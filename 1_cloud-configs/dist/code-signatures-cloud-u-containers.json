@@ -62234,6 +62234,7 @@
         "dbnomics",
         "riksbank",
         "worldbank",
+        "worldbank_as",
         "frankfurter_ts",
         "sec_earnings",
         "par_duration",
@@ -62247,8 +62248,11 @@
         "history",
         "curves",
         "chain",
-        "earnings",
-        "Obs"
+        "ppp_today",
+        "real_adjust",
+        "pct",
+        "window_avg",
+        "fx_ppp_row"
       ],
       "imports": [
         "super::normalise::Ev",
@@ -62285,6 +62289,7 @@
         "dbnomics(body: &str, d: &Value)",
         "riksbank(body: &str, d: &Value)",
         "worldbank(body: &str)",
+        "worldbank_as(body: &str, prefix: &str)",
         "frankfurter_ts(body: &str)",
         "sec_earnings(body: &str, symbol: &str, cik: &str, filing: &str, day: NaiveDate, lookback_days: i64)",
         "par_duration(y: f64, years: f64)",
@@ -62305,8 +62310,7 @@
         "date_of(v: &Value)",
         "run_hist(st: &AppState, pool: &SqlitePool, pacer: &mut Pacer, u: &Value, s: &Value)",
         "run_curve(st: &AppState, pool: &SqlitePool, pacer: &mut Pacer, u: &Value, f: &Value)",
-        "countries(u: &Value)",
-        "run_gdp(st: &AppState, pool: &SqlitePool, pacer: &mut Pacer, u: &Value)"
+        "countries(u: &Value)"
       ]
     },
     {

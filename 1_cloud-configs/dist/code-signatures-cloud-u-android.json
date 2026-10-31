@@ -36231,6 +36231,7 @@
         "androidx.compose.foundation.interaction.PressInteraction",
         "androidx.compose.ui.Modifier",
         "androidx.compose.ui.graphics.Color",
+        "androidx.compose.ui.graphics.drawOutline",
         "androidx.compose.ui.graphics.drawscope.ContentDrawScope",
         "androidx.compose.ui.node.DelegatableNode",
         "androidx.compose.ui.node.DrawModifierNode",
@@ -36244,7 +36245,8 @@
         "onAttach()",
         "draw()",
         "class FleetIndication",
-        "class Instance"
+        "class Instance",
+        "class FleetPillIndication"
       ]
     },
     {
@@ -186539,7 +186541,12 @@
         "texts()",
         "launch()",
         "open_git()",
-        "sheet_open()"
+        "front()",
+        "ensure_git()",
+        "step()",
+        "sheet_open()",
+        "advanced()",
+        "pick()"
       ],
       "imports": [],
       "symbols": [
@@ -186552,7 +186559,12 @@
         "texts()",
         "launch()",
         "open_git()",
-        "sheet_open()"
+        "front()",
+        "ensure_git()",
+        "step()",
+        "sheet_open()",
+        "advanced()",
+        "pick()"
       ]
     },
     {
@@ -221327,7 +221339,8 @@
         "last()",
         "state()",
         "shown()",
-        "openat()"
+        "openat()",
+        "up()"
       ],
       "imports": [],
       "symbols": [
@@ -221338,7 +221351,8 @@
         "last()",
         "state()",
         "shown()",
-        "openat()"
+        "openat()",
+        "up()"
       ]
     },
     {
