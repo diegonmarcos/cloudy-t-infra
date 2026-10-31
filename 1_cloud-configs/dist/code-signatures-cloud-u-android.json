@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 22959,
+    "files": 22961,
     "by_lang": {
       "sh": 632,
       "js": 526,
       "py": 186,
-      "kotlin": 12351,
+      "kotlin": 12353,
       "java": 649,
       "nix": 35,
       "rust": 111,
@@ -23,7 +23,7 @@
       "shell": 503,
       "script": 279,
       "java": 648,
-      "kotlin": 12348,
+      "kotlin": 12350,
       "python": 59,
       "module": 6459,
       "flake": 31,
@@ -19956,6 +19956,7 @@
         "onBattery(raw: Int? = -400_000, level: Int = 80)",
         "report(r: BatteryReading = onBattery()",
         "code(f: File)",
+        "popup(r: BatteryReport)",
         "class BatteryTruthTest"
       ]
     },
@@ -25562,7 +25563,9 @@
         "find_text()",
         "tap_text()",
         "shot()",
-        "open_page()"
+        "open_page()",
+        "cap()",
+        "has_all()"
       ],
       "imports": [],
       "symbols": [
@@ -25571,7 +25574,9 @@
         "find_text()",
         "tap_text()",
         "shot()",
-        "open_page()"
+        "open_page()",
+        "cap()",
+        "has_all()"
       ]
     },
     {
@@ -223641,6 +223646,18 @@
       ]
     },
     {
+      "path": "ac_cloud-mail/app/src/main/kotlin/app/sterna/push/ReconnectBackoff.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [],
+      "imports": [],
+      "symbols": [
+        "delayMs(failures: Int)",
+        "next(failures: Int, openedForMs: Long?)",
+        "class ReconnectBackoff"
+      ]
+    },
+    {
       "path": "ac_cloud-mail/app/src/main/kotlin/app/sterna/push/RelayPush.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -232234,6 +232251,21 @@
         "blockAfter(body: String, header: String)",
         "bodyOf(file: File, name: String)",
         "class QuickReplyWiringTest"
+      ]
+    },
+    {
+      "path": "ac_cloud-mail/app/src/test/kotlin/app/sterna/push/ReconnectBackoffTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ReconnectBackoffTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "class ReconnectBackoffTest"
       ]
     },
     {
@@ -586933,6 +586965,8 @@
         "bls(body: String)",
         "frankfurter(body: String)",
         "coinbase(body: String, each: String)",
+        "cot(body: String, each: String)",
+        "net(i: Int)",
         "cboe(body: String, each: String, last: Int)",
         "cboePrev(price: Double, change: Double?, prevClose: Double?)",
         "ff(body: String)",
@@ -588652,6 +588686,8 @@
         "secConceptKeepsFullYearFramesWithTheYearBefore()",
         "theContainerAnswersEveryNormalisedShape()",
         "anythingUnrecognisedIsEmptyNotAnError()",
+        "coinbaseDailyCandlesPerItemAreAQuoteRowWithASevenDaySparkline()",
+        "cftcCotIsNetNonCommercialThisWeekAndLast()",
         "class FeedsTest"
       ]
     },
