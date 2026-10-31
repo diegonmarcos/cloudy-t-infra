@@ -62232,6 +62232,7 @@
         "csv_wide",
         "valet",
         "dbnomics",
+        "riksbank",
         "worldbank",
         "frankfurter_ts",
         "sec_earnings",
@@ -62282,6 +62283,7 @@
         "csv_wide(body: &str, d: &Value)",
         "valet(body: &str, d: &Value)",
         "dbnomics(body: &str, d: &Value)",
+        "riksbank(body: &str, d: &Value)",
         "worldbank(body: &str)",
         "frankfurter_ts(body: &str)",
         "sec_earnings(body: &str, symbol: &str, cik: &str, filing: &str, day: NaiveDate, lookback_days: i64)",
@@ -62304,8 +62306,7 @@
         "run_hist(st: &AppState, pool: &SqlitePool, pacer: &mut Pacer, u: &Value, s: &Value)",
         "run_curve(st: &AppState, pool: &SqlitePool, pacer: &mut Pacer, u: &Value, f: &Value)",
         "countries(u: &Value)",
-        "run_gdp(st: &AppState, pool: &SqlitePool, pacer: &mut Pacer, u: &Value)",
-        "run_fx(st: &AppState, pool: &SqlitePool, pacer: &mut Pacer, u: &Value)"
+        "run_gdp(st: &AppState, pool: &SqlitePool, pacer: &mut Pacer, u: &Value)"
       ]
     },
     {

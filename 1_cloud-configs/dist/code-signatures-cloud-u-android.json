@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 22915,
+    "files": 22936,
     "by_lang": {
-      "sh": 628,
+      "sh": 630,
       "js": 526,
       "py": 184,
-      "kotlin": 12313,
+      "kotlin": 12332,
       "java": 649,
       "nix": 35,
       "rust": 111,
@@ -20,10 +20,10 @@
     "by_role": {
       "hook": 158,
       "file": 2303,
-      "shell": 500,
+      "shell": 502,
       "script": 276,
       "java": 648,
-      "kotlin": 12310,
+      "kotlin": 12329,
       "python": 59,
       "module": 6459,
       "flake": 31,
@@ -6306,7 +6306,9 @@
       "role": "script",
       "exports": [
         "say()",
+        "dump1()",
         "shot()",
+        "tap_text()",
         "has()",
         "check()",
         "perms_page()"
@@ -6314,7 +6316,9 @@
       "imports": [],
       "symbols": [
         "say()",
+        "dump1()",
         "shot()",
+        "tap_text()",
         "has()",
         "check()",
         "perms_page()"
@@ -19032,7 +19036,7 @@
         "StoreBuiltFromTest"
       ],
       "imports": [
-        "com.diegonmarcos.superapp.appstore.BuiltFrom",
+        "com.diegonmarcos.superapp.fleetconfig.BuiltFrom",
         "org.junit.Assert.assertEquals",
         "org.junit.Assert.assertFalse",
         "org.junit.Assert.assertNull",
@@ -31689,6 +31693,7 @@
       ],
       "imports": [
         "android.content.Context",
+        "com.diegonmarcos.superapp.fleetconfig.BuiltFrom",
         "android.widget.Toast",
         "androidx.compose.foundation.background",
         "androidx.compose.foundation.border",
@@ -31726,8 +31731,7 @@
         "androidx.compose.ui.unit.sp",
         "com.diegonmarcos.superapp.updater.BootstrapInstall",
         "com.diegonmarcos.superapp.updater.Fleet",
-        "com.diegonmarcos.superapp.updater.FleetIdentity",
-        "com.diegonmarcos.superapp.updater.VersionOrder"
+        "com.diegonmarcos.superapp.updater.FleetIdentity"
       ],
       "symbols": [
         "Sheet(app: Fleet.App, state: Fleet.State?, onDismiss: ()",
@@ -31999,26 +32003,6 @@
         "class Phase",
         "class exists",
         "class Engine"
-      ]
-    },
-    {
-      "path": "ab_cloud-libs-shared/libs/appstore/src/main/java/com/diegonmarcos/superapp/appstore/BuiltFrom.kt",
-      "lang": "kotlin",
-      "role": "kotlin",
-      "exports": [
-        "BuiltFrom"
-      ],
-      "imports": [
-        "com.diegonmarcos.superapp.updater.Fleet"
-      ],
-      "symbols": [
-        "commitFromSidecar(text: String?)",
-        "shaFromVersionName(versionName: String?)",
-        "short(sha: String?)",
-        "same(a: String?, b: String?)",
-        "commitUrl(releaseUrl: String, sha: String?)",
-        "fetchReleaseCommit(app: Fleet.App)",
-        "class BuiltFrom"
       ]
     },
     {
@@ -37564,6 +37548,33 @@
       ]
     },
     {
+      "path": "ab_cloud-libs-shared/libs/bottomnav/src/test/kotlin/com/diegonmarcos/superapp/bottomnav/NavUiPrefsOffMainTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "NavUiPrefsOffMainTest"
+      ],
+      "imports": [
+        "android.content.Context",
+        "android.content.ContextWrapper",
+        "android.content.SharedPreferences",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertNotNull",
+        "org.junit.Assert.assertNotSame",
+        "org.junit.Test",
+        "org.junit.runner.RunWith",
+        "org.robolectric.RobolectricTestRunner",
+        "org.robolectric.RuntimeEnvironment",
+        "org.robolectric.annotation.Config"
+      ],
+      "symbols": [
+        "getApplicationContext()",
+        "getSharedPreferences(name: String?, mode: Int)",
+        "class NavUiPrefsOffMainTest",
+        "class Recording"
+      ]
+    },
+    {
       "path": "ab_cloud-libs-shared/libs/bottomnav/src/test/kotlin/com/diegonmarcos/superapp/bottomnav/NavUiTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -42145,6 +42156,7 @@
         "save(name, mime, buf)",
         "exportGLB(name = 'avatar.glb')",
         "snapshotPNG(name = 'avatar.png')",
+        "goLite(why)",
         "tick()",
         "boot(config)"
       ]
@@ -48545,6 +48557,24 @@
         "walk(dir, rel)",
         "startupBanner()",
         "shutdown(sig)"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/fleetconfig-model/src/main/java/com/diegonmarcos/superapp/fleetconfig/BuiltFrom.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "BuiltFrom"
+      ],
+      "imports": [],
+      "symbols": [
+        "commitFromSidecar(text: String?)",
+        "shaFromVersionName(versionName: String?)",
+        "short(sha: String?)",
+        "same(a: String?, b: String?)",
+        "commitUrl(releaseUrl: String, sha: String?)",
+        "fetchReleaseCommit(assetUrl: String)",
+        "class BuiltFrom"
       ]
     },
     {
@@ -74837,6 +74867,7 @@
         "android.provider.Settings"
       ],
       "symbols": [
+        "appLabel(ctx: Context, pkg: String, fallback: String = pkg)",
         "catalogue(ctx: Context)",
         "vars(ctx: Context)",
         "service(action: String)",
@@ -74856,7 +74887,6 @@
         "decorate(i: Intent, withData: Boolean)",
         "open(ctx: Context, e: PermEntry, pkg: String = ctx.packageName)",
         "missing(ctx: Context, vararg features: String)",
-        "appLabel(ctx: Context, pkg: String, fallback: String = pkg)",
         "labels(entries: List<PermEntry>)",
         "idsFor(ctx: Context, permissions: Collection<String>)",
         "openPermsPage()",
@@ -74896,17 +74926,14 @@
         "androidx.activity.result.contract.ActivityResultContracts",
         "androidx.compose.foundation.isSystemInDarkTheme",
         "androidx.compose.foundation.layout.Column",
-        "androidx.compose.foundation.layout.WindowInsets",
         "androidx.compose.foundation.layout.fillMaxSize",
         "androidx.compose.foundation.layout.padding",
-        "androidx.compose.foundation.layout.safeDrawing",
-        "androidx.compose.foundation.layout.windowInsetsPadding",
         "androidx.compose.foundation.rememberScrollState",
         "androidx.compose.foundation.verticalScroll",
         "androidx.compose.material3.ExperimentalMaterial3Api",
         "androidx.compose.material3.MaterialTheme",
         "androidx.compose.material3.ModalBottomSheet",
-        "androidx.compose.material3.Surface",
+        "androidx.compose.material3.Scaffold",
         "androidx.compose.material3.Text",
         "androidx.compose.material3.darkColorScheme",
         "androidx.compose.material3.lightColorScheme",
@@ -74965,6 +74992,7 @@
         "onActivityDestroyed(activity: Activity)",
         "neverAsked(ctx: Context)",
         "fromLauncher(i: Intent?)",
+        "global(ctx: Context)",
         "suppressed(ctx: Context)",
         "class PermsFirstRun"
       ]
@@ -75126,6 +75154,7 @@
         "GroupBlock(g: PermsView.Group, all: List<PermItem>, onAction: (PermItem)",
         "HealthBlock(health: List<PermItem>, onAction: (PermItem)",
         "PermRowView(it: PermItem, onAction: (PermItem)",
+        "showsAction(it: PermItem)",
         "ChipView(chip: PermChip, p: PermsPalette, modifier: Modifier = Modifier)",
         "Pill(word: String, c: Color, modifier: Modifier = Modifier)",
         "PermsPromptCard( text: String, onGrant: ()",
@@ -75136,6 +75165,37 @@
         "class PermsType",
         "class PermIcons",
         "class PermsTags"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/perms/src/main/java/com/diegonmarcos/superapp/perms/PermsUsb.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "PermsUsb"
+      ],
+      "imports": [
+        "android.app.PendingIntent",
+        "android.content.BroadcastReceiver",
+        "android.content.Context",
+        "android.content.Intent",
+        "android.content.IntentFilter",
+        "android.content.pm.PackageManager",
+        "android.hardware.usb.UsbDevice",
+        "android.hardware.usb.UsbManager",
+        "android.os.Build",
+        "androidx.core.content.ContextCompat"
+      ],
+      "symbols": [
+        "hasUsbHost(ctx: Context)",
+        "isMassStorage(d: UsbDevice)",
+        "drives(ctx: Context)",
+        "granted(ctx: Context, d: UsbDevice)",
+        "status(ctx: Context)",
+        "request(ctx: Context, device: UsbDevice, onResult: (Boolean)",
+        "onReceive(c: Context, i: Intent)",
+        "class 8",
+        "class PermsUsb"
       ]
     },
     {
@@ -79713,6 +79773,7 @@
         "android.content.Context",
         "android.content.Intent",
         "android.os.Build",
+        "com.diegonmarcos.superapp.fleetconfig.BuiltFrom",
         "org.json.JSONArray",
         "java.net.HttpURLConnection",
         "java.net.URL"
@@ -79927,6 +79988,8 @@
         "androidx.compose.foundation.layout.WindowInsets",
         "androidx.compose.foundation.layout.statusBars",
         "androidx.compose.ui.draw.drawBehind",
+        "androidx.compose.ui.layout.onGloballyPositioned",
+        "androidx.compose.ui.layout.positionInWindow",
         "androidx.compose.ui.geometry.Offset",
         "androidx.compose.ui.geometry.Size",
         "androidx.compose.ui.graphics.Color",
@@ -79952,9 +80015,7 @@
         "androidx.compose.ui.window.Popup",
         "androidx.compose.ui.window.PopupPositionProvider",
         "androidx.compose.ui.window.PopupProperties",
-        "androidx.compose.material3.HorizontalDivider",
-        "androidx.compose.material3.DropdownMenuItem",
-        "androidx.compose.material3.Icon"
+        "androidx.compose.material3.HorizontalDivider"
       ],
       "symbols": [
         "islandMaxWidth(rowWidth: Dp)",
@@ -93957,6 +94018,7 @@
         "DateForms"
       ],
       "imports": [
+        "com.diegonmarcos.cloudcalc.tools.ToolCalcs",
         "java.time.format.TextStyle",
         "java.util.Locale"
       ],
@@ -93964,6 +94026,7 @@
         "label(o: Declarations.Output, values: Map<String, String>, bind: Map<String, String>)",
         "result(book: WorkingDays.Book, o: Declarations.Output, bind: Map<String, String>, values: Map<String, String>)",
         "v(role: String)",
+        "toolResult(o: Declarations.Output, form: Declarations.Form, values: Map<String, String>, today: java.time.LocalDate = java.time.LocalDate.now()",
         "ok(text: String)",
         "bad(why: String)",
         "class DateForms"
@@ -94184,6 +94247,7 @@
       ],
       "imports": [
         "android.content.Context",
+        "com.diegonmarcos.cloudcalc.DateForms",
         "com.diegonmarcos.cloudcalc.Declarations",
         "com.diegonmarcos.cloudcalc.Logic",
         "com.diegonmarcos.cloudcalc.clock.ClockEngine",
@@ -95072,6 +95136,7 @@
         "historyDelete(i: Int)",
         "tab(id: String)",
         "mode(id: String)",
+        "form(id: String)",
         "key(label: String)",
         "jevCandidate(id: String)",
         "askPreset(id: String)",
@@ -96317,6 +96382,75 @@
       ]
     },
     {
+      "path": "ac_cloud-calc/app/src/main/java/com/diegonmarcos/cloudcalc/ui/ToolScreens.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ToolView",
+        "ToolTags",
+        "ToolPrefs"
+      ],
+      "imports": [
+        "android.content.Context",
+        "androidx.compose.foundation.Canvas",
+        "androidx.compose.foundation.layout.Arrangement",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.PaddingValues",
+        "androidx.compose.foundation.layout.Row",
+        "androidx.compose.foundation.layout.fillMaxSize",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.foundation.layout.height",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.foundation.lazy.LazyColumn",
+        "androidx.compose.foundation.lazy.LazyRow",
+        "androidx.compose.foundation.lazy.items",
+        "androidx.compose.foundation.rememberScrollState",
+        "androidx.compose.foundation.text.KeyboardOptions",
+        "androidx.compose.foundation.verticalScroll",
+        "androidx.compose.material3.FilterChip",
+        "androidx.compose.material3.HorizontalDivider",
+        "androidx.compose.material3.MaterialTheme",
+        "androidx.compose.material3.OutlinedTextField",
+        "androidx.compose.material3.Text",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.LaunchedEffect",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.remember",
+        "androidx.compose.runtime.saveable.rememberSaveable",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.geometry.Offset",
+        "androidx.compose.ui.graphics.Path",
+        "androidx.compose.ui.graphics.drawscope.Stroke",
+        "androidx.compose.ui.platform.LocalContext",
+        "androidx.compose.ui.platform.testTag",
+        "androidx.compose.ui.text.input.KeyboardType",
+        "androidx.compose.ui.unit.dp",
+        "com.diegonmarcos.cloudcalc.Declarations",
+        "com.diegonmarcos.cloudcalc.audio.Mic",
+        "com.diegonmarcos.cloudcalc.audio.SoundDecl",
+        "com.diegonmarcos.cloudcalc.audio.SoundStore"
+      ],
+      "symbols": [
+        "ToolView(mode: Declarations.Mode, view: String)",
+        "calendar(id: String)",
+        "fftSource(id: String)",
+        "currency(ctx: Context)",
+        "setCurrency(ctx: Context, code: String)",
+        "chineseOf(d: LocalDate)",
+        "CalendarsView()",
+        "FftView()",
+        "MicSpectrum()",
+        "SyntheticSpectrum()",
+        "SpectrumPanel(spectrum: DoubleArray?, rate: Int, a4: Double)",
+        "x(f: Double)",
+        "y(db: Double)",
+        "class ToolTags",
+        "class ToolPrefs"
+      ]
+    },
+    {
       "path": "ac_cloud-calc/app/src/main/java/com/diegonmarcos/cloudcalc/WorkingDays.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -97298,6 +97432,8 @@
         "week(first: DayOfWeek)",
         "city(zoneId: String)",
         "offsetText(zone: ZoneId, here: ZoneId, now: Long)",
+        "utcText(zone: ZoneId, now: Long)",
+        "isDay(zone: ZoneId, now: Long)",
         "dayShift(zone: ZoneId, here: ZoneId, now: Long)",
         "sleepWindow(d: ClockData, now: Long, zone: ZoneId)",
         "parseTime(text: String)",
@@ -97305,9 +97441,7 @@
         "class ClockLogic",
         "class PhaseKind",
         "class Phase",
-        "class Wakeup",
-        "class Effect",
-        "class Fired"
+        "class Wakeup"
       ]
     },
     {
@@ -98682,6 +98816,247 @@
       "symbols": [
         "ctxFor(sink)",
         "makeEnv()"
+      ]
+    },
+    {
+      "path": "ac_cloud-calc/tools/src/main/kotlin/com/diegonmarcos/cloudcalc/tools/Calendars.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "Calendars"
+      ],
+      "imports": [
+        "java.time.LocalDate",
+        "java.time.chrono.HijrahDate",
+        "java.time.format.TextStyle",
+        "java.time.temporal.ChronoField",
+        "java.time.temporal.IsoFields",
+        "java.util.Locale",
+        "kotlin.math.cos",
+        "kotlin.math.floor",
+        "kotlin.math.roundToInt"
+      ],
+      "symbols": [
+        "jdn(d: LocalDate)",
+        "rd(d: LocalDate)",
+        "fromRd(rd: Long)",
+        "fd(a: Long, b: Long)",
+        "fm(a: Long, b: Long)",
+        "julian(d: LocalDate)",
+        "julianToJdn(y: Long, m: Int, d: Int)",
+        "hebrewLeap(y: Long)",
+        "hebrewElapsed(y: Long)",
+        "hebrewCorrection(y: Long)",
+        "hebrewNewYear(y: Long)",
+        "hebrewYearDays(y: Long)",
+        "hebrewMonthDays(m: Int, y: Long)",
+        "hebrewToRd(y: Long, m: Int, d: Int)",
+        "hebrew(date: LocalDate)",
+        "hebrewMonthName(m: Int, y: Long)",
+        "islamicToRd(y: Long, m: Int, d: Int)",
+        "islamicCivil(date: LocalDate)",
+        "ummAlQura(date: LocalDate)",
+        "tdiv(a: Long, b: Long)",
+        "tmod(a: Long, b: Long)",
+        "persianYear(jy: Long)",
+        "persian(date: LocalDate)",
+        "persianLeap(jy: Long)",
+        "copticToRd(epoch: Long, y: Long, m: Int, d: Int)",
+        "alexandrian(epoch: Long, date: LocalDate)",
+        "coptic(date: LocalDate)",
+        "ethiopian(date: LocalDate)",
+        "chaitra1(gy: Int)",
+        "saka(date: LocalDate)",
+        "japanese(date: LocalDate)",
+        "buddhist(date: LocalDate)",
+        "holocene(date: LocalDate)",
+        "longCount(date: LocalDate)",
+        "tzolkin(date: LocalDate)",
+        "haab(date: LocalDate)",
+        "tonalpohualli(date: LocalDate)",
+        "xiuhpohualli(date: LocalDate)",
+        "isLeapDay(d: LocalDate)",
+        "daysSkippingLeap(a: LocalDate, b: LocalDate)"
+      ]
+    },
+    {
+      "path": "ac_cloud-calc/tools/src/main/kotlin/com/diegonmarcos/cloudcalc/tools/DateFacts.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "DateFacts"
+      ],
+      "imports": [
+        "java.time.LocalDate",
+        "java.time.format.TextStyle",
+        "java.time.temporal.IsoFields",
+        "java.util.Locale"
+      ],
+      "symbols": [
+        "full(d: LocalDate)",
+        "dayOfYear(d: LocalDate)",
+        "isoWeek(d: LocalDate)",
+        "quarter(d: LocalDate)",
+        "daysLeft(d: LocalDate)",
+        "nextLeap(year: Int)",
+        "leap(d: LocalDate)",
+        "class DateFacts"
+      ]
+    },
+    {
+      "path": "ac_cloud-calc/tools/src/main/kotlin/com/diegonmarcos/cloudcalc/tools/Finance.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "Finance"
+      ],
+      "imports": [
+        "kotlin.math.abs",
+        "kotlin.math.pow"
+      ],
+      "symbols": [
+        "payment(principal: Double, rate: Double, n: Int)",
+        "schedule(principal: Double, rate: Double, n: Int)",
+        "yearly(rows: List<Row>, per: Int)",
+        "futureValue(pv: Double, rate: Double, n: Double, deposit: Double = 0.0)",
+        "presentValue(fv: Double, rate: Double, n: Double)",
+        "npv(rate: Double, flows: List<Double>)",
+        "irr(flows: List<Double>)",
+        "savingsDeposit(goal: Double, current: Double, rate: Double, n: Int)",
+        "cagr(start: Double, end: Double, years: Double)",
+        "inflate(amount: Double, rate: Double, years: Double)",
+        "deflate(amount: Double, rate: Double, years: Double)",
+        "class Finance",
+        "class Row"
+      ]
+    },
+    {
+      "path": "ac_cloud-calc/tools/src/main/kotlin/com/diegonmarcos/cloudcalc/tools/ToolCalcs.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ToolCalcs"
+      ],
+      "imports": [
+        "com.diegonmarcos.cloudcalc.sound.Air",
+        "com.diegonmarcos.cloudcalc.sound.Notes",
+        "java.time.LocalDate",
+        "java.util.Locale",
+        "kotlin.math.abs",
+        "kotlin.math.log10",
+        "kotlin.math.pow",
+        "kotlin.math.roundToInt"
+      ],
+      "symbols": [
+        "eval(calc: String, metric: String, get: (String)",
+        "n(role: String)",
+        "pct(role: String)",
+        "money(x: Double)",
+        "bad()",
+        "noteHz(name: String, a4: Double)",
+        "dbAdd(a: Double, b: Double)",
+        "dbSubtract(a: Double, b: Double)",
+        "splOf(pa: Double)",
+        "paOf(db: Double)",
+        "beatMs(bpm: Double)",
+        "num(s: String)",
+        "fmt(x: Double)",
+        "money(x: Double, currency: String)",
+        "percent(x: Double)",
+        "ms(x: Double)",
+        "bytes(b: Double)",
+        "class ToolCalcs"
+      ]
+    },
+    {
+      "path": "ac_cloud-calc/tools/src/test/kotlin/com/diegonmarcos/cloudcalc/tools/CalendarsTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "CalendarsTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.cloudcalc.tools.Calendars.Ymd",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.time.LocalDate"
+      ],
+      "symbols": [
+        "d(s: String)",
+        "continuous(name: String, first: Int = 1, maxMonth: Int, f: (LocalDate)",
+        "everyDayFollows()",
+        "julianDay()",
+        "julian()",
+        "hebrew()",
+        "islamic()",
+        "persian()",
+        "copticEthiopianSaka()",
+        "eras()",
+        "maya()",
+        "aztec()",
+        "thirteenMoon()",
+        "internationalFixed()",
+        "frenchRepublican()",
+        "discordian()",
+        "chinese()",
+        "moon()",
+        "all()",
+        "class CalendarsTest"
+      ]
+    },
+    {
+      "path": "ac_cloud-calc/tools/src/test/kotlin/com/diegonmarcos/cloudcalc/tools/FinanceTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "FinanceTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertNull",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "payment()",
+        "paymentNeedsPeriods()",
+        "schedule()",
+        "futureAndPresentValue()",
+        "npvIrr()",
+        "savings()",
+        "savingsNeedsPeriods()",
+        "cagrInflation()",
+        "cagrNeedsPositive()",
+        "class FinanceTest"
+      ]
+    },
+    {
+      "path": "ac_cloud-calc/tools/src/test/kotlin/com/diegonmarcos/cloudcalc/tools/ToolCalcsTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ToolCalcsTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.time.LocalDate"
+      ],
+      "symbols": [
+        "calc(c: String, m: String, vararg f: Pair<String, String>, cur: String = \"EUR\")",
+        "fails(c: String, m: String, vararg f: Pair<String, String>)",
+        "date()",
+        "loan()",
+        "compoundAndPv()",
+        "npv()",
+        "savingsCagrInflation()",
+        "sound()",
+        "formatting()",
+        "class ToolCalcsTest"
       ]
     },
     {
@@ -177281,6 +177656,7 @@
         "androidx.compose.foundation.layout.padding",
         "androidx.compose.runtime.Composable",
         "androidx.compose.runtime.LaunchedEffect",
+        "androidx.compose.runtime.collectAsState",
         "androidx.compose.runtime.getValue",
         "androidx.compose.runtime.mutableStateOf",
         "androidx.compose.runtime.saveable.rememberSaveable",
@@ -177973,6 +178349,7 @@
         "onCreate(savedInstanceState: Bundle?)",
         "startup()",
         "guarded(phase: String, optional: Boolean = false, block: ()",
+        "onNewIntent(intent: Intent)",
         "onResume()",
         "Root()",
         "requestStorageAccess()",
@@ -179989,6 +180366,7 @@
         "androidx.compose.material3.ExperimentalMaterial3Api",
         "androidx.compose.material3.pulltorefresh.PullToRefreshBox",
         "androidx.compose.runtime.Composable",
+        "androidx.compose.foundation.layout.fillMaxWidth",
         "androidx.compose.ui.Modifier",
         "androidx.compose.ui.platform.testTag",
         "com.diegonmarcos.clouddrive.ui.DriveMetrics",
@@ -180187,6 +180565,74 @@
         "class State",
         "class Status",
         "class Target"
+      ]
+    },
+    {
+      "path": "ac_cloud-drive/app/src/main/java/com/diegonmarcos/clouddrive/sync/GitStorage.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "GitStorage"
+      ],
+      "imports": [
+        "java.io.File"
+      ],
+      "symbols": [
+        "of(id: String?)",
+        "gitFolder(root: File?)",
+        "repos(gitFolder: File?)",
+        "view(root: File?)",
+        "class GitStorage",
+        "class Kind",
+        "class View",
+        "class NoDrive",
+        "class NoGitFolder",
+        "class Repos"
+      ]
+    },
+    {
+      "path": "ac_cloud-drive/app/src/main/java/com/diegonmarcos/clouddrive/sync/GitStoragePage.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "gitStorageSelected",
+        "gitStorageSelect",
+        "gitStorageRoot",
+        "gitStoragePages",
+        "GitStorageRepos"
+      ],
+      "imports": [
+        "android.content.Context",
+        "android.os.Environment",
+        "androidx.compose.foundation.lazy.LazyColumn",
+        "androidx.compose.foundation.lazy.items",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.collectAsState",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.produceState",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.platform.LocalContext",
+        "androidx.compose.ui.res.stringResource",
+        "com.diegonmarcos.clouddrive.R",
+        "com.diegonmarcos.clouddrive.ui.DriveCard",
+        "com.diegonmarcos.clouddrive.ui.EmptyState",
+        "com.diegonmarcos.clouddrive.ui.IconCatalog",
+        "com.diegonmarcos.clouddrive.ui.Pill",
+        "com.diegonmarcos.clouddrive.ui.PillRow",
+        "com.diegonmarcos.clouddrive.usb.StorageVolumes",
+        "com.diegonmarcos.clouddrive.usb.UsbVolumeModel",
+        "com.diegonmarcos.cloudlib.gitsync.ManagedRepo",
+        "com.diegonmarcos.superapp.bottomnav.NavPage",
+        "kotlinx.coroutines.Dispatchers",
+        "kotlinx.coroutines.withContext",
+        "java.io.File"
+      ],
+      "symbols": [
+        "gitStorageSelected(ctx: Context)",
+        "gitStorageSelect(ctx: Context, k: GitStorage.Kind)",
+        "gitStorageRoot(ctx: Context, k: GitStorage.Kind)",
+        "gitStoragePages()",
+        "GitStorageRepos(kind: GitStorage.Kind, git: GitSyncCoordinator, modifier: Modifier = Modifier)"
       ]
     },
     {
@@ -181121,6 +181567,7 @@
         "androidx.compose.foundation.layout.ExperimentalLayoutApi",
         "androidx.compose.foundation.layout.FlowRow",
         "androidx.compose.foundation.layout.Row",
+        "androidx.compose.foundation.layout.Spacer",
         "androidx.compose.foundation.layout.fillMaxWidth",
         "androidx.compose.foundation.layout.heightIn",
         "androidx.compose.foundation.layout.padding",
@@ -182119,6 +182566,201 @@
         "doWork()",
         "schedule(context: Context)",
         "class UnisonSyncWorker"
+      ]
+    },
+    {
+      "path": "ac_cloud-drive/app/src/main/java/com/diegonmarcos/clouddrive/usb/RawUsbDrive.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "RawUsbDrive"
+      ],
+      "imports": [
+        "android.content.Context",
+        "android.hardware.usb.UsbDevice",
+        "me.jahnen.libaums.core.UsbMassStorageDevice",
+        "me.jahnen.libaums.core.UsbMassStorageDevice.Companion.getMassStorageDevices",
+        "me.jahnen.libaums.core.fs.FileSystem",
+        "me.jahnen.libaums.core.fs.UsbFile",
+        "me.jahnen.libaums.core.fs.UsbFileStreamFactory",
+        "java.io.Closeable",
+        "java.io.File"
+      ],
+      "symbols": [
+        "find(path: String)",
+        "list(path: String)",
+        "copyToPhone(path: String, destDir: File)",
+        "copyFromPhone(file: File, dirPath: String)",
+        "mkdir(dirPath: String, name: String)",
+        "delete(path: String)",
+        "track(c: Closeable, block: ()",
+        "close()",
+        "massStorage(ctx: Context, device: UsbDevice)",
+        "open(ctx: Context, device: UsbDevice)",
+        "class RawUsbDrive",
+        "class Entry",
+        "class Opened",
+        "class Ok",
+        "class Unsupported",
+        "class Failed"
+      ]
+    },
+    {
+      "path": "ac_cloud-drive/app/src/main/java/com/diegonmarcos/clouddrive/usb/StorageVolumes.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "StorageVolumes"
+      ],
+      "imports": [
+        "android.content.Context",
+        "android.content.Intent",
+        "android.os.Build",
+        "android.os.StatFs",
+        "android.os.storage.StorageManager",
+        "android.os.storage.StorageVolume",
+        "kotlinx.coroutines.flow.MutableStateFlow",
+        "kotlinx.coroutines.flow.StateFlow",
+        "java.io.File"
+      ],
+      "symbols": [
+        "onBroadcast(key: String, action: String, sessionClosed: Boolean = false)",
+        "read(ctx: Context)",
+        "drives(ctx: Context)",
+        "pathOf(v: StorageVolume)",
+        "sizeOf(path: String)",
+        "openEjectSettings(ctx: Context)",
+        "grantIntent(ctx: Context, path: String)",
+        "class StorageVolumes"
+      ]
+    },
+    {
+      "path": "ac_cloud-drive/app/src/main/java/com/diegonmarcos/clouddrive/usb/UsbDriveActivity.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "UsbDriveActivity"
+      ],
+      "imports": [
+        "android.content.BroadcastReceiver",
+        "android.content.Context",
+        "android.content.Intent",
+        "android.content.IntentFilter",
+        "android.hardware.usb.UsbDevice",
+        "android.hardware.usb.UsbManager",
+        "android.os.Build",
+        "android.os.Bundle",
+        "android.os.Environment",
+        "androidx.activity.ComponentActivity",
+        "androidx.activity.compose.BackHandler",
+        "androidx.activity.compose.setContent",
+        "androidx.compose.foundation.clickable",
+        "androidx.compose.foundation.layout.Arrangement",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.Row",
+        "androidx.compose.foundation.layout.fillMaxSize",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.foundation.lazy.LazyColumn",
+        "androidx.compose.foundation.lazy.items",
+        "androidx.compose.material3.Button",
+        "androidx.compose.material3.HorizontalDivider",
+        "androidx.compose.material3.MaterialTheme",
+        "androidx.compose.material3.Surface",
+        "androidx.compose.material3.Text",
+        "androidx.compose.material3.TextButton",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.ui.Alignment",
+        "androidx.compose.ui.Modifier",
+        "com.diegonmarcos.clouddrive.ui.DriveMetrics",
+        "androidx.core.content.ContextCompat",
+        "androidx.lifecycle.lifecycleScope",
+        "com.diegonmarcos.clouddrive.MainActivity",
+        "com.diegonmarcos.clouddrive.R",
+        "com.diegonmarcos.clouddrive.ui.DriveTheme",
+        "com.diegonmarcos.superapp.perms.PermsUsb"
+      ],
+      "symbols": [
+        "onReceive(c: Context, i: Intent)",
+        "onCreate(savedInstanceState: Bundle?)",
+        "onNewIntent(intent: Intent)",
+        "onDestroy()",
+        "start(i: Intent?)",
+        "openInExplorer(path: String)",
+        "openRaw(device: UsbDevice)",
+        "browse(path: String, note: String = \"\")",
+        "eject()",
+        "copyDir()",
+        "Screen()",
+        "Message(text: String)",
+        "Browser(b: Ui.Browsing)",
+        "copy(e: RawUsbDrive.Entry, here: String)",
+        "delete(e: RawUsbDrive.Entry, here: String)",
+        "intent(ctx: Context)",
+        "open(ctx: Context)",
+        "deviceOf(i: Intent)",
+        "class 8",
+        "class UsbDriveActivity",
+        "class Ui",
+        "class Looking",
+        "class Asking",
+        "class Denied",
+        "class NoDrive",
+        "class Failed",
+        "class Browsing",
+        "class Gone"
+      ]
+    },
+    {
+      "path": "ac_cloud-drive/app/src/main/java/com/diegonmarcos/clouddrive/usb/UsbVolumeModel.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "UsbVolumeModel"
+      ],
+      "imports": [],
+      "symbols": [
+        "isMounted(v: Volume)",
+        "isExternalDrive(v: Volume)",
+        "kindOf(v: Volume)",
+        "labelOf(v: Volume)",
+        "sizeHint(total: Long, free: Long)",
+        "human(bytes: Long)",
+        "drives(volumes: List<Volume>)",
+        "toOpen(before: Set<String>, now: List<Volume>)",
+        "isMassStorage(deviceClass: Int, interfaceClasses: List<Int>)",
+        "next(current: DriveState, action: String, sessionClosed: Boolean = false)",
+        "mustClose(action: String)",
+        "pathOfMediaUri(uri: String?)",
+        "rawParent(path: String)",
+        "rawChild(path: String, name: String)",
+        "freeName(name: String, exists: (String)",
+        "class 8",
+        "class UsbVolumeModel",
+        "class Volume",
+        "class Kind",
+        "class Drive",
+        "class DriveState"
+      ]
+    },
+    {
+      "path": "ac_cloud-drive/app/src/main/java/com/diegonmarcos/clouddrive/usb/UsbVolumeReceiver.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "UsbVolumeReceiver"
+      ],
+      "imports": [
+        "android.content.BroadcastReceiver",
+        "android.content.Context",
+        "android.content.Intent"
+      ],
+      "symbols": [
+        "onReceive(ctx: Context, intent: Intent)",
+        "class UsbVolumeReceiver"
       ]
     },
     {
@@ -184010,6 +184652,27 @@
       ]
     },
     {
+      "path": "ac_cloud-drive/app/src/test/java/com/diegonmarcos/clouddrive/sync/GitStorageTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "GitStorageTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Rule",
+        "org.junit.Test",
+        "org.junit.rules.TemporaryFolder",
+        "java.io.File"
+      ],
+      "symbols": [
+        "repo(parent: File, name: String)",
+        "class GitStorageTest"
+      ]
+    },
+    {
       "path": "ac_cloud-drive/app/src/test/java/com/diegonmarcos/clouddrive/sync/GitTopBarStateTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -184944,6 +185607,28 @@
       ]
     },
     {
+      "path": "ac_cloud-drive/app/src/test/java/com/diegonmarcos/clouddrive/usb/UsbVolumeModelTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "UsbVolumeModelTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.clouddrive.usb.UsbVolumeModel.DriveState",
+        "com.diegonmarcos.clouddrive.usb.UsbVolumeModel.Kind",
+        "com.diegonmarcos.clouddrive.usb.UsbVolumeModel.Volume",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "class UsbVolumeModelTest",
+        "class 8"
+      ]
+    },
+    {
       "path": "ac_cloud-drive/build.sh",
       "lang": "sh",
       "role": "shell",
@@ -185127,6 +185812,30 @@
         "fail()",
         "q()",
         "ipc()"
+      ]
+    },
+    {
+      "path": "ac_cloud-drive/test/emulator-usb-volume.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "fail()",
+        "shot()",
+        "dump()",
+        "where()",
+        "tap()",
+        "has()",
+        "texts()"
+      ],
+      "imports": [],
+      "symbols": [
+        "fail()",
+        "shot()",
+        "dump()",
+        "where()",
+        "tap()",
+        "has()",
+        "texts()"
       ]
     },
     {
@@ -185889,7 +186598,8 @@
         "f1()",
         "t3()",
         "t4()",
-        "t5()"
+        "t5()",
+        "t6()"
       ],
       "imports": [],
       "symbols": [
@@ -185900,7 +186610,8 @@
         "f1()",
         "t3()",
         "t4()",
-        "t5()"
+        "t5()",
+        "t6()"
       ]
     },
     {
@@ -186193,6 +186904,20 @@
         "n3()",
         "n4()",
         "mut()"
+      ]
+    },
+    {
+      "path": "ac_cloud-drive/test/test-drive-usb-drives.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "copy()",
+        "mutate()"
+      ],
+      "imports": [],
+      "symbols": [
+        "copy()",
+        "mutate()"
       ]
     },
     {
@@ -585813,6 +586538,8 @@
       ],
       "symbols": [
         "load(panel: Panel, source: Source, f: JSONObject, http: Http, today: LocalDate, c: ModelCtx)",
+        "emUsd(panel: Panel, f: JSONObject, http: Http, c: ModelCtx)",
+        "emUsdTable(panel: Panel, body: String, by: String)",
         "symbolFor(route: JSONObject, item: String)",
         "gather(item: String, source: Source, f: JSONObject, http: Http, today: LocalDate, c: ModelCtx)",
         "filled(spec: JSONObject, sl: Map<String, String>)",
@@ -585833,7 +586560,10 @@
         "coverage(values: List<Pair<Double, Double?>>)",
         "gatedAverage(values: List<Pair<Double, Double?>>, min: Double)",
         "pct0(x: Double)",
-        "matrix(panel: Panel, f: JSONObject, got: Map<String, ItemGot>)",
+        "parseOne(body: String, each: List<String>, by: String)",
+        "matrixOne(f: JSONObject, http: Http, c: ModelCtx)",
+        "reasons(why: Map<String, Map<String, String>>, ts: List<String>)",
+        "matrix(panel: Panel, f: JSONObject, got: Map<String, ItemGot>, one: One? = null)",
         "vals(members: List<String>, i: Int)",
         "avg(members: List<String>)",
         "cov(members: List<String>)",
@@ -585842,7 +586572,8 @@
         "strings(a: JSONArray?)",
         "class Tables",
         "class ItemGot",
-        "class Tenor"
+        "class Tenor",
+        "class One"
       ]
     },
     {
@@ -587492,6 +588223,10 @@
         "theMatrixHasAveragesThenEveryCountryAndSaysWhyACellIsEmpty()",
         "anAverageOfTheUsAloneIsInsufficientCoverageNotTheUsYield()",
         "coverageIsTheGdpShareWithAValueAndGatesTheAverage()",
+        "oneMatrixCallFillsEveryCountryAndSaysWhyEachCellIsEmpty()",
+        "aMatrixCallWithoutRowsFallsBackToOneCallPerCountry()",
+        "emUsdBondsAreOneRowPerCountryWithTheReasonForEachEmptyCell()",
+        "theEmUsdPanelIsRoutedToTheContainerAndSaysMeshOffWithoutIt()",
         "theDeclaredMatrixIsTheOwnersCountryList()",
         "class TablesTest",
         "class Fake"
