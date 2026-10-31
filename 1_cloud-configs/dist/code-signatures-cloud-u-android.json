@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 22961,
+    "files": 22962,
     "by_lang": {
       "sh": 632,
       "js": 526,
       "py": 186,
-      "kotlin": 12353,
+      "kotlin": 12354,
       "java": 649,
       "nix": 35,
       "rust": 111,
@@ -23,7 +23,7 @@
       "shell": 503,
       "script": 279,
       "java": 648,
-      "kotlin": 12350,
+      "kotlin": 12351,
       "python": 59,
       "module": 6459,
       "flake": 31,
@@ -7530,68 +7530,6 @@
       ]
     },
     {
-      "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/agents/AgentsFragment.kt",
-      "lang": "kotlin",
-      "role": "kotlin",
-      "exports": [
-        "AgentsFragment"
-      ],
-      "imports": [
-        "android.os.Bundle",
-        "android.view.LayoutInflater",
-        "android.view.View",
-        "android.view.ViewGroup",
-        "androidx.compose.foundation.layout.Arrangement",
-        "androidx.compose.foundation.layout.Column",
-        "androidx.compose.foundation.layout.Spacer",
-        "androidx.compose.foundation.layout.fillMaxSize",
-        "androidx.compose.foundation.layout.height",
-        "androidx.compose.foundation.layout.padding",
-        "androidx.compose.foundation.lazy.LazyColumn",
-        "androidx.compose.foundation.lazy.items",
-        "androidx.compose.material3.Text",
-        "androidx.compose.runtime.Composable",
-        "androidx.compose.runtime.getValue",
-        "androidx.compose.runtime.mutableStateMapOf",
-        "androidx.compose.runtime.mutableStateOf",
-        "androidx.compose.runtime.setValue",
-        "androidx.compose.ui.Modifier",
-        "androidx.compose.ui.platform.testTag",
-        "androidx.compose.ui.unit.dp",
-        "androidx.lifecycle.lifecycleScope",
-        "com.diegonmarcos.superapp.ShellActivity",
-        "com.diegonmarcos.superapp.ui.LauncherPalette",
-        "com.diegonmarcos.superapp.uikit.KitAction",
-        "com.diegonmarcos.superapp.uikit.KitActionBar",
-        "com.diegonmarcos.superapp.uikit.KitCard",
-        "com.diegonmarcos.superapp.uikit.KitComposeFragment",
-        "com.diegonmarcos.superapp.uikit.KitDensity",
-        "com.diegonmarcos.superapp.uikit.KitEmptyState",
-        "com.diegonmarcos.superapp.uikit.KitListRow",
-        "com.diegonmarcos.superapp.uikit.KitSectionHeader",
-        "com.diegonmarcos.superapp.uikit.KitState",
-        "com.diegonmarcos.superapp.uikit.KitStatusBanner",
-        "com.diegonmarcos.superapp.uikit.LocalKitPalette",
-        "kotlinx.coroutines.Dispatchers",
-        "kotlinx.coroutines.launch",
-        "kotlinx.coroutines.withContext"
-      ],
-      "symbols": [
-        "newInstance(scope: String)",
-        "palette()",
-        "onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?)",
-        "load()",
-        "Content()",
-        "Loaded(agents: List<FleetAgents.Agent>)",
-        "Details(a: FleetAgents.Agent, l: AgentStatusReader.Live?)",
-        "class AgentsFragment",
-        "class Ui",
-        "class Loading",
-        "class Error",
-        "class Loaded"
-      ]
-    },
-    {
       "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/agents/AgentStatusReader.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -8119,29 +8057,33 @@
         "androidx.compose.ui.text.font.FontWeight",
         "androidx.compose.ui.unit.dp",
         "androidx.compose.ui.unit.sp",
+        "com.diegonmarcos.superapp.battery.BatteryCycles",
         "com.diegonmarcos.superapp.battery.BatteryHistory",
+        "com.diegonmarcos.superapp.battery.BatteryLabels",
         "com.diegonmarcos.superapp.battery.BatteryPrivileged",
         "com.diegonmarcos.superapp.battery.BatteryReport",
         "com.diegonmarcos.superapp.battery.BatteryRepository",
         "com.diegonmarcos.superapp.battery.BatteryRows",
         "com.diegonmarcos.superapp.battery.BatterySample",
-        "com.diegonmarcos.superapp.ui.LauncherPalette",
-        "com.diegonmarcos.superapp.uikit.KitComposeFragment",
-        "com.diegonmarcos.superapp.uikit.LocalKitPalette"
+        "com.diegonmarcos.superapp.ui.LauncherPalette"
       ],
       "symbols": [
         "palette()",
         "Content()",
         "Body(r: BatteryReport, samples: List<BatterySample>, priv: Privileged?, week: Boolean, setWeek: (Boolean)",
         "readPrivileged(ctx: Context)",
+        "rows(apps: Map<Int, Double>, from: Long)",
         "Section(s: BatteryRows.Section)",
         "Header(t: String)",
         "Kv(label: String, value: String)",
         "Line(t: String)",
         "Divider()",
         "Toggle(t: String, on: Boolean, pick: ()",
-        "Table(head: List<String>, rows: List<List<String>>)",
+        "Table(head: List<String>, rows: List<List<String>>, weights: List<Float> = listOf(0.22f, 0.16f, 0.14f, 0.34f, 0.14f)",
         "cells(c: List<String>, bold: Boolean)",
+        "AppTable(apps: List<AppUse>)",
+        "InfoLine(t: String)",
+        "fmtDur(ms: Long)",
         "LevelGraph(points: List<BatteryHistory.Point>, from: Long, to: Long)",
         "x(ts: Long)",
         "y(pct: Int)",
@@ -8149,6 +8091,7 @@
         "newInstance()",
         "class the",
         "class BatteryStatsFragment",
+        "class AppUse",
         "class Privileged"
       ]
     },
@@ -9411,46 +9354,6 @@
       ]
     },
     {
-      "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/configs/DiagnosticsFragment.kt",
-      "lang": "kotlin",
-      "role": "kotlin",
-      "exports": [
-        "DiagnosticsFragment"
-      ],
-      "imports": [
-        "android.content.Intent",
-        "androidx.compose.foundation.layout.Column",
-        "androidx.compose.foundation.layout.fillMaxSize",
-        "androidx.compose.foundation.layout.padding",
-        "androidx.compose.foundation.rememberScrollState",
-        "androidx.compose.foundation.verticalScroll",
-        "androidx.compose.runtime.Composable",
-        "androidx.compose.runtime.LaunchedEffect",
-        "androidx.compose.runtime.getValue",
-        "androidx.compose.runtime.mutableStateOf",
-        "androidx.compose.runtime.remember",
-        "androidx.compose.runtime.setValue",
-        "androidx.compose.ui.Modifier",
-        "androidx.compose.ui.platform.LocalContext",
-        "androidx.compose.ui.unit.dp",
-        "androidx.lifecycle.Lifecycle",
-        "androidx.lifecycle.repeatOnLifecycle",
-        "com.diegonmarcos.superapp.settings.ConfigButton",
-        "com.diegonmarcos.superapp.settings.ConfigCaption",
-        "com.diegonmarcos.superapp.settings.ConfigHeader",
-        "com.diegonmarcos.superapp.settings.ConfigReadout",
-        "com.diegonmarcos.superapp.ui.LauncherPalette",
-        "com.diegonmarcos.superapp.uikit.KitComposeFragment",
-        "kotlinx.coroutines.delay"
-      ],
-      "symbols": [
-        "palette()",
-        "Content()",
-        "newInstance()",
-        "class DiagnosticsFragment"
-      ]
-    },
-    {
       "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/configs/OneHandFragment.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -9956,6 +9859,9 @@
         "DevControlFragment"
       ],
       "imports": [
+        "com.diegonmarcos.superapp.agents.AgentStatusReader",
+        "com.diegonmarcos.superapp.agents.FleetAgents",
+        "com.diegonmarcos.superapp.configs.Diagnostics",
         "com.diegonmarcos.superapp.devtools.DevControlPrefs",
         "com.diegonmarcos.superapp.system.Trace",
         "com.diegonmarcos.superapp.system.ScreenLocker",
@@ -9992,10 +9898,7 @@
         "androidx.compose.ui.unit.dp",
         "android.widget.Toast",
         "com.diegonmarcos.superapp.BuildConfig",
-        "com.diegonmarcos.superapp.adbdebug.WirelessDebugging",
-        "com.diegonmarcos.superapp.updater.BuildConfig",
-        "com.diegonmarcos.superapp.updater.BuildAge",
-        "com.diegonmarcos.superapp.updater.Fleet"
+        "com.diegonmarcos.superapp.adbdebug.WirelessDebugging"
       ],
       "symbols": [
         "ctxAny()",
@@ -10030,7 +9933,7 @@
         "statFsBytes(path: String)",
         "readSwapBytes()",
         "kb(field: String)",
-        "newInstance()",
+        "newInstance(title: String = \"X-Ray\", macros: ArrayList<String>? = null)",
         "class DevControlFragment",
         "class limit",
         "class SshTerminal",
@@ -18719,9 +18622,6 @@
       ],
       "imports": [
         "android.app.Application",
-        "androidx.compose.ui.test.onNodeWithTag",
-        "androidx.compose.ui.test.onNodeWithText",
-        "androidx.compose.ui.test.performClick",
         "com.diegonmarcos.superapp.launcher.Sections",
         "com.diegonmarcos.superapp.ui.KitPageHarness",
         "org.json.JSONObject",
@@ -19882,6 +19782,23 @@
       "symbols": [
         "s(m: Int, level: Int, plugged: Int = 0, ma: Int? = null, mv: Int? = null, temp: Int? = null, screen: Boolean? = null)",
         "class BatteryHistoryTest"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/test/java/com/diegonmarcos/superapp/batterystats/BatteryLabelsTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "BatteryLabelsTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.battery.BatteryLabels",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertNull",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "class BatteryLabelsTest"
       ]
     },
     {
@@ -25565,7 +25482,8 @@
         "shot()",
         "open_page()",
         "cap()",
-        "has_all()"
+        "has_all()",
+        "xray_capture()"
       ],
       "imports": [],
       "symbols": [
@@ -25576,7 +25494,8 @@
         "shot()",
         "open_page()",
         "cap()",
-        "has_all()"
+        "has_all()",
+        "xray_capture()"
       ]
     },
     {
@@ -34933,6 +34852,7 @@
         "step(state: State, now: Snap)",
         "monthKey(ts: Long, zone: TimeZone = TimeZone.getDefault()",
         "months(cycles: List<Cycle>, zone: TimeZone = TimeZone.getDefault()",
+        "sumSince(cycles: List<Cycle>, from: Long)",
         "shares(apps: Map<Int, Double>)",
         "encode(apps: Map<Int, Double>?)",
         "decode(s: String?)",
@@ -35060,6 +34980,20 @@
       ]
     },
     {
+      "path": "ab_cloud-libs-shared/libs/battery/src/main/java/com/diegonmarcos/superapp/battery/BatteryLabels.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "BatteryLabels"
+      ],
+      "imports": [],
+      "symbols": [
+        "system(uid: Int)",
+        "display(uid: Int, label: String?, packages: List<String>)",
+        "class BatteryLabels"
+      ]
+    },
+    {
       "path": "ab_cloud-libs-shared/libs/battery/src/main/java/com/diegonmarcos/superapp/battery/BatteryMath.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -35145,6 +35079,7 @@
         "privileged(ctx: Context)",
         "privilegedChannel(ctx: Context)",
         "appLabel(ctx: Context, uid: Int)",
+        "usageTimes(ctx: Context, from: Long, to: Long = System.currentTimeMillis()",
         "snapshotCycle(ctx: Context, pluggedHint: Boolean? = null, now: Long = System.currentTimeMillis()",
         "cycles(ctx: Context)",
         "encodeSnap(s: BatteryCycles.Snap)",
@@ -35166,8 +35101,7 @@
         "openCycle()",
         "cycles()",
         "query(tail: String)",
-        "sessions(ctx: Context, write: (BatterySample)",
-        "counters(ctx: Context, put: (String, String)"
+        "sessions(ctx: Context, write: (BatterySample)"
       ]
     },
     {
@@ -75787,6 +75721,7 @@
         "PermsPromptAbove"
       ],
       "imports": [
+        "androidx.compose.foundation.layout.PaddingValues",
         "androidx.compose.foundation.layout.fillMaxSize",
         "androidx.compose.foundation.verticalScroll",
         "androidx.compose.foundation.rememberScrollState",
@@ -75825,8 +75760,7 @@
         "androidx.compose.runtime.mutableStateOf",
         "androidx.compose.runtime.remember",
         "androidx.compose.runtime.saveable.rememberSaveable",
-        "androidx.compose.runtime.setValue",
-        "androidx.compose.ui.Alignment"
+        "androidx.compose.runtime.setValue"
       ],
       "symbols": [
         "tone(t: PermChip.Tone)",
@@ -587142,6 +587076,28 @@
       ]
     },
     {
+      "path": "ad_Capital-Stack-FinTerminal/app/src/main/java/com/diegonmarcos/capitalfinterm/FxPpp.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "FxPpp"
+      ],
+      "imports": [
+        "org.json.JSONObject",
+        "java.time.LocalDate"
+      ],
+      "symbols": [
+        "pppToday(ppp0: Double, home0: Double, home1: Double, us0: Double, us1: Double)",
+        "realAdjust(rate: Double, home0: Double, home1: Double, us0: Double, us1: Double)",
+        "pct(a: Double, b: Double)",
+        "windowAvg(s: List<Pair<String, Double>>, end: LocalDate, days: Long)",
+        "atYear(s: List<Pair<String, Double>>, y: Int)",
+        "year(s: List<Pair<String, Double>>)",
+        "row(r: JSONObject, fx: List<Pair<String, Double>>, ppp: List<Pair<String, Double>>, cpi: List<Pair<String, Double>>, usCpi: List<Pair<String, Double>>, win: Long)",
+        "class FxPpp"
+      ]
+    },
+    {
       "path": "ad_Capital-Stack-FinTerminal/app/src/main/java/com/diegonmarcos/capitalfinterm/Holdings.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -587362,6 +587318,12 @@
       ],
       "symbols": [
         "load(panel: Panel, source: Source, f: JSONObject, http: Http, today: LocalDate, c: ModelCtx)",
+        "fxPpp(panel: Panel, f: JSONObject, http: Http, today: LocalDate, c: ModelCtx)",
+        "wbSeries(code: String)",
+        "fxPppTable(panel: Panel, rows: JSONArray, by: String)",
+        "d(o: JSONObject, k: String, digits: Int)",
+        "p(o: JSONObject, k: String)",
+        "dg(o: JSONObject)",
         "legSets(f: JSONObject)",
         "riskCompare(panel: Panel, f: JSONObject, sets: List<List<Pair<String, Int>>>, got: Map<String, ItemGot>)",
         "spreads(m: PanelData, f: JSONObject)",
@@ -587394,13 +587356,7 @@
         "parseOne(body: String, each: List<String>, by: String)",
         "matrixOne(f: JSONObject, http: Http, c: ModelCtx)",
         "reasons(why: Map<String, Map<String, String>>, ts: List<String>)",
-        "matrix(panel: Panel, f: JSONObject, got: Map<String, ItemGot>, one: One? = null)",
-        "vals(members: List<String>, i: Int)",
-        "avg(members: List<String>)",
-        "cov(members: List<String>)",
-        "fmtRow(label: String, covCell: String, v: List<Double?>)",
-        "fmtYears(y: Double)",
-        "strings(a: JSONArray?)"
+        "matrix(panel: Panel, f: JSONObject, got: Map<String, ItemGot>, one: One? = null)"
       ]
     },
     {
@@ -588107,14 +588063,14 @@
         "androidx.compose.ui.Modifier",
         "androidx.compose.ui.graphics.Brush",
         "androidx.compose.ui.graphics.Color",
+        "androidx.compose.ui.graphics.lerp",
         "androidx.compose.ui.platform.testTag",
         "androidx.compose.ui.text.style.TextAlign",
         "androidx.compose.ui.text.style.TextOverflow",
         "androidx.compose.ui.unit.Dp",
         "androidx.compose.ui.unit.dp",
         "androidx.compose.ui.unit.sp",
-        "com.diegonmarcos.capitalfinterm.FinFormat",
-        "com.diegonmarcos.capitalfinterm.FinLogic"
+        "com.diegonmarcos.capitalfinterm.FinFormat"
       ],
       "symbols": [
         "FinTable( panelId: String, columns: List<String>, rows: List<List<String>>, links: List<String>, declared: List<String>, width: Dp, limit: Int = 8, details: List<String> = emptyList()",
@@ -588717,6 +588673,7 @@
         "calendarChipsKeepAllTodayOrThisMondayToSundayWeek()",
         "creditAndMacroMovesAreColouredByWhatIsBetter()",
         "nextDecisionTilesTakeTheFirstUpcomingDecisionPerCountry()",
+        "aDeclaredHeatColumnIsTintedAgainstItsLargestValue()",
         "class FinFormatTest"
       ]
     },
@@ -589065,6 +589022,7 @@
         "theEmUsdPanelIsRoutedToTheContainerAndSaysMeshOffWithoutIt()",
         "theDeclaredMatrixIsTheOwnersCountryList()",
         "worldBondsSpreadsAreThe10yOverThe2yTheBundAndTheUstInBp()",
+        "pppIsCarriedByRelativeInflationAndTheYearAgoWindowIsRealAdjusted()",
         "class TablesTest",
         "class Fake"
       ]
