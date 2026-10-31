@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 22936,
+    "files": 22940,
     "by_lang": {
-      "sh": 630,
+      "sh": 631,
       "js": 526,
       "py": 184,
-      "kotlin": 12332,
+      "kotlin": 12335,
       "java": 649,
       "nix": 35,
       "rust": 111,
@@ -20,10 +20,10 @@
     "by_role": {
       "hook": 158,
       "file": 2303,
-      "shell": 502,
+      "shell": 503,
       "script": 276,
       "java": 648,
-      "kotlin": 12329,
+      "kotlin": 12332,
       "python": 59,
       "module": 6459,
       "flake": 31,
@@ -10008,7 +10008,6 @@
         "com.diegonmarcos.superapp.apps.PhoneFolders",
         "com.diegonmarcos.superapp.apps.PhoneAppClassifier",
         "com.diegonmarcos.superapp.battery.SysfsProc",
-        "com.diegonmarcos.superapp.battery.ShizukuEnergy",
         "com.diegonmarcos.superapp.battery.PowerStateReceiver",
         "com.diegonmarcos.superapp.battery.EnergyWatchdog",
         "com.diegonmarcos.superapp.battery.EnergyLedger",
@@ -10039,7 +10038,7 @@
         "canonicalOp(path: String)",
         "endpointDocsJson(port: Int)",
         "energySelfJson()",
-        "energyShizukuJson(ctx: Context)",
+        "energyExactJson(ctx: Context)",
         "energyAttributionJson(ctx: Context)",
         "energySamplesJson(ctx: Context)",
         "mapToJson(v: Any?)",
@@ -12362,6 +12361,53 @@
         "prefs(ctx: Context)",
         "read(sp: SharedPreferences)",
         "class RecentCloudTiles"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/launcher/ResourcesBatteryUsage.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [],
+      "imports": [
+        "androidx.compose.foundation.background",
+        "androidx.compose.foundation.layout.Box",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.fillMaxHeight",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.foundation.layout.height",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.foundation.layout.width",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableIntStateOf",
+        "androidx.compose.runtime.produceState",
+        "androidx.compose.runtime.saveable.rememberSaveable",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.platform.LocalContext",
+        "androidx.compose.ui.platform.testTag",
+        "androidx.compose.ui.unit.dp",
+        "com.diegonmarcos.superapp.adbdebug.AdbShellLink",
+        "com.diegonmarcos.superapp.battery.BatteryCycles",
+        "com.diegonmarcos.superapp.battery.BatteryRepository",
+        "com.diegonmarcos.superapp.uikit.KitListRow",
+        "com.diegonmarcos.superapp.uikit.KitSegmented",
+        "com.diegonmarcos.superapp.uikit.KitState",
+        "com.diegonmarcos.superapp.uikit.LocalKitPalette",
+        "java.text.SimpleDateFormat",
+        "java.util.Date",
+        "java.util.Locale",
+        "kotlinx.coroutines.Dispatchers",
+        "kotlinx.coroutines.withContext"
+      ],
+      "symbols": [
+        "BatteryUsageBody()",
+        "cyclePeriod(c: BatteryCycles.Cycle)",
+        "monthPeriod(m: BatteryCycles.Month)",
+        "ShareBar(share: Double)",
+        "class Usage",
+        "class Period"
       ]
     },
     {
@@ -19740,6 +19786,28 @@
       ]
     },
     {
+      "path": "aa_cloud-superapp/app/src/test/java/com/diegonmarcos/superapp/batterystats/BatteryCyclesTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "BatteryCyclesTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.battery.BatteryCycles",
+        "com.diegonmarcos.superapp.battery.BatteryCycles.Edge",
+        "com.diegonmarcos.superapp.battery.BatteryCycles.Snap",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.util.TimeZone"
+      ],
+      "symbols": [
+        "snap(ts: Long, pct: Int, plugged: Boolean, vararg apps: Pair<Int, Double>)",
+        "class BatteryCyclesTest"
+      ]
+    },
+    {
       "path": "aa_cloud-superapp/app/src/test/java/com/diegonmarcos/superapp/batterystats/BatteryHistoryTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -25428,6 +25496,28 @@
       ],
       "symbols": [
         "main(manifest_path, root)"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/test/emulator-battery-usage.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "dump()",
+        "centre()",
+        "find_text()",
+        "tap_text()",
+        "shot()",
+        "open_page()"
+      ],
+      "imports": [],
+      "symbols": [
+        "dump()",
+        "centre()",
+        "find_text()",
+        "tap_text()",
+        "shot()",
+        "open_page()"
       ]
     },
     {
@@ -34712,6 +34802,37 @@
       ]
     },
     {
+      "path": "ab_cloud-libs-shared/libs/battery/src/main/java/com/diegonmarcos/superapp/battery/BatteryCycles.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "BatteryCycles"
+      ],
+      "imports": [
+        "java.util.Calendar",
+        "java.util.Locale",
+        "java.util.TimeZone"
+      ],
+      "symbols": [
+        "edge(prev: Snap?, now: Snap, open: Boolean)",
+        "delta(prev: Map<Int, Double>?, cur: Map<Int, Double>?)",
+        "add(a: Map<Int, Double>, b: Map<Int, Double>)",
+        "step(state: State, now: Snap)",
+        "monthKey(ts: Long, zone: TimeZone = TimeZone.getDefault()",
+        "months(cycles: List<Cycle>, zone: TimeZone = TimeZone.getDefault()",
+        "shares(apps: Map<Int, Double>)",
+        "encode(apps: Map<Int, Double>?)",
+        "decode(s: String?)",
+        "class BatteryCycles",
+        "class Snap",
+        "class Cycle",
+        "class State",
+        "class Edge",
+        "class Month",
+        "class Share"
+      ]
+    },
+    {
       "path": "ab_cloud-libs-shared/libs/battery/src/main/java/com/diegonmarcos/superapp/battery/BatteryEstimatePopup.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -34889,7 +35010,9 @@
         "android.os.BatteryManager",
         "android.os.Build",
         "android.os.PowerManager",
-        "com.diegonmarcos.superapp.adbdebug.ShellChannels"
+        "com.diegonmarcos.superapp.adbdebug.ShellChannel",
+        "com.diegonmarcos.superapp.adbdebug.ShellChannels",
+        "com.diegonmarcos.superapp.adbdebug.ShizukuShellChannel"
       ],
       "symbols": [
         "probe(ctx: Context, sticky: Intent? = null, now: Long = System.currentTimeMillis()",
@@ -34905,8 +35028,14 @@
         "longProp(k: String, id: Int)",
         "ex(k: String, key: String)",
         "samples(ctx: Context, fromTs: Long = 0L)",
+        "channel(ctx: Context)",
         "privileged(ctx: Context)",
         "privilegedChannel(ctx: Context)",
+        "appLabel(ctx: Context, uid: Int)",
+        "snapshotCycle(ctx: Context, pluggedHint: Boolean? = null, now: Long = System.currentTimeMillis()",
+        "cycles(ctx: Context)",
+        "encodeSnap(s: BatteryCycles.Snap)",
+        "decodeSnap(v: String)",
         "db(ctx: Context)",
         "load(ctx: Context)",
         "onCreate(db: SQLiteDatabase)",
@@ -34919,11 +35048,13 @@
         "intOrNull(i: Int)",
         "meta(k: String)",
         "putMeta(k: String, v: String)",
+        "putCycle(c: BatteryCycles.Cycle)",
+        "pruneCycles(before: Long)",
+        "openCycle()",
+        "cycles()",
+        "query(tail: String)",
         "sessions(ctx: Context, write: (BatterySample)",
-        "counters(ctx: Context, put: (String, String)",
-        "class BatteryRepository",
-        "class Db",
-        "class LegacyImport"
+        "counters(ctx: Context, put: (String, String)"
       ]
     },
     {
@@ -35117,7 +35248,6 @@
         "androidx.compose.foundation.verticalScroll",
         "androidx.compose.material3.Text",
         "androidx.compose.runtime.Composable",
-        "androidx.compose.runtime.LaunchedEffect",
         "androidx.compose.runtime.getValue",
         "androidx.compose.runtime.mutableIntStateOf",
         "androidx.compose.runtime.mutableStateOf",
@@ -35134,7 +35264,8 @@
         "androidx.compose.ui.text.font.FontFamily",
         "androidx.compose.ui.text.font.FontWeight",
         "androidx.compose.ui.text.style.TextAlign",
-        "androidx.compose.ui.text.style.TextOverflow"
+        "androidx.compose.ui.text.style.TextOverflow",
+        "androidx.compose.ui.unit.dp"
       ],
       "symbols": [
         "onCreateDialog(savedInstanceState: Bundle?)",
@@ -35203,41 +35334,6 @@
       "symbols": [
         "onReceive(ctx: Context, intent: Intent)",
         "class PowerStateReceiver"
-      ]
-    },
-    {
-      "path": "ab_cloud-libs-shared/libs/battery/src/main/java/com/diegonmarcos/superapp/battery/ShizukuEnergy.kt",
-      "lang": "kotlin",
-      "role": "kotlin",
-      "exports": [
-        "ShizukuEnergy"
-      ],
-      "imports": [
-        "com.diegonmarcos.superapp.IUserService",
-        "com.diegonmarcos.superapp.system.ShizukuUserService",
-        "android.content.ComponentName",
-        "android.content.Context",
-        "android.content.ServiceConnection",
-        "android.content.pm.PackageManager",
-        "android.os.IBinder",
-        "rikka.shizuku.Shizuku"
-      ],
-      "symbols": [
-        "componentName(ctx: Context)",
-        "onServiceConnected(name: ComponentName?, binder: IBinder?)",
-        "onServiceDisconnected(name: ComponentName?)",
-        "userServiceArgs(ctx: Context)",
-        "isAvailable()",
-        "isGranted()",
-        "requestPermission()",
-        "status()",
-        "bind(ctx: Context)",
-        "unbind(ctx: Context)",
-        "exec(cmd: String)",
-        "exact(ctx: Context)",
-        "parseEstimatedPower(ctx: Context, dump: String)",
-        "class ShizukuEnergy",
-        "class AppEnergy"
       ]
     },
     {
@@ -74930,14 +75026,11 @@
         "androidx.compose.foundation.layout.padding",
         "androidx.compose.foundation.rememberScrollState",
         "androidx.compose.foundation.verticalScroll",
-        "androidx.compose.material3.ExperimentalMaterial3Api",
         "androidx.compose.material3.MaterialTheme",
-        "androidx.compose.material3.ModalBottomSheet",
         "androidx.compose.material3.Scaffold",
         "androidx.compose.material3.Text",
         "androidx.compose.material3.darkColorScheme",
         "androidx.compose.material3.lightColorScheme",
-        "androidx.compose.material3.rememberModalBottomSheetState",
         "androidx.compose.runtime.Composable",
         "androidx.compose.runtime.LaunchedEffect",
         "androidx.compose.runtime.getValue",
@@ -74956,7 +75049,7 @@
         "onCreate(savedInstanceState: Bundle?)",
         "onResume()",
         "Page(feature: String, ids: Set<String>, tick: Int)",
-        "Sheet(ids: Set<String>, tick: Int)",
+        "Gate(ids: Set<String>, tick: Int)",
         "request(entries: List<PermEntry>)",
         "intent(ctx: Context, feature: String, ids: Collection<String>)",
         "rows(entries: List<PermEntry>, wanted: Set<String>, status: (PermEntry)",
@@ -75097,6 +75190,12 @@
         "PermsPromptAbove"
       ],
       "imports": [
+        "androidx.compose.foundation.layout.fillMaxSize",
+        "androidx.compose.foundation.verticalScroll",
+        "androidx.compose.foundation.rememberScrollState",
+        "androidx.compose.material3.OutlinedButton",
+        "androidx.compose.material3.BottomAppBar",
+        "androidx.compose.material3.Scaffold",
         "android.content.Context",
         "androidx.compose.foundation.background",
         "androidx.compose.foundation.border",
@@ -75130,13 +75229,7 @@
         "androidx.compose.runtime.remember",
         "androidx.compose.runtime.saveable.rememberSaveable",
         "androidx.compose.runtime.setValue",
-        "androidx.compose.ui.Alignment",
-        "androidx.compose.ui.Modifier",
-        "androidx.compose.ui.draw.clip",
-        "androidx.compose.ui.graphics.Color",
-        "androidx.compose.ui.graphics.SolidColor",
-        "androidx.compose.ui.graphics.isSpecified",
-        "androidx.compose.ui.graphics.luminance"
+        "androidx.compose.ui.Alignment"
       ],
       "symbols": [
         "tone(t: PermChip.Tone)",
@@ -75159,7 +75252,7 @@
         "Pill(word: String, c: Color, modifier: Modifier = Modifier)",
         "PermsPromptCard( text: String, onGrant: ()",
         "PermsPromptAbove(prompt: @Composable ()",
-        "FirstRunSheetBody(appName: String, items: List<PermItem>, onGrantAll: ()",
+        "FirstRunGate( appName: String, items: List<PermItem>, onAction: (PermItem)",
         "class PermsStyle",
         "class PermsPalette",
         "class PermsType",
@@ -75219,6 +75312,7 @@
         "of(kind: PermItemKind)",
         "healthLine(health: List<PermItem>)",
         "typesToggle(n: Int, open: Boolean)",
+        "gateShows(items: List<PermItem>)",
         "missing(items: List<PermItem>)",
         "promptText(missing: List<String>)",
         "item(e: PermEntry, s: PermStatus, highlight: Boolean = false)",
@@ -75234,6 +75328,23 @@
         "class PermsView",
         "class Progress",
         "class Group"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/perms/src/test/java/com/diegonmarcos/superapp/perms/PermsGateLayoutTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "PermsGateLayoutTest"
+      ],
+      "imports": [
+        "java.io.File",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "FirstRunGate(\")",
+        "class PermsGateLayoutTest"
       ]
     },
     {
@@ -79616,6 +79727,7 @@
         "android.os.PowerManager",
         "android.provider.Settings",
         "androidx.compose.foundation.Image",
+        "androidx.compose.foundation.ScrollState",
         "androidx.compose.foundation.background",
         "androidx.compose.foundation.border",
         "androidx.compose.foundation.clickable",
@@ -79641,8 +79753,7 @@
         "androidx.compose.material.icons.Icons",
         "androidx.compose.material.icons.automirrored.filled.ArrowBack",
         "androidx.compose.material.icons.filled.Apps",
-        "androidx.compose.material.icons.filled.BatteryChargingFull",
-        "androidx.compose.material.icons.filled.BugReport"
+        "androidx.compose.material.icons.filled.BatteryChargingFull"
       ],
       "symbols": [
         "anchor(id: String)",
@@ -79652,7 +79763,7 @@
         "fleetConfigsEntryLabel(p: FleetConfigsPage)",
         "sectionIcon(id: String)",
         "FleetConfigsScreen( page: FleetConfigsPage, dark: Boolean, onDismiss: ()",
-        "FleetGeneralPage(decl: FleetConfigsDecl, dark: Boolean, c: ThemeColors, onAppConfigs: ()",
+        "FleetGeneralPage( decl: FleetConfigsDecl, dark: Boolean, c: ThemeColors, onAppConfigs: ()",
         "AnchorGrid(sections: List<GeneralSection>, c: ThemeColors, onAnchor: (String)",
         "PermsSection(c: ThemeColors, tick: Int)",
         "BatterySection(c: ThemeColors, tick: Int)",
@@ -181587,6 +181698,7 @@
         "com.diegonmarcos.clouddrive.DrivePrefs",
         "com.diegonmarcos.clouddrive.R",
         "com.diegonmarcos.clouddrive.ui.DriveMetrics",
+        "com.diegonmarcos.clouddrive.ui.scrollFadeEnd",
         "com.diegonmarcos.clouddrive.ui.DriveTags",
         "com.diegonmarcos.clouddrive.ui.IconCatalog",
         "com.diegonmarcos.clouddrive.ui.Pill",
@@ -182284,7 +182396,8 @@
         "EmptyState",
         "ErrorState",
         "LoadingState",
-        "Hairline"
+        "Hairline",
+        "scrollFadeEnd"
       ],
       "imports": [
         "androidx.compose.foundation.background",
@@ -182318,15 +182431,15 @@
         "androidx.compose.runtime.Composable",
         "androidx.compose.ui.Alignment",
         "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.draw.drawWithContent",
+        "androidx.compose.ui.graphics.graphicsLayer",
         "androidx.compose.ui.draw.clip",
         "androidx.compose.ui.graphics.Color",
         "androidx.compose.ui.graphics.vector.ImageVector",
         "androidx.compose.ui.platform.testTag",
         "androidx.compose.ui.res.colorResource",
         "androidx.compose.ui.res.stringResource",
-        "androidx.compose.ui.text.font.FontFamily",
-        "androidx.compose.ui.text.font.FontWeight",
-        "androidx.compose.ui.text.style.TextOverflow"
+        "androidx.compose.ui.text.font.FontFamily"
       ],
       "symbols": [
         "tab(id: String)",
@@ -182358,6 +182471,7 @@
         "ErrorState(message: String, modifier: Modifier = Modifier, onRetry: (()",
         "LoadingState(modifier: Modifier = Modifier)",
         "Hairline(modifier: Modifier = Modifier)",
+        "scrollFadeEnd(show: Boolean)",
         "class DriveMetrics",
         "class DriveTags"
       ]
@@ -186599,7 +186713,8 @@
         "t3()",
         "t4()",
         "t5()",
-        "t6()"
+        "t6()",
+        "t7()"
       ],
       "imports": [],
       "symbols": [
@@ -186611,7 +186726,8 @@
         "t3()",
         "t4()",
         "t5()",
-        "t6()"
+        "t6()",
+        "t7()"
       ]
     },
     {
@@ -365308,13 +365424,14 @@
         "androidx.compose.foundation.layout.fillMaxWidth",
         "androidx.compose.foundation.layout.padding",
         "androidx.compose.foundation.layout.size",
-        "androidx.compose.foundation.rememberScrollState",
+        "androidx.compose.foundation.ScrollState",
         "androidx.compose.foundation.shape.CircleShape",
         "androidx.compose.foundation.shape.RoundedCornerShape",
         "androidx.compose.foundation.verticalScroll",
         "androidx.compose.material3.LinearProgressIndicator",
         "androidx.compose.material3.Text",
         "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.remember",
         "androidx.compose.runtime.getValue",
         "androidx.compose.runtime.produceState",
         "androidx.compose.runtime.setValue",
@@ -365330,8 +365447,7 @@
         "androidx.compose.ui.platform.LocalContext",
         "androidx.compose.ui.res.colorResource",
         "androidx.compose.ui.res.painterResource",
-        "androidx.compose.ui.text.font.FontStyle",
-        "androidx.compose.ui.text.font.FontWeight"
+        "androidx.compose.ui.text.font.FontStyle"
       ],
       "symbols": [
         "StackScreen(stack: JSONArray, modifier: Modifier = Modifier)",
@@ -432555,6 +432671,8 @@
         "MainActivity"
       ],
       "imports": [
+        "androidx.compose.ui.graphics.toArgb",
+        "app.cloudnotes.pro.theme.ObsidianTokens",
         "com.diegonmarcos.cloudlib.web.CloudWeb",
         "com.diegonmarcos.cloudlib.web.WebProfile",
         "android.content.ComponentCallbacks2",
@@ -432589,7 +432707,6 @@
         "com.google.android.material.floatingactionbutton.FloatingActionButton",
         "androidx.coordinatorlayout.widget.CoordinatorLayout",
         "androidx.core.view.updateMargins",
-        "androidx.core.content.ContextCompat",
         "dagger.hilt.android.AndroidEntryPoint",
         "timber.log.Timber"
       ],
