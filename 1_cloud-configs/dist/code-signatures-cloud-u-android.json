@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 22940,
+    "files": 22959,
     "by_lang": {
-      "sh": 631,
+      "sh": 632,
       "js": 526,
-      "py": 184,
-      "kotlin": 12335,
+      "py": 186,
+      "kotlin": 12351,
       "java": 649,
       "nix": 35,
       "rust": 111,
@@ -21,9 +21,9 @@
       "hook": 158,
       "file": 2303,
       "shell": 503,
-      "script": 276,
+      "script": 279,
       "java": 648,
-      "kotlin": 12332,
+      "kotlin": 12348,
       "python": 59,
       "module": 6459,
       "flake": 31,
@@ -724,6 +724,26 @@
         "coupled(root, modules)",
         "declarations(root, modules)",
         "check(root)",
+        "main(argv)"
+      ]
+    },
+    {
+      "path": ".github/workflows/scripts/cloud-android-fgs-timeout-guard.py",
+      "lang": "py",
+      "role": "script",
+      "exports": [
+        "strip_comments(src)",
+        "vers(v)",
+        "walk(root)",
+        "main(argv)"
+      ],
+      "imports": [
+        "json"
+      ],
+      "symbols": [
+        "strip_comments(src)",
+        "vers(v)",
+        "walk(root)",
         "main(argv)"
       ]
     },
@@ -3407,6 +3427,26 @@
       ]
     },
     {
+      "path": "1_cicd/src/scripts/cloud-android-fgs-timeout-guard.py",
+      "lang": "py",
+      "role": "script",
+      "exports": [
+        "strip_comments(src)",
+        "vers(v)",
+        "walk(root)",
+        "main(argv)"
+      ],
+      "imports": [
+        "json"
+      ],
+      "symbols": [
+        "strip_comments(src)",
+        "vers(v)",
+        "walk(root)",
+        "main(argv)"
+      ]
+    },
+    {
       "path": "1_cicd/src/scripts/cloud-android-firestack-pin-health.sh",
       "lang": "sh",
       "role": "script",
@@ -5798,6 +5838,20 @@
         "js()",
         "landed()",
         "red()"
+      ]
+    },
+    {
+      "path": "1_cicd/src/scripts/test/fgs-timeout-guard.test.sh",
+      "lang": "sh",
+      "role": "script",
+      "exports": [
+        "mk()",
+        "expect()"
+      ],
+      "imports": [],
+      "symbols": [
+        "mk()",
+        "expect()"
       ]
     },
     {
@@ -32116,7 +32170,10 @@
         "androidx.work.WorkManager",
         "androidx.work.WorkerParameters",
         "com.diegonmarcos.superapp.core.FleetAlerts",
+        "com.diegonmarcos.superapp.core.DataSyncBudget",
         "com.diegonmarcos.superapp.core.StoreNotifyGate",
+        "com.diegonmarcos.superapp.updater.holdDataSync",
+        "com.diegonmarcos.superapp.updater.stopCooperatively",
         "androidx.work.ForegroundInfo",
         "com.diegonmarcos.superapp.updater.Advisory",
         "com.diegonmarcos.superapp.updater.BatchForeground",
@@ -32132,6 +32189,7 @@
       "symbols": [
         "getForegroundInfo()",
         "doWork()",
+        "work()",
         "constraints()",
         "cancelAll(context: Context)",
         "triggerData(trigger: String)",
@@ -33155,6 +33213,7 @@
         "FleetPage(ctx: Context, list: List<Fleet.App>, blurb: String, hasLibSections: Boolean)",
         "inFilter(app: Fleet.App)",
         "FleetList(ctx: Context, list: List<Fleet.App>, libSplit: Boolean)",
+        "tallyItems(c: Context, snap: Map<String, Fleet.State>)",
         "summaryOf(list: List<Fleet.App>)",
         "rowUi(ctx: Context, app: Fleet.App, s: Fleet.State?, stg: StoreStages.Stage?, isChecking: Boolean)",
         "identity(fields: Set<FleetIdentity.Field>)",
@@ -33180,8 +33239,7 @@
         "runStage(ctx: Context, app: Fleet.App, verb: String)",
         "rowAction(ctx: Context, app: Fleet.App, a: FleetActions.Action, stg: StoreStages.Stage?)",
         "verb(onClick: ()",
-        "stageVerb(ctx: Context, app: Fleet.App, a: FleetActions.Action, verb: String, stg: StoreStages.Stage?, tag: String)",
-        "stop(ctx: Context, app: Fleet.App)"
+        "stageVerb(ctx: Context, app: Fleet.App, a: FleetActions.Action, verb: String, stg: StoreStages.Stage?, tag: String)"
       ]
     },
     {
@@ -33574,6 +33632,7 @@
         "importFrom(uri: Uri)",
         "importText(text: String)",
         "rows(ctx: Context)",
+        "tallyItems(c: Context, list: List<AppRow>, st: Map<String, SourceResolver.Check>)",
         "measureSizes()",
         "grantUsageAccess(ctx: Context)",
         "checkAll()",
@@ -33587,8 +33646,7 @@
         "toastLater(ctx: Context, msg: String)",
         "class StorePhoneFragment",
         "class AppRow",
-        "class Loaded",
-        "class PhoneHead"
+        "class Loaded"
       ]
     },
     {
@@ -33643,6 +33701,7 @@
         "androidx.compose.material3.Text",
         "androidx.compose.runtime.Composable",
         "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableIntStateOf",
         "androidx.compose.runtime.mutableStateOf",
         "androidx.compose.runtime.remember",
         "androidx.compose.runtime.setValue",
@@ -34008,6 +34067,55 @@
         "class Folder",
         "class Hit",
         "class Result"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/appstore/src/main/java/com/diegonmarcos/superapp/appstore/StoreTally.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "StoreTally"
+      ],
+      "imports": [
+        "android.content.Context",
+        "androidx.compose.foundation.background",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.foundation.shape.RoundedCornerShape",
+        "androidx.compose.material3.Text",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.LaunchedEffect",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.remember",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.draw.clip",
+        "androidx.compose.ui.platform.testTag",
+        "androidx.compose.ui.text.style.TextOverflow",
+        "androidx.compose.ui.unit.dp",
+        "androidx.compose.ui.unit.sp",
+        "androidx.core.content.pm.PackageInfoCompat",
+        "com.diegonmarcos.superapp.updater.cache.ApkCache",
+        "java.io.File",
+        "kotlinx.coroutines.Dispatchers",
+        "kotlinx.coroutines.delay",
+        "kotlinx.coroutines.withContext"
+      ],
+      "symbols": [
+        "installedLine()",
+        "updatesLine()",
+        "aggregate(items: List<Item>)",
+        "apkBytes(ctx: Context, pkg: String)",
+        "installedCode(ctx: Context, pkg: String)",
+        "cache(ctx: Context)",
+        "cachedUpdate(cache: Map<String, Pair<Long, Long>>, pkg: String, installedCode: Long?)",
+        "Area(key: Any?, compute: (Context)",
+        "Line(text: String, tag: String)",
+        "class StoreTally",
+        "class Item",
+        "class Tally"
       ]
     },
     {
@@ -43232,6 +43340,30 @@
         "putPlainResultReceiver(intent: Intent, key: String, receiver: ResultReceiver)",
         "class name",
         "class CrossProcess"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/core/src/main/java/com/diegonmarcos/superapp/core/DataSyncBudget.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "DataSyncBudget"
+      ],
+      "imports": [
+        "android.content.Context"
+      ],
+      "symbols": [
+        "mayHold(ctx: Context, userInitiated: Boolean)",
+        "begin(ctx: Context)",
+        "end(ctx: Context, token: Long)",
+        "usedMs(ctx: Context, now: Long = System.currentTimeMillis()",
+        "used(spans: List<Span>, now: Long)",
+        "prefs(ctx: Context)",
+        "read(ctx: Context)",
+        "write(ctx: Context, spans: List<Span>)",
+        "class enforces",
+        "class DataSyncBudget",
+        "class Span"
       ]
     },
     {
@@ -56756,6 +56888,7 @@
         "summarise(context: Context, style: Style, text: String, route: Route = route(context)",
         "enforceBullets(reply: String)",
         "compose(style: Style, extra: List<String>)",
+        "answerStyle(context: Context)",
         "enhanceStyle(context: Context, base: Style = style(context)",
         "pick(context: Context, set: List<Style>, key: String, fallback: String)",
         "complete(context: Context, system: String, user: String)",
@@ -56768,6 +56901,52 @@
         "class of",
         "class Route",
         "class NoTokenException"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/keyboard/src/main/java/helium314/keyboard/latin/AiTaskRouting.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "AiTask",
+        "AiEngine",
+        "EngineResolution",
+        "AiTaskModels",
+        "AiTaskRouting",
+        "asStore"
+      ],
+      "imports": [
+        "android.content.Context",
+        "android.content.SharedPreferences",
+        "android.net.ConnectivityManager",
+        "android.net.NetworkCapabilities",
+        "androidx.core.content.edit",
+        "helium314.keyboard.latin.utils.prefs"
+      ],
+      "symbols": [
+        "fromId(id: String?)",
+        "key(task: AiTask)",
+        "get(store: KeyValueStore, task: AiTask)",
+        "set(store: KeyValueStore, task: AiTask, modelId: String?)",
+        "chosen(store: KeyValueStore, task: AiTask)",
+        "choose(store: KeyValueStore, task: AiTask, engine: AiEngine)",
+        "resolve(chosen: AiEngine, mlAvailable: Boolean, online: Boolean, hasKey: Boolean)",
+        "grammarEngine(stored: String, active: AiEngine?)",
+        "hasKey(context: Context)",
+        "isOnline(context: Context)",
+        "mlAvailable(task: AiTask)",
+        "resolution(context: Context, task: AiTask)",
+        "route(context: Context, task: AiTask)",
+        "modelInUse(context: Context, task: AiTask)",
+        "asStore()",
+        "get(key: String)",
+        "put(key: String, value: String?)",
+        "class AiTask",
+        "class AiEngine",
+        "class EngineResolution",
+        "class Reason",
+        "class AiTaskModels",
+        "class AiTaskRouting"
       ]
     },
     {
@@ -58076,12 +58255,20 @@
         "android.content.IntentFilter",
         "android.content.pm.ApplicationInfo",
         "android.util.Log",
+        "android.view.inputmethod.ExtractedTextRequest",
         "androidx.core.content.ContextCompat",
         "com.diegonmarcos.superapp.autofill.AutocompleteContract",
         "helium314.keyboard.keyboard.KeyboardSwitcher",
         "helium314.keyboard.keyboard.emoji.EmojiSearchUi",
         "helium314.keyboard.keyboard.internal.keyboard_parser.floris.KeyCode",
+        "helium314.keyboard.latin.AiEngine",
+        "helium314.keyboard.latin.AiTask",
+        "helium314.keyboard.latin.AiTaskModels",
+        "helium314.keyboard.latin.AiTaskRouting",
+        "helium314.keyboard.latin.GrammarHighlights",
+        "helium314.keyboard.latin.GrammarPopup",
         "helium314.keyboard.latin.LatinIME",
+        "helium314.keyboard.latin.asStore",
         "helium314.keyboard.latin.autocomplete.AutocompletePage",
         "helium314.keyboard.latin.autocomplete.AutocompleteStore",
         "helium314.keyboard.latin.common.Constants",
@@ -58092,6 +58279,7 @@
         "onReceive(context: Context, intent: Intent)",
         "press(code: Int)",
         "run(cmd: String, arg: String)",
+        "fieldText()",
         "code(name: String)",
         "registerIfDebuggable(ime: LatinIME)",
         "class KeyboardDebugReceiver"
@@ -58799,6 +58987,30 @@
       ]
     },
     {
+      "path": "ab_cloud-libs-shared/libs/keyboard/src/main/java/helium314/keyboard/latin/DraftAnswer.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "DraftAnswer",
+        "AnswerInput",
+        "AiPrompt"
+      ],
+      "imports": [],
+      "symbols": [
+        "defaultInput(clips: List<Clip>)",
+        "pickList(clips: List<Clip>, max: Int = 20)",
+        "systemPrompt(preamble: String, extras: List<String>)",
+        "model(store: KeyValueStore, fallback: String)",
+        "reset(clips: List<DraftAnswer.Clip>)",
+        "set(text: String)",
+        "join(preamble: String, task: String, extras: List<String>)",
+        "class DraftAnswer",
+        "class Clip",
+        "class AnswerInput",
+        "class AiPrompt"
+      ]
+    },
+    {
       "path": "ab_cloud-libs-shared/libs/keyboard/src/main/java/helium314/keyboard/latin/EmojiAltPhysicalKeyDetector.java",
       "lang": "java",
       "role": "java",
@@ -58884,16 +59096,21 @@
       ],
       "symbols": [
         "get()",
+        "clips()",
         "current()",
         "set(id: String)",
         "label()",
         "palette()",
         "Body()",
+        "AnswerInputRows(p: KitPalette, hint: Color)",
         "Chip(label: String, bg: Color, fg: Color, onClick: ()",
         "OptionPanel(p: KitPalette, option: Option)",
         "MenuPanel(p: KitPalette, items: List<MenuItem>)",
         "bind(connectionProvider: ConnectionProvider, onCloseAction: Runnable)",
+        "setClipSource(source: ClipSource)",
+        "isAnswerMode()",
         "onShown()",
+        "onShown(answer: Boolean)",
         "onFieldChanged()",
         "consumesKeys()",
         "focusField()",
@@ -58917,12 +59134,7 @@
         "cutSelection()",
         "attachOutputTouch()",
         "showEditMenu()",
-        "renderOutput()",
-        "applyOutputView()",
-        "showStatus(msg: String)",
-        "str(id: Int)",
-        "toast(msg: String)",
-        "dp(v: Int)"
+        "renderOutput()"
       ]
     },
     {
@@ -59005,7 +59217,7 @@
         "applySentenceCaps(text: String)",
         "applyLocalRules(context: Context, text: String)",
         "post(urlStr: String, body: String)",
-        "callRemote(context: Context, text: String, language: String, highlightOnly: Boolean = false)",
+        "callRemote(context: Context, text: String, language: String, highlightOnly: Boolean = false, marks: MutableList<GrammarIssue>? = null)",
         "checkAndFix(context: Context, connection: RichInputConnection)",
         "checkWholeField(context: Context, connection: RichInputConnection)",
         "checkWholeFieldLocal(context: Context, connection: RichInputConnection)",
@@ -59013,6 +59225,62 @@
         "replace(context: Context, connection: RichInputConnection, before: String, start: Int, end: Int, replacement: String, tail: String, highlightOnly: Boolean = false)",
         "class GrammarChecker",
         "class Match"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/keyboard/src/main/java/helium314/keyboard/latin/GrammarHighlights.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "GrammarIssue",
+        "GrammarHighlights"
+      ],
+      "imports": [],
+      "symbols": [
+        "isIgnored(original: String, suggestion: String)",
+        "record(found: List<GrammarIssue>)",
+        "at(cursor: Int)",
+        "ignore(issue: GrammarIssue)",
+        "replaced(issue: GrammarIssue)",
+        "drop(issue: GrammarIssue)",
+        "newSession()",
+        "class GrammarIssue",
+        "class GrammarHighlights"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/keyboard/src/main/java/helium314/keyboard/latin/GrammarPopup.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "GrammarPopup"
+      ],
+      "imports": [
+        "android.graphics.drawable.GradientDrawable",
+        "android.util.TypedValue",
+        "android.view.Gravity",
+        "android.view.View",
+        "android.view.ViewGroup",
+        "android.widget.Button",
+        "android.widget.LinearLayout",
+        "android.widget.PopupWindow",
+        "android.widget.TextView",
+        "androidx.compose.ui.graphics.toArgb",
+        "helium314.keyboard.keyboard.KeyboardSwitcher",
+        "helium314.keyboard.latin.settings.GrammarMode",
+        "helium314.keyboard.latin.settings.Settings",
+        "helium314.keyboard.latin.utils.Log",
+        "helium314.keyboard.latin.utils.prefs",
+        "helium314.keyboard.latin.utils.toKitPalette"
+      ],
+      "symbols": [
+        "onSelectionChanged(ime: LatinIME, selStart: Int, selEnd: Int)",
+        "show(ime: LatinIME, issue: GrammarIssue, cursor: Int)",
+        "dismiss()",
+        "stillThere(ime: LatinIME, issue: GrammarIssue)",
+        "replace(ime: LatinIME)",
+        "ignore(ime: LatinIME)",
+        "class GrammarPopup"
       ]
     },
     {
@@ -59779,6 +60047,49 @@
       ]
     },
     {
+      "path": "ab_cloud-libs-shared/libs/keyboard/src/main/java/helium314/keyboard/latin/OpenRouterCatalog.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "CatalogModel",
+        "Catalog",
+        "KeyValueStore",
+        "OpenRouterCatalog"
+      ],
+      "imports": [
+        "org.json.JSONArray",
+        "org.json.JSONObject",
+        "java.io.IOException",
+        "java.net.ConnectException",
+        "java.net.HttpURLConnection",
+        "java.net.NoRouteToHostException",
+        "java.net.SocketTimeoutException",
+        "java.net.URL",
+        "java.net.UnknownHostException"
+      ],
+      "symbols": [
+        "get(key: String)",
+        "put(key: String, value: String?)",
+        "perMillion(o: JSONObject?, key: String)",
+        "parse(body: String)",
+        "encode(c: Catalog)",
+        "decode(raw: String?)",
+        "load(store: KeyValueStore)",
+        "refresh(store: KeyValueStore, now: Long, fetch: ()",
+        "isOffline(e: Throwable)",
+        "filter(models: List<CatalogModel>, query: String, freeOnly: Boolean)",
+        "httpGet(url: String = URL, timeoutMs: Int = 15_000)",
+        "class CatalogModel",
+        "class Catalog",
+        "class KeyValueStore",
+        "class OpenRouterCatalog",
+        "class RefreshResult",
+        "class Ok",
+        "class Offline",
+        "class Failed"
+      ]
+    },
+    {
       "path": "ab_cloud-libs-shared/libs/keyboard/src/main/java/helium314/keyboard/latin/permissions/PermissionsUtil.java",
       "lang": "java",
       "role": "java",
@@ -60105,6 +60416,34 @@
         "get(subtype: InputMethodSubtype?)",
         "class for",
         "class RichInputMethodSubtype"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/keyboard/src/main/java/helium314/keyboard/latin/RoutedTranslateEngineClient.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "RoutedTranslateEngineClient"
+      ],
+      "imports": [
+        "android.content.Context",
+        "com.diegonmarcos.superapp.translate.TranslateEngineClient",
+        "com.diegonmarcos.superapp.translate.TranslateEngines",
+        "com.diegonmarcos.superapp.translate.TranslatePrefs",
+        "helium314.keyboard.latin.utils.Log",
+        "java.util.Locale"
+      ],
+      "symbols": [
+        "active()",
+        "langName(tag: String)",
+        "viaOpenRouter(text: String, sourceTag: String, targetTag: String)",
+        "translate(text: String, targetTag: String)",
+        "translateFrom(text: String, sourceTag: String, targetTag: String)",
+        "supportedLanguages()",
+        "isConnected()",
+        "install(context: Context)",
+        "onDevice()",
+        "class RoutedTranslateEngineClient"
       ]
     },
     {
@@ -61436,7 +61775,7 @@
         "cutPoint(text: String, limit: Int)",
         "rewrite( context: Context, style: AiRouter.Style, text: String, progress: (Int, Int)",
         "enhance(context: Context, connection: RichInputConnection)",
-        "run(context: Context, connection: RichInputConnection, style: AiRouter.Style)",
+        "run(context: Context, connection: RichInputConnection, style: AiRouter.Style, route: AiRouter.Route = AiRouter.route(context)",
         "ended(context: Context, label: String, why: String, message: Int, vararg args: Any)",
         "endedQuietly(label: String, why: String)",
         "apply(context: Context, connection: RichInputConnection, target: Target, replacement: String)",
@@ -65057,6 +65396,7 @@
         "androidx.compose.ui.tooling.preview.Preview",
         "androidx.compose.ui.unit.dp",
         "helium314.keyboard.latin.AiRouter",
+        "helium314.keyboard.latin.AiTask",
         "helium314.keyboard.latin.R",
         "helium314.keyboard.latin.settings.Settings",
         "helium314.keyboard.latin.utils.Log",
@@ -65067,8 +65407,7 @@
         "helium314.keyboard.settings.Setting",
         "helium314.keyboard.settings.SettingsActivity",
         "helium314.keyboard.settings.initPreview",
-        "helium314.keyboard.settings.preferences.ListPreference",
-        "helium314.keyboard.settings.preferences.TextInputPreference"
+        "helium314.keyboard.settings.preferences.ListPreference"
       ],
       "symbols": [
         "titleFor(prefix: String, id: String, generic: Int)",
@@ -65083,6 +65422,78 @@
         "AiPricingTable(setting: Setting, p: AiRouter.Provider)",
         "AiRoutingScreen(onClickBack: ()",
         "PreferencePreview()"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/keyboard/src/main/java/helium314/keyboard/settings/screens/AiTaskModelTables.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "AiRoutingRows",
+        "AiCatalogRow",
+        "AiTaskTable",
+        "AiRoutingSwitch",
+        "AiEnhanceModelRow"
+      ],
+      "imports": [
+        "android.content.Context",
+        "androidx.compose.foundation.background",
+        "androidx.compose.foundation.clickable",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.Row",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.foundation.layout.height",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.foundation.layout.width",
+        "androidx.compose.foundation.lazy.LazyColumn",
+        "androidx.compose.foundation.lazy.items",
+        "androidx.compose.material3.Button",
+        "androidx.compose.material3.MaterialTheme",
+        "androidx.compose.material3.Text",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.CompositionLocalProvider",
+        "androidx.compose.runtime.LaunchedEffect",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableIntStateOf",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.remember",
+        "androidx.compose.runtime.rememberCoroutineScope",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.ui.Alignment",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.platform.LocalContext",
+        "androidx.compose.ui.platform.testTag",
+        "androidx.compose.ui.res.stringResource",
+        "androidx.compose.ui.text.style.TextAlign",
+        "androidx.compose.ui.unit.dp",
+        "com.diegonmarcos.superapp.uikit.KitListRow",
+        "com.diegonmarcos.superapp.uikit.KitPalette",
+        "com.diegonmarcos.superapp.uikit.KitSearchBar",
+        "com.diegonmarcos.superapp.uikit.KitSelectableTile",
+        "com.diegonmarcos.superapp.uikit.KitState",
+        "com.diegonmarcos.superapp.uikit.KitSwitchRow",
+        "com.diegonmarcos.superapp.uikit.LocalKitPalette",
+        "helium314.keyboard.latin.AiEngine",
+        "helium314.keyboard.latin.AiTask",
+        "helium314.keyboard.latin.AiTaskModels"
+      ],
+      "symbols": [
+        "table(task: AiTask)",
+        "KitScope(content: @Composable ()",
+        "stamp(ms: Long)",
+        "price(v: Double?)",
+        "contextLabel(n: Int?)",
+        "loadOnce(ctx: Context)",
+        "refresh(ctx: Context)",
+        "AiCatalogRow(setting: Setting)",
+        "AiTaskTable(setting: Setting, task: AiTask)",
+        "ModelRow(m: CatalogModel, selected: Boolean, onSelect: ()",
+        "AiRoutingSwitch(setting: Setting, task: AiTask)",
+        "name(e: AiEngine?)",
+        "reasonText(ctx: Context, r: EngineResolution.Reason)",
+        "AiEnhanceModelRow(setting: Setting)",
+        "class AiRoutingRows",
+        "class CatalogUi"
       ]
     },
     {
@@ -65389,6 +65800,48 @@
         "DictionaryScreen( onClickBack: ()",
         "getUserAndInternalDictionaries(context: Context, locale: Locale)",
         "Preview()"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/keyboard/src/main/java/helium314/keyboard/settings/screens/DraftAnswerScreen.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "createDraftAnswerSettings",
+        "DraftAnswerScreen"
+      ],
+      "imports": [
+        "android.content.Context",
+        "androidx.compose.material3.Surface",
+        "androidx.compose.material3.Switch",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.collectAsState",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.ui.platform.LocalContext",
+        "androidx.compose.ui.res.stringResource",
+        "androidx.compose.ui.tooling.preview.Preview",
+        "helium314.keyboard.latin.AiRouter",
+        "helium314.keyboard.latin.R",
+        "helium314.keyboard.latin.settings.Settings",
+        "helium314.keyboard.latin.utils.Log",
+        "helium314.keyboard.latin.utils.Theme",
+        "helium314.keyboard.latin.utils.ToolbarKey",
+        "helium314.keyboard.latin.utils.getActivity",
+        "helium314.keyboard.latin.utils.getEnabledToolbarKeys",
+        "helium314.keyboard.latin.utils.prefs",
+        "helium314.keyboard.latin.utils.previewDark",
+        "helium314.keyboard.latin.utils.setToolbarKeyEnabled",
+        "helium314.keyboard.settings.SearchSettingsScreen",
+        "helium314.keyboard.settings.Setting",
+        "helium314.keyboard.settings.SettingsActivity",
+        "helium314.keyboard.settings.initPreview",
+        "helium314.keyboard.settings.preferences.ListPreference",
+        "helium314.keyboard.settings.preferences.Preference"
+      ],
+      "symbols": [
+        "createDraftAnswerSettings(context: Context)",
+        "DraftAnswerScreen(onClickBack: ()",
+        "PreferencePreview()"
       ]
     },
     {
@@ -65797,13 +66250,13 @@
         "androidx.compose.ui.platform.LocalContext",
         "androidx.compose.ui.res.stringResource",
         "androidx.compose.ui.tooling.preview.Preview",
+        "helium314.keyboard.latin.AiTask",
+        "helium314.keyboard.latin.AiTaskRouting",
         "helium314.keyboard.latin.R",
         "helium314.keyboard.latin.settings.Defaults",
         "helium314.keyboard.latin.settings.Settings",
         "helium314.keyboard.latin.utils.Theme",
-        "helium314.keyboard.latin.utils.previewDark",
-        "helium314.keyboard.settings.SearchSettingsScreen",
-        "helium314.keyboard.settings.Setting"
+        "helium314.keyboard.latin.utils.previewDark"
       ],
       "symbols": [
         "createGrammarSettings(context: Context)",
@@ -66445,6 +66898,9 @@
         "androidx.compose.ui.unit.dp",
         "com.diegonmarcos.superapp.translate.TranslateEngines",
         "com.diegonmarcos.superapp.translate.TranslatePrefs",
+        "helium314.keyboard.latin.AiTask",
+        "helium314.keyboard.latin.AiTaskRouting",
+        "helium314.keyboard.latin.RoutedTranslateEngineClient",
         "helium314.keyboard.latin.R",
         "helium314.keyboard.latin.utils.Theme",
         "helium314.keyboard.latin.utils.previewDark",
@@ -66672,6 +67128,7 @@
         "helium314.keyboard.settings.screens.createAiRoutingSettings",
         "helium314.keyboard.settings.screens.createGrammarSettings",
         "helium314.keyboard.settings.screens.createTextEnhanceSettings",
+        "helium314.keyboard.settings.screens.createDraftAnswerSettings",
         "helium314.keyboard.settings.screens.createTextResumeSettings",
         "helium314.keyboard.settings.screens.createLayoutSettings",
         "helium314.keyboard.settings.screens.createPreferencesSettings",
@@ -66731,12 +67188,12 @@
         "helium314.keyboard.settings.screens.UpdateScreen",
         "helium314.keyboard.settings.screens.GrammarCheckScreen",
         "helium314.keyboard.settings.screens.TextEnhanceScreen",
+        "helium314.keyboard.settings.screens.DraftAnswerScreen",
         "helium314.keyboard.settings.screens.TextResumeScreen",
         "helium314.keyboard.settings.screens.TextCorrectionScreen",
         "helium314.keyboard.settings.screens.ToolbarScreen",
         "helium314.keyboard.settings.screens.TranslationInfoScreen",
-        "helium314.keyboard.settings.screens.EmojiInfoScreen",
-        "helium314.keyboard.settings.screens.VoiceTranscriptInfoScreen"
+        "helium314.keyboard.settings.screens.EmojiInfoScreen"
       ],
       "symbols": [
         "SettingsNavHost( onClickBack: ()",
@@ -66976,6 +67433,134 @@
         "toolbarKeyAndBackLeadBackToTyping()",
         "lockedConfigChangeWhileClipboardOpenKeepsTheExit()",
         "class KeyboardViewStateTest"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/keyboard/src/test/java/helium314/keyboard/latin/ai/AiTaskRoutingTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "AiTaskRoutingTest"
+      ],
+      "imports": [
+        "helium314.keyboard.latin.AiEngine",
+        "helium314.keyboard.latin.AiTask",
+        "helium314.keyboard.latin.AiTaskModels",
+        "helium314.keyboard.latin.AiTaskRouting",
+        "helium314.keyboard.latin.EngineResolution.Reason",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertNull",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "eachTaskKeepsItsOwnModel()",
+        "selectionPersistsInTheStoreAndBlankClears()",
+        "switchDefaultsToMlAndPersists()",
+        "openRouterChosenOnlineWithKey()",
+        "openRouterChosenOfflineFallsBackToMl()",
+        "openRouterChosenWithoutKeyFallsBackToMl()",
+        "openRouterChosenOfflineAndNoMlRunsNothing()",
+        "mlChosenRunsOnDeviceEvenOffline()",
+        "mlChosenButUnavailableUsesOpenRouter()",
+        "mlChosenWithoutKeyNamesNoFallback()",
+        "grammarEngineFollowsTheSwitch()",
+        "class AiTaskRoutingTest"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/keyboard/src/test/java/helium314/keyboard/latin/ai/DraftAnswerTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "DraftAnswerTest"
+      ],
+      "imports": [
+        "helium314.keyboard.latin.AiPrompt",
+        "helium314.keyboard.latin.AiTask",
+        "helium314.keyboard.latin.AiTaskModels",
+        "helium314.keyboard.latin.AnswerInput",
+        "helium314.keyboard.latin.DraftAnswer",
+        "helium314.keyboard.latin.DraftAnswer.Clip",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "defaultIsTheNewestTextClip()",
+        "pickerListsTextClipsNewestFirstOnce()",
+        "inputDefaultsToClipboardUntilOverridden()",
+        "editingBackToTheDefaultIsNotAnOverride()",
+        "reopeningDropsTheOverride()",
+        "usesTheTextEnhancementModel()",
+        "promptIsTheReplyTaskPlusTheSharedLines()",
+        "promptFallsBackToTheDefaultPreambleAndNeverTheRewriteOne()",
+        "sharedComposerDropsBlankParts()",
+        "class DraftAnswerTest"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/keyboard/src/test/java/helium314/keyboard/latin/ai/GrammarHighlightsTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "GrammarHighlightsTest"
+      ],
+      "imports": [
+        "helium314.keyboard.latin.GrammarHighlights",
+        "helium314.keyboard.latin.GrammarIssue",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "tapInsideOrAtTheEdgeFindsTheMark()",
+        "ignoreRemovesTheSpan()",
+        "ignoredSpanDoesNotReappearOnRecheck()",
+        "ignoreIsPerSession()",
+        "replaceRemovesAndShiftsLaterMarks()",
+        "aNewMarkReplacesAnOverlappingOne()",
+        "class GrammarHighlightsTest"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/keyboard/src/test/java/helium314/keyboard/latin/ai/OpenRouterCatalogTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "MapStore",
+        "OpenRouterCatalogTest"
+      ],
+      "imports": [
+        "helium314.keyboard.latin.Catalog",
+        "helium314.keyboard.latin.CatalogModel",
+        "helium314.keyboard.latin.KeyValueStore",
+        "helium314.keyboard.latin.OpenRouterCatalog",
+        "helium314.keyboard.latin.OpenRouterCatalog.RefreshResult",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.io.IOException",
+        "java.net.UnknownHostException"
+      ],
+      "symbols": [
+        "get(key: String)",
+        "put(key: String, value: String?)",
+        "parsesNameProviderContextAndPricePerMillion()",
+        "freeBadgeFromSuffixOrZeroPrice()",
+        "cacheRoundTripKeepsEveryField()",
+        "refreshCachesWithTimestamp()",
+        "offlineKeepsThePreviousCacheAndSaysOffline()",
+        "httpErrorAndEmptyListAreFailuresNotOffline()",
+        "searchMatchesEveryWordAcrossNameIdProviderAndFreeFilter()",
+        "offlineClassification()",
+        "model(id: String)",
+        "class MapStore",
+        "class OpenRouterCatalogTest"
       ]
     },
     {
@@ -67332,6 +67917,7 @@
         "enabled(pref: String)",
         "autocompleteAndTranslateSwappedPlaces()",
         "clipboardAndNumpadSwappedPlaces()",
+        "draftAnswerTakesEmojisPlaceAndEmojiOpensPageTwoAfterVault()",
         "vaultFollowsSwitchLanguageAndAndroidSettingsComesRightBeforeVault()",
         "theWholeFirstRowIsExactlyThis()",
         "noKeyIsForcedOntoAPageOfItsOwnAnyMore()",
@@ -81147,6 +81733,7 @@
         "androidx.work.CoroutineWorker",
         "androidx.work.ForegroundInfo",
         "androidx.work.WorkerParameters",
+        "com.diegonmarcos.superapp.core.DataSyncBudget",
         "kotlinx.coroutines.Dispatchers",
         "kotlinx.coroutines.withContext",
         "java.io.File"
@@ -81154,6 +81741,7 @@
       "symbols": [
         "getForegroundInfo()",
         "doWork()",
+        "work()",
         "fetchSidecar(url: String)",
         "parseSha256(text: String)",
         "class ApkInstallWorker"
@@ -81215,6 +81803,7 @@
         "androidx.core.app.ServiceCompat",
         "androidx.core.content.ContextCompat",
         "androidx.work.ForegroundInfo",
+        "com.diegonmarcos.superapp.core.DataSyncBudget",
         "com.diegonmarcos.superapp.core.SilentChannels",
         "com.diegonmarcos.superapp.core.StoreNotifyGate",
         "java.util.concurrent.atomic.AtomicInteger"
@@ -81230,6 +81819,7 @@
         "foregroundInfo(ctx: Context)",
         "onBind(intent: Intent?)",
         "onStartCommand(intent: Intent?, flags: Int, startId: Int)",
+        "onTimeout(startId: Int, fgsType: Int)",
         "onDestroy()",
         "class BatchForeground",
         "class BatchForegroundService"
@@ -81975,6 +82565,7 @@
         "com.diegonmarcos.superapp.updater.install.UpdateInstaller",
         "com.diegonmarcos.superapp.updater.source.UpdateChecker",
         "android.content.Context",
+        "com.diegonmarcos.superapp.core.DataSyncBudget",
         "com.diegonmarcos.superapp.core.StoreNotifyGate",
         "android.util.Log",
         "androidx.work.CoroutineWorker",
@@ -81986,6 +82577,7 @@
       "symbols": [
         "getForegroundInfo()",
         "doWork()",
+        "work()",
         "updateFleet()",
         "installSelf(apk: VerifiedApk)",
         "ownsFleetPass(packageName: String)",
@@ -82006,6 +82598,29 @@
         "landed(candidateCode: Long?, installedCode: Long?)",
         "class VersionOrder",
         "class Order"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/updater/src/main/java/com/diegonmarcos/superapp/updater/WorkerStop.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "stopCooperatively",
+        "holdDataSync"
+      ],
+      "imports": [
+        "android.content.Context",
+        "androidx.work.CoroutineWorker",
+        "androidx.work.ForegroundInfo",
+        "com.diegonmarcos.superapp.core.DataSyncBudget",
+        "kotlinx.coroutines.CoroutineScope",
+        "kotlinx.coroutines.awaitCancellation",
+        "kotlinx.coroutines.coroutineScope",
+        "kotlinx.coroutines.launch"
+      ],
+      "symbols": [
+        "stopCooperatively(body: suspend CoroutineScope.()",
+        "holdDataSync(userInitiated: Boolean, info: (Context)"
       ]
     },
     {
@@ -180591,7 +181206,7 @@
         "androidx.compose.material3.MaterialTheme"
       ],
       "symbols": [
-        "GitReposScreen(coordinator: GitSyncCoordinator, actions: DriveActions, nextRunMinutes: Long?, modifier: Modifier = Modifier, view: GitView = GitView.ME, prefs: DrivePrefs? = null, part: GitPart = GitPart.TABLE)",
+        "GitReposScreen(coordinator: GitSyncCoordinator, actions: DriveActions, nextRunMinutes: Long?, modifier: Modifier = Modifier, view: GitView = GitView.ME, prefs: DrivePrefs? = null, part: GitPart = GitPart.TABLE, /** #1356/#1376 the repositories of another storage's git folder (Emulated, External)",
         "onSignedIn(result: SignInResult)",
         "onWebSession(cookie: String)",
         "tableRow(name: String, owner: String, declaredPrivate: Boolean?, listedUrl: String = \"\")",
@@ -180709,14 +181324,14 @@
         "gitStorageSelected",
         "gitStorageSelect",
         "gitStorageRoot",
-        "gitStoragePages",
-        "GitStorageRepos"
+        "GitStorageMenu",
+        "rememberGitStorageView",
+        "managed",
+        "GitStorageEmpty"
       ],
       "imports": [
         "android.content.Context",
         "android.os.Environment",
-        "androidx.compose.foundation.lazy.LazyColumn",
-        "androidx.compose.foundation.lazy.items",
         "androidx.compose.runtime.Composable",
         "androidx.compose.runtime.collectAsState",
         "androidx.compose.runtime.getValue",
@@ -180725,25 +181340,38 @@
         "androidx.compose.ui.platform.LocalContext",
         "androidx.compose.ui.res.stringResource",
         "com.diegonmarcos.clouddrive.R",
-        "com.diegonmarcos.clouddrive.ui.DriveCard",
         "com.diegonmarcos.clouddrive.ui.EmptyState",
         "com.diegonmarcos.clouddrive.ui.IconCatalog",
-        "com.diegonmarcos.clouddrive.ui.Pill",
-        "com.diegonmarcos.clouddrive.ui.PillRow",
         "com.diegonmarcos.clouddrive.usb.StorageVolumes",
         "com.diegonmarcos.clouddrive.usb.UsbVolumeModel",
         "com.diegonmarcos.cloudlib.gitsync.ManagedRepo",
-        "com.diegonmarcos.superapp.bottomnav.NavPage",
         "kotlinx.coroutines.Dispatchers",
         "kotlinx.coroutines.withContext",
+        "androidx.compose.foundation.layout.Box",
+        "androidx.compose.foundation.layout.height",
+        "androidx.compose.foundation.layout.size",
+        "androidx.compose.material3.DropdownMenu",
+        "androidx.compose.material3.DropdownMenuItem",
+        "androidx.compose.material3.FilterChip",
+        "androidx.compose.material3.Icon",
+        "androidx.compose.material3.MaterialTheme",
+        "androidx.compose.material3.Text",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.remember",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.ui.platform.testTag",
+        "com.diegonmarcos.clouddrive.ui.DriveMetrics",
+        "com.diegonmarcos.clouddrive.ui.DriveTags",
         "java.io.File"
       ],
       "symbols": [
         "gitStorageSelected(ctx: Context)",
         "gitStorageSelect(ctx: Context, k: GitStorage.Kind)",
         "gitStorageRoot(ctx: Context, k: GitStorage.Kind)",
-        "gitStoragePages()",
-        "GitStorageRepos(kind: GitStorage.Kind, git: GitSyncCoordinator, modifier: Modifier = Modifier)"
+        "GitStorageMenu(selected: GitStorage.Kind, onSelect: (GitStorage.Kind)",
+        "rememberGitStorageView(kind: GitStorage.Kind)",
+        "managed()",
+        "GitStorageEmpty(kind: GitStorage.Kind, view: GitStorage.View, modifier: Modifier = Modifier)"
       ]
     },
     {
@@ -180801,6 +181429,7 @@
         "autoSettings()",
         "runPlan(work: Set<AutoChecks.Work>)",
         "checkWorktree(repo: ManagedRepo)",
+        "checkRepos(list: List<ManagedRepo>, full: Boolean)",
         "lightCheckAll()",
         "fullCheckAll()",
         "cancelStatusReads()",
@@ -180821,8 +181450,7 @@
         "record(repo: ManagedRepo, opId: String, result: GitOpResult, trigger: String)",
         "runCompound(repo: ManagedRepo, id: String)",
         "runCompoundAll(id: String, only: List<ManagedRepo>? = null)",
-        "bulkOps(id: String, targets: List<ManagedRepo>, op: (ManagedRepo)",
-        "single(repo: ManagedRepo, id: String, step: Step, body: ()"
+        "bulkOps(id: String, targets: List<ManagedRepo>, op: (ManagedRepo)"
       ]
     },
     {
@@ -182038,6 +182666,7 @@
         "androidx.compose.runtime.saveable.rememberSaveable",
         "androidx.compose.runtime.setValue",
         "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.Alignment",
         "androidx.compose.ui.platform.LocalContext",
         "androidx.compose.ui.platform.testTag",
         "androidx.compose.ui.res.stringResource",
@@ -182052,8 +182681,7 @@
         "com.diegonmarcos.clouddrive.ui.DriveMetrics",
         "com.diegonmarcos.clouddrive.ui.DriveTags",
         "com.diegonmarcos.clouddrive.ui.EmptyState",
-        "com.diegonmarcos.clouddrive.ui.IconCatalog",
-        "com.diegonmarcos.clouddrive.ui.IslandAction"
+        "com.diegonmarcos.clouddrive.ui.IconCatalog"
       ],
       "symbols": [
         "GitPageScreen( git: GitSyncCoordinator, prefs: DrivePrefs, actions: DriveActions, page: String? = null, onPageConsumed: ()",
@@ -186714,7 +187342,8 @@
         "t4()",
         "t5()",
         "t6()",
-        "t7()"
+        "t7()",
+        "t8()"
       ],
       "imports": [],
       "symbols": [
@@ -186727,7 +187356,8 @@
         "t4()",
         "t5()",
         "t6()",
-        "t7()"
+        "t7()",
+        "t8()"
       ]
     },
     {
@@ -189881,6 +190511,7 @@
         "android.os.BatteryManager",
         "android.os.Build",
         "androidx.core.app.NotificationCompat",
+        "com.diegonmarcos.superapp.core.DataSyncBudget",
         "com.diegonmarcos.superapp.core.FleetAlerts",
         "androidx.hilt.work.HiltWorker",
         "androidx.work.BackoffPolicy",
@@ -189911,11 +190542,11 @@
         "kotlinx.coroutines.flow.first",
         "com.diegonmarcos.mediacenter.feature_node.domain.util.getUri",
         "androidx.work.workDataOf",
-        "java.security.MessageDigest",
-        "java.util.concurrent.TimeUnit"
+        "java.security.MessageDigest"
       ],
       "symbols": [
         "doWork()",
+        "work()",
         "runDeleteLocalPass(activeConfigs: List<CloudServerConfigEntity>)",
         "runAlbumSyncPass( activeConfigs: List<CloudServerConfigEntity>, uploaded: List<UploadedAsset> )",
         "ensureChannel(id: String, nameRes: Int, importance: Int)",
@@ -198194,6 +198825,7 @@
         "android.app.NotificationChannel",
         "android.app.NotificationManager",
         "android.content.Context",
+        "com.diegonmarcos.superapp.core.DataSyncBudget",
         "android.content.pm.ServiceInfo",
         "android.os.Build",
         "android.os.StatFs",
@@ -198229,6 +198861,7 @@
       ],
       "symbols": [
         "doWork()",
+        "work()",
         "downloadFile( group: ModelGroup, url: String, destFile: File, fileName: String, completedFiles: Int, totalFiles: Int, previousFilesBytes: Long, totalAllBytes: Long )",
         "modelUrlFor(fileName: String)",
         "cleanupPartialFiles(files: List<String>)",
@@ -198393,6 +199026,7 @@
         "android.app.NotificationChannel",
         "android.app.NotificationManager",
         "android.content.Context",
+        "com.diegonmarcos.superapp.core.DataSyncBudget",
         "android.content.pm.ServiceInfo",
         "android.net.Uri",
         "android.os.Build",
@@ -198424,6 +199058,7 @@
       ],
       "symbols": [
         "doWork()",
+        "work()",
         "updateProgress(completed: Int, total: Int, operation: String)",
         "createForegroundInfo(progress: Float, operation: String)",
         "ensureChannel()",
@@ -220542,6 +221177,7 @@
         "androidx.activity.ComponentActivity",
         "androidx.activity.compose.setContent",
         "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.fillMaxWidth",
         "androidx.compose.foundation.layout.padding",
         "androidx.compose.foundation.text.BasicText",
         "androidx.compose.foundation.text.BasicTextField",
@@ -220745,7 +221381,8 @@
         "kb()",
         "last()",
         "state()",
-        "shown()"
+        "shown()",
+        "openat()"
       ],
       "imports": [],
       "symbols": [
@@ -220755,7 +221392,8 @@
         "kb()",
         "last()",
         "state()",
-        "shown()"
+        "shown()",
+        "openat()"
       ]
     },
     {
@@ -499003,6 +499641,25 @@
       ]
     },
     {
+      "path": "ac_cloud-store/app/src/test/java/com/diegonmarcos/cloudstore/StoreTallyTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "StoreTallyTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.appstore.StoreTally",
+        "com.diegonmarcos.superapp.appstore.StoreTally.Item",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "class StoreTallyTest"
+      ]
+    },
+    {
       "path": "ac_cloud-store/app/src/test/java/com/diegonmarcos/cloudstore/UnpackAfterInstallTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -586319,6 +586976,11 @@
         "policy(sourceId: String)",
         "nextDelay(everyMs: Long, failures: Int, rnd: Double)",
         "isStale(fetchedAt: Long, now: Long, sourceId: String)",
+        "failureReason(e: Throwable)",
+        "failureText(source: String, reason: String)",
+        "shortSource(name: String)",
+        "lowerBetter(betterWhen: String, label: String)",
+        "tone(d: Dir, lowerBetter: Boolean)",
         "class FinFormat",
         "class Dir",
         "class Kind",
@@ -586357,6 +587019,8 @@
         "spread(rows: List<List<String>>, a: String, b: String, bp: Boolean = true)",
         "v(l: String)",
         "flag(iso2: String?)",
+        "nextDecisions(events: List<Pair<String, String>>, today: LocalDate)",
+        "inCalWindow(ts: String, chip: Int, today: LocalDate)",
         "dayHeader(isoDate: String)",
         "afp(columns: List<String>, row: List<String>)",
         "at(re: Regex)",
@@ -586366,6 +587030,7 @@
         "class FinLogic",
         "class Col",
         "class Layout",
+        "class NextDecision",
         "class Afp"
       ]
     },
@@ -586415,6 +587080,7 @@
       "symbols": [
         "yieldAt(curve: List<Pair<Double, Double>>, t: Double)",
         "rate(curve: List<Pair<Double, Double>>, start: Double, length: Double)",
+        "table(curve: List<Pair<Double, Double>>, start: Double)",
         "curve(curve: List<Pair<Double, Double>>, length: Double, maxStart: Int)",
         "class Forward"
       ]
@@ -586655,6 +587321,11 @@
       ],
       "symbols": [
         "load(panel: Panel, source: Source, f: JSONObject, http: Http, today: LocalDate, c: ModelCtx)",
+        "spreads(m: PanelData, f: JSONObject)",
+        "cell(r: List<String>, i: Int)",
+        "num(r: List<String>?, i: Int)",
+        "row(cc: String)",
+        "bp(a: Double?, b: Double?)",
         "emUsd(panel: Panel, f: JSONObject, http: Http, c: ModelCtx)",
         "emUsdTable(panel: Panel, body: String, by: String)",
         "symbolFor(route: JSONObject, item: String)",
@@ -586688,9 +587359,7 @@
         "fmtYears(y: Double)",
         "strings(a: JSONArray?)",
         "class Tables",
-        "class ItemGot",
-        "class Tenor",
-        "class One"
+        "class ItemGot"
       ]
     },
     {
@@ -586891,7 +587560,7 @@
         "forget()",
         "statusWord(status: DashStatus)",
         "key(d: Dashboard, p: Panel)",
-        "quotesOf(d: PanelData)",
+        "quotesOf(d: PanelData, betterWhen: String? = null)",
         "eventsOf(d: PanelData, source: String)",
         "openDashboard(id: String)",
         "openQuote(symbol: String)",
@@ -587255,7 +587924,7 @@
         "finFlashInk(value: String, dir: FinFormat.Dir, rest: Color)",
         "FinSparkline(values: List<Double>, modifier: Modifier = Modifier)",
         "y(v: Double)",
-        "FinChange(text: String, modifier: Modifier = Modifier, style: androidx.compose.ui.text.TextStyle = FinType.num, align: TextAlign = TextAlign.End)",
+        "FinChange(text: String, modifier: Modifier = Modifier, style: androidx.compose.ui.text.TextStyle = FinType.num, align: TextAlign = TextAlign.End, lowerBetter: Boolean = false)",
         "class FinState",
         "class Loading",
         "class Ok",
@@ -588000,6 +588669,11 @@
         "numbersAndDirectionAreReadFromSourceStrings()",
         "beatOrMissDependsOnWhichWayIsBetter()",
         "refreshCadenceJitterBackoffAndStaleness()",
+        "aContainerOnlyPanelOffTheMeshSaysMeshOffNotItsPublicSource()",
+        "footerSourceNamesDropTheirParentheticalAndSlashDetail()",
+        "calendarChipsKeepAllTodayOrThisMondayToSundayWeek()",
+        "creditAndMacroMovesAreColouredByWhatIsBetter()",
+        "nextDecisionTilesTakeTheFirstUpcomingDecisionPerCountry()",
         "class FinFormatTest"
       ]
     },
@@ -588090,6 +588764,7 @@
         "anUpwardCurveHasForwardsAboveSpot()",
         "interpolationIsLinearAndFlatOutside()",
         "degenerateInputsAreNaNAndTheCurveHasOnePointPerStartYear()",
+        "theSpec9TableIsTenorSpotAndTheForwardOverTheSameTenor()",
         "class ForwardTest"
       ]
     },
@@ -588345,6 +589020,7 @@
         "emUsdBondsAreOneRowPerCountryWithTheReasonForEachEmptyCell()",
         "theEmUsdPanelIsRoutedToTheContainerAndSaysMeshOffWithoutIt()",
         "theDeclaredMatrixIsTheOwnersCountryList()",
+        "worldBondsSpreadsAreThe10yOverThe2yTheBundAndTheUstInBp()",
         "class TablesTest",
         "class Fake"
       ]
