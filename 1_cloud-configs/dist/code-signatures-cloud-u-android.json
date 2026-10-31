@@ -587321,6 +587321,8 @@
       ],
       "symbols": [
         "load(panel: Panel, source: Source, f: JSONObject, http: Http, today: LocalDate, c: ModelCtx)",
+        "legSets(f: JSONObject)",
+        "riskCompare(panel: Panel, f: JSONObject, sets: List<List<Pair<String, Int>>>, got: Map<String, ItemGot>)",
         "spreads(m: PanelData, f: JSONObject)",
         "cell(r: List<String>, i: Int)",
         "num(r: List<String>?, i: Int)",
@@ -587357,9 +587359,7 @@
         "cov(members: List<String>)",
         "fmtRow(label: String, covCell: String, v: List<Double?>)",
         "fmtYears(y: Double)",
-        "strings(a: JSONArray?)",
-        "class Tables",
-        "class ItemGot"
+        "strings(a: JSONArray?)"
       ]
     },
     {
@@ -589010,6 +589010,7 @@
         "trailingYearsAndRiskColumns()",
         "portfolioIsRebalancedDailyNotBoughtAndHeld()",
         "modelPortfolioPerformanceRowsArePortfolioThenLegs()",
+        "riskComparisonStacksEachPortfolioHeadlineOnTheSameProxies()",
         "averagesAreGdpWeightedOverTheCountriesWithAValue()",
         "spotCellsAreExactTenorsAndForwardCellsComeFromForward()",
         "theMatrixHasAveragesThenEveryCountryAndSaysWhyACellIsEmpty()",
