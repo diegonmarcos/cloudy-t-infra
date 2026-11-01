@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 22977,
+    "files": 22986,
     "by_lang": {
-      "sh": 634,
+      "sh": 636,
       "js": 526,
-      "py": 190,
-      "kotlin": 12363,
+      "py": 191,
+      "kotlin": 12369,
       "java": 649,
       "nix": 35,
       "rust": 111,
@@ -20,11 +20,11 @@
     "by_role": {
       "hook": 158,
       "file": 2303,
-      "shell": 504,
+      "shell": 506,
       "script": 284,
       "java": 648,
-      "kotlin": 12360,
-      "python": 59,
+      "kotlin": 12366,
+      "python": 60,
       "module": 6459,
       "flake": 31,
       "rust-module": 111,
@@ -366649,6 +366649,76 @@
       ]
     },
     {
+      "path": "ac_cloud-me/app/src/main/java/com/diegonmarcos/cloudme/VaultFolder.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "VaultFolder",
+        "VaultRow",
+        "VaultRows"
+      ],
+      "imports": [
+        "org.json.JSONArray",
+        "org.json.JSONObject"
+      ],
+      "symbols": [
+        "parse(text: String)",
+        "folder(o: JSONObject)",
+        "find(rows: List<VaultRow>, path: String)",
+        "walk(f: VaultFolder)",
+        "class VaultFolder",
+        "class VaultRow",
+        "class VaultRows"
+      ]
+    },
+    {
+      "path": "ac_cloud-me/app/src/main/java/com/diegonmarcos/cloudme/VaultFolderScreen.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "VaultFolderTags",
+        "VaultFolderScreen"
+      ],
+      "imports": [
+        "androidx.compose.foundation.background",
+        "androidx.compose.foundation.clickable",
+        "androidx.compose.foundation.horizontalScroll",
+        "androidx.compose.foundation.layout.Arrangement",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.PaddingValues",
+        "androidx.compose.foundation.layout.Row",
+        "androidx.compose.foundation.layout.fillMaxSize",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.foundation.lazy.LazyColumn",
+        "androidx.compose.foundation.lazy.items",
+        "androidx.compose.foundation.rememberScrollState",
+        "androidx.compose.foundation.shape.RoundedCornerShape",
+        "androidx.compose.material3.MaterialTheme",
+        "androidx.compose.material3.Text",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.remember",
+        "androidx.compose.runtime.saveable.rememberSaveable",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.draw.clip",
+        "androidx.compose.ui.platform.LocalContext",
+        "androidx.compose.ui.platform.testTag",
+        "androidx.compose.ui.text.font.FontWeight",
+        "androidx.compose.ui.text.style.TextOverflow",
+        "androidx.compose.ui.unit.dp",
+        "androidx.compose.ui.unit.sp"
+      ],
+      "symbols": [
+        "sub(path: String)",
+        "note(name: String)",
+        "VaultFolderScreen(asset: String, path: String, modifier: Modifier = Modifier)",
+        "class VaultFolderTags"
+      ]
+    },
+    {
       "path": "ac_cloud-me/app/src/main/java/com/diegonmarcos/cloudme/WebPage.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -367451,6 +367521,32 @@
       ]
     },
     {
+      "path": "ac_cloud-me/app/src/test/java/com/diegonmarcos/cloudme/VaultRowsTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "VaultRowsTest"
+      ],
+      "imports": [
+        "org.json.JSONArray",
+        "org.json.JSONObject",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertNotNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "org.junit.runner.RunWith",
+        "org.robolectric.RobolectricTestRunner",
+        "org.robolectric.annotation.Config",
+        "android.app.Application"
+      ],
+      "symbols": [
+        "groups(s: String)",
+        "ids(a: JSONArray)",
+        "pages(s: String)",
+        "class VaultRowsTest"
+      ]
+    },
+    {
       "path": "ac_cloud-me/build.sh",
       "lang": "sh",
       "role": "shell",
@@ -367581,6 +367677,38 @@
         "done_plan(fields_done, fields_plan_extra=None)",
         "study_kind(degree)",
         "build(d)",
+        "main(argv)"
+      ]
+    },
+    {
+      "path": "ac_cloud-me/data/regen-vault-rows.py",
+      "lang": "py",
+      "role": "python",
+      "exports": [
+        "number(name)",
+        "label(name)",
+        "nat(num)",
+        "parent(num)",
+        "anchor(num, have)",
+        "page_id(num)",
+        "render(lines, decl)",
+        "text(t)",
+        "live()",
+        "main(argv)"
+      ],
+      "imports": [
+        "json"
+      ],
+      "symbols": [
+        "number(name)",
+        "label(name)",
+        "nat(num)",
+        "parent(num)",
+        "anchor(num, have)",
+        "page_id(num)",
+        "render(lines, decl)",
+        "text(t)",
+        "live()",
         "main(argv)"
       ]
     },
@@ -367871,6 +367999,30 @@
         "mk()",
         "red_check()",
         "red_rules()"
+      ]
+    },
+    {
+      "path": "ac_cloud-me/test/test-vault-rows.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "ok()",
+        "bad()",
+        "mapping()",
+        "projects()",
+        "mk()",
+        "red()",
+        "red_check()"
+      ],
+      "imports": [],
+      "symbols": [
+        "ok()",
+        "bad()",
+        "mapping()",
+        "projects()",
+        "mk()",
+        "red()",
+        "red_check()"
       ]
     },
     {
@@ -587297,6 +587449,7 @@
         "com.diegonmarcos.superapp.bottomnav.NavDecl"
       ],
       "symbols": [
+        "pages(sectionId: String)",
         "decode(b64: String)",
         "class Decl"
       ]
@@ -587516,12 +587669,15 @@
       ],
       "imports": [],
       "symbols": [
-        "initial(defaultDashboard: String?)",
+        "initial()",
         "open(@Suppress(\"UNUSED_PARAMETER\")",
+        "openPage(id: String)",
         "quote(stack: List<String>, symbol: String)",
         "dashboardOf(stack: List<String>)",
+        "pageOf(stack: List<String>)",
+        "selectedPage(stack: List<String>, sectionId: String)",
         "symbolOf(screen: String?)",
-        "back(stack: List<String>, defaultDashboard: String?, isHomeTab: Boolean)",
+        "back(stack: List<String>, isHomeTab: Boolean)",
         "class FinNavStack"
       ]
     },
@@ -587750,6 +587906,7 @@
       "role": "kotlin",
       "exports": [
         "Entry",
+        "HomeCard",
         "Pages"
       ],
       "imports": [
@@ -587758,7 +587915,15 @@
       "symbols": [
         "entries(stacks: String, sectionId: String)",
         "resolve(e: Entry, targets: String)",
+        "homeId(sectionId: String)",
+        "isHome(sectionId: String, pageId: String)",
+        "slugOf(id: String)",
+        "pageIdOf(e: Entry)",
+        "homeCards(pages: List<Triple<String, String, String>>, entries: List<Entry>)",
+        "entryOf(entries: List<Entry>, pageId: String)",
+        "redirect(redirects: String, dashboard: String)",
         "class Entry",
+        "class HomeCard",
         "class Pages"
       ]
     },
@@ -587927,6 +588092,7 @@
         "androidx.compose.animation.togetherWith",
         "androidx.compose.foundation.background",
         "androidx.compose.foundation.layout.Box",
+        "androidx.compose.foundation.layout.Column",
         "androidx.compose.foundation.layout.WindowInsets",
         "androidx.compose.foundation.layout.displayCutout",
         "androidx.compose.foundation.layout.fillMaxSize",
@@ -587947,7 +588113,6 @@
         "androidx.compose.ui.res.stringResource",
         "com.diegonmarcos.capitalfinterm.AssetData",
         "com.diegonmarcos.capitalfinterm.BuildConfig",
-        "com.diegonmarcos.capitalfinterm.Dashboards",
         "com.diegonmarcos.capitalfinterm.Decl",
         "com.diegonmarcos.capitalfinterm.FinNavStack",
         "com.diegonmarcos.capitalfinterm.FinSearchIndex",
@@ -587966,13 +588131,13 @@
         "source(id: String)",
         "key(id: String)",
         "AppShell(startDashboard: String? = null)",
-        "defaultDash(sec: String)",
         "stackOf(sec: String)",
         "setStack(sec: String, s: List<String>)",
         "openDashboard(id: String)",
         "openQuote(symbol: String)",
         "openSources()",
         "search()",
+        "openPage(sec: String, id: String)",
         "class Tags"
       ]
     },
@@ -588872,7 +589037,9 @@
       "lang": "kotlin",
       "role": "kotlin",
       "exports": [
-        "SectionPage"
+        "SectionPage",
+        "HOME_GRID",
+        "HOME_CARD"
       ],
       "imports": [
         "android.content.Context",
@@ -588894,6 +589061,8 @@
         "androidx.compose.foundation.layout.height",
         "androidx.compose.foundation.layout.padding",
         "androidx.compose.foundation.layout.width",
+        "androidx.compose.foundation.layout.size",
+        "androidx.compose.material3.Icon",
         "androidx.compose.foundation.lazy.LazyColumn",
         "androidx.compose.foundation.shape.RoundedCornerShape",
         "androidx.compose.material3.Switch",
@@ -588912,14 +589081,15 @@
         "androidx.compose.ui.text.style.TextOverflow",
         "androidx.compose.ui.unit.dp",
         "com.diegonmarcos.capitalfinterm.AssetData",
-        "com.diegonmarcos.capitalfinterm.BuildConfig",
-        "com.diegonmarcos.capitalfinterm.DashStatus",
-        "com.diegonmarcos.capitalfinterm.Dashboards"
+        "com.diegonmarcos.capitalfinterm.BuildConfig"
       ],
       "symbols": [
         "SectionPage(sectionId: String, stack: List<String>, nav: FinNav, onSelectList: (String)",
         "TabList(sectionId: String, entries: List<Entry>, compact: Boolean, selected: String?, nav: FinNav, onOpen: (String)",
         "status(e: Entry)",
+        "EntryPage(e: Entry)",
+        "HomeGrid(sectionId: String, cards: List<HomeCard>, nav: FinNav, onOpen: (String)",
+        "HomeCardTile(c: HomeCard, modifier: Modifier, onOpen: ()",
         "StatusPill(status: DashStatus?)",
         "DashTile(e: Entry, status: DashStatus?, modifier: Modifier, onOpen: ()",
         "DashRow(e: Entry, status: DashStatus?, selected: Boolean, onOpen: ()",
@@ -589093,7 +589263,7 @@
         "eachTabOpensOnItsDeclaredDefault()",
         "keyRowsComeLastAndASegmentIsDrawnInsideItsCard()",
         "aKeyRowDeclaredFirstIsStillDrawnLast()",
-        "marketMonitorLeadsWithTheTreasuryTilesAndTheDerivedSpread()",
+        "theMarketMonitorEventsPanelMovedToMacro()",
         "fixedIncomeHoldsNoEquityPanel()",
         "noPlaceholderDeclaresADashedLayout()",
         "class DashboardsUiTest"
@@ -589276,7 +589446,8 @@
         "org.junit.Test"
       ],
       "symbols": [
-        "aTabOpensOnItsDefaultDashboard()",
+        "aTabOpensOnItsHomepage()",
+        "theSelectedSubPageIsTheShownOne()",
         "backUnwindsInTheDeclaredOrder()",
         "class FinNavStackTest"
       ]
@@ -589510,6 +589681,35 @@
       ]
     },
     {
+      "path": "ad_Capital-Stack-FinTerminal/app/src/test/java/com/diegonmarcos/capitalfinterm/SectionHomeTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "SectionHomeTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.bottomnav.NavUiDecl",
+        "com.diegonmarcos.superapp.bottomnav.NavUiMode",
+        "com.diegonmarcos.superapp.bottomnav.SecondRowMode",
+        "org.json.JSONArray",
+        "org.json.JSONObject",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "section(id: String)",
+        "pages(id: String)",
+        "everySectionOpensOnItsHomepage()",
+        "theHomepageListsEverySubPageWithIconNameAndDescription()",
+        "marketMonitorIsGoneAndItsDeepLinkOpensTheFiHomepage()",
+        "theNavIsOneScrollableRow()",
+        "class SectionHomeTest"
+      ]
+    },
+    {
       "path": "ad_Capital-Stack-FinTerminal/app/src/test/java/com/diegonmarcos/capitalfinterm/SourceKeysTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -589692,6 +589892,24 @@
       ]
     },
     {
+      "path": "ad_Capital-Stack-FinTerminal/test/test-finterm-nav.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "check()",
+        "ok()",
+        "bad()",
+        "mutant()"
+      ],
+      "imports": [],
+      "symbols": [
+        "check()",
+        "ok()",
+        "bad()",
+        "mutant()"
+      ]
+    },
+    {
       "path": "ad_Capital-Stack-FinTerminal/test/test-finterm-sources.sh",
       "lang": "sh",
       "role": "shell",
@@ -589799,6 +590017,7 @@
       ],
       "imports": [],
       "symbols": [
+        "worldFromLink(scheme: String?, host: String?, path: String?)",
         "resolve(section: String?, world: String?, sections: Set<String>, worlds: Set<String>, default: String)",
         "class Launch",
         "class Start"
@@ -589812,17 +590031,21 @@
         "MainActivity"
       ],
       "imports": [
+        "android.content.Intent",
         "android.os.Bundle",
         "android.os.StrictMode",
         "android.util.Log",
         "androidx.activity.ComponentActivity",
         "androidx.activity.compose.setContent",
+        "androidx.compose.runtime.mutableStateOf",
         "com.diegonmarcos.cgomniverse.ui.AppShell",
         "com.diegonmarcos.cgomniverse.ui.AppTheme",
         "com.diegonmarcos.superapp.bottomnav.FleetChrome"
       ],
       "symbols": [
         "onCreate(savedInstanceState: Bundle?)",
+        "onNewIntent(intent: Intent)",
+        "worldOf(i: Intent?)",
         "class MainActivity"
       ]
     },
@@ -589879,10 +590102,29 @@
       ]
     },
     {
+      "path": "ad_CG-Omniverse/app/src/main/java/com/diegonmarcos/cgomniverse/Tabs.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "Tabs"
+      ],
+      "imports": [],
+      "symbols": [
+        "default(worlds: List<World>)",
+        "open(s: State, id: String)",
+        "close(s: State, id: String)",
+        "encode(s: State)",
+        "decode(stored: String?, worlds: List<World>)",
+        "class Tabs",
+        "class State"
+      ]
+    },
+    {
       "path": "ad_CG-Omniverse/app/src/main/java/com/diegonmarcos/cgomniverse/ui/AppShell.kt",
       "lang": "kotlin",
       "role": "kotlin",
       "exports": [
+        "GalaxyTabs",
         "Tags",
         "AppShell"
       ],
@@ -589895,17 +590137,20 @@
         "androidx.compose.foundation.layout.union",
         "androidx.compose.foundation.layout.windowInsetsPadding",
         "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.LaunchedEffect",
         "androidx.compose.runtime.getValue",
         "androidx.compose.runtime.mutableStateOf",
         "androidx.compose.runtime.remember",
         "androidx.compose.runtime.saveable.rememberSaveable",
         "androidx.compose.runtime.setValue",
         "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.platform.LocalContext",
         "androidx.compose.ui.platform.testTag",
         "androidx.compose.ui.res.stringResource",
         "com.diegonmarcos.cgomniverse.Decl",
         "com.diegonmarcos.cgomniverse.Launch",
         "com.diegonmarcos.cgomniverse.R",
+        "com.diegonmarcos.cgomniverse.Tabs",
         "com.diegonmarcos.cgomniverse.World",
         "com.diegonmarcos.superapp.bottomnav.islandEntries",
         "com.diegonmarcos.superapp.bottomnav.rememberAccountLauncher",
@@ -589923,8 +590168,10 @@
         "world(id: String)",
         "openGalaxy(id: String)",
         "openBrowser(id: String)",
-        "galaxyWorld(id: String)",
-        "AppShell(startSection: String? = null, startWorld: String? = null)",
+        "galaxyTab(id: String)",
+        "galaxyTabClose(id: String)",
+        "AppShell(startSection: String? = null, startWorld: String? = null, incoming: String? = null, onIncoming: ()",
+        "class GalaxyTabs",
         "class Tags"
       ]
     },
@@ -590067,22 +590314,23 @@
         "androidx.compose.foundation.layout.Arrangement",
         "androidx.compose.foundation.layout.Box",
         "androidx.compose.foundation.layout.Column",
-        "androidx.compose.foundation.layout.PaddingValues",
         "androidx.compose.foundation.layout.Row",
         "androidx.compose.foundation.layout.Spacer",
         "androidx.compose.foundation.layout.fillMaxSize",
         "androidx.compose.foundation.layout.fillMaxWidth",
         "androidx.compose.foundation.layout.padding",
         "androidx.compose.foundation.layout.width",
-        "androidx.compose.foundation.lazy.LazyColumn",
-        "androidx.compose.foundation.lazy.items",
+        "androidx.compose.foundation.layout.widthIn",
+        "androidx.compose.foundation.layout.size",
+        "androidx.compose.foundation.horizontalScroll",
+        "androidx.compose.foundation.rememberScrollState",
         "androidx.compose.foundation.shape.RoundedCornerShape",
         "androidx.compose.material.icons.Icons",
+        "androidx.compose.material.icons.filled.Add",
         "androidx.compose.material.icons.filled.Close",
         "androidx.compose.material.icons.filled.History",
         "androidx.compose.material.icons.filled.DesktopWindows",
         "androidx.compose.material.icons.filled.OpenInBrowser",
-        "androidx.compose.material.icons.filled.PlayArrow",
         "androidx.compose.material.icons.filled.Refresh",
         "androidx.compose.material.icons.filled.ViewInAr",
         "androidx.compose.material3.Icon",
@@ -590090,16 +590338,16 @@
         "androidx.compose.material3.LinearProgressIndicator",
         "androidx.compose.material3.MaterialTheme",
         "androidx.compose.material3.Text",
-        "androidx.compose.runtime.Composable",
-        "androidx.compose.runtime.DisposableEffect"
+        "androidx.compose.runtime.Composable"
       ],
       "symbols": [
-        "GalaxyPage(loaded: World?, onEnter: (World)",
-        "WorldView(w: World, onClose: ()",
+        "GalaxyPage(tabs: Tabs.State, onSelect: (String)",
+        "WorldView(w: World, modifier: Modifier = Modifier)",
         "onProgressChanged(view: WebView, newProgress: Int)",
         "onPermissionRequest(request: PermissionRequest)",
         "shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest)",
         "onPageStarted(view: WebView, url: String, favicon: Bitmap?)",
+        "doUpdateVisitedHistory(view: WebView, url: String?, isReload: Boolean)",
         "onPageFinished(view: WebView, url: String)",
         "onReceivedError(view: WebView, request: WebResourceRequest, err: WebResourceError)",
         "onReceivedHttpError(view: WebView, request: WebResourceRequest, response: WebResourceResponse)",
@@ -590137,7 +590385,6 @@
         "com.diegonmarcos.cgomniverse.Entry",
         "com.diegonmarcos.cgomniverse.Pages",
         "com.diegonmarcos.cgomniverse.R",
-        "com.diegonmarcos.cgomniverse.World",
         "com.diegonmarcos.superapp.uikit.GroupTitle",
         "com.diegonmarcos.superapp.uikit.KitCard",
         "com.diegonmarcos.superapp.uikit.KitSectionHeader",
@@ -590145,7 +590392,7 @@
         "com.diegonmarcos.superapp.uikit.LocalKitPalette"
       ],
       "symbols": [
-        "SectionPage(sectionId: String, loaded: World?, onEnterWorld: (World)",
+        "SectionPage(sectionId: String, galaxy: GalaxyTabs)",
         "EntryRow(e: Entry, url: String?, onOpen: (String)",
         "AboutPanel()",
         "openUrl(ctx: Context, url: String)"
@@ -590230,6 +590477,8 @@
         "prefs(ctx: Context)",
         "desktop(ctx: Context, worldId: String)",
         "setDesktop(ctx: Context, worldId: String, on: Boolean)",
+        "tabs(ctx: Context)",
+        "setTabs(ctx: Context, encoded: String)",
         "class Web"
       ]
     },
@@ -590281,6 +590530,7 @@
         "anUnknownSectionIsTheDefault()",
         "aKnownWorldOpensGalaxy()",
         "anUnknownWorldIsIgnored()",
+        "theDeepLinkNamesAWorld()",
         "class LaunchTest"
       ]
     },
@@ -590358,7 +590608,36 @@
         "toggleFlipsOneChipOnly()",
         "allSelectsEveryChipOrClearsTheGroup()",
         "theGeneratedCatalogueParsesWhole()",
+        "floor796IsInTheCatalogue()",
         "class StoreTest"
+      ]
+    },
+    {
+      "path": "ad_CG-Omniverse/app/src/test/java/com/diegonmarcos/cgomniverse/TabsTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "TabsTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.io.File"
+      ],
+      "symbols": [
+        "w(id: String, url: String = \"https://$id.example\")",
+        "st(sel: String?, vararg open: String)",
+        "theFirstLaunchOpensFloor796()",
+        "theRealCatalogueDefaultsToFloor796()",
+        "openAddsAtTheEndAndSelects()",
+        "openingAnOpenWorldFocusesItWithoutADuplicate()",
+        "closingTheSelectedTabSelectsTheRightNeighbourElseTheLeft()",
+        "closingAnotherTabKeepsTheSelection()",
+        "tabsPersist()",
+        "aRestoreDropsUnknownWorldsAndALostSelection()",
+        "class TabsTest"
       ]
     },
     {
