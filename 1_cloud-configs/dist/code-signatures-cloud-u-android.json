@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 22976,
+    "files": 22977,
     "by_lang": {
       "sh": 634,
       "js": 526,
       "py": 190,
-      "kotlin": 12362,
+      "kotlin": 12363,
       "java": 649,
       "nix": 35,
       "rust": 111,
@@ -23,7 +23,7 @@
       "shell": 504,
       "script": 284,
       "java": 648,
-      "kotlin": 12359,
+      "kotlin": 12360,
       "python": 59,
       "module": 6459,
       "flake": 31,
@@ -35506,9 +35506,12 @@
       "imports": [
         "android.content.BroadcastReceiver",
         "android.content.Context",
-        "android.content.Intent"
+        "android.content.Intent",
+        "android.content.IntentFilter",
+        "android.os.Build"
       ],
       "symbols": [
+        "register(ctx: Context)",
         "onReceive(ctx: Context, intent: Intent)",
         "class PowerStateReceiver"
       ]
@@ -182483,6 +182486,7 @@
         "androidx.compose.foundation.layout.fillMaxSize",
         "androidx.compose.foundation.layout.fillMaxWidth",
         "androidx.compose.foundation.layout.padding",
+        "androidx.compose.foundation.layout.systemBarsPadding",
         "androidx.compose.material.icons.Icons",
         "androidx.compose.material.icons.filled.Close",
         "androidx.compose.material.icons.filled.MoreVert",
@@ -182507,8 +182511,7 @@
         "com.diegonmarcos.clouddrive.R",
         "com.diegonmarcos.clouddrive.ui.DriveMetrics",
         "com.diegonmarcos.clouddrive.ui.DriveTags",
-        "com.diegonmarcos.cloudlib.web.CloudWeb",
-        "com.diegonmarcos.cloudlib.web.CloudWebClient"
+        "com.diegonmarcos.cloudlib.web.CloudWeb"
       ],
       "symbols": [
         "chooser(url: String, title: String)",
@@ -587624,6 +587627,27 @@
       ]
     },
     {
+      "path": "ad_Capital-Stack-FinTerminal/app/src/main/java/com/diegonmarcos/capitalfinterm/G20Bonds.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "G20Bonds"
+      ],
+      "imports": [
+        "org.json.JSONObject",
+        "java.time.LocalDate"
+      ],
+      "symbols": [
+        "ma(s: List<Pair<String, Double>>, end: LocalDate, win: Long, minDaily: Int)",
+        "dep(today: Double, past: Double, years: Int)",
+        "net(y: Double, fx: Double)",
+        "real(net: Double, cpi: Double)",
+        "cpiYoY(s: List<Pair<String, Double>>)",
+        "row(r: JSONObject, y: List<Pair<String, Double>>, fx: List<Pair<String, Double>>, cpi: Pair<Double, String>?, end: LocalDate, win: Long, minDaily: Int)",
+        "class G20Bonds"
+      ]
+    },
+    {
       "path": "ad_Capital-Stack-FinTerminal/app/src/main/java/com/diegonmarcos/capitalfinterm/Holdings.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -587856,6 +587880,11 @@
         "src(k: String)",
         "fxMatrixTable(panel: Panel, f: JSONObject, rows: JSONArray, by: String, fails: List<String>)",
         "d(o: JSONObject, k: String)",
+        "g20Bonds(panel: Panel, f: JSONObject, http: Http, today: LocalDate, c: ModelCtx)",
+        "g20Table(panel: Panel, f: JSONObject, rows: JSONArray, by: String, fails: List<String>)",
+        "v(o: JSONObject, k: String)",
+        "n(o: JSONObject, k: String)",
+        "s(o: JSONObject, k: String)",
         "legSets(f: JSONObject)",
         "riskCompare(panel: Panel, f: JSONObject, sets: List<List<Pair<String, Int>>>, got: Map<String, ItemGot>)",
         "spreads(m: PanelData, f: JSONObject)",
@@ -587877,12 +587906,7 @@
         "shortName(label: String)",
         "rebalanced(legs: List<Pair<Double, List<Pair<LocalDate, Double>>>>)",
         "portfolio(panel: Panel, f: JSONObject, legs: List<Pair<String, Int>>, got: Map<String, ItemGot>)",
-        "line(label: String, cl: List<Pair<LocalDate, Double>>, last: String)",
-        "tenors(f: JSONObject)",
-        "curve(f: JSONObject, g: Got)",
-        "cell(curve: List<Pair<Double, Double>>, t: Double, forward: Boolean, start: Double)",
-        "weighted(values: List<Pair<Double, Double?>>)",
-        "coverage(values: List<Pair<Double, Double?>>)"
+        "line(label: String, cl: List<Pair<LocalDate, Double>>, last: String)"
       ]
     },
     {
@@ -589554,6 +589578,7 @@
         "worldBondsSpreadsAreThe10yOverThe2yTheBundAndTheUstInBp()",
         "pppIsCarriedByRelativeInflationAndTheYearAgoWindowIsRealAdjusted()",
         "fxMatrixRealMovingAveragesPppBigMacDiffsAndDxy()",
+        "g20BondsMovingAverageFxAnnualisationNetAndReal()",
         "class TablesTest",
         "class Fake"
       ]

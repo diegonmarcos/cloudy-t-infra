@@ -6,14 +6,14 @@
   },
   "repo": "cloud-u-containers",
   "counts": {
-    "files": 2521,
+    "files": 2522,
     "by_lang": {
       "sh": 175,
       "js": 96,
       "nix": 185,
       "py": 507,
       "ts": 1190,
-      "rust": 368
+      "rust": 369
     },
     "by_role": {
       "shell": 165,
@@ -27,7 +27,7 @@
       "compose": 82,
       "mcp-tool": 121,
       "workflow-dag": 5,
-      "rust-module": 364,
+      "rust-module": 365,
       "hook": 53
     }
   },
@@ -62071,6 +62071,35 @@
         "close(a: f64, b: f64, eps: f64)",
         "real_moving_averages_ppp_big_mac_diffs_and_dxy()",
         "ice_weights_reproduce_the_published_index()"
+      ]
+    },
+    {
+      "path": "user-fin_capital-stack-finterminal-api/src/code/crates/server/src/finterm/g20bonds.rs",
+      "lang": "rust",
+      "role": "rust-module",
+      "exports": [
+        "ma",
+        "dep",
+        "net",
+        "real",
+        "cpi_yoy",
+        "row"
+      ],
+      "imports": [
+        "super::store::window_avg",
+        "chrono::",
+        "serde_json::",
+        "super::"
+      ],
+      "symbols": [
+        "ma(s: &[(String, f64)",
+        "dep(today: f64, past: f64, years: i32)",
+        "net(y: f64, fx: f64)",
+        "real(net: f64, cpi: f64)",
+        "cpi_yoy(s: &[(String, f64)",
+        "row(r: &Value, y: &[(String, f64)",
+        "s(v: &[(&str, f64)",
+        "moving_average_fx_annualisation_net_and_real()"
       ]
     },
     {
