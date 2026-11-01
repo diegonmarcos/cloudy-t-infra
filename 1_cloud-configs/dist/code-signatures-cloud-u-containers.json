@@ -6,14 +6,14 @@
   },
   "repo": "cloud-u-containers",
   "counts": {
-    "files": 2520,
+    "files": 2521,
     "by_lang": {
       "sh": 175,
       "js": 96,
       "nix": 185,
       "py": 507,
       "ts": 1190,
-      "rust": 367
+      "rust": 368
     },
     "by_role": {
       "shell": 165,
@@ -27,7 +27,7 @@
       "compose": 82,
       "mcp-tool": 121,
       "workflow-dag": 5,
-      "rust-module": 363,
+      "rust-module": 364,
       "hook": 53
     }
   },
@@ -62036,6 +62036,44 @@
       ]
     },
     {
+      "path": "user-fin_capital-stack-finterminal-api/src/code/crates/server/src/finterm/fxmatrix.rs",
+      "lang": "rust",
+      "role": "rust-module",
+      "exports": [
+        "rppp",
+        "dxy",
+        "diff",
+        "ma_key",
+        "keys",
+        "row",
+        "dxy_row"
+      ],
+      "imports": [
+        "super::store::",
+        "chrono::",
+        "serde_json::",
+        "std::collections::HashMap",
+        "super::"
+      ],
+      "symbols": [
+        "rppp(s_hist: f64, home0: f64, home1: f64, us0: f64, us1: f64)",
+        "dxy(constant: f64, legs: &[(f64, f64)",
+        "diff(today: f64, x: f64)",
+        "ma_key(years: i64)",
+        "keys(lags: &[i64])",
+        "at_year(s: &[(String, f64)",
+        "last_year(s: &[(String, f64)",
+        "diffs(o: &mut Map<String, Value>, lags: &[i64])",
+        "row(r: &Value, fx: &[(String, f64)",
+        "dxy_row(d: &Value, by_ccy: &HashMap<String, Value>, lags: &[i64])",
+        "y(v: &[(i64, f64)",
+        "s(v: &[(&str, f64)",
+        "close(a: f64, b: f64, eps: f64)",
+        "real_moving_averages_ppp_big_mac_diffs_and_dxy()",
+        "ice_weights_reproduce_the_published_index()"
+      ]
+    },
+    {
       "path": "user-fin_capital-stack-finterminal-api/src/code/crates/server/src/finterm/mod.rs",
       "lang": "rust",
       "role": "rust-module",
@@ -62235,6 +62273,8 @@
         "riksbank",
         "worldbank",
         "worldbank_as",
+        "bigmac_csv",
+        "cbr_xml",
         "frankfurter_ts",
         "sec_earnings",
         "par_duration",
@@ -62250,9 +62290,7 @@
         "chain",
         "ppp_today",
         "real_adjust",
-        "pct",
-        "window_avg",
-        "fx_ppp_row"
+        "pct"
       ],
       "imports": [
         "super::normalise::Ev",
@@ -62290,6 +62328,8 @@
         "riksbank(body: &str, d: &Value)",
         "worldbank(body: &str)",
         "worldbank_as(body: &str, prefix: &str)",
+        "bigmac_csv(body: &str)",
+        "cbr_xml(body: &str, id: &str)",
         "frankfurter_ts(body: &str)",
         "sec_earnings(body: &str, symbol: &str, cik: &str, filing: &str, day: NaiveDate, lookback_days: i64)",
         "par_duration(y: f64, years: f64)",
@@ -62308,9 +62348,7 @@
         "put(pool: &SqlitePool, obs: &[Obs])",
         "last_date(pool: &SqlitePool, id: &str)",
         "date_of(v: &Value)",
-        "run_hist(st: &AppState, pool: &SqlitePool, pacer: &mut Pacer, u: &Value, s: &Value)",
-        "run_curve(st: &AppState, pool: &SqlitePool, pacer: &mut Pacer, u: &Value, f: &Value)",
-        "countries(u: &Value)"
+        "run_hist(st: &AppState, pool: &SqlitePool, pacer: &mut Pacer, u: &Value, s: &Value)"
       ]
     },
     {

@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 22962,
+    "files": 22976,
     "by_lang": {
-      "sh": 632,
+      "sh": 634,
       "js": 526,
-      "py": 186,
-      "kotlin": 12354,
+      "py": 190,
+      "kotlin": 12362,
       "java": 649,
       "nix": 35,
       "rust": 111,
@@ -20,10 +20,10 @@
     "by_role": {
       "hook": 158,
       "file": 2303,
-      "shell": 503,
-      "script": 279,
+      "shell": 504,
+      "script": 284,
       "java": 648,
-      "kotlin": 12351,
+      "kotlin": 12359,
       "python": 59,
       "module": 6459,
       "flake": 31,
@@ -1580,6 +1580,58 @@
         "is_excluded(rel, excls)",
         "scan_tree(repo, tree, cfg)",
         "exclusions_engaged(repo, cfg)",
+        "main(argv)"
+      ]
+    },
+    {
+      "path": ".github/workflows/scripts/cloud-android-page-size-guard.py",
+      "lang": "py",
+      "role": "script",
+      "exports": [
+        "find_data()",
+        "load_aligns(path)",
+        "data_offset(fh, info)",
+        "find_zipalign()",
+        "main(argv)"
+      ],
+      "imports": [
+        "glob",
+        "json",
+        "os",
+        "re",
+        "shutil",
+        "struct",
+        "subprocess",
+        "sys",
+        "tempfile",
+        "zipfile"
+      ],
+      "symbols": [
+        "find_data()",
+        "load_aligns(path)",
+        "data_offset(fh, info)",
+        "find_zipalign()",
+        "main(argv)"
+      ]
+    },
+    {
+      "path": ".github/workflows/scripts/cloud-android-page-size-inject.py",
+      "lang": "py",
+      "role": "script",
+      "exports": [
+        "strip_managed(lines)",
+        "render(text, name, bad)",
+        "main(argv)"
+      ],
+      "imports": [
+        "glob",
+        "os",
+        "re",
+        "sys"
+      ],
+      "symbols": [
+        "strip_managed(lines)",
+        "render(text, name, bad)",
         "main(argv)"
       ]
     },
@@ -4283,6 +4335,58 @@
       ]
     },
     {
+      "path": "1_cicd/src/scripts/cloud-android-page-size-guard.py",
+      "lang": "py",
+      "role": "script",
+      "exports": [
+        "find_data()",
+        "load_aligns(path)",
+        "data_offset(fh, info)",
+        "find_zipalign()",
+        "main(argv)"
+      ],
+      "imports": [
+        "glob",
+        "json",
+        "os",
+        "re",
+        "shutil",
+        "struct",
+        "subprocess",
+        "sys",
+        "tempfile",
+        "zipfile"
+      ],
+      "symbols": [
+        "find_data()",
+        "load_aligns(path)",
+        "data_offset(fh, info)",
+        "find_zipalign()",
+        "main(argv)"
+      ]
+    },
+    {
+      "path": "1_cicd/src/scripts/cloud-android-page-size-inject.py",
+      "lang": "py",
+      "role": "script",
+      "exports": [
+        "strip_managed(lines)",
+        "render(text, name, bad)",
+        "main(argv)"
+      ],
+      "imports": [
+        "glob",
+        "os",
+        "re",
+        "sys"
+      ],
+      "symbols": [
+        "strip_managed(lines)",
+        "render(text, name, bad)",
+        "main(argv)"
+      ]
+    },
+    {
       "path": "1_cicd/src/scripts/cloud-android-perms-guard.py",
       "lang": "py",
       "role": "script",
@@ -6355,6 +6459,24 @@
       ]
     },
     {
+      "path": "1_cicd/src/scripts/test/page-size-guard.test.sh",
+      "lang": "sh",
+      "role": "script",
+      "exports": [
+        "ok()",
+        "fail()",
+        "mk()",
+        "expect()"
+      ],
+      "imports": [],
+      "symbols": [
+        "ok()",
+        "fail()",
+        "mk()",
+        "expect()"
+      ]
+    },
+    {
       "path": "1_cicd/src/scripts/test/perms-emulator-proof.sh",
       "lang": "sh",
       "role": "script",
@@ -6364,6 +6486,8 @@
         "shot()",
         "tap_text()",
         "has()",
+        "launch()",
+        "absent()",
         "check()",
         "perms_page()"
       ],
@@ -6374,6 +6498,8 @@
         "shot()",
         "tap_text()",
         "has()",
+        "launch()",
+        "absent()",
         "check()",
         "perms_page()"
       ]
@@ -25475,6 +25601,8 @@
       "lang": "sh",
       "role": "shell",
       "exports": [
+        "wake()",
+        "scroll()",
         "dump()",
         "centre()",
         "find_text()",
@@ -25487,6 +25615,8 @@
       ],
       "imports": [],
       "symbols": [
+        "wake()",
+        "scroll()",
         "dump()",
         "centre()",
         "find_text()",
@@ -181158,6 +181288,7 @@
         "onWebSession(cookie: String)",
         "tableRow(name: String, owner: String, declaredPrivate: Boolean?, listedUrl: String = \"\")",
         "refreshTargets()",
+        "cloneBlocked()",
         "cloneViaTerminal(name: String, url: String)",
         "clone(name: String, listedUrl: String = \"\", listedSshUrl: String = \"\")",
         "cloneViaFleet(rungId: String, gh: GitHubRepos.Repo)",
@@ -181189,10 +181320,9 @@
         "statusErrorText(kind: RepoStatus.ErrorKind?, detail: String?)",
         "RepoStatusBlock(b: RepoStatus.Block, fmt: DateFormat)",
         "GitRepoOpsBox( repo: ManagedRepo, page: Declarations.GitPageDecl, details: GitSyncCoordinator.Details?, result: com.diegonmarcos.cloudlib.gitsync.GitOpResult?, running: GitSyncCoordinator.Running?, glance: GitSyncCoordinator.Glance?, fmt: DateFormat, coordinator: GitSyncCoordinator, actions: DriveActions, repoName: String, owner: String, remote: RepoRemoteStats.Stats?, cloneDepth: Int, cloneSsh: Boolean, onSettings: ()",
+        "openWeb(u: String)",
         "declared(op: Declarations.GitOpDecl)",
-        "act(id: String)",
-        "GitRepoNotClonedBox( page: Declarations.GitPageDecl, repoName: String, owner: String, row: RepoTableRow, isPrivate: Boolean?, remote: RepoRemoteStats.Stats?, cloneUrl: String, cloning: Boolean, coordinator: GitSyncCoordinator, actions: DriveActions, onClone: ()",
-        "MetaLine(text: String)"
+        "act(id: String)"
       ]
     },
     {
@@ -181254,17 +181384,29 @@
         "of(id: String?)",
         "gitFolder(root: File?)",
         "repos(gitFolder: File?)",
-        "view(root: File?)",
+        "view(root: File?, rawAttached: Boolean = false)",
+        "targets(store: Target, emulated: Target, drives: List<Target>)",
+        "defaultTarget(targets: List<Target>, selected: Kind)",
+        "access(raw: Boolean, canWrite: Boolean)",
+        "cloneAt(t: Target, name: String)",
+        "onVolume(path: String)",
         "class GitStorage",
         "class Kind",
         "class View",
         "class NoDrive",
+        "class RawOnly",
         "class NoGitFolder",
-        "class Repos"
+        "class Repos",
+        "class Target",
+        "class Access",
+        "class CloneAt",
+        "class RawReadOnly",
+        "class NeedsFolder",
+        "class Ready"
       ]
     },
     {
-      "path": "ac_cloud-drive/app/src/main/java/com/diegonmarcos/clouddrive/sync/GitStoragePage.kt",
+      "path": "ac_cloud-drive/app/src/main/java/com/diegonmarcos/clouddrive/sync/GitStorageUi.kt",
       "lang": "kotlin",
       "role": "kotlin",
       "exports": [
@@ -181273,8 +181415,14 @@
         "gitStorageRoot",
         "GitStorageMenu",
         "rememberGitStorageView",
+        "rawUsbAttached",
+        "gitCloneTargets",
+        "gitStorageAccess",
+        "GitCloneTargetRow",
+        "GitConflictsDialog",
         "managed",
-        "GitStorageEmpty"
+        "GitStorageEmpty",
+        "GitStorageGrantBanner"
       ],
       "imports": [
         "android.content.Context",
@@ -181309,16 +181457,25 @@
         "androidx.compose.ui.platform.testTag",
         "com.diegonmarcos.clouddrive.ui.DriveMetrics",
         "com.diegonmarcos.clouddrive.ui.DriveTags",
-        "java.io.File"
+        "java.io.File",
+        "androidx.compose.foundation.clickable",
+        "androidx.compose.foundation.layout.padding"
       ],
       "symbols": [
         "gitStorageSelected(ctx: Context)",
         "gitStorageSelect(ctx: Context, k: GitStorage.Kind)",
         "gitStorageRoot(ctx: Context, k: GitStorage.Kind)",
         "GitStorageMenu(selected: GitStorage.Kind, onSelect: (GitStorage.Kind)",
-        "rememberGitStorageView(kind: GitStorage.Kind)",
+        "rememberGitStorageView(kind: GitStorage.Kind, refresh: Int = 0)",
+        "rawUsbAttached(ctx: Context)",
+        "gitCloneTargets(ctx: Context)",
+        "gitStorageAccess(ctx: Context, kind: GitStorage.Kind)",
+        "GitCloneTargetRow(targets: List<GitStorage.Target>, picked: GitStorage.Target?, onPick: (GitStorage.Target)",
+        "GitConflictsDialog(repos: List<Pair<ManagedRepo, Int>>, onOpen: (ManagedRepo)",
         "managed()",
-        "GitStorageEmpty(kind: GitStorage.Kind, view: GitStorage.View, modifier: Modifier = Modifier)"
+        "GitStorageEmpty(kind: GitStorage.Kind, view: GitStorage.View, modifier: Modifier = Modifier, onCreated: ()",
+        "GitStorageGrantBanner(kind: GitStorage.Kind)",
+        "class class"
       ]
     },
     {
@@ -181907,7 +182064,8 @@
       "lang": "kotlin",
       "role": "kotlin",
       "exports": [
-        "RepoActions"
+        "RepoActions",
+        "SyncAll"
       ],
       "imports": [],
       "symbols": [
@@ -181915,8 +182073,13 @@
         "route(id: String)",
         "isCompound(id: String)",
         "needsClone(id: String)",
+        "modeOf(op: String)",
+        "isConflict(summary: String, details: String = \"\")",
+        "opensSolver(op: String, results: List<Pair<String, String>>)",
         "class RepoActions",
-        "class Route"
+        "class Route",
+        "class SyncAll",
+        "class Mode"
       ]
     },
     {
@@ -182243,6 +182406,10 @@
       "role": "kotlin",
       "exports": [],
       "imports": [
+        "androidx.compose.material3.Icon",
+        "androidx.compose.ui.draw.clip",
+        "androidx.compose.foundation.layout.size",
+        "androidx.compose.foundation.layout.widthIn",
         "androidx.compose.foundation.ScrollState",
         "androidx.compose.foundation.background",
         "androidx.compose.foundation.clickable",
@@ -182291,6 +182458,65 @@
         "RepoActionGroupsView( page: Declarations.GitPageDecl, busy: Boolean, blocked: (Declarations.GitOpDecl)",
         "MenuItems( page: Declarations.GitPageDecl, g: Declarations.GitMenuGroupDecl, groupId: String, danger: Boolean, lang: String, busy: Boolean, blocked: (Declarations.GitOpDecl)",
         "RepoMetaTable(rows: List<Pair<String, String>>)"
+      ]
+    },
+    {
+      "path": "ac_cloud-drive/app/src/main/java/com/diegonmarcos/clouddrive/sync/RepoWebViewer.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "RepoWebMenu",
+        "RepoWebViewer"
+      ],
+      "imports": [
+        "android.content.ClipData",
+        "android.content.ClipboardManager",
+        "android.content.Context",
+        "android.content.Intent",
+        "android.net.Uri",
+        "android.webkit.WebView",
+        "androidx.activity.compose.BackHandler",
+        "androidx.compose.foundation.background",
+        "androidx.compose.foundation.layout.Box",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.Row",
+        "androidx.compose.foundation.layout.fillMaxSize",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.material.icons.Icons",
+        "androidx.compose.material.icons.filled.Close",
+        "androidx.compose.material.icons.filled.MoreVert",
+        "androidx.compose.material3.DropdownMenu",
+        "androidx.compose.material3.DropdownMenuItem",
+        "androidx.compose.material3.MaterialTheme",
+        "androidx.compose.material3.Text",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.remember",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.ui.Alignment",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.platform.LocalContext",
+        "androidx.compose.ui.platform.testTag",
+        "androidx.compose.ui.res.stringResource",
+        "androidx.compose.ui.text.style.TextOverflow",
+        "androidx.compose.ui.viewinterop.AndroidView",
+        "androidx.compose.ui.window.Dialog",
+        "androidx.compose.ui.window.DialogProperties",
+        "com.diegonmarcos.clouddrive.R",
+        "com.diegonmarcos.clouddrive.ui.DriveMetrics",
+        "com.diegonmarcos.clouddrive.ui.DriveTags",
+        "com.diegonmarcos.cloudlib.web.CloudWeb",
+        "com.diegonmarcos.cloudlib.web.CloudWebClient"
+      ],
+      "symbols": [
+        "chooser(url: String, title: String)",
+        "share(url: String, title: String)",
+        "RepoWebViewer(url: String, onClose: ()",
+        "onPageFinished(view: WebView?, u: String?)",
+        "class RepoWebMenu",
+        "class Item"
       ]
     },
     {
@@ -182607,6 +182833,7 @@
         "androidx.compose.runtime.Composable",
         "androidx.compose.runtime.LaunchedEffect",
         "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.collectAsState",
         "androidx.compose.runtime.mutableStateOf",
         "androidx.compose.runtime.remember",
         "androidx.compose.runtime.rememberCoroutineScope",
@@ -182627,8 +182854,7 @@
         "com.diegonmarcos.superapp.navbartop2.NavBarTopSecondRow",
         "com.diegonmarcos.clouddrive.ui.DriveMetrics",
         "com.diegonmarcos.clouddrive.ui.DriveTags",
-        "com.diegonmarcos.clouddrive.ui.EmptyState",
-        "com.diegonmarcos.clouddrive.ui.IconCatalog"
+        "com.diegonmarcos.clouddrive.ui.EmptyState"
       ],
       "symbols": [
         "GitPageScreen( git: GitSyncCoordinator, prefs: DrivePrefs, actions: DriveActions, page: String? = null, onPageConsumed: ()",
@@ -183255,6 +183481,41 @@
         "doWork()",
         "schedule(context: Context)",
         "class UnisonSyncWorker"
+      ]
+    },
+    {
+      "path": "ac_cloud-drive/app/src/main/java/com/diegonmarcos/clouddrive/usb/JavaUsbCommunication.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "JavaUsbCommunication"
+      ],
+      "imports": [
+        "android.hardware.usb.UsbConstants",
+        "android.hardware.usb.UsbDevice",
+        "android.hardware.usb.UsbDeviceConnection",
+        "android.hardware.usb.UsbEndpoint",
+        "android.hardware.usb.UsbInterface",
+        "android.hardware.usb.UsbManager",
+        "me.jahnen.libaums.core.usb.PipeException",
+        "me.jahnen.libaums.core.usb.UsbCommunication",
+        "me.jahnen.libaums.core.usb.UsbCommunicationCreator",
+        "me.jahnen.libaums.core.usb.UsbCommunicationFactory",
+        "java.io.IOException",
+        "java.nio.ByteBuffer"
+      ],
+      "symbols": [
+        "bulk(ep: UsbEndpoint, buf: ByteBuffer)",
+        "bulkOutTransfer(src: ByteBuffer)",
+        "bulkInTransfer(dest: ByteBuffer)",
+        "controlTransfer(requestType: Int, request: Int, value: Int, index: Int, buffer: ByteArray, length: Int)",
+        "isHalted(ep: UsbEndpoint)",
+        "clearFeatureHalt(endpoint: UsbEndpoint)",
+        "resetDevice()",
+        "close()",
+        "install()",
+        "create(usbManager: UsbManager, usbDevice: UsbDevice, usbInterface: UsbInterface, outEndpoint: UsbEndpoint, inEndpoint: UsbEndpoint)",
+        "class JavaUsbCommunication"
       ]
     },
     {
@@ -185358,6 +185619,7 @@
       ],
       "symbols": [
         "repo(parent: File, name: String)",
+        "t(kind: GitStorage.Kind, root: File?, label: String = kind.id, raw: Boolean = false)",
         "class GitStorageTest"
       ]
     },
@@ -185762,6 +186024,24 @@
       ]
     },
     {
+      "path": "ac_cloud-drive/app/src/test/java/com/diegonmarcos/clouddrive/sync/RepoWebViewerTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "RepoWebViewerTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.io.File"
+      ],
+      "symbols": [
+        "class RepoWebViewerTest"
+      ]
+    },
+    {
       "path": "ac_cloud-drive/app/src/test/java/com/diegonmarcos/clouddrive/sync/RepoWorkflowTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -185891,6 +186171,24 @@
         "remove(path: String)",
         "class StoreLegsTest",
         "class Rec"
+      ]
+    },
+    {
+      "path": "ac_cloud-drive/app/src/test/java/com/diegonmarcos/clouddrive/sync/SyncAllTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "SyncAllTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "class SyncAllTest"
       ]
     },
     {
@@ -186456,7 +186754,10 @@
         "where()",
         "tap()",
         "has()",
-        "texts()"
+        "reveal()",
+        "texts()",
+        "to_explorer()",
+        "front()"
       ],
       "imports": [],
       "symbols": [
@@ -186466,7 +186767,10 @@
         "where()",
         "tap()",
         "has()",
-        "texts()"
+        "reveal()",
+        "texts()",
+        "to_explorer()",
+        "front()"
       ]
     },
     {
@@ -186564,6 +186868,44 @@
         "step()",
         "sheet_open()",
         "advanced()",
+        "pick()"
+      ]
+    },
+    {
+      "path": "ac_cloud-drive/test/emulator-walk-git-sync-storage.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "fail()",
+        "note()",
+        "dump()",
+        "shot()",
+        "where()",
+        "tap()",
+        "has()",
+        "texts()",
+        "back()",
+        "swipe_up()",
+        "launch()",
+        "open_git()",
+        "need()",
+        "pick()"
+      ],
+      "imports": [],
+      "symbols": [
+        "fail()",
+        "note()",
+        "dump()",
+        "shot()",
+        "where()",
+        "tap()",
+        "has()",
+        "texts()",
+        "back()",
+        "swipe_up()",
+        "launch()",
+        "open_git()",
+        "need()",
         "pick()"
       ]
     },
@@ -364422,6 +364764,113 @@
       ]
     },
     {
+      "path": "ac_cloud-me/app/src/main/java/com/diegonmarcos/cloudme/ExperiencesBlock.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ExpTags",
+        "ExperiencesBlock"
+      ],
+      "imports": [
+        "androidx.compose.foundation.Canvas",
+        "androidx.compose.foundation.background",
+        "androidx.compose.foundation.border",
+        "androidx.compose.foundation.clickable",
+        "androidx.compose.foundation.horizontalScroll",
+        "androidx.compose.foundation.layout.Arrangement",
+        "androidx.compose.foundation.layout.Box",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.ExperimentalLayoutApi",
+        "androidx.compose.foundation.layout.FlowRow",
+        "androidx.compose.foundation.layout.Row",
+        "androidx.compose.foundation.layout.Spacer",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.foundation.layout.height",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.foundation.layout.size",
+        "androidx.compose.foundation.layout.width",
+        "androidx.compose.foundation.rememberScrollState",
+        "androidx.compose.foundation.shape.CircleShape",
+        "androidx.compose.foundation.shape.RoundedCornerShape",
+        "androidx.compose.material3.Text",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.remember",
+        "androidx.compose.runtime.saveable.rememberSaveable",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.ui.Alignment",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.draw.clip",
+        "androidx.compose.ui.geometry.Offset",
+        "androidx.compose.ui.geometry.Size",
+        "androidx.compose.ui.graphics.Color",
+        "androidx.compose.ui.graphics.StrokeCap",
+        "androidx.compose.ui.graphics.drawscope.Stroke",
+        "androidx.compose.ui.platform.LocalContext",
+        "androidx.compose.ui.platform.LocalUriHandler",
+        "androidx.compose.ui.platform.testTag",
+        "androidx.compose.ui.text.font.FontWeight",
+        "androidx.compose.ui.text.style.TextDecoration"
+      ],
+      "symbols": [
+        "chip(c: String)",
+        "group(c: String)",
+        "item(collection: String, id: String)",
+        "done(collection: String, id: String)",
+        "ExperiencesBlock(o: JSONObject)",
+        "commit(d: LedgerData)",
+        "Gap(dp: Int = 12)",
+        "ItemCard(item: ExpItem, icon: String, onDone: ()",
+        "MilestoneCard(ms: List<Milestone>, current: Int, note: String)",
+        "Stat(value: String, caption: String, modifier: Modifier)",
+        "Chip(label: String, on: Boolean, tag: String, onClick: ()",
+        "Bar(share: Float, modifier: Modifier = Modifier)",
+        "ProgressRing(share: Float, color: Color = LocalKitPalette.current.ok)",
+        "class ExpTags"
+      ]
+    },
+    {
+      "path": "ac_cloud-me/app/src/main/java/com/diegonmarcos/cloudme/ExperiencesModel.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ExpStatus",
+        "ExpItem",
+        "CatCount",
+        "Milestone",
+        "ExperiencesModel"
+      ],
+      "imports": [],
+      "symbols": [
+        "doneDef(defs: List<LedgerDef>)",
+        "planDef(defs: List<LedgerDef>)",
+        "status(rec: Rec, planned: Boolean)",
+        "items(defs: List<LedgerDef>, data: LedgerData, group: String = \"category\")",
+        "item(def: LedgerDef, id: String, r: Rec, planned: Boolean, readOnly: Boolean, sg: Int = -1)",
+        "split(items: List<ExpItem>)",
+        "sorted(items: List<ExpItem>)",
+        "filter(items: List<ExpItem>, query: String, category: String?)",
+        "groups(items: List<ExpItem>)",
+        "counts(items: List<ExpItem>)",
+        "progress(done: Int, planned: Int)",
+        "markDone(data: LedgerData, plan: String, done: String, id: String, today: String)",
+        "markUndone(data: LedgerData, done: String, plan: String, id: String)",
+        "withStatus(data: LedgerData, plan: String, id: String, status: ExpStatus)",
+        "year(date: String?)",
+        "bucket(year: Int?, own: Int, born: Int, ages: List<Int>)",
+        "milestones(born: Int, ages: List<Int>, data: LedgerData, thisYear: Int)",
+        "icon(category: String, fallback: String)",
+        "name(category: String)",
+        "class turns",
+        "class ExpStatus",
+        "class ExpItem",
+        "class CatCount",
+        "class Milestone",
+        "class ExperiencesModel"
+      ]
+    },
+    {
       "path": "ac_cloud-me/app/src/main/java/com/diegonmarcos/cloudme/FilesScreen.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -366315,6 +366764,32 @@
       ]
     },
     {
+      "path": "ac_cloud-me/app/src/test/java/com/diegonmarcos/cloudme/ExperiencesTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ExperiencesTest"
+      ],
+      "imports": [
+        "android.app.Application",
+        "org.json.JSONArray",
+        "org.json.JSONObject",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "org.junit.runner.RunWith",
+        "org.robolectric.RobolectricTestRunner",
+        "org.robolectric.annotation.Config"
+      ],
+      "symbols": [
+        "block(p: String)",
+        "defs(p: String)",
+        "class ExperiencesTest"
+      ]
+    },
+    {
       "path": "ac_cloud-me/app/src/test/java/com/diegonmarcos/cloudme/FolderTreeTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -367084,6 +367559,9 @@
         "present(dates)",
         "job_card(e, body=False)",
         "edu_card(e, body=False)",
+        "month_date(part)",
+        "done_plan(fields_done, fields_plan_extra=None)",
+        "study_kind(degree)",
         "build(d)",
         "main(argv)"
       ],
@@ -367096,6 +367574,9 @@
         "present(dates)",
         "job_card(e, body=False)",
         "edu_card(e, body=False)",
+        "month_date(part)",
+        "done_plan(fields_done, fields_plan_extra=None)",
+        "study_kind(degree)",
         "build(d)",
         "main(argv)"
       ]
@@ -587090,6 +587571,37 @@
       ]
     },
     {
+      "path": "ad_Capital-Stack-FinTerminal/app/src/main/java/com/diegonmarcos/capitalfinterm/FxMatrix.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "FxMatrix"
+      ],
+      "imports": [
+        "org.json.JSONArray",
+        "org.json.JSONObject",
+        "java.time.LocalDate",
+        "java.time.format.DateTimeFormatter"
+      ],
+      "symbols": [
+        "rppp(sHist: Double, home0: Double, home1: Double, us0: Double, us1: Double)",
+        "dxy(constant: Double, legs: List<Pair<Double, Double>>)",
+        "diff(today: Double, x: Double)",
+        "maKey(years: Int)",
+        "keys(lags: List<Int>)",
+        "atYear(s: List<Pair<String, Double>>, y: Int)",
+        "year(s: List<Pair<String, Double>>)",
+        "num(o: JSONObject, k: String)",
+        "row(r: JSONObject, fx: List<Pair<String, Double>>, ppp: List<Pair<String, Double>>, cpi: List<Pair<String, Double>>, usCpi: List<Pair<String, Double>>, bm: List<Pair<String, Double>>, bmUs: List<Pair<String, Double>>, win: Long, lags: List<Int>)",
+        "diffs(o: JSONObject, lags: List<Int>)",
+        "dxyRow(d: JSONObject, byCcy: Map<String, JSONObject>, lags: List<Int>)",
+        "bigMac(csv: String)",
+        "cells(line: String)",
+        "cbr(xml: String)",
+        "class FxMatrix"
+      ]
+    },
+    {
       "path": "ad_Capital-Stack-FinTerminal/app/src/main/java/com/diegonmarcos/capitalfinterm/FxPpp.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -587338,6 +587850,12 @@
         "d(o: JSONObject, k: String, digits: Int)",
         "p(o: JSONObject, k: String)",
         "dg(o: JSONObject)",
+        "objs(a: JSONArray?)",
+        "lagsOf(f: JSONObject)",
+        "fxMatrix(panel: Panel, f: JSONObject, http: Http, today: LocalDate, c: ModelCtx)",
+        "src(k: String)",
+        "fxMatrixTable(panel: Panel, f: JSONObject, rows: JSONArray, by: String, fails: List<String>)",
+        "d(o: JSONObject, k: String)",
         "legSets(f: JSONObject)",
         "riskCompare(panel: Panel, f: JSONObject, sets: List<List<Pair<String, Int>>>, got: Map<String, ItemGot>)",
         "spreads(m: PanelData, f: JSONObject)",
@@ -587364,13 +587882,7 @@
         "curve(f: JSONObject, g: Got)",
         "cell(curve: List<Pair<Double, Double>>, t: Double, forward: Boolean, start: Double)",
         "weighted(values: List<Pair<Double, Double?>>)",
-        "coverage(values: List<Pair<Double, Double?>>)",
-        "gatedAverage(values: List<Pair<Double, Double?>>, min: Double)",
-        "pct0(x: Double)",
-        "parseOne(body: String, each: List<String>, by: String)",
-        "matrixOne(f: JSONObject, http: Http, c: ModelCtx)",
-        "reasons(why: Map<String, Map<String, String>>, ts: List<String>)",
-        "matrix(panel: Panel, f: JSONObject, got: Map<String, ItemGot>, one: One? = null)"
+        "coverage(values: List<Pair<Double, Double?>>)"
       ]
     },
     {
@@ -588248,7 +588760,11 @@
         "androidx.compose.foundation.layout.Row",
         "androidx.compose.foundation.layout.fillMaxWidth",
         "androidx.compose.foundation.text.KeyboardOptions",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.material3.ExperimentalMaterial3Api",
         "androidx.compose.material3.MaterialTheme",
+        "androidx.compose.material3.ModalBottomSheet",
         "androidx.compose.material3.OutlinedTextField",
         "androidx.compose.material3.Text",
         "androidx.compose.runtime.Composable",
@@ -589037,6 +589553,7 @@
         "theDeclaredMatrixIsTheOwnersCountryList()",
         "worldBondsSpreadsAreThe10yOverThe2yTheBundAndTheUstInBp()",
         "pppIsCarriedByRelativeInflationAndTheYearAgoWindowIsRealAdjusted()",
+        "fxMatrixRealMovingAveragesPppBigMacDiffsAndDxy()",
         "class TablesTest",
         "class Fake"
       ]
