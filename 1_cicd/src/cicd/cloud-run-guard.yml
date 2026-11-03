@@ -1,0 +1,43 @@
+#
+# Cloud Run registry guard (#1432-#1434): c_vps/vps_gcloud/src/terraform.json cloud_run_services is complete and
+# carries no secret value, and main.tf (Cloud Run + GCS + remote AR resources) passes terraform validate.
+# No credentials, no plan, no apply: init runs with -backend=false.
+name: cloud-run-guard
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'c_vps/vps_gcloud/src/**'
+      - 'c_vps/vps_gcloud/test/**'
+      - '.github/workflows/cloud-run-guard.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'c_vps/vps_gcloud/src/**'
+      - 'c_vps/vps_gcloud/test/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cloud-run-guard-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Registry assertions (each proven red)
+        run: python3 c_vps/vps_gcloud/test/test-cloud-run.py
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_wrapper: false
+      - name: terraform validate (no backend, no credentials)
+        working-directory: c_vps/vps_gcloud/src
+        run: |
+          terraform init -backend=false -input=false
+          terraform validate

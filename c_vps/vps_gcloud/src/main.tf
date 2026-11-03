@@ -6,6 +6,12 @@ locals {
   # Index instances by name for resource addressing
   instances_with_static_ip = { for i in local.config.instances : i.name => i if i.static_ip_name != null }
   instances_with_gpu       = { for i in local.config.instances : i.name => i if i.gpu != null }
+  # Cloud Run (serverless containers): terraform.json cloud_run_services is the fleet registry. Only entries with
+  # managed = true become resources; the rest are declarations (state declared / live-unmanaged) read by the UI and
+  # the migration plan. A live-unmanaged service must be imported before managed flips to true.
+  cloud_run          = { for s in try(local.config.cloud_run_services, []) : s.name => s if try(s.managed, false) }
+  cloud_run_buckets  = { for v in flatten([for s in values(local.cloud_run) : try(s.volumes, [])]) : v.bucket => v if try(v.create_bucket, true) }
+  cloud_run_registry = try(local.config.cloud_run_registry, null)
 }
 
 # =============================================================================
@@ -173,6 +179,119 @@ resource "google_compute_instance" "vms" {
 }
 
 # =============================================================================
+# Cloud Run services (terraform.json cloud_run_services, managed = true only)
+# =============================================================================
+
+# Remote Artifact Registry repo proxying ghcr.io, so Cloud Run pulls the fleet's GHCR images (amd64 manifests).
+resource "google_artifact_registry_repository" "ghcr_remote" {
+  count         = local.cloud_run_registry != null && length(local.cloud_run) > 0 ? 1 : 0
+  location      = local.cloud_run_registry.region
+  repository_id = local.cloud_run_registry.repository_id
+  format        = "DOCKER"
+  mode          = "REMOTE_REPOSITORY"
+  description   = local.cloud_run_registry.description
+  remote_repository_config {
+    docker_repository {
+      custom_repository {
+        uri = local.cloud_run_registry.upstream
+      }
+    }
+  }
+}
+
+resource "google_storage_bucket" "cloud_run_volumes" {
+  for_each                    = local.cloud_run_buckets
+  name                        = each.key
+  location                    = upper(local.config.provider.region)
+  uniform_bucket_level_access = true
+  public_access_prevention    = "enforced"
+  lifecycle {
+    prevent_destroy = true
+  }
+}
+
+resource "google_cloud_run_v2_service" "svc" {
+  for_each = local.cloud_run
+  name     = each.key
+  location = each.value.region
+  ingress  = try(each.value.ingress, "INGRESS_TRAFFIC_ALL")
+
+  template {
+    execution_environment            = try(each.value.execution_environment, "EXECUTION_ENVIRONMENT_GEN2")
+    session_affinity                 = try(each.value.session_affinity, false)
+    timeout                          = "${try(each.value.timeout_s, 300)}s"
+    max_instance_request_concurrency = try(each.value.concurrency, 80)
+    service_account                  = try(each.value.service_account, null)
+
+    scaling {
+      min_instance_count = try(each.value.min_instances, 0)
+      max_instance_count = try(each.value.max_instances, 1)
+    }
+
+    containers {
+      image = each.value.image
+      ports {
+        container_port = each.value.port
+      }
+      resources {
+        limits            = { cpu = each.value.cpu, memory = each.value.memory }
+        cpu_idle          = try(each.value.cpu_throttling, true)
+        startup_cpu_boost = try(each.value.startup_cpu_boost, false)
+      }
+      dynamic "env" {
+        for_each = try(each.value.env, {})
+        content {
+          name  = env.key
+          value = env.value
+        }
+      }
+      # Secrets by Secret Manager NAME only; values never live in this repo.
+      dynamic "env" {
+        for_each = try(each.value.secret_env, {})
+        content {
+          name = env.key
+          value_source {
+            secret_key_ref {
+              secret  = env.value
+              version = "latest"
+            }
+          }
+        }
+      }
+      dynamic "volume_mounts" {
+        for_each = try(each.value.volumes, [])
+        content {
+          name       = volume_mounts.value.name
+          mount_path = volume_mounts.value.mount_path
+        }
+      }
+    }
+
+    dynamic "volumes" {
+      for_each = try(each.value.volumes, [])
+      content {
+        name = volumes.value.name
+        gcs {
+          bucket    = volumes.value.bucket
+          read_only = try(volumes.value.read_only, false)
+        }
+      }
+    }
+  }
+
+  depends_on = [google_storage_bucket.cloud_run_volumes]
+}
+
+# Public invoker only where the entry says so (the app gates itself, e.g. oauth2-proxy); otherwise IAM-only.
+resource "google_cloud_run_v2_service_iam_member" "public_invoker" {
+  for_each = { for k, s in local.cloud_run : k => s if try(s.invoker, "iam") == "public" }
+  name     = google_cloud_run_v2_service.svc[each.key].name
+  location = google_cloud_run_v2_service.svc[each.key].location
+  role     = "roles/run.invoker"
+  member   = "allUsers"
+}
+
+# =============================================================================
 # Budget Alerts
 # =============================================================================
 
@@ -212,4 +331,9 @@ output "static_ips" {
 output "instances" {
   value       = { for name, vm in google_compute_instance.vms : name => vm.network_interface[0].access_config[0].nat_ip }
   description = "Instance IPs"
+}
+
+output "cloud_run_urls" {
+  value       = { for name, svc in google_cloud_run_v2_service.svc : name => svc.uri }
+  description = "Cloud Run service URLs (managed entries only)"
 }

@@ -64,5 +64,195 @@
     "currency": "EUR",
     "amount": 30,
     "thresholds": [0.5, 0.9, 1.0]
-  }
+  },
+
+  "_cloud_run_doc": "Cloud Run (serverless containers) fleet registry. One entry per service: runtime, image, env, secret NAMES (Secret Manager; never values), GCS volumes, route, state (live-unmanaged | declared). main.tf creates only managed=true entries; the cloud-c3 Infra page Serverless Cont reads this list.",
+
+  "cloud_run_registry": {
+    "region": "us-central1",
+    "repository_id": "ghcr",
+    "upstream": "https://ghcr.io",
+    "description": "Remote repo proxying ghcr.io so Cloud Run can pull the fleet's GHCR images (amd64 manifests only)"
+  },
+
+  "cloud_run_services": [
+    {
+      "name": "agy",
+      "label": "Antigravity (agy)",
+      "managed": false,
+      "state": "live-unmanaged",
+      "region": "us-central1",
+      "source": {
+        "repo": "cloudy-u-containers",
+        "path": "user-ai_antigravity"
+      },
+      "image": "us-central1-docker.pkg.dev/diegonmarcos-infra-prod/antigravity-repo/agy:latest",
+      "port": 8080,
+      "build": {
+        "workflow": "cloudy-u-containers/.github/workflows/cloud-run-images.yml",
+        "ghcr": "ghcr.io/diegonmarcos/agy-cloudrun",
+        "platform": "linux/amd64",
+        "adopt_image": "us-central1-docker.pkg.dev/diegonmarcos-infra-prod/ghcr/diegonmarcos/agy-cloudrun:latest"
+      },
+      "cpu": "2",
+      "memory": "2Gi",
+      "min_instances": 1,
+      "max_instances": 1,
+      "cpu_throttling": false,
+      "startup_cpu_boost": true,
+      "execution_environment": "EXECUTION_ENVIRONMENT_GEN2",
+      "session_affinity": true,
+      "timeout_s": 3600,
+      "invoker": "public",
+      "env": {},
+      "secret_env": {
+        "OAUTH_CLIENT_ID": "agy-oauth-client-id",
+        "OAUTH_CLIENT_SECRET": "agy-oauth-client-secret",
+        "COOKIE_SECRET": "agy-cookie-secret",
+        "ALLOWED_EMAIL": "agy-allowed-email"
+      },
+      "volumes": [
+        {
+          "name": "persist-vol",
+          "bucket": "diegonmarcos-infra-prod-antigravity-persist",
+          "mount_path": "/persist",
+          "create_bucket": false
+        }
+      ],
+      "persistence": "GCS volume (gcsfuse) on /persist: dotfiles, agy/claude state, workspace, git clones",
+      "route": {
+        "public_url": "Cloud Run URL (run.app)",
+        "auth": "oauth2-proxy (Google provider, one allowed email)"
+      },
+      "notes": "Live today with the four env values set as plain env vars; adopting it = terraform import, then managed=true moves them to Secret Manager refs. min 1 always-on 2 vCPU/2 GiB is outside the free tier."
+    },
+    {
+      "name": "capital-stack-finterminal-api",
+      "label": "FinTerminal API",
+      "managed": false,
+      "state": "declared",
+      "region": "us-central1",
+      "from_host": "oci-apps",
+      "source": {
+        "repo": "cloudy-u-containers",
+        "path": "user-fin_capital-stack-finterminal-api"
+      },
+      "image": "us-central1-docker.pkg.dev/diegonmarcos-infra-prod/ghcr/diegonmarcos/capital-stack-finterminal-api-cloudrun:latest",
+      "port": 8340,
+      "build": {
+        "workflow": "cloudy-u-containers/.github/workflows/cloud-run-images.yml",
+        "ghcr": "ghcr.io/diegonmarcos/capital-stack-finterminal-api-cloudrun",
+        "platform": "linux/amd64"
+      },
+      "cpu": "1",
+      "memory": "512Mi",
+      "min_instances": 0,
+      "max_instances": 1,
+      "cpu_throttling": true,
+      "startup_cpu_boost": true,
+      "execution_environment": "EXECUTION_ENVIRONMENT_GEN2",
+      "session_affinity": false,
+      "timeout_s": 300,
+      "invoker": "iam",
+      "env": {
+        "FINTERM_CONTACT": "(me@diegonmarcos.com)",
+        "FINTERM_DB": "/data/finterm.db",
+        "FIN_API_HOST": "0.0.0.0",
+        "FIN_API_PORT": "8340",
+        "RUST_LOG": "info,tower_http=info"
+      },
+      "secret_env": {},
+      "volumes": [
+        {
+          "name": "finterm-data",
+          "bucket": "diegonmarcos-infra-prod-finterm-data",
+          "mount_path": "/data"
+        }
+      ],
+      "persistence": "SQLite on a GCS volume with max_instances 1 (single writer). Cloud SQL is the later option if write contention or gcsfuse locking bites.",
+      "route": {
+        "edge_path": "api.diegonmarcos.com/capital-stack-finterminal-api",
+        "auth": "two_factor at the edge (unchanged)",
+        "cutover": "Caddy keeps the same-origin path and proxies it to the run.app URL with an identity token for roles/run.invoker; APK and web URLs do not change"
+      },
+      "blockers": [
+        "the VM image is arm64-only (docker.arch arm64); the amd64 -cloudrun image builds in cloud-run-images.yml and must be pushed (approved dispatch) before the first apply",
+        "edge to Cloud Run auth: Caddy must mint a Google ID token (service account) or the app must enforce its bearer; invoker stays IAM-only until then",
+        "data copy of the finterm_data volume from oci-apps to the bucket at cutover"
+      ]
+    },
+    {
+      "name": "capital-stack-finterminal-web",
+      "label": "FinTerminal Web",
+      "managed": false,
+      "state": "declared",
+      "region": "us-central1",
+      "from_host": "oci-apps",
+      "source": {
+        "repo": "cloudy-u-containers",
+        "path": "user-fin_capital-stack-finterminal-web"
+      },
+      "image": "us-central1-docker.pkg.dev/diegonmarcos-infra-prod/ghcr/diegonmarcos/capital-stack-finterminal-web-cloudrun:latest",
+      "port": 80,
+      "build": {
+        "workflow": "cloudy-u-containers/.github/workflows/cloud-run-images.yml",
+        "ghcr": "ghcr.io/diegonmarcos/capital-stack-finterminal-web-cloudrun",
+        "platform": "linux/amd64"
+      },
+      "cpu": "1",
+      "memory": "256Mi",
+      "min_instances": 0,
+      "max_instances": 2,
+      "cpu_throttling": true,
+      "invoker": "iam",
+      "env": {},
+      "secret_env": {},
+      "volumes": [],
+      "persistence": "none (static nginx)",
+      "route": {
+        "edge_path": "same edge host as /capital-stack-finterminal-api",
+        "auth": "edge (unchanged)",
+        "cutover": "the bundle calls the API at the relative path /capital-stack-finterminal-api, so the web and the API stay behind one Caddy origin that proxies both run.app upstreams"
+      },
+      "blockers": [
+        "same edge-to-Cloud-Run identity-token step as capital-stack-finterminal-api"
+      ]
+    },
+    {
+      "name": "scrappers-api",
+      "label": "Scrappers API",
+      "managed": false,
+      "state": "declared",
+      "region": "us-central1",
+      "from_host": "oci-apps",
+      "source": {
+        "repo": "cloudy-u-containers",
+        "path": "user-data_scrappers-api"
+      },
+      "image": "us-central1-docker.pkg.dev/diegonmarcos-infra-prod/ghcr/diegonmarcos/scrappers-api-cloudrun:latest",
+      "port": 3020,
+      "cpu": "1",
+      "memory": "512Mi",
+      "min_instances": 0,
+      "max_instances": 1,
+      "cpu_throttling": true,
+      "invoker": "iam",
+      "env": {
+        "PORT": "3020"
+      },
+      "secret_env": {},
+      "volumes": [],
+      "persistence": "none",
+      "route": {
+        "edge_path": "api.diegonmarcos.com/scrappers",
+        "auth": "two_factor at the edge; /scrappers/health and /scrappers/openapi.json public",
+        "cutover": "Caddy proxies the same path to the run.app URL with an identity token"
+      },
+      "blockers": [
+        "env_file: true - its keys must be listed as Secret Manager names in secret_env before the first apply",
+        "image is a native_build image-wrapper (python:3.13-slim) with no Dockerfile in src; an amd64 build entry is needed in cloud-run-images.yml",
+        "overlaps #1429 (scraper API on Cloud Run): that ticket reuses this entry rather than adding a second one"
+      ]
+    }
+  ]
 }
