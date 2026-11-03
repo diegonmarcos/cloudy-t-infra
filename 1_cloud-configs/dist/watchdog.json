@@ -431,6 +431,11 @@
   },
   "storage": [
     {
+      "provider": "gcp",
+      "name": "each.key",
+      "tier": "STANDARD"
+    },
+    {
       "provider": "oci",
       "name": "cloud-backups-binaries-medias",
       "tier": "Standard",

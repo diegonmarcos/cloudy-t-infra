@@ -10261,7 +10261,7 @@
       "category": "data",
       "vm": "oci-A1-f_0",
       "folder": "user-data_scrappers-api",
-      "description": "Unified scrapers API (Instagram / Pinterest / LinkedIn / generic crawl) — retires crawlee-cloud. Lean single-container FastAPI, on-demand, flat-JSON output.",
+      "description": "Unified scrapers API (Instagram / Pinterest / LinkedIn / generic crawl / YouTube download) — retires crawlee-cloud. Lean single-container FastAPI, on-demand, flat-JSON output.",
       "enabled": true,
       "domain": "api.diegonmarcos.com",
       "flake": "user-data_scrappers-api",
@@ -10339,6 +10339,10 @@
         },
         "prices": {
           "cmd": "python3 test_prices.py",
+          "cwd": "src/code"
+        },
+        "ytdl": {
+          "cmd": "python3 test_ytdl.py",
           "cwd": "src/code"
         }
       },
@@ -12275,6 +12279,11 @@
   },
   "storage": [
     {
+      "provider": "gcp",
+      "name": "each.key",
+      "tier": "STANDARD"
+    },
+    {
       "provider": "oci",
       "name": "cloud-backups-binaries-medias",
       "tier": "Standard",
@@ -12323,18 +12332,18 @@
   "databases": {
     "_doc": "Canonical registry of every datastore. `kind` is what it is; `persistence.type` is where it survives. Fleet groups project one axis — never hand-maintain a parallel list. Git existence comes from the fetched GitHub inventory (src/inputs/github-repos.json); mirrored/indexed are declaration-driven flags on top.",
     "_counts": {
-      "total": 106,
+      "total": 107,
       "by_kind": {
         "embedded": 13,
         "container": 9,
-        "object-store": 5,
+        "object-store": 6,
         "git-remote": 79
       },
       "by_persistence": {
         "docker-volume": 19,
         "docker-bind": 1,
         "unknown": 2,
-        "s3": 5,
+        "s3": 6,
         "git": 79
       },
       "github_repos": 40,
@@ -12760,6 +12769,28 @@
         "vm": "oci-A1-f_0",
         "backup": {
           "enabled": true,
+          "strategy": null
+        }
+      },
+      {
+        "id": "each.key",
+        "service": null,
+        "container": null,
+        "engine": "s3",
+        "kind": "object-store",
+        "persistence": {
+          "type": "s3",
+          "ref": "each.key",
+          "mount": null
+        },
+        "provider": "gcp",
+        "region": null,
+        "tier": "STANDARD",
+        "endpoint": null,
+        "dns": null,
+        "vm": null,
+        "backup": {
+          "enabled": false,
           "strategy": null
         }
       },

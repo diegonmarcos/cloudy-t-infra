@@ -6,12 +6,12 @@
   },
   "repo": "cloud",
   "counts": {
-    "files": 1573,
+    "files": 1574,
     "by_lang": {
       "sh": 1061,
       "js": 169,
       "nix": 304,
-      "py": 9,
+      "py": 10,
       "ts": 30
     },
     "by_role": {
@@ -21,7 +21,7 @@
       "flake": 6,
       "script": 145,
       "module": 113,
-      "python": 6,
+      "python": 7,
       "engine": 1,
       "nix-module": 298
     }
@@ -33478,6 +33478,24 @@
       "symbols": [
         "log()",
         "MDATA()"
+      ]
+    },
+    {
+      "path": "c_vps/vps_gcloud/test/test-cloud-run.py",
+      "lang": "py",
+      "role": "python",
+      "exports": [
+        "check(cfg)",
+        "mutations(cfg)",
+        "main()"
+      ],
+      "imports": [
+        "copy"
+      ],
+      "symbols": [
+        "check(cfg)",
+        "mutations(cfg)",
+        "main()"
       ]
     },
     {

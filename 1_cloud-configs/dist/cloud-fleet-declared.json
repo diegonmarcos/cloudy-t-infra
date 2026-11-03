@@ -1338,6 +1338,28 @@
         ],
         "db-s3": [
           {
+            "id": "each.key",
+            "service": null,
+            "container": null,
+            "engine": "s3",
+            "kind": "object-store",
+            "persistence": {
+              "type": "s3",
+              "ref": "each.key",
+              "mount": null
+            },
+            "provider": "gcp",
+            "region": null,
+            "tier": "STANDARD",
+            "endpoint": null,
+            "dns": null,
+            "vm": null,
+            "backup": {
+              "enabled": false,
+              "strategy": null
+            }
+          },
+          {
             "id": "cloud-backups-binaries-medias",
             "service": null,
             "container": null,
@@ -5110,6 +5132,28 @@
         }
       ],
       "db-s3": [
+        {
+          "id": "each.key",
+          "service": null,
+          "container": null,
+          "engine": "s3",
+          "kind": "object-store",
+          "persistence": {
+            "type": "s3",
+            "ref": "each.key",
+            "mount": null
+          },
+          "provider": "gcp",
+          "region": null,
+          "tier": "STANDARD",
+          "endpoint": null,
+          "dns": null,
+          "vm": null,
+          "backup": {
+            "enabled": false,
+            "strategy": null
+          }
+        },
         {
           "id": "cloud-backups-binaries-medias",
           "service": null,

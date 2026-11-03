@@ -310,6 +310,11 @@
   },
   "storage": [
     {
+      "provider": "gcp",
+      "name": "each.key",
+      "tier": "STANDARD"
+    },
+    {
       "provider": "oci",
       "name": "cloud-backups-binaries-medias",
       "tier": "Standard",
@@ -5859,7 +5864,7 @@
       "category": "data",
       "vm": "oci-A1-f_0",
       "folder": "user-data_scrappers-api",
-      "description": "Unified scrapers API (Instagram / Pinterest / LinkedIn / generic crawl) — retires crawlee-cloud. Lean single-container FastAPI, on-demand, flat-JSON output.",
+      "description": "Unified scrapers API (Instagram / Pinterest / LinkedIn / generic crawl / YouTube download) — retires crawlee-cloud. Lean single-container FastAPI, on-demand, flat-JSON output.",
       "domain": "api.diegonmarcos.com",
       "port": 3020,
       "dns": "scrappers-api.mesh.diegonmarcos.com",

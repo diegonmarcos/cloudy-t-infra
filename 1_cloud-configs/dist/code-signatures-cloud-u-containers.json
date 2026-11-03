@@ -6,20 +6,20 @@
   },
   "repo": "cloud-u-containers",
   "counts": {
-    "files": 2522,
+    "files": 2525,
     "by_lang": {
       "sh": 175,
       "js": 96,
       "nix": 185,
-      "py": 507,
+      "py": 509,
       "ts": 1190,
-      "rust": 369
+      "rust": 370
     },
     "by_role": {
       "shell": 165,
       "file": 343,
       "nix-module": 19,
-      "python": 493,
+      "python": 495,
       "module": 733,
       "script": 9,
       "flake": 84,
@@ -27,7 +27,7 @@
       "compose": 82,
       "mcp-tool": 121,
       "workflow-dag": 5,
-      "rust-module": 365,
+      "rust-module": 366,
       "hook": 53
     }
   },
@@ -59856,17 +59856,22 @@
         "scrape(platform: str, req: ScrapeReq)",
         "prices(q: str, brands: str | None = None)",
         "run_target(target_id: str)",
-        "class ScrapeReq"
+        "download_youtube(req: YtDownloadReq)",
+        "class ScrapeReq",
+        "class YtDownloadReq"
       ],
       "imports": [
         "pathlib",
         "fastapi",
         "fastapi.responses",
+        "starlette.background",
         "pydantic",
         "os",
         "json",
         "time",
-        "importlib"
+        "importlib",
+        "shutil",
+        "ytdl"
       ],
       "symbols": [
         "_load(platform: str)",
@@ -59877,7 +59882,9 @@
         "scrape(platform: str, req: ScrapeReq)",
         "prices(q: str, brands: str | None = None)",
         "run_target(target_id: str)",
-        "class ScrapeReq"
+        "download_youtube(req: YtDownloadReq)",
+        "class ScrapeReq",
+        "class YtDownloadReq"
       ]
     },
     {
@@ -60133,6 +60140,45 @@
         "check(robots_src: str, sources: dict, base: str, dead: str)",
         "main()",
         "class Handler"
+      ]
+    },
+    {
+      "path": "user-data_scrappers-api/src/code/test_ytdl.py",
+      "lang": "py",
+      "role": "python",
+      "exports": [
+        "load(src)",
+        "check(m)"
+      ],
+      "imports": [
+        "pathlib",
+        "sys"
+      ],
+      "symbols": [
+        "load(src)",
+        "check(m)"
+      ]
+    },
+    {
+      "path": "user-data_scrappers-api/src/code/ytdl.py",
+      "lang": "py",
+      "role": "python",
+      "exports": [
+        "validate(url: str, mode: str, quality: int | None)",
+        "format_selector(mode: str, quality: int | None)",
+        "ydl_options(mode: str, quality: int | None, out_dir: str)",
+        "download(url: str, mode: str, quality: int | None = None)"
+      ],
+      "imports": [
+        "pathlib",
+        "re",
+        "tempfile"
+      ],
+      "symbols": [
+        "validate(url: str, mode: str, quality: int | None)",
+        "format_selector(mode: str, quality: int | None)",
+        "ydl_options(mode: str, quality: int | None, out_dir: str)",
+        "download(url: str, mode: str, quality: int | None = None)"
       ]
     },
     {
@@ -62036,6 +62082,60 @@
       ]
     },
     {
+      "path": "user-fin_capital-stack-finterminal-api/src/code/crates/server/src/finterm/freestack.rs",
+      "lang": "rust",
+      "role": "rust-module",
+      "exports": [
+        "gap",
+        "key",
+        "flag_on",
+        "state",
+        "yahoo_wanted",
+        "redact",
+        "row",
+        "openfigi_map",
+        "fmp_ratios",
+        "sec_filings",
+        "sec_facts",
+        "yahoo_chart"
+      ],
+      "imports": [
+        "super::store::Obs",
+        "serde_json::",
+        "std::time::Duration",
+        "super::"
+      ],
+      "symbols": [
+        "gap(per_min: u64)",
+        "key(env: &str, var: impl Fn(&str)",
+        "flag_on(declared_default: bool, value: Option<&str>)",
+        "state(s: &Value, has_key: bool, flag: bool)",
+        "yahoo_wanted(flag: bool, primary_has_rows: bool)",
+        "redact(msg: &str, key: Option<&str>)",
+        "row(s: &Value, st: &str, last_ok: Option<i64>, error: Option<&str>)",
+        "obs(id: String, date: String, value: f64)",
+        "openfigi_map(body: &str, jobs: &[Value])",
+        "fmp_ratios(body: &str, symbol: &str)",
+        "sec_filings(body: &str, forms: &[String], keep: usize)",
+        "sec_facts(body: &str, cik: &str, concepts: &[String], forms: &[String])",
+        "yahoo_chart(body: &str, symbol: &str)",
+        "fs()",
+        "src(id: &str)",
+        "the_declaration_holds_five_sources_whose_formats_the_store_parses()",
+        "gap_paces_by_the_declared_budget()",
+        "key_reads_the_variable_then_its_file_and_never_an_empty_one()",
+        "a_keyed_source_without_its_key_needs_one()",
+        "yahoo_is_off_by_default_and_only_the_last_fallback()",
+        "row_rates_and_errors()",
+        "redact_hides_the_key()",
+        "openfigi_parses_each_job_in_order()",
+        "fmp_keeps_every_numeric_field_per_date()",
+        "sec_filings_keep_the_declared_forms_newest_first()",
+        "sec_facts_read_declared_concepts_from_declared_forms()",
+        "yahoo_reads_closes_dividends_and_splits()"
+      ]
+    },
+    {
       "path": "user-fin_capital-stack-finterminal-api/src/code/crates/server/src/finterm/fxmatrix.rs",
       "lang": "rust",
       "role": "rust-module",
@@ -62322,6 +62422,7 @@
         "pct"
       ],
       "imports": [
+        "super::freestack",
         "super::normalise::Ev",
         "super::scheduler::collect",
         "super::",
@@ -62370,14 +62471,14 @@
         "start(state: AppState, pool: SqlitePool)",
         "wait(&mut self, source: &str, per_min: u64)",
         "tasks(u: &Value)",
+        "free_tasks(u: &Value)",
         "run_due(st: &AppState, pool: &SqlitePool, pacer: &mut Pacer)",
         "per_min(s: &Value)",
         "url(source: &Value, path: &str, params: &Value, slots: &[(&str, String)",
         "fetch(st: &AppState, url: &str)",
         "put(pool: &SqlitePool, obs: &[Obs])",
         "last_date(pool: &SqlitePool, id: &str)",
-        "date_of(v: &Value)",
-        "run_hist(st: &AppState, pool: &SqlitePool, pacer: &mut Pacer, u: &Value, s: &Value)"
+        "date_of(v: &Value)"
       ]
     },
     {
@@ -62876,6 +62977,7 @@
       "exports": [
         "buildFetchers",
         "buildUniverse",
+        "freeStack",
         "historySymbols",
         "OUT",
         "APP",
@@ -62892,6 +62994,7 @@
       "symbols": [
         "buildFetchers({ sources, dashboards, centralBanks, universe, declarationSha })",
         "buildUniverse(u, byId, fail, dashboards, v1)",
+        "freeStack(fs, u, v1, fail)",
         "historySymbols(dashboards, h, fail)",
         "readAndroid(rel, local)"
       ]
