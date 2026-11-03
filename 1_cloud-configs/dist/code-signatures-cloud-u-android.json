@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 23036,
+    "files": 23060,
     "by_lang": {
-      "sh": 642,
+      "sh": 645,
       "js": 526,
-      "py": 192,
-      "kotlin": 12412,
+      "py": 193,
+      "kotlin": 12432,
       "java": 649,
       "nix": 35,
       "rust": 111,
@@ -20,11 +20,11 @@
     "by_role": {
       "hook": 158,
       "file": 2303,
-      "shell": 512,
+      "shell": 515,
       "script": 284,
       "java": 648,
-      "kotlin": 12409,
-      "python": 61,
+      "kotlin": 12429,
+      "python": 62,
       "module": 6459,
       "flake": 31,
       "rust-module": 111,
@@ -39001,6 +39001,8 @@
         "applySeed(seed: FavSeed)",
         "viewMode()",
         "setViewMode(v: String)",
+        "collapsed()",
+        "toggleCollapsed(folder: String)",
         "edit(url: String, title: String, folder: String)",
         "save(list: List<BrowserBookmark>)",
         "class BrowserBookmark",
@@ -39409,6 +39411,7 @@
       "role": "kotlin",
       "exports": [
         "FavSeedItem",
+        "FavFilter",
         "FavSeed",
         "BrowserFavourites"
       ],
@@ -39422,13 +39425,21 @@
         "merge(list: List<BrowserBookmark>, seed: FavSeed, seen: Set<String>, now: Long)",
         "letter(title: String, url: String)",
         "sections(list: List<BrowserBookmark>)",
+        "filterOf(folder: String)",
+        "subOf(folder: String)",
+        "byFilter(sections: List<Pair<String, List<BrowserBookmark>>>, label: String?)",
+        "gridRows(items: List<T>)",
+        "groups(sections: List<Pair<String, List<BrowserBookmark>>>, collapsed: Set<String>)",
+        "toggle(collapsed: Set<String>, folder: String)",
         "tokens(q: String)",
         "matches(b: BrowserBookmark, q: String)",
         "filter(sections: List<Pair<String, List<BrowserBookmark>>>, q: String)",
         "suggest(list: List<BrowserBookmark>, q: String, limit: Int, skip: Set<String> = emptySet()",
         "class FavSeedItem",
+        "class FavFilter",
         "class FavSeed",
-        "class BrowserFavourites"
+        "class BrowserFavourites",
+        "class FavGroup"
       ]
     },
     {
@@ -39661,14 +39672,15 @@
       "imports": [],
       "symbols": [
         "isFormPostResult(url: String?)",
-        "cleanUserAgent(ua: String)",
+        "isGoogleOAuth(url: String?)",
         "hasWebViewToken(ua: String)",
         "decide(url: String?)",
         "class BrowserNavPolicy",
         "class Decision",
         "class Load",
         "class Redirect",
-        "class Block"
+        "class Block",
+        "class CustomTab"
       ]
     },
     {
@@ -40025,6 +40037,7 @@
         "androidx.compose.foundation.layout.ExperimentalLayoutApi",
         "androidx.compose.foundation.layout.FlowRow",
         "androidx.compose.foundation.layout.Row",
+        "androidx.compose.foundation.horizontalScroll",
         "androidx.compose.foundation.layout.fillMaxSize",
         "androidx.compose.foundation.layout.fillMaxWidth",
         "androidx.compose.foundation.layout.height",
@@ -40054,8 +40067,7 @@
         "androidx.compose.ui.Alignment",
         "androidx.compose.ui.Modifier",
         "androidx.compose.ui.graphics.Color",
-        "androidx.compose.ui.platform.testTag",
-        "androidx.compose.ui.unit.dp"
+        "androidx.compose.ui.platform.testTag"
       ],
       "symbols": [
         "sheet()",
@@ -40071,7 +40083,7 @@
         "BrowserClearScreen(boxes: List<Pair<String, String>>, note: String, onClear: (Set<String>)",
         "BrowserScraperScreen( result: String, onPick: ()",
         "BrowserFavScreen( sections: List<Pair<String, List<BrowserBookmark>>>, view: String, icon: (String)",
-        "tile(b: BrowserBookmark)",
+        "tile(b: BrowserBookmark, size: androidx.compose.ui.unit.Dp)",
         "class SheetRow",
         "class BrowserSettingsLayout",
         "class ListRow"
@@ -71247,6 +71259,28 @@
       ]
     },
     {
+      "path": "ab_cloud-libs-shared/libs/media-convert-audio/src/main/java/com/diegonmarcos/superapp/mediaconvert/audio/AudioExtract.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "AudioExtract"
+      ],
+      "imports": [
+        "android.media.MediaCodec",
+        "android.media.MediaExtractor",
+        "android.media.MediaFormat",
+        "android.media.MediaMuxer",
+        "java.io.File",
+        "java.nio.ByteBuffer"
+      ],
+      "symbols": [
+        "plan(trackMimes: List<String?>)",
+        "extract(src: File, dstWithoutExt: File)",
+        "class AudioExtract",
+        "class Plan"
+      ]
+    },
+    {
       "path": "ab_cloud-libs-shared/libs/media/src/main/java/com/diegonmarcos/superapp/media/BundledStickerProvider.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -72291,6 +72325,71 @@
         "isConnected()",
         "loadOrCacheModel(dir: String)",
         "class LocalVoiceEngineClient"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/ml-ocr/src/main/java/com/diegonmarcos/superapp/mlocr/MlKitOcr.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "MlKitOcr"
+      ],
+      "imports": [
+        "android.graphics.Bitmap",
+        "com.google.android.gms.tasks.Tasks",
+        "com.google.mlkit.vision.common.InputImage",
+        "com.google.mlkit.vision.text.TextRecognizer",
+        "com.google.mlkit.vision.text.TextRecognition",
+        "com.google.mlkit.vision.text.chinese.ChineseTextRecognizerOptions",
+        "com.google.mlkit.vision.text.devanagari.DevanagariTextRecognizerOptions",
+        "com.google.mlkit.vision.text.japanese.JapaneseTextRecognizerOptions",
+        "com.google.mlkit.vision.text.korean.KoreanTextRecognizerOptions",
+        "com.google.mlkit.vision.text.latin.TextRecognizerOptions",
+        "java.util.concurrent.TimeUnit"
+      ],
+      "symbols": [
+        "recognizer(s: Script)",
+        "score(t: String)",
+        "nonLatinNeeded(latin: String)",
+        "read(bitmap: Bitmap, timeoutSeconds: Long = 30)",
+        "class MlKitOcr",
+        "class Script",
+        "class Read"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/ml-ocr/src/main/java/com/diegonmarcos/superapp/mlocr/OcrImage.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "OcrImage"
+      ],
+      "imports": [
+        "android.content.Context",
+        "android.graphics.Bitmap",
+        "android.graphics.BitmapFactory",
+        "android.graphics.ImageDecoder",
+        "android.net.Uri",
+        "android.os.Build",
+        "java.io.ByteArrayOutputStream"
+      ],
+      "symbols": [
+        "load(context: Context, uri: Uri, maxSide: Int = MAX_SIDE)",
+        "jpeg(bitmap: Bitmap, quality: Int = 85)",
+        "class OcrImage"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/ml-ocr/src/main/java/com/diegonmarcos/superapp/mlocr/VisionOcr.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "VisionOcr"
+      ],
+      "imports": [],
+      "symbols": [
+        "read(jpeg: ByteArray, model: String, prompt: String)",
+        "class VisionOcr"
       ]
     },
     {
@@ -77318,6 +77417,299 @@
         "refresh_list()",
         "_derive_outline()",
         "refresh_outline()"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/scraper/src/main/java/com/diegonmarcos/superapp/scraper/FileViewer.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "FileViewer",
+        "styleOf",
+        "highlighted",
+        "prettyJson"
+      ],
+      "imports": [
+        "android.graphics.BitmapFactory",
+        "android.content.Context",
+        "android.webkit.WebView",
+        "com.diegonmarcos.cloudlib.web.CloudWeb",
+        "com.diegonmarcos.cloudlib.web.WebProfile",
+        "android.widget.MediaController",
+        "android.widget.VideoView",
+        "androidx.activity.compose.BackHandler",
+        "androidx.compose.foundation.Image",
+        "androidx.compose.foundation.background",
+        "androidx.compose.foundation.clickable",
+        "androidx.compose.foundation.gestures.detectTransformGestures",
+        "androidx.compose.foundation.horizontalScroll",
+        "androidx.compose.foundation.layout.Box",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.Row",
+        "androidx.compose.foundation.layout.fillMaxSize",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.foundation.rememberScrollState",
+        "androidx.compose.foundation.verticalScroll",
+        "androidx.compose.material3.MaterialTheme",
+        "androidx.compose.material3.Text",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.LaunchedEffect",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableFloatStateOf",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.remember",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.ui.Alignment",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.graphics.Color",
+        "androidx.compose.ui.graphics.asImageBitmap",
+        "androidx.compose.ui.graphics.graphicsLayer",
+        "androidx.compose.ui.input.pointer.pointerInput",
+        "androidx.compose.ui.platform.LocalContext",
+        "androidx.compose.ui.platform.testTag",
+        "androidx.compose.ui.text.AnnotatedString",
+        "androidx.compose.ui.text.SpanStyle"
+      ],
+      "symbols": [
+        "FileViewer(f: SiteFile, c: ThemeColors, onClose: ()",
+        "pageView(cx: Context, f: File)",
+        "styleOf(t: Tok)",
+        "highlighted(text: String, lang: String)",
+        "CodeView(f: File, lang: String, c: ThemeColors)",
+        "prettyJson(raw: String)",
+        "ImageView(f: File)",
+        "MediaView(f: File)"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/scraper/src/main/java/com/diegonmarcos/superapp/scraper/ScraperApi.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ScraperApiException",
+        "ScraperApi"
+      ],
+      "imports": [
+        "org.json.JSONObject",
+        "java.io.IOException",
+        "java.io.InputStream",
+        "java.net.HttpURLConnection",
+        "java.net.URL"
+      ],
+      "symbols": [
+        "downloadYoutube(body: JSONObject, sink: (InputStream, Download)",
+        "post(path: String, body: JSONObject, ok: (HttpURLConnection)",
+        "fileNameOf(header: String?, fallback: String)",
+        "safeName(fallback: String)",
+        "detailOf(body: String)",
+        "class ScraperApiException",
+        "class ScraperApi",
+        "class Download"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/scraper/src/main/java/com/diegonmarcos/superapp/scraper/ScrapersUi.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ScrapersPages",
+        "ScrapersPage",
+        "SiteFilesPage",
+        "ScrapToolsPage"
+      ],
+      "imports": [
+        "android.net.Uri",
+        "androidx.activity.compose.rememberLauncherForActivityResult",
+        "androidx.activity.result.contract.ActivityResultContracts",
+        "androidx.compose.foundation.background",
+        "androidx.compose.foundation.clickable",
+        "androidx.compose.foundation.horizontalScroll",
+        "androidx.compose.foundation.layout.Box",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.Row",
+        "androidx.compose.foundation.layout.Spacer",
+        "androidx.compose.foundation.layout.fillMaxSize",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.foundation.layout.height",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.foundation.layout.width",
+        "androidx.compose.foundation.lazy.LazyColumn",
+        "androidx.compose.foundation.lazy.items",
+        "androidx.compose.foundation.rememberScrollState",
+        "androidx.compose.foundation.shape.RoundedCornerShape",
+        "androidx.compose.foundation.verticalScroll",
+        "androidx.compose.material3.Button",
+        "androidx.compose.material3.ButtonDefaults",
+        "androidx.compose.material3.FilterChip",
+        "androidx.compose.material3.FilterChipDefaults",
+        "androidx.compose.material3.LinearProgressIndicator",
+        "androidx.compose.material3.MaterialTheme",
+        "androidx.compose.material3.OutlinedTextField",
+        "androidx.compose.material3.OutlinedTextFieldDefaults",
+        "androidx.compose.material3.Text",
+        "androidx.compose.material3.TextButton",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.LaunchedEffect",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableStateListOf",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.remember",
+        "androidx.compose.runtime.rememberCoroutineScope",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.ui.Alignment",
+        "androidx.compose.ui.Modifier"
+      ],
+      "symbols": [
+        "ScrapersPage(page: String?, c: ThemeColors, modifier: Modifier = Modifier)",
+        "human(bytes: Long)",
+        "date(ts: Long)",
+        "Chip(label: String, selected: Boolean, c: ThemeColors, tag: String, onClick: ()",
+        "SiteFilesPage(c: ThemeColors)",
+        "ScrapToolsPage(c: ThemeColors)",
+        "YouTubeTool(c: ThemeColors)",
+        "start(chosen: Uri?)",
+        "class ScrapersPages"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/scraper/src/main/java/com/diegonmarcos/superapp/scraper/SiteFiles.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "FileSource",
+        "SiteFile",
+        "SiteGroup",
+        "SiteSort",
+        "SiteFiles",
+        "SimpleCache"
+      ],
+      "imports": [
+        "org.json.JSONArray",
+        "org.json.JSONObject",
+        "java.io.File",
+        "java.net.URI",
+        "java.nio.ByteBuffer",
+        "java.nio.ByteOrder"
+      ],
+      "symbols": [
+        "hostOf(url: String)",
+        "nameOf(url: String)",
+        "group(files: List<SiteFile>, visits: List<Pair<String, Long>>)",
+        "sort(groups: List<SiteGroup>, by: SiteSort)",
+        "downloads(json: String?, exists: (String)",
+        "saved(json: String?, root: File, exists: (String)",
+        "visits(json: String?)",
+        "parse(b: ByteArray)",
+        "urlOfKey(key: String)",
+        "header(raw: String, name: String)",
+        "class FileSource",
+        "class SiteFile",
+        "class SiteGroup",
+        "class SiteSort",
+        "class SiteFiles",
+        "class SimpleCache",
+        "class Entry"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/scraper/src/main/java/com/diegonmarcos/superapp/scraper/SiteFilesSource.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "SiteFilesSource"
+      ],
+      "imports": [
+        "android.content.Context",
+        "java.io.File",
+        "java.util.zip.GZIPInputStream"
+      ],
+      "symbols": [
+        "webRoots(ctx: Context)",
+        "cacheEntries(ctx: Context)",
+        "load(ctx: Context)",
+        "ownDownloads(ctx: Context, stat: (String)",
+        "materialize(ctx: Context, f: SiteFile)",
+        "class SiteFilesSource"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/scraper/src/main/java/com/diegonmarcos/superapp/scraper/Viewer.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "Viewer",
+        "Route",
+        "ViewerRoute",
+        "Tok",
+        "Span",
+        "Highlighter"
+      ],
+      "imports": [],
+      "symbols": [
+        "route(name: String, mime: String = \"\")",
+        "rules(lang: String)",
+        "spans(text: String, lang: String)",
+        "class Viewer",
+        "class Route",
+        "class ViewerRoute",
+        "class Tok",
+        "class Span",
+        "class Highlighter"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/scraper/src/main/java/com/diegonmarcos/superapp/scraper/YtDownloader.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "YtDownloader"
+      ],
+      "imports": [
+        "android.content.ContentValues",
+        "android.content.Context",
+        "android.net.Uri",
+        "android.os.Build",
+        "android.os.Environment",
+        "android.provider.MediaStore",
+        "com.diegonmarcos.superapp.mediaconvert.audio.AudioExtract",
+        "java.io.File"
+      ],
+      "symbols": [
+        "externalDir(ctx: Context)",
+        "run(ctx: Context, r: YtRequest, chosen: Uri?, api: ScraperApi = ScraperApi()",
+        "fetch(serverExtract: Boolean)",
+        "toDownloads(ctx: Context, f: File, mime: String)",
+        "class YtDownloader"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/scraper/src/main/java/com/diegonmarcos/superapp/scraper/YtTool.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "YtAs",
+        "YtTarget",
+        "YtRequest",
+        "YtTool"
+      ],
+      "imports": [
+        "org.json.JSONObject",
+        "java.net.URI"
+      ],
+      "symbols": [
+        "qualities(saveAs: YtAs)",
+        "videoId(raw: String)",
+        "canonical(id: String)",
+        "problems(r: YtRequest)",
+        "extractsOnDevice(r: YtRequest)",
+        "body(r: YtRequest, serverExtract: Boolean = false)",
+        "suggestedName(r: YtRequest)",
+        "suggestedMime(r: YtRequest)",
+        "class YtAs",
+        "class YtTarget",
+        "class YtRequest",
+        "class YtTool"
       ]
     },
     {
@@ -89270,6 +89662,7 @@
         "org.junit.Test"
       ],
       "symbols": [
+        "bm(url: String, folder: String)",
         "class BrowserFavouritesTest"
       ]
     },
@@ -90127,6 +90520,89 @@
       ]
     },
     {
+      "path": "ac_cloud-browser/app/src/test/java/com/diegonmarcos/cloudbrowser/ScraperSiteFilesTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ScraperSiteFilesTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.scraper.FileSource",
+        "com.diegonmarcos.superapp.scraper.SimpleCache",
+        "com.diegonmarcos.superapp.scraper.SiteFile",
+        "com.diegonmarcos.superapp.scraper.SiteFiles",
+        "com.diegonmarcos.superapp.scraper.SiteSort",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertNull",
+        "org.junit.Test",
+        "java.io.ByteArrayOutputStream",
+        "java.io.File",
+        "java.nio.ByteBuffer",
+        "java.nio.ByteOrder"
+      ],
+      "symbols": [
+        "entry(key: String, body: ByteArray, headers: String = \"HTTP/1.1 200\\u0000content-type: text/css; charset=utf-8\\u0000\")",
+        "le(n: Int, put: ByteBuffer.()",
+        "f(host: String, name: String, mod: Long, src: FileSource = FileSource.CACHE)",
+        "class ScraperSiteFilesTest"
+      ]
+    },
+    {
+      "path": "ac_cloud-browser/app/src/test/java/com/diegonmarcos/cloudbrowser/ScraperViewerRouteTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ScraperViewerRouteTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.scraper.Highlighter",
+        "com.diegonmarcos.superapp.scraper.Route",
+        "com.diegonmarcos.superapp.scraper.Tok",
+        "com.diegonmarcos.superapp.scraper.Viewer",
+        "com.diegonmarcos.superapp.scraper.ViewerRoute",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "r(name: String, mime: String = \"\")",
+        "toks(text: String, lang: String)",
+        "class ScraperViewerRouteTest"
+      ]
+    },
+    {
+      "path": "ac_cloud-browser/app/src/test/java/com/diegonmarcos/cloudbrowser/ScraperYouTubeToolTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ScraperYouTubeToolTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.scraper.ScraperApi",
+        "com.diegonmarcos.superapp.scraper.ScraperApiException",
+        "com.diegonmarcos.superapp.scraper.YtAs",
+        "com.diegonmarcos.superapp.scraper.YtRequest",
+        "com.diegonmarcos.superapp.scraper.YtTarget",
+        "com.diegonmarcos.superapp.scraper.YtTool",
+        "okhttp3.mockwebserver.MockResponse",
+        "okhttp3.mockwebserver.MockWebServer",
+        "org.json.JSONObject",
+        "org.junit.After",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Assert.fail",
+        "org.junit.Before",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "up()",
+        "down()",
+        "class ScraperYouTubeToolTest"
+      ]
+    },
+    {
       "path": "ac_cloud-browser/app/src/test/java/com/diegonmarcos/cloudbrowser/TabThumbnailsTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -90583,6 +91059,30 @@
       ]
     },
     {
+      "path": "ac_cloud-browser/test/emulator-browser-proof.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "ok()",
+        "bad()",
+        "dump()",
+        "shot()",
+        "top()",
+        "tap()",
+        "open_url()"
+      ],
+      "imports": [],
+      "symbols": [
+        "ok()",
+        "bad()",
+        "dump()",
+        "shot()",
+        "top()",
+        "tap()",
+        "open_url()"
+      ]
+    },
+    {
       "path": "ac_cloud-browser/test/emulator-linktree.sh",
       "lang": "sh",
       "role": "shell",
@@ -90622,6 +91122,26 @@
         "tap_text()",
         "wait_for()",
         "fg_service()"
+      ]
+    },
+    {
+      "path": "ac_cloud-browser/test/emulator-scrapers.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "ok()",
+        "bad()",
+        "dump()",
+        "shot()",
+        "tap()"
+      ],
+      "imports": [],
+      "symbols": [
+        "ok()",
+        "bad()",
+        "dump()",
+        "shot()",
+        "tap()"
       ]
     },
     {
@@ -90818,6 +91338,38 @@
         "el(tag, attrs, parent, rect)",
         "text(v, parent)",
         "page(scrollY)"
+      ]
+    },
+    {
+      "path": "ac_cloud-browser/tools/gen-favourites-catalog.py",
+      "lang": "py",
+      "role": "python",
+      "exports": [
+        "load(rel)",
+        "cloud_categories(cloud_services)",
+        "service_rows(rows, cats, url_field, scheme, protocols=None, require_port=False)",
+        "pages_rows(pages)",
+        "site_of(pkg)",
+        "phone_rows(superapp_ui, section)",
+        "webserver_pages(ws_build, app_rs)",
+        "derive(bj, read)",
+        "reader(rel)",
+        "render()"
+      ],
+      "imports": [
+        "json"
+      ],
+      "symbols": [
+        "load(rel)",
+        "cloud_categories(cloud_services)",
+        "service_rows(rows, cats, url_field, scheme, protocols=None, require_port=False)",
+        "pages_rows(pages)",
+        "site_of(pkg)",
+        "phone_rows(superapp_ui, section)",
+        "webserver_pages(ws_build, app_rs)",
+        "derive(bj, read)",
+        "reader(rel)",
+        "render()"
       ]
     },
     {
@@ -93026,6 +93578,7 @@
         "runSpec(s: CloudRun)",
         "runState(s: CloudRun)",
         "vmNet(v: Vm)",
+        "personalKinds(page: String, s: Slice)",
         "kindLabel(kind: String)",
         "daysUntil(date: String, today: java.time.LocalDate)",
         "costLine(p: Provider, live: String?, why: String?)",
@@ -93055,8 +93608,7 @@
         "class DnsRecord",
         "class Domain",
         "class CloudRun",
-        "class Slice",
-        "class StorageRow"
+        "class Hosting"
       ]
     },
     {
@@ -93071,7 +93623,9 @@
         "MachinesScreen",
         "ServerlessScreen",
         "StorageScreen",
-        "ElectronicsScreen",
+        "NodePythonScreen",
+        "PublicDomainsScreen",
+        "DevicesScreen",
         "DomainsScreen",
         "InfraSectionFragment"
       ],
@@ -93115,7 +93669,9 @@
         "MachinesScreen(slice: FleetModel.Slice)",
         "ServerlessScreen(slice: FleetModel.Slice)",
         "StorageScreen(slice: FleetModel.Slice, live: FleetLiveState)",
-        "ElectronicsScreen(slice: FleetModel.Slice)",
+        "NodePythonScreen(slice: FleetModel.Slice)",
+        "PublicDomainsScreen(slice: FleetModel.Slice)",
+        "DevicesScreen(section: String, slice: FleetModel.Slice)",
         "DomainsScreen(slice: FleetModel.Slice, live: FleetLiveState, today: LocalDate = LocalDate.now()",
         "LiveDnsBlock(live: FleetLiveState)",
         "Page(section: String, summary: String, content: @Composable ()",
@@ -93150,13 +93706,17 @@
         "androidx.fragment.app.Fragment",
         "com.diegonmarcos.cloudc3.R",
         "com.diegonmarcos.superapp.bottomnav.NavPage",
+        "com.diegonmarcos.superapp.bottomnav.NavSection",
+        "com.diegonmarcos.superapp.bottomnav.SecondRowMode",
         "com.diegonmarcos.superapp.navbartop2.NavBarTopSecondRow",
+        "com.diegonmarcos.superapp.navbartop2.NavBarTopSecondRows",
         "com.diegonmarcos.superapp.uikit.KitComposeFragment",
         "com.diegonmarcos.superapp.uikit.KitPalette"
       ],
       "symbols": [
         "pages()",
         "pageFragment(pageId: String)",
+        "section()",
         "openPage(pageId: String)",
         "palette()",
         "onCreate(savedInstanceState: Bundle?)",
@@ -93481,6 +94041,7 @@
       ],
       "symbols": [
         "pages()",
+        "section()",
         "pageFragment(pageId: String)",
         "palette()",
         "Content()",
@@ -187684,6 +188245,26 @@
         "reportIsOneLinePerRepoWithTheRealReason()",
         "class StoreGitFishShellTest",
         "class R"
+      ]
+    },
+    {
+      "path": "ac_cloud-drive/app/src/test/java/com/diegonmarcos/clouddrive/sync/StoreGitHintTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "StoreGitHintTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "rootfsFallbackSaysItRepairsItself()",
+        "missingGitSaysPkgInstall()",
+        "readOnlyRootSaysUpdate()",
+        "anUnrelatedFailureGetsNoHint()",
+        "class StoreGitHintTest"
       ]
     },
     {
@@ -587738,9 +588319,9 @@
         "startListen()",
         "ListenPanel(ask: ManagedActivityResultLauncher<Array<String>, Map<String, Boolean>>)",
         "listenRouteLine(s: ListenEngine.Status)",
-        "ConfigsScreen()",
-        "ResultDialog(r: ToolResult)",
-        "DeleteDialog(id: String)"
+        "ToolTab( input: BoxState, inputLabel: String, output: BoxState, outputLabel: String, runLabel: String, onRun: ()",
+        "landIn(output: BoxState)",
+        "runTab(tool: WriterTool, input: BoxState, output: BoxState)"
       ]
     },
     {
@@ -588018,6 +588599,78 @@
       ]
     },
     {
+      "path": "ac_cloud-writer/app/src/main/java/com/diegonmarcos/cloudwriter/WriterBoxes.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "BoxState",
+        "BoxIo",
+        "rememberBoxIo",
+        "ocrInto",
+        "WriterBox"
+      ],
+      "imports": [
+        "android.content.ClipData",
+        "android.content.ClipboardManager",
+        "android.content.Context",
+        "android.net.Uri",
+        "android.os.Handler",
+        "android.os.Looper",
+        "android.provider.OpenableColumns",
+        "androidx.activity.compose.rememberLauncherForActivityResult",
+        "androidx.activity.result.contract.ActivityResultContracts",
+        "androidx.compose.foundation.horizontalScroll",
+        "androidx.compose.foundation.layout.Arrangement",
+        "androidx.compose.foundation.layout.Box",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.Row",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.foundation.layout.heightIn",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.foundation.rememberScrollState",
+        "androidx.compose.material.icons.Icons",
+        "androidx.compose.material.icons.automirrored.filled.FormatListBulleted",
+        "androidx.compose.material.icons.filled.AddPhotoAlternate",
+        "androidx.compose.material.icons.filled.Code",
+        "androidx.compose.material.icons.filled.ContentCopy",
+        "androidx.compose.material.icons.filled.FileOpen",
+        "androidx.compose.material.icons.filled.FileUpload",
+        "androidx.compose.material.icons.filled.FormatBold",
+        "androidx.compose.material.icons.filled.FormatItalic",
+        "androidx.compose.material.icons.filled.FormatListNumbered",
+        "androidx.compose.material.icons.filled.FormatQuote",
+        "androidx.compose.material.icons.filled.Link",
+        "androidx.compose.material.icons.filled.PhotoCamera",
+        "androidx.compose.material.icons.filled.Title",
+        "androidx.compose.material3.AlertDialog",
+        "androidx.compose.material3.Card",
+        "androidx.compose.material3.DropdownMenu",
+        "androidx.compose.material3.DropdownMenuItem",
+        "androidx.compose.material3.FilterChip",
+        "androidx.compose.material3.Icon",
+        "androidx.compose.material3.IconButton",
+        "androidx.compose.material3.MaterialTheme"
+      ],
+      "symbols": [
+        "html()",
+        "text()",
+        "setHtml(html: String)",
+        "setText(text: String)",
+        "switchTo(m: EditMode)",
+        "rememberBoxIo(context: Context, worker: Executor, note: (String)",
+        "ocr(uri: Uri)",
+        "ocrInto(context: Context, worker: Executor, box: BoxState, uri: Uri, note: (String)",
+        "displayName(context: Context, uri: Uri)",
+        "WriterBox(label: String, state: BoxState, io: BoxIo, input: Boolean, modifier: Modifier = Modifier)",
+        "Action(icon: ImageVector, label: Int, onClick: ()",
+        "ExportMenu(onPick: (ExportFormat)",
+        "FormatStrip(rich: RichTextState)",
+        "LinkDialog(rich: RichTextState, close: ()",
+        "class BoxState",
+        "class BoxIo"
+      ]
+    },
+    {
       "path": "ac_cloud-writer/app/src/main/java/com/diegonmarcos/cloudwriter/WriterDebugApi.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -588081,6 +588734,7 @@
         "WriterNav"
       ],
       "imports": [
+        "com.diegonmarcos.cloudwriter.core.WriterTabs",
         "com.diegonmarcos.superapp.bottomnav.NavDecl"
       ],
       "symbols": [
@@ -588125,6 +588779,7 @@
         "putModel(context: Context, providerId: String, modelId: String)",
         "putToolModel(context: Context, tool: WriterTool, providerId: String, modelId: String)",
         "enhancePrompt(context: Context)",
+        "draftPrompt(context: Context)",
         "summaryPrompt(context: Context)",
         "translatePrompt(context: Context)",
         "summaryWantsBullets(context: Context)",
@@ -588160,6 +588815,7 @@
         "language(id: String?)",
         "summary(id: String?)",
         "enhancePrompt(styleId: String?, toneId: String?, lengthId: String?, languageId: String?)",
+        "draftPrompt(toneId: String?, lengthId: String?, languageId: String?)",
         "grammarPrompt()",
         "translatePrompt(languageId: String?)",
         "summaryPrompt(summaryId: String?)",
@@ -588192,6 +588848,12 @@
         "com.diegonmarcos.cloudwriter.core.Route",
         "com.diegonmarcos.cloudwriter.core.Routing",
         "com.diegonmarcos.cloudwriter.core.Wav",
+        "com.diegonmarcos.cloudwriter.core.Ocr",
+        "com.diegonmarcos.cloudwriter.core.OcrEngine",
+        "com.diegonmarcos.superapp.mlocr.MlKitOcr",
+        "com.diegonmarcos.superapp.mlocr.OcrImage",
+        "com.diegonmarcos.superapp.mlocr.VisionOcr",
+        "android.graphics.Bitmap",
         "com.diegonmarcos.superapp.decisions.UrlHttp",
         "com.diegonmarcos.superapp.texttools.TextToolsClient",
         "org.json.JSONObject"
@@ -588216,6 +588878,13 @@
         "accountToken(context: Context)",
         "accountHasKey(context: Context)",
         "translate(context: Context, text: String, languageId: String)",
+        "ocrEngine(context: Context)",
+        "setOcrEngine(context: Context, engine: OcrEngine)",
+        "defaultOcrModel()",
+        "ocrModel(context: Context)",
+        "setOcrModel(context: Context, id: String)",
+        "ocr(context: Context, bitmap: Bitmap)",
+        "visionModels(context: Context)",
         "transcribe(context: Context, pcm: ByteArray, blockerAtStart: String?, onDevice: ()",
         "speechBlocker(context: Context)",
         "speechPrompt(context: Context)",
@@ -588321,6 +588990,7 @@
         "translateLanguages()",
         "providerLabel()",
         "run(tool: WriterTool, text: String, onDone: (WriterOutcome)",
+        "draft(text: String, onDone: (WriterOutcome)",
         "runTool(tool: WriterTool, text: String)",
         "anyFixEnabled(context: Context)",
         "fix(context: Context, text: String)",
@@ -588439,6 +589109,42 @@
       ]
     },
     {
+      "path": "ac_cloud-writer/core/src/main/kotlin/com/diegonmarcos/cloudwriter/core/Boxes.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "WriterTabs",
+        "ImportKind",
+        "Import",
+        "Docx",
+        "OcrEngine",
+        "Ocr"
+      ],
+      "imports": [
+        "java.io.ByteArrayInputStream",
+        "java.util.zip.ZipInputStream"
+      ],
+      "symbols": [
+        "check(declared: List<String>)",
+        "kind(name: String?, mime: String?)",
+        "toHtml(kind: ImportKind, bytes: ByteArray)",
+        "bodyOf(html: String)",
+        "text(bytes: ByteArray)",
+        "documentText(xml: String)",
+        "of(id: String?)",
+        "route(engine: OcrEngine)",
+        "run(engine: OcrEngine, blocker: String?, openRouter: ()",
+        "nonBlank(o: Outcome)",
+        "intoBox(boxHtml: String, recognised: String)",
+        "class WriterTabs",
+        "class ImportKind",
+        "class Import",
+        "class Docx",
+        "class OcrEngine",
+        "class Ocr"
+      ]
+    },
+    {
       "path": "ac_cloud-writer/core/src/main/kotlin/com/diegonmarcos/cloudwriter/core/Dictation.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -588478,6 +589184,35 @@
         "file(id: String)",
         "class DocMeta",
         "class DocStore"
+      ]
+    },
+    {
+      "path": "ac_cloud-writer/core/src/main/kotlin/com/diegonmarcos/cloudwriter/core/HtmlText.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "HtmlText",
+        "EditMode",
+        "ExportFormat",
+        "Export"
+      ],
+      "imports": [],
+      "symbols": [
+        "escape(text: String)",
+        "unescape(text: String)",
+        "textToHtml(text: String)",
+        "htmlToText(html: String)",
+        "htmlToMarkdown(html: String)",
+        "markdownToHtml(md: String)",
+        "flush()",
+        "inline(text: String)",
+        "of(id: String?)",
+        "render(format: ExportFormat, html: String, title: String)",
+        "fileName(html: String, format: ExportFormat)",
+        "class HtmlText",
+        "class EditMode",
+        "class ExportFormat",
+        "class Export"
       ]
     },
     {
@@ -588537,6 +589272,8 @@
         "content(body: String)",
         "catalogue(body: String)",
         "speechModels(all: List<CatalogueModel>)",
+        "visionModels(all: List<CatalogueModel>)",
+        "visionBody(model: String, prompt: String, image: ByteArray, mime: String, maxTokens: Int)",
         "textModels(all: List<CatalogueModel>)",
         "strings(a: JSONArray?)",
         "class OpenRouterConfig",
@@ -588593,6 +589330,33 @@
         "int(at: Int)",
         "short(at: Int)",
         "class AudioTest"
+      ]
+    },
+    {
+      "path": "ac_cloud-writer/core/src/test/kotlin/com/diegonmarcos/cloudwriter/core/BoxesTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "BoxesTest"
+      ],
+      "imports": [
+        "org.json.JSONObject",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.io.ByteArrayOutputStream",
+        "java.util.zip.ZipEntry",
+        "java.util.zip.ZipOutputStream"
+      ],
+      "symbols": [
+        "or(o: Outcome)",
+        "ml(o: Outcome)",
+        "model(id: String, price: String, vararg ins: String)",
+        "docx()",
+        "zip(vararg entries: Pair<String, String>)",
+        "class BoxesTest"
       ]
     },
     {
@@ -588747,6 +589511,24 @@
         "JAVA_HOME",
         "GRADLE_OPTS",
         "shellHook"
+      ]
+    },
+    {
+      "path": "ac_cloud-writer/test/emulator-writer-tabs.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "bad()",
+        "shot()",
+        "has()",
+        "start_section()"
+      ],
+      "imports": [],
+      "symbols": [
+        "bad()",
+        "shot()",
+        "has()",
+        "start_section()"
       ]
     },
     {
