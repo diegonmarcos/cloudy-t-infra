@@ -1598,7 +1598,7 @@
       "vm": "oci-apps",
       "healthcheck": "curl -fsS http://127.0.0.1:3020/health >/dev/null 2>&1 || exit 1",
       "domain": "api.diegonmarcos.com",
-      "description": "Unified scrapers API (Instagram / Pinterest / LinkedIn / generic crawl / YouTube download) — retires crawlee-cloud. Lean single-container FastAPI, on-demand, flat-JSON output.",
+      "description": "Unified scrapers API (Instagram / Pinterest / LinkedIn / generic crawl) — retires crawlee-cloud. Lean single-container FastAPI, on-demand, flat-JSON output.",
       "api": {
         "has_api": true,
         "has_web_ui": true,
