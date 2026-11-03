@@ -231,16 +231,26 @@
       },
       "image": "us-central1-docker.pkg.dev/diegonmarcos-infra-prod/ghcr/diegonmarcos/scrappers-api-cloudrun:latest",
       "port": 3020,
+      "build": {
+        "workflow": "cloudy-u-containers/.github/workflows/cloud-run-images.yml",
+        "ghcr": "ghcr.io/diegonmarcos/scrappers-api-cloudrun",
+        "platform": "linux/amd64",
+        "dockerfile": "user-data_scrappers-api/src/Dockerfile.cloudrun"
+      },
       "cpu": "1",
       "memory": "512Mi",
       "min_instances": 0,
       "max_instances": 1,
       "cpu_throttling": true,
+      "timeout_s": 900,
       "invoker": "iam",
       "env": {
         "PORT": "3020"
       },
-      "secret_env": {},
+      "secret_env": {
+        "IG_BURNER_USER": "scrappers-ig-burner-user",
+        "IG_BURNER_PASS": "scrappers-ig-burner-pass"
+      },
       "volumes": [],
       "persistence": "none",
       "route": {
@@ -249,10 +259,10 @@
         "cutover": "Caddy proxies the same path to the run.app URL with an identity token"
       },
       "blockers": [
-        "env_file: true - its keys must be listed as Secret Manager names in secret_env before the first apply",
-        "image is a native_build image-wrapper (python:3.13-slim) with no Dockerfile in src; an amd64 build entry is needed in cloud-run-images.yml",
-        "overlaps #1429 (scraper API on Cloud Run): that ticket reuses this entry rather than adding a second one"
-      ]
+        "Secret Manager holds no scrappers-ig-burner-user / scrappers-ig-burner-pass yet (only the Instagram private-account path reads them; YouTube download does not)",
+        "the image push (cloud-run-images.yml dispatch push=true) and the Terraform apply are the owner-approved steps"
+      ],
+      "notes": "#1429 the Cloud Browser's Scrap Tools call POST /download/youtube (yt-dlp + ffmpeg, Dockerfile.cloudrun); timeout 900 s for long downloads. The phone tries the mesh name first and this edge path second."
     }
   ]
 }
