@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 23384,
+    "files": 23399,
     "by_lang": {
       "sh": 676,
       "js": 543,
       "py": 203,
-      "kotlin": 12691,
+      "kotlin": 12706,
       "ts": 8470,
       "java": 649,
       "nix": 36,
@@ -24,7 +24,7 @@
       "script": 294,
       "module": 6477,
       "java": 648,
-      "kotlin": 12688,
+      "kotlin": 12703,
       "python": 68,
       "flake": 32,
       "rust-module": 116,
@@ -80030,6 +80030,259 @@
         "writeFormsBuildValidMessages()",
         "declaredCatalogParsesAndHoldsNoKeys()",
         "class NdefTest"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/ocr/src/main/java/com/diegonmarcos/superapp/ocr/Languages.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "Languages"
+      ],
+      "imports": [],
+      "symbols": [
+        "detect(text: String)",
+        "script(c: Char)",
+        "class Languages"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/ocr/src/main/java/com/diegonmarcos/superapp/ocr/LayoutBuilder.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "LayoutBuilder"
+      ],
+      "imports": [],
+      "symbols": [
+        "build(lines: List<OcrLine>, width: Int, height: Int, engine: String, engineVersion: String = \"\", gapFactor: Double = 0.9)",
+        "blocks(lines: List<OcrLine>, gapFactor: Double = 0.9)",
+        "withWords(line: OcrLine)",
+        "class LayoutBuilder"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/ocr/src/main/java/com/diegonmarcos/superapp/ocr/MarkdownFormatter.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "MarkdownFormatter"
+      ],
+      "imports": [
+        "java.text.SimpleDateFormat",
+        "java.util.Date",
+        "java.util.Locale",
+        "java.util.TimeZone"
+      ],
+      "symbols": [
+        "format(r: OcrResult, front: Front?)",
+        "frontMatter(f: Front)",
+        "iso(ms: Long)",
+        "yaml(s: String)",
+        "heading(line: OcrLine, body: Int)",
+        "block(b: OcrBlock, body: Int)",
+        "flush()",
+        "table(t: OcrTable)",
+        "cell(c: OcrCell)",
+        "class MarkdownFormatter",
+        "class Front"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/ocr/src/main/java/com/diegonmarcos/superapp/ocr/OcrModel.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "Box",
+        "OcrWord",
+        "OcrLine",
+        "OcrBlock",
+        "OcrCell",
+        "OcrTable",
+        "OcrResult"
+      ],
+      "imports": [],
+      "symbols": [
+        "union(o: Box)",
+        "list()",
+        "class Box",
+        "class OcrWord",
+        "class OcrLine",
+        "class OcrBlock",
+        "class OcrCell",
+        "class OcrTable",
+        "class OcrResult"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/ocr/src/main/java/com/diegonmarcos/superapp/ocr/SidecarIdempotency.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "SidecarIdempotency"
+      ],
+      "imports": [
+        "java.io.File",
+        "java.security.MessageDigest",
+        "org.json.JSONObject"
+      ],
+      "symbols": [
+        "recorded(jsonText: String)",
+        "isCurrent(recorded: Recorded?, mdExists: Boolean, size: Long, modifiedMs: Long, sha256: ()",
+        "isCurrent(image: File)",
+        "sha256(f: File)",
+        "class SidecarIdempotency",
+        "class Recorded"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/ocr/src/main/java/com/diegonmarcos/superapp/ocr/SidecarJson.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ScreenshotMeta",
+        "SidecarJson"
+      ],
+      "imports": [
+        "org.json.JSONArray",
+        "org.json.JSONObject"
+      ],
+      "symbols": [
+        "build(m: ScreenshotMeta, r: OcrResult)",
+        "ocr(r: OcrResult)",
+        "line(l: OcrLine)",
+        "round(d: Double)",
+        "validate(o: JSONObject)",
+        "class ScreenshotMeta",
+        "class SidecarJson"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/ocr/src/main/java/com/diegonmarcos/superapp/ocr/SidecarNaming.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "SidecarNaming"
+      ],
+      "imports": [
+        "java.io.File"
+      ],
+      "symbols": [
+        "base(imageName: String)",
+        "md(image: File)",
+        "json(image: File)",
+        "isSidecarName(name: String)",
+        "class SidecarNaming"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/ocr/src/main/java/com/diegonmarcos/superapp/ocr/TableDetector.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "TableDetector"
+      ],
+      "imports": [
+        "kotlin.math.abs"
+      ],
+      "symbols": [
+        "rows(lines: List<OcrLine>)",
+        "detect(lines: List<OcrLine>)",
+        "height(a: List<OcrLine>, b: List<OcrLine>)",
+        "gap(a: List<OcrLine>, b: List<OcrLine>)",
+        "build(run: List<List<OcrLine>>)",
+        "class TableDetector",
+        "class Result",
+        "class Col"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/ocr/src/test/java/com/diegonmarcos/superapp/ocr/Fixtures.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "Fixtures"
+      ],
+      "imports": [
+        "java.io.File"
+      ],
+      "symbols": [
+        "line(text: String, l: Int, t: Int, r: Int, h: Int = 30, conf: Double? = 0.9)",
+        "battery()",
+        "tmp()",
+        "class Fixtures"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/ocr/src/test/java/com/diegonmarcos/superapp/ocr/MarkdownFormatterTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "MarkdownFormatterTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "headingParagraphAndTableInReadingOrder()",
+        "tableHasHeaderSeparatorAndExactNumbers()",
+        "pipesInCellsAreEscaped()",
+        "listsAreOneItemPerLine()",
+        "frontMatterHasSourceTimeAppEngineConfidence()",
+        "frontMatterQuotesAwkwardValues()",
+        "emptyOcrGivesOnlyTheFrontMatter()",
+        "class MarkdownFormatterTest"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/ocr/src/test/java/com/diegonmarcos/superapp/ocr/SidecarTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "SidecarTest"
+      ],
+      "imports": [
+        "java.io.File",
+        "org.json.JSONObject",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNotNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "meta(sha: String = \"a\".repeat(64)",
+        "fileNaming()",
+        "jsonMatchesTheSchema()",
+        "validateCatchesMissingParts()",
+        "idempotencySkipsOnMatchAndRedoesOnChange()",
+        "idempotencyOnRealFiles()",
+        "languagesAndScripts()",
+        "class SidecarTest"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/ocr/src/test/java/com/diegonmarcos/superapp/ocr/TableDetectorTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "TableDetectorTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "batteryTableIsThreeColumnsThreeRows()",
+        "cellsCarryRowAndColumn()",
+        "rightAlignedNumbersStayInTheirColumn()",
+        "plainParagraphIsNotATable()",
+        "aWideCellDoesNotGlueTwoColumns()",
+        "farApartRowsAreNotOneTable()",
+        "class TableDetectorTest"
       ]
     },
     {
@@ -186691,6 +186944,26 @@
       ]
     },
     {
+      "path": "ac_cloud-drive/app/src/main/java/com/diegonmarcos/clouddrive/agents/AgentsDecl.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "AgentsDecl"
+      ],
+      "imports": [
+        "android.content.Context",
+        "org.json.JSONObject"
+      ],
+      "symbols": [
+        "parse(text: String)",
+        "strs(k: String)",
+        "load(ctx: Context)",
+        "class AgentsDecl",
+        "class Action",
+        "class Agent"
+      ]
+    },
+    {
       "path": "ac_cloud-drive/app/src/main/java/com/diegonmarcos/clouddrive/agents/AgentsScreen.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -186832,6 +187105,7 @@
       ],
       "symbols": [
         "ScreenshotAgentPage(title: String, modifier: Modifier = Modifier)",
+        "AgentRow(agent: AgentsDecl.Agent, enabled: Boolean, running: Boolean, caption: String, error: String?, fraction: Float?, canRetry: Boolean, onAction: (String)",
         "RecordRow(r: ScreenshotRecord, onOpen: ()",
         "thumbnail(f: File)"
       ]
@@ -186886,12 +187160,11 @@
         "android.content.Context",
         "android.provider.MediaStore",
         "com.diegonmarcos.clouddrive.DrivePrefs",
+        "androidx.work.BackoffPolicy",
         "androidx.work.Constraints",
         "androidx.work.CoroutineWorker",
-        "androidx.work.ExistingPeriodicWorkPolicy",
         "androidx.work.ExistingWorkPolicy",
         "androidx.work.OneTimeWorkRequestBuilder",
-        "androidx.work.PeriodicWorkRequestBuilder",
         "androidx.work.WorkManager",
         "androidx.work.WorkerParameters",
         "androidx.work.workDataOf",
@@ -187001,6 +187274,46 @@
         "atomic(target: File, text: String)",
         "class ScreenshotStore",
         "class State"
+      ]
+    },
+    {
+      "path": "ac_cloud-drive/app/src/main/java/com/diegonmarcos/clouddrive/agents/SidecarWriter.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "SidecarWriter"
+      ],
+      "imports": [
+        "android.content.Context",
+        "android.media.ExifInterface",
+        "android.os.Build",
+        "android.provider.MediaStore",
+        "com.diegonmarcos.superapp.ocr.Box",
+        "com.diegonmarcos.superapp.ocr.LayoutBuilder",
+        "com.diegonmarcos.superapp.ocr.MarkdownFormatter",
+        "com.diegonmarcos.superapp.ocr.OcrLine",
+        "com.diegonmarcos.superapp.ocr.OcrResult",
+        "com.diegonmarcos.superapp.ocr.ScreenshotMeta",
+        "com.diegonmarcos.superapp.ocr.SidecarIdempotency",
+        "com.diegonmarcos.superapp.ocr.SidecarJson",
+        "com.diegonmarcos.superapp.ocr.SidecarNaming",
+        "java.io.File",
+        "java.security.MessageDigest"
+      ],
+      "symbols": [
+        "layout(r: ScreenshotRecord)",
+        "isCurrent(f: File)",
+        "write(ctx: Context, f: File, r: ScreenshotRecord)",
+        "atomic(target: File, text: String)",
+        "digest(f: File, algo: String)",
+        "mime(f: File)",
+        "exif(f: File)",
+        "xmp(f: File)",
+        "mediaStore(ctx: Context, f: File)",
+        "s(n: String)",
+        "l(n: String)",
+        "class only",
+        "class SidecarWriter"
       ]
     },
     {
@@ -193800,6 +194113,29 @@
         "linesGroupIntoBlocksInReadingOrder()",
         "l(s: String, l: Int, t: Int, r: Int, b: Int)",
         "class ScreenshotAgentLogicTest"
+      ]
+    },
+    {
+      "path": "ac_cloud-drive/app/src/test/java/com/diegonmarcos/clouddrive/agents/ScreenshotOcrSidecarTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ScreenshotOcrSidecarTest"
+      ],
+      "imports": [
+        "java.io.File",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "line(t: String, l: Int, top: Int, r: Int)",
+        "record(lines: List<ScreenshotRecord.Line>)",
+        "agentIsDeclaredAsScreenshotOcr()",
+        "recordLinesBecomeATableAndMarkdown()",
+        "scheduleHasNoPollingAndFloorsRetries()",
+        "agentUiUsesTheKitRampNotSpLiterals()",
+        "class ScreenshotOcrSidecarTest"
       ]
     },
     {
