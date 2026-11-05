@@ -60,16 +60,16 @@
       "api": {
         "has_api": true,
         "has_web_ui": false,
-        "api_path": "/",
+        "api_path": "/ai",
         "api_url": null,
         "healthcheck_paths": [
           "/health"
         ],
         "type": "custom-rest",
-        "base_path": "/",
-        "endpoint_count": 8,
-        "display_name": "Fleet Token Engine",
-        "description": "Owner-only token manager (list, reveal, generate, import, revoke, audit) and the mesh-only /v1/verify that introspect-proxy calls.",
+        "base_path": "/ai",
+        "endpoint_count": 6,
+        "display_name": "Cloudy AI gateway",
+        "description": "One public prefix /ai/{tokens,embeddings,agents,claude,memory} in front of the five AI backend containers; legacy /<old-name>/ paths kept for one release; GET /health.",
         "auth": "bearer"
       }
     },

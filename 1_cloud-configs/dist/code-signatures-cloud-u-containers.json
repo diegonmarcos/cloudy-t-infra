@@ -6,25 +6,25 @@
   },
   "repo": "cloud-u-containers",
   "counts": {
-    "files": 2568,
+    "files": 2571,
     "by_lang": {
-      "sh": 175,
+      "sh": 176,
       "js": 100,
-      "nix": 187,
+      "nix": 189,
       "py": 510,
       "ts": 1226,
       "rust": 370
     },
     "by_role": {
-      "shell": 166,
+      "shell": 167,
       "file": 341,
       "nix-module": 19,
       "python": 496,
       "module": 754,
       "script": 8,
-      "flake": 85,
+      "flake": 86,
       "entrypoint": 53,
-      "compose": 83,
+      "compose": 84,
       "mcp-tool": 139,
       "workflow-dag": 5,
       "rust-module": 366,
@@ -1341,6 +1341,42 @@
       ]
     },
     {
+      "path": "infra-ai_cloudy-ai-api/build.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "get_config()",
+        "get_config_array()",
+        "get_lifecycle()",
+        "detect_layout()",
+        "rewrite_compose_image_refs()",
+        "log()",
+        "log_warn()",
+        "log_error()",
+        "declared_container_names()",
+        "ssh_with_retry()",
+        "ssh_run_detached()",
+        "rsync_with_retry()",
+        "_ship_build_phase()"
+      ],
+      "imports": [],
+      "symbols": [
+        "get_config()",
+        "get_config_array()",
+        "get_lifecycle()",
+        "detect_layout()",
+        "rewrite_compose_image_refs()",
+        "log()",
+        "log_warn()",
+        "log_error()",
+        "declared_container_names()",
+        "ssh_with_retry()",
+        "ssh_run_detached()",
+        "rsync_with_retry()",
+        "_ship_build_phase()"
+      ]
+    },
+    {
       "path": "infra-ai_cloudy-ai-api/src/code/gateway.test.ts",
       "lang": "ts",
       "role": "module",
@@ -1382,6 +1418,74 @@
         "./gateway.ts"
       ],
       "symbols": []
+    },
+    {
+      "path": "infra-ai_cloudy-ai-api/src/compose.nix",
+      "lang": "nix",
+      "role": "compose",
+      "exports": [
+        "buildJson",
+        "container"
+      ],
+      "imports": [],
+      "symbols": [
+        "svc",
+        "wgIp",
+        "port",
+        "backend",
+        "routes",
+        "binariesImage",
+        "services",
+        "image",
+        "container_name",
+        "network_mode",
+        "user",
+        "environment",
+        "PORT",
+        "BIND_HOST",
+        "ROUTES",
+        "healthcheck",
+        "test",
+        "interval",
+        "timeout",
+        "retries",
+        "start_period",
+        "limits",
+        "reservations"
+      ]
+    },
+    {
+      "path": "infra-ai_cloudy-ai-api/src/flake.nix",
+      "lang": "nix",
+      "role": "flake",
+      "exports": [],
+      "imports": [
+        "../../_shared/engine.nix",
+        "./compose.nix",
+        "../_shared/engine.nix",
+        "compose.nix"
+      ],
+      "symbols": [
+        "description",
+        "outputs",
+        "forAllSystems",
+        "buildJson",
+        "container",
+        "engine",
+        "nb",
+        "packages",
+        "pkgs",
+        "default",
+        "srcDir",
+        "templates",
+        "composeSpec",
+        "nativeBuild",
+        "cmd",
+        "binary",
+        "baseImage",
+        "apt",
+        "title"
+      ]
     },
     {
       "path": "infra-ai_cloudy-ai-embeddings-api/build.sh",

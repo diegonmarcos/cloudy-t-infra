@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 23350,
+    "files": 23366,
     "by_lang": {
       "sh": 675,
       "js": 543,
       "py": 203,
-      "kotlin": 12658,
+      "kotlin": 12674,
       "ts": 8470,
       "java": 649,
       "nix": 36,
@@ -24,7 +24,7 @@
       "script": 294,
       "module": 6477,
       "java": 648,
-      "kotlin": 12655,
+      "kotlin": 12671,
       "python": 68,
       "flake": 32,
       "rust-module": 116,
@@ -8388,20 +8388,20 @@
         "androidx.compose.ui.text.font.FontWeight",
         "androidx.compose.ui.unit.dp",
         "androidx.compose.ui.unit.sp",
+        "com.diegonmarcos.superapp.battery.BatteryArchive",
         "com.diegonmarcos.superapp.battery.BatteryCycles",
+        "com.diegonmarcos.superapp.battery.BatterySession",
         "com.diegonmarcos.superapp.battery.BatteryHistory",
         "com.diegonmarcos.superapp.battery.BatteryLabels",
         "com.diegonmarcos.superapp.battery.BatteryPrivileged",
         "com.diegonmarcos.superapp.battery.BatteryReport",
         "com.diegonmarcos.superapp.battery.BatteryRepository",
-        "com.diegonmarcos.superapp.battery.BatteryRows",
-        "com.diegonmarcos.superapp.battery.BatterySample",
-        "com.diegonmarcos.superapp.ui.LauncherPalette"
+        "com.diegonmarcos.superapp.battery.BatteryRows"
       ],
       "symbols": [
         "palette()",
         "Content()",
-        "Body(r: BatteryReport, samples: List<BatterySample>, priv: Privileged?, week: Boolean, setWeek: (Boolean)",
+        "Body(r: BatteryReport, samples: List<BatterySample>, hist: List<BatterySession>, priv: Privileged?, week: Boolean, setWeek: (Boolean)",
         "readPrivileged(ctx: Context)",
         "rows(apps: Map<Int, Double>, from: Long)",
         "Section(s: BatteryRows.Section)",
@@ -10190,6 +10190,7 @@
         "DevControlFragment"
       ],
       "imports": [
+        "com.diegonmarcos.superapp.xray.PARTIAL_LABEL",
         "com.diegonmarcos.superapp.agents.AgentStatusReader",
         "com.diegonmarcos.superapp.agents.FleetAgents",
         "com.diegonmarcos.superapp.configs.Diagnostics",
@@ -10228,8 +10229,7 @@
         "androidx.compose.ui.platform.testTag",
         "androidx.compose.ui.unit.dp",
         "android.widget.Toast",
-        "com.diegonmarcos.superapp.BuildConfig",
-        "com.diegonmarcos.superapp.adbdebug.WirelessDebugging"
+        "com.diegonmarcos.superapp.BuildConfig"
       ],
       "symbols": [
         "ctxAny()",
@@ -10417,6 +10417,60 @@
         "appsJson(ctx: Context, roster: List<Member>)",
         "class MeshGateway",
         "class Member"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/devcontrol/XrayExport.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [],
+      "imports": [
+        "android.app.Activity",
+        "android.app.AlertDialog",
+        "android.content.ClipData",
+        "android.content.ClipboardManager",
+        "android.content.ContentValues",
+        "android.content.Context",
+        "android.content.Intent",
+        "android.os.Build",
+        "android.provider.MediaStore",
+        "android.provider.Settings",
+        "com.diegonmarcos.superapp.BuildConfig",
+        "com.diegonmarcos.superapp.adbdebug.EmbeddedAdbChannel",
+        "com.diegonmarcos.superapp.adbdebug.ShellChannels",
+        "com.diegonmarcos.superapp.battery.BatteryRepository",
+        "com.diegonmarcos.superapp.ops.dagu.DaguPrefs",
+        "com.diegonmarcos.superapp.profile.AccountData",
+        "com.diegonmarcos.superapp.xray.PARTIAL_LABEL",
+        "com.diegonmarcos.superapp.xray.SRC_APP",
+        "com.diegonmarcos.superapp.xray.XSection",
+        "com.diegonmarcos.superapp.xray.XrayAdbGate",
+        "com.diegonmarcos.superapp.xray.XrayBattery",
+        "com.diegonmarcos.superapp.xray.XrayExporter",
+        "com.diegonmarcos.superapp.xray.XrayFormat",
+        "com.diegonmarcos.superapp.xray.XrayInputs",
+        "com.diegonmarcos.superapp.xray.XrayPoster",
+        "com.diegonmarcos.superapp.xray.XrayShell",
+        "kotlinx.coroutines.CoroutineScope",
+        "kotlinx.coroutines.Dispatchers",
+        "kotlinx.coroutines.delay",
+        "kotlinx.coroutines.suspendCancellableCoroutine",
+        "kotlinx.coroutines.withContext",
+        "java.io.File",
+        "java.util.concurrent.atomic.AtomicBoolean",
+        "kotlin.coroutines.resume"
+      ],
+      "symbols": [
+        "run(ctx: Context, activity: Activity?, page: AboutPage, scope: CoroutineScope, out: XrayOut, say: (String)",
+        "go(ctx: Context, activity: Activity?, page: AboutPage, scope: CoroutineScope, out: XrayOut, say: (String)",
+        "exec(cmd: String)",
+        "walk(page: AboutPage, scope: CoroutineScope)",
+        "save(ctx: Context, name: String, mime: String, text: String)",
+        "openWirelessDebugging(ctx: Context)",
+        "askDialog(activity: Activity?, message: String)",
+        "answer(c: XrayAdbGate.Choice)",
+        "class XrayOut",
+        "class XrayExport"
       ]
     },
     {
@@ -18962,6 +19016,201 @@
       ]
     },
     {
+      "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/xray/XrayAdbGate.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "XrayAdbGate"
+      ],
+      "imports": [],
+      "symbols": [
+        "run( ready: ()",
+        "class XrayAdbGate",
+        "class Choice",
+        "class Result",
+        "class Ready",
+        "class Partial",
+        "class Cancelled"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/xray/XrayAnalyze.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "XrayAnalyze"
+      ],
+      "imports": [
+        "java.util.Locale"
+      ],
+      "symbols": [
+        "durMs(s: String)",
+        "uidOf(name: String)",
+        "uidPackages(out: String)",
+        "label(uidName: String, pk: Map<Int, List<String>>)",
+        "estimatedPower(dump: String)",
+        "powerHeader(dump: String)",
+        "uidStats(dump: String)",
+        "alarmWakeups(out: String)",
+        "services(out: String)",
+        "startReasons(out: String)",
+        "jobs(out: String)",
+        "mins(ms: Long)",
+        "suspects(raw: Map<String, String>, top: Int = 15)",
+        "fleetLines(raw: Map<String, String>)",
+        "class XrayAnalyze",
+        "class Power",
+        "class UidStat",
+        "class Svc"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/xray/XrayBattery.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "XrayBattery"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.battery.BatteryArchive",
+        "com.diegonmarcos.superapp.battery.BatteryCycles",
+        "com.diegonmarcos.superapp.battery.BatterySession",
+        "java.text.SimpleDateFormat",
+        "java.util.Date",
+        "java.util.Locale",
+        "java.util.TimeZone"
+      ],
+      "symbols": [
+        "f1(d: Double)",
+        "whenOf(ts: Long, zone: TimeZone)",
+        "sections( sessions: List<BatterySession>, cycles: List<BatteryCycles.Cycle>, label: (Int)",
+        "class XrayBattery"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/xray/XrayExporter.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "XrayShell",
+        "XrayInputs",
+        "XrayExporter"
+      ],
+      "imports": [],
+      "symbols": [
+        "exec(cmd: String)",
+        "build(i: XrayInputs)",
+        "cap(s: String, n: Int)",
+        "class XrayShell",
+        "class XrayInputs",
+        "class XrayExporter"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/xray/XrayModel.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "XRAY_SCHEMA",
+        "SRC_SHELL",
+        "SRC_APP",
+        "SRC_SKIPPED",
+        "PARTIAL_LABEL",
+        "XSection",
+        "Suspect",
+        "XReport",
+        "XrayFormat"
+      ],
+      "imports": [
+        "org.json.JSONArray",
+        "org.json.JSONObject",
+        "java.text.SimpleDateFormat",
+        "java.util.Date",
+        "java.util.Locale",
+        "java.util.TimeZone"
+      ],
+      "symbols": [
+        "iso(ms: Long)",
+        "fileStem(r: XReport)",
+        "markdown(r: XReport)",
+        "esc(s: String)",
+        "json(r: XReport)",
+        "jsonText(r: XReport)",
+        "class XSection",
+        "class Suspect",
+        "class XReport",
+        "class XrayFormat"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/xray/XrayPoster.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "XrayPoster"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.notificationcenter.AiUsageClient",
+        "org.json.JSONObject",
+        "java.io.IOException"
+      ],
+      "symbols": [
+        "post(url: String, headers: Map<String, String>, body: String)",
+        "body(r: XReport)",
+        "fallbackBody(r: XReport)",
+        "post(bases: List<String>, bearer: String, r: XReport, fleet: PostTransport, plain: PostTransport)",
+        "one(url: String, bearer: String, body: String, fleet: PostTransport, plain: PostTransport)",
+        "class XrayPoster",
+        "class PostTransport",
+        "class Outcome",
+        "class Ok",
+        "class Failed",
+        "class Attempt",
+        "class Missing",
+        "class Err"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/xray/XrayProbes.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "Probe",
+        "XrayProbes"
+      ],
+      "imports": [],
+      "symbols": [
+        "class Probe",
+        "class XrayProbes"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/xray/XrayRedact.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "XrayRedact"
+      ],
+      "imports": [],
+      "symbols": [
+        "scrub(s: String)",
+        "class XrayRedact"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/xray/XrayTree.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "XrayTree"
+      ],
+      "imports": [],
+      "symbols": [
+        "manifest(pages: List<String>, walked: Boolean)",
+        "class XrayTree"
+      ]
+    },
+    {
       "path": "aa_cloud-superapp/app/src/test/java/com/diegonmarcos/superapp/agents/AgentsPageComposeTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -25709,6 +25958,74 @@
         "ap(bssid: String, ssid: String, freq: Int, rssi: Int, width: Int = 0, cf0: Int = 0, caps: String = \"[WPA2-PSK-CCMP][ESS]\", now: Long = 1_000_000L)",
         "entry(n: String, suffix: Int, flags: Int)",
         "class WifiLibTest"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/test/java/com/diegonmarcos/superapp/xray/BatteryArchiveTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "BatteryArchiveTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.battery.BatteryArchive",
+        "com.diegonmarcos.superapp.battery.BatteryCycles",
+        "com.diegonmarcos.superapp.battery.BatterySession",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.util.TimeZone"
+      ],
+      "symbols": [
+        "dis(d: Int, pct: Int, hours: Double, h0: Int = 8)",
+        "chg(d: Int)",
+        "class BatteryArchiveTest"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/test/java/com/diegonmarcos/superapp/xray/XrayAnalyzeTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "XrayAnalyzeTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertNull",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "class XrayAnalyzeTest"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/test/java/com/diegonmarcos/superapp/xray/XrayExportTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "XrayExportTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.notificationcenter.AiUsageClient",
+        "kotlinx.coroutines.runBlocking",
+        "org.json.JSONArray",
+        "org.json.JSONObject",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.io.File",
+        "java.io.IOException"
+      ],
+      "symbols": [
+        "fixtureFor(cmd: String)",
+        "exec(cmd: String)",
+        "build(sh: XrayShell? = shell, reason: String = \"\")",
+        "find(o: Any?)",
+        "tp(name: String, f: (String)",
+        "class XrayExportTest"
       ]
     },
     {
@@ -36474,6 +36791,29 @@
       ]
     },
     {
+      "path": "ab_cloud-libs-shared/libs/battery/src/main/java/com/diegonmarcos/superapp/battery/BatteryArchive.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "BatteryArchive"
+      ],
+      "imports": [
+        "java.util.Calendar",
+        "java.util.Locale",
+        "java.util.TimeZone"
+      ],
+      "symbols": [
+        "merge(archived: List<BatterySession>, live: List<BatterySession>, now: Long)",
+        "dayKey(ts: Long, zone: TimeZone = TimeZone.getDefault()",
+        "trend(sessions: List<BatterySession>, zone: TimeZone = TimeZone.getDefault()",
+        "dailyApps(cycles: List<BatteryCycles.Cycle>, zone: TimeZone = TimeZone.getDefault()",
+        "encode(s: BatterySession)",
+        "decode(v: String)",
+        "class BatteryArchive",
+        "class DayTrend"
+      ]
+    },
+    {
       "path": "ab_cloud-libs-shared/libs/battery/src/main/java/com/diegonmarcos/superapp/battery/BatteryCapacity.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -36762,6 +37102,8 @@
         "appLabel(ctx: Context, uid: Int)",
         "usageTimes(ctx: Context, from: Long, to: Long = System.currentTimeMillis()",
         "snapshotCycle(ctx: Context, pluggedHint: Boolean? = null, now: Long = System.currentTimeMillis()",
+        "archive(ctx: Context, list: List<BatterySample>, now: Long)",
+        "sessions90(ctx: Context, live: List<BatterySession>, now: Long = System.currentTimeMillis()",
         "cycles(ctx: Context)",
         "encodeSnap(s: BatteryCycles.Snap)",
         "decodeSnap(v: String)",
@@ -36778,11 +37120,9 @@
         "meta(k: String)",
         "putMeta(k: String, v: String)",
         "putCycle(c: BatteryCycles.Cycle)",
-        "pruneCycles(before: Long)",
-        "openCycle()",
-        "cycles()",
-        "query(tail: String)",
-        "sessions(ctx: Context, write: (BatterySample)"
+        "putSession(s: BatterySession)",
+        "pruneSessions(before: Long)",
+        "sessions()"
       ]
     },
     {
@@ -48806,7 +49146,22 @@
         "pump()",
         "uidOf(line: String)",
         "levelOf(line: String)",
-        "class LogPipe"
+        "class LogPipe",
+        "class IdleStop"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/devtools/src/main/java/com/diegonmarcos/superapp/devtools/RetryBackoff.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "RetryBackoff"
+      ],
+      "imports": [],
+      "symbols": [
+        "next(prevMs: Long)",
+        "afterFailures(failures: Int)",
+        "class RetryBackoff"
       ]
     },
     {
@@ -48968,6 +49323,28 @@
         "noDoor_fallsBackToTheHttpPort_overARealSocket()",
         "noDoorAndNoHttp_isUnreachable()",
         "class FleetIpcWireTest"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/devtools/src/test/java/com/diegonmarcos/superapp/devtools/RetryBackoffTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "RetryBackoffTest"
+      ],
+      "imports": [
+        "java.io.File",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "neverBelowTheFloor()",
+        "src(rel: String)",
+        "logPipeRestartHasNoShortWait()",
+        "everySleepInTheSharedLoopsIsAFloorOrABackoff()",
+        "class RetryBackoffTest"
       ]
     },
     {
@@ -84594,6 +84971,7 @@
         "screenOffSleepsLongAndNeverDials()",
         "keepAliveServicesAreNotSticky()",
         "noBackgroundNoService()",
+        "noPassSoonerThanThirtySeconds()",
         "class KeepAlivePolicyTest"
       ]
     },

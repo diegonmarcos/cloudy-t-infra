@@ -756,7 +756,7 @@
       "containers": {
         "app": {
           "container_name": "cloudy-ai-api",
-          "image": "ghcr.io/diegonmarcos/tokens-api-binaries:latest",
+          "image": "ghcr.io/diegonmarcos/cloudy-ai-api-binaries:latest",
           "port": 4185,
           "port_env": null,
           "dns": "cloudy-ai-api.mesh.diegonmarcos.com",
@@ -767,10 +767,8 @@
             "dns_check": true,
             "endpoint_check": true
           },
-          "volumes": [
-            "tokens_api_data:/data"
-          ],
-          "env_file": true,
+          "volumes": [],
+          "env_file": false,
           "depends_on": [],
           "resources": null,
           "read_only": false,
@@ -827,24 +825,24 @@
       },
       "tests": {
         "unit": {
-          "cmd": "python3 -m pip install -q flask==3.0.0 'PyJWT[crypto]==2.9.0' cryptography==43.0.3 pytest && python3 -m pytest -q -p no:cacheprovider test",
-          "cwd": "src"
+          "cmd": "node --test gateway.test.ts",
+          "cwd": "src/code"
         }
       },
-      "_draft": "#1450 pending owner deploy. Backends: tokens 4184, embeddings 7997, agents 3217, claude 3117, memory 3108 (ROUTES env overrides).",
+      "_gateway": "Public route: api.diegonmarcos.com/ai and c3-pvt.diegonmarcos.com/ai, bearer-gated at the hub Caddy; backends are bound on the WireGuard IP (ROUTES env in compose.nix).",
       "api": {
         "has_api": true,
         "has_web_ui": false,
-        "api_path": "/",
+        "api_path": "/ai",
         "api_url": null,
         "healthcheck_paths": [
           "/health"
         ],
         "type": "custom-rest",
-        "base_path": "/",
-        "endpoint_count": 8,
-        "display_name": "Fleet Token Engine",
-        "description": "Owner-only token manager (list, reveal, generate, import, revoke, audit) and the mesh-only /v1/verify that introspect-proxy calls.",
+        "base_path": "/ai",
+        "endpoint_count": 6,
+        "display_name": "Cloudy AI gateway",
+        "description": "One public prefix /ai/{tokens,embeddings,agents,claude,memory} in front of the five AI backend containers; legacy /<old-name>/ paths kept for one release; GET /health.",
         "auth": "bearer"
       }
     },

@@ -1126,7 +1126,7 @@
       "containers": {
         "app": {
           "container_name": "cloudy-ai-api",
-          "image": "ghcr.io/diegonmarcos/tokens-api-binaries:latest",
+          "image": "ghcr.io/diegonmarcos/cloudy-ai-api-binaries:latest",
           "port": 4185,
           "port_env": null,
           "dns": "cloudy-ai-api.mesh.diegonmarcos.com",
@@ -1137,10 +1137,8 @@
             "dns_check": true,
             "endpoint_check": true
           },
-          "volumes": [
-            "tokens_api_data:/data"
-          ],
-          "env_file": true,
+          "volumes": [],
+          "env_file": false,
           "depends_on": [],
           "resources": null,
           "read_only": false,

@@ -269,7 +269,7 @@
       "group": "Infra Apps",
       "category": "Net-Routing & Security",
       "description": "AI gateway: /ai/{tokens,embeddings,agents,claude,memory} -> separate backend containers (cloudy-ai-*-api); legacy /<old-name>/ paths kept for one release.",
-      "image": "ghcr.io/diegonmarcos/tokens-api-binaries:latest",
+      "image": "ghcr.io/diegonmarcos/cloudy-ai-api-binaries:latest",
       "host": "oci-apps",
       "dns": "cloudy-ai-api.mesh.diegonmarcos.com",
       "port": 4185,
