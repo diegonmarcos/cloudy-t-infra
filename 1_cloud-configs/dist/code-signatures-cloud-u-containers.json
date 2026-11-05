@@ -6,13 +6,13 @@
   },
   "repo": "cloud-u-containers",
   "counts": {
-    "files": 2433,
+    "files": 2568,
     "by_lang": {
       "sh": 175,
       "js": 100,
       "nix": 187,
       "py": 510,
-      "ts": 1091,
+      "ts": 1226,
       "rust": 370
     },
     "by_role": {
@@ -20,12 +20,12 @@
       "file": 341,
       "nix-module": 19,
       "python": 496,
-      "module": 664,
+      "module": 754,
       "script": 8,
       "flake": 85,
       "entrypoint": 53,
       "compose": 83,
-      "mcp-tool": 94,
+      "mcp-tool": 139,
       "workflow-dag": 5,
       "rust-module": 366,
       "hook": 53
@@ -3119,6 +3119,1397 @@
         "workflowsDaguTrigger(dagName?: string)",
         "registerWorkflowTools(server: McpServer)",
         "jobLog(target: string, jobId: string)"
+      ]
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/shared/libs/__selfcheck__.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [],
+      "imports": [
+        "node:assert",
+        "./secrets-status.js",
+        "./app-logs-core.js"
+      ],
+      "symbols": [
+        "compareOp(value: number, op: string, threshold: number)",
+        "nextAlertState(breached: boolean, alreadyOpen: boolean)",
+        "foldBucket(values: number[])",
+        "mergeWeightedAvg(existingAvg: number, existingCount: number, incomingAvg: number, incomingCount: number)",
+        "bucket5m(ts: Date)"
+      ]
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/shared/libs/ai-usage.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "validateClaudeBody",
+        "emptyStore",
+        "applySample",
+        "loadStore",
+        "saveStore",
+        "claudeView",
+        "parseOpenRouter",
+        "resetOpenRouterCache",
+        "getOpenRouter",
+        "Window",
+        "ClaudeSample",
+        "ClaudeHistoryPoint",
+        "ClaudeStore",
+        "HISTORY_MAX",
+        "HISTORY_MIN_GAP_S",
+        "OrActivityRow",
+        "OrWindow",
+        "OrSummary",
+        "OR_TTL_MS"
+      ],
+      "imports": [
+        "node:fs",
+        "node:path"
+      ],
+      "symbols": [
+        "parseWindow(name: string, v: unknown, errors: string[])",
+        "validateClaudeBody(body: unknown, now: number)",
+        "emptyStore()",
+        "applySample(store: ClaudeStore, s: ClaudeSample)",
+        "loadStore(dir: string)",
+        "saveStore(dir: string, st: ClaudeStore)",
+        "claudeView(st: ClaudeStore, now: number)",
+        "parseOpenRouter(credits: unknown, activity: unknown, nowMs: number)",
+        "resetOpenRouterCache()",
+        "getOpenRouter(env: Record<string, string | undefined>, fetchFn: typeof fetch, nowMs: number)"
+      ]
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/shared/libs/app-logs-core.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "telemetryAppId",
+        "resolveName",
+        "apksFromFleet",
+        "readEvents",
+        "isLogFileName",
+        "AppKind",
+        "DeclaredApk",
+        "StoredEvent"
+      ],
+      "imports": [],
+      "symbols": [
+        "telemetryAppId(pkg: string)",
+        "resolveName(kind: AppKind, raw: string, apks: DeclaredApk[], containers: string[])",
+        "apksFromFleet(fleet: { apps?: Array<{ label?: string; package?: string; kind?: string }> })",
+        "readEvents(jsonl: string, opts: { kind?: string; since?: string; limit?: number })",
+        "isLogFileName(f: string)"
+      ]
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/shared/libs/async-exec.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "execAsync",
+        "shellAsync",
+        "ExecResult"
+      ],
+      "imports": [
+        "child_process",
+        "./paths.js"
+      ],
+      "symbols": [
+        "execAsync(\n  command: string,\n  args: string[],\n  options?: { timeout?: number; cwd?: string },\n)",
+        "shellAsync(\n  script: string,\n  timeout?: number,\n)"
+      ]
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/shared/libs/async-ssh.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "sshExecAsync",
+        "tcpProbeAsync",
+        "pingAsync",
+        "curlStatusAsync",
+        "curlAsync"
+      ],
+      "imports": [
+        "./async-exec.js",
+        "./config.js"
+      ],
+      "symbols": [
+        "errorResult(\n  error: string,\n  context: string,\n  startMs: number,\n)",
+        "sshExecAsync(\n  vmNameOrAlias: string,\n  command: string,\n  timeout?: number,\n)",
+        "tcpProbeAsync(\n  host: string,\n  timeout = 5_000,\n)",
+        "pingAsync(\n  host: string,\n  timeout = 3_000,\n)",
+        "curlStatusAsync(\n  url: string,\n  timeout = 5_000,\n)",
+        "curlAsync(\n  url: string,\n  timeout = 10_000,\n)"
+      ]
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/shared/libs/audit.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "audit"
+      ],
+      "imports": [
+        "./db.js"
+      ],
+      "symbols": [
+        "audit(tool: string, target: string, result: string, source = \"mcp\")"
+      ]
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/shared/libs/auth-decision.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "isPublicPath",
+        "isMeshIp",
+        "isCaddyAuthenticated",
+        "isAllowed"
+      ],
+      "imports": [],
+      "symbols": [
+        "isPublicPath(url: string)",
+        "isMeshIp(ip: string)",
+        "isCaddyAuthenticated(headers: Record<string, unknown>)",
+        "isAllowed(url: string, ip: string, headers: Record<string, unknown>)"
+      ]
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/shared/libs/binds.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "bindHost"
+      ],
+      "imports": [
+        "../shared/libs/binds.js"
+      ],
+      "symbols": [
+        "bindHost(envName: string = \"MCP_HTTP_HOST\")"
+      ]
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/shared/libs/cache.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "cacheWrite",
+        "cacheRead",
+        "cacheList",
+        "cachePrune",
+        "startCacheCleanup"
+      ],
+      "imports": [
+        "fs",
+        "path",
+        "os"
+      ],
+      "symbols": [
+        "cacheWrite(\n  endpoint: string,\n  target: string,\n  data: unknown,\n)",
+        "cacheRead(\n  endpoint: string,\n  target: string,\n  limit = 10,\n)",
+        "cacheList()",
+        "cachePrune()",
+        "pruneDir(dir: string)",
+        "sanitize(s: string)",
+        "startCacheCleanup()"
+      ]
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/shared/libs/caddy-cert-repair.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "parseDataMount",
+        "tsStamp",
+        "buildScanScript",
+        "buildRepairScript",
+        "parseResult",
+        "parseScanOutput",
+        "mismatchLines",
+        "mismatchDomains",
+        "lastStartupError",
+        "parseState",
+        "formatReport",
+        "CONTAINER_RE",
+        "MISMATCH_RE",
+        "DATA_MOUNT_TEMPLATE",
+        "CertStatus",
+        "RESULT_MAX_AGE_SEC",
+        "CERT_RE",
+        "ScanResult",
+        "Parsed",
+        "certDomain",
+        "ContainerState",
+        "STATE_TEMPLATE",
+        "RepairReport"
+      ],
+      "imports": [],
+      "symbols": [
+        "parseDataMount(stdout: string)",
+        "tsStamp(d: Date = new Date()",
+        "checkState(stateDir: string)",
+        "buildScanScript(o: { stateDir?: string })",
+        "buildRepairScript(o: { dataDir?: string; container?: string; allMesh: boolean; dryRun: boolean; ts: string; stateDir?: string; maxAgeSec?: number })",
+        "emptyParsed()",
+        "parseResult(json: string)",
+        "parseScanOutput(out: string)",
+        "mismatchLines(logs: string, max = 10)",
+        "mismatchDomains(logs: string)",
+        "summarize(line: string)",
+        "lastStartupError(logs: string, domain?: string)",
+        "parseState(out: string)",
+        "formatReport(r: RepairReport)"
+      ]
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/shared/libs/cloud/aws.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "listInstances",
+        "listResources",
+        "getCosts"
+      ],
+      "imports": [
+        "../exec.js",
+        "zod",
+        "../schemas.js"
+      ],
+      "symbols": [
+        "awsCli(args: string[], timeout = 30_000)",
+        "getRegion()",
+        "listInstances()",
+        "listResources()",
+        "monthLabel(d: Date)",
+        "getCosts()"
+      ]
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/shared/libs/cloud/gcp.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "listInstances",
+        "getInstanceState",
+        "instanceAction",
+        "listResources",
+        "getCosts",
+        "getCostsHistory",
+        "getCostsByVm"
+      ],
+      "imports": [
+        "../exec.js",
+        "zod",
+        "../schemas.js"
+      ],
+      "symbols": [
+        "gcloudCli(args: string[], timeout = 30_000)",
+        "listInstances()",
+        "getInstanceState(instanceName: string, zone: string)",
+        "instanceAction(\n  instanceName: string,\n  zone: string,\n  action: \"start\" | \"stop\" | \"reset\",\n)",
+        "listResources()",
+        "monthLabel(d: Date)",
+        "getCosts()",
+        "bqQuery(sql: string, timeout = 60_000)",
+        "getCostsHistory(months: number = 6)",
+        "getCostsByVm(months: number = 6)"
+      ]
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/shared/libs/cloud/oci.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "listInstances",
+        "getInstanceState",
+        "instanceAction",
+        "listResources",
+        "getCosts",
+        "getCostsHistory"
+      ],
+      "imports": [
+        "node:fs",
+        "node:path",
+        "../exec.js",
+        "zod",
+        "../schemas.js"
+      ],
+      "symbols": [
+        "getCompartmentId()",
+        "ociCli(args: string[], timeout = 30_000)",
+        "listInstances()",
+        "getInstanceState(instanceId: string)",
+        "instanceAction(\n  instanceId: string,\n  action: \"START\" | \"STOP\" | \"RESET\",\n)",
+        "listResources()",
+        "monthLabel(d: Date)",
+        "queryMonthCosts(\n  tenantId: string,\n  start: Date,\n  end: Date,\n  period: string,\n)",
+        "getCosts()",
+        "getCostsHistory(months: number = 3)",
+        "getInstanceBasedCosts(compartmentId: string, period: string)"
+      ]
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/shared/libs/config.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "getConfig",
+        "reloadConfig",
+        "getDriftReport",
+        "getServiceFolder",
+        "composeCd",
+        "getServiceDir",
+        "isSolutionTreeMissing",
+        "serviceContainerNames",
+        "getVmSshAlias",
+        "resolveVmId",
+        "getServicesForVm"
+      ],
+      "imports": [
+        "fs",
+        "path",
+        "./types.js",
+        "./paths.js"
+      ],
+      "symbols": [
+        "getConfig()",
+        "reloadConfig()",
+        "getDriftReport()",
+        "discoverServicesFromDisk(fileConfig: InfraConfig)",
+        "getServiceFolder(name: string)",
+        "composeCd(remotePath: string)",
+        "getServiceDir(name: string)",
+        "isSolutionTreeMissing()",
+        "serviceContainerNames(svc: unknown, serviceName: string)",
+        "buildAliasMap()",
+        "getVmSshAlias(vmId: string)",
+        "resolveVmId(nameOrAlias: string)",
+        "getServicesForVm(vmId: string)"
+      ]
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/shared/libs/configs-sync-core.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "isConfigFileName",
+        "readConfigFile",
+        "clearConfigCache",
+        "DATA_REPO_RAW",
+        "TTL_MS"
+      ],
+      "imports": [],
+      "symbols": [
+        "isConfigFileName(name: string)",
+        "readConfigFile(name: string, f: Fetcher = fetch as unknown as Fetcher, now = Date.now()",
+        "clearConfigCache()"
+      ]
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/shared/libs/control.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "vmSerialConsole",
+        "vmStart",
+        "vmStop",
+        "vmReset",
+        "containerStart",
+        "containerStop",
+        "containerRestart",
+        "serviceStart",
+        "serviceStop",
+        "serviceRestart",
+        "vmDrain",
+        "ControlResult"
+      ],
+      "imports": [
+        "./ssh.js",
+        "./config.js",
+        "./exec.js",
+        "./audit.js",
+        "./docker.js",
+        "./cloud/oci.js",
+        "./validators.js"
+      ],
+      "symbols": [
+        "ensureVmReachable(vmId: string)",
+        "resolveOciInstanceId(vmId: string, alias: string)",
+        "ociInstanceAction(\n  vmId: string,\n  alias: string,\n  action: \"START\" | \"RESET\" | \"STOP\",\n  auditKey: string,\n)",
+        "vmSerialConsole(vmNameOrAlias: string, lines = 200)",
+        "vmStart(vmNameOrAlias: string)",
+        "vmStop(vmNameOrAlias: string)",
+        "vmReset(vmNameOrAlias: string)",
+        "containerStart(\n  vmNameOrAlias: string,\n  containerName: string,\n)",
+        "containerStop(\n  vmNameOrAlias: string,\n  containerName: string,\n)",
+        "containerRestart(\n  vmNameOrAlias: string,\n  containerName: string,\n)",
+        "serviceStart(\n  vmNameOrAlias: string,\n  serviceName: string,\n)",
+        "serviceStop(\n  vmNameOrAlias: string,\n  serviceName: string,\n)",
+        "serviceRestart(\n  vmNameOrAlias: string,\n  serviceName: string,\n)",
+        "vmDrain(vmNameOrAlias: string)"
+      ]
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/shared/libs/db.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "getDb",
+        "recordHealthCheck",
+        "getHealthHistory",
+        "getUptimeReport",
+        "recordAudit",
+        "getAuditLog",
+        "recordDeploy",
+        "getDeployHistory",
+        "getAlertState",
+        "updateAlertState",
+        "pruneOldRecords",
+        "recordMetricSample",
+        "queryMetricSeries",
+        "getLatestMetric",
+        "getTopByMetric",
+        "rollupMetrics",
+        "pruneMetrics",
+        "listAlertRules",
+        "getAlertRule",
+        "createAlertRule",
+        "updateAlertRule",
+        "deleteAlertRule",
+        "getOpenAlertForRule",
+        "recordAlertFired",
+        "recordAlertResolved",
+        "ackAlert",
+        "getActiveAlerts",
+        "getAlertHistory",
+        "insertLogLines",
+        "searchLogLines"
+      ],
+      "imports": [
+        "better-sqlite3",
+        "fs",
+        "path",
+        "os"
+      ],
+      "symbols": [
+        "ensureDir(dir: string)",
+        "getDb()",
+        "initSchema(db: Database.Database)",
+        "recordHealthCheck(record: HealthRecord)",
+        "getHealthHistory(query: HealthHistoryQuery = {})",
+        "getUptimeReport(vm?: string, hours = 24)",
+        "recordAudit(tool: string, target: string, result: string, source = \"mcp\")",
+        "getAuditLog(query: AuditQuery = {})",
+        "recordDeploy(\n  service: string,\n  step: string,\n  success: boolean,\n  durationMs?: number,\n  output?: string,\n)",
+        "getDeployHistory(query: DeployQuery = {})",
+        "getAlertState(vm: string)",
+        "updateAlertState(vm: string, status: string, notified: boolean)",
+        "pruneOldRecords(daysToKeep = 30)",
+        "bucket5m(ts: Date)",
+        "recordMetricSample(target: string, metric: MetricName, value: number)",
+        "queryMetricSeries(\n  target: string,\n  metric: MetricName,\n  from?: string,\n  to?: string,\n)",
+        "getLatestMetric(target: string, metric: MetricName)",
+        "getTopByMetric(metric: MetricName, limit = 10)",
+        "rollupMetrics(rawRetentionHours = 6)",
+        "pruneMetrics(daysToKeep = 30)",
+        "rowToRule(r: Record<string, unknown>)",
+        "listAlertRules()",
+        "getAlertRule(id: number)",
+        "createAlertRule(rule: Omit<AlertRule, \"id\" | \"createdTs\">)",
+        "updateAlertRule(id: number, patch: Partial<Omit<AlertRule, \"id\" | \"createdTs\">>)",
+        "deleteAlertRule(id: number)",
+        "rowToHistory(r: Record<string, unknown>)",
+        "getOpenAlertForRule(ruleId: number)",
+        "recordAlertFired(ruleId: number, target: string, metric: string, value: number)",
+        "recordAlertResolved(id: number)",
+        "ackAlert(id: number)",
+        "getActiveAlerts()",
+        "getAlertHistory(limit = 100)",
+        "insertLogLines(lines: LogLine[])",
+        "searchLogLines(query: LogSearchQuery)"
+      ]
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/shared/libs/diagnostics.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "profileContainer",
+        "profileVm",
+        "profileService",
+        "vmNetwork",
+        "vmTop",
+        "vmDiskUsage",
+        "vmJournal"
+      ],
+      "imports": [
+        "./ssh.js",
+        "./config.js",
+        "./docker.js",
+        "./exec.js",
+        "zod",
+        "./schemas.js"
+      ],
+      "symbols": [
+        "timedCheck(name: string, fn: ()",
+        "findContainerVm(containerName: string)",
+        "profileContainer(containerName: string)",
+        "profileVm(vmNameOrAlias: string)",
+        "profileService(serviceName: string)",
+        "vmNetwork(vmNameOrAlias: string)",
+        "vmTop(vmNameOrAlias: string)",
+        "vmDiskUsage(vmNameOrAlias: string)",
+        "vmJournal(\n  vmNameOrAlias: string,\n  lines = 100,\n  unit?: string,\n)"
+      ]
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/shared/libs/discovery.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "listServices",
+        "getService",
+        "probeSpec",
+        "getAllSpecs",
+        "serviceVersion",
+        "allServiceVersions",
+        "ServiceVersion",
+        "getServiceDomains",
+        "SERVICE_BASE_PATHS"
+      ],
+      "imports": [
+        "./config.js",
+        "./http.js"
+      ],
+      "symbols": [
+        "getServiceDomains()",
+        "listServices()",
+        "getService(serviceName: string)",
+        "probeSpec(serviceName: string)",
+        "getAllSpecs()",
+        "serviceVersion(serviceName: string)",
+        "allServiceVersions()"
+      ]
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/shared/libs/docker.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "listContainers",
+        "controlContainer",
+        "getContainerLogs",
+        "composeUp",
+        "batchContainerStatuses",
+        "computeServiceStatus",
+        "containerTop",
+        "containerDiff",
+        "containerInspectFull",
+        "containerEvents",
+        "containerPause",
+        "containerUnpause",
+        "containerExecCmd",
+        "caddyCertRepair",
+        "logsSearch",
+        "logsMulti",
+        "composeUpAll",
+        "pullUpContainer",
+        "pullUpVmFleet",
+        "pullUpCloudFleet",
+        "dockerSystemDf",
+        "updateContainer",
+        "containerStatsOne",
+        "inspectContainerDetails",
+        "checkImageUpdate",
+        "runAllowlistedExecCommand",
+        "ContainerStats",
+        "ContainerDetails",
+        "ImageUpdateStatus",
+        "EXEC_COMMAND_ALLOWLIST"
+      ],
+      "imports": [
+        "./ssh.js",
+        "./config.js",
+        "./audit.js",
+        "./shell-quote.js",
+        "./validators.js",
+        "./redact-argv.js",
+        "./caddy-cert-repair.js",
+        "zod",
+        "./schemas.js"
+      ],
+      "symbols": [
+        "listContainers(\n  vmNameOrAlias: string,\n  includeAll = false,\n)",
+        "controlContainer(\n  vmNameOrAlias: string,\n  container: string,\n  action: \"start\" | \"stop\" | \"restart\",\n)",
+        "getContainerLogs(\n  vmNameOrAlias: string,\n  container: string,\n  lines = 100,\n  since?: string,\n)",
+        "composeUp(\n  service: string,\n)",
+        "batchContainerStatuses(\n  vmNameOrAlias: string,\n)",
+        "computeServiceStatus(\n  vmNameOrAlias: string,\n  serviceName: string,\n)",
+        "containerTop(\n  vmNameOrAlias: string,\n  container: string,\n)",
+        "containerDiff(\n  vmNameOrAlias: string,\n  container: string,\n)",
+        "containerInspectFull(\n  vmNameOrAlias: string,\n  container: string,\n)",
+        "containerEvents(\n  vmNameOrAlias: string,\n  container: string,\n  since = \"1h\",\n)",
+        "containerPause(\n  vmNameOrAlias: string,\n  container: string,\n)",
+        "containerUnpause(\n  vmNameOrAlias: string,\n  container: string,\n)",
+        "containerExecCmd(\n  vmNameOrAlias: string,\n  container: string,\n  command: string,\n)",
+        "caddyCertRepair(\n  vmNameOrAlias: string,\n  container: string,\n  dryRun: boolean,\n  allMesh: boolean,\n)",
+        "logsSearch(\n  vmNameOrAlias: string,\n  container: string,\n  pattern: string,\n  lines = 1000,\n)",
+        "logsMulti(\n  serviceName: string,\n  lines = 50,\n)",
+        "composeUpAll(\n  vmNameOrAlias: string,\n)",
+        "runPullUp(\n  vmNameOrAlias: string,\n  filter?: string,\n)",
+        "pullUpContainer(\n  service: string,\n)",
+        "pullUpVmFleet(\n  vmNameOrAlias: string,\n)",
+        "pullUpCloudFleet()",
+        "dockerSystemDf(\n  vmNameOrAlias: string,\n)",
+        "updateContainer(\n  vmNameOrAlias: string,\n  container: string,\n)",
+        "containerStatsOne(\n  vmNameOrAlias: string,\n  container: string,\n)",
+        "inspectContainerDetails(\n  vmNameOrAlias: string,\n  container: string,\n)",
+        "checkImageUpdate(\n  vmNameOrAlias: string,\n  container: string,\n)",
+        "runAllowlistedExecCommand(\n  vmNameOrAlias: string,\n  container: string,\n  commandName: string,\n)"
+      ]
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/shared/libs/exec.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "exec",
+        "execAsync",
+        "ExecResult"
+      ],
+      "imports": [
+        "child_process",
+        "./paths.js"
+      ],
+      "symbols": [
+        "resolveExecEnv(command: string)",
+        "exec(\n  command: string,\n  args: string[],\n  // `input` feeds the child's stdin. Use it for anything secret — an argv\n  // element is readable by any process that can stat /proc/<pid>/cmdline.\n  options?: { timeout?: number; cwd?: string; input?: string }\n)",
+        "execAsync(\n  command: string,\n  args: string[],\n  options?: { timeout?: number; cwd?: string }\n)"
+      ]
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/shared/libs/files.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "getConfigFile",
+        "getContainerLog",
+        "getVmStatus",
+        "getReport",
+        "getSecretsStatus"
+      ],
+      "imports": [
+        "fs",
+        "path",
+        "./config.js",
+        "./paths.js",
+        "./ssh.js",
+        "./health.js",
+        "./discovery.js",
+        "./security.js"
+      ],
+      "symbols": [
+        "redactSensitiveLines(content: string)",
+        "redactWireGuardKeys(content: string)",
+        "getConfigFile(service: string, filename = \"build.json\")",
+        "getContainerLog(\n  vmId: string,\n  container: string,\n  lines = 100,\n  since?: string,\n)",
+        "getVmStatus(vmId: string)",
+        "getReport(reportType: string)",
+        "getSecretsStatus(service?: string)"
+      ]
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/shared/libs/gha-policy.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "validRepo",
+        "validId",
+        "validArtifactName",
+        "safeRelPath",
+        "planInline",
+        "rerunnable",
+        "validSha",
+        "cancellable",
+        "grepLines",
+        "validPsPattern",
+        "ARTIFACT_MAX_BYTES",
+        "ARTIFACT_INLINE_MAX_BYTES",
+        "ARTIFACT_FILE_MAX_BYTES",
+        "ArtifactFile"
+      ],
+      "imports": [],
+      "symbols": [
+        "validRepo(repo: string)",
+        "validId(id: string)",
+        "validArtifactName(name: string)",
+        "safeRelPath(p: string)",
+        "planInline(files: ArtifactFile[], total = ARTIFACT_INLINE_MAX_BYTES, perFile = ARTIFACT_FILE_MAX_BYTES)",
+        "rerunnable(runStatus: string | undefined)",
+        "validSha(sha: string)",
+        "cancellable(runStatus: string | undefined)",
+        "grepLines(lines: string[], pattern: string, context = 0)",
+        "validPsPattern(p: string)"
+      ]
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/shared/libs/health-match.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "hasGlob",
+        "globToRegex",
+        "isDeployed",
+        "isRunning",
+        "runningNames",
+        "DriftContainer"
+      ],
+      "imports": [],
+      "symbols": [
+        "hasGlob(pat: string)",
+        "globToRegex(pat: string)",
+        "isDeployed(declared: string[], deployed: string[])",
+        "isRunning(status: string | undefined)",
+        "runningNames(containers: DriftContainer[])"
+      ]
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/shared/libs/health.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "healthAlive",
+        "healthDeclared",
+        "healthDeployed",
+        "healthDrift",
+        "healthStatus",
+        "checkTier1All",
+        "checkTier2All",
+        "checkTier3All",
+        "gatherVmResources",
+        "probeVm",
+        "healthEndpoints",
+        "checkUp",
+        "checkHealth",
+        "checkReach",
+        "metricsSnapshot",
+        "Tier1Result",
+        "Tier2Result",
+        "VmResources",
+        "ContainerInfo",
+        "Tier3Result",
+        "DeployedVm",
+        "DriftEntry",
+        "HealthDeclaredResult",
+        "HealthStatusResult",
+        "EndpointHealthResult",
+        "UpResult",
+        "HealthResult",
+        "ReachResult",
+        "ContainerMetrics",
+        "VmMetricsSnapshot"
+      ],
+      "imports": [
+        "./ssh.js",
+        "./config.js",
+        "./docker.js",
+        "./exec.js",
+        "./paths.js",
+        "./types.js",
+        "./health-match.js"
+      ],
+      "symbols": [
+        "getVmIds(vmId?: string)",
+        "parseResources(output: string)",
+        "healthAlive()",
+        "healthDeclared()",
+        "healthDeployed(vmId?: string)",
+        "healthDrift()",
+        "healthStatus(vmId?: string)",
+        "checkTier1All(vmId?: string)",
+        "checkTier2All(vmId?: string)",
+        "checkTier3All(vmId?: string)",
+        "gatherVmResources(vmId: string)",
+        "probeVm(vmId: string)",
+        "getHealthDomains()",
+        "healthEndpoints()",
+        "resolveTarget(target: string)",
+        "buildAliasMapPublic()",
+        "findContainerVm(containerName: string)",
+        "checkUp(target: string)",
+        "findContainerOnVm(vmId: string, containerName: string)",
+        "checkHealth(target: string)",
+        "resolveServiceDomain(target: string)",
+        "checkReach(target: string)",
+        "metricsSnapshot(vmFilter?: string)"
+      ]
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/shared/libs/http.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "getBearerToken",
+        "c3ApiGet",
+        "c3ApiPost",
+        "httpGet",
+        "rawHttpRequest",
+        "HttpResult"
+      ],
+      "imports": [
+        "./exec.js",
+        "./paths.js",
+        "fs"
+      ],
+      "symbols": [
+        "httpRequest(\n  method: string,\n  url: string,\n  body?: string,\n  timeout?: number,\n  extraHeaders?: Record<string, string>\n)",
+        "fetchOidcToken()",
+        "getBearerToken()",
+        "c3ApiGet(endpoint: string, timeout?: number)",
+        "c3ApiPost(endpoint: string, body?: string, timeout?: number)",
+        "httpGet(url: string, timeout?: number)",
+        "rawHttpRequest(\n  method: string,\n  url: string,\n  body?: string,\n  timeout?: number,\n  extraHeaders?: Record<string, string>\n)"
+      ]
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/shared/libs/jev-flake.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "jevFlake",
+        "JevFlakeAnswer"
+      ],
+      "imports": [],
+      "symbols": [
+        "jevFlake(\n  workflow: string,\n  logTail: string[],\n  fetchImpl: typeof fetch = fetch,\n  env: Record<string, string | undefined> = process.env,\n)"
+      ]
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/shared/libs/jev.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "jevAlertPriority",
+        "jevAlertLabel",
+        "jevAlertOutcome",
+        "JevPriority",
+        "JevAlertState",
+        "JevAlertAnswer"
+      ],
+      "imports": [],
+      "symbols": [
+        "jevAlertPriority(\n  state: JevAlertState,\n  fetchImpl: typeof fetch = fetch,\n  env: Record<string, string | undefined> = process.env,\n)",
+        "jevAlertLabel(openMs: number)",
+        "jevAlertOutcome(\n  call: string | null,\n  openMs: number,\n  fetchImpl: typeof fetch = fetch,\n  env: Record<string, string | undefined> = process.env,\n)"
+      ]
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/shared/libs/notify.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "sendNotification",
+        "alertHealthDown",
+        "alertHealthRecovered",
+        "alertCertExpiring",
+        "alertDiskFull",
+        "Priority",
+        "NotifyOptions",
+        "NotifyResult"
+      ],
+      "imports": [
+        "./exec.js",
+        "./config.js"
+      ],
+      "symbols": [
+        "resolveNtfyUrl()",
+        "sendNotification(opts: NotifyOptions)",
+        "alertHealthDown(vm: string, details: string)",
+        "alertHealthRecovered(vm: string)",
+        "alertCertExpiring(domain: string, daysLeft: number)",
+        "alertDiskFull(vm: string, percent: string)"
+      ]
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/shared/libs/obs.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "resolve",
+        "up",
+        "upAll",
+        "upAllContainers",
+        "health",
+        "healthAll",
+        "profile",
+        "profileAllServices",
+        "profileAllContainers",
+        "Resolved",
+        "UpProbe",
+        "PerfTiming",
+        "UpResult",
+        "UpAllResult",
+        "HealthCheck",
+        "HealthResult",
+        "ProfilingStep",
+        "ProfilingEngine",
+        "ProfilingResult"
+      ],
+      "imports": [
+        "./config.js",
+        "./pool.js",
+        "./async-ssh.js",
+        "./cache.js",
+        "./async-exec.js"
+      ],
+      "symbols": [
+        "resolve(target: string)",
+        "up(target: string)",
+        "upAll()",
+        "upAllContainers()",
+        "probeUrl(resolved: Resolved)",
+        "probeVm(resolved: Resolved)",
+        "probeContainer(resolved: Resolved)",
+        "health(target: string)",
+        "healthAll()",
+        "healthCheckUrl(resolved: Resolved)",
+        "healthCheckVm(resolved: Resolved)",
+        "healthCheckContainer(\n  resolved: Resolved,\n)",
+        "profile(target: string)",
+        "profileAllServices()",
+        "profileAllContainers()",
+        "engineUrl(resolved: Resolved)",
+        "engineContainer(\n  resolved: Resolved,\n)",
+        "engineNetwork(\n  resolved: Resolved,\n)",
+        "engineVmContext(\n  resolved: Resolved,\n)",
+        "extractBlock(\n  output: string,\n  startMarker: string,\n  endMarker: string | null,\n)",
+        "extractAssetUrls(html: string, baseUrl: string)",
+        "resolveUrl(href: string, base: string)",
+        "generateDiagnosis(\n  a: ProfilingEngine | null,\n  b: ProfilingEngine | null,\n  c: ProfilingEngine | null,\n  d: ProfilingEngine | null,\n)"
+      ]
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/shared/libs/ops.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "handlePushEvent",
+        "daguHeaders",
+        "PushEvent",
+        "PushEventResult",
+        "DAGU_API",
+        "DAGU_API_PATH"
+      ],
+      "imports": [
+        "fs",
+        "path",
+        "./audit.js",
+        "./paths.js",
+        "./async-exec.js"
+      ],
+      "symbols": [
+        "resolveDaguApi()",
+        "resolveDaguApiPath()",
+        "handlePushEvent(event: PushEvent)",
+        "extractModifiedFiles(event: PushEvent)",
+        "daguHeaders()",
+        "triggerDag(name: string)",
+        "triggerDagViaSsh(name: string)"
+      ]
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/shared/libs/paths.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "getOctocodeRepoConfig",
+        "getOctocodeRepos",
+        "getSolutionRoots",
+        "getContainersRoot",
+        "getRepoDir",
+        "syncRepos",
+        "HOME",
+        "GIT_BASE",
+        "IS_ANDROID",
+        "IS_SERVER",
+        "IS_CLIENT",
+        "SSH_IDENTITY",
+        "SOLUTIONS_DIR",
+        "CLOUD_DATA_DIR",
+        "CLOUD_DATA_REPO",
+        "getConsolidatedPath",
+        "getConfigsPath",
+        "getDepsPath",
+        "getOwnBuildPath",
+        "CONFIGS_PATH",
+        "DEPS_PATH",
+        "getTopologySlice",
+        "getConfigsSlice",
+        "getDepsSlice",
+        "FRONT_DEPS_PATH",
+        "FRONT_TOPOLOGY_PATH",
+        "BUILD_SCRIPT",
+        "SSH_CONFIG_PATH",
+        "SOPS_AGE_KEY_FILE",
+        "AUTHELIA_TOKEN_PATH"
+      ],
+      "imports": [
+        "fs",
+        "child_process",
+        "os",
+        "path"
+      ],
+      "symbols": [
+        "resolveCloudDataPath(filename: string)",
+        "resolveConfigPath()",
+        "readConsolidated()",
+        "resolveC3Api()",
+        "resolveOwnBuildJsonPath()",
+        "getOctocodeRepoConfig()",
+        "getOctocodeRepos()",
+        "getSolutionRoots()",
+        "getContainersRoot()",
+        "getRepoDir(localName: string)",
+        "syncRepos(force = false)"
+      ]
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/shared/libs/poller.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "getLastFleetHealthSnapshot",
+        "evaluateAlertRules",
+        "startPoller",
+        "stopPoller",
+        "TICK_INTERVAL_MS",
+        "pollerEvents",
+        "FleetHealthSnapshot"
+      ],
+      "imports": [
+        "events",
+        "./config.js",
+        "./async-ssh.js",
+        "./jev.js",
+        "./db.js",
+        "./notify.js"
+      ],
+      "symbols": [
+        "getLastFleetHealthSnapshot()",
+        "sampleAllTargets()",
+        "extractBlock(output: string, startMarker: string, endMarker: string | null)",
+        "parsePercent(s?: string)",
+        "parseNetBytes(s?: string)",
+        "parseSize(s: string)",
+        "compareOp(value: number, op: string, threshold: number)",
+        "evaluateAlertRules()",
+        "runTick()",
+        "startPoller()",
+        "stopPoller()"
+      ]
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/shared/libs/pool.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "runAsBulk",
+        "Pool",
+        "sshPool",
+        "httpPool"
+      ],
+      "imports": [
+        "node:async_hooks"
+      ],
+      "symbols": [
+        "class Pool"
+      ]
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/shared/libs/redact-argv.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "redactCommandString",
+        "redactArgv",
+        "redactInspectArgv",
+        "REDACTED"
+      ],
+      "imports": [],
+      "symbols": [
+        "redactCommandString(s: string)",
+        "redactArgv(argv: unknown)",
+        "redactInspectArgv(item: any)"
+      ]
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/shared/libs/schemas.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "VmConfigSchema",
+        "ServiceCategorySchema",
+        "ServiceConfigSchema",
+        "InfraConfigSchema",
+        "Tier1ResultSchema",
+        "Tier2ResultSchema",
+        "VmResourcesSchema",
+        "ContainerStatusSchema",
+        "Tier3ResultSchema",
+        "HealthDeclaredSchema",
+        "DeployedContainerSchema",
+        "DriftEntrySchema",
+        "DiagnosticCheckSchema",
+        "ProfilingResponseSchema",
+        "CloudInstanceSchema",
+        "CloudResourceSchema",
+        "CloudCostSchema",
+        "TopologyVmSchema",
+        "TopologyNetworkSchema",
+        "TopologySchema",
+        "TestResultSchema",
+        "TestSuiteResultSchema",
+        "TestSuiteNameSchema",
+        "FileRetrievalSchema",
+        "ReportTypeSchema",
+        "ServiceInfoSchema",
+        "SecurityFindingSchema",
+        "SecurityScanResultSchema",
+        "NotifyOptionsSchema",
+        "NotifyResultSchema"
+      ],
+      "imports": [
+        "zod"
+      ],
+      "symbols": []
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/shared/libs/secrets-status.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "describeSecretsStatus",
+        "SecretsProbe"
+      ],
+      "imports": [],
+      "symbols": [
+        "describeSecretsStatus(probe: SecretsProbe)"
+      ]
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/shared/libs/security.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "securityScan",
+        "securityDocker",
+        "securitySshKeys",
+        "securityTokens",
+        "SecurityFinding",
+        "SecurityScanResult",
+        "DockerSecurityInfo",
+        "SshKeysAudit",
+        "TokenStatus"
+      ],
+      "imports": [
+        "./ssh.js",
+        "./config.js",
+        "./exec.js",
+        "fs",
+        "./paths.js"
+      ],
+      "symbols": [
+        "summarize(findings: SecurityFinding[])",
+        "securityScan(vmFilter?: string)",
+        "securityDocker(vmNameOrAlias: string)",
+        "securitySshKeys(vmNameOrAlias: string)",
+        "securityTokens()"
+      ]
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/shared/libs/shell-quote.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "posixQuote",
+        "anyShellQuote",
+        "remoteShellWrap",
+        "dockerExecShell",
+        "sqliteReadonlyCmd"
+      ],
+      "imports": [],
+      "symbols": [
+        "posixQuote(v: string)",
+        "anyShellQuote(v: string)",
+        "remoteShellWrap(command: string)",
+        "dockerExecShell(container: string, command: string)",
+        "sqliteReadonlyCmd(db: string, sql: string)"
+      ]
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/shared/libs/ssh-argv.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "sshArgv",
+        "vmMeshAddress",
+        "SSH_BASE_OPTS"
+      ],
+      "imports": [],
+      "symbols": [
+        "sshArgv(alias: string, wrappedCommand: string, connectTimeout: number | string = 10)",
+        "vmMeshAddress(vm: { ip: string; wg_ip?: string })"
+      ]
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/shared/libs/ssh.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "sshExec",
+        "sshExecAsync",
+        "checkVmReachable",
+        "remoteShellWrap",
+        "vmMeshAddress"
+      ],
+      "imports": [
+        "./exec.js",
+        "./config.js",
+        "./audit.js",
+        "./shell-quote.js",
+        "./ssh-argv.js"
+      ],
+      "symbols": [
+        "sshExec(\n  vmNameOrAlias: string,\n  command: string,\n  timeout?: number,\n  _noRetry = false,\n  connectTimeout = 10,\n)",
+        "sshExecAsync(\n  vmNameOrAlias: string,\n  command: string,\n  timeout?: number,\n  _noRetry = false,\n  connectTimeout = 10,\n)",
+        "checkVmReachable(vmNameOrAlias: string)"
+      ]
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/shared/libs/tests.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "testWgPing",
+        "testSshSession",
+        "testDnsResolve",
+        "testTlsCert",
+        "testHttpRoute",
+        "testContainerHealth",
+        "testPortOpen",
+        "testDeployHistoryPopulated",
+        "runTestSuite",
+        "TestResult",
+        "TestSuiteResult"
+      ],
+      "imports": [
+        "./ssh.js",
+        "./config.js",
+        "./exec.js",
+        "./docker.js",
+        "./discovery.js",
+        "./db.js",
+        "./paths.js",
+        "fs",
+        "path"
+      ],
+      "symbols": [
+        "runTest(\n  name: string,\n  target: string,\n  fn: ()",
+        "buildSuiteResult(suite: string, tests: TestResult[], suiteStart: number)",
+        "getVmIds(target?: string)",
+        "getServicesWithDomains()",
+        "testWgPing(vmId: string)",
+        "testSshSession(vmId: string)",
+        "testDnsResolve(domain: string)",
+        "testTlsCert(domain: string)",
+        "testHttpRoute(domain: string)",
+        "testContainerHealth(vmId: string, containerName: string)",
+        "testPortOpen(ip: string, port: number)",
+        "testDeployHistoryPopulated()",
+        "runConnectivitySuite(target?: string)",
+        "runDnsSuite()",
+        "runTlsSuite()",
+        "runRoutesSuite()",
+        "runContainersSuite(target?: string)",
+        "runWireguardSuite()",
+        "runAuthSuite()",
+        "runSecretsSuite()",
+        "runComposeSuite()",
+        "runVolumesSuite(target?: string)",
+        "runResourcesSuite(target?: string)",
+        "runLatencySuite()",
+        "runImagesSuite(target?: string)",
+        "runCrossVmSuite()",
+        "runDeploySuite()",
+        "runTestSuite(suite: SuiteName, target?: string)"
+      ]
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/shared/libs/types.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "VmConfig",
+        "ServiceConfig",
+        "InfraConfig"
+      ],
+      "imports": [],
+      "symbols": []
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/shared/libs/validators.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "validateContainerName",
+        "validateSince",
+        "validatePathComponent"
+      ],
+      "imports": [],
+      "symbols": [
+        "validateContainerName(name: string)",
+        "validateSince(since: string)",
+        "validatePathComponent(path: string)"
+      ]
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/shared/libs/vm-files-policy.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "normalizeAbs",
+        "readDenied",
+        "treeDenied",
+        "writeTarget",
+        "resolvedInside",
+        "looksText",
+        "envLine",
+        "shq",
+        "READ_FILE_DEFAULT_BYTES",
+        "READ_FILE_MAX_BYTES",
+        "READ_TREE_DEFAULT_BYTES",
+        "READ_TREE_MAX_BYTES",
+        "WRITE_FILE_MAX_BYTES",
+        "READ_DENY",
+        "TREE_EXCLUDES",
+        "WriteRoot",
+        "WRITE_ROOTS"
+      ],
+      "imports": [],
+      "symbols": [
+        "normalizeAbs(p: string)",
+        "readDenied(p: string)",
+        "treeDenied(p: string)",
+        "under(path: string, root: string)",
+        "writeTarget(\n  vmId: string, container: string, p: string,\n)",
+        "resolvedInside(resolved: string, root: string)",
+        "looksText(buf: Uint8Array)",
+        "envLine(e: string)",
+        "shq(v: string)"
       ]
     },
     {
@@ -20546,6 +21937,1397 @@
       ]
     },
     {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/shared/libs/__selfcheck__.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [],
+      "imports": [
+        "node:assert",
+        "./secrets-status.js",
+        "./app-logs-core.js"
+      ],
+      "symbols": [
+        "compareOp(value: number, op: string, threshold: number)",
+        "nextAlertState(breached: boolean, alreadyOpen: boolean)",
+        "foldBucket(values: number[])",
+        "mergeWeightedAvg(existingAvg: number, existingCount: number, incomingAvg: number, incomingCount: number)",
+        "bucket5m(ts: Date)"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/shared/libs/ai-usage.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "validateClaudeBody",
+        "emptyStore",
+        "applySample",
+        "loadStore",
+        "saveStore",
+        "claudeView",
+        "parseOpenRouter",
+        "resetOpenRouterCache",
+        "getOpenRouter",
+        "Window",
+        "ClaudeSample",
+        "ClaudeHistoryPoint",
+        "ClaudeStore",
+        "HISTORY_MAX",
+        "HISTORY_MIN_GAP_S",
+        "OrActivityRow",
+        "OrWindow",
+        "OrSummary",
+        "OR_TTL_MS"
+      ],
+      "imports": [
+        "node:fs",
+        "node:path"
+      ],
+      "symbols": [
+        "parseWindow(name: string, v: unknown, errors: string[])",
+        "validateClaudeBody(body: unknown, now: number)",
+        "emptyStore()",
+        "applySample(store: ClaudeStore, s: ClaudeSample)",
+        "loadStore(dir: string)",
+        "saveStore(dir: string, st: ClaudeStore)",
+        "claudeView(st: ClaudeStore, now: number)",
+        "parseOpenRouter(credits: unknown, activity: unknown, nowMs: number)",
+        "resetOpenRouterCache()",
+        "getOpenRouter(env: Record<string, string | undefined>, fetchFn: typeof fetch, nowMs: number)"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/shared/libs/app-logs-core.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "telemetryAppId",
+        "resolveName",
+        "apksFromFleet",
+        "readEvents",
+        "isLogFileName",
+        "AppKind",
+        "DeclaredApk",
+        "StoredEvent"
+      ],
+      "imports": [],
+      "symbols": [
+        "telemetryAppId(pkg: string)",
+        "resolveName(kind: AppKind, raw: string, apks: DeclaredApk[], containers: string[])",
+        "apksFromFleet(fleet: { apps?: Array<{ label?: string; package?: string; kind?: string }> })",
+        "readEvents(jsonl: string, opts: { kind?: string; since?: string; limit?: number })",
+        "isLogFileName(f: string)"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/shared/libs/async-exec.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "execAsync",
+        "shellAsync",
+        "ExecResult"
+      ],
+      "imports": [
+        "child_process",
+        "./paths.js"
+      ],
+      "symbols": [
+        "execAsync(\n  command: string,\n  args: string[],\n  options?: { timeout?: number; cwd?: string },\n)",
+        "shellAsync(\n  script: string,\n  timeout?: number,\n)"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/shared/libs/async-ssh.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "sshExecAsync",
+        "tcpProbeAsync",
+        "pingAsync",
+        "curlStatusAsync",
+        "curlAsync"
+      ],
+      "imports": [
+        "./async-exec.js",
+        "./config.js"
+      ],
+      "symbols": [
+        "errorResult(\n  error: string,\n  context: string,\n  startMs: number,\n)",
+        "sshExecAsync(\n  vmNameOrAlias: string,\n  command: string,\n  timeout?: number,\n)",
+        "tcpProbeAsync(\n  host: string,\n  timeout = 5_000,\n)",
+        "pingAsync(\n  host: string,\n  timeout = 3_000,\n)",
+        "curlStatusAsync(\n  url: string,\n  timeout = 5_000,\n)",
+        "curlAsync(\n  url: string,\n  timeout = 10_000,\n)"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/shared/libs/audit.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "audit"
+      ],
+      "imports": [
+        "./db.js"
+      ],
+      "symbols": [
+        "audit(tool: string, target: string, result: string, source = \"mcp\")"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/shared/libs/auth-decision.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "isPublicPath",
+        "isMeshIp",
+        "isCaddyAuthenticated",
+        "isAllowed"
+      ],
+      "imports": [],
+      "symbols": [
+        "isPublicPath(url: string)",
+        "isMeshIp(ip: string)",
+        "isCaddyAuthenticated(headers: Record<string, unknown>)",
+        "isAllowed(url: string, ip: string, headers: Record<string, unknown>)"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/shared/libs/binds.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "bindHost"
+      ],
+      "imports": [
+        "../shared/libs/binds.js"
+      ],
+      "symbols": [
+        "bindHost(envName: string = \"MCP_HTTP_HOST\")"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/shared/libs/cache.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "cacheWrite",
+        "cacheRead",
+        "cacheList",
+        "cachePrune",
+        "startCacheCleanup"
+      ],
+      "imports": [
+        "fs",
+        "path",
+        "os"
+      ],
+      "symbols": [
+        "cacheWrite(\n  endpoint: string,\n  target: string,\n  data: unknown,\n)",
+        "cacheRead(\n  endpoint: string,\n  target: string,\n  limit = 10,\n)",
+        "cacheList()",
+        "cachePrune()",
+        "pruneDir(dir: string)",
+        "sanitize(s: string)",
+        "startCacheCleanup()"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/shared/libs/caddy-cert-repair.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "parseDataMount",
+        "tsStamp",
+        "buildScanScript",
+        "buildRepairScript",
+        "parseResult",
+        "parseScanOutput",
+        "mismatchLines",
+        "mismatchDomains",
+        "lastStartupError",
+        "parseState",
+        "formatReport",
+        "CONTAINER_RE",
+        "MISMATCH_RE",
+        "DATA_MOUNT_TEMPLATE",
+        "CertStatus",
+        "RESULT_MAX_AGE_SEC",
+        "CERT_RE",
+        "ScanResult",
+        "Parsed",
+        "certDomain",
+        "ContainerState",
+        "STATE_TEMPLATE",
+        "RepairReport"
+      ],
+      "imports": [],
+      "symbols": [
+        "parseDataMount(stdout: string)",
+        "tsStamp(d: Date = new Date()",
+        "checkState(stateDir: string)",
+        "buildScanScript(o: { stateDir?: string })",
+        "buildRepairScript(o: { dataDir?: string; container?: string; allMesh: boolean; dryRun: boolean; ts: string; stateDir?: string; maxAgeSec?: number })",
+        "emptyParsed()",
+        "parseResult(json: string)",
+        "parseScanOutput(out: string)",
+        "mismatchLines(logs: string, max = 10)",
+        "mismatchDomains(logs: string)",
+        "summarize(line: string)",
+        "lastStartupError(logs: string, domain?: string)",
+        "parseState(out: string)",
+        "formatReport(r: RepairReport)"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/shared/libs/cloud/aws.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "listInstances",
+        "listResources",
+        "getCosts"
+      ],
+      "imports": [
+        "../exec.js",
+        "zod",
+        "../schemas.js"
+      ],
+      "symbols": [
+        "awsCli(args: string[], timeout = 30_000)",
+        "getRegion()",
+        "listInstances()",
+        "listResources()",
+        "monthLabel(d: Date)",
+        "getCosts()"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/shared/libs/cloud/gcp.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "listInstances",
+        "getInstanceState",
+        "instanceAction",
+        "listResources",
+        "getCosts",
+        "getCostsHistory",
+        "getCostsByVm"
+      ],
+      "imports": [
+        "../exec.js",
+        "zod",
+        "../schemas.js"
+      ],
+      "symbols": [
+        "gcloudCli(args: string[], timeout = 30_000)",
+        "listInstances()",
+        "getInstanceState(instanceName: string, zone: string)",
+        "instanceAction(\n  instanceName: string,\n  zone: string,\n  action: \"start\" | \"stop\" | \"reset\",\n)",
+        "listResources()",
+        "monthLabel(d: Date)",
+        "getCosts()",
+        "bqQuery(sql: string, timeout = 60_000)",
+        "getCostsHistory(months: number = 6)",
+        "getCostsByVm(months: number = 6)"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/shared/libs/cloud/oci.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "listInstances",
+        "getInstanceState",
+        "instanceAction",
+        "listResources",
+        "getCosts",
+        "getCostsHistory"
+      ],
+      "imports": [
+        "node:fs",
+        "node:path",
+        "../exec.js",
+        "zod",
+        "../schemas.js"
+      ],
+      "symbols": [
+        "getCompartmentId()",
+        "ociCli(args: string[], timeout = 30_000)",
+        "listInstances()",
+        "getInstanceState(instanceId: string)",
+        "instanceAction(\n  instanceId: string,\n  action: \"START\" | \"STOP\" | \"RESET\",\n)",
+        "listResources()",
+        "monthLabel(d: Date)",
+        "queryMonthCosts(\n  tenantId: string,\n  start: Date,\n  end: Date,\n  period: string,\n)",
+        "getCosts()",
+        "getCostsHistory(months: number = 3)",
+        "getInstanceBasedCosts(compartmentId: string, period: string)"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/shared/libs/config.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "getConfig",
+        "reloadConfig",
+        "getDriftReport",
+        "getServiceFolder",
+        "composeCd",
+        "getServiceDir",
+        "isSolutionTreeMissing",
+        "serviceContainerNames",
+        "getVmSshAlias",
+        "resolveVmId",
+        "getServicesForVm"
+      ],
+      "imports": [
+        "fs",
+        "path",
+        "./types.js",
+        "./paths.js"
+      ],
+      "symbols": [
+        "getConfig()",
+        "reloadConfig()",
+        "getDriftReport()",
+        "discoverServicesFromDisk(fileConfig: InfraConfig)",
+        "getServiceFolder(name: string)",
+        "composeCd(remotePath: string)",
+        "getServiceDir(name: string)",
+        "isSolutionTreeMissing()",
+        "serviceContainerNames(svc: unknown, serviceName: string)",
+        "buildAliasMap()",
+        "getVmSshAlias(vmId: string)",
+        "resolveVmId(nameOrAlias: string)",
+        "getServicesForVm(vmId: string)"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/shared/libs/configs-sync-core.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "isConfigFileName",
+        "readConfigFile",
+        "clearConfigCache",
+        "DATA_REPO_RAW",
+        "TTL_MS"
+      ],
+      "imports": [],
+      "symbols": [
+        "isConfigFileName(name: string)",
+        "readConfigFile(name: string, f: Fetcher = fetch as unknown as Fetcher, now = Date.now()",
+        "clearConfigCache()"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/shared/libs/control.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "vmSerialConsole",
+        "vmStart",
+        "vmStop",
+        "vmReset",
+        "containerStart",
+        "containerStop",
+        "containerRestart",
+        "serviceStart",
+        "serviceStop",
+        "serviceRestart",
+        "vmDrain",
+        "ControlResult"
+      ],
+      "imports": [
+        "./ssh.js",
+        "./config.js",
+        "./exec.js",
+        "./audit.js",
+        "./docker.js",
+        "./cloud/oci.js",
+        "./validators.js"
+      ],
+      "symbols": [
+        "ensureVmReachable(vmId: string)",
+        "resolveOciInstanceId(vmId: string, alias: string)",
+        "ociInstanceAction(\n  vmId: string,\n  alias: string,\n  action: \"START\" | \"RESET\" | \"STOP\",\n  auditKey: string,\n)",
+        "vmSerialConsole(vmNameOrAlias: string, lines = 200)",
+        "vmStart(vmNameOrAlias: string)",
+        "vmStop(vmNameOrAlias: string)",
+        "vmReset(vmNameOrAlias: string)",
+        "containerStart(\n  vmNameOrAlias: string,\n  containerName: string,\n)",
+        "containerStop(\n  vmNameOrAlias: string,\n  containerName: string,\n)",
+        "containerRestart(\n  vmNameOrAlias: string,\n  containerName: string,\n)",
+        "serviceStart(\n  vmNameOrAlias: string,\n  serviceName: string,\n)",
+        "serviceStop(\n  vmNameOrAlias: string,\n  serviceName: string,\n)",
+        "serviceRestart(\n  vmNameOrAlias: string,\n  serviceName: string,\n)",
+        "vmDrain(vmNameOrAlias: string)"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/shared/libs/db.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "getDb",
+        "recordHealthCheck",
+        "getHealthHistory",
+        "getUptimeReport",
+        "recordAudit",
+        "getAuditLog",
+        "recordDeploy",
+        "getDeployHistory",
+        "getAlertState",
+        "updateAlertState",
+        "pruneOldRecords",
+        "recordMetricSample",
+        "queryMetricSeries",
+        "getLatestMetric",
+        "getTopByMetric",
+        "rollupMetrics",
+        "pruneMetrics",
+        "listAlertRules",
+        "getAlertRule",
+        "createAlertRule",
+        "updateAlertRule",
+        "deleteAlertRule",
+        "getOpenAlertForRule",
+        "recordAlertFired",
+        "recordAlertResolved",
+        "ackAlert",
+        "getActiveAlerts",
+        "getAlertHistory",
+        "insertLogLines",
+        "searchLogLines"
+      ],
+      "imports": [
+        "better-sqlite3",
+        "fs",
+        "path",
+        "os"
+      ],
+      "symbols": [
+        "ensureDir(dir: string)",
+        "getDb()",
+        "initSchema(db: Database.Database)",
+        "recordHealthCheck(record: HealthRecord)",
+        "getHealthHistory(query: HealthHistoryQuery = {})",
+        "getUptimeReport(vm?: string, hours = 24)",
+        "recordAudit(tool: string, target: string, result: string, source = \"mcp\")",
+        "getAuditLog(query: AuditQuery = {})",
+        "recordDeploy(\n  service: string,\n  step: string,\n  success: boolean,\n  durationMs?: number,\n  output?: string,\n)",
+        "getDeployHistory(query: DeployQuery = {})",
+        "getAlertState(vm: string)",
+        "updateAlertState(vm: string, status: string, notified: boolean)",
+        "pruneOldRecords(daysToKeep = 30)",
+        "bucket5m(ts: Date)",
+        "recordMetricSample(target: string, metric: MetricName, value: number)",
+        "queryMetricSeries(\n  target: string,\n  metric: MetricName,\n  from?: string,\n  to?: string,\n)",
+        "getLatestMetric(target: string, metric: MetricName)",
+        "getTopByMetric(metric: MetricName, limit = 10)",
+        "rollupMetrics(rawRetentionHours = 6)",
+        "pruneMetrics(daysToKeep = 30)",
+        "rowToRule(r: Record<string, unknown>)",
+        "listAlertRules()",
+        "getAlertRule(id: number)",
+        "createAlertRule(rule: Omit<AlertRule, \"id\" | \"createdTs\">)",
+        "updateAlertRule(id: number, patch: Partial<Omit<AlertRule, \"id\" | \"createdTs\">>)",
+        "deleteAlertRule(id: number)",
+        "rowToHistory(r: Record<string, unknown>)",
+        "getOpenAlertForRule(ruleId: number)",
+        "recordAlertFired(ruleId: number, target: string, metric: string, value: number)",
+        "recordAlertResolved(id: number)",
+        "ackAlert(id: number)",
+        "getActiveAlerts()",
+        "getAlertHistory(limit = 100)",
+        "insertLogLines(lines: LogLine[])",
+        "searchLogLines(query: LogSearchQuery)"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/shared/libs/diagnostics.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "profileContainer",
+        "profileVm",
+        "profileService",
+        "vmNetwork",
+        "vmTop",
+        "vmDiskUsage",
+        "vmJournal"
+      ],
+      "imports": [
+        "./ssh.js",
+        "./config.js",
+        "./docker.js",
+        "./exec.js",
+        "zod",
+        "./schemas.js"
+      ],
+      "symbols": [
+        "timedCheck(name: string, fn: ()",
+        "findContainerVm(containerName: string)",
+        "profileContainer(containerName: string)",
+        "profileVm(vmNameOrAlias: string)",
+        "profileService(serviceName: string)",
+        "vmNetwork(vmNameOrAlias: string)",
+        "vmTop(vmNameOrAlias: string)",
+        "vmDiskUsage(vmNameOrAlias: string)",
+        "vmJournal(\n  vmNameOrAlias: string,\n  lines = 100,\n  unit?: string,\n)"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/shared/libs/discovery.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "listServices",
+        "getService",
+        "probeSpec",
+        "getAllSpecs",
+        "serviceVersion",
+        "allServiceVersions",
+        "ServiceVersion",
+        "getServiceDomains",
+        "SERVICE_BASE_PATHS"
+      ],
+      "imports": [
+        "./config.js",
+        "./http.js"
+      ],
+      "symbols": [
+        "getServiceDomains()",
+        "listServices()",
+        "getService(serviceName: string)",
+        "probeSpec(serviceName: string)",
+        "getAllSpecs()",
+        "serviceVersion(serviceName: string)",
+        "allServiceVersions()"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/shared/libs/docker.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "listContainers",
+        "controlContainer",
+        "getContainerLogs",
+        "composeUp",
+        "batchContainerStatuses",
+        "computeServiceStatus",
+        "containerTop",
+        "containerDiff",
+        "containerInspectFull",
+        "containerEvents",
+        "containerPause",
+        "containerUnpause",
+        "containerExecCmd",
+        "caddyCertRepair",
+        "logsSearch",
+        "logsMulti",
+        "composeUpAll",
+        "pullUpContainer",
+        "pullUpVmFleet",
+        "pullUpCloudFleet",
+        "dockerSystemDf",
+        "updateContainer",
+        "containerStatsOne",
+        "inspectContainerDetails",
+        "checkImageUpdate",
+        "runAllowlistedExecCommand",
+        "ContainerStats",
+        "ContainerDetails",
+        "ImageUpdateStatus",
+        "EXEC_COMMAND_ALLOWLIST"
+      ],
+      "imports": [
+        "./ssh.js",
+        "./config.js",
+        "./audit.js",
+        "./shell-quote.js",
+        "./validators.js",
+        "./redact-argv.js",
+        "./caddy-cert-repair.js",
+        "zod",
+        "./schemas.js"
+      ],
+      "symbols": [
+        "listContainers(\n  vmNameOrAlias: string,\n  includeAll = false,\n)",
+        "controlContainer(\n  vmNameOrAlias: string,\n  container: string,\n  action: \"start\" | \"stop\" | \"restart\",\n)",
+        "getContainerLogs(\n  vmNameOrAlias: string,\n  container: string,\n  lines = 100,\n  since?: string,\n)",
+        "composeUp(\n  service: string,\n)",
+        "batchContainerStatuses(\n  vmNameOrAlias: string,\n)",
+        "computeServiceStatus(\n  vmNameOrAlias: string,\n  serviceName: string,\n)",
+        "containerTop(\n  vmNameOrAlias: string,\n  container: string,\n)",
+        "containerDiff(\n  vmNameOrAlias: string,\n  container: string,\n)",
+        "containerInspectFull(\n  vmNameOrAlias: string,\n  container: string,\n)",
+        "containerEvents(\n  vmNameOrAlias: string,\n  container: string,\n  since = \"1h\",\n)",
+        "containerPause(\n  vmNameOrAlias: string,\n  container: string,\n)",
+        "containerUnpause(\n  vmNameOrAlias: string,\n  container: string,\n)",
+        "containerExecCmd(\n  vmNameOrAlias: string,\n  container: string,\n  command: string,\n)",
+        "caddyCertRepair(\n  vmNameOrAlias: string,\n  container: string,\n  dryRun: boolean,\n  allMesh: boolean,\n)",
+        "logsSearch(\n  vmNameOrAlias: string,\n  container: string,\n  pattern: string,\n  lines = 1000,\n)",
+        "logsMulti(\n  serviceName: string,\n  lines = 50,\n)",
+        "composeUpAll(\n  vmNameOrAlias: string,\n)",
+        "runPullUp(\n  vmNameOrAlias: string,\n  filter?: string,\n)",
+        "pullUpContainer(\n  service: string,\n)",
+        "pullUpVmFleet(\n  vmNameOrAlias: string,\n)",
+        "pullUpCloudFleet()",
+        "dockerSystemDf(\n  vmNameOrAlias: string,\n)",
+        "updateContainer(\n  vmNameOrAlias: string,\n  container: string,\n)",
+        "containerStatsOne(\n  vmNameOrAlias: string,\n  container: string,\n)",
+        "inspectContainerDetails(\n  vmNameOrAlias: string,\n  container: string,\n)",
+        "checkImageUpdate(\n  vmNameOrAlias: string,\n  container: string,\n)",
+        "runAllowlistedExecCommand(\n  vmNameOrAlias: string,\n  container: string,\n  commandName: string,\n)"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/shared/libs/exec.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "exec",
+        "execAsync",
+        "ExecResult"
+      ],
+      "imports": [
+        "child_process",
+        "./paths.js"
+      ],
+      "symbols": [
+        "resolveExecEnv(command: string)",
+        "exec(\n  command: string,\n  args: string[],\n  // `input` feeds the child's stdin. Use it for anything secret — an argv\n  // element is readable by any process that can stat /proc/<pid>/cmdline.\n  options?: { timeout?: number; cwd?: string; input?: string }\n)",
+        "execAsync(\n  command: string,\n  args: string[],\n  options?: { timeout?: number; cwd?: string }\n)"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/shared/libs/files.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "getConfigFile",
+        "getContainerLog",
+        "getVmStatus",
+        "getReport",
+        "getSecretsStatus"
+      ],
+      "imports": [
+        "fs",
+        "path",
+        "./config.js",
+        "./paths.js",
+        "./ssh.js",
+        "./health.js",
+        "./discovery.js",
+        "./security.js"
+      ],
+      "symbols": [
+        "redactSensitiveLines(content: string)",
+        "redactWireGuardKeys(content: string)",
+        "getConfigFile(service: string, filename = \"build.json\")",
+        "getContainerLog(\n  vmId: string,\n  container: string,\n  lines = 100,\n  since?: string,\n)",
+        "getVmStatus(vmId: string)",
+        "getReport(reportType: string)",
+        "getSecretsStatus(service?: string)"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/shared/libs/gha-policy.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "validRepo",
+        "validId",
+        "validArtifactName",
+        "safeRelPath",
+        "planInline",
+        "rerunnable",
+        "validSha",
+        "cancellable",
+        "grepLines",
+        "validPsPattern",
+        "ARTIFACT_MAX_BYTES",
+        "ARTIFACT_INLINE_MAX_BYTES",
+        "ARTIFACT_FILE_MAX_BYTES",
+        "ArtifactFile"
+      ],
+      "imports": [],
+      "symbols": [
+        "validRepo(repo: string)",
+        "validId(id: string)",
+        "validArtifactName(name: string)",
+        "safeRelPath(p: string)",
+        "planInline(files: ArtifactFile[], total = ARTIFACT_INLINE_MAX_BYTES, perFile = ARTIFACT_FILE_MAX_BYTES)",
+        "rerunnable(runStatus: string | undefined)",
+        "validSha(sha: string)",
+        "cancellable(runStatus: string | undefined)",
+        "grepLines(lines: string[], pattern: string, context = 0)",
+        "validPsPattern(p: string)"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/shared/libs/health-match.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "hasGlob",
+        "globToRegex",
+        "isDeployed",
+        "isRunning",
+        "runningNames",
+        "DriftContainer"
+      ],
+      "imports": [],
+      "symbols": [
+        "hasGlob(pat: string)",
+        "globToRegex(pat: string)",
+        "isDeployed(declared: string[], deployed: string[])",
+        "isRunning(status: string | undefined)",
+        "runningNames(containers: DriftContainer[])"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/shared/libs/health.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "healthAlive",
+        "healthDeclared",
+        "healthDeployed",
+        "healthDrift",
+        "healthStatus",
+        "checkTier1All",
+        "checkTier2All",
+        "checkTier3All",
+        "gatherVmResources",
+        "probeVm",
+        "healthEndpoints",
+        "checkUp",
+        "checkHealth",
+        "checkReach",
+        "metricsSnapshot",
+        "Tier1Result",
+        "Tier2Result",
+        "VmResources",
+        "ContainerInfo",
+        "Tier3Result",
+        "DeployedVm",
+        "DriftEntry",
+        "HealthDeclaredResult",
+        "HealthStatusResult",
+        "EndpointHealthResult",
+        "UpResult",
+        "HealthResult",
+        "ReachResult",
+        "ContainerMetrics",
+        "VmMetricsSnapshot"
+      ],
+      "imports": [
+        "./ssh.js",
+        "./config.js",
+        "./docker.js",
+        "./exec.js",
+        "./paths.js",
+        "./types.js",
+        "./health-match.js"
+      ],
+      "symbols": [
+        "getVmIds(vmId?: string)",
+        "parseResources(output: string)",
+        "healthAlive()",
+        "healthDeclared()",
+        "healthDeployed(vmId?: string)",
+        "healthDrift()",
+        "healthStatus(vmId?: string)",
+        "checkTier1All(vmId?: string)",
+        "checkTier2All(vmId?: string)",
+        "checkTier3All(vmId?: string)",
+        "gatherVmResources(vmId: string)",
+        "probeVm(vmId: string)",
+        "getHealthDomains()",
+        "healthEndpoints()",
+        "resolveTarget(target: string)",
+        "buildAliasMapPublic()",
+        "findContainerVm(containerName: string)",
+        "checkUp(target: string)",
+        "findContainerOnVm(vmId: string, containerName: string)",
+        "checkHealth(target: string)",
+        "resolveServiceDomain(target: string)",
+        "checkReach(target: string)",
+        "metricsSnapshot(vmFilter?: string)"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/shared/libs/http.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "getBearerToken",
+        "c3ApiGet",
+        "c3ApiPost",
+        "httpGet",
+        "rawHttpRequest",
+        "HttpResult"
+      ],
+      "imports": [
+        "./exec.js",
+        "./paths.js",
+        "fs"
+      ],
+      "symbols": [
+        "httpRequest(\n  method: string,\n  url: string,\n  body?: string,\n  timeout?: number,\n  extraHeaders?: Record<string, string>\n)",
+        "fetchOidcToken()",
+        "getBearerToken()",
+        "c3ApiGet(endpoint: string, timeout?: number)",
+        "c3ApiPost(endpoint: string, body?: string, timeout?: number)",
+        "httpGet(url: string, timeout?: number)",
+        "rawHttpRequest(\n  method: string,\n  url: string,\n  body?: string,\n  timeout?: number,\n  extraHeaders?: Record<string, string>\n)"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/shared/libs/jev-flake.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "jevFlake",
+        "JevFlakeAnswer"
+      ],
+      "imports": [],
+      "symbols": [
+        "jevFlake(\n  workflow: string,\n  logTail: string[],\n  fetchImpl: typeof fetch = fetch,\n  env: Record<string, string | undefined> = process.env,\n)"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/shared/libs/jev.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "jevAlertPriority",
+        "jevAlertLabel",
+        "jevAlertOutcome",
+        "JevPriority",
+        "JevAlertState",
+        "JevAlertAnswer"
+      ],
+      "imports": [],
+      "symbols": [
+        "jevAlertPriority(\n  state: JevAlertState,\n  fetchImpl: typeof fetch = fetch,\n  env: Record<string, string | undefined> = process.env,\n)",
+        "jevAlertLabel(openMs: number)",
+        "jevAlertOutcome(\n  call: string | null,\n  openMs: number,\n  fetchImpl: typeof fetch = fetch,\n  env: Record<string, string | undefined> = process.env,\n)"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/shared/libs/notify.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "sendNotification",
+        "alertHealthDown",
+        "alertHealthRecovered",
+        "alertCertExpiring",
+        "alertDiskFull",
+        "Priority",
+        "NotifyOptions",
+        "NotifyResult"
+      ],
+      "imports": [
+        "./exec.js",
+        "./config.js"
+      ],
+      "symbols": [
+        "resolveNtfyUrl()",
+        "sendNotification(opts: NotifyOptions)",
+        "alertHealthDown(vm: string, details: string)",
+        "alertHealthRecovered(vm: string)",
+        "alertCertExpiring(domain: string, daysLeft: number)",
+        "alertDiskFull(vm: string, percent: string)"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/shared/libs/obs.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "resolve",
+        "up",
+        "upAll",
+        "upAllContainers",
+        "health",
+        "healthAll",
+        "profile",
+        "profileAllServices",
+        "profileAllContainers",
+        "Resolved",
+        "UpProbe",
+        "PerfTiming",
+        "UpResult",
+        "UpAllResult",
+        "HealthCheck",
+        "HealthResult",
+        "ProfilingStep",
+        "ProfilingEngine",
+        "ProfilingResult"
+      ],
+      "imports": [
+        "./config.js",
+        "./pool.js",
+        "./async-ssh.js",
+        "./cache.js",
+        "./async-exec.js"
+      ],
+      "symbols": [
+        "resolve(target: string)",
+        "up(target: string)",
+        "upAll()",
+        "upAllContainers()",
+        "probeUrl(resolved: Resolved)",
+        "probeVm(resolved: Resolved)",
+        "probeContainer(resolved: Resolved)",
+        "health(target: string)",
+        "healthAll()",
+        "healthCheckUrl(resolved: Resolved)",
+        "healthCheckVm(resolved: Resolved)",
+        "healthCheckContainer(\n  resolved: Resolved,\n)",
+        "profile(target: string)",
+        "profileAllServices()",
+        "profileAllContainers()",
+        "engineUrl(resolved: Resolved)",
+        "engineContainer(\n  resolved: Resolved,\n)",
+        "engineNetwork(\n  resolved: Resolved,\n)",
+        "engineVmContext(\n  resolved: Resolved,\n)",
+        "extractBlock(\n  output: string,\n  startMarker: string,\n  endMarker: string | null,\n)",
+        "extractAssetUrls(html: string, baseUrl: string)",
+        "resolveUrl(href: string, base: string)",
+        "generateDiagnosis(\n  a: ProfilingEngine | null,\n  b: ProfilingEngine | null,\n  c: ProfilingEngine | null,\n  d: ProfilingEngine | null,\n)"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/shared/libs/ops.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "handlePushEvent",
+        "daguHeaders",
+        "PushEvent",
+        "PushEventResult",
+        "DAGU_API",
+        "DAGU_API_PATH"
+      ],
+      "imports": [
+        "fs",
+        "path",
+        "./audit.js",
+        "./paths.js",
+        "./async-exec.js"
+      ],
+      "symbols": [
+        "resolveDaguApi()",
+        "resolveDaguApiPath()",
+        "handlePushEvent(event: PushEvent)",
+        "extractModifiedFiles(event: PushEvent)",
+        "daguHeaders()",
+        "triggerDag(name: string)",
+        "triggerDagViaSsh(name: string)"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/shared/libs/paths.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "getOctocodeRepoConfig",
+        "getOctocodeRepos",
+        "getSolutionRoots",
+        "getContainersRoot",
+        "getRepoDir",
+        "syncRepos",
+        "HOME",
+        "GIT_BASE",
+        "IS_ANDROID",
+        "IS_SERVER",
+        "IS_CLIENT",
+        "SSH_IDENTITY",
+        "SOLUTIONS_DIR",
+        "CLOUD_DATA_DIR",
+        "CLOUD_DATA_REPO",
+        "getConsolidatedPath",
+        "getConfigsPath",
+        "getDepsPath",
+        "getOwnBuildPath",
+        "CONFIGS_PATH",
+        "DEPS_PATH",
+        "getTopologySlice",
+        "getConfigsSlice",
+        "getDepsSlice",
+        "FRONT_DEPS_PATH",
+        "FRONT_TOPOLOGY_PATH",
+        "BUILD_SCRIPT",
+        "SSH_CONFIG_PATH",
+        "SOPS_AGE_KEY_FILE",
+        "AUTHELIA_TOKEN_PATH"
+      ],
+      "imports": [
+        "fs",
+        "child_process",
+        "os",
+        "path"
+      ],
+      "symbols": [
+        "resolveCloudDataPath(filename: string)",
+        "resolveConfigPath()",
+        "readConsolidated()",
+        "resolveC3Api()",
+        "resolveOwnBuildJsonPath()",
+        "getOctocodeRepoConfig()",
+        "getOctocodeRepos()",
+        "getSolutionRoots()",
+        "getContainersRoot()",
+        "getRepoDir(localName: string)",
+        "syncRepos(force = false)"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/shared/libs/poller.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "getLastFleetHealthSnapshot",
+        "evaluateAlertRules",
+        "startPoller",
+        "stopPoller",
+        "TICK_INTERVAL_MS",
+        "pollerEvents",
+        "FleetHealthSnapshot"
+      ],
+      "imports": [
+        "events",
+        "./config.js",
+        "./async-ssh.js",
+        "./jev.js",
+        "./db.js",
+        "./notify.js"
+      ],
+      "symbols": [
+        "getLastFleetHealthSnapshot()",
+        "sampleAllTargets()",
+        "extractBlock(output: string, startMarker: string, endMarker: string | null)",
+        "parsePercent(s?: string)",
+        "parseNetBytes(s?: string)",
+        "parseSize(s: string)",
+        "compareOp(value: number, op: string, threshold: number)",
+        "evaluateAlertRules()",
+        "runTick()",
+        "startPoller()",
+        "stopPoller()"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/shared/libs/pool.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "runAsBulk",
+        "Pool",
+        "sshPool",
+        "httpPool"
+      ],
+      "imports": [
+        "node:async_hooks"
+      ],
+      "symbols": [
+        "class Pool"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/shared/libs/redact-argv.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "redactCommandString",
+        "redactArgv",
+        "redactInspectArgv",
+        "REDACTED"
+      ],
+      "imports": [],
+      "symbols": [
+        "redactCommandString(s: string)",
+        "redactArgv(argv: unknown)",
+        "redactInspectArgv(item: any)"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/shared/libs/schemas.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "VmConfigSchema",
+        "ServiceCategorySchema",
+        "ServiceConfigSchema",
+        "InfraConfigSchema",
+        "Tier1ResultSchema",
+        "Tier2ResultSchema",
+        "VmResourcesSchema",
+        "ContainerStatusSchema",
+        "Tier3ResultSchema",
+        "HealthDeclaredSchema",
+        "DeployedContainerSchema",
+        "DriftEntrySchema",
+        "DiagnosticCheckSchema",
+        "ProfilingResponseSchema",
+        "CloudInstanceSchema",
+        "CloudResourceSchema",
+        "CloudCostSchema",
+        "TopologyVmSchema",
+        "TopologyNetworkSchema",
+        "TopologySchema",
+        "TestResultSchema",
+        "TestSuiteResultSchema",
+        "TestSuiteNameSchema",
+        "FileRetrievalSchema",
+        "ReportTypeSchema",
+        "ServiceInfoSchema",
+        "SecurityFindingSchema",
+        "SecurityScanResultSchema",
+        "NotifyOptionsSchema",
+        "NotifyResultSchema"
+      ],
+      "imports": [
+        "zod"
+      ],
+      "symbols": []
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/shared/libs/secrets-status.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "describeSecretsStatus",
+        "SecretsProbe"
+      ],
+      "imports": [],
+      "symbols": [
+        "describeSecretsStatus(probe: SecretsProbe)"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/shared/libs/security.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "securityScan",
+        "securityDocker",
+        "securitySshKeys",
+        "securityTokens",
+        "SecurityFinding",
+        "SecurityScanResult",
+        "DockerSecurityInfo",
+        "SshKeysAudit",
+        "TokenStatus"
+      ],
+      "imports": [
+        "./ssh.js",
+        "./config.js",
+        "./exec.js",
+        "fs",
+        "./paths.js"
+      ],
+      "symbols": [
+        "summarize(findings: SecurityFinding[])",
+        "securityScan(vmFilter?: string)",
+        "securityDocker(vmNameOrAlias: string)",
+        "securitySshKeys(vmNameOrAlias: string)",
+        "securityTokens()"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/shared/libs/shell-quote.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "posixQuote",
+        "anyShellQuote",
+        "remoteShellWrap",
+        "dockerExecShell",
+        "sqliteReadonlyCmd"
+      ],
+      "imports": [],
+      "symbols": [
+        "posixQuote(v: string)",
+        "anyShellQuote(v: string)",
+        "remoteShellWrap(command: string)",
+        "dockerExecShell(container: string, command: string)",
+        "sqliteReadonlyCmd(db: string, sql: string)"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/shared/libs/ssh-argv.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "sshArgv",
+        "vmMeshAddress",
+        "SSH_BASE_OPTS"
+      ],
+      "imports": [],
+      "symbols": [
+        "sshArgv(alias: string, wrappedCommand: string, connectTimeout: number | string = 10)",
+        "vmMeshAddress(vm: { ip: string; wg_ip?: string })"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/shared/libs/ssh.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "sshExec",
+        "sshExecAsync",
+        "checkVmReachable",
+        "remoteShellWrap",
+        "vmMeshAddress"
+      ],
+      "imports": [
+        "./exec.js",
+        "./config.js",
+        "./audit.js",
+        "./shell-quote.js",
+        "./ssh-argv.js"
+      ],
+      "symbols": [
+        "sshExec(\n  vmNameOrAlias: string,\n  command: string,\n  timeout?: number,\n  _noRetry = false,\n  connectTimeout = 10,\n)",
+        "sshExecAsync(\n  vmNameOrAlias: string,\n  command: string,\n  timeout?: number,\n  _noRetry = false,\n  connectTimeout = 10,\n)",
+        "checkVmReachable(vmNameOrAlias: string)"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/shared/libs/tests.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "testWgPing",
+        "testSshSession",
+        "testDnsResolve",
+        "testTlsCert",
+        "testHttpRoute",
+        "testContainerHealth",
+        "testPortOpen",
+        "testDeployHistoryPopulated",
+        "runTestSuite",
+        "TestResult",
+        "TestSuiteResult"
+      ],
+      "imports": [
+        "./ssh.js",
+        "./config.js",
+        "./exec.js",
+        "./docker.js",
+        "./discovery.js",
+        "./db.js",
+        "./paths.js",
+        "fs",
+        "path"
+      ],
+      "symbols": [
+        "runTest(\n  name: string,\n  target: string,\n  fn: ()",
+        "buildSuiteResult(suite: string, tests: TestResult[], suiteStart: number)",
+        "getVmIds(target?: string)",
+        "getServicesWithDomains()",
+        "testWgPing(vmId: string)",
+        "testSshSession(vmId: string)",
+        "testDnsResolve(domain: string)",
+        "testTlsCert(domain: string)",
+        "testHttpRoute(domain: string)",
+        "testContainerHealth(vmId: string, containerName: string)",
+        "testPortOpen(ip: string, port: number)",
+        "testDeployHistoryPopulated()",
+        "runConnectivitySuite(target?: string)",
+        "runDnsSuite()",
+        "runTlsSuite()",
+        "runRoutesSuite()",
+        "runContainersSuite(target?: string)",
+        "runWireguardSuite()",
+        "runAuthSuite()",
+        "runSecretsSuite()",
+        "runComposeSuite()",
+        "runVolumesSuite(target?: string)",
+        "runResourcesSuite(target?: string)",
+        "runLatencySuite()",
+        "runImagesSuite(target?: string)",
+        "runCrossVmSuite()",
+        "runDeploySuite()",
+        "runTestSuite(suite: SuiteName, target?: string)"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/shared/libs/types.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "VmConfig",
+        "ServiceConfig",
+        "InfraConfig"
+      ],
+      "imports": [],
+      "symbols": []
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/shared/libs/validators.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "validateContainerName",
+        "validateSince",
+        "validatePathComponent"
+      ],
+      "imports": [],
+      "symbols": [
+        "validateContainerName(name: string)",
+        "validateSince(since: string)",
+        "validatePathComponent(path: string)"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/shared/libs/vm-files-policy.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "normalizeAbs",
+        "readDenied",
+        "treeDenied",
+        "writeTarget",
+        "resolvedInside",
+        "looksText",
+        "envLine",
+        "shq",
+        "READ_FILE_DEFAULT_BYTES",
+        "READ_FILE_MAX_BYTES",
+        "READ_TREE_DEFAULT_BYTES",
+        "READ_TREE_MAX_BYTES",
+        "WRITE_FILE_MAX_BYTES",
+        "READ_DENY",
+        "TREE_EXCLUDES",
+        "WriteRoot",
+        "WRITE_ROOTS"
+      ],
+      "imports": [],
+      "symbols": [
+        "normalizeAbs(p: string)",
+        "readDenied(p: string)",
+        "treeDenied(p: string)",
+        "under(path: string, root: string)",
+        "writeTarget(\n  vmId: string, container: string, p: string,\n)",
+        "resolvedInside(resolved: string, root: string)",
+        "looksText(buf: Uint8Array)",
+        "envLine(e: string)",
+        "shq(v: string)"
+      ]
+    },
+    {
       "path": "user-ai_cloud-cgc-pub-mcp/src/code/surface.ts",
       "lang": "ts",
       "role": "module",
@@ -20767,6 +23549,1397 @@
       "symbols": [
         "runOctocode(args: string[], cwd?: string)",
         "registerOctocodeTools(server: McpServer)"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/tools/shared/libs/__selfcheck__.ts",
+      "lang": "ts",
+      "role": "mcp-tool",
+      "exports": [],
+      "imports": [
+        "node:assert",
+        "./secrets-status.js",
+        "./app-logs-core.js"
+      ],
+      "symbols": [
+        "compareOp(value: number, op: string, threshold: number)",
+        "nextAlertState(breached: boolean, alreadyOpen: boolean)",
+        "foldBucket(values: number[])",
+        "mergeWeightedAvg(existingAvg: number, existingCount: number, incomingAvg: number, incomingCount: number)",
+        "bucket5m(ts: Date)"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/tools/shared/libs/ai-usage.ts",
+      "lang": "ts",
+      "role": "mcp-tool",
+      "exports": [
+        "validateClaudeBody",
+        "emptyStore",
+        "applySample",
+        "loadStore",
+        "saveStore",
+        "claudeView",
+        "parseOpenRouter",
+        "resetOpenRouterCache",
+        "getOpenRouter",
+        "Window",
+        "ClaudeSample",
+        "ClaudeHistoryPoint",
+        "ClaudeStore",
+        "HISTORY_MAX",
+        "HISTORY_MIN_GAP_S",
+        "OrActivityRow",
+        "OrWindow",
+        "OrSummary",
+        "OR_TTL_MS"
+      ],
+      "imports": [
+        "node:fs",
+        "node:path"
+      ],
+      "symbols": [
+        "parseWindow(name: string, v: unknown, errors: string[])",
+        "validateClaudeBody(body: unknown, now: number)",
+        "emptyStore()",
+        "applySample(store: ClaudeStore, s: ClaudeSample)",
+        "loadStore(dir: string)",
+        "saveStore(dir: string, st: ClaudeStore)",
+        "claudeView(st: ClaudeStore, now: number)",
+        "parseOpenRouter(credits: unknown, activity: unknown, nowMs: number)",
+        "resetOpenRouterCache()",
+        "getOpenRouter(env: Record<string, string | undefined>, fetchFn: typeof fetch, nowMs: number)"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/tools/shared/libs/app-logs-core.ts",
+      "lang": "ts",
+      "role": "mcp-tool",
+      "exports": [
+        "telemetryAppId",
+        "resolveName",
+        "apksFromFleet",
+        "readEvents",
+        "isLogFileName",
+        "AppKind",
+        "DeclaredApk",
+        "StoredEvent"
+      ],
+      "imports": [],
+      "symbols": [
+        "telemetryAppId(pkg: string)",
+        "resolveName(kind: AppKind, raw: string, apks: DeclaredApk[], containers: string[])",
+        "apksFromFleet(fleet: { apps?: Array<{ label?: string; package?: string; kind?: string }> })",
+        "readEvents(jsonl: string, opts: { kind?: string; since?: string; limit?: number })",
+        "isLogFileName(f: string)"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/tools/shared/libs/async-exec.ts",
+      "lang": "ts",
+      "role": "mcp-tool",
+      "exports": [
+        "execAsync",
+        "shellAsync",
+        "ExecResult"
+      ],
+      "imports": [
+        "child_process",
+        "./paths.js"
+      ],
+      "symbols": [
+        "execAsync(\n  command: string,\n  args: string[],\n  options?: { timeout?: number; cwd?: string },\n)",
+        "shellAsync(\n  script: string,\n  timeout?: number,\n)"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/tools/shared/libs/async-ssh.ts",
+      "lang": "ts",
+      "role": "mcp-tool",
+      "exports": [
+        "sshExecAsync",
+        "tcpProbeAsync",
+        "pingAsync",
+        "curlStatusAsync",
+        "curlAsync"
+      ],
+      "imports": [
+        "./async-exec.js",
+        "./config.js"
+      ],
+      "symbols": [
+        "errorResult(\n  error: string,\n  context: string,\n  startMs: number,\n)",
+        "sshExecAsync(\n  vmNameOrAlias: string,\n  command: string,\n  timeout?: number,\n)",
+        "tcpProbeAsync(\n  host: string,\n  timeout = 5_000,\n)",
+        "pingAsync(\n  host: string,\n  timeout = 3_000,\n)",
+        "curlStatusAsync(\n  url: string,\n  timeout = 5_000,\n)",
+        "curlAsync(\n  url: string,\n  timeout = 10_000,\n)"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/tools/shared/libs/audit.ts",
+      "lang": "ts",
+      "role": "mcp-tool",
+      "exports": [
+        "audit"
+      ],
+      "imports": [
+        "./db.js"
+      ],
+      "symbols": [
+        "audit(tool: string, target: string, result: string, source = \"mcp\")"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/tools/shared/libs/auth-decision.ts",
+      "lang": "ts",
+      "role": "mcp-tool",
+      "exports": [
+        "isPublicPath",
+        "isMeshIp",
+        "isCaddyAuthenticated",
+        "isAllowed"
+      ],
+      "imports": [],
+      "symbols": [
+        "isPublicPath(url: string)",
+        "isMeshIp(ip: string)",
+        "isCaddyAuthenticated(headers: Record<string, unknown>)",
+        "isAllowed(url: string, ip: string, headers: Record<string, unknown>)"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/tools/shared/libs/binds.ts",
+      "lang": "ts",
+      "role": "mcp-tool",
+      "exports": [
+        "bindHost"
+      ],
+      "imports": [
+        "../shared/libs/binds.js"
+      ],
+      "symbols": [
+        "bindHost(envName: string = \"MCP_HTTP_HOST\")"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/tools/shared/libs/cache.ts",
+      "lang": "ts",
+      "role": "mcp-tool",
+      "exports": [
+        "cacheWrite",
+        "cacheRead",
+        "cacheList",
+        "cachePrune",
+        "startCacheCleanup"
+      ],
+      "imports": [
+        "fs",
+        "path",
+        "os"
+      ],
+      "symbols": [
+        "cacheWrite(\n  endpoint: string,\n  target: string,\n  data: unknown,\n)",
+        "cacheRead(\n  endpoint: string,\n  target: string,\n  limit = 10,\n)",
+        "cacheList()",
+        "cachePrune()",
+        "pruneDir(dir: string)",
+        "sanitize(s: string)",
+        "startCacheCleanup()"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/tools/shared/libs/caddy-cert-repair.ts",
+      "lang": "ts",
+      "role": "mcp-tool",
+      "exports": [
+        "parseDataMount",
+        "tsStamp",
+        "buildScanScript",
+        "buildRepairScript",
+        "parseResult",
+        "parseScanOutput",
+        "mismatchLines",
+        "mismatchDomains",
+        "lastStartupError",
+        "parseState",
+        "formatReport",
+        "CONTAINER_RE",
+        "MISMATCH_RE",
+        "DATA_MOUNT_TEMPLATE",
+        "CertStatus",
+        "RESULT_MAX_AGE_SEC",
+        "CERT_RE",
+        "ScanResult",
+        "Parsed",
+        "certDomain",
+        "ContainerState",
+        "STATE_TEMPLATE",
+        "RepairReport"
+      ],
+      "imports": [],
+      "symbols": [
+        "parseDataMount(stdout: string)",
+        "tsStamp(d: Date = new Date()",
+        "checkState(stateDir: string)",
+        "buildScanScript(o: { stateDir?: string })",
+        "buildRepairScript(o: { dataDir?: string; container?: string; allMesh: boolean; dryRun: boolean; ts: string; stateDir?: string; maxAgeSec?: number })",
+        "emptyParsed()",
+        "parseResult(json: string)",
+        "parseScanOutput(out: string)",
+        "mismatchLines(logs: string, max = 10)",
+        "mismatchDomains(logs: string)",
+        "summarize(line: string)",
+        "lastStartupError(logs: string, domain?: string)",
+        "parseState(out: string)",
+        "formatReport(r: RepairReport)"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/tools/shared/libs/cloud/aws.ts",
+      "lang": "ts",
+      "role": "mcp-tool",
+      "exports": [
+        "listInstances",
+        "listResources",
+        "getCosts"
+      ],
+      "imports": [
+        "../exec.js",
+        "zod",
+        "../schemas.js"
+      ],
+      "symbols": [
+        "awsCli(args: string[], timeout = 30_000)",
+        "getRegion()",
+        "listInstances()",
+        "listResources()",
+        "monthLabel(d: Date)",
+        "getCosts()"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/tools/shared/libs/cloud/gcp.ts",
+      "lang": "ts",
+      "role": "mcp-tool",
+      "exports": [
+        "listInstances",
+        "getInstanceState",
+        "instanceAction",
+        "listResources",
+        "getCosts",
+        "getCostsHistory",
+        "getCostsByVm"
+      ],
+      "imports": [
+        "../exec.js",
+        "zod",
+        "../schemas.js"
+      ],
+      "symbols": [
+        "gcloudCli(args: string[], timeout = 30_000)",
+        "listInstances()",
+        "getInstanceState(instanceName: string, zone: string)",
+        "instanceAction(\n  instanceName: string,\n  zone: string,\n  action: \"start\" | \"stop\" | \"reset\",\n)",
+        "listResources()",
+        "monthLabel(d: Date)",
+        "getCosts()",
+        "bqQuery(sql: string, timeout = 60_000)",
+        "getCostsHistory(months: number = 6)",
+        "getCostsByVm(months: number = 6)"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/tools/shared/libs/cloud/oci.ts",
+      "lang": "ts",
+      "role": "mcp-tool",
+      "exports": [
+        "listInstances",
+        "getInstanceState",
+        "instanceAction",
+        "listResources",
+        "getCosts",
+        "getCostsHistory"
+      ],
+      "imports": [
+        "node:fs",
+        "node:path",
+        "../exec.js",
+        "zod",
+        "../schemas.js"
+      ],
+      "symbols": [
+        "getCompartmentId()",
+        "ociCli(args: string[], timeout = 30_000)",
+        "listInstances()",
+        "getInstanceState(instanceId: string)",
+        "instanceAction(\n  instanceId: string,\n  action: \"START\" | \"STOP\" | \"RESET\",\n)",
+        "listResources()",
+        "monthLabel(d: Date)",
+        "queryMonthCosts(\n  tenantId: string,\n  start: Date,\n  end: Date,\n  period: string,\n)",
+        "getCosts()",
+        "getCostsHistory(months: number = 3)",
+        "getInstanceBasedCosts(compartmentId: string, period: string)"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/tools/shared/libs/config.ts",
+      "lang": "ts",
+      "role": "mcp-tool",
+      "exports": [
+        "getConfig",
+        "reloadConfig",
+        "getDriftReport",
+        "getServiceFolder",
+        "composeCd",
+        "getServiceDir",
+        "isSolutionTreeMissing",
+        "serviceContainerNames",
+        "getVmSshAlias",
+        "resolveVmId",
+        "getServicesForVm"
+      ],
+      "imports": [
+        "fs",
+        "path",
+        "./types.js",
+        "./paths.js"
+      ],
+      "symbols": [
+        "getConfig()",
+        "reloadConfig()",
+        "getDriftReport()",
+        "discoverServicesFromDisk(fileConfig: InfraConfig)",
+        "getServiceFolder(name: string)",
+        "composeCd(remotePath: string)",
+        "getServiceDir(name: string)",
+        "isSolutionTreeMissing()",
+        "serviceContainerNames(svc: unknown, serviceName: string)",
+        "buildAliasMap()",
+        "getVmSshAlias(vmId: string)",
+        "resolveVmId(nameOrAlias: string)",
+        "getServicesForVm(vmId: string)"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/tools/shared/libs/configs-sync-core.ts",
+      "lang": "ts",
+      "role": "mcp-tool",
+      "exports": [
+        "isConfigFileName",
+        "readConfigFile",
+        "clearConfigCache",
+        "DATA_REPO_RAW",
+        "TTL_MS"
+      ],
+      "imports": [],
+      "symbols": [
+        "isConfigFileName(name: string)",
+        "readConfigFile(name: string, f: Fetcher = fetch as unknown as Fetcher, now = Date.now()",
+        "clearConfigCache()"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/tools/shared/libs/control.ts",
+      "lang": "ts",
+      "role": "mcp-tool",
+      "exports": [
+        "vmSerialConsole",
+        "vmStart",
+        "vmStop",
+        "vmReset",
+        "containerStart",
+        "containerStop",
+        "containerRestart",
+        "serviceStart",
+        "serviceStop",
+        "serviceRestart",
+        "vmDrain",
+        "ControlResult"
+      ],
+      "imports": [
+        "./ssh.js",
+        "./config.js",
+        "./exec.js",
+        "./audit.js",
+        "./docker.js",
+        "./cloud/oci.js",
+        "./validators.js"
+      ],
+      "symbols": [
+        "ensureVmReachable(vmId: string)",
+        "resolveOciInstanceId(vmId: string, alias: string)",
+        "ociInstanceAction(\n  vmId: string,\n  alias: string,\n  action: \"START\" | \"RESET\" | \"STOP\",\n  auditKey: string,\n)",
+        "vmSerialConsole(vmNameOrAlias: string, lines = 200)",
+        "vmStart(vmNameOrAlias: string)",
+        "vmStop(vmNameOrAlias: string)",
+        "vmReset(vmNameOrAlias: string)",
+        "containerStart(\n  vmNameOrAlias: string,\n  containerName: string,\n)",
+        "containerStop(\n  vmNameOrAlias: string,\n  containerName: string,\n)",
+        "containerRestart(\n  vmNameOrAlias: string,\n  containerName: string,\n)",
+        "serviceStart(\n  vmNameOrAlias: string,\n  serviceName: string,\n)",
+        "serviceStop(\n  vmNameOrAlias: string,\n  serviceName: string,\n)",
+        "serviceRestart(\n  vmNameOrAlias: string,\n  serviceName: string,\n)",
+        "vmDrain(vmNameOrAlias: string)"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/tools/shared/libs/db.ts",
+      "lang": "ts",
+      "role": "mcp-tool",
+      "exports": [
+        "getDb",
+        "recordHealthCheck",
+        "getHealthHistory",
+        "getUptimeReport",
+        "recordAudit",
+        "getAuditLog",
+        "recordDeploy",
+        "getDeployHistory",
+        "getAlertState",
+        "updateAlertState",
+        "pruneOldRecords",
+        "recordMetricSample",
+        "queryMetricSeries",
+        "getLatestMetric",
+        "getTopByMetric",
+        "rollupMetrics",
+        "pruneMetrics",
+        "listAlertRules",
+        "getAlertRule",
+        "createAlertRule",
+        "updateAlertRule",
+        "deleteAlertRule",
+        "getOpenAlertForRule",
+        "recordAlertFired",
+        "recordAlertResolved",
+        "ackAlert",
+        "getActiveAlerts",
+        "getAlertHistory",
+        "insertLogLines",
+        "searchLogLines"
+      ],
+      "imports": [
+        "better-sqlite3",
+        "fs",
+        "path",
+        "os"
+      ],
+      "symbols": [
+        "ensureDir(dir: string)",
+        "getDb()",
+        "initSchema(db: Database.Database)",
+        "recordHealthCheck(record: HealthRecord)",
+        "getHealthHistory(query: HealthHistoryQuery = {})",
+        "getUptimeReport(vm?: string, hours = 24)",
+        "recordAudit(tool: string, target: string, result: string, source = \"mcp\")",
+        "getAuditLog(query: AuditQuery = {})",
+        "recordDeploy(\n  service: string,\n  step: string,\n  success: boolean,\n  durationMs?: number,\n  output?: string,\n)",
+        "getDeployHistory(query: DeployQuery = {})",
+        "getAlertState(vm: string)",
+        "updateAlertState(vm: string, status: string, notified: boolean)",
+        "pruneOldRecords(daysToKeep = 30)",
+        "bucket5m(ts: Date)",
+        "recordMetricSample(target: string, metric: MetricName, value: number)",
+        "queryMetricSeries(\n  target: string,\n  metric: MetricName,\n  from?: string,\n  to?: string,\n)",
+        "getLatestMetric(target: string, metric: MetricName)",
+        "getTopByMetric(metric: MetricName, limit = 10)",
+        "rollupMetrics(rawRetentionHours = 6)",
+        "pruneMetrics(daysToKeep = 30)",
+        "rowToRule(r: Record<string, unknown>)",
+        "listAlertRules()",
+        "getAlertRule(id: number)",
+        "createAlertRule(rule: Omit<AlertRule, \"id\" | \"createdTs\">)",
+        "updateAlertRule(id: number, patch: Partial<Omit<AlertRule, \"id\" | \"createdTs\">>)",
+        "deleteAlertRule(id: number)",
+        "rowToHistory(r: Record<string, unknown>)",
+        "getOpenAlertForRule(ruleId: number)",
+        "recordAlertFired(ruleId: number, target: string, metric: string, value: number)",
+        "recordAlertResolved(id: number)",
+        "ackAlert(id: number)",
+        "getActiveAlerts()",
+        "getAlertHistory(limit = 100)",
+        "insertLogLines(lines: LogLine[])",
+        "searchLogLines(query: LogSearchQuery)"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/tools/shared/libs/diagnostics.ts",
+      "lang": "ts",
+      "role": "mcp-tool",
+      "exports": [
+        "profileContainer",
+        "profileVm",
+        "profileService",
+        "vmNetwork",
+        "vmTop",
+        "vmDiskUsage",
+        "vmJournal"
+      ],
+      "imports": [
+        "./ssh.js",
+        "./config.js",
+        "./docker.js",
+        "./exec.js",
+        "zod",
+        "./schemas.js"
+      ],
+      "symbols": [
+        "timedCheck(name: string, fn: ()",
+        "findContainerVm(containerName: string)",
+        "profileContainer(containerName: string)",
+        "profileVm(vmNameOrAlias: string)",
+        "profileService(serviceName: string)",
+        "vmNetwork(vmNameOrAlias: string)",
+        "vmTop(vmNameOrAlias: string)",
+        "vmDiskUsage(vmNameOrAlias: string)",
+        "vmJournal(\n  vmNameOrAlias: string,\n  lines = 100,\n  unit?: string,\n)"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/tools/shared/libs/discovery.ts",
+      "lang": "ts",
+      "role": "mcp-tool",
+      "exports": [
+        "listServices",
+        "getService",
+        "probeSpec",
+        "getAllSpecs",
+        "serviceVersion",
+        "allServiceVersions",
+        "ServiceVersion",
+        "getServiceDomains",
+        "SERVICE_BASE_PATHS"
+      ],
+      "imports": [
+        "./config.js",
+        "./http.js"
+      ],
+      "symbols": [
+        "getServiceDomains()",
+        "listServices()",
+        "getService(serviceName: string)",
+        "probeSpec(serviceName: string)",
+        "getAllSpecs()",
+        "serviceVersion(serviceName: string)",
+        "allServiceVersions()"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/tools/shared/libs/docker.ts",
+      "lang": "ts",
+      "role": "mcp-tool",
+      "exports": [
+        "listContainers",
+        "controlContainer",
+        "getContainerLogs",
+        "composeUp",
+        "batchContainerStatuses",
+        "computeServiceStatus",
+        "containerTop",
+        "containerDiff",
+        "containerInspectFull",
+        "containerEvents",
+        "containerPause",
+        "containerUnpause",
+        "containerExecCmd",
+        "caddyCertRepair",
+        "logsSearch",
+        "logsMulti",
+        "composeUpAll",
+        "pullUpContainer",
+        "pullUpVmFleet",
+        "pullUpCloudFleet",
+        "dockerSystemDf",
+        "updateContainer",
+        "containerStatsOne",
+        "inspectContainerDetails",
+        "checkImageUpdate",
+        "runAllowlistedExecCommand",
+        "ContainerStats",
+        "ContainerDetails",
+        "ImageUpdateStatus",
+        "EXEC_COMMAND_ALLOWLIST"
+      ],
+      "imports": [
+        "./ssh.js",
+        "./config.js",
+        "./audit.js",
+        "./shell-quote.js",
+        "./validators.js",
+        "./redact-argv.js",
+        "./caddy-cert-repair.js",
+        "zod",
+        "./schemas.js"
+      ],
+      "symbols": [
+        "listContainers(\n  vmNameOrAlias: string,\n  includeAll = false,\n)",
+        "controlContainer(\n  vmNameOrAlias: string,\n  container: string,\n  action: \"start\" | \"stop\" | \"restart\",\n)",
+        "getContainerLogs(\n  vmNameOrAlias: string,\n  container: string,\n  lines = 100,\n  since?: string,\n)",
+        "composeUp(\n  service: string,\n)",
+        "batchContainerStatuses(\n  vmNameOrAlias: string,\n)",
+        "computeServiceStatus(\n  vmNameOrAlias: string,\n  serviceName: string,\n)",
+        "containerTop(\n  vmNameOrAlias: string,\n  container: string,\n)",
+        "containerDiff(\n  vmNameOrAlias: string,\n  container: string,\n)",
+        "containerInspectFull(\n  vmNameOrAlias: string,\n  container: string,\n)",
+        "containerEvents(\n  vmNameOrAlias: string,\n  container: string,\n  since = \"1h\",\n)",
+        "containerPause(\n  vmNameOrAlias: string,\n  container: string,\n)",
+        "containerUnpause(\n  vmNameOrAlias: string,\n  container: string,\n)",
+        "containerExecCmd(\n  vmNameOrAlias: string,\n  container: string,\n  command: string,\n)",
+        "caddyCertRepair(\n  vmNameOrAlias: string,\n  container: string,\n  dryRun: boolean,\n  allMesh: boolean,\n)",
+        "logsSearch(\n  vmNameOrAlias: string,\n  container: string,\n  pattern: string,\n  lines = 1000,\n)",
+        "logsMulti(\n  serviceName: string,\n  lines = 50,\n)",
+        "composeUpAll(\n  vmNameOrAlias: string,\n)",
+        "runPullUp(\n  vmNameOrAlias: string,\n  filter?: string,\n)",
+        "pullUpContainer(\n  service: string,\n)",
+        "pullUpVmFleet(\n  vmNameOrAlias: string,\n)",
+        "pullUpCloudFleet()",
+        "dockerSystemDf(\n  vmNameOrAlias: string,\n)",
+        "updateContainer(\n  vmNameOrAlias: string,\n  container: string,\n)",
+        "containerStatsOne(\n  vmNameOrAlias: string,\n  container: string,\n)",
+        "inspectContainerDetails(\n  vmNameOrAlias: string,\n  container: string,\n)",
+        "checkImageUpdate(\n  vmNameOrAlias: string,\n  container: string,\n)",
+        "runAllowlistedExecCommand(\n  vmNameOrAlias: string,\n  container: string,\n  commandName: string,\n)"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/tools/shared/libs/exec.ts",
+      "lang": "ts",
+      "role": "mcp-tool",
+      "exports": [
+        "exec",
+        "execAsync",
+        "ExecResult"
+      ],
+      "imports": [
+        "child_process",
+        "./paths.js"
+      ],
+      "symbols": [
+        "resolveExecEnv(command: string)",
+        "exec(\n  command: string,\n  args: string[],\n  // `input` feeds the child's stdin. Use it for anything secret — an argv\n  // element is readable by any process that can stat /proc/<pid>/cmdline.\n  options?: { timeout?: number; cwd?: string; input?: string }\n)",
+        "execAsync(\n  command: string,\n  args: string[],\n  options?: { timeout?: number; cwd?: string }\n)"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/tools/shared/libs/files.ts",
+      "lang": "ts",
+      "role": "mcp-tool",
+      "exports": [
+        "getConfigFile",
+        "getContainerLog",
+        "getVmStatus",
+        "getReport",
+        "getSecretsStatus"
+      ],
+      "imports": [
+        "fs",
+        "path",
+        "./config.js",
+        "./paths.js",
+        "./ssh.js",
+        "./health.js",
+        "./discovery.js",
+        "./security.js"
+      ],
+      "symbols": [
+        "redactSensitiveLines(content: string)",
+        "redactWireGuardKeys(content: string)",
+        "getConfigFile(service: string, filename = \"build.json\")",
+        "getContainerLog(\n  vmId: string,\n  container: string,\n  lines = 100,\n  since?: string,\n)",
+        "getVmStatus(vmId: string)",
+        "getReport(reportType: string)",
+        "getSecretsStatus(service?: string)"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/tools/shared/libs/gha-policy.ts",
+      "lang": "ts",
+      "role": "mcp-tool",
+      "exports": [
+        "validRepo",
+        "validId",
+        "validArtifactName",
+        "safeRelPath",
+        "planInline",
+        "rerunnable",
+        "validSha",
+        "cancellable",
+        "grepLines",
+        "validPsPattern",
+        "ARTIFACT_MAX_BYTES",
+        "ARTIFACT_INLINE_MAX_BYTES",
+        "ARTIFACT_FILE_MAX_BYTES",
+        "ArtifactFile"
+      ],
+      "imports": [],
+      "symbols": [
+        "validRepo(repo: string)",
+        "validId(id: string)",
+        "validArtifactName(name: string)",
+        "safeRelPath(p: string)",
+        "planInline(files: ArtifactFile[], total = ARTIFACT_INLINE_MAX_BYTES, perFile = ARTIFACT_FILE_MAX_BYTES)",
+        "rerunnable(runStatus: string | undefined)",
+        "validSha(sha: string)",
+        "cancellable(runStatus: string | undefined)",
+        "grepLines(lines: string[], pattern: string, context = 0)",
+        "validPsPattern(p: string)"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/tools/shared/libs/health-match.ts",
+      "lang": "ts",
+      "role": "mcp-tool",
+      "exports": [
+        "hasGlob",
+        "globToRegex",
+        "isDeployed",
+        "isRunning",
+        "runningNames",
+        "DriftContainer"
+      ],
+      "imports": [],
+      "symbols": [
+        "hasGlob(pat: string)",
+        "globToRegex(pat: string)",
+        "isDeployed(declared: string[], deployed: string[])",
+        "isRunning(status: string | undefined)",
+        "runningNames(containers: DriftContainer[])"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/tools/shared/libs/health.ts",
+      "lang": "ts",
+      "role": "mcp-tool",
+      "exports": [
+        "healthAlive",
+        "healthDeclared",
+        "healthDeployed",
+        "healthDrift",
+        "healthStatus",
+        "checkTier1All",
+        "checkTier2All",
+        "checkTier3All",
+        "gatherVmResources",
+        "probeVm",
+        "healthEndpoints",
+        "checkUp",
+        "checkHealth",
+        "checkReach",
+        "metricsSnapshot",
+        "Tier1Result",
+        "Tier2Result",
+        "VmResources",
+        "ContainerInfo",
+        "Tier3Result",
+        "DeployedVm",
+        "DriftEntry",
+        "HealthDeclaredResult",
+        "HealthStatusResult",
+        "EndpointHealthResult",
+        "UpResult",
+        "HealthResult",
+        "ReachResult",
+        "ContainerMetrics",
+        "VmMetricsSnapshot"
+      ],
+      "imports": [
+        "./ssh.js",
+        "./config.js",
+        "./docker.js",
+        "./exec.js",
+        "./paths.js",
+        "./types.js",
+        "./health-match.js"
+      ],
+      "symbols": [
+        "getVmIds(vmId?: string)",
+        "parseResources(output: string)",
+        "healthAlive()",
+        "healthDeclared()",
+        "healthDeployed(vmId?: string)",
+        "healthDrift()",
+        "healthStatus(vmId?: string)",
+        "checkTier1All(vmId?: string)",
+        "checkTier2All(vmId?: string)",
+        "checkTier3All(vmId?: string)",
+        "gatherVmResources(vmId: string)",
+        "probeVm(vmId: string)",
+        "getHealthDomains()",
+        "healthEndpoints()",
+        "resolveTarget(target: string)",
+        "buildAliasMapPublic()",
+        "findContainerVm(containerName: string)",
+        "checkUp(target: string)",
+        "findContainerOnVm(vmId: string, containerName: string)",
+        "checkHealth(target: string)",
+        "resolveServiceDomain(target: string)",
+        "checkReach(target: string)",
+        "metricsSnapshot(vmFilter?: string)"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/tools/shared/libs/http.ts",
+      "lang": "ts",
+      "role": "mcp-tool",
+      "exports": [
+        "getBearerToken",
+        "c3ApiGet",
+        "c3ApiPost",
+        "httpGet",
+        "rawHttpRequest",
+        "HttpResult"
+      ],
+      "imports": [
+        "./exec.js",
+        "./paths.js",
+        "fs"
+      ],
+      "symbols": [
+        "httpRequest(\n  method: string,\n  url: string,\n  body?: string,\n  timeout?: number,\n  extraHeaders?: Record<string, string>\n)",
+        "fetchOidcToken()",
+        "getBearerToken()",
+        "c3ApiGet(endpoint: string, timeout?: number)",
+        "c3ApiPost(endpoint: string, body?: string, timeout?: number)",
+        "httpGet(url: string, timeout?: number)",
+        "rawHttpRequest(\n  method: string,\n  url: string,\n  body?: string,\n  timeout?: number,\n  extraHeaders?: Record<string, string>\n)"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/tools/shared/libs/jev-flake.ts",
+      "lang": "ts",
+      "role": "mcp-tool",
+      "exports": [
+        "jevFlake",
+        "JevFlakeAnswer"
+      ],
+      "imports": [],
+      "symbols": [
+        "jevFlake(\n  workflow: string,\n  logTail: string[],\n  fetchImpl: typeof fetch = fetch,\n  env: Record<string, string | undefined> = process.env,\n)"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/tools/shared/libs/jev.ts",
+      "lang": "ts",
+      "role": "mcp-tool",
+      "exports": [
+        "jevAlertPriority",
+        "jevAlertLabel",
+        "jevAlertOutcome",
+        "JevPriority",
+        "JevAlertState",
+        "JevAlertAnswer"
+      ],
+      "imports": [],
+      "symbols": [
+        "jevAlertPriority(\n  state: JevAlertState,\n  fetchImpl: typeof fetch = fetch,\n  env: Record<string, string | undefined> = process.env,\n)",
+        "jevAlertLabel(openMs: number)",
+        "jevAlertOutcome(\n  call: string | null,\n  openMs: number,\n  fetchImpl: typeof fetch = fetch,\n  env: Record<string, string | undefined> = process.env,\n)"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/tools/shared/libs/notify.ts",
+      "lang": "ts",
+      "role": "mcp-tool",
+      "exports": [
+        "sendNotification",
+        "alertHealthDown",
+        "alertHealthRecovered",
+        "alertCertExpiring",
+        "alertDiskFull",
+        "Priority",
+        "NotifyOptions",
+        "NotifyResult"
+      ],
+      "imports": [
+        "./exec.js",
+        "./config.js"
+      ],
+      "symbols": [
+        "resolveNtfyUrl()",
+        "sendNotification(opts: NotifyOptions)",
+        "alertHealthDown(vm: string, details: string)",
+        "alertHealthRecovered(vm: string)",
+        "alertCertExpiring(domain: string, daysLeft: number)",
+        "alertDiskFull(vm: string, percent: string)"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/tools/shared/libs/obs.ts",
+      "lang": "ts",
+      "role": "mcp-tool",
+      "exports": [
+        "resolve",
+        "up",
+        "upAll",
+        "upAllContainers",
+        "health",
+        "healthAll",
+        "profile",
+        "profileAllServices",
+        "profileAllContainers",
+        "Resolved",
+        "UpProbe",
+        "PerfTiming",
+        "UpResult",
+        "UpAllResult",
+        "HealthCheck",
+        "HealthResult",
+        "ProfilingStep",
+        "ProfilingEngine",
+        "ProfilingResult"
+      ],
+      "imports": [
+        "./config.js",
+        "./pool.js",
+        "./async-ssh.js",
+        "./cache.js",
+        "./async-exec.js"
+      ],
+      "symbols": [
+        "resolve(target: string)",
+        "up(target: string)",
+        "upAll()",
+        "upAllContainers()",
+        "probeUrl(resolved: Resolved)",
+        "probeVm(resolved: Resolved)",
+        "probeContainer(resolved: Resolved)",
+        "health(target: string)",
+        "healthAll()",
+        "healthCheckUrl(resolved: Resolved)",
+        "healthCheckVm(resolved: Resolved)",
+        "healthCheckContainer(\n  resolved: Resolved,\n)",
+        "profile(target: string)",
+        "profileAllServices()",
+        "profileAllContainers()",
+        "engineUrl(resolved: Resolved)",
+        "engineContainer(\n  resolved: Resolved,\n)",
+        "engineNetwork(\n  resolved: Resolved,\n)",
+        "engineVmContext(\n  resolved: Resolved,\n)",
+        "extractBlock(\n  output: string,\n  startMarker: string,\n  endMarker: string | null,\n)",
+        "extractAssetUrls(html: string, baseUrl: string)",
+        "resolveUrl(href: string, base: string)",
+        "generateDiagnosis(\n  a: ProfilingEngine | null,\n  b: ProfilingEngine | null,\n  c: ProfilingEngine | null,\n  d: ProfilingEngine | null,\n)"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/tools/shared/libs/ops.ts",
+      "lang": "ts",
+      "role": "mcp-tool",
+      "exports": [
+        "handlePushEvent",
+        "daguHeaders",
+        "PushEvent",
+        "PushEventResult",
+        "DAGU_API",
+        "DAGU_API_PATH"
+      ],
+      "imports": [
+        "fs",
+        "path",
+        "./audit.js",
+        "./paths.js",
+        "./async-exec.js"
+      ],
+      "symbols": [
+        "resolveDaguApi()",
+        "resolveDaguApiPath()",
+        "handlePushEvent(event: PushEvent)",
+        "extractModifiedFiles(event: PushEvent)",
+        "daguHeaders()",
+        "triggerDag(name: string)",
+        "triggerDagViaSsh(name: string)"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/tools/shared/libs/paths.ts",
+      "lang": "ts",
+      "role": "mcp-tool",
+      "exports": [
+        "getOctocodeRepoConfig",
+        "getOctocodeRepos",
+        "getSolutionRoots",
+        "getContainersRoot",
+        "getRepoDir",
+        "syncRepos",
+        "HOME",
+        "GIT_BASE",
+        "IS_ANDROID",
+        "IS_SERVER",
+        "IS_CLIENT",
+        "SSH_IDENTITY",
+        "SOLUTIONS_DIR",
+        "CLOUD_DATA_DIR",
+        "CLOUD_DATA_REPO",
+        "getConsolidatedPath",
+        "getConfigsPath",
+        "getDepsPath",
+        "getOwnBuildPath",
+        "CONFIGS_PATH",
+        "DEPS_PATH",
+        "getTopologySlice",
+        "getConfigsSlice",
+        "getDepsSlice",
+        "FRONT_DEPS_PATH",
+        "FRONT_TOPOLOGY_PATH",
+        "BUILD_SCRIPT",
+        "SSH_CONFIG_PATH",
+        "SOPS_AGE_KEY_FILE",
+        "AUTHELIA_TOKEN_PATH"
+      ],
+      "imports": [
+        "fs",
+        "child_process",
+        "os",
+        "path"
+      ],
+      "symbols": [
+        "resolveCloudDataPath(filename: string)",
+        "resolveConfigPath()",
+        "readConsolidated()",
+        "resolveC3Api()",
+        "resolveOwnBuildJsonPath()",
+        "getOctocodeRepoConfig()",
+        "getOctocodeRepos()",
+        "getSolutionRoots()",
+        "getContainersRoot()",
+        "getRepoDir(localName: string)",
+        "syncRepos(force = false)"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/tools/shared/libs/poller.ts",
+      "lang": "ts",
+      "role": "mcp-tool",
+      "exports": [
+        "getLastFleetHealthSnapshot",
+        "evaluateAlertRules",
+        "startPoller",
+        "stopPoller",
+        "TICK_INTERVAL_MS",
+        "pollerEvents",
+        "FleetHealthSnapshot"
+      ],
+      "imports": [
+        "events",
+        "./config.js",
+        "./async-ssh.js",
+        "./jev.js",
+        "./db.js",
+        "./notify.js"
+      ],
+      "symbols": [
+        "getLastFleetHealthSnapshot()",
+        "sampleAllTargets()",
+        "extractBlock(output: string, startMarker: string, endMarker: string | null)",
+        "parsePercent(s?: string)",
+        "parseNetBytes(s?: string)",
+        "parseSize(s: string)",
+        "compareOp(value: number, op: string, threshold: number)",
+        "evaluateAlertRules()",
+        "runTick()",
+        "startPoller()",
+        "stopPoller()"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/tools/shared/libs/pool.ts",
+      "lang": "ts",
+      "role": "mcp-tool",
+      "exports": [
+        "runAsBulk",
+        "Pool",
+        "sshPool",
+        "httpPool"
+      ],
+      "imports": [
+        "node:async_hooks"
+      ],
+      "symbols": [
+        "class Pool"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/tools/shared/libs/redact-argv.ts",
+      "lang": "ts",
+      "role": "mcp-tool",
+      "exports": [
+        "redactCommandString",
+        "redactArgv",
+        "redactInspectArgv",
+        "REDACTED"
+      ],
+      "imports": [],
+      "symbols": [
+        "redactCommandString(s: string)",
+        "redactArgv(argv: unknown)",
+        "redactInspectArgv(item: any)"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/tools/shared/libs/schemas.ts",
+      "lang": "ts",
+      "role": "mcp-tool",
+      "exports": [
+        "VmConfigSchema",
+        "ServiceCategorySchema",
+        "ServiceConfigSchema",
+        "InfraConfigSchema",
+        "Tier1ResultSchema",
+        "Tier2ResultSchema",
+        "VmResourcesSchema",
+        "ContainerStatusSchema",
+        "Tier3ResultSchema",
+        "HealthDeclaredSchema",
+        "DeployedContainerSchema",
+        "DriftEntrySchema",
+        "DiagnosticCheckSchema",
+        "ProfilingResponseSchema",
+        "CloudInstanceSchema",
+        "CloudResourceSchema",
+        "CloudCostSchema",
+        "TopologyVmSchema",
+        "TopologyNetworkSchema",
+        "TopologySchema",
+        "TestResultSchema",
+        "TestSuiteResultSchema",
+        "TestSuiteNameSchema",
+        "FileRetrievalSchema",
+        "ReportTypeSchema",
+        "ServiceInfoSchema",
+        "SecurityFindingSchema",
+        "SecurityScanResultSchema",
+        "NotifyOptionsSchema",
+        "NotifyResultSchema"
+      ],
+      "imports": [
+        "zod"
+      ],
+      "symbols": []
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/tools/shared/libs/secrets-status.ts",
+      "lang": "ts",
+      "role": "mcp-tool",
+      "exports": [
+        "describeSecretsStatus",
+        "SecretsProbe"
+      ],
+      "imports": [],
+      "symbols": [
+        "describeSecretsStatus(probe: SecretsProbe)"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/tools/shared/libs/security.ts",
+      "lang": "ts",
+      "role": "mcp-tool",
+      "exports": [
+        "securityScan",
+        "securityDocker",
+        "securitySshKeys",
+        "securityTokens",
+        "SecurityFinding",
+        "SecurityScanResult",
+        "DockerSecurityInfo",
+        "SshKeysAudit",
+        "TokenStatus"
+      ],
+      "imports": [
+        "./ssh.js",
+        "./config.js",
+        "./exec.js",
+        "fs",
+        "./paths.js"
+      ],
+      "symbols": [
+        "summarize(findings: SecurityFinding[])",
+        "securityScan(vmFilter?: string)",
+        "securityDocker(vmNameOrAlias: string)",
+        "securitySshKeys(vmNameOrAlias: string)",
+        "securityTokens()"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/tools/shared/libs/shell-quote.ts",
+      "lang": "ts",
+      "role": "mcp-tool",
+      "exports": [
+        "posixQuote",
+        "anyShellQuote",
+        "remoteShellWrap",
+        "dockerExecShell",
+        "sqliteReadonlyCmd"
+      ],
+      "imports": [],
+      "symbols": [
+        "posixQuote(v: string)",
+        "anyShellQuote(v: string)",
+        "remoteShellWrap(command: string)",
+        "dockerExecShell(container: string, command: string)",
+        "sqliteReadonlyCmd(db: string, sql: string)"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/tools/shared/libs/ssh-argv.ts",
+      "lang": "ts",
+      "role": "mcp-tool",
+      "exports": [
+        "sshArgv",
+        "vmMeshAddress",
+        "SSH_BASE_OPTS"
+      ],
+      "imports": [],
+      "symbols": [
+        "sshArgv(alias: string, wrappedCommand: string, connectTimeout: number | string = 10)",
+        "vmMeshAddress(vm: { ip: string; wg_ip?: string })"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/tools/shared/libs/ssh.ts",
+      "lang": "ts",
+      "role": "mcp-tool",
+      "exports": [
+        "sshExec",
+        "sshExecAsync",
+        "checkVmReachable",
+        "remoteShellWrap",
+        "vmMeshAddress"
+      ],
+      "imports": [
+        "./exec.js",
+        "./config.js",
+        "./audit.js",
+        "./shell-quote.js",
+        "./ssh-argv.js"
+      ],
+      "symbols": [
+        "sshExec(\n  vmNameOrAlias: string,\n  command: string,\n  timeout?: number,\n  _noRetry = false,\n  connectTimeout = 10,\n)",
+        "sshExecAsync(\n  vmNameOrAlias: string,\n  command: string,\n  timeout?: number,\n  _noRetry = false,\n  connectTimeout = 10,\n)",
+        "checkVmReachable(vmNameOrAlias: string)"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/tools/shared/libs/tests.ts",
+      "lang": "ts",
+      "role": "mcp-tool",
+      "exports": [
+        "testWgPing",
+        "testSshSession",
+        "testDnsResolve",
+        "testTlsCert",
+        "testHttpRoute",
+        "testContainerHealth",
+        "testPortOpen",
+        "testDeployHistoryPopulated",
+        "runTestSuite",
+        "TestResult",
+        "TestSuiteResult"
+      ],
+      "imports": [
+        "./ssh.js",
+        "./config.js",
+        "./exec.js",
+        "./docker.js",
+        "./discovery.js",
+        "./db.js",
+        "./paths.js",
+        "fs",
+        "path"
+      ],
+      "symbols": [
+        "runTest(\n  name: string,\n  target: string,\n  fn: ()",
+        "buildSuiteResult(suite: string, tests: TestResult[], suiteStart: number)",
+        "getVmIds(target?: string)",
+        "getServicesWithDomains()",
+        "testWgPing(vmId: string)",
+        "testSshSession(vmId: string)",
+        "testDnsResolve(domain: string)",
+        "testTlsCert(domain: string)",
+        "testHttpRoute(domain: string)",
+        "testContainerHealth(vmId: string, containerName: string)",
+        "testPortOpen(ip: string, port: number)",
+        "testDeployHistoryPopulated()",
+        "runConnectivitySuite(target?: string)",
+        "runDnsSuite()",
+        "runTlsSuite()",
+        "runRoutesSuite()",
+        "runContainersSuite(target?: string)",
+        "runWireguardSuite()",
+        "runAuthSuite()",
+        "runSecretsSuite()",
+        "runComposeSuite()",
+        "runVolumesSuite(target?: string)",
+        "runResourcesSuite(target?: string)",
+        "runLatencySuite()",
+        "runImagesSuite(target?: string)",
+        "runCrossVmSuite()",
+        "runDeploySuite()",
+        "runTestSuite(suite: SuiteName, target?: string)"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/tools/shared/libs/types.ts",
+      "lang": "ts",
+      "role": "mcp-tool",
+      "exports": [
+        "VmConfig",
+        "ServiceConfig",
+        "InfraConfig"
+      ],
+      "imports": [],
+      "symbols": []
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/tools/shared/libs/validators.ts",
+      "lang": "ts",
+      "role": "mcp-tool",
+      "exports": [
+        "validateContainerName",
+        "validateSince",
+        "validatePathComponent"
+      ],
+      "imports": [],
+      "symbols": [
+        "validateContainerName(name: string)",
+        "validateSince(since: string)",
+        "validatePathComponent(path: string)"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/tools/shared/libs/vm-files-policy.ts",
+      "lang": "ts",
+      "role": "mcp-tool",
+      "exports": [
+        "normalizeAbs",
+        "readDenied",
+        "treeDenied",
+        "writeTarget",
+        "resolvedInside",
+        "looksText",
+        "envLine",
+        "shq",
+        "READ_FILE_DEFAULT_BYTES",
+        "READ_FILE_MAX_BYTES",
+        "READ_TREE_DEFAULT_BYTES",
+        "READ_TREE_MAX_BYTES",
+        "WRITE_FILE_MAX_BYTES",
+        "READ_DENY",
+        "TREE_EXCLUDES",
+        "WriteRoot",
+        "WRITE_ROOTS"
+      ],
+      "imports": [],
+      "symbols": [
+        "normalizeAbs(p: string)",
+        "readDenied(p: string)",
+        "treeDenied(p: string)",
+        "under(path: string, root: string)",
+        "writeTarget(\n  vmId: string, container: string, p: string,\n)",
+        "resolvedInside(resolved: string, root: string)",
+        "looksText(buf: Uint8Array)",
+        "envLine(e: string)",
+        "shq(v: string)"
       ]
     },
     {

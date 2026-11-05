@@ -6,28 +6,28 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 23319,
+    "files": 23350,
     "by_lang": {
-      "sh": 673,
+      "sh": 675,
       "js": 543,
-      "py": 201,
-      "kotlin": 12632,
+      "py": 203,
+      "kotlin": 12658,
       "ts": 8470,
       "java": 649,
       "nix": 36,
-      "rust": 115
+      "rust": 116
     },
     "by_role": {
       "hook": 158,
       "file": 2303,
-      "shell": 537,
+      "shell": 539,
       "script": 294,
       "module": 6477,
       "java": 648,
-      "kotlin": 12629,
-      "python": 66,
+      "kotlin": 12655,
+      "python": 68,
       "flake": 32,
-      "rust-module": 115,
+      "rust-module": 116,
       "nix-module": 4,
       "entrypoint": 3,
       "mcp-tool": 53
@@ -15648,66 +15648,6 @@
         "bearer(ctx: Context)",
         "ensureChannel(ctx: Context)",
         "class AiBadgeService"
-      ]
-    },
-    {
-      "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/notificationcenter/AiUsageClient.kt",
-      "lang": "kotlin",
-      "role": "kotlin",
-      "exports": [
-        "AiUsageClient"
-      ],
-      "imports": [
-        "java.io.IOException",
-        "java.net.HttpURLConnection",
-        "java.net.URL"
-      ],
-      "symbols": [
-        "get(url: String, headers: Map<String, String>)",
-        "fetch(baseUrl: String, bearer: String, fleet: Transport, plain: Transport)",
-        "class AiUsageClient",
-        "class Reply",
-        "class Transport",
-        "class Outcome",
-        "class Ok",
-        "class Failed"
-      ]
-    },
-    {
-      "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/notificationcenter/AiUsageModel.kt",
-      "lang": "kotlin",
-      "role": "kotlin",
-      "exports": [
-        "AiUsageModel"
-      ],
-      "imports": [
-        "org.json.JSONObject",
-        "java.text.SimpleDateFormat",
-        "java.util.Locale",
-        "java.util.TimeZone"
-      ],
-      "symbols": [
-        "parse(body: String)",
-        "win(o: JSONObject?)",
-        "spend(o: JSONObject?)",
-        "usd(v: Double)",
-        "mTokens(t: Long)",
-        "spend(s: Spend?)",
-        "pct(d: Double)",
-        "ago(ms: Long)",
-        "until(ms: Long)",
-        "d1(v: Double)",
-        "weekLines(w: Win, nowMs: Long)",
-        "over(rate: Double?)",
-        "resets(w: Win, nowMs: Long, zone: TimeZone)",
-        "card(snap: Snapshot?, fetchedAtMs: Long, nowMs: Long, note: String = \"\", zone: TimeZone = TimeZone.getDefault()",
-        "class AiUsageModel",
-        "class Win",
-        "class Claude",
-        "class Spend",
-        "class OpenRouter",
-        "class Snapshot",
-        "class Card"
       ]
     },
     {
@@ -31576,6 +31516,67 @@
       ]
     },
     {
+      "path": "ab_cloud-libs-shared/libs/ai-usage/src/main/kotlin/com/diegonmarcos/superapp/notificationcenter/AiUsageClient.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "AiUsageClient"
+      ],
+      "imports": [
+        "java.io.IOException",
+        "java.net.HttpURLConnection",
+        "java.net.URL"
+      ],
+      "symbols": [
+        "get(url: String, headers: Map<String, String>)",
+        "fetchAny(bases: List<String>, bearer: String, fleet: Transport, plain: Transport)",
+        "fetch(baseUrl: String, bearer: String, fleet: Transport, plain: Transport)",
+        "class AiUsageClient",
+        "class Reply",
+        "class Transport",
+        "class Outcome",
+        "class Ok",
+        "class Failed"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/ai-usage/src/main/kotlin/com/diegonmarcos/superapp/notificationcenter/AiUsageModel.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "AiUsageModel"
+      ],
+      "imports": [
+        "org.json.JSONObject",
+        "java.text.SimpleDateFormat",
+        "java.util.Locale",
+        "java.util.TimeZone"
+      ],
+      "symbols": [
+        "parse(body: String)",
+        "win(o: JSONObject?)",
+        "spend(o: JSONObject?)",
+        "usd(v: Double)",
+        "mTokens(t: Long)",
+        "spend(s: Spend?)",
+        "pct(d: Double)",
+        "ago(ms: Long)",
+        "until(ms: Long)",
+        "d1(v: Double)",
+        "weekLines(w: Win, nowMs: Long)",
+        "over(rate: Double?)",
+        "resets(w: Win, nowMs: Long, zone: TimeZone)",
+        "card(snap: Snapshot?, fetchedAtMs: Long, nowMs: Long, note: String = \"\", zone: TimeZone = TimeZone.getDefault()",
+        "class AiUsageModel",
+        "class Win",
+        "class Claude",
+        "class Spend",
+        "class OpenRouter",
+        "class Snapshot",
+        "class Card"
+      ]
+    },
+    {
       "path": "ab_cloud-libs-shared/libs/ai/src/main/kotlin/com/diegonmarcos/superapp/ai/AiBackend.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -32733,6 +32734,8 @@
         "cloudflareUrl(base: String, endpoint: String = CLOUDFLARE_ENDPOINT)",
         "workerUrl(worker: String?, target: String)",
         "cloudflareMarkdown(mode: String, body: String)",
+        "headlessRunBody(target: String)",
+        "headlessMarkdown(body: String)",
         "runSyncUrl(apiBase: String, actor: String)",
         "get(key: String)",
         "set(key: String, value: String?)",
@@ -32755,6 +32758,33 @@
         "class ApifyKv",
         "class EncryptedApifyKv",
         "class ApifyBackendStore"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/apify/src/test/java/com/diegonmarcos/superapp/apify/ApifyHeadlessBackendsTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ApifyHeadlessBackendsTest"
+      ],
+      "imports": [
+        "org.json.JSONObject",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.io.IOException"
+      ],
+      "symbols": [
+        "get(key: String)",
+        "set(key: String, value: String?)",
+        "declaredListCarriesBothNewBackendsAndKeepsTheDefault()",
+        "parsedDeclarationsKeepTheKind()",
+        "storeResolvesPhoneAndHeadlessWithTheirOwnKeys()",
+        "runBodyAndMarkdownFollowTheSharedApi()",
+        "class ApifyHeadlessBackendsTest",
+        "class Mem"
       ]
     },
     {
@@ -33279,6 +33309,7 @@
         "com.diegonmarcos.superapp.updater.Advisory",
         "com.diegonmarcos.superapp.updater.BatchForeground",
         "com.diegonmarcos.superapp.updater.AutoUpdatePrefs",
+        "com.diegonmarcos.superapp.updater.BackgroundGate",
         "com.diegonmarcos.superapp.updater.InstallIdentity",
         "com.diegonmarcos.superapp.updater.UpdateProgress",
         "com.diegonmarcos.superapp.updater.Fleet",
@@ -33291,7 +33322,7 @@
         "getForegroundInfo()",
         "doWork()",
         "work()",
-        "constraints()",
+        "constraints(context: Context)",
         "cancelAll(context: Context)",
         "triggerData(trigger: String)",
         "kick(context: Context, trigger: String)",
@@ -45377,6 +45408,22 @@
       ]
     },
     {
+      "path": "ab_cloud-libs-shared/libs/core/src/main/java/com/diegonmarcos/superapp/core/BackgroundPolicy.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "BackgroundPolicy"
+      ],
+      "imports": [],
+      "symbols": [
+        "modeOf(packageName: String)",
+        "mayBackground(packageName: String, autoUpdateOn: Boolean, unmetered: Boolean)",
+        "mayWakePeer(packageName: String)",
+        "class BackgroundPolicy",
+        "class Mode"
+      ]
+    },
+    {
       "path": "ab_cloud-libs-shared/libs/core/src/main/java/com/diegonmarcos/superapp/core/CoreInitProvider.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -45736,6 +45783,27 @@
         "drain(dir: File, send: (String)",
         "class TelemetryRoute",
         "class TelemetryQueue"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/core/src/test/java/com/diegonmarcos/superapp/core/BackgroundPolicyTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "BackgroundPolicyTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "accountNeverBackgrounds()",
+        "storeNeedsAutoUpdateAndUnmetered()",
+        "otherAppsAreUnchanged()",
+        "nobodyWakesAccountOrStore()",
+        "class BackgroundPolicyTest"
       ]
     },
     {
@@ -53920,6 +53988,448 @@
         "supports(verb: String)",
         "class GixRunner",
         "class Result"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/headless-browser/src/main/java/com/diegonmarcos/superapp/headless/CdpPolicy.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "CdpPolicy"
+      ],
+      "imports": [],
+      "symbols": [
+        "clampMinutes(m: Int?)",
+        "clampPort(p: Int?)",
+        "socketName(pid: Int)",
+        "forwardCommand(pid: Int, port: Int)",
+        "unforwardCommand(port: Int)",
+        "allowedCommand(cmd: String)",
+        "expired(now: Long, armedAt: Long, minutes: Int)",
+        "mayArm(tokenOk: Boolean, setting: Boolean)",
+        "class CdpPolicy"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/headless-browser/src/main/java/com/diegonmarcos/superapp/headless/CdpRelay.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "CdpRelay"
+      ],
+      "imports": [
+        "android.net.LocalSocket",
+        "android.net.LocalSocketAddress",
+        "android.webkit.WebView",
+        "java.io.InputStream",
+        "java.io.OutputStream",
+        "java.net.InetAddress",
+        "java.net.ServerSocket",
+        "java.net.Socket"
+      ],
+      "symbols": [
+        "start(preferred: Int)",
+        "stop()",
+        "relay(c: Socket)",
+        "pipe(i: InputStream, o: OutputStream)",
+        "enableDebugging()",
+        "class CdpRelay"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/headless-browser/src/main/java/com/diegonmarcos/superapp/headless/HeadlessApi.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "HeadlessApi"
+      ],
+      "imports": [
+        "org.json.JSONArray",
+        "org.json.JSONObject"
+      ],
+      "symbols": [
+        "validate(c: JSONObject)",
+        "need(k: String)",
+        "validateRun(r: JSONObject)",
+        "ok(session: String?, result: Any?)",
+        "fail(code: String, message: String)",
+        "fail(e: Throwable)",
+        "httpStatus(code: String)",
+        "stepsOf(r: JSONObject)",
+        "class HeadlessApi",
+        "class Err"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/headless-browser/src/main/java/com/diegonmarcos/superapp/headless/HeadlessAudit.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "HeadlessAudit"
+      ],
+      "imports": [
+        "org.json.JSONArray",
+        "org.json.JSONObject"
+      ],
+      "symbols": [
+        "add(list: List<Entry>, e: Entry)",
+        "title(e: Entry)",
+        "toJson(list: List<Entry>)",
+        "fromJson(s: String?)",
+        "class HeadlessAudit",
+        "class Entry"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/headless-browser/src/main/java/com/diegonmarcos/superapp/headless/HeadlessBackend.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "HeadlessBackend",
+        "HeadlessRoute",
+        "HeadlessSelector"
+      ],
+      "imports": [],
+      "symbols": [
+        "parse(id: String?)",
+        "resolve(setting: (String)",
+        "remote(b: HeadlessBackend, url: String?, token: String?)",
+        "class HeadlessBackend",
+        "class HeadlessRoute",
+        "class HeadlessSelector"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/headless-browser/src/main/java/com/diegonmarcos/superapp/headless/HeadlessBrowserService.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "HeadlessBrowserService"
+      ],
+      "imports": [
+        "android.app.Service",
+        "android.content.BroadcastReceiver",
+        "android.content.Context",
+        "android.content.Intent",
+        "android.content.IntentFilter",
+        "android.os.Binder",
+        "android.os.Handler",
+        "android.os.IBinder",
+        "android.os.Looper",
+        "org.json.JSONObject"
+      ],
+      "symbols": [
+        "execute(path: String, body: String)",
+        "run()",
+        "onReceive(c: Context, i: Intent)",
+        "onCreate()",
+        "onStartCommand(intent: Intent?, flags: Int, startId: Int)",
+        "onBind(intent: Intent?)",
+        "onDestroy()",
+        "ensure(ctx: Context)",
+        "class HeadlessBrowserService",
+        "class LocalBinder"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/headless-browser/src/main/java/com/diegonmarcos/superapp/headless/HeadlessDispatcher.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "HeadlessEngine",
+        "HeadlessDispatcher"
+      ],
+      "imports": [
+        "org.json.JSONArray",
+        "org.json.JSONObject",
+        "java.util.concurrent.Callable",
+        "java.util.concurrent.ExecutionException",
+        "java.util.concurrent.Executors",
+        "java.util.concurrent.TimeUnit",
+        "java.util.concurrent.TimeoutException"
+      ],
+      "symbols": [
+        "newSession(profile: String)",
+        "closeSession(handle: Any)",
+        "run(handle: Any, cmd: JSONObject)",
+        "open()",
+        "list()",
+        "command(c: JSONObject)",
+        "run(r: JSONObject)",
+        "exec(c: JSONObject)",
+        "close(id: String)",
+        "sweep()",
+        "closeAll()",
+        "timed(ms: Long, label: String, f: ()",
+        "auditIt(c: JSONObject, ok: Boolean)",
+        "class HeadlessEngine",
+        "class HeadlessDispatcher",
+        "class S"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/headless-browser/src/main/java/com/diegonmarcos/superapp/headless/HeadlessLoopback.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "HeadlessLoopback"
+      ],
+      "imports": [
+        "org.json.JSONArray",
+        "org.json.JSONObject",
+        "java.io.InputStream",
+        "java.net.InetAddress",
+        "java.net.ServerSocket",
+        "java.net.Socket"
+      ],
+      "symbols": [
+        "start(preferred: Int)",
+        "stop()",
+        "serve(c: Socket)",
+        "send(code: Int, o: JSONObject)",
+        "readRequest(i: InputStream)",
+        "line()",
+        "class HeadlessLoopback",
+        "class Req"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/headless-browser/src/main/java/com/diegonmarcos/superapp/headless/HeadlessPolicy.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "HeadlessPolicy"
+      ],
+      "imports": [],
+      "symbols": [
+        "clampSessions(n: Int?)",
+        "clampIdleMs(ms: Long?)",
+        "clampCallMs(ms: Long?)",
+        "sessionExpired(now: Long, lastUsed: Long, idleMs: Long)",
+        "serviceShouldStop(now: Long, lastActivity: Long, openSessions: Int, idleMs: Long)",
+        "mayRun(screenOn: Boolean)",
+        "mayOpen(open: Int, max: Int)",
+        "class HeadlessPolicy"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/headless-browser/src/main/java/com/diegonmarcos/superapp/headless/HeadlessProvider.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "HeadlessProvider"
+      ],
+      "imports": [
+        "android.content.ContentProvider",
+        "android.content.ContentValues",
+        "android.content.pm.PackageManager",
+        "android.database.Cursor",
+        "android.net.Uri",
+        "android.os.Binder",
+        "android.os.Bundle",
+        "android.os.Process",
+        "org.json.JSONObject"
+      ],
+      "symbols": [
+        "onCreate()",
+        "call(method: String, arg: String?, extras: Bundle?)",
+        "reply(ok: Boolean, payload: String, error: String)",
+        "query(u: Uri, p: Array<String>?, s: String?, a: Array<String>?, o: String?)",
+        "getType(u: Uri)",
+        "insert(u: Uri, v: ContentValues?)",
+        "delete(u: Uri, s: String?, a: Array<String>?)",
+        "update(u: Uri, v: ContentValues?, s: String?, a: Array<String>?)",
+        "authority(pkg: String)",
+        "class HeadlessProvider"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/headless-browser/src/main/java/com/diegonmarcos/superapp/headless/HeadlessRemote.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "HeadlessRemote"
+      ],
+      "imports": [
+        "org.json.JSONObject",
+        "java.net.HttpURLConnection",
+        "java.net.URL",
+        "java.net.URLEncoder"
+      ],
+      "symbols": [
+        "forward(route: HeadlessRoute, path: String, body: JSONObject, timeoutMs: Int = 60_000)",
+        "post(url: String, bearer: String, body: JSONObject, timeoutMs: Int)",
+        "cloudflare(route: HeadlessRoute, path: String, body: JSONObject, timeoutMs: Int)",
+        "class HeadlessRemote"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/headless-browser/src/main/java/com/diegonmarcos/superapp/headless/HeadlessRuntime.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "HeadlessRuntime"
+      ],
+      "imports": [
+        "android.content.Context",
+        "android.os.Process",
+        "android.os.PowerManager",
+        "android.webkit.WebView",
+        "org.json.JSONArray",
+        "org.json.JSONObject"
+      ],
+      "symbols": [
+        "setting(key: String)",
+        "int(key: String)",
+        "store()",
+        "applyConfig()",
+        "route()",
+        "execute(path: String, body: JSONObject)",
+        "status()",
+        "startLoopback()",
+        "armCdp(tokenOk: Boolean)",
+        "disarmCdp()",
+        "sweep()",
+        "shutdown()",
+        "storeSet(key: String, value: String)",
+        "record(e: HeadlessAudit.Entry)",
+        "get(ctx: Context)",
+        "audit(ctx: Context)",
+        "class HeadlessRuntime"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/headless-browser/src/main/java/com/diegonmarcos/superapp/headless/HeadlessStore.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "HeadlessStore"
+      ],
+      "imports": [
+        "android.content.Context",
+        "com.diegonmarcos.superapp.crash.SafeEncryptedPrefs"
+      ],
+      "symbols": [
+        "get(key: String?)",
+        "set(key: String, value: String?)",
+        "class HeadlessStore"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/headless-browser/src/main/java/com/diegonmarcos/superapp/headless/HeadlessTokenGate.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "HeadlessTokenGate"
+      ],
+      "imports": [
+        "java.security.MessageDigest",
+        "java.security.SecureRandom"
+      ],
+      "symbols": [
+        "check(authorization: String?)",
+        "generate(random: SecureRandom = SecureRandom()",
+        "loopbackOnly(host: String)",
+        "class HeadlessTokenGate"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/headless-browser/src/main/java/com/diegonmarcos/superapp/headless/WebViewEngine.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "WebViewEngine",
+        "root",
+        "m"
+      ],
+      "imports": [
+        "android.annotation.SuppressLint",
+        "android.app.Presentation",
+        "android.content.Context",
+        "android.graphics.Bitmap",
+        "android.graphics.Canvas",
+        "android.graphics.PixelFormat",
+        "android.hardware.display.DisplayManager",
+        "android.hardware.display.VirtualDisplay",
+        "android.media.ImageReader",
+        "android.os.Handler",
+        "android.os.Looper",
+        "android.util.Base64",
+        "android.view.ViewGroup",
+        "android.webkit.CookieManager",
+        "android.webkit.WebResourceRequest",
+        "android.webkit.WebResourceResponse",
+        "android.webkit.WebView",
+        "androidx.webkit.ProfileStore",
+        "androidx.webkit.WebViewClientCompat",
+        "androidx.webkit.WebViewCompat",
+        "androidx.webkit.WebViewFeature",
+        "com.diegonmarcos.cloudlib.web.CloudWeb",
+        "com.diegonmarcos.cloudlib.web.WebProfile",
+        "org.json.JSONArray",
+        "org.json.JSONObject",
+        "org.json.JSONTokener",
+        "java.io.ByteArrayOutputStream",
+        "java.util.concurrent.CountDownLatch",
+        "java.util.concurrent.TimeUnit",
+        "java.util.concurrent.atomic.AtomicReference"
+      ],
+      "symbols": [
+        "onMain(f: ()",
+        "ensureDisplay()",
+        "newSession(profile: String)",
+        "onPageStarted(v: WebView, url: String, f: Bitmap?)",
+        "onPageFinished(v: WebView, url: String)",
+        "shouldInterceptRequest(v: WebView, r: WebResourceRequest)",
+        "closeSession(handle: Any)",
+        "js(h: H, script: String, timeoutMs: Long)",
+        "q(s: String)",
+        "waitFor(timeoutMs: Long, label: String, ok: ()",
+        "run(handle: Any, cmd: JSONObject)",
+        "storageJs(c: JSONObject)",
+        "cookieManager(h: H)",
+        "cookies(h: H, c: JSONObject)",
+        "shot(h: H)",
+        "shutdown()",
+        "class WebViewEngine",
+        "class H"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/headless-browser/src/test/java/com/diegonmarcos/superapp/headless/HeadlessContractTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "HeadlessContractTest"
+      ],
+      "imports": [
+        "org.json.JSONObject",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.io.File"
+      ],
+      "symbols": [
+        "j(s: String)",
+        "code(f: ()",
+        "errCode(o: JSONObject)",
+        "newSession(profile: String)",
+        "closeSession(handle: Any)",
+        "run(handle: Any, cmd: JSONObject)",
+        "commandListMatchesTheSharedSchema()",
+        "validateRejectsBadCommands()",
+        "selectorDefaultsToThisApp()",
+        "selectorResolvesRemotesFromStoreKeyNames()",
+        "idlePolicy()",
+        "tokenGateFailsClosed()",
+        "cdpIsOptInTokenGatedAndSelfExpiring()",
+        "auditRingIsCappedAndTagged()",
+        "dispatcherEnforcesLimitsIdleTimeoutScreenAndAudits()",
+        "runStepsStopOnError()",
+        "class HeadlessContractTest",
+        "class Fake"
       ]
     },
     {
@@ -72485,17 +72995,18 @@
         "ServedPage"
       ],
       "imports": [
-        "android.annotation.SuppressLint",
         "android.webkit.WebResourceRequest",
         "android.webkit.WebResourceResponse",
         "android.webkit.WebView",
-        "android.webkit.WebViewClient",
         "androidx.compose.runtime.Composable",
         "androidx.compose.runtime.DisposableEffect",
         "androidx.compose.runtime.remember",
         "androidx.compose.ui.Modifier",
         "androidx.compose.ui.platform.testTag",
         "androidx.compose.ui.viewinterop.AndroidView",
+        "com.diegonmarcos.cloudlib.web.CloudWeb",
+        "com.diegonmarcos.cloudlib.web.CloudWebClient",
+        "com.diegonmarcos.cloudlib.web.WebProfile",
         "java.io.ByteArrayInputStream",
         "java.io.File"
       ],
@@ -82575,13 +83086,14 @@
         "android.os.Binder",
         "android.os.Bundle",
         "android.os.Process",
+        "com.diegonmarcos.superapp.core.BackgroundPolicy",
         "com.diegonmarcos.superapp.core.FleetConfig"
       ],
       "symbols": [
         "ownLink(ctx: Context, now: Long = System.currentTimeMillis()",
         "own(ctx: Context, peer: AdbPeer)",
-        "remote(ctx: Context, peer: AdbPeer)",
-        "read(ctx: Context, peers: List<AdbPeer> = AdbPeers.FLEET)",
+        "remote(ctx: Context, peer: AdbPeer, wake: Boolean = true)",
+        "read(ctx: Context, peers: List<AdbPeer> = AdbPeers.FLEET, wake: Boolean = true)",
         "pairingHeldElsewhere(ctx: Context)",
         "peers(ctx: Context)",
         "onCreate()",
@@ -83159,6 +83671,7 @@
       ],
       "symbols": [
         "workName(ctx: Context)",
+        "mayBackground(ctx: Context)",
         "install(app: Context)",
         "schedule(ctx: Context, replace: Boolean)",
         "onConnected(ctx: Context)",
@@ -83215,7 +83728,7 @@
       ],
       "imports": [],
       "symbols": [
-        "needed(debugServerAllowed: Boolean, channelEnabled: Boolean)",
+        "needed(debugServerAllowed: Boolean, channelEnabled: Boolean, backgroundAllowed: Boolean = true)",
         "nextDelayMs(failures: Int, screenOn: Boolean)",
         "mayReconnect(screenOn: Boolean)",
         "class KeepAlivePolicy"
@@ -83573,6 +84086,7 @@
         "androidx.work.WorkManager",
         "androidx.work.Worker",
         "androidx.work.WorkerParameters",
+        "com.diegonmarcos.superapp.core.BackgroundPolicy",
         "com.diegonmarcos.superapp.devtools.AppDebugServer",
         "com.diegonmarcos.superapp.perms.PermsLink",
         "java.util.concurrent.Executors",
@@ -84079,6 +84593,7 @@
         "backsOffAndCaps()",
         "screenOffSleepsLongAndNeverDials()",
         "keepAliveServicesAreNotSticky()",
+        "noBackgroundNoService()",
         "class KeepAlivePolicyTest"
       ]
     },
@@ -87284,6 +87799,7 @@
         "setRequireUnmetered(ctx: Context, on: Boolean)",
         "setSilent(ctx: Context, on: Boolean)",
         "canInstallSilently(ctx: Context)",
+        "onUnmetered(ctx: Context)",
         "isMetered(ctx: Context)",
         "lastCheck(ctx: Context)",
         "recordCheck(ctx: Context, remoteDigest12: String, remoteBytes: Long)",
@@ -87291,6 +87807,26 @@
         "class AutoUpdatePrefs",
         "class LastCheck",
         "class of"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/updater/src/main/java/com/diegonmarcos/superapp/updater/BackgroundGate.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "BackgroundGate"
+      ],
+      "imports": [
+        "android.content.Context",
+        "androidx.work.NetworkType",
+        "com.diegonmarcos.superapp.core.BackgroundPolicy"
+      ],
+      "symbols": [
+        "pkg(ctx: Context)",
+        "never(ctx: Context)",
+        "network(ctx: Context)",
+        "mayRun(ctx: Context)",
+        "class BackgroundGate"
       ]
     },
     {
@@ -91507,6 +92043,31 @@
       ]
     },
     {
+      "path": "ac_cloud-account/app/src/main/java/com/diegonmarcos/cloudaccount/AccountForeground.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "AccountForeground"
+      ],
+      "imports": [
+        "android.content.Context",
+        "android.util.Log",
+        "androidx.work.WorkManager",
+        "com.diegonmarcos.superapp.profile.AccountDevice",
+        "com.diegonmarcos.superapp.profile.ActivityFeed",
+        "com.diegonmarcos.superapp.profile.AutoBackup",
+        "com.diegonmarcos.superapp.profile.DeviceVault",
+        "com.diegonmarcos.superapp.profile.MeAutocompleteSync"
+      ],
+      "symbols": [
+        "retireLegacyJobs(ctx: Context)",
+        "onForeground(ctx: Context)",
+        "due(mode: String, lastMs: Long, nowMs: Long)",
+        "backupIfDue(ctx: Context, now: Long = System.currentTimeMillis()",
+        "class AccountForeground"
+      ]
+    },
+    {
       "path": "ac_cloud-account/app/src/main/java/com/diegonmarcos/cloudaccount/AccountUiHostImpl.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -91559,34 +92120,6 @@
         "open(activity: Activity, route: String)",
         "class supplies",
         "class App"
-      ]
-    },
-    {
-      "path": "ac_cloud-account/app/src/main/java/com/diegonmarcos/cloudaccount/AutoBackupWorker.kt",
-      "lang": "kotlin",
-      "role": "kotlin",
-      "exports": [
-        "AutoBackupWorker"
-      ],
-      "imports": [
-        "android.content.Context",
-        "androidx.work.Constraints",
-        "androidx.work.ExistingPeriodicWorkPolicy",
-        "androidx.work.NetworkType",
-        "androidx.work.PeriodicWorkRequestBuilder",
-        "androidx.work.WorkManager",
-        "androidx.work.Worker",
-        "androidx.work.WorkerParameters",
-        "com.diegonmarcos.superapp.profile.AccountDevice",
-        "com.diegonmarcos.superapp.profile.ActivityFeed",
-        "com.diegonmarcos.superapp.profile.AutoBackup",
-        "com.diegonmarcos.superapp.profile.DeviceVault",
-        "java.util.concurrent.TimeUnit"
-      ],
-      "symbols": [
-        "doWork()",
-        "schedule(ctx: Context)",
-        "class AutoBackupWorker"
       ]
     },
     {
@@ -92144,32 +92677,6 @@
         "FleetSetupPage(model: AccountModel)",
         "deepLink(intent: Intent?)",
         "class MainActivity"
-      ]
-    },
-    {
-      "path": "ac_cloud-account/app/src/main/java/com/diegonmarcos/cloudaccount/MeAutocompleteWorker.kt",
-      "lang": "kotlin",
-      "role": "kotlin",
-      "exports": [
-        "MeAutocompleteWorker"
-      ],
-      "imports": [
-        "android.content.Context",
-        "android.util.Log",
-        "androidx.work.Constraints",
-        "androidx.work.ExistingPeriodicWorkPolicy",
-        "androidx.work.NetworkType",
-        "androidx.work.PeriodicWorkRequestBuilder",
-        "androidx.work.WorkManager",
-        "androidx.work.Worker",
-        "androidx.work.WorkerParameters",
-        "com.diegonmarcos.superapp.profile.MeAutocompleteSync",
-        "java.util.concurrent.TimeUnit"
-      ],
-      "symbols": [
-        "doWork()",
-        "schedule(ctx: Context)",
-        "class MeAutocompleteWorker"
       ]
     },
     {
@@ -96933,6 +97440,34 @@
       ]
     },
     {
+      "path": "ac_cloud-c3-webserver/data/gen_mcp_catalogue.py",
+      "lang": "py",
+      "role": "python",
+      "exports": [
+        "J(p)",
+        "leaves(nodes, pre=\"\")",
+        "owner(h, name)",
+        "tool_names(src_dir, skip=(\"meta.ts\",)",
+        "auth_of(b)",
+        "route_of(node_path, node)",
+        "build(containers, linux)",
+        "main()"
+      ],
+      "imports": [
+        "argparse"
+      ],
+      "symbols": [
+        "J(p)",
+        "leaves(nodes, pre=\"\")",
+        "owner(h, name)",
+        "tool_names(src_dir, skip=(\"meta.ts\",)",
+        "auth_of(b)",
+        "route_of(node_path, node)",
+        "build(containers, linux)",
+        "main()"
+      ]
+    },
+    {
       "path": "ac_cloud-c3-webserver/flake.nix",
       "lang": "nix",
       "role": "flake",
@@ -97040,6 +97575,7 @@
         "group",
         "public_url",
         "mesh_url",
+        "mcp_page",
         "public_page",
         "mesh_page",
         "apps_page",
@@ -97065,6 +97601,7 @@
         "group(title: &str, rows: Vec<Value>)",
         "public_url(svc: &Value)",
         "mesh_url(svc: &Value)",
+        "mcp_page(d: &Value)",
         "public_page(d: &Value)",
         "mesh_page(d: &Value, m: &Mesh, apps: &[App])",
         "apps_page(d: &Value, apps: &[App], b: &Value)",
@@ -97074,6 +97611,7 @@
         "public_page_lists_only_public_urls()",
         "apps_page_lists_ports_from_the_table()",
         "ipc_page_derives_every_authority_from_the_package()",
+        "mcp_page_lists_each_tool_with_route_server_and_auth()",
         "the_real_declarations_feed_every_page()"
       ]
     },
@@ -97110,6 +97648,7 @@
         "page_shell(_ctx: &Ctx, _req: &Req)",
         "api_routes(_ctx: &Ctx, _req: &Req)",
         "api_serving(_ctx: &Ctx, _req: &Req)",
+        "api_power(_ctx: &Ctx, req: &Req)",
         "api_engines(_ctx: &Ctx, _req: &Req)",
         "api_config(ctx: &Ctx, _req: &Req)",
         "api_about(ctx: &Ctx, _req: &Req)",
@@ -97216,7 +97755,7 @@
         "respond(q: &[u8], names: &[&str], answer: Ipv4Addr, ttl: u32)",
         "query_a(id: u16, name: &str)",
         "bind_shared(host: &str, port: u16)",
-        "start()",
+        "start(stop: std::sync::Arc<std::sync::atomic::AtomicBool>)",
         "rcode(r: &[u8])",
         "ancount(r: &[u8])",
         "binds_beside_a_wildcard_socket_on_the_same_port()",
@@ -97265,6 +97804,9 @@
         "handle_diag",
         "drive_handler",
         "start",
+        "running",
+        "stop_all",
+        "resume",
         "Ctx",
         "Config"
       ],
@@ -97273,7 +97815,7 @@
         "fleet_webserver::render::jstr",
         "std::net::",
         "std::sync::atomic::",
-        "std::sync::Arc",
+        "std::sync::",
         "std::time::Instant",
         "super::",
         "std::io::"
@@ -97281,10 +97823,15 @@
       "symbols": [
         "private_names()",
         "handle_diag(ctx: &Ctx, req: &Req)",
+        "loopback()",
         "host_allowed(host: &str)",
         "drive_handler(ctx: Ctx, files: Arc<http::Handler>)",
         "start(cfg: Config)",
-        "start_once(cfg: Config)",
+        "running()",
+        "stop_all()",
+        "resume()",
+        "bind_retry(port: u16)",
+        "start_once(cfg: Config, stop: Arc<AtomicBool>)",
         "diag_get(path: &str, host: &str)",
         "diagnostics_listener_serves_diagnostics_only()",
         "the_drive_is_the_shared_server()",
@@ -97307,6 +97854,7 @@
         "check_bind",
         "authorize",
         "route",
+        "browser",
         "start",
         "Mesh"
       ],
@@ -97335,21 +97883,74 @@
         "authorize(header: Option<&str>, token: Option<&str>)",
         "digits(v: Option<&str>, max: u32)",
         "route(m: &Mesh, apps: &[App], req: &Req, token: Option<&str>, src: &LogSource)",
-        "start(m: Mesh)",
+        "browser(m: &Mesh, rest: &str, req: &Req, src: &LogSource)",
+        "start(m: Mesh, stop: Arc<std::sync::atomic::AtomicBool>)",
         "mesh()",
         "apps()",
         "get(path: &str, auth: Option<&str>)",
         "stub(authority: &str, method: &str, arg: &str)",
+        "an_app_that_may_not_be_woken_is_never_called()",
         "every_path_needs_the_bearer()",
         "the_endpoint_pages_are_bearer_guarded_too()",
         "with_no_token_known_it_fails_closed()",
         "a_good_bearer_routes_to_the_apps_ipc()",
         "only_manifest_apps_and_declared_methods_are_called()",
+        "post(path: &str, auth: Option<&str>, body: &str)",
+        "browser_routes_are_bearer_gated_and_call_only_the_browser_provider()",
+        "browser_wrong_verb_unknown_path_and_dead_phone()",
         "a_dead_app_is_a_502_not_a_hang()",
         "the_bind_is_never_public_loopback_or_wildcard()",
         "only_mesh_peers_are_answered()",
         "the_real_declaration_is_a_valid_mesh_listener()",
         "constant_time_compare_agrees_with_equality()"
+      ]
+    },
+    {
+      "path": "ac_cloud-c3-webserver/server/src/power.rs",
+      "lang": "rust",
+      "role": "rust-module",
+      "exports": [
+        "plan",
+        "may_start_from_outside",
+        "from_build",
+        "cfg",
+        "load",
+        "save",
+        "current",
+        "set_site",
+        "set_sync_hook",
+        "apply",
+        "status_json",
+        "Switches",
+        "Plan",
+        "Cfg",
+        "State"
+      ],
+      "imports": [
+        "crate::apis",
+        "serde_json::",
+        "std::path::",
+        "std::sync::",
+        "super::"
+      ],
+      "symbols": [
+        "plan(s: Switches)",
+        "may_start_from_outside(s: Switches)",
+        "from_build(b: &Value)",
+        "cfg()",
+        "load(path: &Path, default: Switches)",
+        "save(path: &Path, st: &State)",
+        "current()",
+        "set_site(id: &str, on: bool)",
+        "set_sync_hook(f: Box<Hook>)",
+        "apply(sw: Switches)",
+        "status_json()",
+        "the_rules_equal_the_declared_table()",
+        "server_off_means_no_listeners_in_every_keep_alive_state()",
+        "keep_alive_off_means_no_service_no_boot_no_sticky_no_wake()",
+        "on_on_runs_the_foreground_service_and_only_then()",
+        "no_state_schedules_a_wake()",
+        "the_store_round_trips_defaults_and_survives_garbage()"
       ]
     },
     {
@@ -97371,6 +97972,9 @@
         "dir_handler",
         "running",
         "start",
+        "count",
+        "ports",
+        "stop_all",
         "stop",
         "host",
         "add",
@@ -97417,6 +98021,9 @@
         "dir_handler(root: PathBuf, index: Option<String>, extra_hosts: Vec<String>)",
         "running(&self, id: &str)",
         "start(&self, cfg: &Cfg, e: &Entry)",
+        "count(&self)",
+        "ports(&self)",
+        "stop_all(&self)",
         "stop(&self, id: &str)",
         "host()",
         "slug(label: &str)",
@@ -97436,8 +98043,7 @@
         "a_mesh_entry_without_a_mesh_address_and_a_public_one_never_bind()",
         "the_terminal_proxy_forwards_inside_its_base_and_refuses_traversal()",
         "terminal_targets_split_an_entry_file_from_the_folder()",
-        "scan_finds_repos_without_descending_into_them()",
-        "the_real_declaration_parses_and_never_allows_public()"
+        "scan_finds_repos_without_descending_into_them()"
       ]
     },
     {
@@ -97497,6 +98103,7 @@
       "role": "rust-module",
       "exports": [
         "subpages",
+        "api_mcp",
         "api_public",
         "api_mesh",
         "api_apps",
@@ -97525,6 +98132,7 @@
         "subpages(_ctx: &Ctx, _req: &Req)",
         "ok(v: Value)",
         "err(status: u16, msg: &str)",
+        "api_mcp(_c: &Ctx, _r: &Req)",
         "api_public(_c: &Ctx, _r: &Req)",
         "api_mesh(_c: &Ctx, _r: &Req)",
         "api_apps(_c: &Ctx, _r: &Req)",
@@ -97601,6 +98209,7 @@
         "android.app.Notification",
         "android.app.NotificationChannel",
         "android.app.NotificationManager",
+        "android.app.PendingIntent",
         "android.app.Service",
         "android.content.Context",
         "android.content.Intent",
@@ -97608,6 +98217,7 @@
       ],
       "symbols": [
         "nativeStart()",
+        "nativeStop()",
         "onCreate()",
         "onStartCommand(intent: Intent?, flags: Int, startId: Int)",
         "onBind(intent: Intent?)",
@@ -97622,13 +98232,37 @@
         "MainActivity"
       ],
       "imports": [
+        "android.content.ComponentName",
         "android.content.Intent",
+        "android.content.pm.PackageManager",
         "android.os.Bundle",
         "androidx.activity.enableEdgeToEdge"
       ],
       "symbols": [
         "onCreate(savedInstanceState: Bundle?)",
+        "syncKeepAlive()",
         "class MainActivity"
+      ]
+    },
+    {
+      "path": "ac_cloud-c3-webserver/src-tauri/gen/android/app/src/main/java/com/diegonmarcos/cloudwebserver/PowerState.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "PowerState"
+      ],
+      "imports": [
+        "android.content.Context",
+        "org.json.JSONObject",
+        "java.io.File"
+      ],
+      "symbols": [
+        "serviceAllowed(server: Boolean, keepAlive: Boolean)",
+        "flag(ctx: Context, key: String, default: Boolean)",
+        "serverOn(ctx: Context)",
+        "keepAliveOn(ctx: Context)",
+        "serviceAllowed(ctx: Context)",
+        "class PowerState"
       ]
     },
     {
@@ -97698,7 +98332,8 @@
         "read_bridge(method: &str, arg: &str)",
         "read_token()",
         "friendly(e: &str, authority: &str)",
-        "open_in_browser(url: &str)"
+        "open_in_browser(url: &str)",
+        "sync_keep_alive()"
       ]
     },
     {
@@ -97710,11 +98345,14 @@
       ],
       "imports": [
         "Tauri",
-        "tauri::"
+        "tauri::",
+        "c3_webserver::power"
       ],
       "symbols": [
         "start_servers()",
         "Java_com_diegonmarcos_cloudwebserver_KeepAliveService_nativeStart(\n    _env: jni::JNIEnv,\n    _service: jni::objects::JObject,\n)",
+        "power_set(server: Option<bool>, keep_alive: Option<bool>)",
+        "Java_com_diegonmarcos_cloudwebserver_KeepAliveService_nativeStop(\n    _env: jni::JNIEnv,\n    _service: jni::objects::JObject,\n)",
         "run()",
         "request_storage(window: &tauri::WebviewWindow)"
       ]
@@ -97770,6 +98408,22 @@
       "symbols": [
         "mirror()",
         "plant()"
+      ]
+    },
+    {
+      "path": "ac_cloud-c3-webserver/test/test-c3-webserver-mcp.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "pass()",
+        "fail()",
+        "mutate()"
+      ],
+      "imports": [],
+      "symbols": [
+        "pass()",
+        "fail()",
+        "mutate()"
       ]
     },
     {
@@ -383116,6 +383770,7 @@
         "post(url: String, bearer: String, body: String)",
         "postText(url: String, bearer: String, body: String?)",
         "cloudflare(url: String, bearer: String, input: JSONObject, rest: Boolean)",
+        "headless(url: String, bearer: String, input: JSONObject)",
         "ok(c: JSONObject, age: Long)",
         "fail(msg: String, code: String)",
         "class ApifyRunner"
@@ -509436,14 +510091,12 @@
       "role": "kotlin",
       "exports": [
         "CloudStoreShell",
-        "ShellChannelWorker",
-        "ShellBootReceiver"
+        "ShellChannelWorker"
       ],
       "imports": [
         "android.content.Context",
         "androidx.work.WorkerParameters",
         "com.diegonmarcos.superapp.adbdebug.HostShell",
-        "com.diegonmarcos.superapp.adbdebug.HostShellBootReceiver",
         "com.diegonmarcos.superapp.adbdebug.HostShellWorker"
       ],
       "symbols": [
@@ -509452,8 +510105,7 @@
         "class only",
         "class CloudStoreShell",
         "class by",
-        "class ShellChannelWorker",
-        "class ShellBootReceiver"
+        "class ShellChannelWorker"
       ]
     },
     {
@@ -509511,25 +510163,6 @@
         "markBatteryPrompted(ctx: Context)",
         "class UpdateChecks",
         "class Need"
-      ]
-    },
-    {
-      "path": "ac_cloud-store/app/src/main/java/com/diegonmarcos/cloudstore/UpdateChecksBootReceiver.kt",
-      "lang": "kotlin",
-      "role": "kotlin",
-      "exports": [
-        "UpdateChecksBootReceiver"
-      ],
-      "imports": [
-        "android.content.BroadcastReceiver",
-        "android.content.Context",
-        "android.content.Intent",
-        "android.util.Log",
-        "com.diegonmarcos.superapp.appstore.ConstellationWorker"
-      ],
-      "symbols": [
-        "onReceive(context: Context, intent: Intent)",
-        "class UpdateChecksBootReceiver"
       ]
     },
     {
@@ -510537,6 +511170,94 @@
       ]
     },
     {
+      "path": "ac_cloud-superintel/app/src/main/java/com/diegonmarcos/cloudsuperintel/AiData.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "AiRow",
+        "AiGroup",
+        "AiPageSpec",
+        "AiData",
+        "PrivateSource"
+      ],
+      "imports": [
+        "android.content.Context",
+        "android.net.Uri",
+        "org.json.JSONObject"
+      ],
+      "symbols": [
+        "pages(text: String)",
+        "groups(text: String)",
+        "asset(ctx: Context, name: String)",
+        "get(key: String)",
+        "account(ctx: Context, authority: String, method: String)",
+        "class AiRow",
+        "class AiGroup",
+        "class AiPageSpec",
+        "class AiData",
+        "class PrivateSource"
+      ]
+    },
+    {
+      "path": "ac_cloud-superintel/app/src/main/java/com/diegonmarcos/cloudsuperintel/Apis.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ApiLink",
+        "ApiRow",
+        "ApiConfig",
+        "Apis"
+      ],
+      "imports": [
+        "org.json.JSONArray",
+        "org.json.JSONObject"
+      ],
+      "symbols": [
+        "parseRows(a: JSONArray, sample: Boolean)",
+        "parse(text: String)",
+        "rows(cfg: ApiConfig, src: PrivateSource)",
+        "line(template: String, r: ApiRow)",
+        "reveal(cfg: ApiConfig, src: PrivateSource, r: ApiRow)",
+        "class ApiLink",
+        "class ApiRow",
+        "class ApiConfig",
+        "class Apis"
+      ]
+    },
+    {
+      "path": "ac_cloud-superintel/app/src/main/java/com/diegonmarcos/cloudsuperintel/Cost.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "CostRowDecl",
+        "CostConfig",
+        "CostRow",
+        "CostTable",
+        "Cost"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.notificationcenter.AiUsageClient",
+        "com.diegonmarcos.superapp.notificationcenter.AiUsageModel",
+        "org.json.JSONObject"
+      ],
+      "symbols": [
+        "parse(text: String)",
+        "list(k: String)",
+        "spend(k: String)",
+        "fetch(cfg: CostConfig, bearer: String)",
+        "pct(w: AiUsageModel.Win?)",
+        "spend(s: AiUsageModel.Spend?)",
+        "claude(metric: String, c: AiUsageModel.Claude?, nowMs: Long)",
+        "openRouter(metric: String, o: AiUsageModel.OpenRouter)",
+        "table(cfg: CostConfig, snap: AiUsageModel.Snapshot?, nowMs: Long)",
+        "class CostRowDecl",
+        "class CostConfig",
+        "class CostRow",
+        "class CostTable",
+        "class Cost"
+      ]
+    },
+    {
       "path": "ac_cloud-superintel/app/src/main/java/com/diegonmarcos/cloudsuperintel/Decl.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -510709,6 +511430,67 @@
       ]
     },
     {
+      "path": "ac_cloud-superintel/app/src/main/java/com/diegonmarcos/cloudsuperintel/ui/AiScreens.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "AiTags",
+        "AiPage"
+      ],
+      "imports": [
+        "android.content.Intent",
+        "android.net.Uri",
+        "androidx.compose.foundation.background",
+        "androidx.compose.foundation.layout.Box",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.Row",
+        "androidx.compose.foundation.layout.fillMaxSize",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.foundation.layout.height",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.foundation.lazy.LazyColumn",
+        "androidx.compose.foundation.lazy.items",
+        "androidx.compose.material3.MaterialTheme",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.LaunchedEffect",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableIntStateOf",
+        "androidx.compose.runtime.mutableStateMapOf",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.remember",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.platform.LocalContext",
+        "androidx.compose.ui.platform.testTag",
+        "androidx.compose.ui.res.stringResource",
+        "androidx.compose.ui.text.style.TextAlign",
+        "androidx.compose.ui.unit.dp",
+        "com.diegonmarcos.cloudsuperintel.AiData",
+        "com.diegonmarcos.cloudsuperintel.AiGroup",
+        "com.diegonmarcos.cloudsuperintel.AiPageSpec",
+        "com.diegonmarcos.cloudsuperintel.ApiRow",
+        "com.diegonmarcos.cloudsuperintel.Apis",
+        "com.diegonmarcos.cloudsuperintel.Cost",
+        "com.diegonmarcos.cloudsuperintel.PrivateSource",
+        "com.diegonmarcos.cloudsuperintel.R",
+        "com.diegonmarcos.superapp.notificationcenter.AiUsageModel",
+        "com.diegonmarcos.superapp.uikit.CloudKitTheme",
+        "com.diegonmarcos.superapp.uikit.KitPalette",
+        "com.diegonmarcos.superapp.uikit.KitStoreCaption",
+        "com.diegonmarcos.superapp.uikit.KitStoreDot"
+      ],
+      "symbols": [
+        "AiPage(spec: AiPageSpec)",
+        "KitHost(content: @Composable ()",
+        "Rule()",
+        "Header(text: String)",
+        "RowsPage(groups: List<AiGroup>)",
+        "ApisPage(text: String)",
+        "CostPage(text: String)",
+        "class AiTags"
+      ]
+    },
+    {
       "path": "ac_cloud-superintel/app/src/main/java/com/diegonmarcos/cloudsuperintel/ui/NotebookScreens.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -510816,6 +511598,7 @@
         "androidx.compose.ui.platform.testTag",
         "androidx.compose.ui.res.stringResource",
         "androidx.compose.ui.unit.dp",
+        "com.diegonmarcos.cloudsuperintel.AiData",
         "com.diegonmarcos.cloudsuperintel.BuildConfig",
         "com.diegonmarcos.cloudsuperintel.Decl",
         "com.diegonmarcos.cloudsuperintel.R",
@@ -510827,8 +511610,7 @@
         "com.diegonmarcos.superapp.ai.AiSettingsPickers",
         "com.diegonmarcos.superapp.ai.AiStrings",
         "com.diegonmarcos.superapp.ai.AiTheme",
-        "com.diegonmarcos.superapp.ai.materialAiTheme",
-        "com.diegonmarcos.superapp.bottomnav.TopBarDrawer"
+        "com.diegonmarcos.superapp.ai.materialAiTheme"
       ],
       "symbols": [
         "siAiTheme()",
@@ -510865,6 +511647,82 @@
       ]
     },
     {
+      "path": "ac_cloud-superintel/app/src/test/java/com/diegonmarcos/cloudsuperintel/AiApisTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "AiApisTest"
+      ],
+      "imports": [
+        "java.io.File",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNotNull",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "fourRowsInTheOrdersOrder()",
+        "bundledRowsAreSampleAndTheirTokensAreMasked()",
+        "withoutThePrivateStoreTheSampleShowsAndNothingRevealsFromIt()",
+        "privateRowsReplaceTheSampleAndATokenRevealsOnlyFromThePrivateSource()",
+        "badPrivateRowsFallBackToTheSample()",
+        "noRealSecretShapedValueInTheAppTree()",
+        "class AiApisTest"
+      ]
+    },
+    {
+      "path": "ac_cloud-superintel/app/src/test/java/com/diegonmarcos/cloudsuperintel/AiCostTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "AiCostTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.notificationcenter.AiUsageClient",
+        "com.diegonmarcos.superapp.notificationcenter.AiUsageModel",
+        "java.io.File",
+        "org.json.JSONObject",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "costFetchesThroughTheSharedClientOnTheBadgesRoute()",
+        "theBadgesDeclaredEndpointIsOneOfCostsBases()",
+        "aSecondBaseIsTriedWhenTheFirstFails()",
+        "theTableIsClaudeAndOpenRouterSideBySideFromTheSameSnapshot()",
+        "withoutAConfiguredOpenRouterTheSampleShowsLabelled()",
+        "noSnapshotMeansNoClaudeFigures()",
+        "costKotlinHasNoClientOrRouteOfItsOwn()",
+        "class AiCostTest"
+      ]
+    },
+    {
+      "path": "ac_cloud-superintel/app/src/test/java/com/diegonmarcos/cloudsuperintel/AiPagesTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "AiPagesTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "bottomNavOrderIsNotebookCgcsSiAisCost()",
+        "aisSubPagesAreApisMcpDotfilesPlugins()",
+        "everyDeclaredPageHasDataAndEveryDataPageIsDeclared()",
+        "mcpPageNamesTheRebrandAndTheC3Merge()",
+        "dotfilesHaveTheFourSectionsForBothSettingsFilesAndNoValues()",
+        "pluginsPageHasTheC3InfraSkillRulesAndAgents()",
+        "class AiPagesTest"
+      ]
+    },
+    {
       "path": "ac_cloud-superintel/app/src/test/java/com/diegonmarcos/cloudsuperintel/Data.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -510877,6 +511735,7 @@
       ],
       "symbols": [
         "asset(name: String)",
+        "ai(name: String)",
         "buildJson()",
         "pages(section: String)",
         "bottomNav()",
@@ -511110,6 +511969,24 @@
       ]
     },
     {
+      "path": "ac_cloud-superintel/test/test-superintel-ais.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "check()",
+        "ok()",
+        "bad()",
+        "mutant()"
+      ],
+      "imports": [],
+      "symbols": [
+        "check()",
+        "ok()",
+        "bad()",
+        "mutant()"
+      ]
+    },
+    {
       "path": "ac_cloud-superintel/test/test-superintel-app.sh",
       "lang": "sh",
       "role": "shell",
@@ -511125,6 +512002,20 @@
         "ok()",
         "bad()",
         "mutant()"
+      ]
+    },
+    {
+      "path": "ac_cloud-superintel/tools/derive-ai-data.py",
+      "lang": "py",
+      "role": "python",
+      "exports": [
+        "settings(name)"
+      ],
+      "imports": [
+        "glob"
+      ],
+      "symbols": [
+        "settings(name)"
       ]
     },
     {
