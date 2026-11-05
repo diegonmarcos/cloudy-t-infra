@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 23312,
+    "files": 23316,
     "by_lang": {
-      "sh": 674,
+      "sh": 673,
       "js": 543,
       "py": 199,
-      "kotlin": 12626,
+      "kotlin": 12631,
       "ts": 8470,
       "java": 649,
       "nix": 36,
@@ -20,11 +20,11 @@
     "by_role": {
       "hook": 158,
       "file": 2303,
-      "shell": 538,
+      "shell": 537,
       "script": 294,
       "module": 6477,
       "java": 648,
-      "kotlin": 12623,
+      "kotlin": 12628,
       "python": 64,
       "flake": 32,
       "rust-module": 115,
@@ -41137,6 +41137,7 @@
         "configsPageFor(pageId: String)",
         "dismissOverlays()",
         "openFavourites()",
+        "openUrl(url: String)",
         "openTabs()",
         "openBrowser()",
         "openAddress()",
@@ -41166,8 +41167,7 @@
         "openUrlInTab(url: String, private_: Boolean = false)",
         "refreshSuggestions(state: SuggestState, q: String, private_: Boolean)",
         "local(remote: List<String>)",
-        "unwrapJs(raw: String?)",
-        "collect(maxChars: Int, done: (String?)"
+        "unwrapJs(raw: String?)"
       ]
     },
     {
@@ -93819,14 +93819,14 @@
         "androidx.compose.ui.res.colorResource",
         "androidx.compose.ui.unit.dp",
         "androidx.fragment.app.commit",
+        "com.diegonmarcos.cloudbrowser.sites.CloudyPage",
+        "com.diegonmarcos.cloudbrowser.sites.DomainsPage",
+        "com.diegonmarcos.cloudbrowser.sites.SitesDecl",
+        "com.diegonmarcos.cloudbrowser.sites.VisitLogStore",
+        "com.diegonmarcos.cloudbrowser.sites.WebyPage",
         "com.diegonmarcos.superapp.bottomnav.BottomNavCollapse",
         "com.diegonmarcos.superapp.bottomnav.FleetChrome",
-        "com.diegonmarcos.superapp.bottomnav.NavChromeScroll",
-        "com.diegonmarcos.superapp.bottomnav.NavDecl",
-        "com.diegonmarcos.superapp.bottomnav.TopBarDrawer",
-        "com.diegonmarcos.superapp.bottomnav.rememberAccountLauncher",
-        "com.diegonmarcos.superapp.bottomnav.islandEntries",
-        "com.diegonmarcos.superapp.navbarbottom.NavBarBottom"
+        "com.diegonmarcos.superapp.bottomnav.NavChromeScroll"
       ],
       "symbols": [
         "onCreate(savedInstanceState: Bundle?)",
@@ -93835,8 +93835,10 @@
         "Chrome()",
         "onWebScroll(delta: Float)",
         "openSection(id: String)",
+        "openUrl(url: String)",
         "openConfigsPage(id: String)",
         "onNewIntent(intent: Intent)",
+        "onStop()",
         "onDestroy()",
         "handleUpdateState(state: UpdateProgress.State)",
         "class MainActivity"
@@ -94082,6 +94084,291 @@
       "symbols": [
         "install(app: Context, search: SearchAddon)",
         "class SearchPageScreen"
+      ]
+    },
+    {
+      "path": "ac_cloud-browser/app/src/main/java/com/diegonmarcos/cloudbrowser/sites/Cloudy.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "CloudyEntry",
+        "Cloudy"
+      ],
+      "imports": [
+        "org.json.JSONArray",
+        "org.json.JSONObject",
+        "java.net.InetSocketAddress",
+        "java.net.Socket"
+      ],
+      "symbols": [
+        "seedPages(decl: JSONObject)",
+        "merge(seed: List<CloudyEntry>, pagesJson: String?)",
+        "declaredWebserver(decl: JSONObject)",
+        "storeEntries(json: String?)",
+        "probe(port: Int, timeoutMs: Int)",
+        "class CloudyEntry",
+        "class Cloudy"
+      ]
+    },
+    {
+      "path": "ac_cloud-browser/app/src/main/java/com/diegonmarcos/cloudbrowser/sites/Domains.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "VisitLog",
+        "HistoryDays",
+        "Visited",
+        "CachedFile",
+        "SiteOp",
+        "SiteExec",
+        "SiteActions"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.browser.BrowserSitePolicy",
+        "com.diegonmarcos.superapp.browser.BrowserVisit",
+        "org.json.JSONArray",
+        "org.json.JSONObject",
+        "java.time.Instant",
+        "java.time.ZoneId"
+      ],
+      "symbols": [
+        "merge(log: List<BrowserVisit>, history: List<BrowserVisit>, cap: Int = CAP)",
+        "toJson(list: List<BrowserVisit>)",
+        "fromJson(raw: String?)",
+        "domainOf(url: String)",
+        "dayOf(ts: Long, zone: ZoneId)",
+        "pagesByDay(visits: List<BrowserVisit>, zone: ZoneId)",
+        "domainsByDay(visits: List<BrowserVisit>, zone: ZoneId)",
+        "sites(visits: List<BrowserVisit>)",
+        "sort(sites: List<Site>, by: String)",
+        "everSeen(visited: List<Site>, ruleHosts: Collection<String>)",
+        "deleteFiles(paths: List<String>)",
+        "cookies(host: String)",
+        "storage(host: String)",
+        "resetPerms(host: String)",
+        "own(host: String, files: List<CachedFile>)",
+        "plan(id: String, host: String, files: List<CachedFile>, mediaPrefixes: List<String>)",
+        "run(ops: List<SiteOp>, exec: SiteExec)",
+        "class VisitLog",
+        "class HistoryDays",
+        "class PageDay",
+        "class DomainCount",
+        "class DomainDay",
+        "class Visited",
+        "class Site",
+        "class CachedFile",
+        "class SiteOp",
+        "class DeleteFiles",
+        "class Cookies",
+        "class Storage",
+        "class ResetPerms",
+        "class SiteExec",
+        "class SiteActions"
+      ]
+    },
+    {
+      "path": "ac_cloud-browser/app/src/main/java/com/diegonmarcos/cloudbrowser/sites/SiteCache.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "SiteFile",
+        "SiteCache"
+      ],
+      "imports": [
+        "android.content.Context",
+        "com.diegonmarcos.superapp.uikit.KitFileTree",
+        "java.io.File",
+        "java.net.URI",
+        "java.nio.ByteBuffer",
+        "java.nio.ByteOrder"
+      ],
+      "symbols": [
+        "dirOf(url: String)",
+        "hostOf(url: String)",
+        "nameOf(url: String)",
+        "hostOfOriginDir(name: String)",
+        "entries(files: List<SiteFile>)",
+        "hosts(files: List<SiteFile>)",
+        "cached(files: List<SiteFile>)",
+        "load(ctx: Context)",
+        "body(f: SiteFile)",
+        "parse(b: ByteArray)",
+        "bodyEnd(b: ByteArray, bb: ByteBuffer, start: Int)",
+        "urlOfKey(key: String)",
+        "header(raw: String, name: String)",
+        "class SiteFile",
+        "class SiteCache",
+        "class Entry"
+      ]
+    },
+    {
+      "path": "ac_cloud-browser/app/src/main/java/com/diegonmarcos/cloudbrowser/sites/SitesAndroid.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "VisitLogStore",
+        "AndroidSiteExec",
+        "CloudyCache",
+        "onMain"
+      ],
+      "imports": [
+        "android.content.Context",
+        "android.os.Handler",
+        "android.os.Looper",
+        "com.diegonmarcos.superapp.browser.BrowserClearCategories",
+        "com.diegonmarcos.superapp.browser.BrowserHistory",
+        "com.diegonmarcos.superapp.browser.BrowserSitePermissions",
+        "com.diegonmarcos.superapp.browser.BrowserStorage",
+        "com.diegonmarcos.superapp.browser.BrowserVisit",
+        "java.io.File",
+        "java.net.HttpURLConnection",
+        "java.net.URL"
+      ],
+      "symbols": [
+        "all()",
+        "sync()",
+        "deleteFiles(paths: List<String>)",
+        "cookies(host: String)",
+        "storage(host: String)",
+        "resetPerms(host: String)",
+        "pagesJson()",
+        "refresh(url: String, timeoutMs: Int)",
+        "onMain(f: ()",
+        "class VisitLogStore",
+        "class AndroidSiteExec",
+        "class CloudyCache"
+      ]
+    },
+    {
+      "path": "ac_cloud-browser/app/src/main/java/com/diegonmarcos/cloudbrowser/sites/SitesDecl.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "SitesDecl"
+      ],
+      "imports": [
+        "android.util.Base64",
+        "org.json.JSONArray",
+        "org.json.JSONObject"
+      ],
+      "symbols": [
+        "block(name: String)",
+        "texts(of: JSONObject)",
+        "parseBase64(b64: String)",
+        "ids(arr: JSONArray?, key: String = \"id\")",
+        "class SitesDecl"
+      ]
+    },
+    {
+      "path": "ac_cloud-browser/app/src/main/java/com/diegonmarcos/cloudbrowser/sites/SitesUi.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "WebyPage",
+        "CloudyPage",
+        "DomainsPage"
+      ],
+      "imports": [
+        "androidx.compose.foundation.ExperimentalFoundationApi",
+        "androidx.compose.foundation.background",
+        "androidx.compose.foundation.clickable",
+        "androidx.compose.foundation.combinedClickable",
+        "androidx.compose.foundation.layout.Arrangement",
+        "androidx.compose.foundation.layout.Box",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.PaddingValues",
+        "androidx.compose.foundation.layout.Row",
+        "androidx.compose.foundation.layout.Spacer",
+        "androidx.compose.foundation.layout.fillMaxSize",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.foundation.layout.size",
+        "androidx.compose.foundation.layout.width",
+        "androidx.compose.foundation.lazy.LazyColumn",
+        "androidx.compose.foundation.lazy.LazyListScope",
+        "androidx.compose.foundation.lazy.grid.GridCells",
+        "androidx.compose.foundation.lazy.grid.GridItemSpan",
+        "androidx.compose.foundation.lazy.grid.LazyVerticalGrid",
+        "androidx.compose.foundation.lazy.grid.items",
+        "androidx.compose.foundation.lazy.items",
+        "androidx.compose.foundation.rememberScrollState",
+        "androidx.compose.foundation.shape.RoundedCornerShape",
+        "androidx.compose.foundation.verticalScroll",
+        "androidx.compose.material3.AlertDialog",
+        "androidx.compose.material3.Text",
+        "androidx.compose.material3.TextButton",
+        "androidx.compose.material3.TextField",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.State",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableIntStateOf",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.remember",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.runtime.mutableStateListOf",
+        "androidx.compose.ui.Alignment",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.draw.alpha"
+      ],
+      "symbols": [
+        "loaded(initial: T, key: Any?, work: ()",
+        "rel(ts: Long)",
+        "WebyPage(decl: SitesDecl, onOpen: (String)",
+        "commit(n: List<WebyFolder>)",
+        "CloudyPage(page: String?, decl: SitesDecl, onOpen: (String)",
+        "CloudyList(entries: List<CloudyEntry>, empty: String, tag: String, up: (CloudyEntry)",
+        "DomainsPage(page: String?, decl: SitesDecl)",
+        "FilesPage(t: (String)",
+        "PermsPage(d: org.json.JSONObject, t: (String)",
+        "SiteDetail(host: String, d: org.json.JSONObject, t: (String)",
+        "HistoryPage(d: org.json.JSONObject, t: (String)",
+        "dayHeader(day: String, n: Int, dim: androidx.compose.ui.graphics.Color, ink: androidx.compose.ui.graphics.Color)",
+        "VisitedPage(d: org.json.JSONObject, t: (String)",
+        "optionsOf(d: org.json.JSONObject, key: String)",
+        "class WebyDialog",
+        "class AddBookmark",
+        "class AddFolder",
+        "class RemoveTile",
+        "class RemoveFolder"
+      ]
+    },
+    {
+      "path": "ac_cloud-browser/app/src/main/java/com/diegonmarcos/cloudbrowser/sites/Weby.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "WebyTile",
+        "WebyFolder",
+        "WebySeed",
+        "WebyOps",
+        "WebyStore"
+      ],
+      "imports": [
+        "android.content.Context",
+        "org.json.JSONArray",
+        "org.json.JSONObject"
+      ],
+      "symbols": [
+        "derive(decl: JSONObject)",
+        "tiles(arr: JSONArray?)",
+        "normFolder(path: String)",
+        "normalizeUrl(input: String)",
+        "edit(list: List<WebyFolder>, path: List<String>, create: Boolean, f: (WebyFolder)",
+        "addBookmark(list: List<WebyFolder>, path: String, label: String, url: String)",
+        "removeBookmark(list: List<WebyFolder>, path: String, id: String)",
+        "addFolder(list: List<WebyFolder>, path: String)",
+        "removeFolder(list: List<WebyFolder>, path: String)",
+        "flatten(list: List<WebyFolder>, prefix: String = \"\")",
+        "toJson(list: List<WebyFolder>)",
+        "fromJson(raw: String?)",
+        "parse(a: JSONArray)",
+        "load()",
+        "save(list: List<WebyFolder>)",
+        "class WebyTile",
+        "class WebyFolder",
+        "class WebySeed",
+        "class WebyOps",
+        "class WebyStore"
       ]
     },
     {
@@ -95662,176 +95949,70 @@
       ]
     },
     {
-      "path": "ac_cloud-browser/app/src/test/java/com/diegonmarcos/cloudbrowser/ScraperApifyTest.kt",
+      "path": "ac_cloud-browser/app/src/test/java/com/diegonmarcos/cloudbrowser/sites/CloudyTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
       "exports": [
-        "ScraperApifyTest"
+        "CloudyTest"
       ],
       "imports": [
-        "com.diegonmarcos.superapp.apify.ApifyBackendStore",
-        "com.diegonmarcos.superapp.apify.ApifyBackends",
-        "com.diegonmarcos.superapp.apify.ApifyKv",
-        "com.diegonmarcos.superapp.scraper.ApifyCatalog",
-        "com.diegonmarcos.superapp.scraper.ApifyClient",
-        "com.diegonmarcos.superapp.scraper.ApifyExport",
-        "com.diegonmarcos.superapp.scraper.ApifyStore",
-        "com.diegonmarcos.superapp.scraper.CfEndpoint",
-        "com.diegonmarcos.superapp.scraper.CloudflareClient",
-        "com.diegonmarcos.superapp.scraper.MusicHttp",
-        "com.diegonmarcos.superapp.scraper.ScrapersPages",
-        "com.diegonmarcos.superapp.scraper.SelfHostedCatalog",
-        "okhttp3.mockwebserver.MockResponse",
-        "okhttp3.mockwebserver.MockWebServer",
+        "org.json.JSONObject",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "class CloudyTest"
+      ]
+    },
+    {
+      "path": "ac_cloud-browser/app/src/test/java/com/diegonmarcos/cloudbrowser/sites/DomainsTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "DomainsTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.browser.BrowserVisit",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.time.ZoneId",
+        "java.time.ZoneOffset",
+        "java.time.ZonedDateTime"
+      ],
+      "symbols": [
+        "at(y: Int, m: Int, d: Int, h: Int)",
+        "deleteFiles(paths: List<String>)",
+        "cookies(host: String)",
+        "storage(host: String)",
+        "resetPerms(host: String)",
+        "run(id: String, host: String)",
+        "class DomainsTest",
+        "class Fake"
+      ]
+    },
+    {
+      "path": "ac_cloud-browser/app/src/test/java/com/diegonmarcos/cloudbrowser/sites/WebyTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "WebyTest"
+      ],
+      "imports": [
         "org.json.JSONArray",
         "org.json.JSONObject",
         "org.junit.Assert.assertEquals",
-        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNull",
         "org.junit.Assert.assertTrue",
         "org.junit.Test",
         "java.io.File"
       ],
       "symbols": [
-        "get(key: String)",
-        "set(key: String, value: String?)",
-        "class ScraperApifyTest",
-        "class MapKv"
-      ]
-    },
-    {
-      "path": "ac_cloud-browser/app/src/test/java/com/diegonmarcos/cloudbrowser/ScraperMusicTest.kt",
-      "lang": "kotlin",
-      "role": "kotlin",
-      "exports": [
-        "ScraperMusicTest"
-      ],
-      "imports": [
-        "com.diegonmarcos.superapp.scraper.AuthKind",
-        "com.diegonmarcos.superapp.scraper.ConnectStatus",
-        "com.diegonmarcos.superapp.scraper.How",
-        "com.diegonmarcos.superapp.scraper.Isrc",
-        "com.diegonmarcos.superapp.scraper.Matcher",
-        "com.diegonmarcos.superapp.scraper.MemoryTokenStore",
-        "com.diegonmarcos.superapp.scraper.MusicAccounts",
-        "com.diegonmarcos.superapp.scraper.MusicCatalog",
-        "com.diegonmarcos.superapp.scraper.MusicConnector",
-        "com.diegonmarcos.superapp.scraper.MusicExport",
-        "com.diegonmarcos.superapp.scraper.MusicHttp",
-        "com.diegonmarcos.superapp.scraper.MusicOAuth",
-        "com.diegonmarcos.superapp.scraper.MusicSync",
-        "com.diegonmarcos.superapp.scraper.Playlist",
-        "com.diegonmarcos.superapp.scraper.ServiceSpec",
-        "com.diegonmarcos.superapp.scraper.SpotifyConnector",
-        "com.diegonmarcos.superapp.scraper.TokenSet",
-        "com.diegonmarcos.superapp.scraper.Track",
-        "com.diegonmarcos.superapp.scraper.WebPlayer",
-        "com.diegonmarcos.superapp.scraper.YouTubeConnector",
-        "okhttp3.mockwebserver.MockResponse",
-        "okhttp3.mockwebserver.MockWebServer",
-        "org.json.JSONObject",
-        "org.junit.Assert.assertEquals",
-        "org.junit.Assert.assertFalse",
-        "org.junit.Assert.assertNotNull",
-        "org.junit.Assert.assertNull",
-        "org.junit.Assert.assertTrue",
-        "org.junit.Test"
-      ],
-      "symbols": [
-        "t(title: String, artist: String, ms: Long = 0, isrc: String = \"\", id: String = \"\")",
-        "playlists()",
-        "tracks(p: Playlist)",
-        "liked()",
-        "find(t: Track)",
-        "createPlaylist(name: String)",
-        "addTracks(playlistId: String, ids: List<String>)",
-        "spec(base: String)",
-        "class ScraperMusicTest",
-        "class Fake"
-      ]
-    },
-    {
-      "path": "ac_cloud-browser/app/src/test/java/com/diegonmarcos/cloudbrowser/ScraperSiteFilesTest.kt",
-      "lang": "kotlin",
-      "role": "kotlin",
-      "exports": [
-        "ScraperSiteFilesTest"
-      ],
-      "imports": [
-        "com.diegonmarcos.superapp.scraper.FileSource",
-        "com.diegonmarcos.superapp.scraper.SimpleCache",
-        "com.diegonmarcos.superapp.scraper.SiteFile",
-        "com.diegonmarcos.superapp.scraper.SiteFiles",
-        "com.diegonmarcos.superapp.scraper.SiteSort",
-        "com.diegonmarcos.superapp.uikit.KitFileTree",
-        "org.junit.Assert.assertEquals",
-        "org.junit.Assert.assertNull",
-        "org.junit.Test",
-        "java.io.ByteArrayOutputStream",
-        "java.io.File",
-        "java.nio.ByteBuffer",
-        "java.nio.ByteOrder"
-      ],
-      "symbols": [
-        "entry(key: String, body: ByteArray, headers: String = \"HTTP/1.1 200\\u0000content-type: text/css; charset=utf-8\\u0000\", sha: Boolean = false)",
-        "le(n: Int, put: ByteBuffer.()",
-        "tf(dirs: List<String>, name: String, mod: Long = 1, bytes: Long = 10)",
-        "f(host: String, name: String, mod: Long, src: FileSource = FileSource.CACHE)",
-        "class ScraperSiteFilesTest"
-      ]
-    },
-    {
-      "path": "ac_cloud-browser/app/src/test/java/com/diegonmarcos/cloudbrowser/ScraperViewerRouteTest.kt",
-      "lang": "kotlin",
-      "role": "kotlin",
-      "exports": [
-        "ScraperViewerRouteTest"
-      ],
-      "imports": [
-        "com.diegonmarcos.superapp.scraper.Highlighter",
-        "com.diegonmarcos.superapp.scraper.Route",
-        "com.diegonmarcos.superapp.scraper.Tok",
-        "com.diegonmarcos.superapp.scraper.Viewer",
-        "com.diegonmarcos.superapp.scraper.ViewerRoute",
-        "org.junit.Assert.assertEquals",
-        "org.junit.Assert.assertTrue",
-        "org.junit.Test"
-      ],
-      "symbols": [
-        "r(name: String, mime: String = \"\")",
-        "toks(text: String, lang: String)",
-        "class ScraperViewerRouteTest"
-      ]
-    },
-    {
-      "path": "ac_cloud-browser/app/src/test/java/com/diegonmarcos/cloudbrowser/ScraperYouTubeToolTest.kt",
-      "lang": "kotlin",
-      "role": "kotlin",
-      "exports": [
-        "ScraperYouTubeToolTest"
-      ],
-      "imports": [
-        "com.diegonmarcos.superapp.scraper.ScraperApi",
-        "com.diegonmarcos.superapp.scraper.ScraperApiException",
-        "com.diegonmarcos.superapp.scraper.YtAs",
-        "com.diegonmarcos.superapp.scraper.YtRequest",
-        "com.diegonmarcos.superapp.scraper.YtTarget",
-        "com.diegonmarcos.superapp.scraper.YtTool",
-        "okhttp3.mockwebserver.MockResponse",
-        "okhttp3.mockwebserver.MockWebServer",
-        "org.json.JSONObject",
-        "org.junit.After",
-        "org.junit.Assert.assertEquals",
-        "org.junit.Assert.assertFalse",
-        "org.junit.Assert.assertNull",
-        "org.junit.Assert.assertTrue",
-        "org.junit.Assert.fail",
-        "org.junit.Before",
-        "org.junit.Test"
-      ],
-      "symbols": [
-        "up()",
-        "down()",
-        "class ScraperYouTubeToolTest"
+        "seed()",
+        "pkgs(a: JSONArray?)",
+        "class WebyTest"
       ]
     },
     {
@@ -96356,28 +96537,6 @@
         "tap_text()",
         "wait_for()",
         "fg_service()"
-      ]
-    },
-    {
-      "path": "ac_cloud-browser/test/emulator-scrapers.sh",
-      "lang": "sh",
-      "role": "shell",
-      "exports": [
-        "ok()",
-        "bad()",
-        "raw_dump()",
-        "dump()",
-        "shot()",
-        "tap()"
-      ],
-      "imports": [],
-      "symbols": [
-        "ok()",
-        "bad()",
-        "raw_dump()",
-        "dump()",
-        "shot()",
-        "tap()"
       ]
     },
     {
