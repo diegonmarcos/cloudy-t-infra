@@ -1619,6 +1619,12 @@
       "parent_domain": "api.diegonmarcos.com",
       "paths": [
         {
+          "base_path": "/ai",
+          "upstream": "10.0.0.6:4185",
+          "wg_only": true,
+          "comment": "AI gateway: /ai/{tokens,embeddings,agents,claude,memory} -> separate backend containers (cloudy-ai-*-api); legacy /<old-name>/ paths kept for one release."
+        },
+        {
           "base_path": "/pub",
           "upstream": "10.0.0.4:8087",
           "public_paths": [
@@ -1848,11 +1854,6 @@
       "parent_domain": "mcp.diegonmarcos.com",
       "endpoints": [
         {
-          "base_path": "/ai",
-          "upstream": "10.0.0.6:4185",
-          "wg_only": true
-        },
-        {
           "base_path": "/cloud-drive-mcp",
           "upstream": "10.0.0.6:3109",
           "wg_only": true,
@@ -1896,17 +1897,20 @@
         {
           "base_path": "/cloudy-all-mcp",
           "upstream": "10.0.0.6:3112",
-          "wg_only": true
+          "wg_only": true,
+          "bearer_auth": true
         },
         {
           "base_path": "/cloudy-apps-communication-mcp",
           "upstream": "10.0.0.6:3103",
-          "wg_only": true
+          "wg_only": true,
+          "bearer_auth": true
         },
         {
           "base_path": "/cloudy-apps-drive-mcp",
           "upstream": "10.0.0.6:3109",
-          "wg_only": true
+          "wg_only": true,
+          "bearer_auth": true
         },
         {
           "base_path": "/g-personal",
@@ -1933,7 +1937,7 @@
         }
       ],
       "comment": "MCP -- Streamable HTTP endpoints for Claude Code MCP clients",
-      "fallback_message": "MCP Hub -- use /ai/mcp, /cloud-drive-mcp/mcp, /c3-infra-mcp/mcp, /mail-mcp/mcp, /mattermost-mcp/mcp, /c3-services-mcp/mcp, /cloud-superapp-mcp/mcp, /cloud-vault-mcp/mcp, /cloudy-all-mcp/mcp, /cloudy-apps-communication-mcp/mcp, /cloudy-apps-drive-mcp/mcp, /g-personal/mcp, /g-workspace/mcp, /cloud-cgc-pub-mcp/mcp, /cloud-cgc-pvt-mcp/mcp"
+      "fallback_message": "MCP Hub -- use /cloud-drive-mcp/mcp, /c3-infra-mcp/mcp, /mail-mcp/mcp, /mattermost-mcp/mcp, /c3-services-mcp/mcp, /cloud-superapp-mcp/mcp, /cloud-vault-mcp/mcp, /cloudy-all-mcp/mcp, /cloudy-apps-communication-mcp/mcp, /cloudy-apps-drive-mcp/mcp, /g-personal/mcp, /g-workspace/mcp, /cloud-cgc-pub-mcp/mcp, /cloud-cgc-pvt-mcp/mcp"
     }
   ],
   "oidc_public": {
@@ -3597,6 +3601,27 @@
         "url": "https://c3-cloud-vault-mcp.mesh.diegonmarcos.com/mcp"
       },
       {
+        "name": "cloudy-all-mcp",
+        "base_path": "/cloudy-all-mcp",
+        "container": "cloudy-all-mcp",
+        "private": "c3-cloudy-all-mcp.mesh.diegonmarcos.com",
+        "url": "https://c3-cloudy-all-mcp.mesh.diegonmarcos.com/mcp"
+      },
+      {
+        "name": "cloudy-apps-communication-mcp",
+        "base_path": "/cloudy-apps-communication-mcp",
+        "container": "cloudy-apps-communication-mcp",
+        "private": "c3-cloudy-apps-communication-mcp.mesh.diegonmarcos.com",
+        "url": "https://c3-cloudy-apps-communication-mcp.mesh.diegonmarcos.com/mcp"
+      },
+      {
+        "name": "cloudy-apps-drive-mcp",
+        "base_path": "/cloudy-apps-drive-mcp",
+        "container": "cloudy-apps-drive-mcp",
+        "private": "c3-cloudy-apps-drive-mcp.mesh.diegonmarcos.com",
+        "url": "https://c3-cloudy-apps-drive-mcp.mesh.diegonmarcos.com/mcp"
+      },
+      {
         "name": "google-personal-mcp",
         "base_path": "/g-personal",
         "container": "google-personal-mcp",
@@ -3866,6 +3891,21 @@
         "name": "cloud-vault-mcp",
         "base_path": "/cloud-vault-mcp",
         "auth": "mesh"
+      },
+      {
+        "name": "cloudy-all-mcp",
+        "base_path": "/cloudy-all-mcp",
+        "auth": "token"
+      },
+      {
+        "name": "cloudy-apps-communication-mcp",
+        "base_path": "/cloudy-apps-communication-mcp",
+        "auth": "token"
+      },
+      {
+        "name": "cloudy-apps-drive-mcp",
+        "base_path": "/cloudy-apps-drive-mcp",
+        "auth": "token"
       },
       {
         "name": "google-personal-mcp",
@@ -5405,16 +5445,6 @@
     },
     {
       "host": "mcp.diegonmarcos.com",
-      "path": "/ai",
-      "upstream": "10.0.0.6:4185",
-      "kind": "reverse_proxy",
-      "tls": "public",
-      "zone": "com",
-      "service": null,
-      "notes": null
-    },
-    {
-      "host": "mcp.diegonmarcos.com",
       "path": "/cloud-drive-mcp",
       "upstream": "10.0.0.6:3109",
       "kind": "reverse_proxy",
@@ -5555,6 +5585,16 @@
     }
   ],
   "public_B_apis": [
+    {
+      "host": "api.diegonmarcos.com",
+      "path": "/ai",
+      "upstream": "10.0.0.6:4185",
+      "kind": "reverse_proxy",
+      "tls": "public",
+      "zone": "com",
+      "service": null,
+      "notes": "AI gateway: /ai/{tokens,embeddings,agents,claude,memory} -> separate backend containers (cloudy-ai-*-api); legacy /<old-name>/ paths kept for one release."
+    },
     {
       "host": "api.diegonmarcos.com",
       "path": "/pub",

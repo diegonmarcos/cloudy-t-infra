@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 23366,
+    "files": 23380,
     "by_lang": {
-      "sh": 675,
+      "sh": 676,
       "js": 543,
       "py": 203,
-      "kotlin": 12674,
+      "kotlin": 12687,
       "ts": 8470,
       "java": 649,
       "nix": 36,
@@ -20,11 +20,11 @@
     "by_role": {
       "hook": 158,
       "file": 2303,
-      "shell": 539,
+      "shell": 540,
       "script": 294,
       "module": 6477,
       "java": 648,
-      "kotlin": 12671,
+      "kotlin": 12684,
       "python": 68,
       "flake": 32,
       "rust-module": 116,
@@ -8446,6 +8446,328 @@
         "intent(ctx: Context)",
         "shellOf(ctx: Context)",
         "class BatteryStatsPage"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/bgpolicy/BatteryHunger.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "BatteryHungerPanel"
+      ],
+      "imports": [
+        "android.app.Activity",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.Spacer",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.foundation.layout.height",
+        "androidx.compose.foundation.layout.width",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.remember",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.platform.LocalView",
+        "androidx.compose.ui.platform.testTag",
+        "androidx.compose.ui.graphics.Color",
+        "androidx.compose.foundation.layout.padding",
+        "com.diegonmarcos.superapp.ui.Haptics",
+        "com.diegonmarcos.superapp.uikit.KitSectionHeader",
+        "com.diegonmarcos.superapp.uikit.KitStoreCaption",
+        "com.diegonmarcos.superapp.uikit.KitStoreDot",
+        "com.diegonmarcos.superapp.uikit.KitStoreName",
+        "com.diegonmarcos.superapp.uikit.KitStoreQuick",
+        "com.diegonmarcos.superapp.uikit.KitStoreRow",
+        "com.diegonmarcos.superapp.uikit.KitStoreRowLine",
+        "com.diegonmarcos.superapp.uikit.LocalKitPalette",
+        "com.diegonmarcos.superapp.xray.XrayAnalyze",
+        "com.diegonmarcos.superapp.xray.XrayProbes",
+        "java.util.Locale"
+      ],
+      "symbols": [
+        "BatteryHungerPanel(activity: Activity)",
+        "task(say: String, work: (BgEngine, BgConfig)",
+        "replace(list: List<HungerRow>, o: BgOutcome)",
+        "bgAct(r: HungerRow, name: String, f: (BgEngine, String)",
+        "loadApps()",
+        "rank()",
+        "restrictAll()",
+        "restore()",
+        "components(r: HungerRow)",
+        "readRows(activity: Activity, e: BgEngine, cfg: BgConfig)",
+        "HungerRowUi(r: HungerRow, busy: Boolean, view: android.view.View, onRestrict: ()",
+        "class HungerRow"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/bgpolicy/BgCmd.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "BgCmd"
+      ],
+      "imports": [],
+      "symbols": [
+        "safePkg(p: String)",
+        "safeComp(c: String)",
+        "allow(p: String)",
+        "restrict(p: String)",
+        "putBack(p: String, b: BgPrior)",
+        "safeKey(k: String)",
+        "safeNs(n: String)",
+        "settingGet(ns: String, key: String)",
+        "settingPut(ns: String, key: String, v: String)",
+        "settingDelete(ns: String, key: String)",
+        "forceStop(p: String)",
+        "component(p: String, comp: String, enable: Boolean)",
+        "readPkgs(pkgs: List<String>)",
+        "opMode(out: String, op: String)",
+        "bucketOf(out: String)",
+        "running(pkg: String)",
+        "parseGlobal(out: String)",
+        "parsePkgs(out: String)",
+        "flush()",
+        "class BgCmd",
+        "class Global"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/bgpolicy/BgConfig.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "BgConfig",
+        "BgEssential"
+      ],
+      "imports": [
+        "org.json.JSONObject"
+      ],
+      "symbols": [
+        "isFleet(pkg: String)",
+        "isFixedEssential(pkg: String)",
+        "parse(json: String)",
+        "list(a: org.json.JSONArray?)",
+        "isEssential(pkg: String)",
+        "class BgConfig",
+        "class BgEssential"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/bgpolicy/BgDialogs.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [],
+      "imports": [
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.Spacer",
+        "androidx.compose.foundation.layout.height",
+        "androidx.compose.material3.AlertDialog",
+        "androidx.compose.material3.Text",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.platform.testTag",
+        "com.diegonmarcos.superapp.uikit.KitStoreCaption",
+        "com.diegonmarcos.superapp.uikit.KitStoreQuick",
+        "com.diegonmarcos.superapp.uikit.KitStoreRow",
+        "com.diegonmarcos.superapp.uikit.KitStoreRowLine",
+        "com.diegonmarcos.superapp.uikit.LocalKitPalette",
+        "kotlinx.coroutines.suspendCancellableCoroutine",
+        "kotlin.coroutines.resume"
+      ],
+      "symbols": [
+        "askGate(message: String)",
+        "askConfirm(title: String, message: String, yes: ()",
+        "BgDialogHost(d: BgDialogs)",
+        "class BgDialogs",
+        "class Ask",
+        "class Pick"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/bgpolicy/BgEngine.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "BgEngine"
+      ],
+      "imports": [],
+      "symbols": [
+        "run(cmd: String)",
+        "say(o: BgOutcome)",
+        "readAll(pkgs: List<BgPkg>, cfg: BgConfig)",
+        "read(pkg: String)",
+        "stateOf(pkg: String, t: Triple<String, String, String>, g: BgCmd.Global)",
+        "allow(pkg: String)",
+        "restrict(pkg: String)",
+        "forceStop(pkg: String)",
+        "component(pkg: String, comp: String, enable: Boolean)",
+        "restrictAll(pkgs: List<BgPkg>, cfg: BgConfig)",
+        "restore(skip: Set<String> = emptySet()",
+        "restrictedChoices()",
+        "sameMode(a: String, b: String)",
+        "reapply(pkg: String)",
+        "class BgEngine"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/bgpolicy/BgGate.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "BgGate"
+      ],
+      "imports": [],
+      "symbols": [
+        "run( ready: ()",
+        "class BgGate",
+        "class Choice",
+        "class Result"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/bgpolicy/BgHost.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "BgPrefsKv",
+        "BgAudit",
+        "BgHost"
+      ],
+      "imports": [
+        "android.content.ComponentName",
+        "android.content.Context",
+        "android.content.Intent",
+        "android.content.pm.ApplicationInfo",
+        "android.content.pm.PackageManager",
+        "android.provider.Settings",
+        "android.provider.Telephony",
+        "android.telecom.TelecomManager",
+        "com.diegonmarcos.superapp.adbdebug.ShellChannels",
+        "java.io.File"
+      ],
+      "symbols": [
+        "get(key: String)",
+        "put(key: String, value: String)",
+        "append(ctx: Context, line: String)",
+        "tail(ctx: Context, n: Int = 40)",
+        "config(ctx: Context)",
+        "shell(ctx: Context)",
+        "exec(cmd: String)",
+        "packages(ctx: Context)",
+        "roles(ctx: Context, cfg: BgConfig)",
+        "essential(ctx: Context, cfg: BgConfig = config(ctx)",
+        "components(ctx: Context, pkg: String)",
+        "isEnabled(ctx: Context, pkg: String, comp: String)",
+        "engine(ctx: Context, shell: BgShell? = shell(ctx)",
+        "class BgPrefsKv",
+        "class BgAudit",
+        "class BgHost",
+        "class names"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/bgpolicy/BgModel.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "BgShell",
+        "BgPkg",
+        "OP_ANY",
+        "OP_IN",
+        "Bucket",
+        "BgState",
+        "BgPrior",
+        "BgAction",
+        "BgOutcome",
+        "BgChoice"
+      ],
+      "imports": [],
+      "symbols": [
+        "exec(cmd: String)",
+        "name(b: Int)",
+        "arg(b: Int)",
+        "of(s: BgState)",
+        "noAdb(pkg: String, a: BgAction)",
+        "class BgShell",
+        "class BgPkg",
+        "class Bucket",
+        "class BgState",
+        "class BgPrior",
+        "class BgAction",
+        "class BgOutcome",
+        "class BgChoice"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/bgpolicy/BgReplacedReceiver.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "BgReplacedReceiver",
+        "BgReplaced"
+      ],
+      "imports": [
+        "android.content.BroadcastReceiver",
+        "android.content.Context",
+        "android.content.Intent",
+        "android.content.IntentFilter",
+        "androidx.core.content.ContextCompat"
+      ],
+      "symbols": [
+        "onReceive(context: Context, intent: Intent)",
+        "register(app: Context)",
+        "apply(ctx: Context, pkg: String?)",
+        "class BgReplacedReceiver",
+        "class BgReplaced"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/bgpolicy/BgStore.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "BgKv",
+        "BgStore"
+      ],
+      "imports": [
+        "org.json.JSONObject"
+      ],
+      "symbols": [
+        "get(key: String)",
+        "put(key: String, value: String)",
+        "obj(key: String)",
+        "choices()",
+        "choice(pkg: String)",
+        "setChoice(pkg: String, c: BgChoice?)",
+        "prior(pkg: String)",
+        "priors()",
+        "capture(pkg: String, p: BgPrior)",
+        "forgetPrior(pkg: String)",
+        "class BgKv",
+        "class BgStore"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/bgpolicy/BgUi.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [],
+      "imports": [
+        "android.app.Activity",
+        "android.widget.Toast",
+        "com.diegonmarcos.superapp.adbdebug.AdbShellLink",
+        "com.diegonmarcos.superapp.adbdebug.ControlStatus",
+        "kotlinx.coroutines.runBlocking"
+      ],
+      "symbols": [
+        "ensureShell(activity: Activity, dialogs: BgDialogs)",
+        "toast(activity: Activity, text: String)",
+        "summary(what: String, r: List<BgOutcome>)",
+        "class BgUi"
       ]
     },
     {
@@ -20475,6 +20797,48 @@
       ]
     },
     {
+      "path": "aa_cloud-superapp/app/src/test/java/com/diegonmarcos/superapp/bgpolicy/BgFakeDevice.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "BgFakeDevice"
+      ],
+      "imports": [
+        "java.io.File"
+      ],
+      "symbols": [
+        "exec(cmd: String)",
+        "run(s: String, out: StringBuilder)",
+        "cfg()",
+        "kv()",
+        "get(key: String)",
+        "put(key: String, value: String)",
+        "class BgFakeDevice",
+        "class App"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/test/java/com/diegonmarcos/superapp/bgpolicy/BgPolicyTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "BgPolicyTest"
+      ],
+      "imports": [
+        "kotlinx.coroutines.runBlocking",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "engine(dev: BgShell?, roles: Set<String> = setOf(\"com.diegonmarcos.superapp\")",
+        "exec(cmd: String)",
+        "class BgPolicyTest"
+      ]
+    },
+    {
       "path": "aa_cloud-superapp/app/src/test/java/com/diegonmarcos/superapp/bluetooth/BluetoothLibTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -26585,6 +26949,20 @@
     },
     {
       "path": "aa_cloud-superapp/test/test-battery-one-sot.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "ok()",
+        "bad()"
+      ],
+      "imports": [],
+      "symbols": [
+        "ok()",
+        "bad()"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/test/test-bg-policy.sh",
       "lang": "sh",
       "role": "shell",
       "exports": [

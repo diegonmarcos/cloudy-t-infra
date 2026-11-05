@@ -1095,6 +1095,24 @@
           "bearer_auth": true
         },
         {
+          "base_path": "/cloudy-all-mcp",
+          "upstream": "10.0.0.6:3112",
+          "wg_only": true,
+          "bearer_auth": true
+        },
+        {
+          "base_path": "/cloudy-apps-communication-mcp",
+          "upstream": "10.0.0.6:3103",
+          "wg_only": true,
+          "bearer_auth": true
+        },
+        {
+          "base_path": "/cloudy-apps-drive-mcp",
+          "upstream": "10.0.0.6:3109",
+          "wg_only": true,
+          "bearer_auth": true
+        },
+        {
           "base_path": "/g-personal",
           "upstream": "10.0.0.6:3106",
           "wg_only": true,
@@ -1119,7 +1137,7 @@
         }
       ],
       "comment": "MCP -- Streamable HTTP endpoints for Claude Code MCP clients",
-      "fallback_message": "MCP Hub -- use /cloud-drive-mcp/mcp, /c3-infra-mcp/mcp, /mail-mcp/mcp, /mattermost-mcp/mcp, /c3-services-mcp/mcp, /cloud-superapp-mcp/mcp, /g-personal/mcp, /g-workspace/mcp, /cloud-cgc-pub-mcp/mcp, /cloud-cgc-pvt-mcp/mcp"
+      "fallback_message": "MCP Hub -- use /cloud-drive-mcp/mcp, /c3-infra-mcp/mcp, /mail-mcp/mcp, /mattermost-mcp/mcp, /c3-services-mcp/mcp, /cloud-superapp-mcp/mcp, /cloudy-all-mcp/mcp, /cloudy-apps-communication-mcp/mcp, /cloudy-apps-drive-mcp/mcp, /g-personal/mcp, /g-workspace/mcp, /cloud-cgc-pub-mcp/mcp, /cloud-cgc-pvt-mcp/mcp"
     }
   ],
   "oidc_public": {

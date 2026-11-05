@@ -112,6 +112,8 @@
       "command": "node",
       "args": [
         "${CLAUDE_PROJECT_DIR:-.}/.claude/mcp-connect.mjs",
+        "--mesh",
+        "https://c3-cloudy-all-mcp.mesh.diegonmarcos.com/mcp",
         "--public",
         "https://c3-pvt.diegonmarcos.com/cloudy-all-mcp/mcp"
       ]
@@ -121,6 +123,8 @@
       "command": "node",
       "args": [
         "${CLAUDE_PROJECT_DIR:-.}/.claude/mcp-connect.mjs",
+        "--mesh",
+        "https://c3-cloudy-apps-communication-mcp.mesh.diegonmarcos.com/mcp",
         "--public",
         "https://c3-pvt.diegonmarcos.com/cloudy-apps-communication-mcp/mcp"
       ]

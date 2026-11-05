@@ -774,10 +774,10 @@
           "read_only": false,
           "protocol": "http",
           "proxy": {
-            "streaming": true,
             "type": "path",
             "parent_domain": "api.diegonmarcos.com",
-            "base_path": "/ai"
+            "base_path": "/ai",
+            "auth": "two_factor"
           }
         }
       },
@@ -796,11 +796,13 @@
         "networks": []
       },
       "proxy": {
+        "app_hub": false,
         "primary": {
-          "streaming": true,
           "type": "path",
           "parent_domain": "api.diegonmarcos.com",
-          "base_path": "/ai"
+          "base_path": "/ai",
+          "auth": "two_factor",
+          "wg_only": true
         }
       },
       "declared_ports": {
