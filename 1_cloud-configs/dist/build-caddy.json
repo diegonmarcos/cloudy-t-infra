@@ -2017,16 +2017,6 @@
       "private_name": "cloud.cloud-infra-mcp.mesh.diegonmarcos.com"
     },
     {
-      "service": "superapp-mcp.mesh.diegonmarcos.com",
-      "upstream": "10.0.0.6:3100",
-      "private_name": "cloud.superapp-mcp.mesh.diegonmarcos.com"
-    },
-    {
-      "service": "cloud-superapp-mcp.mesh.diegonmarcos.com",
-      "upstream": "10.0.0.6:3100",
-      "private_name": "cloud.cloud-superapp-mcp.mesh.diegonmarcos.com"
-    },
-    {
       "service": "mail-mcp.mesh.diegonmarcos.com",
       "upstream": "10.0.0.6:3103",
       "private_name": "cloud.mail-mcp.mesh.diegonmarcos.com"
@@ -2063,11 +2053,13 @@
     },
     {
       "service": "superapp-mcp.mesh.diegonmarcos.com",
-      "upstream": "10.0.0.6:3110"
+      "upstream": "10.0.0.6:3110",
+      "private_name": "cloud.superapp-mcp.mesh.diegonmarcos.com"
     },
     {
       "service": "cloud-superapp-mcp.mesh.diegonmarcos.com",
-      "upstream": "10.0.0.6:3110"
+      "upstream": "10.0.0.6:3110",
+      "private_name": "cloud.cloud-superapp-mcp.mesh.diegonmarcos.com"
     },
     {
       "service": "cloudy-all-api.mesh.diegonmarcos.com",
@@ -2418,18 +2410,6 @@
       "source": "internal_routes"
     },
     {
-      "service": "cloud.superapp-mcp.mesh.diegonmarcos.com",
-      "upstream": "10.0.0.6:3100",
-      "alias_of": "superapp-mcp.mesh.diegonmarcos.com",
-      "source": "internal_routes"
-    },
-    {
-      "service": "cloud.cloud-superapp-mcp.mesh.diegonmarcos.com",
-      "upstream": "10.0.0.6:3100",
-      "alias_of": "cloud-superapp-mcp.mesh.diegonmarcos.com",
-      "source": "internal_routes"
-    },
-    {
       "service": "cloud.mail-mcp.mesh.diegonmarcos.com",
       "upstream": "10.0.0.6:3103",
       "alias_of": "mail-mcp.mesh.diegonmarcos.com",
@@ -2469,6 +2449,18 @@
       "service": "cloud.cloud-services-mcp.mesh.diegonmarcos.com",
       "upstream": "10.0.0.6:3101",
       "alias_of": "cloud-services-mcp.mesh.diegonmarcos.com",
+      "source": "internal_routes"
+    },
+    {
+      "service": "cloud.superapp-mcp.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:3110",
+      "alias_of": "superapp-mcp.mesh.diegonmarcos.com",
+      "source": "internal_routes"
+    },
+    {
+      "service": "cloud.cloud-superapp-mcp.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:3110",
+      "alias_of": "cloud-superapp-mcp.mesh.diegonmarcos.com",
       "source": "internal_routes"
     },
     {
@@ -6971,26 +6963,6 @@
     },
     {
       "host": "cloud-infra-mcp.mesh.diegonmarcos.com",
-      "path": null,
-      "upstream": "10.0.0.6:3100",
-      "kind": "reverse_proxy",
-      "tls": "internal",
-      "zone": "com",
-      "service": null,
-      "notes": null
-    },
-    {
-      "host": "superapp-mcp.mesh.diegonmarcos.com",
-      "path": null,
-      "upstream": "10.0.0.6:3100",
-      "kind": "reverse_proxy",
-      "tls": "internal",
-      "zone": "com",
-      "service": null,
-      "notes": null
-    },
-    {
-      "host": "cloud-superapp-mcp.mesh.diegonmarcos.com",
       "path": null,
       "upstream": "10.0.0.6:3100",
       "kind": "reverse_proxy",

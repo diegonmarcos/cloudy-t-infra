@@ -1641,9 +1641,7 @@
         "category": "Ops-API-MCP"
       },
       "dns_aliases": [
-        "cloud-infra-mcp.mesh.diegonmarcos.com",
-        "superapp-mcp.mesh.diegonmarcos.com",
-        "cloud-superapp-mcp.mesh.diegonmarcos.com"
+        "cloud-infra-mcp.mesh.diegonmarcos.com"
       ],
       "legacy_aliases": {
         "names": [
@@ -1651,10 +1649,8 @@
           "cloud-superapp-mcp",
           "cloudy-android-mcp"
         ],
-        "dns_aliases": [
-          "superapp-mcp.mesh.diegonmarcos.com",
-          "cloud-superapp-mcp.mesh.diegonmarcos.com"
-        ],
+        "dns_aliases": [],
+        "_dns_aliases_deferred": "superapp-mcp.mesh and cloud-superapp-mcp.mesh stay with the old cloud-superapp-mcp container until the merged peers-control tools are verified (needs SUPERAPP_FLEET_TOKEN in this service secrets); claiming them earlier rendered two Caddy sites for one host (ambiguous site definition).",
         "base_paths": [
           "/c3-infra-mcp",
           "/cloud-superapp-mcp",

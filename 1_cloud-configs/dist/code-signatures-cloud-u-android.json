@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 23403,
+    "files": 23421,
     "by_lang": {
       "sh": 678,
       "js": 543,
       "py": 203,
-      "kotlin": 12708,
+      "kotlin": 12726,
       "ts": 8470,
       "java": 649,
       "nix": 36,
@@ -24,7 +24,7 @@
       "script": 294,
       "module": 6477,
       "java": 648,
-      "kotlin": 12705,
+      "kotlin": 12723,
       "python": 68,
       "flake": 32,
       "rust-module": 116,
@@ -6456,14 +6456,16 @@
         "ok()",
         "fail()",
         "chk()",
-        "has()"
+        "has()",
+        "cat_edit()"
       ],
       "imports": [],
       "symbols": [
         "ok()",
         "fail()",
         "chk()",
-        "has()"
+        "has()",
+        "cat_edit()"
       ]
     },
     {
@@ -8647,6 +8649,7 @@
         "android.provider.Telephony",
         "android.telecom.TelecomManager",
         "com.diegonmarcos.superapp.adbdebug.ShellChannels",
+        "com.diegonmarcos.superapp.shellbroker.ShellBroker",
         "java.io.File"
       ],
       "symbols": [
@@ -10617,6 +10620,7 @@
         "com.diegonmarcos.superapp.adbdebug.LocalShellChannel",
         "com.diegonmarcos.superapp.adbdebug.ShellChannels",
         "com.diegonmarcos.superapp.devtools.AppDebugServer",
+        "com.diegonmarcos.superapp.shellbroker.ShellBroker",
         "org.json.JSONObject"
       ],
       "symbols": [
@@ -10880,6 +10884,7 @@
         "com.diegonmarcos.superapp.adbdebug.ChannelOps",
         "com.diegonmarcos.superapp.adbdebug.SetupAction",
         "com.diegonmarcos.superapp.adbdebug.ShellChannels",
+        "com.diegonmarcos.superapp.shellbroker.ShellBroker",
         "com.diegonmarcos.superapp.battery.BatteryRepository",
         "com.diegonmarcos.superapp.ops.dagu.DaguPrefs",
         "com.diegonmarcos.superapp.profile.AccountData",
@@ -26009,6 +26014,29 @@
       ]
     },
     {
+      "path": "aa_cloud-superapp/app/src/test/java/com/diegonmarcos/superapp/shellbroker/SelfAllowlistTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "SelfAllowlistTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.bgpolicy.BgCmd",
+        "com.diegonmarcos.superapp.bgpolicy.BgPrior",
+        "com.diegonmarcos.superapp.xray.XrayProbes",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.io.File"
+      ],
+      "symbols": [
+        "allowed(cmd: String)",
+        "everyXrayProbeIsAllowed()",
+        "everyBackgroundPolicyCommandShapeIsAllowed()",
+        "theSuperAppEntryStillRefusesWhatNoFeatureNeeds()",
+        "class SelfAllowlistTest"
+      ]
+    },
+    {
       "path": "aa_cloud-superapp/app/src/test/java/com/diegonmarcos/superapp/system/FirstRunPermsTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -34761,6 +34789,35 @@
       ]
     },
     {
+      "path": "ab_cloud-libs-shared/libs/appstore/src/main/java/com/diegonmarcos/superapp/appstore/LibsTable.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [],
+      "imports": [
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableIntStateOf",
+        "androidx.compose.runtime.mutableStateMapOf",
+        "androidx.compose.runtime.remember",
+        "androidx.compose.runtime.setValue",
+        "org.json.JSONObject"
+      ],
+      "symbols": [
+        "appName(dir: String)",
+        "parse(root: JSONObject, ml: Boolean)",
+        "strings(a: org.json.JSONArray?)",
+        "groups(root: JSONObject, rows: List<Row>, filter: Int)",
+        "summary(rows: List<Row>)",
+        "detail(r: Row)",
+        "Page(root: JSONObject, ml: Boolean, group: @Composable (key: String, title: String, count: Int, content: @Composable ()",
+        "class and",
+        "class LibsTable",
+        "class Row",
+        "class Group"
+      ]
+    },
+    {
       "path": "ab_cloud-libs-shared/libs/appstore/src/main/java/com/diegonmarcos/superapp/appstore/PermsGrantDevice.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -35242,7 +35299,6 @@
         "android.os.Looper",
         "android.util.Base64",
         "android.widget.Toast",
-        "androidx.compose.foundation.background",
         "androidx.compose.foundation.layout.Column",
         "androidx.compose.foundation.layout.fillMaxWidth",
         "androidx.compose.foundation.layout.padding",
@@ -35274,7 +35330,8 @@
         "androidx.compose.ui.window.DialogProperties",
         "com.diegonmarcos.superapp.uikit.KitComposeFragment",
         "com.diegonmarcos.superapp.uikit.KitPalette",
-        "com.diegonmarcos.superapp.updater.Fleet"
+        "com.diegonmarcos.superapp.updater.Fleet",
+        "com.diegonmarcos.superapp.updater.FleetIdentity"
       ],
       "symbols": [
         "fleetObjects(key: String)",
@@ -35304,7 +35361,6 @@
         "appNames(a: JSONArray?)",
         "runtimeCallers(id: String)",
         "BuildTimeLibs(ml: Boolean)",
-        "LibCard(lib: JSONObject)",
         "SectionHeading(t: String)",
         "isCollapsed(key: String)",
         "setCollapsed(key: String, v: Boolean)",
@@ -35316,7 +35372,8 @@
         "runStage(ctx: Context, app: Fleet.App, verb: String)",
         "rowAction(ctx: Context, app: Fleet.App, a: FleetActions.Action, stg: StoreStages.Stage?)",
         "verb(onClick: ()",
-        "stageVerb(ctx: Context, app: Fleet.App, a: FleetActions.Action, verb: String, stg: StoreStages.Stage?, tag: String)"
+        "stageVerb(ctx: Context, app: Fleet.App, a: FleetActions.Action, verb: String, stg: StoreStages.Stage?, tag: String)",
+        "stop(ctx: Context, app: Fleet.App)"
       ]
     },
     {
@@ -36571,6 +36628,29 @@
         "class Ok",
         "class Refused",
         "class volume"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/appstore/src/test/java/com/diegonmarcos/superapp/appstore/LibsTableTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "LibsTableTest"
+      ],
+      "imports": [
+        "org.json.JSONObject",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.io.File"
+      ],
+      "symbols": [
+        "parseSplitsMlAndNamesConsumers()",
+        "groupsFollowDeclaredOrderDropEmptyAndTrailOther()",
+        "filtersKeepApkOrStatic()",
+        "detailNamesTheConsumersOnTap()",
+        "realDataHasNoUncategorizedLib()",
+        "class LibsTableTest"
       ]
     },
     {
@@ -84177,6 +84257,403 @@
         "decide(myUid: Int, ownerUid: Int?, storeAccessible: Boolean, execGranted: Boolean)",
         "class StorePaths",
         "class Mode"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/shell-broker/src/main/java/com/diegonmarcos/superapp/shellbroker/Allowlist.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "Allowlist"
+      ],
+      "imports": [
+        "org.json.JSONObject"
+      ],
+      "symbols": [
+        "callerKey(pkg: String)",
+        "callers()",
+        "decide(pkg: String, cmd: String)",
+        "one(key: String, e: Entry, c: String)",
+        "parse(json: String)",
+        "class Allowlist",
+        "class Rule",
+        "class Entry",
+        "class Decision",
+        "class Allow",
+        "class Deny"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/shell-broker/src/main/java/com/diegonmarcos/superapp/shellbroker/ArmGate.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ArmGate"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.devtools.RetryBackoff"
+      ],
+      "symbols": [
+        "mayTry(nowMs: Long)",
+        "failed(nowMs: Long)",
+        "succeeded()",
+        "class ArmGate"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/shell-broker/src/main/java/com/diegonmarcos/superapp/shellbroker/AuditLog.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "AuditLog"
+      ],
+      "imports": [
+        "org.json.JSONObject"
+      ],
+      "symbols": [
+        "append(line: String)",
+        "add(e: Entry)",
+        "entries()",
+        "line(e: Entry)",
+        "redact(cmd: String)",
+        "class AuditLog",
+        "class Entry",
+        "class Sink"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/shell-broker/src/main/java/com/diegonmarcos/superapp/shellbroker/BrokerCore.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "BrokerChannel",
+        "IdlePolicy",
+        "BrokerCore"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.shellclient.ShellResult",
+        "com.diegonmarcos.superapp.shellclient.ShellWire",
+        "java.io.File",
+        "java.util.concurrent.ExecutionException",
+        "java.util.concurrent.Future",
+        "java.util.concurrent.LinkedBlockingQueue",
+        "java.util.concurrent.Semaphore",
+        "java.util.concurrent.ThreadPoolExecutor",
+        "java.util.concurrent.TimeUnit",
+        "java.util.concurrent.TimeoutException"
+      ],
+      "symbols": [
+        "name()",
+        "ready()",
+        "run(cmd: String, stdin: File?)",
+        "shouldStop(inflight: Int, lastActiveMs: Long, nowMs: Long, idleMs: Long = IDLE_MS)",
+        "poolAlive()",
+        "pool()",
+        "reapIfIdle(nowMs: Long = clock()",
+        "note(caller: String, cmd: String, outcome: String, exit: Int, ms: Long, source: String)",
+        "auditEntries()",
+        "status()",
+        "exec(caller: String, cmd: String, timeoutMs: Long, maxBytes: Int = ShellWire.EXEC_MAX_BYTES, stdin: File? = null)",
+        "done(r: ShellResult, outcome: String, exit: Int, source: String = \"\")",
+        "release()",
+        "parse(raw: String, source: String, maxBytes: Int)",
+        "class BrokerChannel",
+        "class IdlePolicy",
+        "class BrokerCore"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/shell-broker/src/main/java/com/diegonmarcos/superapp/shellbroker/CallerId.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "CallerId"
+      ],
+      "imports": [
+        "android.content.Context",
+        "android.content.pm.PackageManager",
+        "android.os.Binder",
+        "android.os.Process",
+        "com.diegonmarcos.superapp.shellclient.ShellWire"
+      ],
+      "symbols": [
+        "permitted(ctx: Context, uid: Int = Binder.getCallingUid()",
+        "of(ctx: Context, uid: Int, claimed: String?)",
+        "class CallerId"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/shell-broker/src/main/java/com/diegonmarcos/superapp/shellbroker/ShellArmActivity.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ShellArmActivity"
+      ],
+      "imports": [
+        "android.app.Activity",
+        "android.os.Bundle",
+        "com.diegonmarcos.superapp.adbdebug.AdbShellLink"
+      ],
+      "symbols": [
+        "onCreate(savedInstanceState: Bundle?)",
+        "class ShellArmActivity"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/shell-broker/src/main/java/com/diegonmarcos/superapp/shellbroker/ShellBroker.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ShellBroker"
+      ],
+      "imports": [
+        "android.content.Context",
+        "com.diegonmarcos.superapp.adbdebug.ChannelAutoArm",
+        "com.diegonmarcos.superapp.adbdebug.EmbeddedAdbChannel",
+        "com.diegonmarcos.superapp.adbdebug.ShellChannels",
+        "com.diegonmarcos.superapp.shellclient.ShellResult",
+        "com.diegonmarcos.superapp.shellclient.ShellStatus",
+        "com.diegonmarcos.superapp.shellclient.ShellWire",
+        "java.io.File"
+      ],
+      "symbols": [
+        "core(ctx: Context)",
+        "build(app: Context)",
+        "name()",
+        "ready()",
+        "run(cmd: String, stdin: File?)",
+        "exec(ctx: Context, caller: String, cmd: String, timeoutMs: Long = ShellWire.DEFAULT_TIMEOUT_MS, maxBytes: Int = ShellWire.EXEC_MAX_BYTES, stdin: File? = null)",
+        "execText(ctx: Context, cmd: String)",
+        "recordLegacy(ctx: Context, cmd: String, ok: Boolean, ms: Long, source: String)",
+        "status(ctx: Context)",
+        "auditEntries(ctx: Context)",
+        "reapIfIdle()",
+        "class ShellBroker"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/shell-broker/src/main/java/com/diegonmarcos/superapp/shellbroker/ShellBrokerProvider.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ShellBrokerProvider"
+      ],
+      "imports": [
+        "android.content.ContentProvider",
+        "android.content.ContentValues",
+        "android.database.Cursor",
+        "android.net.Uri",
+        "android.os.Binder",
+        "android.os.Bundle",
+        "com.diegonmarcos.superapp.shellclient.ShellResult",
+        "com.diegonmarcos.superapp.shellclient.ShellWire"
+      ],
+      "symbols": [
+        "onCreate()",
+        "call(method: String, arg: String?, extras: Bundle?)",
+        "reply(json: String)",
+        "query(u: Uri, p: Array<String>?, s: String?, a: Array<String>?, o: String?)",
+        "getType(uri: Uri)",
+        "insert(uri: Uri, values: ContentValues?)",
+        "delete(uri: Uri, selection: String?, selectionArgs: Array<String>?)",
+        "update(uri: Uri, values: ContentValues?, selection: String?, selectionArgs: Array<String>?)",
+        "class ShellBrokerProvider"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/shell-broker/src/main/java/com/diegonmarcos/superapp/shellbroker/ShellBrokerService.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ShellBrokerService"
+      ],
+      "imports": [
+        "android.app.Service",
+        "android.content.Intent",
+        "android.os.Bundle",
+        "android.os.Handler",
+        "android.os.HandlerThread",
+        "android.os.IBinder",
+        "android.os.Message",
+        "android.os.Messenger",
+        "com.diegonmarcos.superapp.shellclient.ShellResult",
+        "com.diegonmarcos.superapp.shellclient.ShellWire"
+      ],
+      "symbols": [
+        "onBind(intent: Intent?)",
+        "handleMessage(msg: Message)",
+        "onUnbind(intent: Intent?)",
+        "class ShellBrokerService"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/shell-broker/src/test/java/com/diegonmarcos/superapp/shellbroker/AllowlistTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "AllowlistTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.shellbroker.Allowlist.Decision",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.io.File"
+      ],
+      "symbols": [
+        "matchingRuleAllows()",
+        "defaultDenyForAnUnknownCaller()",
+        "defaultDenyForAnUnmatchedCommand()",
+        "anAllowedVerbCannotCarryAChain()",
+        "aRuleMayDeclareItsOwnMeta()",
+        "emptyAndOversizedAreDenied()",
+        "theMeshIsADedicatedEntryReachedByAlias()",
+        "theShippedAllowlistParsesAndDeniesByDefault()",
+        "aSegmentedCallerMayChainOnlyAllowedSegments()",
+        "anExactLineIsAllowedWhole()",
+        "class AllowlistTest"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/shell-broker/src/test/java/com/diegonmarcos/superapp/shellbroker/BrokerCoreTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "BrokerCoreTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.shellclient.ShellResult",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.io.File",
+        "java.util.concurrent.CountDownLatch",
+        "java.util.concurrent.TimeUnit"
+      ],
+      "symbols": [
+        "name()",
+        "ready()",
+        "run(cmd: String, stdin: File?)",
+        "core(ch: BrokerChannel, audit: AuditLog = AuditLog()",
+        "okCarriesExitStdoutAndSource()",
+        "aNonZeroExitIsReported()",
+        "deniedNeverReachesTheChannelAndIsAudited()",
+        "auditHasCallerCmdExitDurationAndNoOutput()",
+        "auditMasksCredentialsInTheCommand()",
+        "auditRingIsBounded()",
+        "everyCallTimesOut()",
+        "unarmedChannelIsNeedsArm()",
+        "anArmAttemptThatBringsTheChannelUpServesTheCall()",
+        "aChannelThatReturnsNothingIsNeedsArm()",
+        "concurrencyIsCapped()",
+        "outputIsCapped()",
+        "aChannelErrorLandsInStderr()",
+        "theBrokerGoesIdleAndStopsItsWorkers()",
+        "idlePolicyNeverStopsAWorkingBroker()",
+        "armGateHonoursTheThirtySecondFloor()",
+        "class BrokerCoreTest",
+        "class FakeChannel"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/shell-client/src/main/java/com/diegonmarcos/superapp/shellclient/ShellClient.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ShellClient"
+      ],
+      "imports": [
+        "android.content.Context",
+        "android.content.Intent",
+        "android.os.Bundle",
+        "java.util.concurrent.Callable",
+        "java.util.concurrent.ExecutionException",
+        "java.util.concurrent.Executors",
+        "java.util.concurrent.TimeUnit",
+        "java.util.concurrent.TimeoutException"
+      ],
+      "symbols": [
+        "call(method: String, cmd: String, extras: Map<String, String>)",
+        "exec(cmd: String, timeoutMs: Long = ShellWire.DEFAULT_TIMEOUT_MS)",
+        "stream(cmd: String, maxBytes: Int = ShellWire.STREAM_MAX_BYTES, timeoutMs: Long = ShellWire.DEFAULT_TIMEOUT_MS, onLine: (String)",
+        "status()",
+        "ask(method: String, cmd: String, timeoutMs: Long, maxBytes: Int)",
+        "over(ctx: Context)",
+        "exec(ctx: Context, cmd: String, timeoutMs: Long = ShellWire.DEFAULT_TIMEOUT_MS)",
+        "status(ctx: Context)",
+        "arm(ctx: Context)",
+        "class ShellClient",
+        "class Transport"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/shell-client/src/main/java/com/diegonmarcos/superapp/shellclient/ShellResult.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ShellResult",
+        "ShellStatus"
+      ],
+      "imports": [],
+      "symbols": [
+        "toString()",
+        "stdoutOrNull()",
+        "class ShellResult",
+        "class Ok",
+        "class NeedsArm",
+        "class Denied",
+        "class Failed",
+        "class ShellStatus"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/shell-client/src/main/java/com/diegonmarcos/superapp/shellclient/ShellWire.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ShellWire"
+      ],
+      "imports": [
+        "org.json.JSONObject"
+      ],
+      "symbols": [
+        "encode(r: ShellResult)",
+        "decode(json: String?)",
+        "encodeStatus(s: ShellStatus)",
+        "decodeStatus(json: String?)",
+        "clampTimeout(ms: Long)",
+        "class ShellWire"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/shell-client/src/test/java/com/diegonmarcos/superapp/shellclient/ShellClientTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ShellClientTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertSame",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "client(answer: (String, String, Map<String, String>)",
+        "okRoundTrip()",
+        "unarmedBrokerIsNeedsArm()",
+        "deniedCarriesTheReason()",
+        "blankCommandNeverReachesTheBroker()",
+        "unreachableBrokerIsFailedNotAThrow()",
+        "everyCallCarriesAClampedTimeout()",
+        "aSlowBrokerTimesOutOnTheClientToo()",
+        "streamStopsEarlyAndIsBounded()",
+        "statusWhenTheBrokerIsGone()",
+        "statusRoundTrip()",
+        "garbageIsFailed()",
+        "class ShellClientTest"
       ]
     },
     {
