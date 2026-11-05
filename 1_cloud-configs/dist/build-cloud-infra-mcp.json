@@ -573,13 +573,13 @@
       "api": {
         "has_api": true,
         "has_web_ui": true,
-        "api_path": "/cloudy-drive-git-proxy-api",
-        "api_url": "https://api.diegonmarcos.com/git/cloudy-drive-git-proxy-api",
+        "api_path": "/git",
+        "api_url": "https://api.diegonmarcos.com/git/git",
         "healthcheck_paths": [
           "/health"
         ],
         "type": "custom-rest",
-        "base_path": "/cloudy-drive-git-proxy-api",
+        "base_path": "/git",
         "endpoint_count": 9,
         "display_name": "Git Proxy API",
         "description": "Authelia-fronted read path to GitHub: list repos, stream a tarball, clone/fetch over smart HTTP, and read recent commits / workflow runs of declared repos (cached, to keep the Store's feeds off the anonymous quota). The GitHub credential stays server-side; the caller presents an Authelia bearer or an Authelia session cookie. Fleet APK release assets (Range-capable, sha256/source sidecars) are also mirrored for direct mesh callers without a credential (#837).",

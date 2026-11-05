@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 23399,
+    "files": 23403,
     "by_lang": {
-      "sh": 676,
+      "sh": 678,
       "js": 543,
       "py": 203,
-      "kotlin": 12706,
+      "kotlin": 12708,
       "ts": 8470,
       "java": 649,
       "nix": 36,
@@ -20,11 +20,11 @@
     "by_role": {
       "hook": 158,
       "file": 2303,
-      "shell": 540,
+      "shell": 542,
       "script": 294,
       "module": 6477,
       "java": 648,
-      "kotlin": 12703,
+      "kotlin": 12705,
       "python": 68,
       "flake": 32,
       "rust-module": 116,
@@ -10229,6 +10229,7 @@
         "PermissionsFragment"
       ],
       "imports": [
+        "com.diegonmarcos.superapp.system.RamPlus",
         "android.content.ClipData",
         "android.content.ClipboardManager",
         "android.content.Context",
@@ -10267,8 +10268,7 @@
         "com.diegonmarcos.superapp.ui.LauncherPalette",
         "com.diegonmarcos.superapp.uikit.KitComposeFragment",
         "com.diegonmarcos.superapp.uikit.LocalKitPalette",
-        "com.diegonmarcos.superapp.BuildConfig",
-        "com.diegonmarcos.superapp.appstore.ConstellationWorker"
+        "com.diegonmarcos.superapp.BuildConfig"
       ],
       "symbols": [
         "autoNext()",
@@ -13530,6 +13530,7 @@
       "role": "kotlin",
       "exports": [
         "StatusElement",
+        "NetworkSpeedDecl",
         "StatusBarDeclaration",
         "StatusBarDecl",
         "StatusBarPrefs"
@@ -13556,6 +13557,7 @@
         "reset(ctx: Context)",
         "layout(ctx: Context)",
         "class StatusElement",
+        "class NetworkSpeedDecl",
         "class StatusBarDeclaration",
         "class StatusBarDecl",
         "class StatusBarPrefs"
@@ -15657,6 +15659,7 @@
         "androidx.compose.runtime.LaunchedEffect",
         "androidx.compose.runtime.derivedStateOf",
         "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.DisposableEffect",
         "androidx.compose.runtime.mutableIntStateOf",
         "androidx.compose.runtime.produceState",
         "androidx.compose.runtime.remember",
@@ -15667,8 +15670,7 @@
         "androidx.compose.ui.layout.onGloballyPositioned",
         "androidx.compose.ui.layout.positionInParent",
         "androidx.compose.ui.platform.testTag",
-        "androidx.compose.ui.layout.onSizeChanged",
-        "androidx.compose.ui.unit.dp"
+        "androidx.compose.ui.layout.onSizeChanged"
       ],
       "symbols": [
         "wgLink(ctx: Context, vpnTransport: Boolean = hasTransport(ctx, NetworkCapabilities.TRANSPORT_VPN)",
@@ -15678,6 +15680,7 @@
         "NetworkBubble(ctx: Context, focus: String?, dismiss: ()",
         "Section(key: String, content: @Composable ()",
         "Header(key: String, row: @Composable ()",
+        "SpeedRows(ctx: Context)",
         "MeshHeaderRow(ctx: Context, meshes: List<Mesh>, onTap: ()",
         "hasTransport(ctx: Context, t: Int)",
         "wifiEnabled(ctx: Context)",
@@ -15709,8 +15712,7 @@
         "readPorts()",
         "hexToIp(a: String)",
         "fmtKbps(kbps: Int)",
-        "readLocalIps()",
-        "sampleTraffic()"
+        "readLocalIps()"
       ]
     },
     {
@@ -15849,13 +15851,17 @@
         "mbPerSec(mbps: Double)",
         "inWindow(samples: List<SpeedSample>, nowMs: Long, windowMs: Long = WINDOW_MS)",
         "average(samples: List<SpeedSample>, nowMs: Long, windowMs: Long = WINDOW_MS)",
+        "averageTx(samples: List<SpeedSample>, nowMs: Long, windowMs: Long = WINDOW_MS)",
+        "rowLine(label: String, downMbps: Double?, upMbps: Double?)",
+        "parseNetDev(text: String)",
         "prune(samples: List<SpeedSample>, nowMs: Long, windowMs: Long = WINDOW_MS)",
         "fmt(v: Double?)",
         "line(tag: String, mbps: Double?)",
         "encode(samples: List<SpeedSample>)",
         "decode(text: String)",
         "class SpeedSample",
-        "class SpeedMath"
+        "class SpeedMath",
+        "class counters"
       ]
     },
     {
@@ -15883,14 +15889,17 @@
         "run()",
         "start()",
         "stop()",
+        "readIfaces()",
         "load()",
         "add(s: SpeedSample)",
         "recompute(all: List<SpeedSample>)",
-        "passive()",
+        "flush()",
+        "sample()",
         "metered()",
         "online()",
         "testNow()",
         "download(cap: Long)",
+        "class rates",
         "class SpeedMeter",
         "class Result"
       ]
@@ -18827,6 +18836,31 @@
         "selfGrant(ctx: Context)",
         "batteryWhitelistFleet(ctx: Context, pkgs: Set<String>)",
         "class PrivilegedPlaneWorker"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/system/RamPlus.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "RamPlus"
+      ],
+      "imports": [
+        "android.content.ComponentName",
+        "android.content.Context",
+        "android.content.Intent",
+        "android.provider.Settings",
+        "java.io.File"
+      ],
+      "symbols": [
+        "decide(expandSize: String?, swapTotalKb: Long?)",
+        "parseSwapTotalKb(meminfo: String)",
+        "satisfied(on: Boolean?, want: String)",
+        "read(ctx: Context)",
+        "target(spec: String)",
+        "intent(ctx: Context, rungs: List<String>)",
+        "class RamPlus",
+        "class Target"
       ]
     },
     {
@@ -24387,6 +24421,8 @@
         "pruneKeepsTheNewestCap()",
         "storedFormRoundTripsAndSkipsGarbage()",
         "linesShowBothUnits()",
+        "uploadAverageRowLineAndLegacyCodec()",
+        "netDevParsesInterfacesAndSkipsLoopback()",
         "class SpeedMathTest"
       ]
     },
@@ -25996,6 +26032,27 @@
         "persistedSkipsSurviveARestart()",
         "shellAsksOnResume()",
         "class FirstRunPermsTest"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/test/java/com/diegonmarcos/superapp/system/RamPlusTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "RamPlusTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertNull",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "samsungKeyDecidesFirst()",
+        "swapTotalIsTheFallback()",
+        "meminfoSwapTotal()",
+        "desiredStateIsData_defaultOn()",
+        "deepLinkRungs()",
+        "class RamPlusTest"
       ]
     },
     {
@@ -28220,6 +28277,24 @@
       ]
     },
     {
+      "path": "aa_cloud-superapp/test/test-network-speed-in-dropdown.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "ok()",
+        "bad()",
+        "check()",
+        "mut()"
+      ],
+      "imports": [],
+      "symbols": [
+        "ok()",
+        "bad()",
+        "check()",
+        "mut()"
+      ]
+    },
+    {
       "path": "aa_cloud-superapp/test/test-no-conflict-markers.sh",
       "lang": "sh",
       "role": "shell",
@@ -28457,6 +28532,24 @@
       "symbols": [
         "ok()",
         "bad()"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/test/test-perms-ram-plus.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "ok()",
+        "bad()",
+        "check()",
+        "mut()"
+      ],
+      "imports": [],
+      "symbols": [
+        "ok()",
+        "bad()",
+        "check()",
+        "mut()"
       ]
     },
     {

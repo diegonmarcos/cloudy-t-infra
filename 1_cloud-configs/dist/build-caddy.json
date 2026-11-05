@@ -1652,7 +1652,7 @@
           "comment": "C3 REST API — Cloud Control Center Fastify API"
         },
         {
-          "base_path": "/cloudy-drive-git-proxy-api",
+          "base_path": "/git",
           "upstream": "10.0.0.4:8123",
           "public_paths": [
             "/git/health"
@@ -5635,7 +5635,7 @@
     },
     {
       "host": "api.diegonmarcos.com",
-      "path": "/cloudy-drive-git-proxy-api",
+      "path": "/git",
       "upstream": "10.0.0.4:8123",
       "kind": "reverse_proxy",
       "tls": "public",
