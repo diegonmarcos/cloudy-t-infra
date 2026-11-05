@@ -43,5 +43,12 @@ if OVERLAY_OPTIONAL=1 bash "$SCRIPT" "$TMP/none" "$D5" >/dev/null 2>&1; then bad
 D4="$TMP/d4"; mkdir -p "$D4"; mk_dest "$D4"; cp "$V/Linux-Containers/svc-a/src/secrets.yaml" "$D4/svc-a/src/secrets.yaml"; git -C "$D4" add svc-a/src/secrets.yaml
 if OVERLAY_OPTIONAL=1 bash "$SCRIPT" "$TMP/none" "$D4" >/dev/null 2>&1; then ok "transition: missing vault tolerated while public tree still tracks sops"; else bad "transition case failed"; fi
 
+# #1450: a renamed service dir receives the secrets of its pre-rebrand vault dir
+V6="$TMP/v6"; D6="$TMP/d6"; mkdir -p "$V6/Linux-Containers/old-svc/src" "$D6/new-svc/src" "$D6/_rebrand-1450"; echo '{}' > "$D6/new-svc/build.json"
+printf 'K: ENC[AES256_GCM,data:r]\nsops:\n  version: 3.9.4\n' > "$V6/Linux-Containers/old-svc/src/secrets.yaml"
+printf 'old-svc new-svc\n' > "$D6/_rebrand-1450/vault-dir-renames.txt"
+git -C "$D6" init -q .; git -C "$D6" add -A >/dev/null 2>&1; git -C "$D6" -c user.email=t@t -c user.name=t commit -q -m init
+if OVERLAY_MIN=1 bash "$SCRIPT" "$V6" "$D6" >/dev/null 2>&1 && [ -f "$D6/new-svc/src/secrets.yaml" ] && [ ! -e "$D6/old-svc" ]; then ok "rebrand: old vault dir overlaid onto the renamed dir"; else bad "rebrand rename mapping failed"; fi
+
 echo "$PASSES passed, $FAILS failed"
 [ "$FAILS" -eq 0 ]
