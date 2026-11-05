@@ -6,28 +6,28 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 23295,
+    "files": 23312,
     "by_lang": {
-      "sh": 672,
+      "sh": 674,
       "js": 543,
-      "py": 197,
-      "kotlin": 12617,
+      "py": 199,
+      "kotlin": 12626,
       "ts": 8470,
       "java": 649,
       "nix": 36,
-      "rust": 111
+      "rust": 115
     },
     "by_role": {
       "hook": 158,
       "file": 2303,
-      "shell": 537,
-      "script": 291,
+      "shell": 538,
+      "script": 294,
       "module": 6477,
       "java": 648,
-      "kotlin": 12614,
+      "kotlin": 12623,
       "python": 64,
       "flake": 32,
-      "rust-module": 111,
+      "rust-module": 115,
       "nix-module": 4,
       "entrypoint": 3,
       "mcp-tool": 53
@@ -1371,6 +1371,30 @@
         "lines(p)",
         "measure(root, m)",
         "main(argv)"
+      ]
+    },
+    {
+      "path": ".github/workflows/scripts/cloud-android-log-export-guard.py",
+      "lang": "py",
+      "role": "script",
+      "exports": [
+        "read(rel)",
+        "strip(text)",
+        "const(text, name)",
+        "main()"
+      ],
+      "imports": [
+        "glob",
+        "json",
+        "os",
+        "re",
+        "sys"
+      ],
+      "symbols": [
+        "read(rel)",
+        "strip(text)",
+        "const(text, name)",
+        "main()"
       ]
     },
     {
@@ -4179,6 +4203,30 @@
       ]
     },
     {
+      "path": "1_cicd/src/scripts/cloud-android-log-export-guard.py",
+      "lang": "py",
+      "role": "script",
+      "exports": [
+        "read(rel)",
+        "strip(text)",
+        "const(text, name)",
+        "main()"
+      ],
+      "imports": [
+        "glob",
+        "json",
+        "os",
+        "re",
+        "sys"
+      ],
+      "symbols": [
+        "read(rel)",
+        "strip(text)",
+        "const(text, name)",
+        "main()"
+      ]
+    },
+    {
       "path": "1_cicd/src/scripts/cloud-android-mesh-membership-audit.py",
       "lang": "py",
       "role": "script",
@@ -6462,6 +6510,20 @@
         "fixture()",
         "expect()",
         "fetched_fixture()"
+      ]
+    },
+    {
+      "path": "1_cicd/src/scripts/test/log-export-guard.test.sh",
+      "lang": "sh",
+      "role": "script",
+      "exports": [
+        "mk()",
+        "expect()"
+      ],
+      "imports": [],
+      "symbols": [
+        "mk()",
+        "expect()"
       ]
     },
     {
@@ -48680,6 +48742,61 @@
       ]
     },
     {
+      "path": "ab_cloud-libs-shared/libs/devtools/src/main/java/com/diegonmarcos/superapp/logexport/LogExportContract.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "LogExportContract"
+      ],
+      "imports": [],
+      "symbols": [
+        "authority(pkg: String)",
+        "parse(arg: String?)",
+        "refusal(callerHoldsPermission: Boolean, method: String)",
+        "jsonString(s: String)",
+        "meta(app: String, pkg: String, version: String)",
+        "logsJson(lines: List<String>)",
+        "crashesJson(crashes: List<Crash>)",
+        "export(app: String, pkg: String, version: String, timeMs: Long, lines: List<String>, crashes: List<Crash>)",
+        "class LogExportContract",
+        "class Query",
+        "class Crash"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/devtools/src/main/java/com/diegonmarcos/superapp/logexport/LogExportProvider.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "LogExportProvider"
+      ],
+      "imports": [
+        "android.content.ContentProvider",
+        "android.content.ContentValues",
+        "android.content.pm.PackageManager",
+        "android.database.Cursor",
+        "android.net.Uri",
+        "android.os.Binder",
+        "android.os.Bundle",
+        "android.os.Process",
+        "com.diegonmarcos.superapp.devtools.LogPipe",
+        "java.io.File"
+      ],
+      "symbols": [
+        "onCreate()",
+        "call(method: String, arg: String?, extras: Bundle?)",
+        "logLines(q: LogExportContract.Query)",
+        "crashes(ctx: android.content.Context, count: Int)",
+        "reply(ok: Boolean, payload: String, error: String)",
+        "query(uri: Uri, projection: Array<out String>?, selection: String?, selectionArgs: Array<out String>?, sortOrder: String?)",
+        "getType(uri: Uri)",
+        "insert(uri: Uri, values: ContentValues?)",
+        "update(uri: Uri, values: ContentValues?, selection: String?, selectionArgs: Array<out String>?)",
+        "delete(uri: Uri, selection: String?, selectionArgs: Array<out String>?)",
+        "class LogExportProvider"
+      ]
+    },
+    {
       "path": "ab_cloud-libs-shared/libs/devtools/src/test/java/com/diegonmarcos/superapp/devtools/AppDebugServerBodyTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -50633,6 +50750,7 @@
         "parse_request",
         "host_of",
         "listen",
+        "listen_with",
         "Req",
         "Resp"
       ],
@@ -50656,8 +50774,9 @@
         "pct_decode(s: &str, form: bool)",
         "parse_request(head: &str)",
         "host_of(v: &str)",
-        "serve(handler: &Handler, mut stream: TcpStream, port: u16)",
-        "listen(listener: TcpListener, handler: Arc<Handler>)"
+        "serve(handler: &Handler, mut stream: TcpStream, port: u16, peer: &PeerCheck)",
+        "listen(listener: TcpListener, handler: Arc<Handler>)",
+        "listen_with(listener: TcpListener, handler: Arc<Handler>, peer: Arc<PeerCheck>, stop: Option<Arc<std::sync::atomic::AtomicBool>>)"
       ]
     },
     {
@@ -51616,6 +51735,20 @@
       ]
     },
     {
+      "path": "ab_cloud-libs-shared/libs/git-core/src/main/java/com/diegonmarcos/cloudlib/gitcore/CloneMode.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "CloneMode"
+      ],
+      "imports": [],
+      "symbols": [
+        "folderName(name: String)",
+        "args(url: String, dest: String, branch: String? = null, q: (String)",
+        "class CloneMode"
+      ]
+    },
+    {
       "path": "ab_cloud-libs-shared/libs/git-core/src/main/java/com/diegonmarcos/cloudlib/gitcore/GitCalls.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -51762,8 +51895,8 @@
         "isRepository(dir: File)",
         "isBare(dir: File)",
         "init(dir: File)",
-        "clone(url: String, dir: File, auth: GitAuth = GitAuth.None, depth: Int = 0, bare: Boolean = false)",
-        "sshCallback(auth: GitAuth.Ssh)"
+        "clone(url: String, dir: File, auth: GitAuth = GitAuth.None, depth: Int = 0, bare: Boolean = false, singleBranch: Boolean = false, branch: String = \"\", filter: String = \"\")",
+        "clone(url: String, dir: File, mode: CloneMode, auth: GitAuth = GitAuth.None)"
       ]
     },
     {
@@ -51844,6 +51977,30 @@
         "setUp()",
         "tearDown()",
         "class BareCloneTest"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/git-core/src/test/java/com/diegonmarcos/cloudlib/gitcore/CloneModeTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "CloneModeTest"
+      ],
+      "imports": [
+        "org.eclipse.jgit.api.Git",
+        "org.junit.After",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Before",
+        "org.junit.Test",
+        "java.io.File",
+        "java.nio.file.Files"
+      ],
+      "symbols": [
+        "setUp()",
+        "tearDown()",
+        "class CloneModeTest"
       ]
     },
     {
@@ -52187,6 +52344,27 @@
       ]
     },
     {
+      "path": "ab_cloud-libs-shared/libs/git-repos/src/main/java/com/diegonmarcos/cloudlib/gitrepos/RepoDetect.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "RepoDetect"
+      ],
+      "imports": [
+        "java.io.File"
+      ],
+      "symbols": [
+        "isBare(dir: File)",
+        "detect(dir: File)",
+        "list(folders: List<File>)",
+        "scan(root: File)",
+        "git(repo: Repo, vararg rest: String)",
+        "shellPrefix(dir: String, q: (String)",
+        "class RepoDetect",
+        "class Repo"
+      ]
+    },
+    {
       "path": "ab_cloud-libs-shared/libs/git-repos/src/main/java/com/diegonmarcos/cloudlib/gitrepos/StalePackCleaner.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -52274,6 +52452,29 @@
         "w(online: Boolean, model: String?, ask: ((String, String)",
         "allReposRunsOnTheDirtyOnes()",
         "class AutoCommitTest"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/git-repos/src/test/java/com/diegonmarcos/cloudlib/gitrepos/RepoDetectTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "RepoDetectTest"
+      ],
+      "imports": [
+        "java.io.File",
+        "java.nio.file.Files",
+        "org.junit.After",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Before",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "setUp()",
+        "tearDown()",
+        "class RepoDetectTest"
       ]
     },
     {
@@ -52415,7 +52616,7 @@
         "isRepository(dir: File)",
         "isRepositoryAsync(dir: File)",
         "init(transport: GitTransport, dir: File)",
-        "clone(transport: GitTransport, url: String, dir: File, auth: GitAuth = GitAuth.None, depth: Int = 0, bare: Boolean = false)"
+        "clone(transport: GitTransport, url: String, dir: File, auth: GitAuth = GitAuth.None, depth: Int = 0, bare: Boolean = false, mode: com.diegonmarcos.cloudlib.gitcore.CloneMode? = null)"
       ]
     },
     {
@@ -52436,7 +52637,7 @@
         "forDir(context: Context, dir: File)",
         "GitEngine(context: Context, workTree: File)",
         "init(context: Context, dir: File)",
-        "clone(context: Context, url: String, dir: File, auth: GitAuth = GitAuth.None, depth: Int = 0, bare: Boolean = false)",
+        "clone(context: Context, url: String, dir: File, auth: GitAuth = GitAuth.None, depth: Int = 0, bare: Boolean = false, mode: com.diegonmarcos.cloudlib.gitcore.CloneMode? = null)",
         "class GitTransports"
       ]
     },
@@ -52719,7 +52920,7 @@
         "safePath(p: String)",
         "message(path: String, stagedDiff: String, sizeOf: (String)",
         "access(hasToken: Boolean)",
-        "clone(ctx: Context, url: String, dir: File, auth: GitAuth = GitAuth.None, depth: Int = 0, bare: Boolean = false)",
+        "clone(ctx: Context, url: String, dir: File, auth: GitAuth = GitAuth.None, depth: Int = 0, bare: Boolean = false, mode: com.diegonmarcos.cloudlib.gitcore.CloneMode? = null)",
         "token()",
         "hasToken()",
         "saveToken(t: String)",
@@ -72334,6 +72535,31 @@
         "raw(port: Int, request: String)",
         "get(port: Int, path: String, host: String = \"127.0.0.1\")",
         "class LocalServerTest"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/log-export/src/test/java/com/diegonmarcos/superapp/logexport/LogExportContractTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "LogExportContractTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertNotNull",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "authorityIsPerPackage()",
+        "defaultsAndClamps()",
+        "refusesCallerWithoutThePermissionAndUnknownMethods()",
+        "exportJsonEscapesAndCarriesBothRings()",
+        "controlCharactersAreEscaped()",
+        "oversizedCrashIsCut()",
+        "metaListsTheMethods()",
+        "class LogExportContractTest"
       ]
     },
     {
@@ -96643,6 +96869,56 @@
       ]
     },
     {
+      "path": "ac_cloud-c3-webserver/server/src/apis.rs",
+      "lang": "rust",
+      "role": "rust-module",
+      "exports": [
+        "build",
+        "data",
+        "apps_from",
+        "apps",
+        "page",
+        "group",
+        "public_url",
+        "mesh_url",
+        "public_page",
+        "mesh_page",
+        "apps_page",
+        "ipc_page",
+        "App"
+      ],
+      "imports": [
+        "crate::meshlogs::Mesh",
+        "crate::serving",
+        "serde_json::",
+        "std::sync::OnceLock",
+        "super::"
+      ],
+      "symbols": [
+        "build()",
+        "data()",
+        "apps_from(d: &Value)",
+        "apps()",
+        "fill(tpl: &str, pkg: &str)",
+        "s(v: &Value)",
+        "row(head: &str, badges: Vec<String>, lines: Vec<String>, links: Vec<(String, String)",
+        "page(title: &str, note: &str, groups: Vec<Value>)",
+        "group(title: &str, rows: Vec<Value>)",
+        "public_url(svc: &Value)",
+        "mesh_url(svc: &Value)",
+        "public_page(d: &Value)",
+        "mesh_page(d: &Value, m: &Mesh, apps: &[App])",
+        "apps_page(d: &Value, apps: &[App], b: &Value)",
+        "ipc_page(apps: &[App], b: &Value)",
+        "fixture()",
+        "apps_are_the_manifest_apps_only()",
+        "public_page_lists_only_public_urls()",
+        "apps_page_lists_ports_from_the_table()",
+        "ipc_page_derives_every_authority_from_the_package()",
+        "the_real_declarations_feed_every_page()"
+      ]
+    },
+    {
       "path": "ac_cloud-c3-webserver/server/src/app.rs",
       "lang": "rust",
       "role": "rust-module",
@@ -96858,6 +97134,154 @@
       ]
     },
     {
+      "path": "ac_cloud-c3-webserver/server/src/meshlogs.rs",
+      "lang": "rust",
+      "role": "rust-module",
+      "exports": [
+        "set_log_source",
+        "set_token_source",
+        "parse_cidr",
+        "cidr_contains",
+        "from_build",
+        "cidr_text",
+        "is_mesh",
+        "check_bind",
+        "authorize",
+        "route",
+        "start",
+        "Mesh"
+      ],
+      "imports": [
+        "crate::apis::",
+        "fleet_webserver::http::",
+        "fleet_webserver::render::jstr",
+        "serde_json::Value",
+        "std::net::",
+        "std::sync::",
+        "std::time::Duration",
+        "to",
+        "super::",
+        "serde_json::json"
+      ],
+      "symbols": [
+        "set_log_source(f: Box<LogSource>)",
+        "set_token_source(f: Box<TokenSource>)",
+        "parse_cidr(c: &str)",
+        "cidr_contains(c: (Ipv4Addr, u8)",
+        "from_build(b: &Value)",
+        "cidr_text(&self)",
+        "is_mesh(&self, ip: IpAddr)",
+        "check_bind(&self)",
+        "ct_eq(a: &[u8], b: &[u8])",
+        "authorize(header: Option<&str>, token: Option<&str>)",
+        "digits(v: Option<&str>, max: u32)",
+        "route(m: &Mesh, apps: &[App], req: &Req, token: Option<&str>, src: &LogSource)",
+        "start(m: Mesh)",
+        "mesh()",
+        "apps()",
+        "get(path: &str, auth: Option<&str>)",
+        "stub(authority: &str, method: &str, arg: &str)",
+        "every_path_needs_the_bearer()",
+        "the_endpoint_pages_are_bearer_guarded_too()",
+        "with_no_token_known_it_fails_closed()",
+        "a_good_bearer_routes_to_the_apps_ipc()",
+        "only_manifest_apps_and_declared_methods_are_called()",
+        "a_dead_app_is_a_502_not_a_hang()",
+        "the_bind_is_never_public_loopback_or_wildcard()",
+        "only_mesh_peers_are_answered()",
+        "the_real_declaration_is_a_valid_mesh_listener()",
+        "constant_time_compare_agrees_with_equality()"
+      ]
+    },
+    {
+      "path": "ac_cloud-c3-webserver/server/src/repos.rs",
+      "lang": "rust",
+      "role": "rust-module",
+      "exports": [
+        "from_build",
+        "source",
+        "cfg",
+        "to_json",
+        "from_json",
+        "load",
+        "save",
+        "safe_rel",
+        "resolve",
+        "http_get",
+        "proxy_handler",
+        "dir_handler",
+        "running",
+        "start",
+        "stop",
+        "host",
+        "add",
+        "scan",
+        "discover",
+        "url",
+        "Kind",
+        "Source",
+        "Cfg",
+        "Entry",
+        "Target",
+        "Host"
+      ],
+      "imports": [
+        "crate::meshlogs::Mesh",
+        "crate::serving",
+        "fleet_webserver::http::",
+        "serde_json::",
+        "std::collections::HashMap",
+        "std::io::",
+        "std::net::",
+        "std::path::",
+        "std::sync::atomic::",
+        "std::sync::",
+        "std::time::Duration",
+        "super::",
+        "std::fs"
+      ],
+      "symbols": [
+        "from_build(b: &Value, mesh: Option<Mesh>, endpoint_port: &dyn Fn(&str)",
+        "source(&self, id: &str)",
+        "cfg()",
+        "to_json(&self)",
+        "from_json(v: &Value)",
+        "load(path: &Path)",
+        "save(path: &Path, entries: &[Entry])",
+        "safe_rel(s: &str, allow_empty: bool)",
+        "looks_like_file(seg: &str)",
+        "resolve(cfg: &Cfg, e: &Entry)",
+        "pct_encode(s: &str)",
+        "http_get(port: u16, path_and_query: &str, timeout: Duration)",
+        "static_ctype(upstream: &str, path: &str)",
+        "proxy_handler(port: u16, base: String, index: Option<String>)",
+        "dir_handler(root: PathBuf, index: Option<String>, extra_hosts: Vec<String>)",
+        "running(&self, id: &str)",
+        "start(&self, cfg: &Cfg, e: &Entry)",
+        "stop(&self, id: &str)",
+        "host()",
+        "slug(label: &str)",
+        "add(cfg: &Cfg, entries: &mut Vec<Entry>, label: &str, source: &str, repo: &str, start: &str, exposure: &str)",
+        "scan(lister: &dyn Fn(&str)",
+        "discover(cfg: &Cfg, source: &str)",
+        "url(cfg: &Cfg, e: &Entry)",
+        "tmp(tag: &str)",
+        "cfg_for(root: &Path, store: &Path)",
+        "site(root: &Path, repo: &str, files: &[(&str, &str)",
+        "get(port: u16, path: &str)",
+        "safe_rel_refuses_every_escape()",
+        "the_store_round_trips_and_survives_a_missing_file()",
+        "add_allocates_distinct_ports_and_validates()",
+        "a_symlink_out_of_the_repo_or_the_source_is_refused()",
+        "several_sites_serve_at_once_each_on_its_own_port()",
+        "a_mesh_entry_without_a_mesh_address_and_a_public_one_never_bind()",
+        "the_terminal_proxy_forwards_inside_its_base_and_refuses_traversal()",
+        "terminal_targets_split_an_entry_file_from_the_folder()",
+        "scan_finds_repos_without_descending_into_them()",
+        "the_real_declaration_parses_and_never_allows_public()"
+      ]
+    },
+    {
       "path": "ac_cloud-c3-webserver/server/src/serving.rs",
       "lang": "rust",
       "role": "rust-module",
@@ -96906,6 +97330,58 @@
         "the_listeners_and_the_map_must_agree()",
         "dns_is_loopback_only()",
         "json_has_a_row_per_endpoint()"
+      ]
+    },
+    {
+      "path": "ac_cloud-c3-webserver/server/src/sub.rs",
+      "lang": "rust",
+      "role": "rust-module",
+      "exports": [
+        "subpages",
+        "api_public",
+        "api_mesh",
+        "api_apps",
+        "api_ipc",
+        "page_drive",
+        "page_terminals",
+        "repos_page",
+        "page_repos",
+        "repos_op",
+        "api_repos",
+        "api_discover"
+      ],
+      "imports": [
+        "crate::apis::",
+        "crate::repos::",
+        "crate::",
+        "fleet_webserver::http::",
+        "fleet_webserver::render::jstr",
+        "serde_json::",
+        "super::",
+        "std::fs",
+        "std::net::",
+        "std::path::PathBuf"
+      ],
+      "symbols": [
+        "subpages(_ctx: &Ctx, _req: &Req)",
+        "ok(v: Value)",
+        "err(status: u16, msg: &str)",
+        "api_public(_c: &Ctx, _r: &Req)",
+        "api_mesh(_c: &Ctx, _r: &Req)",
+        "api_apps(_c: &Ctx, _r: &Req)",
+        "api_ipc(_c: &Ctx, _r: &Req)",
+        "link(label: &str, href: &str)",
+        "page_drive(_c: &Ctx, _r: &Req)",
+        "page_terminals(_c: &Ctx, _r: &Req)",
+        "entry_row(cfg: &Cfg, host: &Host, e: &Entry)",
+        "repos_page(cfg: &Cfg, host: &Host, entries: &[Entry])",
+        "page_repos(_c: &Ctx, _r: &Req)",
+        "repos_op(cfg: &Cfg, host: &Host, body: &Value)",
+        "api_repos(_c: &Ctx, req: &Req)",
+        "api_discover(_c: &Ctx, req: &Req)",
+        "setup(tag: &str)",
+        "add_start_stop_remove_persist_in_the_json_store()",
+        "the_page_form_offers_only_declared_sources_and_non_public_exposures()"
       ]
     },
     {
@@ -97059,7 +97535,9 @@
         "install(window: &tauri::WebviewWindow)",
         "take_exception(env: &mut JNIEnv)",
         "bundle_string(env: &mut JNIEnv, bundle: &JObject, key: &str)",
+        "call_provider(authority: &str, method: &str, arg: &str)",
         "read_bridge(method: &str, arg: &str)",
+        "read_token()",
         "friendly(e: &str, authority: &str)",
         "open_in_browser(url: &str)"
       ]
@@ -97294,6 +97772,24 @@
     },
     {
       "path": "ac_cloud-c3-webserver/test/test-c3-webserver-shell.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "pass()",
+        "fail()",
+        "run()",
+        "mutate()"
+      ],
+      "imports": [],
+      "symbols": [
+        "pass()",
+        "fail()",
+        "run()",
+        "mutate()"
+      ]
+    },
+    {
+      "path": "ac_cloud-c3-webserver/test/test-c3-webserver-subpages.sh",
       "lang": "sh",
       "role": "shell",
       "exports": [
@@ -185475,6 +185971,7 @@
         "folderAction(kind: String)",
         "depthActions(scope: String)",
         "depthAction(id: String)",
+        "cloneMode(id: String)",
         "op(id: String)",
         "remoteMode(id: String)",
         "cloneUrl(name: String, mode: String = REMOTE_HTTPS)",
@@ -185500,8 +185997,7 @@
         "str(key: String, default: String = \"\")",
         "bool(key: String, default: Boolean = false)",
         "boolOrNull(key: String)",
-        "int(key: String)",
-        "strings(key: String)"
+        "int(key: String)"
       ]
     },
     {
@@ -189032,7 +189528,7 @@
         "repoMessageWords(ctx: Context)",
         "statusFacts(b: RepoStatus.Block)",
         "RepoStatusBlock(b: RepoStatus.Block, fmt: DateFormat)",
-        "GitRepoOpsBox( repo: ManagedRepo, page: Declarations.GitPageDecl, details: GitSyncCoordinator.Details?, result: com.diegonmarcos.cloudlib.gitsync.GitOpResult?, running: GitSyncCoordinator.Running?, glance: GitSyncCoordinator.Glance?, fmt: DateFormat, coordinator: GitSyncCoordinator, actions: DriveActions, repoName: String, owner: String, remote: RepoRemoteStats.Stats?, cloneDepth: Int, cloneSsh: Boolean, onSettings: ()"
+        "GitRepoOpsBox( repo: ManagedRepo, page: Declarations.GitPageDecl, details: GitSyncCoordinator.Details?, result: com.diegonmarcos.cloudlib.gitsync.GitOpResult?, running: GitSyncCoordinator.Running?, glance: GitSyncCoordinator.Glance?, fmt: DateFormat, coordinator: GitSyncCoordinator, actions: DriveActions, repoName: String, owner: String, remote: RepoRemoteStats.Stats?, cloneSsh: Boolean, onSettings: ()"
       ]
     },
     {
@@ -189609,10 +190105,11 @@
         "androidx.compose.ui.platform.testTag",
         "androidx.compose.ui.res.stringResource",
         "com.diegonmarcos.clouddrive.R",
-        "com.diegonmarcos.clouddrive.ui.DriveCard",
         "com.diegonmarcos.clouddrive.ui.DriveTags",
         "com.diegonmarcos.clouddrive.ui.SectionHeader",
-        "com.diegonmarcos.clouddrive.ui.StatusLight"
+        "com.diegonmarcos.superapp.uikit.KitStoreCaption",
+        "com.diegonmarcos.superapp.uikit.KitStoreName",
+        "com.diegonmarcos.superapp.uikit.KitStoreRowLine"
       ],
       "symbols": [
         "ProjectsPage(modifier: Modifier = Modifier, projects: List<ProjectDecl> = SAMPLE_PROJECTS)",
@@ -190415,8 +190912,9 @@
         "hint(text: String)",
         "authed(args: String)",
         "cloneScript(url: String, guestDir: String, depth: Int?)",
+        "cloneModeScript(mode: com.diegonmarcos.cloudlib.gitcore.CloneMode, url: String, guestDir: String)",
         "syncScript(guestDir: String, message: String, name: String, email: String, rebase: Boolean)",
-        "clone(ctx: Context, url: String, dir: File, token: String, depth: Int? = null)",
+        "clone(ctx: Context, url: String, dir: File, token: String, depth: Int? = null, mode: com.diegonmarcos.cloudlib.gitcore.CloneMode? = null)",
         "sync(ctx: Context, dir: File, message: String, name: String, email: String, rebase: Boolean, token: String)",
         "bareClone(ctx: Context, url: String, guestDir: String, token: String, depth: Int)",
         "bareUpdate(ctx: Context, guestDir: String, token: String, depth: Int = 0)",
@@ -190704,6 +191202,7 @@
         "safe(p: String)",
         "sha(s: String)",
         "authHeader(auth: JSONObject?)",
+        "at(dir: String)",
         "g(dir: String, args: String)",
         "hdr(dir: String, args: String)",
         "gAuthed(dir: String, args: String)",
@@ -192783,6 +193282,25 @@
       ]
     },
     {
+      "path": "ac_cloud-drive/app/src/test/java/com/diegonmarcos/clouddrive/sync/CloneModeScriptTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "CloneModeScriptTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.clouddrive.Declarations",
+        "org.json.JSONObject",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "script(id: String)",
+        "class CloneModeScriptTest"
+      ]
+    },
+    {
       "path": "ac_cloud-drive/app/src/test/java/com/diegonmarcos/clouddrive/sync/CloudReposTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -193293,6 +193811,31 @@
       ]
     },
     {
+      "path": "ac_cloud-drive/app/src/test/java/com/diegonmarcos/clouddrive/sync/inventory/OneRepoListTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "OneRepoListTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.clouddrive.Declarations",
+        "com.diegonmarcos.clouddrive.sync.RegistryNames",
+        "com.diegonmarcos.clouddrive.sync.inventory.InventoryScript.Entry",
+        "com.diegonmarcos.clouddrive.sync.inventory.InventoryScript.Kind",
+        "com.diegonmarcos.clouddrive.sync.inventory.RepoInventory.RepoClass",
+        "java.io.File",
+        "java.nio.file.Files",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "class OneRepoListTest",
+        "class and"
+      ]
+    },
+    {
       "path": "ac_cloud-drive/app/src/test/java/com/diegonmarcos/clouddrive/sync/inventory/RepoInventoryPhoneTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -193669,6 +194212,7 @@
       "symbols": [
         "row(name: String, pvt: Boolean? = false, main: Long? = null, total: Long? = null, br: Int? = null, dirty: Int? = null, a: Int? = null, b: Int? = null)",
         "names(rows: List<RepoTableRow>, c: RepoColumn, asc: Boolean)",
+        "cmd(id: String)",
         "class RepoTableTest"
       ]
     },
@@ -195120,13 +195664,12 @@
         "d1()",
         "d2()",
         "d3()",
-        "b1()",
+        "c1()",
         "d4()",
         "u1()",
         "f1()",
         "a1()",
-        "n1()",
-        "c1()"
+        "n1()"
       ],
       "imports": [],
       "symbols": [
@@ -195135,13 +195678,12 @@
         "d1()",
         "d2()",
         "d3()",
-        "b1()",
+        "c1()",
         "d4()",
         "u1()",
         "f1()",
         "a1()",
-        "n1()",
-        "c1()"
+        "n1()"
       ]
     },
     {
