@@ -6,26 +6,26 @@
   },
   "repo": "cloud-u-containers",
   "counts": {
-    "files": 2571,
+    "files": 2604,
     "by_lang": {
-      "sh": 176,
+      "sh": 177,
       "js": 100,
       "nix": 189,
       "py": 510,
-      "ts": 1226,
+      "ts": 1258,
       "rust": 370
     },
     "by_role": {
-      "shell": 167,
-      "file": 341,
+      "shell": 168,
+      "file": 344,
       "nix-module": 19,
       "python": 496,
-      "module": 754,
+      "module": 762,
       "script": 8,
       "flake": 86,
-      "entrypoint": 53,
+      "entrypoint": 71,
       "compose": 84,
-      "mcp-tool": 139,
+      "mcp-tool": 142,
       "workflow-dag": 5,
       "rust-module": 366,
       "hook": 53
@@ -2524,6 +2524,7 @@
         "./tools/finops.js",
         "./tools/finops-cloud.js",
         "./tools/observability.js",
+        "./tools/phone-api.js",
         "./tools/workflows.js",
         "./tools/vps-ops.js",
         "./tools/cloudflare.js",
@@ -2535,11 +2536,12 @@
         "./tools/telegram.js",
         "./tools/security.js",
         "./tools/plugin.js",
+        "./tools/peers-control.js",
         "./resources/index.js"
       ],
       "symbols": [
         "buildRegistry()",
-        "createMcpServer(env: NodeJS.ProcessEnv = process.env)"
+        "createMcpServer(env: NodeJS.ProcessEnv = process.env, variant: \"main\" | \"android\" = \"main\")"
       ]
     },
     {
@@ -2558,7 +2560,7 @@
       ],
       "symbols": [
         "handleMcpRequest(req: IncomingMessage, res: ServerResponse)",
-        "initSession(port: number)",
+        "initSession(port: number, variant: Variant)",
         "startMcpHttpServer(port: number = 3100)"
       ]
     },
@@ -2575,6 +2577,328 @@
       ],
       "symbols": [
         "main()"
+      ]
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/mcp/peers/contract.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "RouteSpec",
+        "path",
+        "CONTRACT",
+        "DOCS_ROUTE"
+      ],
+      "imports": [],
+      "symbols": []
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/mcp/peers/core.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "checkShell",
+        "inputArgsOk",
+        "logcatFullCmd",
+        "label",
+        "resolveApp",
+        "stamp",
+        "ROUTE_RE",
+        "PKG_RE",
+        "SHELL_ALLOW",
+        "Gesture",
+        "FILTER_RE",
+        "PORT_DEVCONTROL",
+        "AppRef"
+      ],
+      "imports": [],
+      "symbols": [
+        "checkShell(cmd: string, dangerouslyRaw = false)",
+        "inputArgsOk(gesture: Gesture, args: string)",
+        "logcatFullCmd(n: number, pkg?: string, filter?: string)",
+        "label(a: AppRef)",
+        "stamp(phone: string | null, r: Out)"
+      ]
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/mcp/peers/device.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "phoneAlias",
+        "doorsOf",
+        "onPhone",
+        "currentPhone",
+        "pinPhone",
+        "dialOrder",
+        "fleetToken",
+        "sq",
+        "run",
+        "parseGatewayApps",
+        "urlOf",
+        "scan",
+        "get",
+        "call",
+        "PHONES",
+        "PORT_DEVCONTROL",
+        "PORT_FIRST",
+        "PORT_LAST",
+        "App"
+      ],
+      "imports": [
+        "node:child_process",
+        "node:async_hooks"
+      ],
+      "symbols": [
+        "phoneAlias(q: string)",
+        "doorsOf(alias: string)",
+        "currentPhone()",
+        "pinPhone(phone: string)",
+        "dialOrder(want: string | null)",
+        "fleetToken()",
+        "sq(s: string)",
+        "exec(cmd: string, args: string[], stdin: string)",
+        "run(script: string)",
+        "parseGatewayApps(body: string)",
+        "urlOf(a: App, path: string, qs = \"\")",
+        "scan()",
+        "get(\n  port: number,\n  path: string,\n  query: Record<string, string> = {},\n  timeoutSec = 20,\n)",
+        "call(\n  a: App,\n  path: string,\n  query: Record<string, string> = {},\n  timeoutSec = 20,\n)",
+        "qs(query: Record<string, string>)",
+        "fetchUrl(url: string, timeoutSec: number)"
+      ]
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/mcp/peers/modules/c3-watchdog/index.ts",
+      "lang": "ts",
+      "role": "entrypoint",
+      "exports": [
+        "default"
+      ],
+      "imports": [
+        "../../registry.js"
+      ],
+      "symbols": []
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/mcp/peers/modules/cloud-browser/index.ts",
+      "lang": "ts",
+      "role": "entrypoint",
+      "exports": [
+        "default"
+      ],
+      "imports": [
+        "../../registry.js"
+      ],
+      "symbols": []
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/mcp/peers/modules/cloud-calendar/index.ts",
+      "lang": "ts",
+      "role": "entrypoint",
+      "exports": [
+        "default"
+      ],
+      "imports": [
+        "../../registry.js"
+      ],
+      "symbols": []
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/mcp/peers/modules/cloud-chat/index.ts",
+      "lang": "ts",
+      "role": "entrypoint",
+      "exports": [
+        "default"
+      ],
+      "imports": [
+        "../../registry.js"
+      ],
+      "symbols": []
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/mcp/peers/modules/cloud-contacts/index.ts",
+      "lang": "ts",
+      "role": "entrypoint",
+      "exports": [
+        "default"
+      ],
+      "imports": [
+        "../../registry.js"
+      ],
+      "symbols": []
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/mcp/peers/modules/cloud-dialer/index.ts",
+      "lang": "ts",
+      "role": "entrypoint",
+      "exports": [
+        "default"
+      ],
+      "imports": [
+        "../../registry.js"
+      ],
+      "symbols": []
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/mcp/peers/modules/cloud-ide/index.ts",
+      "lang": "ts",
+      "role": "entrypoint",
+      "exports": [
+        "default"
+      ],
+      "imports": [
+        "../../registry.js"
+      ],
+      "symbols": []
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/mcp/peers/modules/cloud-keyboard/index.ts",
+      "lang": "ts",
+      "role": "entrypoint",
+      "exports": [
+        "default"
+      ],
+      "imports": [
+        "../../registry.js"
+      ],
+      "symbols": []
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/mcp/peers/modules/cloud-mail/index.ts",
+      "lang": "ts",
+      "role": "entrypoint",
+      "exports": [
+        "default"
+      ],
+      "imports": [
+        "../../registry.js"
+      ],
+      "symbols": []
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/mcp/peers/modules/cloud-matrix/index.ts",
+      "lang": "ts",
+      "role": "entrypoint",
+      "exports": [
+        "default"
+      ],
+      "imports": [
+        "../../registry.js"
+      ],
+      "symbols": []
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/mcp/peers/modules/cloud-me/index.ts",
+      "lang": "ts",
+      "role": "entrypoint",
+      "exports": [
+        "default"
+      ],
+      "imports": [
+        "../../registry.js"
+      ],
+      "symbols": []
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/mcp/peers/modules/cloud-media-center/index.ts",
+      "lang": "ts",
+      "role": "entrypoint",
+      "exports": [
+        "default"
+      ],
+      "imports": [
+        "../../registry.js"
+      ],
+      "symbols": []
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/mcp/peers/modules/cloud-nav/index.ts",
+      "lang": "ts",
+      "role": "entrypoint",
+      "exports": [
+        "default"
+      ],
+      "imports": [
+        "../../registry.js"
+      ],
+      "symbols": []
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/mcp/peers/modules/cloud-news/index.ts",
+      "lang": "ts",
+      "role": "entrypoint",
+      "exports": [
+        "default"
+      ],
+      "imports": [
+        "../../registry.js"
+      ],
+      "symbols": []
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/mcp/peers/modules/cloud-sheets/index.ts",
+      "lang": "ts",
+      "role": "entrypoint",
+      "exports": [
+        "default"
+      ],
+      "imports": [
+        "../../registry.js"
+      ],
+      "symbols": []
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/mcp/peers/modules/cloud-superapp/index.ts",
+      "lang": "ts",
+      "role": "entrypoint",
+      "exports": [
+        "default"
+      ],
+      "imports": [
+        "../../registry.js"
+      ],
+      "symbols": []
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/mcp/peers/modules/cloud-vault/index.ts",
+      "lang": "ts",
+      "role": "entrypoint",
+      "exports": [
+        "default"
+      ],
+      "imports": [
+        "../../registry.js"
+      ],
+      "symbols": []
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/mcp/peers/modules/cloud-wallet/index.ts",
+      "lang": "ts",
+      "role": "entrypoint",
+      "exports": [
+        "default"
+      ],
+      "imports": [
+        "../../registry.js"
+      ],
+      "symbols": []
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/mcp/peers/registry.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "loadModules",
+        "AppModule"
+      ],
+      "imports": [
+        "@modelcontextprotocol/sdk/server/mcp.js",
+        "node:fs",
+        "./contract.js"
+      ],
+      "symbols": [
+        "loadModules()"
       ]
     },
     {
@@ -2620,6 +2944,8 @@
         "jsonSchemaOf",
         "registerGrouped",
         "registerLegacy",
+        "registerTree",
+        "registerSuperappAlias",
         "ToolDef",
         "ToolRegistry",
         "GROUPS",
@@ -2629,7 +2955,8 @@
       "imports": [
         "@modelcontextprotocol/sdk/server/mcp.js",
         "zod",
-        "zod-to-json-schema"
+        "zod-to-json-schema",
+        "./tree.js"
       ],
       "symbols": [
         "classify(name: string)",
@@ -2639,6 +2966,8 @@
         "jsonSchemaOf(def: ToolDef)",
         "registerGrouped(server: McpServer, reg: ToolRegistry)",
         "registerLegacy(server: McpServer, reg: ToolRegistry)",
+        "registerTree(server: McpServer, reg: ToolRegistry, h: Hier = loadHierarchy()",
+        "registerSuperappAlias(server: McpServer, reg: ToolRegistry)",
         "class ToolRegistry"
       ]
     },
@@ -3062,6 +3391,76 @@
       ]
     },
     {
+      "path": "infra-api_cloud-infra-mcp/src/code/mcp/tools/peers-control.ts",
+      "lang": "ts",
+      "role": "mcp-tool",
+      "exports": [
+        "resolve",
+        "registerPeersControlTools",
+        "ROUTE_RE",
+        "label"
+      ],
+      "imports": [
+        "@modelcontextprotocol/sdk/server/mcp.js",
+        "zod",
+        "../peers/device.js",
+        "../peers/registry.js",
+        "../peers/core.js"
+      ],
+      "symbols": [
+        "ensureModules()",
+        "aliasToPkg(q: string)",
+        "apps(refresh = false)",
+        "resolve(list: App[], query: string)",
+        "phoneTool(server: McpServer)",
+        "registerPeersControlTools(server: McpServer)",
+        "pkgOf(query: string)",
+        "adbExec(cmd: string, timeoutSec = 30)",
+        "class escape"
+      ]
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/mcp/tools/phone-api-core.ts",
+      "lang": "ts",
+      "role": "mcp-tool",
+      "exports": [
+        "phoneBase",
+        "appName",
+        "logsPath",
+        "phoneGet",
+        "MESH_SUFFIX",
+        "LOG_METHODS",
+        "LogMethod",
+        "PhoneEnv",
+        "Result",
+        "LogsParams",
+        "FetchLike"
+      ],
+      "imports": [],
+      "symbols": [
+        "phoneBase(env: PhoneEnv)",
+        "appName(s: unknown)",
+        "logsPath(p: LogsParams)",
+        "phoneGet(path: string, env: PhoneEnv, fetchImpl: FetchLike = fetch as unknown as FetchLike, timeoutMs = 15_000)"
+      ]
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/mcp/tools/phone-api.ts",
+      "lang": "ts",
+      "role": "mcp-tool",
+      "exports": [
+        "registerPhoneApiTools"
+      ],
+      "imports": [
+        "@modelcontextprotocol/sdk/server/mcp.js",
+        "zod",
+        "./phone-api-core.js"
+      ],
+      "symbols": [
+        "registerPhoneApiTools(server: McpServer, env: NodeJS.ProcessEnv = process.env)"
+      ]
+    },
+    {
       "path": "infra-api_cloud-infra-mcp/src/code/mcp/tools/plugin.ts",
       "lang": "ts",
       "role": "mcp-tool",
@@ -3223,6 +3622,36 @@
         "workflowsDaguTrigger(dagName?: string)",
         "registerWorkflowTools(server: McpServer)",
         "jobLog(target: string, jobId: string)"
+      ]
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/mcp/tree.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "loadHierarchy",
+        "leaves",
+        "toolMatches",
+        "ownerOfTool",
+        "treeMethod",
+        "arrange",
+        "HNode",
+        "Hier",
+        "Leaf",
+        "HIERARCHY_URL",
+        "TreeTool",
+        "dispatcherOf"
+      ],
+      "imports": [
+        "node:fs"
+      ],
+      "symbols": [
+        "loadHierarchy(url: URL = HIERARCHY_URL)",
+        "leaves(h: Hier)",
+        "toolMatches(pattern: string, name: string)",
+        "ownerOfTool(h: Hier, name: string)",
+        "treeMethod(path: string, name: string)",
+        "arrange(h: Hier, names: string[])"
       ]
     },
     {
@@ -4617,6 +5046,21 @@
       ]
     },
     {
+      "path": "infra-api_cloud-infra-mcp/src/code/test-c3-tree.mts",
+      "lang": "ts",
+      "role": "file",
+      "exports": [],
+      "imports": [
+        "node:assert/strict",
+        "node:crypto",
+        "node:fs",
+        "./mcp/tree.ts"
+      ],
+      "symbols": [
+        "toolNames()"
+      ]
+    },
+    {
       "path": "infra-api_cloud-infra-mcp/src/code/test-caddy-cert-repair.mjs",
       "lang": "js",
       "role": "file",
@@ -4707,6 +5151,30 @@
       "symbols": []
     },
     {
+      "path": "infra-api_cloud-infra-mcp/src/code/test-peers-core.mts",
+      "lang": "ts",
+      "role": "file",
+      "exports": [],
+      "imports": [
+        "node:assert/strict",
+        "node:child_process",
+        "./mcp/peers/device.ts",
+        "./mcp/peers/core.ts"
+      ],
+      "symbols": []
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/test-phone-api.mts",
+      "lang": "ts",
+      "role": "file",
+      "exports": [],
+      "imports": [
+        "node:assert/strict",
+        "./mcp/tools/phone-api-core.ts"
+      ],
+      "symbols": []
+    },
+    {
       "path": "infra-api_cloud-infra-mcp/src/code/test-plugin-gh.mjs",
       "lang": "js",
       "role": "file",
@@ -4792,6 +5260,7 @@
         "MCP_HTTP_HOST",
         "PATH",
         "CLOUDSDK_CONFIG",
+        "SUPERAPP_PHONES",
         "volumes",
         "healthcheck",
         "test",
@@ -4838,6 +5307,20 @@
         "baseImage",
         "apt",
         "title"
+      ]
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/test/test-superapp-hosts.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "bad()",
+        "check()"
+      ],
+      "imports": [],
+      "symbols": [
+        "bad()",
+        "check()"
       ]
     },
     {
@@ -8937,10 +9420,50 @@
         "./routes/workflows.js",
         "./routes/configsSync.js",
         "./routes/aiUsage.js",
+        "./routes/tree.js",
+        "./hierarchy.js",
         "../shared/libs/poller.js"
       ],
       "symbols": [
         "buildApp()"
+      ]
+    },
+    {
+      "path": "infra-api_cloudy-c3-api/src/code/api/hierarchy.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "loadHierarchy",
+        "leaves",
+        "routeMatches",
+        "ownerOfRoute",
+        "canonicalPath",
+        "rewriteTreeUrl",
+        "kindOf",
+        "projectOf",
+        "filterServices",
+        "HNode",
+        "Hier",
+        "Kind",
+        "Project",
+        "ContainersDecl",
+        "Leaf",
+        "HIERARCHY_URL",
+        "Rewrite"
+      ],
+      "imports": [
+        "node:fs"
+      ],
+      "symbols": [
+        "loadHierarchy(url: URL = HIERARCHY_URL)",
+        "leaves(h: Hier)",
+        "routeMatches(pattern: string, path: string)",
+        "score(pattern: string)",
+        "ownerOfRoute(h: Hier, path: string)",
+        "canonicalPath(h: Hier, legacy: string)",
+        "rewriteTreeUrl(h: Hier, url: string, ls: Map<string, Leaf> = leaves(h)",
+        "kindOf(c: ContainersDecl, name: string, category = \"\")",
+        "projectOf(c: ContainersDecl, name: string, folder = \"\")"
       ]
     },
     {
@@ -9134,6 +9657,7 @@
         "../../shared/libs/discovery.js",
         "../../shared/libs/config.js",
         "../../shared/libs/files.js",
+        "../hierarchy.js",
         "../../shared/libs/paths.js"
       ],
       "symbols": [
@@ -9285,6 +9809,21 @@
         "fs"
       ],
       "symbols": []
+    },
+    {
+      "path": "infra-api_cloudy-c3-api/src/code/api/routes/tree.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "registerTreeRoutes"
+      ],
+      "imports": [
+        "fastify",
+        "../hierarchy.js"
+      ],
+      "symbols": [
+        "registerTreeRoutes(app: FastifyInstance)"
+      ]
     },
     {
       "path": "infra-api_cloudy-c3-api/src/code/api/routes/workflows.ts",
@@ -10877,6 +11416,21 @@
       ],
       "symbols": [
         "findPhotoprismBuildJson()"
+      ]
+    },
+    {
+      "path": "infra-api_cloudy-c3-api/src/test-hierarchy.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [],
+      "imports": [
+        "node:assert/strict",
+        "node:crypto",
+        "node:fs",
+        "./code/api/hierarchy.ts"
+      ],
+      "symbols": [
+        "routes()"
       ]
     },
     {

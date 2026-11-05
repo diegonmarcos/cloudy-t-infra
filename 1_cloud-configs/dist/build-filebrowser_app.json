@@ -241,11 +241,11 @@
         "mcp_url": "https://mcp.diegonmarcos.com/c3-infra-mcp/mcp",
         "transport": "streamable-http",
         "endpoint_path": "/mcp",
-        "tools_count": 117,
+        "tools_count": 182,
         "resources_count": 0,
         "prompts_count": 0,
         "display_name": "C3 Infra MCP",
-        "description": "Cloud health, DevOps operations, workflows, cost tracking, security scanning, observability, front-end deployment.",
+        "description": "Cloud health, DevOps operations, workflows, cost tracking, security scanning, observability, front-end deployment, plus the peers-control phone tools (merged from cloudy-android-mcp). Tools are served as the legacy infra_* dispatchers and as the Cloud-C3 app's hierarchy (c3_infra, c3_containers, c3_home, c3_ops, c3_observ, c3_configs, c3_tree).",
         "auth": "none",
         "sdk": "@modelcontextprotocol/sdk@^1.12.0"
       }

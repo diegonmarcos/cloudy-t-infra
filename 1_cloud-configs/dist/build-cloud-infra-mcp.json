@@ -233,11 +233,11 @@
         "mcp_url": "https://mcp.diegonmarcos.com/c3-infra-mcp/mcp",
         "transport": "streamable-http",
         "endpoint_path": "/mcp",
-        "tools_count": 117,
+        "tools_count": 182,
         "resources_count": 0,
         "prompts_count": 0,
         "display_name": "C3 Infra MCP",
-        "description": "Cloud health, DevOps operations, workflows, cost tracking, security scanning, observability, front-end deployment.",
+        "description": "Cloud health, DevOps operations, workflows, cost tracking, security scanning, observability, front-end deployment, plus the peers-control phone tools (merged from cloudy-android-mcp). Tools are served as the legacy infra_* dispatchers and as the Cloud-C3 app's hierarchy (c3_infra, c3_containers, c3_home, c3_ops, c3_observ, c3_configs, c3_tree).",
         "auth": "none",
         "sdk": "@modelcontextprotocol/sdk@^1.12.0"
       }
@@ -2131,8 +2131,28 @@
     "category": "Ops-API-MCP"
   },
   "dns_aliases": [
-    "cloud-infra-mcp.mesh.diegonmarcos.com"
+    "cloud-infra-mcp.mesh.diegonmarcos.com",
+    "superapp-mcp.mesh.diegonmarcos.com",
+    "cloud-superapp-mcp.mesh.diegonmarcos.com"
   ],
+  "legacy_aliases": {
+    "names": [
+      "cloud-infra-mcp",
+      "cloud-superapp-mcp",
+      "cloudy-android-mcp"
+    ],
+    "dns_aliases": [
+      "superapp-mcp.mesh.diegonmarcos.com",
+      "cloud-superapp-mcp.mesh.diegonmarcos.com"
+    ],
+    "base_paths": [
+      "/c3-infra-mcp",
+      "/cloud-superapp-mcp",
+      "/cloudy-android-mcp"
+    ],
+    "android_endpoint": "/mcp-android",
+    "_doc": "#1495 cloudy-android-mcp (cloud-superapp-mcp) is merged into this server as the peers-control tool group. Its old names stay as aliases for one release (#1450 alias policy): the old DNS names and the base paths /cloud-superapp-mcp and /cloudy-android-mcp are rewritten by the edge to this container's /mcp-android endpoint, which serves the same server plus the old `superapp` + `superapp_help` dispatchers so a client keeps its tool names. Remove with the other #1450 aliases and delete infra-api_cloud-superapp-mcp."
+  },
   "env_config": {
     "mattermost_url": "http://mattermost.mesh.diegonmarcos.com"
   },
@@ -2150,9 +2170,106 @@
       "vault_id_rsa.pub",
       "google_compute_engine",
       "google_compute_engine.pub"
+    ],
+    "_phones_doc": "#1495 MERGED from cloudy-android-mcp (cloud-superapp-mcp): the peers-control tool group dials the phones from here. THE ONE declaration of the phones this MCP dials (two phones since #573: the S21+ on wg client `termux` 10.0.0.9 and the A37 on wg client `samsung-a37` 10.0.0.10). Each phone's mesh addresses and peer key are NOT restated here: `wg_client` names its row in cloud-infra config.json#native.wireguard.clients (the same row superapp-users.json peers point at), and the derive resolves it into /opt/ssh-keys/cloud-infra-mcp/config. `alias` is the phone's fleet name; for each phone and each door in `doors` the MCP dials <alias><suffix> (v4) and <alias><suffix>-v6. extra_hosts below is exactly that expansion — test/test-superapp-hosts.sh fails on any drift, and on a SUPERAPP_PHONES alias that is not declared here. Every tool takes `phone` (alias or id); omitted, the phone that answered most recently is tried first, then the rest, and every result names the phone that answered.",
+    "phones": [
+      {
+        "alias": "phone1",
+        "id": "samsung-s21plus",
+        "name": "Samsung Galaxy S21+",
+        "wg_client": "termux"
+      },
+      {
+        "alias": "phone2",
+        "id": "samsung-a37",
+        "name": "Samsung Galaxy A37",
+        "wg_client": "samsung-a37"
+      }
+    ],
+    "doors": [
+      {
+        "suffix": "",
+        "user": "nix-on-droid",
+        "port": 8024
+      },
+      {
+        "suffix": "-termux",
+        "user": "termux",
+        "port": 8023
+      }
+    ],
+    "_extra_hosts_doc": "Ssh aliases the MCP dials (expanded from phones x doors; SUPERAPP_PHONES in src/compose.nix picks the order). The phone's sshd is provided by OUR terminals (cloud-u-android ac_cloud-nix-on-droid / ac_cloud-termux; ports and users as declared in ac_cloud-myterminal/data/terminal-targets.json: nix 8024 user nix-on-droid, termux 8023 user termux). Address = each phone's wg0 mesh client (phones[].wg_client) (config.json native.wireguard.clients), resolved by the derive into /opt/ssh-keys/cloud-infra-mcp/config. MESH ONLY: the phone has no public ssh route by design (sshd is reached over WireGuard; ide-endpoints.json: public surface is 443+51820+25), so there is no phone-pub. The key offered is vault_id_rsa (keys above); it is authorised on the phone by cloud-u-linux da__my-konsole/termux/authorized_keys. test/test-superapp-hosts.sh fails if an alias in SUPERAPP_HOSTS has no entry here.",
+    "extra_hosts": [
+      {
+        "host": "phone1",
+        "wg_client": "termux",
+        "family": "v4",
+        "user": "nix-on-droid",
+        "port": 8024
+      },
+      {
+        "host": "phone1-v6",
+        "wg_client": "termux",
+        "family": "v6",
+        "user": "nix-on-droid",
+        "port": 8024
+      },
+      {
+        "host": "phone1-termux",
+        "wg_client": "termux",
+        "family": "v4",
+        "user": "termux",
+        "port": 8023
+      },
+      {
+        "host": "phone1-termux-v6",
+        "wg_client": "termux",
+        "family": "v6",
+        "user": "termux",
+        "port": 8023
+      },
+      {
+        "host": "phone2",
+        "wg_client": "samsung-a37",
+        "family": "v4",
+        "user": "nix-on-droid",
+        "port": 8024
+      },
+      {
+        "host": "phone2-v6",
+        "wg_client": "samsung-a37",
+        "family": "v6",
+        "user": "nix-on-droid",
+        "port": 8024
+      },
+      {
+        "host": "phone2-termux",
+        "wg_client": "samsung-a37",
+        "family": "v4",
+        "user": "termux",
+        "port": 8023
+      },
+      {
+        "host": "phone2-termux-v6",
+        "wg_client": "samsung-a37",
+        "family": "v6",
+        "user": "termux",
+        "port": 8023
+      }
     ]
   },
   "tests": {
+    "c3-tree": {
+      "cmd": "node --experimental-strip-types test-c3-tree.mts",
+      "cwd": "src/code"
+    },
+    "peers-core": {
+      "cmd": "node --experimental-strip-types test-peers-core.mts",
+      "cwd": "src/code"
+    },
+    "superapp-hosts-declared": {
+      "cmd": "bash test/test-superapp-hosts.sh"
+    },
     "configs-sync": {
       "cmd": "node --experimental-strip-types test-configs-sync.mjs",
       "cwd": "src/code"
@@ -2163,6 +2280,10 @@
     },
     "gha-policy": {
       "cmd": "node --experimental-strip-types test-gha-policy.mjs",
+      "cwd": "src/code"
+    },
+    "phone-api": {
+      "cmd": "node --experimental-strip-types test-phone-api.mts",
       "cwd": "src/code"
     },
     "jev-flake": {
