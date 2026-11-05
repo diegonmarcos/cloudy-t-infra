@@ -6,9 +6,9 @@
   },
   "repo": "cloud",
   "counts": {
-    "files": 1574,
+    "files": 1576,
     "by_lang": {
-      "sh": 1061,
+      "sh": 1063,
       "js": 169,
       "nix": 304,
       "py": 10,
@@ -17,9 +17,9 @@
     "by_role": {
       "hook": 377,
       "file": 86,
-      "shell": 541,
+      "shell": 542,
       "flake": 6,
-      "script": 145,
+      "script": 146,
       "module": 113,
       "python": 7,
       "engine": 1,
@@ -1758,6 +1758,18 @@
         "get_config()",
         "step_build()",
         "step_secrets()"
+      ]
+    },
+    {
+      "path": ".github/workflows/scripts/overlay-private-secrets.sh",
+      "lang": "sh",
+      "role": "script",
+      "exports": [
+        "map_dir()"
+      ],
+      "imports": [],
+      "symbols": [
+        "map_dir()"
       ]
     },
     {
@@ -16585,6 +16597,18 @@
       "imports": [],
       "symbols": [
         "missing_allowance()"
+      ]
+    },
+    {
+      "path": "1_cicd/src/ops/overlay-private-secrets.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "map_dir()"
+      ],
+      "imports": [],
+      "symbols": [
+        "map_dir()"
       ]
     },
     {

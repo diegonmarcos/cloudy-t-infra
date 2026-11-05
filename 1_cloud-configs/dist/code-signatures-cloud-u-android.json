@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 23316,
+    "files": 23319,
     "by_lang": {
       "sh": 673,
       "js": 543,
-      "py": 199,
-      "kotlin": 12631,
+      "py": 201,
+      "kotlin": 12632,
       "ts": 8470,
       "java": 649,
       "nix": 36,
@@ -24,8 +24,8 @@
       "script": 294,
       "module": 6477,
       "java": 648,
-      "kotlin": 12628,
-      "python": 64,
+      "kotlin": 12629,
+      "python": 66,
       "flake": 32,
       "rust-module": 115,
       "nix-module": 4,
@@ -99455,6 +99455,7 @@
         "arr(k: String)",
         "strs(k: String)",
         "summary(decl: JsonObject, id: String)",
+        "rows(decl: JsonObject, id: String)",
         "build(id: String, s: Sources)",
         "row(o: JsonObject)",
         "capped(s: Sources, edges: List<Edge>)",
@@ -99473,6 +99474,7 @@
       "exports": [
         "OpsTags",
         "OpsMapScreen",
+        "OpsCatalogScreen",
         "OpsMapFragment",
         "OpsHealthScreen",
         "OpsHealthFragment",
@@ -99530,6 +99532,7 @@
         "stateInk(state: String)",
         "MapRow(id: String, r: OpsMaps.Row)",
         "OpsMapScreen(id: String, summary: String, sections: List<OpsMaps.Section>)",
+        "OpsCatalogScreen(tag: String, mapId: String, decl: JsonObject = Declarations.opsMaps)",
         "palette()",
         "Content()",
         "newInstance(id: String)",
@@ -100378,6 +100381,38 @@
       ]
     },
     {
+      "path": "ac_cloud-c3/app/src/test/java/com/diegonmarcos/cloudc3/HierarchyTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "HierarchyTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.bottomnav.NavDecl",
+        "com.diegonmarcos.superapp.bottomnav.NavPage",
+        "java.io.File",
+        "kotlinx.serialization.json.Json",
+        "kotlinx.serialization.json.JsonArray",
+        "kotlinx.serialization.json.JsonObject",
+        "kotlinx.serialization.json.jsonArray",
+        "kotlinx.serialization.json.jsonObject",
+        "kotlinx.serialization.json.jsonPrimitive",
+        "org.json.JSONArray",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "org.junit.runner.RunWith",
+        "org.robolectric.RobolectricTestRunner"
+      ],
+      "symbols": [
+        "appDir()",
+        "nav()",
+        "leaves(pages: List<NavPage>)",
+        "hierLeaves(nodes: JsonArray)",
+        "class HierarchyTest"
+      ]
+    },
+    {
       "path": "ac_cloud-c3/app/src/test/java/com/diegonmarcos/cloudc3/InfraScreensComposeTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -100795,6 +100830,32 @@
       ]
     },
     {
+      "path": "ac_cloud-c3/data/gen_c3_hierarchy.py",
+      "lang": "py",
+      "role": "python",
+      "exports": [
+        "load(p)",
+        "strip(parent, cid)",
+        "tree(ui)",
+        "leaves(nodes, prefix=\"\")",
+        "build()",
+        "catalog_maps(h, ids, mp)",
+        "main()"
+      ],
+      "imports": [
+        "json"
+      ],
+      "symbols": [
+        "load(p)",
+        "strip(parent, cid)",
+        "tree(ui)",
+        "leaves(nodes, prefix=\"\")",
+        "build()",
+        "catalog_maps(h, ids, mp)",
+        "main()"
+      ]
+    },
+    {
       "path": "ac_cloud-c3/data/gen_fleet_slice.py",
       "lang": "py",
       "role": "python",
@@ -100907,6 +100968,28 @@
         "shot()",
         "has()",
         "open_page()"
+      ]
+    },
+    {
+      "path": "ac_cloud-c3/test/test_c3_hierarchy.py",
+      "lang": "py",
+      "role": "python",
+      "exports": [
+        "J(p)",
+        "leaves(nodes, pre=\"\")",
+        "api_score(pat)",
+        "api_match(pat, path)",
+        "class Hierarchy"
+      ],
+      "imports": [
+        "json"
+      ],
+      "symbols": [
+        "J(p)",
+        "leaves(nodes, pre=\"\")",
+        "api_score(pat)",
+        "api_match(pat, path)",
+        "class Hierarchy"
       ]
     },
     {
