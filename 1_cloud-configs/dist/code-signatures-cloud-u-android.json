@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 23380,
+    "files": 23384,
     "by_lang": {
       "sh": 676,
       "js": 543,
       "py": 203,
-      "kotlin": 12687,
+      "kotlin": 12691,
       "ts": 8470,
       "java": 649,
       "nix": 36,
@@ -24,7 +24,7 @@
       "script": 294,
       "module": 6477,
       "java": 648,
-      "kotlin": 12684,
+      "kotlin": 12688,
       "python": 68,
       "flake": 32,
       "rust-module": 116,
@@ -8579,7 +8579,7 @@
         "kotlin.coroutines.resume"
       ],
       "symbols": [
-        "askGate(message: String)",
+        "askGate(message: String, withoutAdb: Boolean = false)",
         "askConfirm(title: String, message: String, yes: ()",
         "BgDialogHost(d: BgDialogs)",
         "class BgDialogs",
@@ -8703,6 +8703,28 @@
       ]
     },
     {
+      "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/bgpolicy/BgPolicyApi.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "BgPolicyApi"
+      ],
+      "imports": [
+        "android.content.Context",
+        "org.json.JSONArray",
+        "org.json.JSONObject"
+      ],
+      "symbols": [
+        "get(ctx: Context, query: Map<String, String>)",
+        "set(ctx: Context, query: Map<String, String>)",
+        "superSavingOn(ctx: Context)",
+        "superSavingOff(ctx: Context)",
+        "report(r: List<SsResult>, active: Boolean)",
+        "error(m: String)",
+        "class BgPolicyApi"
+      ]
+    },
+    {
       "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/bgpolicy/BgReplacedReceiver.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -8764,10 +8786,109 @@
         "kotlinx.coroutines.runBlocking"
       ],
       "symbols": [
+        "acquire(activity: Activity, dialogs: BgDialogs, withoutAdb: Boolean = false)",
         "ensureShell(activity: Activity, dialogs: BgDialogs)",
         "toast(activity: Activity, text: String)",
         "summary(what: String, r: List<BgOutcome>)",
-        "class BgUi"
+        "class BgUi",
+        "class Acquired"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/bgpolicy/SuperSaving.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "SsStep",
+        "SsDecl",
+        "SsHost",
+        "SsState",
+        "SsResult",
+        "SuperSaving"
+      ],
+      "imports": [
+        "org.json.JSONArray",
+        "org.json.JSONObject"
+      ],
+      "symbols": [
+        "parse(json: String)",
+        "indicator(json: String)",
+        "masterSync()",
+        "setMasterSync(on: Boolean)",
+        "idleArmed()",
+        "armIdle(on: Boolean)",
+        "keeperEnabled()",
+        "setKeeper(on: Boolean)",
+        "packages()",
+        "sh(cmd: String)",
+        "snapshot()",
+        "save(s: JSONObject)",
+        "result(s: SsStep, st: SsState, note: String)",
+        "on()",
+        "applyStep(s: SsStep, entry: JSONObject, done: List<SsResult>)",
+        "applySettings(s: SsStep, entry: JSONObject)",
+        "applyToggle(s: SsStep, entry: JSONObject)",
+        "off()",
+        "clear()",
+        "revertStep(s: SsStep, entry: JSONObject)",
+        "isActive(kv: BgKv)",
+        "class for",
+        "class SsStep",
+        "class SsDecl",
+        "class SsHost",
+        "class SsState",
+        "class SsResult",
+        "class SuperSaving"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/bgpolicy/SuperSavingRuntime.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "SuperSavingRuntime",
+        "SuperSavingOffReceiver"
+      ],
+      "imports": [
+        "android.app.NotificationChannel",
+        "android.app.NotificationManager",
+        "android.app.PendingIntent",
+        "android.content.BroadcastReceiver",
+        "android.content.ContentResolver",
+        "android.content.Context",
+        "android.content.Intent",
+        "android.content.IntentFilter",
+        "androidx.core.app.NotificationCompat",
+        "androidx.core.content.ContextCompat",
+        "com.diegonmarcos.superapp.R",
+        "com.diegonmarcos.superapp.system.WirelessDebugKeeper"
+      ],
+      "symbols": [
+        "decl(ctx: Context)",
+        "active(ctx: Context)",
+        "host(app: Context)",
+        "masterSync()",
+        "setMasterSync(on: Boolean)",
+        "idleArmed()",
+        "armIdle(on: Boolean)",
+        "keeperEnabled()",
+        "setKeeper(on: Boolean)",
+        "packages()",
+        "build(app: Context, shell: BgShell?)",
+        "turnOn(ctx: Context, shell: BgShell?)",
+        "turnOff(ctx: Context, shell: BgShell? = BgHost.shell(ctx)",
+        "onAppStart(app: Context)",
+        "summary(r: List<SsResult>)",
+        "post(app: Context, text: Triple<String, String, String>)",
+        "cancel(app: Context)",
+        "onReceive(context: Context, intent: Intent)",
+        "register(app: Context)",
+        "onReceive(c: Context, i: Intent)",
+        "unregister(app: Context)",
+        "class SuperSavingRuntime",
+        "class SsIndicator",
+        "class SuperSavingOffReceiver",
+        "class SsScreenOff"
       ]
     },
     {
@@ -10556,6 +10677,7 @@
       "symbols": [
         "ctxAny()",
         "palette()",
+        "askAdb(message: String)",
         "Content()",
         "loadSection(s: AboutSection)",
         "goMacro(label: String)",
@@ -10747,18 +10869,16 @@
       "role": "kotlin",
       "exports": [],
       "imports": [
-        "android.app.Activity",
-        "android.app.AlertDialog",
         "android.content.ClipData",
         "android.content.ClipboardManager",
         "android.content.ContentValues",
         "android.content.Context",
-        "android.content.Intent",
         "android.os.Build",
         "android.provider.MediaStore",
         "android.provider.Settings",
         "com.diegonmarcos.superapp.BuildConfig",
-        "com.diegonmarcos.superapp.adbdebug.EmbeddedAdbChannel",
+        "com.diegonmarcos.superapp.adbdebug.ChannelOps",
+        "com.diegonmarcos.superapp.adbdebug.SetupAction",
         "com.diegonmarcos.superapp.adbdebug.ShellChannels",
         "com.diegonmarcos.superapp.battery.BatteryRepository",
         "com.diegonmarcos.superapp.ops.dagu.DaguPrefs",
@@ -10776,23 +10896,25 @@
         "kotlinx.coroutines.CoroutineScope",
         "kotlinx.coroutines.Dispatchers",
         "kotlinx.coroutines.delay",
-        "kotlinx.coroutines.suspendCancellableCoroutine",
         "kotlinx.coroutines.withContext",
+        "androidx.compose.material3.AlertDialog",
+        "androidx.compose.material3.Text",
+        "androidx.compose.material3.TextButton",
+        "androidx.compose.runtime.Composable",
         "java.io.File",
-        "java.util.concurrent.atomic.AtomicBoolean",
-        "kotlin.coroutines.resume"
+        "java.util.concurrent.atomic.AtomicBoolean"
       ],
       "symbols": [
-        "run(ctx: Context, activity: Activity?, page: AboutPage, scope: CoroutineScope, out: XrayOut, say: (String)",
-        "go(ctx: Context, activity: Activity?, page: AboutPage, scope: CoroutineScope, out: XrayOut, say: (String)",
+        "run(ctx: Context, ask: suspend (String)",
+        "go(ctx: Context, ask: suspend (String)",
         "exec(cmd: String)",
         "walk(page: AboutPage, scope: CoroutineScope)",
         "save(ctx: Context, name: String, mime: String, text: String)",
         "openWirelessDebugging(ctx: Context)",
-        "askDialog(activity: Activity?, message: String)",
-        "answer(c: XrayAdbGate.Choice)",
+        "XrayAdbDialog(a: XrayAsk)",
         "class XrayOut",
-        "class XrayExport"
+        "class XrayExport",
+        "class XrayAsk"
       ]
     },
     {
@@ -18185,6 +18307,7 @@
         "fillSandboxes()",
         "fillThemes()",
         "fillModes()",
+        "superSavingTile(mode: LauncherModes.Mode)",
         "newInstance()",
         "class names",
         "class LauncherPresetsFragment",
@@ -20808,6 +20931,7 @@
       ],
       "symbols": [
         "exec(cmd: String)",
+        "special(c: String)",
         "run(s: String, out: StringBuilder)",
         "cfg()",
         "kv()",
@@ -20836,6 +20960,39 @@
         "engine(dev: BgShell?, roles: Set<String> = setOf(\"com.diegonmarcos.superapp\")",
         "exec(cmd: String)",
         "class BgPolicyTest"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/test/java/com/diegonmarcos/superapp/bgpolicy/SuperSavingTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "SuperSavingTest"
+      ],
+      "imports": [
+        "org.json.JSONObject",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNotNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.io.File"
+      ],
+      "symbols": [
+        "masterSync()",
+        "setMasterSync(on: Boolean)",
+        "idleArmed()",
+        "armIdle(on: Boolean)",
+        "keeperEnabled()",
+        "setKeeper(on: Boolean)",
+        "packages()",
+        "rig(vararg apps: String, essential: Set<String> = setOf(\"com.diegonmarcos.superapp\")",
+        "mode(r: Rig, shell: BgShell? = r.dev)",
+        "world(r: Rig)",
+        "seed(r: Rig)",
+        "class SuperSavingTest",
+        "class FakeHost",
+        "class Rig"
       ]
     },
     {
