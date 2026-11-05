@@ -35,6 +35,14 @@
         "https://c3-pvt.diegonmarcos.com/cloud-drive-mcp/mcp"
       ]
     },
+    "cloud-infra-mcp": {
+      "type": "http",
+      "url": "https://c3-pvt.diegonmarcos.com/cloud-infra-mcp/mcp",
+      "headers": {
+        "Authorization": "Bearer ${AUTHELIA_BEARER_TOKEN:-}"
+      },
+      "headersHelper": "sh \"${CLAUDE_PROJECT_DIR:-.}/.claude/mcp-auth-headers.sh\""
+    },
     "cloud-mail-mcp": {
       "type": "stdio",
       "command": "node",
@@ -57,6 +65,17 @@
         "https://c3-pvt.diegonmarcos.com/cloud-mattermost-mcp/mcp"
       ]
     },
+    "cloud-me-cgc-pvt-mcp": {
+      "type": "stdio",
+      "command": "node",
+      "args": [
+        "${CLAUDE_PROJECT_DIR:-.}/.claude/mcp-connect.mjs",
+        "--mesh",
+        "http://10.0.0.6:3107/mcp",
+        "--public",
+        "https://c3-pvt.diegonmarcos.com/cloud-me-cgc-pvt-mcp/mcp"
+      ]
+    },
     "cloud-services-mcp": {
       "type": "stdio",
       "command": "node",
@@ -68,6 +87,17 @@
         "https://c3-pvt.diegonmarcos.com/cloud-services-mcp/mcp"
       ]
     },
+    "cloud-superapp-mcp": {
+      "type": "stdio",
+      "command": "node",
+      "args": [
+        "${CLAUDE_PROJECT_DIR:-.}/.claude/mcp-connect.mjs",
+        "--mesh",
+        "https://c3-cloud-superapp-mcp.mesh.diegonmarcos.com/mcp",
+        "--public",
+        "https://c3-pvt.diegonmarcos.com/cloud-superapp-mcp/mcp"
+      ]
+    },
     "cloud-vault-mcp": {
       "type": "stdio",
       "command": "node",
@@ -75,6 +105,35 @@
         "${CLAUDE_PROJECT_DIR:-.}/.claude/mcp-connect.mjs",
         "--mesh",
         "http://10.0.0.6:3111/mcp"
+      ]
+    },
+    "cloudy-all-mcp": {
+      "type": "stdio",
+      "command": "node",
+      "args": [
+        "${CLAUDE_PROJECT_DIR:-.}/.claude/mcp-connect.mjs",
+        "--public",
+        "https://c3-pvt.diegonmarcos.com/cloudy-all-mcp/mcp"
+      ]
+    },
+    "cloudy-apps-communication-mcp": {
+      "type": "stdio",
+      "command": "node",
+      "args": [
+        "${CLAUDE_PROJECT_DIR:-.}/.claude/mcp-connect.mjs",
+        "--public",
+        "https://c3-pvt.diegonmarcos.com/cloudy-apps-communication-mcp/mcp"
+      ]
+    },
+    "cloudy-apps-drive-mcp": {
+      "type": "stdio",
+      "command": "node",
+      "args": [
+        "${CLAUDE_PROJECT_DIR:-.}/.claude/mcp-connect.mjs",
+        "--mesh",
+        "http://10.0.0.6:3109/mcp",
+        "--public",
+        "https://c3-pvt.diegonmarcos.com/cloudy-apps-drive-mcp/mcp"
       ]
     },
     "google-personal-mcp": {

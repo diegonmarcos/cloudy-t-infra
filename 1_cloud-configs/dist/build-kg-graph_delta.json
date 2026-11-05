@@ -33,15 +33,15 @@
   "_generated": "",
   "_source": "_cloud-data-consolidated.json via cloud-data-config-derive.ts/kg-delta",
   "counts": {
-    "nodes": 350,
-    "edges": 479,
+    "nodes": 362,
+    "edges": 499,
     "by_table": {
       "vm": 4,
-      "service": 84,
-      "container": 103,
+      "service": 88,
+      "container": 107,
       "domain": 44,
       "repo": 3,
-      "module": 84,
+      "module": 88,
       "package": 28
     }
   },
@@ -146,24 +146,50 @@
     },
     {
       "table": "service",
-      "id": "embeddings_api",
-      "key": "service:embeddings_api",
+      "id": "cloudy_ai_api",
+      "key": "service:cloudy_ai_api",
       "properties": {
-        "name": "embeddings-api",
+        "name": "cloudy-ai-api",
+        "category": "sec",
+        "description": "AI gateway: /ai/{tokens,embeddings,agents,claude,memory} -> separate backend containers (cloudy-ai-*-api); legacy /<old-name>/ paths kept for one release.",
+        "domain": null,
+        "port": 4185,
+        "vm": "oci-apps",
+        "folder": "infra-ai_cloudy-ai-api"
+      }
+    },
+    {
+      "table": "container",
+      "id": "cloudy_ai_api",
+      "key": "container:cloudy_ai_api",
+      "properties": {
+        "name": "cloudy-ai-api",
+        "image": "ghcr.io/diegonmarcos/tokens-api-binaries:latest",
+        "role": "app",
+        "port": 4185,
+        "public": true
+      }
+    },
+    {
+      "table": "service",
+      "id": "cloudy_ai_embeddings_api",
+      "key": "service:cloudy_ai_embeddings_api",
+      "properties": {
+        "name": "cloudy-ai-embeddings-api",
         "category": "agi",
         "description": "Fleet embeddings + rerank + PDF text server, CPU, mesh-only on oci-apps. OpenAI-compatible POST /embeddings (BAAI/bge-m3) and POST /rerank (BAAI/bge-reranker-v2-m3) served by Infinity, plus POST /pdf (raw application/pdf body to plain text, pypdf), GET /models and GET /health. Consumers: Cloud SuperIntel Notebook retrieval and Cloud Tools Retrieval steps. Mesh address http://embeddings-api.mesh.diegonmarcos.com:7997 (direct, plain HTTP inside WireGuard); no public route.",
         "domain": null,
         "port": 7997,
         "vm": "oci-apps",
-        "folder": "infra-ai_embeddings-api"
+        "folder": "infra-ai_cloudy-ai-embeddings-api"
       }
     },
     {
       "table": "container",
-      "id": "embeddings_api",
-      "key": "container:embeddings_api",
+      "id": "cloudy_ai_embeddings_api",
+      "key": "container:cloudy_ai_embeddings_api",
       "properties": {
-        "name": "embeddings-api",
+        "name": "cloudy-ai-embeddings-api",
         "image": "ghcr.io/diegonmarcos/embeddings-api-binaries:latest",
         "role": "app",
         "port": 7997,
@@ -224,32 +250,6 @@
     },
     {
       "table": "service",
-      "id": "c3_infra_api",
-      "key": "service:c3_infra_api",
-      "properties": {
-        "name": "c3-infra-api",
-        "category": "sec",
-        "description": "C3 REST API — Cloud Control Center Fastify API",
-        "domain": "api.diegonmarcos.com/c3-infra-api",
-        "port": 8081,
-        "vm": "oci-apps",
-        "folder": "infra-api_c3-infra-api"
-      }
-    },
-    {
-      "table": "container",
-      "id": "c3_infra_api",
-      "key": "container:c3_infra_api",
-      "properties": {
-        "name": "c3-infra-api",
-        "image": "ghcr.io/diegonmarcos/c3-infra-api:latest",
-        "role": "app",
-        "port": 8081,
-        "public": true
-      }
-    },
-    {
-      "table": "service",
       "id": "c3_public_api",
       "key": "service:c3_public_api",
       "properties": {
@@ -271,32 +271,6 @@
         "image": "ghcr.io/diegonmarcos/c3-public-api:latest",
         "role": "app",
         "port": 8087,
-        "public": true
-      }
-    },
-    {
-      "table": "service",
-      "id": "c3_services_api",
-      "key": "service:c3_services_api",
-      "properties": {
-        "name": "c3-services-api",
-        "category": "obs",
-        "description": "C3 Services REST API — service API gateway Fastify API",
-        "domain": "api.diegonmarcos.com/c3-services-api",
-        "port": 8082,
-        "vm": "oci-apps",
-        "folder": "infra-api_c3-services-api"
-      }
-    },
-    {
-      "table": "container",
-      "id": "c3_services_api",
-      "key": "container:c3_services_api",
-      "properties": {
-        "name": "c3-services-api",
-        "image": "ghcr.io/diegonmarcos/c3-services-api:latest",
-        "role": "app",
-        "port": 8082,
         "public": true
       }
     },
@@ -510,25 +484,155 @@
     },
     {
       "table": "service",
-      "id": "git_proxy_api",
-      "key": "service:git_proxy_api",
+      "id": "cloudy_all_api",
+      "key": "service:cloudy_all_api",
       "properties": {
-        "name": "git-proxy-api",
+        "name": "cloudy-all-api",
+        "category": "obs",
+        "description": "C3 Services REST API — service API gateway Fastify API",
+        "domain": "api.diegonmarcos.com/c3-services-api",
+        "port": 8082,
+        "vm": "oci-apps",
+        "folder": "infra-api_cloudy-all-api"
+      }
+    },
+    {
+      "table": "container",
+      "id": "cloudy_all_api",
+      "key": "container:cloudy_all_api",
+      "properties": {
+        "name": "cloudy-all-api",
+        "image": "ghcr.io/diegonmarcos/cloudy-all-api:latest",
+        "role": "app",
+        "port": 8082,
+        "public": true
+      }
+    },
+    {
+      "table": "service",
+      "id": "cloudy_all_mcp",
+      "key": "service:cloudy_all_mcp",
+      "properties": {
+        "name": "cloudy-all-mcp",
+        "category": "obs",
+        "description": "Fleet MCP router: list_servers, list_tools(server), call(server, tool, args)",
+        "domain": null,
+        "port": 3112,
+        "vm": "oci-apps",
+        "folder": "infra-api_cloudy-all-mcp"
+      }
+    },
+    {
+      "table": "container",
+      "id": "cloudy_all_mcp",
+      "key": "container:cloudy_all_mcp",
+      "properties": {
+        "name": "cloudy-all-mcp",
+        "image": "ghcr.io/diegonmarcos/cloudy-all-mcp:latest",
+        "role": "app",
+        "port": 3112,
+        "public": true
+      }
+    },
+    {
+      "table": "service",
+      "id": "cloudy_apps_communication_mcp",
+      "key": "service:cloudy_apps_communication_mcp",
+      "properties": {
+        "name": "cloudy-apps-communication-mcp",
+        "category": "app",
+        "description": "Mail MCP server — IMAP/SMTP/Admin via Stalwart REST API",
+        "domain": "mcp.diegonmarcos.com",
+        "port": 3103,
+        "vm": "oci-apps",
+        "folder": "infra-api_cloudy-apps-communication-mcp"
+      }
+    },
+    {
+      "table": "container",
+      "id": "cloudy_apps_communication_mcp",
+      "key": "container:cloudy_apps_communication_mcp",
+      "properties": {
+        "name": "cloudy-apps-communication-mcp",
+        "image": "ghcr.io/diegonmarcos/cloudy-apps-communication-mcp:latest",
+        "role": "app",
+        "port": 3103,
+        "public": true
+      }
+    },
+    {
+      "table": "service",
+      "id": "cloudy_apps_drive_mcp",
+      "key": "service:cloudy_apps_drive_mcp",
+      "properties": {
+        "name": "cloudy-apps-drive-mcp",
+        "category": "app",
+        "description": "Drive MCP server — one facade over every storage unit: repos, files, photos, sync, scrapes, S3 and conversion",
+        "domain": "mcp.diegonmarcos.com",
+        "port": 3109,
+        "vm": "oci-apps",
+        "folder": "infra-api_cloudy-apps-drive-mcp"
+      }
+    },
+    {
+      "table": "container",
+      "id": "cloudy_apps_drive_mcp",
+      "key": "container:cloudy_apps_drive_mcp",
+      "properties": {
+        "name": "cloudy-apps-drive-mcp",
+        "image": "ghcr.io/diegonmarcos/cloudy-apps-drive-mcp:latest",
+        "role": "app",
+        "port": 3109,
+        "public": true
+      }
+    },
+    {
+      "table": "service",
+      "id": "cloudy_c3_api",
+      "key": "service:cloudy_c3_api",
+      "properties": {
+        "name": "cloudy-c3-api",
+        "category": "sec",
+        "description": "C3 REST API — Cloud Control Center Fastify API",
+        "domain": "api.diegonmarcos.com/c3-infra-api",
+        "port": 8081,
+        "vm": "oci-apps",
+        "folder": "infra-api_cloudy-c3-api"
+      }
+    },
+    {
+      "table": "container",
+      "id": "cloudy_c3_api",
+      "key": "container:cloudy_c3_api",
+      "properties": {
+        "name": "cloudy-c3-api",
+        "image": "ghcr.io/diegonmarcos/cloudy-c3-api:latest",
+        "role": "app",
+        "port": 8081,
+        "public": true
+      }
+    },
+    {
+      "table": "service",
+      "id": "cloudy_drive_git_proxy_api",
+      "key": "service:cloudy_drive_git_proxy_api",
+      "properties": {
+        "name": "cloudy-drive-git-proxy-api",
         "category": "app",
         "description": "Git Proxy API — Authelia-fronted read path to GitHub so the phone holds NO GitHub credential (#647, route 3 of #646's fallback chain). The caller authenticates to US with the Authelia bearer it already has; this service holds the GitHub token server-side and streams the result back.",
         "domain": "api.diegonmarcos.com/git",
         "port": 8123,
         "vm": "oci-analytics",
-        "folder": "infra-api_git-proxy-api"
+        "folder": "infra-api_cloudy-drive-git-proxy-api"
       }
     },
     {
       "table": "container",
-      "id": "git_proxy_api",
-      "key": "container:git_proxy_api",
+      "id": "cloudy_drive_git_proxy_api",
+      "key": "container:cloudy_drive_git_proxy_api",
       "properties": {
-        "name": "git-proxy-api",
-        "image": "ghcr.io/diegonmarcos/git-proxy-api:latest",
+        "name": "cloudy-drive-git-proxy-api",
+        "image": "ghcr.io/diegonmarcos/cloudy-drive-git-proxy-api:latest",
         "role": "app",
         "port": 8123,
         "public": true
@@ -1042,10 +1146,10 @@
     },
     {
       "table": "container",
-      "id": "rss_gateway",
-      "key": "container:rss_gateway",
+      "id": "capital_stack_news_rss_api",
+      "key": "container:capital_stack_news_rss_api",
       "properties": {
-        "name": "rss-gateway",
+        "name": "capital-stack-news-rss-api",
         "image": "python:3.11-slim",
         "role": "rss-gateway",
         "port": 8091,
@@ -1054,10 +1158,10 @@
     },
     {
       "table": "container",
-      "id": "github_rss",
-      "key": "container:github_rss",
+      "id": "capital_stack_news_github_rss_api",
+      "key": "container:capital_stack_news_github_rss_api",
       "properties": {
-        "name": "github-rss",
+        "name": "capital-stack-news-github-rss-api",
         "image": "python:3.11-slim",
         "role": "github-rss",
         "port": null,
@@ -1234,10 +1338,10 @@
     },
     {
       "table": "container",
-      "id": "auth_broker_google",
-      "key": "container:auth_broker_google",
+      "id": "cloudy_auth_google_api",
+      "key": "container:cloudy_auth_google_api",
       "properties": {
-        "name": "auth-broker-google",
+        "name": "cloudy-auth-google-api",
         "image": "ghcr.io/diegonmarcos/auth-broker-binaries:latest",
         "role": "google",
         "port": 4180,
@@ -1246,10 +1350,10 @@
     },
     {
       "table": "container",
-      "id": "auth_broker_github",
-      "key": "container:auth_broker_github",
+      "id": "cloudy_auth_github_api",
+      "key": "container:cloudy_auth_github_api",
       "properties": {
-        "name": "auth-broker-github",
+        "name": "cloudy-auth-github-api",
         "image": "ghcr.io/diegonmarcos/auth-broker-binaries:latest",
         "role": "github",
         "port": 4181,
@@ -1258,10 +1362,10 @@
     },
     {
       "table": "container",
-      "id": "auth_broker_cloudflare",
-      "key": "container:auth_broker_cloudflare",
+      "id": "cloudy_auth_cloudflare_api",
+      "key": "container:cloudy_auth_cloudflare_api",
       "properties": {
-        "name": "auth-broker-cloudflare",
+        "name": "cloudy-auth-cloudflare-api",
         "image": "ghcr.io/diegonmarcos/auth-broker-binaries:latest",
         "role": "cloudflare",
         "port": 4182,
@@ -1270,10 +1374,10 @@
     },
     {
       "table": "container",
-      "id": "auth_broker_email",
-      "key": "container:auth_broker_email",
+      "id": "cloudy_auth_email_api",
+      "key": "container:cloudy_auth_email_api",
       "properties": {
-        "name": "auth-broker-email",
+        "name": "cloudy-auth-email-api",
         "image": "ghcr.io/diegonmarcos/auth-broker-binaries:latest",
         "role": "email",
         "port": 4183,
@@ -1410,6 +1514,32 @@
     },
     {
       "table": "service",
+      "id": "cloudy_ai_tokens_api",
+      "key": "service:cloudy_ai_tokens_api",
+      "properties": {
+        "name": "cloudy-ai-tokens-api",
+        "category": "sec",
+        "description": "Fleet token engine: lists, generates, reveals and revokes every fleet bearer token (fleet ft_ tokens and adopted Authelia JWTs); introspect-proxy asks it before accepting a Bearer, so a revoked token stops working within 60 seconds. Public address: c3-pvt.diegonmarcos.com/tokens-api (shared gate, #1104); mesh tokens-api.mesh.diegonmarcos.com",
+        "domain": null,
+        "port": 4184,
+        "vm": "oci-apps",
+        "folder": "infra-sec_cloudy-ai-tokens-api"
+      }
+    },
+    {
+      "table": "container",
+      "id": "cloudy_ai_tokens_api",
+      "key": "container:cloudy_ai_tokens_api",
+      "properties": {
+        "name": "cloudy-ai-tokens-api",
+        "image": "ghcr.io/diegonmarcos/tokens-api-binaries:latest",
+        "role": "app",
+        "port": 4184,
+        "public": true
+      }
+    },
+    {
+      "table": "service",
       "id": "crowdsec",
       "key": "service:crowdsec",
       "properties": {
@@ -1488,32 +1618,6 @@
     },
     {
       "table": "service",
-      "id": "tokens_api",
-      "key": "service:tokens_api",
-      "properties": {
-        "name": "tokens-api",
-        "category": "sec",
-        "description": "Fleet token engine: lists, generates, reveals and revokes every fleet bearer token (fleet ft_ tokens and adopted Authelia JWTs); introspect-proxy asks it before accepting a Bearer, so a revoked token stops working within 60 seconds. Public address: c3-pvt.diegonmarcos.com/tokens-api (shared gate, #1104); mesh tokens-api.mesh.diegonmarcos.com",
-        "domain": null,
-        "port": 4184,
-        "vm": "oci-apps",
-        "folder": "infra-sec_tokens-api"
-      }
-    },
-    {
-      "table": "container",
-      "id": "tokens_api",
-      "key": "container:tokens_api",
-      "properties": {
-        "name": "tokens-api",
-        "image": "ghcr.io/diegonmarcos/tokens-api-binaries:latest",
-        "role": "app",
-        "port": 4184,
-        "public": true
-      }
-    },
-    {
-      "table": "service",
       "id": "cloud_cgc_pub_mcp",
       "key": "service:cloud_cgc_pub_mcp",
       "properties": {
@@ -1547,6 +1651,136 @@
         "image": "ghcr.io/diegonmarcos/cloud-cgc-pub-mcp:latest",
         "role": "pvt",
         "port": 3107,
+        "public": false
+      }
+    },
+    {
+      "table": "service",
+      "id": "cloud_me_cgc_pvt_graph_api",
+      "key": "service:cloud_me_cgc_pvt_graph_api",
+      "properties": {
+        "name": "cloud-me-cgc-pvt-graph-api",
+        "category": "data",
+        "description": "SurrealDB Hybrid Knowledge Graph - Infrastructure topology + vector search",
+        "domain": null,
+        "port": 8001,
+        "vm": "oci-apps",
+        "folder": "user-ai_cloud-me-cgc-pvt-graph-api"
+      }
+    },
+    {
+      "table": "container",
+      "id": "cloud_me_cgc_pvt_graph_api",
+      "key": "container:cloud_me_cgc_pvt_graph_api",
+      "properties": {
+        "name": "cloud-me-cgc-pvt-graph-api",
+        "image": "ghcr.io/diegonmarcos/cloud-me-cgc-pvt-graph-api:latest",
+        "role": "app",
+        "port": 8001,
+        "public": false
+      }
+    },
+    {
+      "table": "service",
+      "id": "cloudy_ai_agents_api",
+      "key": "service:cloudy_ai_agents_api",
+      "properties": {
+        "name": "cloudy-ai-agents-api",
+        "category": "agi",
+        "description": "my-ai API on oci-apps — one polyglot container: OpenAI /v1 + Ollama /api + Anthropic /v1/messages mimic backed by OpenRouter (no Claude subscription, no metered Anthropic key), with a vendored Headroom (Apache-2.0) compression hop and a savings dashboard. Sibling of claude-superset-api; the agent face for this stack is goose (my-ai wraps goose, claude-superset keeps claude-cli). Internal WG-only sidecar, never public.",
+        "domain": null,
+        "port": 3217,
+        "vm": "oci-apps",
+        "folder": "user-ai_cloudy-ai-agents-api"
+      }
+    },
+    {
+      "table": "container",
+      "id": "cloud_agi_goose",
+      "key": "container:cloud_agi_goose",
+      "properties": {
+        "name": "cloud-agi-goose",
+        "image": "ghcr.io/diegonmarcos/cloudy-ai-agents-api:latest",
+        "role": "app",
+        "port": 3217,
+        "public": false
+      }
+    },
+    {
+      "table": "service",
+      "id": "cloudy_ai_claude_api",
+      "key": "service:cloudy_ai_claude_api",
+      "properties": {
+        "name": "cloudy-ai-claude-api",
+        "category": "agi",
+        "description": "Claude superset API on oci-apps — one polyglot container: OpenAI /v1 + Ollama /api + Anthropic /v1/messages mimic backed by the subscription `claude` CLI (no metered key), with a vendored Headroom (Apache-2.0) compression hop and a savings dashboard. Successor to kg-bridge; usable as a local/remote fallback. Internal WG-only sidecar, never public.",
+        "domain": null,
+        "port": 3117,
+        "vm": "oci-apps",
+        "folder": "user-ai_cloudy-ai-claude-api"
+      }
+    },
+    {
+      "table": "container",
+      "id": "cloud_agi_claude",
+      "key": "container:cloud_agi_claude",
+      "properties": {
+        "name": "cloud-agi-claude",
+        "image": "ghcr.io/diegonmarcos/claude-superset-api:latest",
+        "role": "app",
+        "port": 3117,
+        "public": false
+      }
+    },
+    {
+      "table": "service",
+      "id": "cloudy_ai_memory_api",
+      "key": "service:cloudy_ai_memory_api",
+      "properties": {
+        "name": "cloudy-ai-memory-api",
+        "category": "agi",
+        "description": "Central SQLite store of all Claude Code session transcripts — push/list/fetch so a session started on one device can be resumed from any other. WG-only sidecar on oci-apps; Node 22 built-in node:sqlite (phone-portable, no native deps).",
+        "domain": null,
+        "port": 3108,
+        "vm": "oci-apps",
+        "folder": "user-ai_cloudy-ai-memory-api"
+      }
+    },
+    {
+      "table": "container",
+      "id": "cloudy_ai_memory_api",
+      "key": "container:cloudy_ai_memory_api",
+      "properties": {
+        "name": "cloudy-ai-memory-api",
+        "image": "ghcr.io/diegonmarcos/cloudy-ai-memory-api:latest",
+        "role": "app",
+        "port": 3108,
+        "public": false
+      }
+    },
+    {
+      "table": "service",
+      "id": "cloudy_cgc_pub_graph_api",
+      "key": "service:cloudy_cgc_pub_graph_api",
+      "properties": {
+        "name": "cloudy-cgc-pub-graph-api",
+        "category": "data",
+        "description": "SurrealDB Hybrid Knowledge Graph - Infrastructure topology + vector search",
+        "domain": null,
+        "port": 8002,
+        "vm": "oci-apps",
+        "folder": "user-ai_cloudy-cgc-pub-graph-api"
+      }
+    },
+    {
+      "table": "container",
+      "id": "cloudy_cgc_pub_graph_api",
+      "key": "container:cloudy_cgc_pub_graph_api",
+      "properties": {
+        "name": "cloudy-cgc-pub-graph-api",
+        "image": "ghcr.io/diegonmarcos/cloudy-cgc-pub-graph-api:latest",
+        "role": "app",
+        "port": 8002,
         "public": false
       }
     },
@@ -1604,110 +1838,6 @@
     },
     {
       "table": "service",
-      "id": "kg_store",
-      "key": "service:kg_store",
-      "properties": {
-        "name": "kg-store",
-        "category": "data",
-        "description": "SurrealDB Hybrid Knowledge Graph - Infrastructure topology + vector search",
-        "domain": null,
-        "port": 8001,
-        "vm": "oci-apps",
-        "folder": "user-ai_kg-store"
-      }
-    },
-    {
-      "table": "container",
-      "id": "kg_store",
-      "key": "container:kg_store",
-      "properties": {
-        "name": "kg-store",
-        "image": "ghcr.io/diegonmarcos/kg-store:latest",
-        "role": "app",
-        "port": 8001,
-        "public": false
-      }
-    },
-    {
-      "table": "service",
-      "id": "kg_store_pub",
-      "key": "service:kg_store_pub",
-      "properties": {
-        "name": "kg-store-pub",
-        "category": "data",
-        "description": "SurrealDB Hybrid Knowledge Graph - Infrastructure topology + vector search",
-        "domain": null,
-        "port": 8002,
-        "vm": "oci-apps",
-        "folder": "user-ai_kg-store-pub"
-      }
-    },
-    {
-      "table": "container",
-      "id": "kg_store_pub",
-      "key": "container:kg_store_pub",
-      "properties": {
-        "name": "kg-store-pub",
-        "image": "ghcr.io/diegonmarcos/kg-store-pub:latest",
-        "role": "app",
-        "port": 8002,
-        "public": false
-      }
-    },
-    {
-      "table": "service",
-      "id": "my_ai_api",
-      "key": "service:my_ai_api",
-      "properties": {
-        "name": "my-ai-api",
-        "category": "agi",
-        "description": "my-ai API on oci-apps — one polyglot container: OpenAI /v1 + Ollama /api + Anthropic /v1/messages mimic backed by OpenRouter (no Claude subscription, no metered Anthropic key), with a vendored Headroom (Apache-2.0) compression hop and a savings dashboard. Sibling of claude-superset-api; the agent face for this stack is goose (my-ai wraps goose, claude-superset keeps claude-cli). Internal WG-only sidecar, never public.",
-        "domain": null,
-        "port": 3217,
-        "vm": "oci-apps",
-        "folder": "user-ai_my-ai-api"
-      }
-    },
-    {
-      "table": "container",
-      "id": "cloud_agi_goose",
-      "key": "container:cloud_agi_goose",
-      "properties": {
-        "name": "cloud-agi-goose",
-        "image": "ghcr.io/diegonmarcos/my-ai-api:latest",
-        "role": "app",
-        "port": 3217,
-        "public": false
-      }
-    },
-    {
-      "table": "service",
-      "id": "my_ai_claude_api",
-      "key": "service:my_ai_claude_api",
-      "properties": {
-        "name": "my-ai_claude-api",
-        "category": "agi",
-        "description": "Claude superset API on oci-apps — one polyglot container: OpenAI /v1 + Ollama /api + Anthropic /v1/messages mimic backed by the subscription `claude` CLI (no metered key), with a vendored Headroom (Apache-2.0) compression hop and a savings dashboard. Successor to kg-bridge; usable as a local/remote fallback. Internal WG-only sidecar, never public.",
-        "domain": null,
-        "port": 3117,
-        "vm": "oci-apps",
-        "folder": "user-ai_my-ai_claude-api"
-      }
-    },
-    {
-      "table": "container",
-      "id": "cloud_agi_claude",
-      "key": "container:cloud_agi_claude",
-      "properties": {
-        "name": "cloud-agi-claude",
-        "image": "ghcr.io/diegonmarcos/claude-superset-api:latest",
-        "role": "app",
-        "port": 3117,
-        "public": false
-      }
-    },
-    {
-      "table": "service",
       "id": "openclaw",
       "key": "service:openclaw",
       "properties": {
@@ -1729,32 +1859,6 @@
         "image": "ghcr.io/openclaw/openclaw:2026.9.9",
         "role": "app",
         "port": 18789,
-        "public": false
-      }
-    },
-    {
-      "table": "service",
-      "id": "session_memory",
-      "key": "service:session_memory",
-      "properties": {
-        "name": "session-memory",
-        "category": "agi",
-        "description": "Central SQLite store of all Claude Code session transcripts — push/list/fetch so a session started on one device can be resumed from any other. WG-only sidecar on oci-apps; Node 22 built-in node:sqlite (phone-portable, no native deps).",
-        "domain": null,
-        "port": 3108,
-        "vm": "oci-apps",
-        "folder": "user-ai_session-memory"
-      }
-    },
-    {
-      "table": "container",
-      "id": "session_memory",
-      "key": "container:session_memory",
-      "properties": {
-        "name": "session-memory",
-        "image": "ghcr.io/diegonmarcos/session-memory:latest",
-        "role": "app",
-        "port": 3108,
         "public": false
       }
     },
@@ -2004,25 +2108,25 @@
     },
     {
       "table": "service",
-      "id": "scrappers_api",
-      "key": "service:scrappers_api",
+      "id": "cloudy_browser_scrapper_api",
+      "key": "service:cloudy_browser_scrapper_api",
       "properties": {
-        "name": "scrappers-api",
+        "name": "cloudy-browser-scrapper-api",
         "category": "data",
         "description": "Unified scrapers API (Instagram / Pinterest / LinkedIn / generic crawl) — retires crawlee-cloud. Lean single-container FastAPI, on-demand, flat-JSON output.",
         "domain": "api.diegonmarcos.com",
         "port": 3020,
         "vm": "oci-apps",
-        "folder": "user-data_scrappers-api"
+        "folder": "user-data_cloudy-browser-scrapper-api"
       }
     },
     {
       "table": "container",
-      "id": "scrappers_api",
-      "key": "container:scrappers_api",
+      "id": "cloudy_browser_scrapper_api",
+      "key": "container:cloudy_browser_scrapper_api",
       "properties": {
-        "name": "scrappers-api",
-        "image": "ghcr.io/diegonmarcos/scrappers-api:latest",
+        "name": "cloudy-browser-scrapper-api",
+        "image": "ghcr.io/diegonmarcos/cloudy-browser-scrapper-api:latest",
         "role": "app",
         "port": 3020,
         "public": true
@@ -2030,25 +2134,25 @@
     },
     {
       "table": "service",
-      "id": "capital_stack_finterminal_api",
-      "key": "service:capital_stack_finterminal_api",
+      "id": "capital_stack_finterm_api",
+      "key": "service:capital_stack_finterm_api",
       "properties": {
-        "name": "capital-stack-finterminal-api",
+        "name": "capital-stack-finterm-api",
         "category": "fin",
         "description": "Fincept Terminal backend (capital-stack-finterminal-api) — REST + WebSocket over DataHub, 35 data connectors, 7 analytics, 17 brokers, 6 investor personas, MCP tools",
         "domain": "api.diegonmarcos.com/capital-stack-finterminal-api",
         "port": 8340,
         "vm": "oci-apps",
-        "folder": "user-fin_capital-stack-finterminal-api"
+        "folder": "user-fin_capital-stack-finterm-api"
       }
     },
     {
       "table": "container",
-      "id": "capital_stack_finterminal_api",
-      "key": "container:capital_stack_finterminal_api",
+      "id": "capital_stack_finterm_api",
+      "key": "container:capital_stack_finterm_api",
       "properties": {
-        "name": "capital-stack-finterminal-api",
-        "image": "ghcr.io/diegonmarcos/capital-stack-finterminal-api:latest",
+        "name": "capital-stack-finterm-api",
+        "image": "ghcr.io/diegonmarcos/capital-stack-finterm-api:latest",
         "role": "app",
         "port": 8340,
         "public": true
@@ -2158,25 +2262,25 @@
     },
     {
       "table": "service",
-      "id": "news_gdelt",
-      "key": "service:news_gdelt",
+      "id": "capital_stack_news_gdelt_api",
+      "key": "service:capital_stack_news_gdelt_api",
       "properties": {
-        "name": "news-gdelt",
+        "name": "capital-stack-news-gdelt-api",
         "category": "tools",
         "description": "GDELT News Aggregator — Fastify API with SQLite cache",
         "domain": null,
         "port": 3019,
         "vm": "oci-apps",
-        "folder": "user-news_news-gdelt"
+        "folder": "user-news_capital-stack-news-gdelt-api"
       }
     },
     {
       "table": "container",
-      "id": "news_gdelt",
-      "key": "container:news_gdelt",
+      "id": "capital_stack_news_gdelt_api",
+      "key": "container:capital_stack_news_gdelt_api",
       "properties": {
-        "name": "news-gdelt",
-        "image": "ghcr.io/diegonmarcos/news-gdelt:latest",
+        "name": "capital-stack-news-gdelt-api",
+        "image": "ghcr.io/diegonmarcos/capital-stack-news-gdelt-api:latest",
         "role": "app",
         "port": 3019,
         "public": false
@@ -2540,26 +2644,10 @@
     },
     {
       "table": "domain",
-      "id": "api_diegonmarcos_com/c3_infra_api",
-      "key": "domain:api_diegonmarcos_com/c3_infra_api",
-      "properties": {
-        "fqdn": "api.diegonmarcos.com/c3-infra-api"
-      }
-    },
-    {
-      "table": "domain",
       "id": "api_diegonmarcos_com/pub",
       "key": "domain:api_diegonmarcos_com/pub",
       "properties": {
         "fqdn": "api.diegonmarcos.com/pub"
-      }
-    },
-    {
-      "table": "domain",
-      "id": "api_diegonmarcos_com/c3_services_api",
-      "key": "domain:api_diegonmarcos_com/c3_services_api",
-      "properties": {
-        "fqdn": "api.diegonmarcos.com/c3-services-api"
       }
     },
     {
@@ -2576,6 +2664,22 @@
       "key": "domain:mcp_diegonmarcos_com/c3_infra_mcp",
       "properties": {
         "fqdn": "mcp.diegonmarcos.com/c3-infra-mcp"
+      }
+    },
+    {
+      "table": "domain",
+      "id": "api_diegonmarcos_com/c3_services_api",
+      "key": "domain:api_diegonmarcos_com/c3_services_api",
+      "properties": {
+        "fqdn": "api.diegonmarcos.com/c3-services-api"
+      }
+    },
+    {
+      "table": "domain",
+      "id": "api_diegonmarcos_com/c3_infra_api",
+      "key": "domain:api_diegonmarcos_com/c3_infra_api",
+      "properties": {
+        "fqdn": "api.diegonmarcos.com/c3-infra-api"
       }
     },
     {
@@ -2904,13 +3008,24 @@
     },
     {
       "table": "module",
-      "id": "infra_ai_embeddings_api",
-      "key": "module:infra_ai_embeddings_api",
+      "id": "infra_ai_cloudy_ai_api",
+      "key": "module:infra_ai_cloudy_ai_api",
       "properties": {
-        "name": "infra-ai_embeddings-api",
+        "name": "infra-ai_cloudy-ai-api",
+        "repo": "cloud",
+        "category": "sec",
+        "service": "cloudy-ai-api"
+      }
+    },
+    {
+      "table": "module",
+      "id": "infra_ai_cloudy_ai_embeddings_api",
+      "key": "module:infra_ai_cloudy_ai_embeddings_api",
+      "properties": {
+        "name": "infra-ai_cloudy-ai-embeddings-api",
         "repo": "cloud",
         "category": "agi",
-        "service": "embeddings-api"
+        "service": "cloudy-ai-embeddings-api"
       }
     },
     {
@@ -2937,17 +3052,6 @@
     },
     {
       "table": "module",
-      "id": "infra_api_c3_infra_api",
-      "key": "module:infra_api_c3_infra_api",
-      "properties": {
-        "name": "infra-api_c3-infra-api",
-        "repo": "cloud",
-        "category": "sec",
-        "service": "c3-infra-api"
-      }
-    },
-    {
-      "table": "module",
       "id": "infra_api_c3_public_api",
       "key": "module:infra_api_c3_public_api",
       "properties": {
@@ -2955,17 +3059,6 @@
         "repo": "cloud",
         "category": "obs",
         "service": "c3-public-api"
-      }
-    },
-    {
-      "table": "module",
-      "id": "infra_api_c3_services_api",
-      "key": "module:infra_api_c3_services_api",
-      "properties": {
-        "name": "infra-api_c3-services-api",
-        "repo": "cloud",
-        "category": "obs",
-        "service": "c3-services-api"
       }
     },
     {
@@ -3058,13 +3151,68 @@
     },
     {
       "table": "module",
-      "id": "infra_api_git_proxy_api",
-      "key": "module:infra_api_git_proxy_api",
+      "id": "infra_api_cloudy_all_api",
+      "key": "module:infra_api_cloudy_all_api",
       "properties": {
-        "name": "infra-api_git-proxy-api",
+        "name": "infra-api_cloudy-all-api",
+        "repo": "cloud",
+        "category": "obs",
+        "service": "cloudy-all-api"
+      }
+    },
+    {
+      "table": "module",
+      "id": "infra_api_cloudy_all_mcp",
+      "key": "module:infra_api_cloudy_all_mcp",
+      "properties": {
+        "name": "infra-api_cloudy-all-mcp",
+        "repo": "cloud",
+        "category": "obs",
+        "service": "cloudy-all-mcp"
+      }
+    },
+    {
+      "table": "module",
+      "id": "infra_api_cloudy_apps_communication_mcp",
+      "key": "module:infra_api_cloudy_apps_communication_mcp",
+      "properties": {
+        "name": "infra-api_cloudy-apps-communication-mcp",
         "repo": "cloud",
         "category": "app",
-        "service": "git-proxy-api"
+        "service": "cloudy-apps-communication-mcp"
+      }
+    },
+    {
+      "table": "module",
+      "id": "infra_api_cloudy_apps_drive_mcp",
+      "key": "module:infra_api_cloudy_apps_drive_mcp",
+      "properties": {
+        "name": "infra-api_cloudy-apps-drive-mcp",
+        "repo": "cloud",
+        "category": "app",
+        "service": "cloudy-apps-drive-mcp"
+      }
+    },
+    {
+      "table": "module",
+      "id": "infra_api_cloudy_c3_api",
+      "key": "module:infra_api_cloudy_c3_api",
+      "properties": {
+        "name": "infra-api_cloudy-c3-api",
+        "repo": "cloud",
+        "category": "sec",
+        "service": "cloudy-c3-api"
+      }
+    },
+    {
+      "table": "module",
+      "id": "infra_api_cloudy_drive_git_proxy_api",
+      "key": "module:infra_api_cloudy_drive_git_proxy_api",
+      "properties": {
+        "name": "infra-api_cloudy-drive-git-proxy-api",
+        "repo": "cloud",
+        "category": "app",
+        "service": "cloudy-drive-git-proxy-api"
       }
     },
     {
@@ -3388,6 +3536,17 @@
     },
     {
       "table": "module",
+      "id": "infra_sec_cloudy_ai_tokens_api",
+      "key": "module:infra_sec_cloudy_ai_tokens_api",
+      "properties": {
+        "name": "infra-sec_cloudy-ai-tokens-api",
+        "repo": "cloud",
+        "category": "sec",
+        "service": "cloudy-ai-tokens-api"
+      }
+    },
+    {
+      "table": "module",
       "id": "infra_sec_crowdsec",
       "key": "module:infra_sec_crowdsec",
       "properties": {
@@ -3421,17 +3580,6 @@
     },
     {
       "table": "module",
-      "id": "infra_sec_tokens_api",
-      "key": "module:infra_sec_tokens_api",
-      "properties": {
-        "name": "infra-sec_tokens-api",
-        "repo": "cloud",
-        "category": "sec",
-        "service": "tokens-api"
-      }
-    },
-    {
-      "table": "module",
       "id": "user_ai_cloud_cgc_pub_mcp",
       "key": "module:user_ai_cloud_cgc_pub_mcp",
       "properties": {
@@ -3439,6 +3587,61 @@
         "repo": "cloud",
         "category": "obs",
         "service": "cloud-cgc-pub-mcp"
+      }
+    },
+    {
+      "table": "module",
+      "id": "user_ai_cloud_me_cgc_pvt_graph_api",
+      "key": "module:user_ai_cloud_me_cgc_pvt_graph_api",
+      "properties": {
+        "name": "user-ai_cloud-me-cgc-pvt-graph-api",
+        "repo": "cloud",
+        "category": "data",
+        "service": "cloud-me-cgc-pvt-graph-api"
+      }
+    },
+    {
+      "table": "module",
+      "id": "user_ai_cloudy_ai_agents_api",
+      "key": "module:user_ai_cloudy_ai_agents_api",
+      "properties": {
+        "name": "user-ai_cloudy-ai-agents-api",
+        "repo": "cloud",
+        "category": "agi",
+        "service": "cloudy-ai-agents-api"
+      }
+    },
+    {
+      "table": "module",
+      "id": "user_ai_cloudy_ai_claude_api",
+      "key": "module:user_ai_cloudy_ai_claude_api",
+      "properties": {
+        "name": "user-ai_cloudy-ai-claude-api",
+        "repo": "cloud",
+        "category": "agi",
+        "service": "cloudy-ai-claude-api"
+      }
+    },
+    {
+      "table": "module",
+      "id": "user_ai_cloudy_ai_memory_api",
+      "key": "module:user_ai_cloudy_ai_memory_api",
+      "properties": {
+        "name": "user-ai_cloudy-ai-memory-api",
+        "repo": "cloud",
+        "category": "agi",
+        "service": "cloudy-ai-memory-api"
+      }
+    },
+    {
+      "table": "module",
+      "id": "user_ai_cloudy_cgc_pub_graph_api",
+      "key": "module:user_ai_cloudy_cgc_pub_graph_api",
+      "properties": {
+        "name": "user-ai_cloudy-cgc-pub-graph-api",
+        "repo": "cloud",
+        "category": "data",
+        "service": "cloudy-cgc-pub-graph-api"
       }
     },
     {
@@ -3465,50 +3668,6 @@
     },
     {
       "table": "module",
-      "id": "user_ai_kg_store",
-      "key": "module:user_ai_kg_store",
-      "properties": {
-        "name": "user-ai_kg-store",
-        "repo": "cloud",
-        "category": "data",
-        "service": "kg-store"
-      }
-    },
-    {
-      "table": "module",
-      "id": "user_ai_kg_store_pub",
-      "key": "module:user_ai_kg_store_pub",
-      "properties": {
-        "name": "user-ai_kg-store-pub",
-        "repo": "cloud",
-        "category": "data",
-        "service": "kg-store-pub"
-      }
-    },
-    {
-      "table": "module",
-      "id": "user_ai_my_ai_api",
-      "key": "module:user_ai_my_ai_api",
-      "properties": {
-        "name": "user-ai_my-ai-api",
-        "repo": "cloud",
-        "category": "agi",
-        "service": "my-ai-api"
-      }
-    },
-    {
-      "table": "module",
-      "id": "user_ai_my_ai_claude_api",
-      "key": "module:user_ai_my_ai_claude_api",
-      "properties": {
-        "name": "user-ai_my-ai_claude-api",
-        "repo": "cloud",
-        "category": "agi",
-        "service": "my-ai_claude-api"
-      }
-    },
-    {
-      "table": "module",
       "id": "user_ai_openclaw",
       "key": "module:user_ai_openclaw",
       "properties": {
@@ -3516,17 +3675,6 @@
         "repo": "cloud",
         "category": "agi",
         "service": "openclaw"
-      }
-    },
-    {
-      "table": "module",
-      "id": "user_ai_session_memory",
-      "key": "module:user_ai_session_memory",
-      "properties": {
-        "name": "user-ai_session-memory",
-        "repo": "cloud",
-        "category": "agi",
-        "service": "session-memory"
       }
     },
     {
@@ -3619,24 +3767,24 @@
     },
     {
       "table": "module",
-      "id": "user_data_scrappers_api",
-      "key": "module:user_data_scrappers_api",
+      "id": "user_data_cloudy_browser_scrapper_api",
+      "key": "module:user_data_cloudy_browser_scrapper_api",
       "properties": {
-        "name": "user-data_scrappers-api",
+        "name": "user-data_cloudy-browser-scrapper-api",
         "repo": "cloud",
         "category": "data",
-        "service": "scrappers-api"
+        "service": "cloudy-browser-scrapper-api"
       }
     },
     {
       "table": "module",
-      "id": "user_fin_capital_stack_finterminal_api",
-      "key": "module:user_fin_capital_stack_finterminal_api",
+      "id": "user_fin_capital_stack_finterm_api",
+      "key": "module:user_fin_capital_stack_finterm_api",
       "properties": {
-        "name": "user-fin_capital-stack-finterminal-api",
+        "name": "user-fin_capital-stack-finterm-api",
         "repo": "cloud",
         "category": "fin",
-        "service": "capital-stack-finterminal-api"
+        "service": "capital-stack-finterm-api"
       }
     },
     {
@@ -3674,13 +3822,13 @@
     },
     {
       "table": "module",
-      "id": "user_news_news_gdelt",
-      "key": "module:user_news_news_gdelt",
+      "id": "user_news_capital_stack_news_gdelt_api",
+      "key": "module:user_news_capital_stack_news_gdelt_api",
       "properties": {
-        "name": "user-news_news-gdelt",
+        "name": "user-news_capital-stack-news-gdelt-api",
         "repo": "cloud",
         "category": "tools",
-        "service": "news-gdelt"
+        "service": "capital-stack-news-gdelt-api"
       }
     },
     {
@@ -4187,16 +4335,32 @@
     },
     {
       "table": "hosted_on",
-      "from": "service:embeddings_api",
+      "from": "service:cloudy_ai_api",
       "to": "vm:oci_apps",
-      "key": "service:embeddings_api->hosted_on->vm:oci_apps",
+      "key": "service:cloudy_ai_api->hosted_on->vm:oci_apps",
       "properties": {}
     },
     {
       "table": "runs_container",
-      "from": "service:embeddings_api",
-      "to": "container:embeddings_api",
-      "key": "service:embeddings_api->runs_container->container:embeddings_api",
+      "from": "service:cloudy_ai_api",
+      "to": "container:cloudy_ai_api",
+      "key": "service:cloudy_ai_api->runs_container->container:cloudy_ai_api",
+      "properties": {
+        "role": "app"
+      }
+    },
+    {
+      "table": "hosted_on",
+      "from": "service:cloudy_ai_embeddings_api",
+      "to": "vm:oci_apps",
+      "key": "service:cloudy_ai_embeddings_api->hosted_on->vm:oci_apps",
+      "properties": {}
+    },
+    {
+      "table": "runs_container",
+      "from": "service:cloudy_ai_embeddings_api",
+      "to": "container:cloudy_ai_embeddings_api",
+      "key": "service:cloudy_ai_embeddings_api->runs_container->container:cloudy_ai_embeddings_api",
       "properties": {
         "role": "app"
       }
@@ -4235,22 +4399,6 @@
     },
     {
       "table": "hosted_on",
-      "from": "service:c3_infra_api",
-      "to": "vm:oci_apps",
-      "key": "service:c3_infra_api->hosted_on->vm:oci_apps",
-      "properties": {}
-    },
-    {
-      "table": "runs_container",
-      "from": "service:c3_infra_api",
-      "to": "container:c3_infra_api",
-      "key": "service:c3_infra_api->runs_container->container:c3_infra_api",
-      "properties": {
-        "role": "app"
-      }
-    },
-    {
-      "table": "hosted_on",
       "from": "service:c3_public_api",
       "to": "vm:oci_analytics",
       "key": "service:c3_public_api->hosted_on->vm:oci_analytics",
@@ -4261,22 +4409,6 @@
       "from": "service:c3_public_api",
       "to": "container:c3_public_api",
       "key": "service:c3_public_api->runs_container->container:c3_public_api",
-      "properties": {
-        "role": "app"
-      }
-    },
-    {
-      "table": "hosted_on",
-      "from": "service:c3_services_api",
-      "to": "vm:oci_apps",
-      "key": "service:c3_services_api->hosted_on->vm:oci_apps",
-      "properties": {}
-    },
-    {
-      "table": "runs_container",
-      "from": "service:c3_services_api",
-      "to": "container:c3_services_api",
-      "key": "service:c3_services_api->runs_container->container:c3_services_api",
       "properties": {
         "role": "app"
       }
@@ -4411,16 +4543,96 @@
     },
     {
       "table": "hosted_on",
-      "from": "service:git_proxy_api",
-      "to": "vm:oci_analytics",
-      "key": "service:git_proxy_api->hosted_on->vm:oci_analytics",
+      "from": "service:cloudy_all_api",
+      "to": "vm:oci_apps",
+      "key": "service:cloudy_all_api->hosted_on->vm:oci_apps",
       "properties": {}
     },
     {
       "table": "runs_container",
-      "from": "service:git_proxy_api",
-      "to": "container:git_proxy_api",
-      "key": "service:git_proxy_api->runs_container->container:git_proxy_api",
+      "from": "service:cloudy_all_api",
+      "to": "container:cloudy_all_api",
+      "key": "service:cloudy_all_api->runs_container->container:cloudy_all_api",
+      "properties": {
+        "role": "app"
+      }
+    },
+    {
+      "table": "hosted_on",
+      "from": "service:cloudy_all_mcp",
+      "to": "vm:oci_apps",
+      "key": "service:cloudy_all_mcp->hosted_on->vm:oci_apps",
+      "properties": {}
+    },
+    {
+      "table": "runs_container",
+      "from": "service:cloudy_all_mcp",
+      "to": "container:cloudy_all_mcp",
+      "key": "service:cloudy_all_mcp->runs_container->container:cloudy_all_mcp",
+      "properties": {
+        "role": "app"
+      }
+    },
+    {
+      "table": "hosted_on",
+      "from": "service:cloudy_apps_communication_mcp",
+      "to": "vm:oci_apps",
+      "key": "service:cloudy_apps_communication_mcp->hosted_on->vm:oci_apps",
+      "properties": {}
+    },
+    {
+      "table": "runs_container",
+      "from": "service:cloudy_apps_communication_mcp",
+      "to": "container:cloudy_apps_communication_mcp",
+      "key": "service:cloudy_apps_communication_mcp->runs_container->container:cloudy_apps_communication_mcp",
+      "properties": {
+        "role": "app"
+      }
+    },
+    {
+      "table": "hosted_on",
+      "from": "service:cloudy_apps_drive_mcp",
+      "to": "vm:oci_apps",
+      "key": "service:cloudy_apps_drive_mcp->hosted_on->vm:oci_apps",
+      "properties": {}
+    },
+    {
+      "table": "runs_container",
+      "from": "service:cloudy_apps_drive_mcp",
+      "to": "container:cloudy_apps_drive_mcp",
+      "key": "service:cloudy_apps_drive_mcp->runs_container->container:cloudy_apps_drive_mcp",
+      "properties": {
+        "role": "app"
+      }
+    },
+    {
+      "table": "hosted_on",
+      "from": "service:cloudy_c3_api",
+      "to": "vm:oci_apps",
+      "key": "service:cloudy_c3_api->hosted_on->vm:oci_apps",
+      "properties": {}
+    },
+    {
+      "table": "runs_container",
+      "from": "service:cloudy_c3_api",
+      "to": "container:cloudy_c3_api",
+      "key": "service:cloudy_c3_api->runs_container->container:cloudy_c3_api",
+      "properties": {
+        "role": "app"
+      }
+    },
+    {
+      "table": "hosted_on",
+      "from": "service:cloudy_drive_git_proxy_api",
+      "to": "vm:oci_analytics",
+      "key": "service:cloudy_drive_git_proxy_api->hosted_on->vm:oci_analytics",
+      "properties": {}
+    },
+    {
+      "table": "runs_container",
+      "from": "service:cloudy_drive_git_proxy_api",
+      "to": "container:cloudy_drive_git_proxy_api",
+      "key": "service:cloudy_drive_git_proxy_api->runs_container->container:cloudy_drive_git_proxy_api",
       "properties": {
         "role": "app"
       }
@@ -4720,8 +4932,8 @@
     {
       "table": "runs_container",
       "from": "service:ntfy",
-      "to": "container:rss_gateway",
-      "key": "service:ntfy->runs_container->container:rss_gateway",
+      "to": "container:capital_stack_news_rss_api",
+      "key": "service:ntfy->runs_container->container:capital_stack_news_rss_api",
       "properties": {
         "role": "rss-gateway"
       }
@@ -4729,8 +4941,8 @@
     {
       "table": "runs_container",
       "from": "service:ntfy",
-      "to": "container:github_rss",
-      "key": "service:ntfy->runs_container->container:github_rss",
+      "to": "container:capital_stack_news_github_rss_api",
+      "key": "service:ntfy->runs_container->container:capital_stack_news_github_rss_api",
       "properties": {
         "role": "github-rss"
       }
@@ -4836,8 +5048,8 @@
     {
       "table": "runs_container",
       "from": "service:auth_broker",
-      "to": "container:auth_broker_google",
-      "key": "service:auth_broker->runs_container->container:auth_broker_google",
+      "to": "container:cloudy_auth_google_api",
+      "key": "service:auth_broker->runs_container->container:cloudy_auth_google_api",
       "properties": {
         "role": "google"
       }
@@ -4845,8 +5057,8 @@
     {
       "table": "runs_container",
       "from": "service:auth_broker",
-      "to": "container:auth_broker_github",
-      "key": "service:auth_broker->runs_container->container:auth_broker_github",
+      "to": "container:cloudy_auth_github_api",
+      "key": "service:auth_broker->runs_container->container:cloudy_auth_github_api",
       "properties": {
         "role": "github"
       }
@@ -4854,8 +5066,8 @@
     {
       "table": "runs_container",
       "from": "service:auth_broker",
-      "to": "container:auth_broker_cloudflare",
-      "key": "service:auth_broker->runs_container->container:auth_broker_cloudflare",
+      "to": "container:cloudy_auth_cloudflare_api",
+      "key": "service:auth_broker->runs_container->container:cloudy_auth_cloudflare_api",
       "properties": {
         "role": "cloudflare"
       }
@@ -4863,8 +5075,8 @@
     {
       "table": "runs_container",
       "from": "service:auth_broker",
-      "to": "container:auth_broker_email",
-      "key": "service:auth_broker->runs_container->container:auth_broker_email",
+      "to": "container:cloudy_auth_email_api",
+      "key": "service:auth_broker->runs_container->container:cloudy_auth_email_api",
       "properties": {
         "role": "email"
       }
@@ -4964,6 +5176,22 @@
     },
     {
       "table": "hosted_on",
+      "from": "service:cloudy_ai_tokens_api",
+      "to": "vm:oci_apps",
+      "key": "service:cloudy_ai_tokens_api->hosted_on->vm:oci_apps",
+      "properties": {}
+    },
+    {
+      "table": "runs_container",
+      "from": "service:cloudy_ai_tokens_api",
+      "to": "container:cloudy_ai_tokens_api",
+      "key": "service:cloudy_ai_tokens_api->runs_container->container:cloudy_ai_tokens_api",
+      "properties": {
+        "role": "app"
+      }
+    },
+    {
+      "table": "hosted_on",
       "from": "service:crowdsec",
       "to": "vm:oci_apps",
       "key": "service:crowdsec->hosted_on->vm:oci_apps",
@@ -5005,22 +5233,6 @@
     },
     {
       "table": "hosted_on",
-      "from": "service:tokens_api",
-      "to": "vm:oci_apps",
-      "key": "service:tokens_api->hosted_on->vm:oci_apps",
-      "properties": {}
-    },
-    {
-      "table": "runs_container",
-      "from": "service:tokens_api",
-      "to": "container:tokens_api",
-      "key": "service:tokens_api->runs_container->container:tokens_api",
-      "properties": {
-        "role": "app"
-      }
-    },
-    {
-      "table": "hosted_on",
       "from": "service:cloud_cgc_pub_mcp",
       "to": "vm:oci_apps",
       "key": "service:cloud_cgc_pub_mcp->hosted_on->vm:oci_apps",
@@ -5042,6 +5254,86 @@
       "key": "service:cloud_cgc_pub_mcp->runs_container->container:cloud_cgc_pvt_mcp",
       "properties": {
         "role": "pvt"
+      }
+    },
+    {
+      "table": "hosted_on",
+      "from": "service:cloud_me_cgc_pvt_graph_api",
+      "to": "vm:oci_apps",
+      "key": "service:cloud_me_cgc_pvt_graph_api->hosted_on->vm:oci_apps",
+      "properties": {}
+    },
+    {
+      "table": "runs_container",
+      "from": "service:cloud_me_cgc_pvt_graph_api",
+      "to": "container:cloud_me_cgc_pvt_graph_api",
+      "key": "service:cloud_me_cgc_pvt_graph_api->runs_container->container:cloud_me_cgc_pvt_graph_api",
+      "properties": {
+        "role": "app"
+      }
+    },
+    {
+      "table": "hosted_on",
+      "from": "service:cloudy_ai_agents_api",
+      "to": "vm:oci_apps",
+      "key": "service:cloudy_ai_agents_api->hosted_on->vm:oci_apps",
+      "properties": {}
+    },
+    {
+      "table": "runs_container",
+      "from": "service:cloudy_ai_agents_api",
+      "to": "container:cloud_agi_goose",
+      "key": "service:cloudy_ai_agents_api->runs_container->container:cloud_agi_goose",
+      "properties": {
+        "role": "app"
+      }
+    },
+    {
+      "table": "hosted_on",
+      "from": "service:cloudy_ai_claude_api",
+      "to": "vm:oci_apps",
+      "key": "service:cloudy_ai_claude_api->hosted_on->vm:oci_apps",
+      "properties": {}
+    },
+    {
+      "table": "runs_container",
+      "from": "service:cloudy_ai_claude_api",
+      "to": "container:cloud_agi_claude",
+      "key": "service:cloudy_ai_claude_api->runs_container->container:cloud_agi_claude",
+      "properties": {
+        "role": "app"
+      }
+    },
+    {
+      "table": "hosted_on",
+      "from": "service:cloudy_ai_memory_api",
+      "to": "vm:oci_apps",
+      "key": "service:cloudy_ai_memory_api->hosted_on->vm:oci_apps",
+      "properties": {}
+    },
+    {
+      "table": "runs_container",
+      "from": "service:cloudy_ai_memory_api",
+      "to": "container:cloudy_ai_memory_api",
+      "key": "service:cloudy_ai_memory_api->runs_container->container:cloudy_ai_memory_api",
+      "properties": {
+        "role": "app"
+      }
+    },
+    {
+      "table": "hosted_on",
+      "from": "service:cloudy_cgc_pub_graph_api",
+      "to": "vm:oci_apps",
+      "key": "service:cloudy_cgc_pub_graph_api->hosted_on->vm:oci_apps",
+      "properties": {}
+    },
+    {
+      "table": "runs_container",
+      "from": "service:cloudy_cgc_pub_graph_api",
+      "to": "container:cloudy_cgc_pub_graph_api",
+      "key": "service:cloudy_cgc_pub_graph_api->runs_container->container:cloudy_cgc_pub_graph_api",
+      "properties": {
+        "role": "app"
       }
     },
     {
@@ -5071,70 +5363,6 @@
     },
     {
       "table": "hosted_on",
-      "from": "service:kg_store",
-      "to": "vm:oci_apps",
-      "key": "service:kg_store->hosted_on->vm:oci_apps",
-      "properties": {}
-    },
-    {
-      "table": "runs_container",
-      "from": "service:kg_store",
-      "to": "container:kg_store",
-      "key": "service:kg_store->runs_container->container:kg_store",
-      "properties": {
-        "role": "app"
-      }
-    },
-    {
-      "table": "hosted_on",
-      "from": "service:kg_store_pub",
-      "to": "vm:oci_apps",
-      "key": "service:kg_store_pub->hosted_on->vm:oci_apps",
-      "properties": {}
-    },
-    {
-      "table": "runs_container",
-      "from": "service:kg_store_pub",
-      "to": "container:kg_store_pub",
-      "key": "service:kg_store_pub->runs_container->container:kg_store_pub",
-      "properties": {
-        "role": "app"
-      }
-    },
-    {
-      "table": "hosted_on",
-      "from": "service:my_ai_api",
-      "to": "vm:oci_apps",
-      "key": "service:my_ai_api->hosted_on->vm:oci_apps",
-      "properties": {}
-    },
-    {
-      "table": "runs_container",
-      "from": "service:my_ai_api",
-      "to": "container:cloud_agi_goose",
-      "key": "service:my_ai_api->runs_container->container:cloud_agi_goose",
-      "properties": {
-        "role": "app"
-      }
-    },
-    {
-      "table": "hosted_on",
-      "from": "service:my_ai_claude_api",
-      "to": "vm:oci_apps",
-      "key": "service:my_ai_claude_api->hosted_on->vm:oci_apps",
-      "properties": {}
-    },
-    {
-      "table": "runs_container",
-      "from": "service:my_ai_claude_api",
-      "to": "container:cloud_agi_claude",
-      "key": "service:my_ai_claude_api->runs_container->container:cloud_agi_claude",
-      "properties": {
-        "role": "app"
-      }
-    },
-    {
-      "table": "hosted_on",
       "from": "service:openclaw",
       "to": "vm:oci_apps",
       "key": "service:openclaw->hosted_on->vm:oci_apps",
@@ -5145,22 +5373,6 @@
       "from": "service:openclaw",
       "to": "container:cloud_agi_openclaw",
       "key": "service:openclaw->runs_container->container:cloud_agi_openclaw",
-      "properties": {
-        "role": "app"
-      }
-    },
-    {
-      "table": "hosted_on",
-      "from": "service:session_memory",
-      "to": "vm:oci_apps",
-      "key": "service:session_memory->hosted_on->vm:oci_apps",
-      "properties": {}
-    },
-    {
-      "table": "runs_container",
-      "from": "service:session_memory",
-      "to": "container:session_memory",
-      "key": "service:session_memory->runs_container->container:session_memory",
       "properties": {
         "role": "app"
       }
@@ -5322,32 +5534,32 @@
     },
     {
       "table": "hosted_on",
-      "from": "service:scrappers_api",
+      "from": "service:cloudy_browser_scrapper_api",
       "to": "vm:oci_apps",
-      "key": "service:scrappers_api->hosted_on->vm:oci_apps",
+      "key": "service:cloudy_browser_scrapper_api->hosted_on->vm:oci_apps",
       "properties": {}
     },
     {
       "table": "runs_container",
-      "from": "service:scrappers_api",
-      "to": "container:scrappers_api",
-      "key": "service:scrappers_api->runs_container->container:scrappers_api",
+      "from": "service:cloudy_browser_scrapper_api",
+      "to": "container:cloudy_browser_scrapper_api",
+      "key": "service:cloudy_browser_scrapper_api->runs_container->container:cloudy_browser_scrapper_api",
       "properties": {
         "role": "app"
       }
     },
     {
       "table": "hosted_on",
-      "from": "service:capital_stack_finterminal_api",
+      "from": "service:capital_stack_finterm_api",
       "to": "vm:oci_apps",
-      "key": "service:capital_stack_finterminal_api->hosted_on->vm:oci_apps",
+      "key": "service:capital_stack_finterm_api->hosted_on->vm:oci_apps",
       "properties": {}
     },
     {
       "table": "runs_container",
-      "from": "service:capital_stack_finterminal_api",
-      "to": "container:capital_stack_finterminal_api",
-      "key": "service:capital_stack_finterminal_api->runs_container->container:capital_stack_finterminal_api",
+      "from": "service:capital_stack_finterm_api",
+      "to": "container:capital_stack_finterm_api",
+      "key": "service:capital_stack_finterm_api->runs_container->container:capital_stack_finterm_api",
       "properties": {
         "role": "app"
       }
@@ -5420,16 +5632,16 @@
     },
     {
       "table": "hosted_on",
-      "from": "service:news_gdelt",
+      "from": "service:capital_stack_news_gdelt_api",
       "to": "vm:oci_apps",
-      "key": "service:news_gdelt->hosted_on->vm:oci_apps",
+      "key": "service:capital_stack_news_gdelt_api->hosted_on->vm:oci_apps",
       "properties": {}
     },
     {
       "table": "runs_container",
-      "from": "service:news_gdelt",
-      "to": "container:news_gdelt",
-      "key": "service:news_gdelt->runs_container->container:news_gdelt",
+      "from": "service:capital_stack_news_gdelt_api",
+      "to": "container:capital_stack_news_gdelt_api",
+      "key": "service:capital_stack_news_gdelt_api->runs_container->container:capital_stack_news_gdelt_api",
       "properties": {
         "role": "app"
       }
@@ -5666,29 +5878,11 @@
     },
     {
       "table": "proxied_by",
-      "from": "service:c3_infra_api",
-      "to": "service:caddy",
-      "key": "service:c3_infra_api->proxied_by->service:caddy",
-      "properties": {
-        "domain": "api.diegonmarcos.com/c3-infra-api"
-      }
-    },
-    {
-      "table": "proxied_by",
       "from": "service:c3_public_api",
       "to": "service:caddy",
       "key": "service:c3_public_api->proxied_by->service:caddy",
       "properties": {
         "domain": "api.diegonmarcos.com/pub"
-      }
-    },
-    {
-      "table": "proxied_by",
-      "from": "service:c3_services_api",
-      "to": "service:caddy",
-      "key": "service:c3_services_api->proxied_by->service:caddy",
-      "properties": {
-        "domain": "api.diegonmarcos.com/c3-services-api"
       }
     },
     {
@@ -5738,11 +5932,56 @@
     },
     {
       "table": "proxied_by",
-      "from": "service:git_proxy_api",
+      "from": "service:cloudy_all_api",
       "to": "service:caddy",
-      "key": "service:git_proxy_api->proxied_by->service:caddy",
+      "key": "service:cloudy_all_api->proxied_by->service:caddy",
+      "properties": {
+        "domain": "api.diegonmarcos.com/c3-services-api"
+      }
+    },
+    {
+      "table": "proxied_by",
+      "from": "service:cloudy_apps_communication_mcp",
+      "to": "service:caddy",
+      "key": "service:cloudy_apps_communication_mcp->proxied_by->service:caddy",
+      "properties": {
+        "domain": "mcp.diegonmarcos.com"
+      }
+    },
+    {
+      "table": "proxied_by",
+      "from": "service:cloudy_apps_drive_mcp",
+      "to": "service:caddy",
+      "key": "service:cloudy_apps_drive_mcp->proxied_by->service:caddy",
+      "properties": {
+        "domain": "mcp.diegonmarcos.com"
+      }
+    },
+    {
+      "table": "proxied_by",
+      "from": "service:cloudy_c3_api",
+      "to": "service:caddy",
+      "key": "service:cloudy_c3_api->proxied_by->service:caddy",
+      "properties": {
+        "domain": "api.diegonmarcos.com/c3-infra-api"
+      }
+    },
+    {
+      "table": "proxied_by",
+      "from": "service:cloudy_drive_git_proxy_api",
+      "to": "service:caddy",
+      "key": "service:cloudy_drive_git_proxy_api->proxied_by->service:caddy",
       "properties": {
         "domain": "api.diegonmarcos.com/git"
+      }
+    },
+    {
+      "table": "proxied_by",
+      "from": "service:cloudy_mail_http_to_smtp_api",
+      "to": "service:caddy",
+      "key": "service:cloudy_mail_http_to_smtp_api->proxied_by->service:caddy",
+      "properties": {
+        "domain": "api.diegonmarcos.com/http-to-smtp-proxy-api"
       }
     },
     {
@@ -5761,15 +6000,6 @@
       "key": "service:google_workspace_mcp->proxied_by->service:caddy",
       "properties": {
         "domain": "mcp.diegonmarcos.com"
-      }
-    },
-    {
-      "table": "proxied_by",
-      "from": "service:http_to_smtp_proxy_api",
-      "to": "service:caddy",
-      "key": "service:http_to_smtp_proxy_api->proxied_by->service:caddy",
-      "properties": {
-        "domain": "api.diegonmarcos.com/http-to-smtp-proxy-api"
       }
     },
     {
@@ -5954,18 +6184,18 @@
     },
     {
       "table": "proxied_by",
-      "from": "service:scrappers_api",
+      "from": "service:cloudy_browser_scrapper_api",
       "to": "service:caddy",
-      "key": "service:scrappers_api->proxied_by->service:caddy",
+      "key": "service:cloudy_browser_scrapper_api->proxied_by->service:caddy",
       "properties": {
         "domain": "api.diegonmarcos.com"
       }
     },
     {
       "table": "proxied_by",
-      "from": "service:capital_stack_finterminal_api",
+      "from": "service:capital_stack_finterm_api",
       "to": "service:caddy",
-      "key": "service:capital_stack_finterminal_api->proxied_by->service:caddy",
+      "key": "service:capital_stack_finterm_api->proxied_by->service:caddy",
       "properties": {
         "domain": "api.diegonmarcos.com/capital-stack-finterminal-api"
       }
@@ -6096,23 +6326,9 @@
     },
     {
       "table": "routes_to",
-      "from": "domain:api_diegonmarcos_com/c3_infra_api",
-      "to": "service:c3_infra_api",
-      "key": "domain:api_diegonmarcos_com/c3_infra_api->routes_to->service:c3_infra_api",
-      "properties": {}
-    },
-    {
-      "table": "routes_to",
       "from": "domain:api_diegonmarcos_com/pub",
       "to": "service:c3_public_api",
       "key": "domain:api_diegonmarcos_com/pub->routes_to->service:c3_public_api",
-      "properties": {}
-    },
-    {
-      "table": "routes_to",
-      "from": "domain:api_diegonmarcos_com/c3_services_api",
-      "to": "service:c3_services_api",
-      "key": "domain:api_diegonmarcos_com/c3_services_api->routes_to->service:c3_services_api",
       "properties": {}
     },
     {
@@ -6152,9 +6368,44 @@
     },
     {
       "table": "routes_to",
+      "from": "domain:api_diegonmarcos_com/c3_services_api",
+      "to": "service:cloudy_all_api",
+      "key": "domain:api_diegonmarcos_com/c3_services_api->routes_to->service:cloudy_all_api",
+      "properties": {}
+    },
+    {
+      "table": "routes_to",
+      "from": "domain:mcp_diegonmarcos_com",
+      "to": "service:cloudy_apps_communication_mcp",
+      "key": "domain:mcp_diegonmarcos_com->routes_to->service:cloudy_apps_communication_mcp",
+      "properties": {}
+    },
+    {
+      "table": "routes_to",
+      "from": "domain:mcp_diegonmarcos_com",
+      "to": "service:cloudy_apps_drive_mcp",
+      "key": "domain:mcp_diegonmarcos_com->routes_to->service:cloudy_apps_drive_mcp",
+      "properties": {}
+    },
+    {
+      "table": "routes_to",
+      "from": "domain:api_diegonmarcos_com/c3_infra_api",
+      "to": "service:cloudy_c3_api",
+      "key": "domain:api_diegonmarcos_com/c3_infra_api->routes_to->service:cloudy_c3_api",
+      "properties": {}
+    },
+    {
+      "table": "routes_to",
       "from": "domain:api_diegonmarcos_com/git",
-      "to": "service:git_proxy_api",
-      "key": "domain:api_diegonmarcos_com/git->routes_to->service:git_proxy_api",
+      "to": "service:cloudy_drive_git_proxy_api",
+      "key": "domain:api_diegonmarcos_com/git->routes_to->service:cloudy_drive_git_proxy_api",
+      "properties": {}
+    },
+    {
+      "table": "routes_to",
+      "from": "domain:api_diegonmarcos_com/http_to_smtp_proxy_api",
+      "to": "service:cloudy_mail_http_to_smtp_api",
+      "key": "domain:api_diegonmarcos_com/http_to_smtp_proxy_api->routes_to->service:cloudy_mail_http_to_smtp_api",
       "properties": {}
     },
     {
@@ -6169,13 +6420,6 @@
       "from": "domain:mcp_diegonmarcos_com",
       "to": "service:google_workspace_mcp",
       "key": "domain:mcp_diegonmarcos_com->routes_to->service:google_workspace_mcp",
-      "properties": {}
-    },
-    {
-      "table": "routes_to",
-      "from": "domain:api_diegonmarcos_com/http_to_smtp_proxy_api",
-      "to": "service:http_to_smtp_proxy_api",
-      "key": "domain:api_diegonmarcos_com/http_to_smtp_proxy_api->routes_to->service:http_to_smtp_proxy_api",
       "properties": {}
     },
     {
@@ -6328,15 +6572,15 @@
     {
       "table": "routes_to",
       "from": "domain:api_diegonmarcos_com",
-      "to": "service:scrappers_api",
-      "key": "domain:api_diegonmarcos_com->routes_to->service:scrappers_api",
+      "to": "service:cloudy_browser_scrapper_api",
+      "key": "domain:api_diegonmarcos_com->routes_to->service:cloudy_browser_scrapper_api",
       "properties": {}
     },
     {
       "table": "routes_to",
       "from": "domain:api_diegonmarcos_com/capital_stack_finterminal_api",
-      "to": "service:capital_stack_finterminal_api",
-      "key": "domain:api_diegonmarcos_com/capital_stack_finterminal_api->routes_to->service:capital_stack_finterminal_api",
+      "to": "service:capital_stack_finterm_api",
+      "key": "domain:api_diegonmarcos_com/capital_stack_finterminal_api->routes_to->service:capital_stack_finterm_api",
       "properties": {}
     },
     {
@@ -6446,16 +6690,30 @@
     },
     {
       "table": "belongs_to_repo",
-      "from": "module:infra_ai_embeddings_api",
+      "from": "module:infra_ai_cloudy_ai_api",
       "to": "repo:cloud",
-      "key": "module:infra_ai_embeddings_api->belongs_to_repo->repo:cloud",
+      "key": "module:infra_ai_cloudy_ai_api->belongs_to_repo->repo:cloud",
       "properties": {}
     },
     {
       "table": "implements",
-      "from": "module:infra_ai_embeddings_api",
-      "to": "service:embeddings_api",
-      "key": "module:infra_ai_embeddings_api->implements->service:embeddings_api",
+      "from": "module:infra_ai_cloudy_ai_api",
+      "to": "service:cloudy_ai_api",
+      "key": "module:infra_ai_cloudy_ai_api->implements->service:cloudy_ai_api",
+      "properties": {}
+    },
+    {
+      "table": "belongs_to_repo",
+      "from": "module:infra_ai_cloudy_ai_embeddings_api",
+      "to": "repo:cloud",
+      "key": "module:infra_ai_cloudy_ai_embeddings_api->belongs_to_repo->repo:cloud",
+      "properties": {}
+    },
+    {
+      "table": "implements",
+      "from": "module:infra_ai_cloudy_ai_embeddings_api",
+      "to": "service:cloudy_ai_embeddings_api",
+      "key": "module:infra_ai_cloudy_ai_embeddings_api->implements->service:cloudy_ai_embeddings_api",
       "properties": {}
     },
     {
@@ -6488,20 +6746,6 @@
     },
     {
       "table": "belongs_to_repo",
-      "from": "module:infra_api_c3_infra_api",
-      "to": "repo:cloud",
-      "key": "module:infra_api_c3_infra_api->belongs_to_repo->repo:cloud",
-      "properties": {}
-    },
-    {
-      "table": "implements",
-      "from": "module:infra_api_c3_infra_api",
-      "to": "service:c3_infra_api",
-      "key": "module:infra_api_c3_infra_api->implements->service:c3_infra_api",
-      "properties": {}
-    },
-    {
-      "table": "belongs_to_repo",
       "from": "module:infra_api_c3_public_api",
       "to": "repo:cloud",
       "key": "module:infra_api_c3_public_api->belongs_to_repo->repo:cloud",
@@ -6512,20 +6756,6 @@
       "from": "module:infra_api_c3_public_api",
       "to": "service:c3_public_api",
       "key": "module:infra_api_c3_public_api->implements->service:c3_public_api",
-      "properties": {}
-    },
-    {
-      "table": "belongs_to_repo",
-      "from": "module:infra_api_c3_services_api",
-      "to": "repo:cloud",
-      "key": "module:infra_api_c3_services_api->belongs_to_repo->repo:cloud",
-      "properties": {}
-    },
-    {
-      "table": "implements",
-      "from": "module:infra_api_c3_services_api",
-      "to": "service:c3_services_api",
-      "key": "module:infra_api_c3_services_api->implements->service:c3_services_api",
       "properties": {}
     },
     {
@@ -6642,16 +6872,86 @@
     },
     {
       "table": "belongs_to_repo",
-      "from": "module:infra_api_git_proxy_api",
+      "from": "module:infra_api_cloudy_all_api",
       "to": "repo:cloud",
-      "key": "module:infra_api_git_proxy_api->belongs_to_repo->repo:cloud",
+      "key": "module:infra_api_cloudy_all_api->belongs_to_repo->repo:cloud",
       "properties": {}
     },
     {
       "table": "implements",
-      "from": "module:infra_api_git_proxy_api",
-      "to": "service:git_proxy_api",
-      "key": "module:infra_api_git_proxy_api->implements->service:git_proxy_api",
+      "from": "module:infra_api_cloudy_all_api",
+      "to": "service:cloudy_all_api",
+      "key": "module:infra_api_cloudy_all_api->implements->service:cloudy_all_api",
+      "properties": {}
+    },
+    {
+      "table": "belongs_to_repo",
+      "from": "module:infra_api_cloudy_all_mcp",
+      "to": "repo:cloud",
+      "key": "module:infra_api_cloudy_all_mcp->belongs_to_repo->repo:cloud",
+      "properties": {}
+    },
+    {
+      "table": "implements",
+      "from": "module:infra_api_cloudy_all_mcp",
+      "to": "service:cloudy_all_mcp",
+      "key": "module:infra_api_cloudy_all_mcp->implements->service:cloudy_all_mcp",
+      "properties": {}
+    },
+    {
+      "table": "belongs_to_repo",
+      "from": "module:infra_api_cloudy_apps_communication_mcp",
+      "to": "repo:cloud",
+      "key": "module:infra_api_cloudy_apps_communication_mcp->belongs_to_repo->repo:cloud",
+      "properties": {}
+    },
+    {
+      "table": "implements",
+      "from": "module:infra_api_cloudy_apps_communication_mcp",
+      "to": "service:cloudy_apps_communication_mcp",
+      "key": "module:infra_api_cloudy_apps_communication_mcp->implements->service:cloudy_apps_communication_mcp",
+      "properties": {}
+    },
+    {
+      "table": "belongs_to_repo",
+      "from": "module:infra_api_cloudy_apps_drive_mcp",
+      "to": "repo:cloud",
+      "key": "module:infra_api_cloudy_apps_drive_mcp->belongs_to_repo->repo:cloud",
+      "properties": {}
+    },
+    {
+      "table": "implements",
+      "from": "module:infra_api_cloudy_apps_drive_mcp",
+      "to": "service:cloudy_apps_drive_mcp",
+      "key": "module:infra_api_cloudy_apps_drive_mcp->implements->service:cloudy_apps_drive_mcp",
+      "properties": {}
+    },
+    {
+      "table": "belongs_to_repo",
+      "from": "module:infra_api_cloudy_c3_api",
+      "to": "repo:cloud",
+      "key": "module:infra_api_cloudy_c3_api->belongs_to_repo->repo:cloud",
+      "properties": {}
+    },
+    {
+      "table": "implements",
+      "from": "module:infra_api_cloudy_c3_api",
+      "to": "service:cloudy_c3_api",
+      "key": "module:infra_api_cloudy_c3_api->implements->service:cloudy_c3_api",
+      "properties": {}
+    },
+    {
+      "table": "belongs_to_repo",
+      "from": "module:infra_api_cloudy_drive_git_proxy_api",
+      "to": "repo:cloud",
+      "key": "module:infra_api_cloudy_drive_git_proxy_api->belongs_to_repo->repo:cloud",
+      "properties": {}
+    },
+    {
+      "table": "implements",
+      "from": "module:infra_api_cloudy_drive_git_proxy_api",
+      "to": "service:cloudy_drive_git_proxy_api",
+      "key": "module:infra_api_cloudy_drive_git_proxy_api->implements->service:cloudy_drive_git_proxy_api",
       "properties": {}
     },
     {
@@ -7062,6 +7362,20 @@
     },
     {
       "table": "belongs_to_repo",
+      "from": "module:infra_sec_cloudy_ai_tokens_api",
+      "to": "repo:cloud",
+      "key": "module:infra_sec_cloudy_ai_tokens_api->belongs_to_repo->repo:cloud",
+      "properties": {}
+    },
+    {
+      "table": "implements",
+      "from": "module:infra_sec_cloudy_ai_tokens_api",
+      "to": "service:cloudy_ai_tokens_api",
+      "key": "module:infra_sec_cloudy_ai_tokens_api->implements->service:cloudy_ai_tokens_api",
+      "properties": {}
+    },
+    {
+      "table": "belongs_to_repo",
       "from": "module:infra_sec_crowdsec",
       "to": "repo:cloud",
       "key": "module:infra_sec_crowdsec->belongs_to_repo->repo:cloud",
@@ -7104,20 +7418,6 @@
     },
     {
       "table": "belongs_to_repo",
-      "from": "module:infra_sec_tokens_api",
-      "to": "repo:cloud",
-      "key": "module:infra_sec_tokens_api->belongs_to_repo->repo:cloud",
-      "properties": {}
-    },
-    {
-      "table": "implements",
-      "from": "module:infra_sec_tokens_api",
-      "to": "service:tokens_api",
-      "key": "module:infra_sec_tokens_api->implements->service:tokens_api",
-      "properties": {}
-    },
-    {
-      "table": "belongs_to_repo",
       "from": "module:user_ai_cloud_cgc_pub_mcp",
       "to": "repo:cloud",
       "key": "module:user_ai_cloud_cgc_pub_mcp->belongs_to_repo->repo:cloud",
@@ -7128,6 +7428,76 @@
       "from": "module:user_ai_cloud_cgc_pub_mcp",
       "to": "service:cloud_cgc_pub_mcp",
       "key": "module:user_ai_cloud_cgc_pub_mcp->implements->service:cloud_cgc_pub_mcp",
+      "properties": {}
+    },
+    {
+      "table": "belongs_to_repo",
+      "from": "module:user_ai_cloud_me_cgc_pvt_graph_api",
+      "to": "repo:cloud",
+      "key": "module:user_ai_cloud_me_cgc_pvt_graph_api->belongs_to_repo->repo:cloud",
+      "properties": {}
+    },
+    {
+      "table": "implements",
+      "from": "module:user_ai_cloud_me_cgc_pvt_graph_api",
+      "to": "service:cloud_me_cgc_pvt_graph_api",
+      "key": "module:user_ai_cloud_me_cgc_pvt_graph_api->implements->service:cloud_me_cgc_pvt_graph_api",
+      "properties": {}
+    },
+    {
+      "table": "belongs_to_repo",
+      "from": "module:user_ai_cloudy_ai_agents_api",
+      "to": "repo:cloud",
+      "key": "module:user_ai_cloudy_ai_agents_api->belongs_to_repo->repo:cloud",
+      "properties": {}
+    },
+    {
+      "table": "implements",
+      "from": "module:user_ai_cloudy_ai_agents_api",
+      "to": "service:cloudy_ai_agents_api",
+      "key": "module:user_ai_cloudy_ai_agents_api->implements->service:cloudy_ai_agents_api",
+      "properties": {}
+    },
+    {
+      "table": "belongs_to_repo",
+      "from": "module:user_ai_cloudy_ai_claude_api",
+      "to": "repo:cloud",
+      "key": "module:user_ai_cloudy_ai_claude_api->belongs_to_repo->repo:cloud",
+      "properties": {}
+    },
+    {
+      "table": "implements",
+      "from": "module:user_ai_cloudy_ai_claude_api",
+      "to": "service:cloudy_ai_claude_api",
+      "key": "module:user_ai_cloudy_ai_claude_api->implements->service:cloudy_ai_claude_api",
+      "properties": {}
+    },
+    {
+      "table": "belongs_to_repo",
+      "from": "module:user_ai_cloudy_ai_memory_api",
+      "to": "repo:cloud",
+      "key": "module:user_ai_cloudy_ai_memory_api->belongs_to_repo->repo:cloud",
+      "properties": {}
+    },
+    {
+      "table": "implements",
+      "from": "module:user_ai_cloudy_ai_memory_api",
+      "to": "service:cloudy_ai_memory_api",
+      "key": "module:user_ai_cloudy_ai_memory_api->implements->service:cloudy_ai_memory_api",
+      "properties": {}
+    },
+    {
+      "table": "belongs_to_repo",
+      "from": "module:user_ai_cloudy_cgc_pub_graph_api",
+      "to": "repo:cloud",
+      "key": "module:user_ai_cloudy_cgc_pub_graph_api->belongs_to_repo->repo:cloud",
+      "properties": {}
+    },
+    {
+      "table": "implements",
+      "from": "module:user_ai_cloudy_cgc_pub_graph_api",
+      "to": "service:cloudy_cgc_pub_graph_api",
+      "key": "module:user_ai_cloudy_cgc_pub_graph_api->implements->service:cloudy_cgc_pub_graph_api",
       "properties": {}
     },
     {
@@ -7160,62 +7530,6 @@
     },
     {
       "table": "belongs_to_repo",
-      "from": "module:user_ai_kg_store",
-      "to": "repo:cloud",
-      "key": "module:user_ai_kg_store->belongs_to_repo->repo:cloud",
-      "properties": {}
-    },
-    {
-      "table": "implements",
-      "from": "module:user_ai_kg_store",
-      "to": "service:kg_store",
-      "key": "module:user_ai_kg_store->implements->service:kg_store",
-      "properties": {}
-    },
-    {
-      "table": "belongs_to_repo",
-      "from": "module:user_ai_kg_store_pub",
-      "to": "repo:cloud",
-      "key": "module:user_ai_kg_store_pub->belongs_to_repo->repo:cloud",
-      "properties": {}
-    },
-    {
-      "table": "implements",
-      "from": "module:user_ai_kg_store_pub",
-      "to": "service:kg_store_pub",
-      "key": "module:user_ai_kg_store_pub->implements->service:kg_store_pub",
-      "properties": {}
-    },
-    {
-      "table": "belongs_to_repo",
-      "from": "module:user_ai_my_ai_api",
-      "to": "repo:cloud",
-      "key": "module:user_ai_my_ai_api->belongs_to_repo->repo:cloud",
-      "properties": {}
-    },
-    {
-      "table": "implements",
-      "from": "module:user_ai_my_ai_api",
-      "to": "service:my_ai_api",
-      "key": "module:user_ai_my_ai_api->implements->service:my_ai_api",
-      "properties": {}
-    },
-    {
-      "table": "belongs_to_repo",
-      "from": "module:user_ai_my_ai_claude_api",
-      "to": "repo:cloud",
-      "key": "module:user_ai_my_ai_claude_api->belongs_to_repo->repo:cloud",
-      "properties": {}
-    },
-    {
-      "table": "implements",
-      "from": "module:user_ai_my_ai_claude_api",
-      "to": "service:my_ai_claude_api",
-      "key": "module:user_ai_my_ai_claude_api->implements->service:my_ai_claude_api",
-      "properties": {}
-    },
-    {
-      "table": "belongs_to_repo",
       "from": "module:user_ai_openclaw",
       "to": "repo:cloud",
       "key": "module:user_ai_openclaw->belongs_to_repo->repo:cloud",
@@ -7226,20 +7540,6 @@
       "from": "module:user_ai_openclaw",
       "to": "service:openclaw",
       "key": "module:user_ai_openclaw->implements->service:openclaw",
-      "properties": {}
-    },
-    {
-      "table": "belongs_to_repo",
-      "from": "module:user_ai_session_memory",
-      "to": "repo:cloud",
-      "key": "module:user_ai_session_memory->belongs_to_repo->repo:cloud",
-      "properties": {}
-    },
-    {
-      "table": "implements",
-      "from": "module:user_ai_session_memory",
-      "to": "service:session_memory",
-      "key": "module:user_ai_session_memory->implements->service:session_memory",
       "properties": {}
     },
     {
@@ -7356,30 +7656,30 @@
     },
     {
       "table": "belongs_to_repo",
-      "from": "module:user_data_scrappers_api",
+      "from": "module:user_data_cloudy_browser_scrapper_api",
       "to": "repo:cloud",
-      "key": "module:user_data_scrappers_api->belongs_to_repo->repo:cloud",
+      "key": "module:user_data_cloudy_browser_scrapper_api->belongs_to_repo->repo:cloud",
       "properties": {}
     },
     {
       "table": "implements",
-      "from": "module:user_data_scrappers_api",
-      "to": "service:scrappers_api",
-      "key": "module:user_data_scrappers_api->implements->service:scrappers_api",
+      "from": "module:user_data_cloudy_browser_scrapper_api",
+      "to": "service:cloudy_browser_scrapper_api",
+      "key": "module:user_data_cloudy_browser_scrapper_api->implements->service:cloudy_browser_scrapper_api",
       "properties": {}
     },
     {
       "table": "belongs_to_repo",
-      "from": "module:user_fin_capital_stack_finterminal_api",
+      "from": "module:user_fin_capital_stack_finterm_api",
       "to": "repo:cloud",
-      "key": "module:user_fin_capital_stack_finterminal_api->belongs_to_repo->repo:cloud",
+      "key": "module:user_fin_capital_stack_finterm_api->belongs_to_repo->repo:cloud",
       "properties": {}
     },
     {
       "table": "implements",
-      "from": "module:user_fin_capital_stack_finterminal_api",
-      "to": "service:capital_stack_finterminal_api",
-      "key": "module:user_fin_capital_stack_finterminal_api->implements->service:capital_stack_finterminal_api",
+      "from": "module:user_fin_capital_stack_finterm_api",
+      "to": "service:capital_stack_finterm_api",
+      "key": "module:user_fin_capital_stack_finterm_api->implements->service:capital_stack_finterm_api",
       "properties": {}
     },
     {
@@ -7426,16 +7726,16 @@
     },
     {
       "table": "belongs_to_repo",
-      "from": "module:user_news_news_gdelt",
+      "from": "module:user_news_capital_stack_news_gdelt_api",
       "to": "repo:cloud",
-      "key": "module:user_news_news_gdelt->belongs_to_repo->repo:cloud",
+      "key": "module:user_news_capital_stack_news_gdelt_api->belongs_to_repo->repo:cloud",
       "properties": {}
     },
     {
       "table": "implements",
-      "from": "module:user_news_news_gdelt",
-      "to": "service:news_gdelt",
-      "key": "module:user_news_news_gdelt->implements->service:news_gdelt",
+      "from": "module:user_news_capital_stack_news_gdelt_api",
+      "to": "service:capital_stack_news_gdelt_api",
+      "key": "module:user_news_capital_stack_news_gdelt_api->implements->service:capital_stack_news_gdelt_api",
       "properties": {}
     },
     {

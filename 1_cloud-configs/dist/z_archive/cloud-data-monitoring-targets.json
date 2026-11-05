@@ -4,19 +4,19 @@
   "_source": "_cloud-data-consolidated.json via cloud-data-config-derive.ts/monitoring-targets",
   "endpoint_checks": [
     {
-      "service": "c3-infra-api",
-      "url": "https://api.diegonmarcos.com/c3-infra-api/health"
-    },
-    {
       "service": "c3-public-api",
       "url": "https://api.diegonmarcos.com/pub/health"
     },
     {
-      "service": "c3-services-api",
+      "service": "cloudy-all-api",
       "url": "https://api.diegonmarcos.com/c3-services-api/health"
     },
     {
-      "service": "git-proxy-api",
+      "service": "cloudy-c3-api",
+      "url": "https://api.diegonmarcos.com/c3-infra-api/health"
+    },
+    {
+      "service": "cloudy-drive-git-proxy-api",
       "url": "https://api.diegonmarcos.com/git/health"
     },
     {
@@ -72,11 +72,11 @@
       "url": "https://jmap.diegonmarcos.com/"
     },
     {
-      "service": "scrappers-api",
+      "service": "cloudy-browser-scrapper-api",
       "url": "https://api.diegonmarcos.com/health"
     },
     {
-      "service": "capital-stack-finterminal-api",
+      "service": "capital-stack-finterm-api",
       "url": "https://api.diegonmarcos.com/capital-stack-finterminal-api/health"
     },
     {
@@ -138,19 +138,19 @@
       "domain": "languagetool.diegonmarcos.com"
     },
     {
-      "service": "c3-infra-api",
-      "domain": "api.diegonmarcos.com/c3-infra-api"
-    },
-    {
       "service": "c3-public-api",
       "domain": "api.diegonmarcos.com/pub"
     },
     {
-      "service": "c3-services-api",
+      "service": "cloudy-all-api",
       "domain": "api.diegonmarcos.com/c3-services-api"
     },
     {
-      "service": "git-proxy-api",
+      "service": "cloudy-c3-api",
+      "domain": "api.diegonmarcos.com/c3-infra-api"
+    },
+    {
+      "service": "cloudy-drive-git-proxy-api",
       "domain": "api.diegonmarcos.com/git"
     },
     {
@@ -214,11 +214,11 @@
       "domain": "jmap.diegonmarcos.com"
     },
     {
-      "service": "scrappers-api",
+      "service": "cloudy-browser-scrapper-api",
       "domain": "api.diegonmarcos.com"
     },
     {
-      "service": "capital-stack-finterminal-api",
+      "service": "capital-stack-finterm-api",
       "domain": "api.diegonmarcos.com/capital-stack-finterminal-api"
     },
     {
@@ -280,19 +280,19 @@
       "domain": "languagetool.diegonmarcos.com"
     },
     {
-      "service": "c3-infra-api",
-      "domain": "api.diegonmarcos.com/c3-infra-api"
-    },
-    {
       "service": "c3-public-api",
       "domain": "api.diegonmarcos.com/pub"
     },
     {
-      "service": "c3-services-api",
+      "service": "cloudy-all-api",
       "domain": "api.diegonmarcos.com/c3-services-api"
     },
     {
-      "service": "git-proxy-api",
+      "service": "cloudy-c3-api",
+      "domain": "api.diegonmarcos.com/c3-infra-api"
+    },
+    {
+      "service": "cloudy-drive-git-proxy-api",
       "domain": "api.diegonmarcos.com/git"
     },
     {
@@ -360,11 +360,11 @@
       "domain": "jmap.diegonmarcos.com"
     },
     {
-      "service": "scrappers-api",
+      "service": "cloudy-browser-scrapper-api",
       "domain": "api.diegonmarcos.com"
     },
     {
-      "service": "capital-stack-finterminal-api",
+      "service": "capital-stack-finterm-api",
       "domain": "api.diegonmarcos.com/capital-stack-finterminal-api"
     },
     {

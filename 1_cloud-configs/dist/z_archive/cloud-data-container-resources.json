@@ -12,12 +12,21 @@
       ],
       "resources": null
     },
-    "embeddings-api": {
+    "cloudy-ai-api": {
       "vm": "oci-apps",
       "vm_ram_gb": 24,
       "vm_cpu": 4,
       "containers": [
-        "embeddings-api"
+        "cloudy-ai-api"
+      ],
+      "resources": null
+    },
+    "cloudy-ai-embeddings-api": {
+      "vm": "oci-apps",
+      "vm_ram_gb": 24,
+      "vm_cpu": 4,
+      "containers": [
+        "cloudy-ai-embeddings-api"
       ],
       "resources": null
     },
@@ -41,30 +50,12 @@
         "mem_reservation": "512m"
       }
     },
-    "c3-infra-api": {
-      "vm": "oci-apps",
-      "vm_ram_gb": 24,
-      "vm_cpu": 4,
-      "containers": [
-        "c3-infra-api"
-      ],
-      "resources": null
-    },
     "c3-public-api": {
       "vm": "oci-analytics",
       "vm_ram_gb": 1,
       "vm_cpu": 1,
       "containers": [
         "c3-public-api"
-      ],
-      "resources": null
-    },
-    "c3-services-api": {
-      "vm": "oci-apps",
-      "vm_ram_gb": 24,
-      "vm_cpu": 4,
-      "containers": [
-        "c3-services-api"
       ],
       "resources": null
     },
@@ -146,12 +137,72 @@
       ],
       "resources": null
     },
-    "git-proxy-api": {
+    "cloudy-all-api": {
+      "vm": "oci-apps",
+      "vm_ram_gb": 24,
+      "vm_cpu": 4,
+      "containers": [
+        "cloudy-all-api"
+      ],
+      "resources": null
+    },
+    "cloudy-all-mcp": {
+      "vm": "oci-apps",
+      "vm_ram_gb": 24,
+      "vm_cpu": 4,
+      "containers": [
+        "cloudy-all-mcp"
+      ],
+      "resources": {
+        "mem_reservation": "256M",
+        "pids_limit": 256
+      }
+    },
+    "cloudy-apps-communication-mcp": {
+      "vm": "oci-apps",
+      "vm_ram_gb": 24,
+      "vm_cpu": 4,
+      "containers": [
+        "cloudy-apps-communication-mcp"
+      ],
+      "resources": {
+        "mem_reservation": "256M",
+        "pids_limit": 256
+      }
+    },
+    "cloudy-apps-drive-mcp": {
+      "vm": "oci-apps",
+      "vm_ram_gb": 24,
+      "vm_cpu": 4,
+      "containers": [
+        "cloudy-apps-drive-mcp"
+      ],
+      "resources": null
+    },
+    "cloudy-c3-api": {
+      "vm": "oci-apps",
+      "vm_ram_gb": 24,
+      "vm_cpu": 4,
+      "containers": [
+        "cloudy-c3-api"
+      ],
+      "resources": null
+    },
+    "cloudy-drive-git-proxy-api": {
       "vm": "oci-analytics",
       "vm_ram_gb": 1,
       "vm_cpu": 1,
       "containers": [
-        "git-proxy-api"
+        "cloudy-drive-git-proxy-api"
+      ],
+      "resources": null
+    },
+    "cloudy-mail-http-to-smtp-api": {
+      "vm": "gcp-proxy",
+      "vm_ram_gb": 1,
+      "vm_cpu": 2,
+      "containers": [
+        "cloudy-mail-http-to-smtp-api"
       ],
       "resources": null
     },
@@ -170,15 +221,6 @@
       "vm_cpu": 4,
       "containers": [
         "google-workspace-mcp"
-      ],
-      "resources": null
-    },
-    "http-to-smtp-proxy-api": {
-      "vm": "gcp-proxy",
-      "vm_ram_gb": 1,
-      "vm_cpu": 2,
-      "containers": [
-        "http-to-smtp-proxy-api"
       ],
       "resources": null
     },
@@ -388,8 +430,8 @@
       "containers": [
         "ntfy",
         "syslog-bridge",
-        "rss-gateway",
-        "github-rss"
+        "capital-stack-news-rss-api",
+        "capital-stack-news-github-rss-api"
       ],
       "resources": {
         "reservations": {
@@ -453,10 +495,10 @@
       "vm_ram_gb": 24,
       "vm_cpu": 4,
       "containers": [
-        "auth-broker-google",
-        "auth-broker-github",
-        "auth-broker-cloudflare",
-        "auth-broker-email"
+        "cloudy-auth-google-api",
+        "cloudy-auth-github-api",
+        "cloudy-auth-cloudflare-api",
+        "cloudy-auth-email-api"
       ],
       "resources": {
         "mem_reservation": "16m",
@@ -505,6 +547,15 @@
       ],
       "resources": null
     },
+    "cloudy-ai-tokens-api": {
+      "vm": "oci-apps",
+      "vm_ram_gb": 24,
+      "vm_cpu": 4,
+      "containers": [
+        "cloudy-ai-tokens-api"
+      ],
+      "resources": null
+    },
     "crowdsec": {
       "vm": "oci-apps",
       "vm_ram_gb": 24,
@@ -536,15 +587,6 @@
       ],
       "resources": null
     },
-    "tokens-api": {
-      "vm": "oci-apps",
-      "vm_ram_gb": 24,
-      "vm_cpu": 4,
-      "containers": [
-        "tokens-api"
-      ],
-      "resources": null
-    },
     "cloud-cgc-pub-mcp": {
       "vm": "oci-apps",
       "vm_ram_gb": 24,
@@ -554,6 +596,65 @@
         "cloud-cgc-pvt-mcp"
       ],
       "resources": null
+    },
+    "cloud-me-cgc-pvt-graph-api": {
+      "vm": "oci-apps",
+      "vm_ram_gb": 24,
+      "vm_cpu": 4,
+      "containers": [
+        "cloud-me-cgc-pvt-graph-api"
+      ],
+      "resources": {
+        "_comment": "THE ONE DECLARATION of this container's memory budget. src/compose.nix reads mem_limit as the cgroup ceiling (deploy.resources.limits.memory) and rocksdb_block_cache / rocksdb_write_buffer below as SurrealDB's own RocksDB budget (SURREAL_ROCKSDB_BLOCK_CACHE_SIZE, SURREAL_ROCKSDB_WRITE_BUFFER_SIZE). Both halves are required: the cgroup alone converts the leak into an OOM kill, and the engine budget alone leaves nothing enforcing it. No literal is written in compose.nix. Sized from measurement: kg-store's resident set on oci-apps 2026-09-24 was 140.6MiB at rest, but a full graph refresh peaked at ~945MiB on 2026-10-10, hence 2G. Raised to 4G on 2026-10-21: a pvt restore (407k-edge cloud-u-android repo-scoped delete) hit the 2G ceiling, the kernel OOM-killed surreal at 2.09GB anon-rss and the ingest aborted with ECONNREFUSED (#1061).",
+        "mem_limit": "4G",
+        "mem_reservation": "128M",
+        "_rocksdb_comment": "SurrealDB RocksDB engine budget, declared on its own so the cgroup ceiling above can grow without the cache growing with it. Raised mem_limit 1G -> 2G on 2026-10-10: a full cgc graph refresh (690k-edge cloud-u-containers ingest) peaked at ~945MiB of the 1G cap and restarted both stores once mid-ingest. The cache and memtables are kept exactly where they were (512M cache, 2 x 128M memtables) so the extra GiB is pure headroom for the process, WAL and compaction. compose.nix refuses a block cache above half of mem_limit, and _shared/test-kg-store-memory-ceiling.mjs asserts mem_limit >= 2G.",
+        "rocksdb_block_cache": "512M",
+        "rocksdb_write_buffer": "128M"
+      }
+    },
+    "cloudy-ai-agents-api": {
+      "vm": "oci-apps",
+      "vm_ram_gb": 24,
+      "vm_cpu": 4,
+      "containers": [
+        "cloud-agi-goose"
+      ],
+      "resources": null
+    },
+    "cloudy-ai-claude-api": {
+      "vm": "oci-apps",
+      "vm_ram_gb": 24,
+      "vm_cpu": 4,
+      "containers": [
+        "cloud-agi-claude"
+      ],
+      "resources": null
+    },
+    "cloudy-ai-memory-api": {
+      "vm": "oci-apps",
+      "vm_ram_gb": 24,
+      "vm_cpu": 4,
+      "containers": [
+        "cloudy-ai-memory-api"
+      ],
+      "resources": null
+    },
+    "cloudy-cgc-pub-graph-api": {
+      "vm": "oci-apps",
+      "vm_ram_gb": 24,
+      "vm_cpu": 4,
+      "containers": [
+        "cloudy-cgc-pub-graph-api"
+      ],
+      "resources": {
+        "_comment": "THE ONE DECLARATION of this container's memory budget — see user-ai_kg-store/build.json for the full note. src/compose.nix takes the cgroup ceiling from mem_limit and SurrealDB's RocksDB budget from rocksdb_block_cache / rocksdb_write_buffer; no literal is written in compose.nix. Measured resident set on oci-apps 2026-09-24: 131.1MiB at rest; ~945MiB peak during a full graph refresh on 2026-10-10, hence 2G.",
+        "mem_limit": "2G",
+        "mem_reservation": "128M",
+        "_rocksdb_comment": "SurrealDB RocksDB engine budget, declared on its own so the cgroup ceiling above can grow without the cache growing with it. Raised mem_limit 1G -> 2G on 2026-10-10: a full cgc graph refresh (690k-edge cloud-u-containers ingest) peaked at ~945MiB of the 1G cap and restarted both stores once mid-ingest. The cache and memtables are kept exactly where they were (512M cache, 2 x 128M memtables) so the extra GiB is pure headroom for the process, WAL and compaction. compose.nix refuses a block cache above half of mem_limit, and _shared/test-kg-store-memory-ceiling.mjs asserts mem_limit >= 2G.",
+        "rocksdb_block_cache": "512M",
+        "rocksdb_write_buffer": "128M"
+      }
     },
     "db-agent": {
       "vm": "all",
@@ -573,56 +674,6 @@
       ],
       "resources": null
     },
-    "kg-store": {
-      "vm": "oci-apps",
-      "vm_ram_gb": 24,
-      "vm_cpu": 4,
-      "containers": [
-        "kg-store"
-      ],
-      "resources": {
-        "_comment": "THE ONE DECLARATION of this container's memory budget. src/compose.nix reads mem_limit as the cgroup ceiling (deploy.resources.limits.memory) and rocksdb_block_cache / rocksdb_write_buffer below as SurrealDB's own RocksDB budget (SURREAL_ROCKSDB_BLOCK_CACHE_SIZE, SURREAL_ROCKSDB_WRITE_BUFFER_SIZE). Both halves are required: the cgroup alone converts the leak into an OOM kill, and the engine budget alone leaves nothing enforcing it. No literal is written in compose.nix. Sized from measurement: kg-store's resident set on oci-apps 2026-09-24 was 140.6MiB at rest, but a full graph refresh peaked at ~945MiB on 2026-10-10, hence 2G. Raised to 4G on 2026-10-21: a pvt restore (407k-edge cloud-u-android repo-scoped delete) hit the 2G ceiling, the kernel OOM-killed surreal at 2.09GB anon-rss and the ingest aborted with ECONNREFUSED (#1061).",
-        "mem_limit": "4G",
-        "mem_reservation": "128M",
-        "_rocksdb_comment": "SurrealDB RocksDB engine budget, declared on its own so the cgroup ceiling above can grow without the cache growing with it. Raised mem_limit 1G -> 2G on 2026-10-10: a full cgc graph refresh (690k-edge cloud-u-containers ingest) peaked at ~945MiB of the 1G cap and restarted both stores once mid-ingest. The cache and memtables are kept exactly where they were (512M cache, 2 x 128M memtables) so the extra GiB is pure headroom for the process, WAL and compaction. compose.nix refuses a block cache above half of mem_limit, and _shared/test-kg-store-memory-ceiling.mjs asserts mem_limit >= 2G.",
-        "rocksdb_block_cache": "512M",
-        "rocksdb_write_buffer": "128M"
-      }
-    },
-    "kg-store-pub": {
-      "vm": "oci-apps",
-      "vm_ram_gb": 24,
-      "vm_cpu": 4,
-      "containers": [
-        "kg-store-pub"
-      ],
-      "resources": {
-        "_comment": "THE ONE DECLARATION of this container's memory budget — see user-ai_kg-store/build.json for the full note. src/compose.nix takes the cgroup ceiling from mem_limit and SurrealDB's RocksDB budget from rocksdb_block_cache / rocksdb_write_buffer; no literal is written in compose.nix. Measured resident set on oci-apps 2026-09-24: 131.1MiB at rest; ~945MiB peak during a full graph refresh on 2026-10-10, hence 2G.",
-        "mem_limit": "2G",
-        "mem_reservation": "128M",
-        "_rocksdb_comment": "SurrealDB RocksDB engine budget, declared on its own so the cgroup ceiling above can grow without the cache growing with it. Raised mem_limit 1G -> 2G on 2026-10-10: a full cgc graph refresh (690k-edge cloud-u-containers ingest) peaked at ~945MiB of the 1G cap and restarted both stores once mid-ingest. The cache and memtables are kept exactly where they were (512M cache, 2 x 128M memtables) so the extra GiB is pure headroom for the process, WAL and compaction. compose.nix refuses a block cache above half of mem_limit, and _shared/test-kg-store-memory-ceiling.mjs asserts mem_limit >= 2G.",
-        "rocksdb_block_cache": "512M",
-        "rocksdb_write_buffer": "128M"
-      }
-    },
-    "my-ai-api": {
-      "vm": "oci-apps",
-      "vm_ram_gb": 24,
-      "vm_cpu": 4,
-      "containers": [
-        "cloud-agi-goose"
-      ],
-      "resources": null
-    },
-    "my-ai_claude-api": {
-      "vm": "oci-apps",
-      "vm_ram_gb": 24,
-      "vm_cpu": 4,
-      "containers": [
-        "cloud-agi-claude"
-      ],
-      "resources": null
-    },
     "openclaw": {
       "vm": "oci-apps",
       "vm_ram_gb": 24,
@@ -635,15 +686,6 @@
         "mem_reservation": "1G",
         "_comment": "Measured 2026-10-10 on oci-apps (smoke run of this exact config): 1.33 GiB resident after one agent turn. 3G is the ceiling with headroom for tool runs; the agi category default (8G) is more than this service needs."
       }
-    },
-    "session-memory": {
-      "vm": "oci-apps",
-      "vm_ram_gb": 24,
-      "vm_cpu": 4,
-      "containers": [
-        "session-memory"
-      ],
-      "resources": null
     },
     "chat-mattermost": {
       "vm": "oci-apps",
@@ -741,21 +783,21 @@
         }
       }
     },
-    "scrappers-api": {
+    "cloudy-browser-scrapper-api": {
       "vm": "oci-apps",
       "vm_ram_gb": 24,
       "vm_cpu": 4,
       "containers": [
-        "scrappers-api"
+        "cloudy-browser-scrapper-api"
       ],
       "resources": null
     },
-    "capital-stack-finterminal-api": {
+    "capital-stack-finterm-api": {
       "vm": "oci-apps",
       "vm_ram_gb": 24,
       "vm_cpu": 4,
       "containers": [
-        "capital-stack-finterminal-api"
+        "capital-stack-finterm-api"
       ],
       "resources": {
         "reservations": {
@@ -796,12 +838,12 @@
       ],
       "resources": null
     },
-    "news-gdelt": {
+    "capital-stack-news-gdelt-api": {
       "vm": "oci-apps",
       "vm_ram_gb": 24,
       "vm_cpu": 4,
       "containers": [
-        "news-gdelt"
+        "capital-stack-news-gdelt-api"
       ],
       "resources": null
     },

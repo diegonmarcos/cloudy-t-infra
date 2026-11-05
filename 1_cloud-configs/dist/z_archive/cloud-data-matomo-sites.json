@@ -9,19 +9,9 @@
       "service": "languagetool"
     },
     {
-      "name": "C3 REST API — Cloud Control Center Fastify API",
-      "url": "https://api.diegonmarcos.com/c3-infra-api",
-      "service": "c3-infra-api"
-    },
-    {
       "name": "C3 Public API — single public-edge listener on oci-analytics. Consolidates http-to-smtp-proxy-api (Bearer-gated /mail/*) and c3-analytics-api passthrough (public /analytics/*). Replaces split listeners across gcp-proxy + oci-analytics so gcp-proxy becomes a pure wg0 spoke.",
       "url": "https://api.diegonmarcos.com/pub",
       "service": "c3-public-api"
-    },
-    {
-      "name": "C3 Services REST API — service API gateway Fastify API",
-      "url": "https://api.diegonmarcos.com/c3-services-api",
-      "service": "c3-services-api"
     },
     {
       "name": "Drive MCP server — one facade over every storage unit: repos, files, photos, sync, scrapes, S3 and conversion",
@@ -49,9 +39,34 @@
       "service": "cloud-vault-mcp"
     },
     {
+      "name": "C3 Services REST API — service API gateway Fastify API",
+      "url": "https://api.diegonmarcos.com/c3-services-api",
+      "service": "cloudy-all-api"
+    },
+    {
+      "name": "Mail MCP server — IMAP/SMTP/Admin via Stalwart REST API",
+      "url": "https://mcp.diegonmarcos.com",
+      "service": "cloudy-apps-communication-mcp"
+    },
+    {
+      "name": "Drive MCP server — one facade over every storage unit: repos, files, photos, sync, scrapes, S3 and conversion",
+      "url": "https://mcp.diegonmarcos.com",
+      "service": "cloudy-apps-drive-mcp"
+    },
+    {
+      "name": "C3 REST API — Cloud Control Center Fastify API",
+      "url": "https://api.diegonmarcos.com/c3-infra-api",
+      "service": "cloudy-c3-api"
+    },
+    {
       "name": "Git Proxy API — Authelia-fronted read path to GitHub so the phone holds NO GitHub credential (#647, route 3 of #646's fallback chain). The caller authenticates to US with the Authelia bearer it already has; this service holds the GitHub token server-side and streams the result back.",
       "url": "https://api.diegonmarcos.com/git",
-      "service": "git-proxy-api"
+      "service": "cloudy-drive-git-proxy-api"
+    },
+    {
+      "name": "HTTP-to-SMTP bridge sidecar of Caddy on gcp-proxy. CF Worker POSTs JSON email payloads to this container (because GCP blocks outbound TCP/25); container speaks SMTP over WG to maddy:25 + stalwart:2025 on oci-mail. Public path: api.diegonmarcos.com/http-to-smtp-proxy-api/ [DECOMMISSIONED 2026-05-21]",
+      "url": "https://api.diegonmarcos.com/http-to-smtp-proxy-api",
+      "service": "cloudy-mail-http-to-smtp-api"
     },
     {
       "name": "Google Personal Account MCP server — Gmail (IMAP/SMTP via App Password) for personal Google accounts, multi-account",
@@ -62,11 +77,6 @@
       "name": "Google Workspace MCP server — Gmail, Calendar, Drive, Docs, Sheets via HTTP transport",
       "url": "https://mcp.diegonmarcos.com",
       "service": "google-workspace-mcp"
-    },
-    {
-      "name": "HTTP-to-SMTP bridge sidecar of Caddy on gcp-proxy. CF Worker POSTs JSON email payloads to this container (because GCP blocks outbound TCP/25); container speaks SMTP over WG to maddy:25 + stalwart:2025 on oci-mail. Public path: api.diegonmarcos.com/http-to-smtp-proxy-api/ [DECOMMISSIONED 2026-05-21]",
-      "url": "https://api.diegonmarcos.com/http-to-smtp-proxy-api",
-      "service": "http-to-smtp-proxy-api"
     },
     {
       "name": "Self-hosted Git service",
@@ -176,12 +186,12 @@
     {
       "name": "Unified scrapers API (Instagram / Pinterest / LinkedIn / generic crawl) — retires crawlee-cloud. Lean single-container FastAPI, on-demand, flat-JSON output.",
       "url": "https://api.diegonmarcos.com",
-      "service": "scrappers-api"
+      "service": "cloudy-browser-scrapper-api"
     },
     {
       "name": "Fincept Terminal backend (capital-stack-finterminal-api) — REST + WebSocket over DataHub, 35 data connectors, 7 analytics, 17 brokers, 6 investor personas, MCP tools",
       "url": "https://api.diegonmarcos.com/capital-stack-finterminal-api",
-      "service": "capital-stack-finterminal-api"
+      "service": "capital-stack-finterm-api"
     },
     {
       "name": "PhotoPrism AI-powered photo management (oci-flex-1)",

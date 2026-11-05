@@ -433,7 +433,7 @@
         "alerts-api",
         "c3-public-api",
         "cloud-me-api",
-        "git-proxy-api",
+        "cloudy-drive-git-proxy-api",
         "unbound-dns64",
         "caddy-public"
       ],
@@ -471,11 +471,10 @@
       },
       "instance_id": "ocid1.instance.oc1.eu-marseille-1.anwxeljruadvczacj7dfxl7uifar574je7fzlvtdjp4ghljdwuwdemsdbiva",
       "services": [
-        "embeddings-api",
+        "cloudy-ai-api",
+        "cloudy-ai-embeddings-api",
         "jev-sidecar",
         "languagetool",
-        "c3-infra-api",
-        "c3-services-api",
         "cloud-drive-mcp",
         "cloud-infra-mcp",
         "cloud-mail-mcp",
@@ -483,6 +482,11 @@
         "cloud-services-mcp",
         "cloud-superapp-mcp",
         "cloud-vault-mcp",
+        "cloudy-all-api",
+        "cloudy-all-mcp",
+        "cloudy-apps-communication-mcp",
+        "cloudy-apps-drive-mcp",
+        "cloudy-c3-api",
         "google-personal-mcp",
         "google-workspace-mcp",
         "gha-runner",
@@ -502,27 +506,27 @@
         "agents-tmp-reaper",
         "disk-janitor",
         "auth-broker",
+        "cloudy-ai-tokens-api",
         "crowdsec",
-        "tokens-api",
         "cloud-cgc-pub-mcp",
+        "cloud-me-cgc-pvt-graph-api",
+        "cloudy-ai-agents-api",
+        "cloudy-ai-claude-api",
+        "cloudy-ai-memory-api",
+        "cloudy-cgc-pub-graph-api",
         "hermes-agent",
-        "kg-store",
-        "kg-store-pub",
-        "my-ai-api",
-        "my-ai_claude-api",
         "openclaw",
-        "session-memory",
         "chat-mattermost",
         "cloud-webmail",
         "matrix-continuwuity",
         "matrix-element",
         "matrix-mautrix-whatsapp",
-        "scrappers-api",
-        "capital-stack-finterminal-api",
+        "cloudy-browser-scrapper-api",
+        "capital-stack-finterm-api",
         "capital-stack-finterminal-web",
         "photoprism",
         "playlist-syncer",
-        "news-gdelt",
+        "capital-stack-news-gdelt-api",
         "calendar-radicale",
         "cloud-notes-sync",
         "cloud-notes-web",
@@ -536,7 +540,7 @@
         "send",
         "vaultwarden"
       ],
-      "container_count": 77
+      "container_count": 81
     },
     "gcp-E2-f_0": {
       "ip": "35.226.147.64",
@@ -616,7 +620,7 @@
       "gcloud_zone": "us-central1-a",
       "instance_id": "projects/diegonmarcos-infra-prod/zones/us-central1-a/instances/gcp-proxy",
       "services": [
-        "http-to-smtp-proxy-api",
+        "cloudy-mail-http-to-smtp-api",
         "postlite",
         "redis",
         "hickory-dns",
@@ -738,23 +742,128 @@
         "healthcheck_paths": []
       }
     },
-    "embeddings-api": {
+    "cloudy-ai-api": {
+      "category": "sec",
+      "vm": "oci-A1-f_0",
+      "folder": "infra-ai_cloudy-ai-api",
+      "description": "AI gateway: /ai/{tokens,embeddings,agents,claude,memory} -> separate backend containers (cloudy-ai-*-api); legacy /<old-name>/ paths kept for one release.",
+      "enabled": true,
+      "flake": "infra-ai_cloudy-ai-api",
+      "port": 4185,
+      "dns": "cloudy-ai-api.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:4185",
+      "containers": {
+        "app": {
+          "container_name": "cloudy-ai-api",
+          "image": "ghcr.io/diegonmarcos/tokens-api-binaries:latest",
+          "port": 4185,
+          "port_env": null,
+          "dns": "cloudy-ai-api.mesh.diegonmarcos.com",
+          "public": true,
+          "healthcheck": "/health",
+          "monitoring": {
+            "tls_check": false,
+            "dns_check": true,
+            "endpoint_check": true
+          },
+          "volumes": [
+            "tokens_api_data:/data"
+          ],
+          "env_file": true,
+          "depends_on": [],
+          "resources": null,
+          "read_only": false,
+          "protocol": "http",
+          "proxy": {
+            "streaming": true,
+            "type": "path",
+            "parent_domain": "api.diegonmarcos.com",
+            "base_path": "/ai"
+          }
+        }
+      },
+      "container_names": [
+        "cloudy-ai-api"
+      ],
+      "all_ports": [
+        "4185"
+      ],
+      "all_dns": [
+        "cloudy-ai-api.mesh.diegonmarcos.com"
+      ],
+      "compose": {
+        "containers": [],
+        "ports": [],
+        "networks": []
+      },
+      "proxy": {
+        "primary": {
+          "streaming": true,
+          "type": "path",
+          "parent_domain": "api.diegonmarcos.com",
+          "base_path": "/ai"
+        }
+      },
+      "declared_ports": {
+        "app": 4185
+      },
+      "health": {
+        "path": "/health"
+      },
+      "monitoring": {
+        "tls_check": false,
+        "dns_check": true,
+        "endpoint_check": true
+      },
+      "taxonomy": {
+        "group": "Infra Apps",
+        "category": "Net-Routing & Security"
+      },
+      "timezone": "Europe/Madrid",
+      "resources": {
+        "mem_reservation": "16M",
+        "mem_limit": "128M"
+      },
+      "tests": {
+        "unit": {
+          "cmd": "python3 -m pip install -q flask==3.0.0 'PyJWT[crypto]==2.9.0' cryptography==43.0.3 pytest && python3 -m pytest -q -p no:cacheprovider test",
+          "cwd": "src"
+        }
+      },
+      "_draft": "#1450 pending owner deploy. Backends: tokens 4184, embeddings 7997, agents 3217, claude 3117, memory 3108 (ROUTES env overrides).",
+      "api": {
+        "has_api": true,
+        "has_web_ui": false,
+        "api_path": "/",
+        "api_url": null,
+        "healthcheck_paths": [
+          "/health"
+        ],
+        "type": "custom-rest",
+        "base_path": "/",
+        "endpoint_count": 8,
+        "display_name": "Fleet Token Engine",
+        "description": "Owner-only token manager (list, reveal, generate, import, revoke, audit) and the mesh-only /v1/verify that introspect-proxy calls.",
+        "auth": "bearer"
+      }
+    },
+    "cloudy-ai-embeddings-api": {
       "category": "agi",
       "vm": "oci-A1-f_0",
-      "folder": "infra-ai_embeddings-api",
+      "folder": "infra-ai_cloudy-ai-embeddings-api",
       "description": "Fleet embeddings + rerank + PDF text server, CPU, mesh-only on oci-apps. OpenAI-compatible POST /embeddings (BAAI/bge-m3) and POST /rerank (BAAI/bge-reranker-v2-m3) served by Infinity, plus POST /pdf (raw application/pdf body to plain text, pypdf), GET /models and GET /health. Consumers: Cloud SuperIntel Notebook retrieval and Cloud Tools Retrieval steps. Mesh address http://embeddings-api.mesh.diegonmarcos.com:7997 (direct, plain HTTP inside WireGuard); no public route.",
       "enabled": true,
-      "flake": "infra-ai_embeddings-api",
+      "flake": "infra-ai_cloudy-ai-embeddings-api",
       "port": 7997,
-      "dns": "embeddings-api.mesh.diegonmarcos.com",
+      "dns": "cloudy-ai-embeddings-api.mesh.diegonmarcos.com",
       "upstream": "10.0.0.6:7997",
       "containers": {
         "app": {
-          "container_name": "embeddings-api",
+          "container_name": "cloudy-ai-embeddings-api",
           "image": "ghcr.io/diegonmarcos/embeddings-api-binaries:latest",
           "port": 7997,
           "port_env": null,
-          "dns": "embeddings-api.mesh.diegonmarcos.com",
+          "dns": "cloudy-ai-embeddings-api.mesh.diegonmarcos.com",
           "public": false,
           "healthcheck": "/health",
           "monitoring": null,
@@ -769,13 +878,13 @@
         }
       },
       "container_names": [
-        "embeddings-api"
+        "cloudy-ai-embeddings-api"
       ],
       "all_ports": [
         "7997"
       ],
       "all_dns": [
-        "embeddings-api.mesh.diegonmarcos.com"
+        "cloudy-ai-embeddings-api.mesh.diegonmarcos.com"
       ],
       "compose": {
         "containers": [],
@@ -823,6 +932,20 @@
           "cwd": "src/code"
         }
       },
+      "legacy_aliases": {
+        "names": [
+          "embeddings-api"
+        ],
+        "dns_aliases": [
+          "embeddings-api.mesh.diegonmarcos.com"
+        ],
+        "base_paths": [],
+        "_doc": "API rebrand #1450: the old names stay served for one release (DNS alias, Caddy path rewrite from _rebrand-1450/caddy-legacy-redirects.caddy, old image tag). Remove after the alias release."
+      },
+      "dns_aliases": [
+        "embeddings-api.mesh.diegonmarcos.com"
+      ],
+      "_gateway": "Reached publicly only through cloudy-ai-api at /ai/<name> (old /<name>-api path is a gateway legacy route).",
       "api": {
         "has_api": true,
         "has_web_ui": false,
@@ -1003,142 +1126,6 @@
         "healthcheck_paths": []
       }
     },
-    "c3-infra-api": {
-      "category": "sec",
-      "vm": "oci-A1-f_0",
-      "folder": "infra-api_c3-infra-api",
-      "description": "C3 REST API — Cloud Control Center Fastify API",
-      "enabled": true,
-      "domain": "api.diegonmarcos.com/c3-infra-api",
-      "flake": "infra-api_c3-infra-api",
-      "port": 8081,
-      "dns": "c3-infra-api.mesh.diegonmarcos.com",
-      "upstream": "10.0.0.6:8081",
-      "containers": {
-        "app": {
-          "container_name": "c3-infra-api",
-          "image": "ghcr.io/diegonmarcos/c3-infra-api:latest",
-          "port": 8081,
-          "port_env": "PORT",
-          "dns": "c3-infra-api.mesh.diegonmarcos.com",
-          "public": true,
-          "proxy": {
-            "type": "path",
-            "parent_domain": "api.diegonmarcos.com",
-            "base_path": "/c3-infra-api",
-            "auth": "two_factor"
-          },
-          "healthcheck": "/health",
-          "monitoring": {
-            "tls_check": true,
-            "dns_check": true,
-            "endpoint_check": true
-          },
-          "volumes": [
-            "/opt/ssh-keys/c3-infra-api:/root/.ssh:ro",
-            "/nix/store:/nix/store:ro",
-            "/home/ubuntu/.nix-profile/bin:/usr/local/nix-bin:ro",
-            "~/.config/gcloud:/root/.config/gcloud",
-            "octocode_repos:/root/git"
-          ],
-          "env_file": true,
-          "depends_on": [],
-          "resources": null,
-          "read_only": false,
-          "protocol": "http"
-        }
-      },
-      "container_names": [
-        "c3-infra-api"
-      ],
-      "all_ports": [
-        "8081"
-      ],
-      "all_dns": [
-        "c3-infra-api.mesh.diegonmarcos.com"
-      ],
-      "compose": {
-        "containers": [],
-        "ports": [],
-        "networks": []
-      },
-      "proxy": {
-        "primary": {
-          "auth": "two_factor",
-          "type": "path",
-          "parent_domain": "api.diegonmarcos.com",
-          "base_path": "/c3-infra-api",
-          "public_paths": [
-            "/c3-infra-api/docs/json",
-            "/c3-infra-api/public/logs",
-            "/c3-infra-api/public/events/*"
-          ]
-        }
-      },
-      "declared_ports": {
-        "app": 8081
-      },
-      "health": {
-        "path": "/c3-infra-api/health"
-      },
-      "monitoring": {
-        "tls_check": true,
-        "dns_check": true,
-        "endpoint_check": true
-      },
-      "taxonomy": {
-        "group": "Infra Apps",
-        "category": "Ops-API-MCP"
-      },
-      "tests": {
-        "drift-multi-container": {
-          "cmd": "node test-drift-multi-container.ts",
-          "cwd": "src"
-        },
-        "jev-alert-priority": {
-          "cmd": "node test-jev-alert-priority.ts",
-          "cwd": "src"
-        },
-        "app-logs": {
-          "cmd": "node test-app-logs.ts",
-          "cwd": "src"
-        },
-        "configs-sync": {
-          "cmd": "node test-configs-sync.ts",
-          "cwd": "src"
-        },
-        "ai-usage": {
-          "cmd": "node test-ai-usage.ts",
-          "cwd": "src"
-        }
-      },
-      "ssh": {
-        "uid": 0,
-        "ssh_dir": "/root/.ssh",
-        "keys": [
-          "vault_id_rsa",
-          "vault_id_rsa.pub",
-          "google_compute_engine",
-          "google_compute_engine.pub"
-        ]
-      },
-      "api": {
-        "has_api": true,
-        "has_web_ui": true,
-        "api_path": "/docs/json",
-        "api_url": "https://api.diegonmarcos.com/c3-infra-api/docs/json",
-        "healthcheck_paths": [
-          "/health"
-        ],
-        "type": "openapi",
-        "spec_path": "/docs/json",
-        "base_path": "/c3-infra-api",
-        "endpoint_count": 100,
-        "display_name": "C3 Cloud Control Center API",
-        "description": "REST API for cloud infrastructure operations, lifecycle control, and observability across inventory, operations, security, and FinOps.",
-        "auth": "bearer"
-      }
-    },
     "c3-public-api": {
       "category": "obs",
       "vm": "oci-E2-f_1",
@@ -1305,104 +1292,6 @@
         "display_name": "C3 Public API",
         "description": "Single public-edge API on oci-analytics. /mail/http-to-smtp (Bearer) bridges CF Worker -> Maddy over WG (Maddy dual-writes to Stalwart). /analytics/{matomo|umami|openobserve}/* (public) passes through to first-party analytics backends.",
         "auth": "mixed"
-      }
-    },
-    "c3-services-api": {
-      "category": "obs",
-      "vm": "oci-A1-f_0",
-      "folder": "infra-api_c3-services-api",
-      "description": "C3 Services REST API — service API gateway Fastify API",
-      "enabled": true,
-      "domain": "api.diegonmarcos.com/c3-services-api",
-      "flake": "infra-api_c3-services-api",
-      "port": 8082,
-      "dns": "c3-services-api.mesh.diegonmarcos.com",
-      "upstream": "10.0.0.6:8082",
-      "containers": {
-        "app": {
-          "container_name": "c3-services-api",
-          "image": "ghcr.io/diegonmarcos/c3-services-api:latest",
-          "port": 8082,
-          "port_env": "PORT",
-          "dns": "c3-services-api.mesh.diegonmarcos.com",
-          "public": true,
-          "proxy": {
-            "type": "path",
-            "parent_domain": "api.diegonmarcos.com",
-            "base_path": "/c3-services-api",
-            "auth": "two_factor"
-          },
-          "healthcheck": "/health",
-          "monitoring": {
-            "tls_check": true,
-            "dns_check": true,
-            "endpoint_check": true
-          },
-          "volumes": [],
-          "env_file": true,
-          "depends_on": [],
-          "resources": null,
-          "read_only": false,
-          "protocol": "http"
-        }
-      },
-      "container_names": [
-        "c3-services-api"
-      ],
-      "all_ports": [
-        "8082"
-      ],
-      "all_dns": [
-        "c3-services-api.mesh.diegonmarcos.com"
-      ],
-      "compose": {
-        "containers": [],
-        "ports": [],
-        "networks": []
-      },
-      "proxy": {
-        "primary": {
-          "type": "path",
-          "parent_domain": "api.diegonmarcos.com",
-          "base_path": "/c3-services-api",
-          "auth": "two_factor",
-          "paths": {
-            "/docs/json": {
-              "auth": "public"
-            }
-          }
-        }
-      },
-      "declared_ports": {
-        "app": 8082
-      },
-      "health": {
-        "path": "/c3-services-api/health"
-      },
-      "monitoring": {
-        "tls_check": true,
-        "dns_check": true,
-        "endpoint_check": true
-      },
-      "taxonomy": {
-        "group": "Infra Apps",
-        "category": "Ops-API-MCP"
-      },
-      "api": {
-        "has_api": true,
-        "has_web_ui": true,
-        "api_path": "/docs/json",
-        "api_url": "https://api.diegonmarcos.com/c3-services-api/docs/json",
-        "healthcheck_paths": [
-          "/health"
-        ],
-        "type": "openapi",
-        "spec_path": "/docs/json",
-        "base_path": "/c3-services-api",
-        "endpoint_count": 25,
-        "display_name": "C3 Services API Gateway",
-        "description": "Unified service API gateway that proxies and wraps OpenAPI services and custom REST/protocol endpoints.",
-        "auth": "bearer"
       }
     },
     "cloud-drive-mcp": {
@@ -2688,30 +2577,803 @@
         "sdk": "@modelcontextprotocol/sdk@^1.12.0"
       }
     },
-    "git-proxy-api": {
+    "cloudy-all-api": {
+      "category": "obs",
+      "vm": "oci-A1-f_0",
+      "folder": "infra-api_cloudy-all-api",
+      "description": "C3 Services REST API — service API gateway Fastify API",
+      "enabled": true,
+      "domain": "api.diegonmarcos.com/c3-services-api",
+      "flake": "infra-api_cloudy-all-api",
+      "port": 8082,
+      "dns": "cloudy-all-api.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:8082",
+      "containers": {
+        "app": {
+          "container_name": "cloudy-all-api",
+          "image": "ghcr.io/diegonmarcos/cloudy-all-api:latest",
+          "port": 8082,
+          "port_env": "PORT",
+          "dns": "cloudy-all-api.mesh.diegonmarcos.com",
+          "public": true,
+          "proxy": {
+            "type": "path",
+            "parent_domain": "api.diegonmarcos.com",
+            "base_path": "/cloudy-all-api",
+            "auth": "two_factor"
+          },
+          "healthcheck": "/health",
+          "monitoring": {
+            "tls_check": true,
+            "dns_check": true,
+            "endpoint_check": true
+          },
+          "volumes": [],
+          "env_file": true,
+          "depends_on": [],
+          "resources": null,
+          "read_only": false,
+          "protocol": "http"
+        }
+      },
+      "container_names": [
+        "cloudy-all-api"
+      ],
+      "all_ports": [
+        "8082"
+      ],
+      "all_dns": [
+        "cloudy-all-api.mesh.diegonmarcos.com"
+      ],
+      "compose": {
+        "containers": [],
+        "ports": [],
+        "networks": []
+      },
+      "proxy": {
+        "primary": {
+          "type": "path",
+          "parent_domain": "api.diegonmarcos.com",
+          "base_path": "/cloudy-all-api",
+          "auth": "two_factor",
+          "paths": {
+            "/docs/json": {
+              "auth": "public"
+            }
+          }
+        }
+      },
+      "declared_ports": {
+        "app": 8082
+      },
+      "health": {
+        "path": "/c3-services-api/health"
+      },
+      "monitoring": {
+        "tls_check": true,
+        "dns_check": true,
+        "endpoint_check": true
+      },
+      "taxonomy": {
+        "group": "Infra Apps",
+        "category": "Ops-API-MCP"
+      },
+      "legacy_aliases": {
+        "names": [
+          "c3-services-api"
+        ],
+        "dns_aliases": [
+          "c3-services-api.mesh.diegonmarcos.com"
+        ],
+        "base_paths": [
+          "/c3-services-api"
+        ],
+        "_doc": "API rebrand #1450: the old names stay served for one release (DNS alias, Caddy path rewrite from _rebrand-1450/caddy-legacy-redirects.caddy, old image tag). Remove after the alias release."
+      },
+      "dns_aliases": [
+        "c3-services-api.mesh.diegonmarcos.com"
+      ],
+      "api": {
+        "has_api": true,
+        "has_web_ui": true,
+        "api_path": "/docs/json",
+        "api_url": "https://api.diegonmarcos.com/c3-services-api/docs/json",
+        "healthcheck_paths": [
+          "/health"
+        ],
+        "type": "openapi",
+        "spec_path": "/docs/json",
+        "base_path": "/cloudy-all-api",
+        "endpoint_count": 25,
+        "display_name": "C3 Services API Gateway",
+        "description": "Unified service API gateway that proxies and wraps OpenAPI services and custom REST/protocol endpoints.",
+        "auth": "bearer"
+      }
+    },
+    "cloudy-all-mcp": {
+      "category": "obs",
+      "vm": "oci-A1-f_0",
+      "folder": "infra-api_cloudy-all-mcp",
+      "description": "Fleet MCP router: list_servers, list_tools(server), call(server, tool, args)",
+      "enabled": true,
+      "flake": "infra-api_cloudy-all-mcp",
+      "port": 3112,
+      "dns": "cloudy-all-mcp.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:3112",
+      "containers": {
+        "app": {
+          "container_name": "cloudy-all-mcp",
+          "image": "ghcr.io/diegonmarcos/cloudy-all-mcp:latest",
+          "port": 3112,
+          "port_env": "MCP_HTTP_PORT",
+          "dns": "cloudy-all-mcp.mesh.diegonmarcos.com",
+          "public": true,
+          "proxy": {
+            "streaming": true,
+            "type": "path",
+            "parent_domain": "mcp.diegonmarcos.com",
+            "base_path": "/cloudy-all-mcp"
+          },
+          "healthcheck": "/mcp",
+          "monitoring": null,
+          "volumes": [],
+          "env_file": true,
+          "depends_on": [],
+          "resources": {
+            "mem_reservation": "256M",
+            "pids_limit": 256
+          },
+          "restart_policy": "unless-stopped",
+          "read_only": false,
+          "protocol": "http"
+        }
+      },
+      "container_names": [
+        "cloudy-all-mcp"
+      ],
+      "all_ports": [
+        "3112"
+      ],
+      "all_dns": [
+        "cloudy-all-mcp.mesh.diegonmarcos.com"
+      ],
+      "compose": {
+        "containers": [],
+        "ports": [],
+        "networks": []
+      },
+      "proxy": {
+        "app_hub": false,
+        "primary": {
+          "streaming": true,
+          "type": "path",
+          "parent_domain": "mcp.diegonmarcos.com",
+          "base_path": "/cloudy-all-mcp",
+          "wg_only": true
+        }
+      },
+      "declared_ports": {
+        "app": 3112
+      },
+      "health": {
+        "path": "/mcp"
+      },
+      "taxonomy": {
+        "group": "Infra Apps",
+        "category": "Ops-API-MCP"
+      },
+      "dns_aliases": [],
+      "runtime": {
+        "init": true,
+        "pids_limit": 512,
+        "_why_init": "proxy-mcp spawns no children, but tini is cheap insurance against future regressions and unblocks Node SIGTERM handling."
+      },
+      "_draft": "MCP rebrand #1450: pending owner deploy; the real build.json is generated from the cloudy-t-infra declaration, mirror this there.",
+      "_env_note": "env: ROUTER_BEARER (public-route fallback, from the secrets file, never committed); ROUTER_SERVERS optional override.",
+      "_dns_aliases_at_cutover": [
+        "cloud-services-mcp.mesh.diegonmarcos.com"
+      ],
+      "_dns_doc": "The old container keeps these DNS names during the alias release; move them here (dns_aliases) at cutover when the old container is removed.",
+      "api": {
+        "has_api": false,
+        "has_web_ui": false,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": [
+          "/mcp"
+        ]
+      },
+      "mcp": {
+        "has_mcp": true,
+        "mcp_url": null,
+        "transport": "streamable-http",
+        "endpoint_path": "/mcp",
+        "tools_count": 3,
+        "resources_count": 0,
+        "prompts_count": 0,
+        "display_name": "Cloudy All MCP",
+        "description": "Fleet MCP router (3 tools).",
+        "auth": "none",
+        "sdk": "@modelcontextprotocol/sdk@^1.12.0"
+      }
+    },
+    "cloudy-apps-communication-mcp": {
+      "category": "app",
+      "vm": "oci-A1-f_0",
+      "folder": "infra-api_cloudy-apps-communication-mcp",
+      "description": "Mail MCP server — IMAP/SMTP/Admin via Stalwart REST API",
+      "enabled": true,
+      "domain": "mcp.diegonmarcos.com",
+      "flake": "infra-api_cloudy-apps-communication-mcp",
+      "port": 3103,
+      "dns": "cloudy-apps-communication-mcp.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:3103",
+      "containers": {
+        "app": {
+          "container_name": "cloudy-apps-communication-mcp",
+          "image": "ghcr.io/diegonmarcos/cloudy-apps-communication-mcp:latest",
+          "port": 3103,
+          "port_env": "PORT",
+          "dns": "cloudy-apps-communication-mcp.mesh.diegonmarcos.com",
+          "public": true,
+          "proxy": {
+            "streaming": true,
+            "type": "path",
+            "parent_domain": "mcp.diegonmarcos.com",
+            "base_path": "/cloudy-apps-communication-mcp"
+          },
+          "healthcheck": null,
+          "monitoring": null,
+          "volumes": [],
+          "env_file": true,
+          "depends_on": [],
+          "resources": {
+            "mem_reservation": "256M",
+            "pids_limit": 256
+          },
+          "read_only": false,
+          "protocol": "http",
+          "restart_policy": "unless-stopped"
+        }
+      },
+      "container_names": [
+        "cloudy-apps-communication-mcp"
+      ],
+      "all_ports": [
+        "3103"
+      ],
+      "all_dns": [
+        "cloudy-apps-communication-mcp.mesh.diegonmarcos.com"
+      ],
+      "compose": {
+        "containers": [],
+        "ports": [],
+        "networks": []
+      },
+      "proxy": {
+        "app_hub": false,
+        "primary": {
+          "streaming": true,
+          "type": "path",
+          "parent_domain": "mcp.diegonmarcos.com",
+          "base_path": "/cloudy-apps-communication-mcp",
+          "wg_only": true
+        }
+      },
+      "declared_ports": {
+        "app": 3103
+      },
+      "taxonomy": {
+        "group": "Infra Apps",
+        "category": "Ops-API-MCP"
+      },
+      "dns_aliases": [],
+      "ssh": {
+        "uid": 0,
+        "ssh_dir": "/root/.ssh",
+        "keys": [
+          "vault_id_rsa",
+          "vault_id_rsa.pub"
+        ]
+      },
+      "proxied_mcps": {
+        "_note": "URLs resolved at flake build time from cloud-data services{}. Bridge mode → WG IPs only. Same retry/LRU pattern as cloud-services-mcp.",
+        "children": [
+          {
+            "name": "google-personal-mcp",
+            "service": "google-personal-mcp",
+            "path": "/mcp"
+          }
+        ],
+        "retry": {
+          "initial_ms": 10000,
+          "max_ms": 120000,
+          "max_retry_state_entries": 16
+        }
+      },
+      "mail_hosts": {
+        "maddy": "mail.diegonmarcos.com",
+        "stalwart": "jmap.diegonmarcos.com"
+      },
+      "mail_ports": {
+        "maddy_imap": 993,
+        "maddy_smtp": 465,
+        "stalwart_imap": 2993,
+        "stalwart_smtp": 2465,
+        "stalwart_jmap_https": 2443
+      },
+      "_draft": "MCP rebrand #1450: pending owner deploy; the real build.json is generated from the cloudy-t-infra declaration, mirror this there.",
+      "_env_note": "env_file must carry the mail vars (MADDY_ME_*/MAIL_*, RESEND, STALWART) AND the mattermost vars (MM_URL, MM_CLAUDE_PASSWORD, MM_TEAM_ID, MM_ADMIN_USERNAME).",
+      "_dns_aliases_at_cutover": [
+        "cloud-mail-mcp.mesh.diegonmarcos.com",
+        "cloud-mattermost-mcp.mesh.diegonmarcos.com",
+        "mattermost-mcp.mesh.diegonmarcos.com"
+      ],
+      "_dns_doc": "The old container keeps these DNS names during the alias release; move them here (dns_aliases) at cutover when the old container is removed.",
+      "api": {
+        "has_api": false,
+        "has_web_ui": false,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": []
+      },
+      "mcp": {
+        "has_mcp": true,
+        "mcp_url": "https://mcp.diegonmarcos.com/mcp",
+        "transport": "streamable-http",
+        "endpoint_path": "/mcp",
+        "tools_count": 29,
+        "resources_count": 0,
+        "prompts_count": 0,
+        "display_name": "Mail MCP",
+        "description": "Mail (IMAP/SMTP/Stalwart/Resend) + Mattermost; proxies google-personal-mcp tools.",
+        "auth": "none",
+        "sdk": "@modelcontextprotocol/sdk@^1.12.0"
+      }
+    },
+    "cloudy-apps-drive-mcp": {
+      "category": "app",
+      "vm": "oci-A1-f_0",
+      "folder": "infra-api_cloudy-apps-drive-mcp",
+      "description": "Drive MCP server — one facade over every storage unit: repos, files, photos, sync, scrapes, S3 and conversion",
+      "enabled": true,
+      "domain": "mcp.diegonmarcos.com",
+      "flake": "infra-api_cloudy-apps-drive-mcp",
+      "port": 3109,
+      "dns": "cloudy-apps-drive-mcp.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:3109",
+      "containers": {
+        "app": {
+          "container_name": "cloudy-apps-drive-mcp",
+          "image": "ghcr.io/diegonmarcos/cloudy-apps-drive-mcp:latest",
+          "port": 3109,
+          "port_env": "PORT",
+          "dns": "cloudy-apps-drive-mcp.mesh.diegonmarcos.com",
+          "public": true,
+          "proxy": {
+            "streaming": true,
+            "type": "path",
+            "parent_domain": "mcp.diegonmarcos.com",
+            "base_path": "/cloudy-apps-drive-mcp"
+          },
+          "healthcheck": null,
+          "monitoring": null,
+          "volumes": [],
+          "env_file": true,
+          "depends_on": [],
+          "resources": null,
+          "read_only": false,
+          "protocol": "http"
+        }
+      },
+      "container_names": [
+        "cloudy-apps-drive-mcp"
+      ],
+      "all_ports": [
+        "3109"
+      ],
+      "all_dns": [
+        "cloudy-apps-drive-mcp.mesh.diegonmarcos.com"
+      ],
+      "compose": {
+        "containers": [],
+        "ports": [],
+        "networks": []
+      },
+      "proxy": {
+        "app_hub": false,
+        "primary": {
+          "streaming": true,
+          "type": "path",
+          "parent_domain": "mcp.diegonmarcos.com",
+          "base_path": "/cloudy-apps-drive-mcp",
+          "wg_only": true
+        }
+      },
+      "declared_ports": {
+        "app": 3109
+      },
+      "taxonomy": {
+        "group": "Infra Apps",
+        "category": "Ops-API-MCP"
+      },
+      "dns_aliases": [],
+      "drive": {
+        "_doc": "Routing table for the single `drive` tool. Adding a capability is a JSON edit, not a code change. `backends` say WHERE to send a call; `methods` say WHAT to send. Every http backend resolves its base URL, api base_path and auth mode from cloud-data services{} at runtime — nothing here repeats an IP or a port.",
+        "backends": {
+          "repo": {
+            "kind": "http",
+            "service": "gitea",
+            "token_env": "GITEA_TOKEN"
+          },
+          "file": {
+            "kind": "http",
+            "service": "filebrowser",
+            "token_env": "FILEBROWSER_TOKEN"
+          },
+          "photo": {
+            "kind": "http",
+            "service": "photoprism",
+            "token_env": "PHOTOPRISM_TOKEN"
+          },
+          "scrape": {
+            "kind": "http",
+            "service": "scrappers-api",
+            "token_env": "SCRAPPERS_TOKEN"
+          },
+          "sync": {
+            "kind": "http",
+            "base_path": "/rest",
+            "url_env": "SYNCTHING_URL",
+            "api_key_env": "SYNCTHING_API_KEY",
+            "_doc": "syncthing is RETIRED (a_solutions/z_archive/ab-mic_syncthing) and runs on no VM. The `service` key was removed: it named a retired service, which Phase 10 correctly flags as live drift, and it was already dead weight — resolveService() prefers url_env and syncthing was never declared in cloud-data services{}, so the lookup always missed. SYNCTHING_URL remains the only way to reach it, exactly as before; env-only backends (see s3 below) legitimately omit `service`. sync.* reports itself unconfigured without one."
+          },
+          "s3": {
+            "kind": "s3",
+            "endpoint_env": "OCI_S3_ENDPOINT",
+            "region_env": "OCI_S3_REGION",
+            "bucket_env": "OCI_S3_BUCKET",
+            "access_key_env": "OCI_S3_ACCESS_KEY",
+            "secret_key_env": "OCI_S3_SECRET_KEY",
+            "_doc": "OCI Object Storage is S3-compatible. The access/secret pair already exists in sops as photoprism's OCI_S3_ACCESS_KEY / OCI_S3_SECRET_KEY; endpoint, region and bucket are deployment inputs and carry no default, so a missing one is reported rather than guessed."
+          },
+          "convert": {
+            "kind": "local"
+          }
+        },
+        "methods": {
+          "repo.list": {
+            "backend": "repo",
+            "http": "GET",
+            "path": "/user/repos"
+          },
+          "repo.detail": {
+            "backend": "repo",
+            "http": "GET",
+            "path": "/repos/{owner}/{repo}"
+          },
+          "repo.releases": {
+            "backend": "repo",
+            "http": "GET",
+            "path": "/repos/{owner}/{repo}/releases"
+          },
+          "repo.issues": {
+            "backend": "repo",
+            "http": "GET",
+            "path": "/repos/{owner}/{repo}/issues"
+          },
+          "repo.orgs": {
+            "backend": "repo",
+            "http": "GET",
+            "path": "/user/orgs"
+          },
+          "file.ls": {
+            "backend": "file",
+            "http": "GET",
+            "path": "/resources/{path}"
+          },
+          "file.info": {
+            "backend": "file",
+            "http": "GET",
+            "path": "/resources/{path}?checksum=md5"
+          },
+          "file.mkdir": {
+            "backend": "file",
+            "http": "POST",
+            "path": "/resources/{path}?override=false"
+          },
+          "file.move": {
+            "backend": "file",
+            "http": "PATCH",
+            "path": "/resources/{path}"
+          },
+          "file.delete": {
+            "backend": "file",
+            "http": "DELETE",
+            "path": "/resources/{path}",
+            "destructive": true
+          },
+          "file.usage": {
+            "backend": "file",
+            "http": "GET",
+            "path": "/usage"
+          },
+          "file.shares": {
+            "backend": "file",
+            "http": "GET",
+            "path": "/shares"
+          },
+          "photo.search": {
+            "backend": "photo",
+            "http": "GET",
+            "path": "/photos"
+          },
+          "photo.albums": {
+            "backend": "photo",
+            "http": "GET",
+            "path": "/albums"
+          },
+          "photo.labels": {
+            "backend": "photo",
+            "http": "GET",
+            "path": "/labels"
+          },
+          "scrape.targets": {
+            "backend": "scrape",
+            "http": "GET",
+            "path": "/targets"
+          },
+          "scrape.run": {
+            "backend": "scrape",
+            "http": "POST",
+            "path": "/scrape"
+          },
+          "sync.status": {
+            "backend": "sync",
+            "http": "GET",
+            "path": "/system/status"
+          },
+          "sync.folders": {
+            "backend": "sync",
+            "http": "GET",
+            "path": "/config/folders"
+          },
+          "sync.devices": {
+            "backend": "sync",
+            "http": "GET",
+            "path": "/config/devices"
+          },
+          "s3.list": {
+            "backend": "s3",
+            "op": "list"
+          },
+          "s3.get": {
+            "backend": "s3",
+            "op": "get"
+          },
+          "s3.put": {
+            "backend": "s3",
+            "op": "put"
+          },
+          "s3.delete": {
+            "backend": "s3",
+            "op": "delete",
+            "destructive": true
+          },
+          "convert.run": {
+            "backend": "convert",
+            "op": "run"
+          },
+          "convert.formats": {
+            "backend": "convert",
+            "op": "formats"
+          }
+        }
+      },
+      "_draft": "MCP rebrand #1450: pending owner deploy; the real build.json is generated from the cloudy-t-infra declaration, mirror this there.",
+      "_vault_gate": "Public route serves ONLY the drive tool. cloud_vault is exposed when the TCP peer is in VAULT_MESH_CIDR (default 10.0.0.0/24) and no X-Forwarded-*/Authorization header is present: clients reach it by direct mesh IP http://10.0.0.6:3109/mcp (mcp-policy.json direct_http). env_file also needs VAULT_PATH, CONFIG_PATH.",
+      "_dns_aliases_at_cutover": [
+        "cloud-drive-mcp.mesh.diegonmarcos.com",
+        "cloud-vault-mcp.mesh.diegonmarcos.com",
+        "vault-mcp.mesh.diegonmarcos.com"
+      ],
+      "_dns_doc": "The old container keeps these DNS names during the alias release; move them here (dns_aliases) at cutover when the old container is removed.",
+      "api": {
+        "has_api": false,
+        "has_web_ui": false,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": []
+      },
+      "mcp": {
+        "has_mcp": true,
+        "mcp_url": "https://mcp.diegonmarcos.com/mcp",
+        "transport": "streamable-http",
+        "endpoint_path": "/mcp",
+        "tools_count": 1,
+        "resources_count": 0,
+        "prompts_count": 0,
+        "display_name": "Drive MCP",
+        "description": "Drive facade; plus cloud_vault only on a direct mesh hit (gate.ts).",
+        "auth": "none",
+        "sdk": "@modelcontextprotocol/sdk@^1.12.0"
+      }
+    },
+    "cloudy-c3-api": {
+      "category": "sec",
+      "vm": "oci-A1-f_0",
+      "folder": "infra-api_cloudy-c3-api",
+      "description": "C3 REST API — Cloud Control Center Fastify API",
+      "enabled": true,
+      "domain": "api.diegonmarcos.com/c3-infra-api",
+      "flake": "infra-api_cloudy-c3-api",
+      "port": 8081,
+      "dns": "cloudy-c3-api.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:8081",
+      "containers": {
+        "app": {
+          "container_name": "cloudy-c3-api",
+          "image": "ghcr.io/diegonmarcos/cloudy-c3-api:latest",
+          "port": 8081,
+          "port_env": "PORT",
+          "dns": "cloudy-c3-api.mesh.diegonmarcos.com",
+          "public": true,
+          "proxy": {
+            "type": "path",
+            "parent_domain": "api.diegonmarcos.com",
+            "base_path": "/cloudy-c3-api",
+            "auth": "two_factor"
+          },
+          "healthcheck": "/health",
+          "monitoring": {
+            "tls_check": true,
+            "dns_check": true,
+            "endpoint_check": true
+          },
+          "volumes": [
+            "/opt/ssh-keys/c3-infra-api:/root/.ssh:ro",
+            "/nix/store:/nix/store:ro",
+            "/home/ubuntu/.nix-profile/bin:/usr/local/nix-bin:ro",
+            "~/.config/gcloud:/root/.config/gcloud",
+            "octocode_repos:/root/git"
+          ],
+          "env_file": true,
+          "depends_on": [],
+          "resources": null,
+          "read_only": false,
+          "protocol": "http"
+        }
+      },
+      "container_names": [
+        "cloudy-c3-api"
+      ],
+      "all_ports": [
+        "8081"
+      ],
+      "all_dns": [
+        "cloudy-c3-api.mesh.diegonmarcos.com"
+      ],
+      "compose": {
+        "containers": [],
+        "ports": [],
+        "networks": []
+      },
+      "proxy": {
+        "primary": {
+          "auth": "two_factor",
+          "type": "path",
+          "parent_domain": "api.diegonmarcos.com",
+          "base_path": "/cloudy-c3-api",
+          "public_paths": [
+            "/c3-infra-api/docs/json",
+            "/c3-infra-api/public/logs",
+            "/c3-infra-api/public/events/*"
+          ]
+        }
+      },
+      "declared_ports": {
+        "app": 8081
+      },
+      "health": {
+        "path": "/c3-infra-api/health"
+      },
+      "monitoring": {
+        "tls_check": true,
+        "dns_check": true,
+        "endpoint_check": true
+      },
+      "taxonomy": {
+        "group": "Infra Apps",
+        "category": "Ops-API-MCP"
+      },
+      "tests": {
+        "drift-multi-container": {
+          "cmd": "node test-drift-multi-container.ts",
+          "cwd": "src"
+        },
+        "jev-alert-priority": {
+          "cmd": "node test-jev-alert-priority.ts",
+          "cwd": "src"
+        },
+        "app-logs": {
+          "cmd": "node test-app-logs.ts",
+          "cwd": "src"
+        },
+        "configs-sync": {
+          "cmd": "node test-configs-sync.ts",
+          "cwd": "src"
+        },
+        "ai-usage": {
+          "cmd": "node test-ai-usage.ts",
+          "cwd": "src"
+        }
+      },
+      "ssh": {
+        "uid": 0,
+        "ssh_dir": "/root/.ssh",
+        "keys": [
+          "vault_id_rsa",
+          "vault_id_rsa.pub",
+          "google_compute_engine",
+          "google_compute_engine.pub"
+        ]
+      },
+      "legacy_aliases": {
+        "names": [
+          "c3-infra-api"
+        ],
+        "dns_aliases": [
+          "c3-infra-api.mesh.diegonmarcos.com"
+        ],
+        "base_paths": [
+          "/c3-infra-api"
+        ],
+        "_doc": "API rebrand #1450: the old names stay served for one release (DNS alias, Caddy path rewrite from _rebrand-1450/caddy-legacy-redirects.caddy, old image tag). Remove after the alias release."
+      },
+      "dns_aliases": [
+        "c3-infra-api.mesh.diegonmarcos.com"
+      ],
+      "api": {
+        "has_api": true,
+        "has_web_ui": true,
+        "api_path": "/docs/json",
+        "api_url": "https://api.diegonmarcos.com/c3-infra-api/docs/json",
+        "healthcheck_paths": [
+          "/health"
+        ],
+        "type": "openapi",
+        "spec_path": "/docs/json",
+        "base_path": "/cloudy-c3-api",
+        "endpoint_count": 100,
+        "display_name": "C3 Cloud Control Center API",
+        "description": "REST API for cloud infrastructure operations, lifecycle control, and observability across inventory, operations, security, and FinOps.",
+        "auth": "bearer"
+      }
+    },
+    "cloudy-drive-git-proxy-api": {
       "category": "app",
       "vm": "oci-E2-f_1",
-      "folder": "infra-api_git-proxy-api",
+      "folder": "infra-api_cloudy-drive-git-proxy-api",
       "description": "Git Proxy API — Authelia-fronted read path to GitHub so the phone holds NO GitHub credential (#647, route 3 of #646's fallback chain). The caller authenticates to US with the Authelia bearer it already has; this service holds the GitHub token server-side and streams the result back.",
       "enabled": true,
       "domain": "api.diegonmarcos.com/git",
-      "flake": "infra-api_git-proxy-api",
+      "flake": "infra-api_cloudy-drive-git-proxy-api",
       "port": 8123,
-      "dns": "git-proxy-api.mesh.diegonmarcos.com",
+      "dns": "cloudy-drive-git-proxy-api.mesh.diegonmarcos.com",
       "upstream": "10.0.0.4:8123",
       "containers": {
         "app": {
-          "container_name": "git-proxy-api",
-          "image": "ghcr.io/diegonmarcos/git-proxy-api:latest",
+          "container_name": "cloudy-drive-git-proxy-api",
+          "image": "ghcr.io/diegonmarcos/cloudy-drive-git-proxy-api:latest",
           "port": 8123,
           "port_env": "PORT",
-          "dns": "git-proxy-api.mesh.diegonmarcos.com",
+          "dns": "cloudy-drive-git-proxy-api.mesh.diegonmarcos.com",
           "public": true,
           "proxy": {
             "auth": "two_factor",
             "type": "path",
             "parent_domain": "api.diegonmarcos.com",
-            "base_path": "/git",
+            "base_path": "/cloudy-drive-git-proxy-api",
             "public_paths": [
               "/git/health"
             ]
@@ -2731,13 +3393,13 @@
         }
       },
       "container_names": [
-        "git-proxy-api"
+        "cloudy-drive-git-proxy-api"
       ],
       "all_ports": [
         "8123"
       ],
       "all_dns": [
-        "git-proxy-api.mesh.diegonmarcos.com"
+        "cloudy-drive-git-proxy-api.mesh.diegonmarcos.com"
       ],
       "compose": {
         "containers": [],
@@ -2750,7 +3412,7 @@
           "auth": "two_factor",
           "type": "path",
           "parent_domain": "api.diegonmarcos.com",
-          "base_path": "/git",
+          "base_path": "/cloudy-drive-git-proxy-api",
           "public_paths": [
             "/git/health"
           ]
@@ -2778,7 +3440,7 @@
       },
       "runtime": {
         "_doc": "THE endpoint contract, declared once, here. The image-wrapper generator COPYs build.json to /app/build.json, so code/contract.mjs reads this exact block at runtime and GET /git/endpoints serves it verbatim — there is no second copy to drift from. #646's client asserts against that response instead of hardcoding paths, which is the drift #371 was (client dialling 10.0.0.4 while the service deployed to 10.0.0.6).",
-        "base_path": "/git",
+        "base_path": "/cloudy-drive-git-proxy-api",
         "endpoints": [
           {
             "method": "GET",
@@ -2887,20 +3549,123 @@
           "cwd": "src"
         }
       },
+      "legacy_aliases": {
+        "names": [
+          "git-proxy-api"
+        ],
+        "dns_aliases": [
+          "git-proxy-api.mesh.diegonmarcos.com"
+        ],
+        "base_paths": [
+          "/git"
+        ],
+        "_doc": "API rebrand #1450: the old names stay served for one release (DNS alias, Caddy path rewrite from _rebrand-1450/caddy-legacy-redirects.caddy, old image tag). Remove after the alias release."
+      },
+      "dns_aliases": [
+        "git-proxy-api.mesh.diegonmarcos.com"
+      ],
       "api": {
         "has_api": true,
         "has_web_ui": true,
-        "api_path": "/git",
-        "api_url": "https://api.diegonmarcos.com/git/git",
+        "api_path": "/cloudy-drive-git-proxy-api",
+        "api_url": "https://api.diegonmarcos.com/git/cloudy-drive-git-proxy-api",
         "healthcheck_paths": [
           "/health"
         ],
         "type": "custom-rest",
-        "base_path": "/git",
+        "base_path": "/cloudy-drive-git-proxy-api",
         "endpoint_count": 9,
         "display_name": "Git Proxy API",
         "description": "Authelia-fronted read path to GitHub: list repos, stream a tarball, clone/fetch over smart HTTP, and read recent commits / workflow runs of declared repos (cached, to keep the Store's feeds off the anonymous quota). The GitHub credential stays server-side; the caller presents an Authelia bearer or an Authelia session cookie. Fleet APK release assets (Range-capable, sha256/source sidecars) are also mirrored for direct mesh callers without a credential (#837).",
         "auth": "mixed"
+      }
+    },
+    "cloudy-mail-http-to-smtp-api": {
+      "category": "app",
+      "vm": "gcp-E2-f_0",
+      "folder": "infra-api_cloudy-mail-http-to-smtp-api",
+      "description": "HTTP-to-SMTP bridge sidecar of Caddy on gcp-proxy. CF Worker POSTs JSON email payloads to this container (because GCP blocks outbound TCP/25); container speaks SMTP over WG to maddy:25 + stalwart:2025 on oci-mail. Public path: api.diegonmarcos.com/http-to-smtp-proxy-api/ [DECOMMISSIONED 2026-05-21]",
+      "enabled": false,
+      "domain": "api.diegonmarcos.com/http-to-smtp-proxy-api",
+      "flake": "infra-api_cloudy-mail-http-to-smtp-api",
+      "port": 8090,
+      "dns": "cloudy-mail-http-to-smtp-api.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.1:8090",
+      "containers": {
+        "app": {
+          "container_name": "cloudy-mail-http-to-smtp-api",
+          "port": 8090,
+          "port_env": "LISTEN_PORT",
+          "dns": "cloudy-mail-http-to-smtp-api.mesh.diegonmarcos.com",
+          "public": true,
+          "proxy": {
+            "type": "path",
+            "parent_domain": "api.diegonmarcos.com",
+            "base_path": "/cloudy-mail-http-to-smtp-api",
+            "auth": "bearer"
+          },
+          "protocol": "http"
+        }
+      },
+      "container_names": [
+        "cloudy-mail-http-to-smtp-api"
+      ],
+      "all_ports": [
+        "8090"
+      ],
+      "all_dns": [
+        "cloudy-mail-http-to-smtp-api.mesh.diegonmarcos.com"
+      ],
+      "compose": {
+        "containers": [],
+        "ports": [],
+        "networks": []
+      },
+      "proxy": {
+        "app_hub": false,
+        "primary": {
+          "type": "path",
+          "parent_domain": "api.diegonmarcos.com",
+          "base_path": "/cloudy-mail-http-to-smtp-api",
+          "auth": "bearer"
+        }
+      },
+      "declared_ports": {
+        "app": 8090
+      },
+      "taxonomy": {
+        "group": "Infra Apps",
+        "category": "Ops-API-MCP"
+      },
+      "_decommissioned": "2026-05-21",
+      "_decommission_reason": "Replaced by bc-obs_c3-public-api/mail/http-to-smtp on oci-analytics. CF Worker repointed in commit 47d19acd (cloudflare-worker/src/wrangler.toml: HTTP_TO_SMTP_PROXY_API_URL → https://api.diegonmarcos.com/c3-public-api/mail/http-to-smtp). End-to-end Gmail-Send-As → CF MX → Worker → c3-public-api round trip verified 2026-05-21 (msg_id <CAKkpMnkF8N_B8Q1ghdc5cRGO1+xwqHpaLUe63-wxvYV+pT29=g@mail.gmail.com>, smtp.delivered to Maddy:25). Container on gcp-proxy remains running until next vm-pilot reconciliation drops it from build-vm-gcp-proxy.json — Caddy route + monitoring stop immediately when this enabled=false propagates through gen-configs.",
+      "legacy_aliases": {
+        "names": [
+          "http-to-smtp-proxy-api"
+        ],
+        "dns_aliases": [
+          "http-to-smtp-proxy-api.mesh.diegonmarcos.com"
+        ],
+        "base_paths": [
+          "/http-to-smtp-proxy-api"
+        ],
+        "_doc": "API rebrand #1450: the old names stay served for one release (DNS alias, Caddy path rewrite from _rebrand-1450/caddy-legacy-redirects.caddy, old image tag). Remove after the alias release."
+      },
+      "dns_aliases": [
+        "http-to-smtp-proxy-api.mesh.diegonmarcos.com"
+      ],
+      "api": {
+        "has_api": true,
+        "has_web_ui": true,
+        "api_path": "/cloudy-mail-http-to-smtp-api",
+        "api_url": "https://api.diegonmarcos.com/http-to-smtp-proxy-api/cloudy-mail-http-to-smtp-api",
+        "healthcheck_paths": [],
+        "type": "custom-rest",
+        "base_path": "/cloudy-mail-http-to-smtp-api",
+        "endpoint_count": 1,
+        "display_name": "HTTP-to-SMTP Proxy API",
+        "description": "POST raw RFC 5322 email body. Translates to SMTP and dual-delivers to maddy:25 + Stalwart:2025 over WG. Used by CF email-forwarder Worker for inbound mail (because CF Workers cannot make outbound TCP/25 connections — port 25 is GCP-blocked end-to-end).",
+        "auth": "bearer"
       }
     },
     "google-personal-mcp": {
@@ -3116,79 +3881,6 @@
         "description": "Gmail, Calendar, Drive, Docs, Sheets, Forms, Slides, Chat, Tasks, Contacts, Search, Apps Script via OAuth 2.0/2.1.",
         "auth": "oidc",
         "sdk": "fastmcp@3.1.1"
-      }
-    },
-    "http-to-smtp-proxy-api": {
-      "category": "app",
-      "vm": "gcp-E2-f_0",
-      "folder": "infra-api_tools-http-to-smtp-proxy-api",
-      "description": "HTTP-to-SMTP bridge sidecar of Caddy on gcp-proxy. CF Worker POSTs JSON email payloads to this container (because GCP blocks outbound TCP/25); container speaks SMTP over WG to maddy:25 + stalwart:2025 on oci-mail. Public path: api.diegonmarcos.com/http-to-smtp-proxy-api/ [DECOMMISSIONED 2026-05-21]",
-      "enabled": false,
-      "domain": "api.diegonmarcos.com/http-to-smtp-proxy-api",
-      "flake": "infra-api_tools-http-to-smtp-proxy-api",
-      "port": 8090,
-      "dns": "http-to-smtp-proxy-api.mesh.diegonmarcos.com",
-      "upstream": "10.0.0.1:8090",
-      "containers": {
-        "app": {
-          "container_name": "http-to-smtp-proxy-api",
-          "port": 8090,
-          "port_env": "LISTEN_PORT",
-          "dns": "http-to-smtp-proxy-api.mesh.diegonmarcos.com",
-          "public": true,
-          "proxy": {
-            "type": "path",
-            "parent_domain": "api.diegonmarcos.com",
-            "base_path": "/http-to-smtp-proxy-api",
-            "auth": "bearer"
-          },
-          "protocol": "http"
-        }
-      },
-      "container_names": [
-        "http-to-smtp-proxy-api"
-      ],
-      "all_ports": [
-        "8090"
-      ],
-      "all_dns": [
-        "http-to-smtp-proxy-api.mesh.diegonmarcos.com"
-      ],
-      "compose": {
-        "containers": [],
-        "ports": [],
-        "networks": []
-      },
-      "proxy": {
-        "app_hub": false,
-        "primary": {
-          "type": "path",
-          "parent_domain": "api.diegonmarcos.com",
-          "base_path": "/http-to-smtp-proxy-api",
-          "auth": "bearer"
-        }
-      },
-      "declared_ports": {
-        "app": 8090
-      },
-      "taxonomy": {
-        "group": "Infra Apps",
-        "category": "Ops-API-MCP"
-      },
-      "_decommissioned": "2026-05-21",
-      "_decommission_reason": "Replaced by bc-obs_c3-public-api/mail/http-to-smtp on oci-analytics. CF Worker repointed in commit 47d19acd (cloudflare-worker/src/wrangler.toml: HTTP_TO_SMTP_PROXY_API_URL → https://api.diegonmarcos.com/c3-public-api/mail/http-to-smtp). End-to-end Gmail-Send-As → CF MX → Worker → c3-public-api round trip verified 2026-05-21 (msg_id <CAKkpMnkF8N_B8Q1ghdc5cRGO1+xwqHpaLUe63-wxvYV+pT29=g@mail.gmail.com>, smtp.delivered to Maddy:25). Container on gcp-proxy remains running until next vm-pilot reconciliation drops it from build-vm-gcp-proxy.json — Caddy route + monitoring stop immediately when this enabled=false propagates through gen-configs.",
-      "api": {
-        "has_api": true,
-        "has_web_ui": false,
-        "api_path": "/http-to-smtp-proxy-api",
-        "api_url": "https://api.diegonmarcos.com/http-to-smtp-proxy-api/http-to-smtp-proxy-api",
-        "healthcheck_paths": [],
-        "type": "custom-rest",
-        "base_path": "/http-to-smtp-proxy-api",
-        "endpoint_count": 1,
-        "display_name": "HTTP-to-SMTP Proxy API",
-        "description": "POST raw RFC 5322 email body. Translates to SMTP and dual-delivers to maddy:25 + Stalwart:2025 over WG. Used by CF email-forwarder Worker for inbound mail (because CF Workers cannot make outbound TCP/25 connections — port 25 is GCP-blocked end-to-end).",
-        "auth": "bearer"
       }
     },
     "cloud-builder-x": {
@@ -4992,7 +5684,7 @@
           "read_only": false
         },
         "rss-gateway": {
-          "container_name": "rss-gateway",
+          "container_name": "capital-stack-news-rss-api",
           "image": "python:3.11-slim",
           "port": 8091,
           "protocol": "http",
@@ -5019,7 +5711,7 @@
           "read_only": false
         },
         "github-rss": {
-          "container_name": "github-rss",
+          "container_name": "capital-stack-news-github-rss-api",
           "image": "python:3.11-slim",
           "port": null,
           "port_env": null,
@@ -5047,8 +5739,8 @@
       "container_names": [
         "ntfy",
         "syslog-bridge",
-        "rss-gateway",
-        "github-rss"
+        "capital-stack-news-rss-api",
+        "capital-stack-news-github-rss-api"
       ],
       "all_ports": [
         "8090",
@@ -5293,6 +5985,16 @@
           ]
         }
       ],
+      "legacy_aliases": {
+        "names": [
+          "github-rss",
+          "rss-gateway"
+        ],
+        "dns_aliases": [],
+        "base_paths": [],
+        "_doc": "API rebrand #1450: the old names stay served for one release (DNS alias, Caddy path rewrite from _rebrand-1450/caddy-legacy-redirects.caddy, old image tag). Remove after the alias release."
+      },
+      "dns_aliases": [],
       "api": {
         "has_api": true,
         "has_web_ui": true,
@@ -5719,7 +6421,7 @@
       "dns": "auth-broker.mesh.diegonmarcos.com",
       "containers": {
         "google": {
-          "container_name": "auth-broker-google",
+          "container_name": "cloudy-auth-google-api",
           "image": "ghcr.io/diegonmarcos/auth-broker-binaries:latest",
           "port": 4180,
           "public": false,
@@ -5733,7 +6435,7 @@
           "protocol": "http"
         },
         "github": {
-          "container_name": "auth-broker-github",
+          "container_name": "cloudy-auth-github-api",
           "image": "ghcr.io/diegonmarcos/auth-broker-binaries:latest",
           "port": 4181,
           "public": false,
@@ -5747,7 +6449,7 @@
           "protocol": "http"
         },
         "cloudflare": {
-          "container_name": "auth-broker-cloudflare",
+          "container_name": "cloudy-auth-cloudflare-api",
           "image": "ghcr.io/diegonmarcos/auth-broker-binaries:latest",
           "port": 4182,
           "public": false,
@@ -5761,7 +6463,7 @@
           "protocol": "http"
         },
         "email": {
-          "container_name": "auth-broker-email",
+          "container_name": "cloudy-auth-email-api",
           "image": "ghcr.io/diegonmarcos/auth-broker-binaries:latest",
           "port": 4183,
           "public": false,
@@ -5776,10 +6478,10 @@
         }
       },
       "container_names": [
-        "auth-broker-google",
-        "auth-broker-github",
-        "auth-broker-cloudflare",
-        "auth-broker-email"
+        "cloudy-auth-google-api",
+        "cloudy-auth-github-api",
+        "cloudy-auth-cloudflare-api",
+        "cloudy-auth-email-api"
       ],
       "all_ports": [
         "4180",
@@ -5946,6 +6648,18 @@
           "cwd": "src"
         }
       },
+      "legacy_aliases": {
+        "names": [
+          "auth-broker-cloudflare",
+          "auth-broker-email",
+          "auth-broker-github",
+          "auth-broker-google"
+        ],
+        "dns_aliases": [],
+        "base_paths": [],
+        "_doc": "API rebrand #1450: the old names stay served for one release (DNS alias, Caddy path rewrite from _rebrand-1450/caddy-legacy-redirects.caddy, old image tag). Remove after the alias release."
+      },
+      "dns_aliases": [],
       "api": {
         "has_api": false,
         "has_web_ui": false,
@@ -7089,6 +7803,110 @@
         "healthcheck_paths": []
       }
     },
+    "cloudy-ai-tokens-api": {
+      "category": "sec",
+      "vm": "oci-A1-f_0",
+      "folder": "infra-sec_cloudy-ai-tokens-api",
+      "description": "Fleet token engine: lists, generates, reveals and revokes every fleet bearer token (fleet ft_ tokens and adopted Authelia JWTs); introspect-proxy asks it before accepting a Bearer, so a revoked token stops working within 60 seconds. Public address: c3-pvt.diegonmarcos.com/tokens-api (shared gate, #1104); mesh tokens-api.mesh.diegonmarcos.com",
+      "enabled": true,
+      "flake": "infra-sec_cloudy-ai-tokens-api",
+      "port": 4184,
+      "dns": "cloudy-ai-tokens-api.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:4184",
+      "containers": {
+        "app": {
+          "container_name": "cloudy-ai-tokens-api",
+          "image": "ghcr.io/diegonmarcos/tokens-api-binaries:latest",
+          "port": 4184,
+          "port_env": null,
+          "dns": "cloudy-ai-tokens-api.mesh.diegonmarcos.com",
+          "public": true,
+          "healthcheck": "/health",
+          "monitoring": {
+            "tls_check": false,
+            "dns_check": true,
+            "endpoint_check": true
+          },
+          "volumes": [
+            "tokens_api_data:/data"
+          ],
+          "env_file": true,
+          "depends_on": [],
+          "resources": null,
+          "read_only": false,
+          "protocol": "http"
+        }
+      },
+      "container_names": [
+        "cloudy-ai-tokens-api"
+      ],
+      "all_ports": [
+        "4184"
+      ],
+      "all_dns": [
+        "cloudy-ai-tokens-api.mesh.diegonmarcos.com"
+      ],
+      "compose": {
+        "containers": [],
+        "ports": [],
+        "networks": []
+      },
+      "declared_ports": {
+        "app": 4184
+      },
+      "health": {
+        "path": "/health"
+      },
+      "monitoring": {
+        "tls_check": false,
+        "dns_check": true,
+        "endpoint_check": true
+      },
+      "taxonomy": {
+        "group": "Infra Apps",
+        "category": "Net-Routing & Security"
+      },
+      "timezone": "Europe/Madrid",
+      "resources": {
+        "mem_reservation": "16M",
+        "mem_limit": "128M"
+      },
+      "tests": {
+        "unit": {
+          "cmd": "python3 -m pip install -q flask==3.0.0 'PyJWT[crypto]==2.9.0' cryptography==43.0.3 pytest && python3 -m pytest -q -p no:cacheprovider test",
+          "cwd": "src"
+        }
+      },
+      "legacy_aliases": {
+        "names": [
+          "tokens-api"
+        ],
+        "dns_aliases": [
+          "tokens-api.mesh.diegonmarcos.com"
+        ],
+        "base_paths": [],
+        "_doc": "API rebrand #1450: the old names stay served for one release (DNS alias, Caddy path rewrite from _rebrand-1450/caddy-legacy-redirects.caddy, old image tag). Remove after the alias release."
+      },
+      "dns_aliases": [
+        "tokens-api.mesh.diegonmarcos.com"
+      ],
+      "_gateway": "Reached publicly only through cloudy-ai-api at /ai/<name> (old /<name>-api path is a gateway legacy route).",
+      "api": {
+        "has_api": true,
+        "has_web_ui": false,
+        "api_path": "/",
+        "api_url": null,
+        "healthcheck_paths": [
+          "/health"
+        ],
+        "type": "custom-rest",
+        "base_path": "/",
+        "endpoint_count": 8,
+        "display_name": "Fleet Token Engine",
+        "description": "Owner-only token manager (list, reveal, generate, import, revoke, audit) and the mesh-only /v1/verify that introspect-proxy calls.",
+        "auth": "bearer"
+      }
+    },
     "crowdsec": {
       "category": "sec",
       "vm": "oci-A1-f_0",
@@ -7354,96 +8172,6 @@
         "display_name": "MCP OAuth Authorization Server",
         "description": "OAuth 2.1 AS for MCP connectors (claude.ai, claude.com, localhost). Public paths are exactly the mcp.diegonmarcos.com entry of caddy_config.edge_auth.public_open; /introspect is mesh-only.",
         "auth": "oauth2"
-      }
-    },
-    "tokens-api": {
-      "category": "sec",
-      "vm": "oci-A1-f_0",
-      "folder": "infra-sec_tokens-api",
-      "description": "Fleet token engine: lists, generates, reveals and revokes every fleet bearer token (fleet ft_ tokens and adopted Authelia JWTs); introspect-proxy asks it before accepting a Bearer, so a revoked token stops working within 60 seconds. Public address: c3-pvt.diegonmarcos.com/tokens-api (shared gate, #1104); mesh tokens-api.mesh.diegonmarcos.com",
-      "enabled": true,
-      "flake": "infra-sec_tokens-api",
-      "port": 4184,
-      "dns": "tokens-api.mesh.diegonmarcos.com",
-      "upstream": "10.0.0.6:4184",
-      "containers": {
-        "app": {
-          "container_name": "tokens-api",
-          "image": "ghcr.io/diegonmarcos/tokens-api-binaries:latest",
-          "port": 4184,
-          "port_env": null,
-          "dns": "tokens-api.mesh.diegonmarcos.com",
-          "public": true,
-          "healthcheck": "/health",
-          "monitoring": {
-            "tls_check": false,
-            "dns_check": true,
-            "endpoint_check": true
-          },
-          "volumes": [
-            "tokens_api_data:/data"
-          ],
-          "env_file": true,
-          "depends_on": [],
-          "resources": null,
-          "read_only": false,
-          "protocol": "http"
-        }
-      },
-      "container_names": [
-        "tokens-api"
-      ],
-      "all_ports": [
-        "4184"
-      ],
-      "all_dns": [
-        "tokens-api.mesh.diegonmarcos.com"
-      ],
-      "compose": {
-        "containers": [],
-        "ports": [],
-        "networks": []
-      },
-      "declared_ports": {
-        "app": 4184
-      },
-      "health": {
-        "path": "/health"
-      },
-      "monitoring": {
-        "tls_check": false,
-        "dns_check": true,
-        "endpoint_check": true
-      },
-      "taxonomy": {
-        "group": "Infra Apps",
-        "category": "Net-Routing & Security"
-      },
-      "timezone": "Europe/Madrid",
-      "resources": {
-        "mem_reservation": "16M",
-        "mem_limit": "128M"
-      },
-      "tests": {
-        "unit": {
-          "cmd": "python3 -m pip install -q flask==3.0.0 'PyJWT[crypto]==2.9.0' cryptography==43.0.3 pytest && python3 -m pytest -q -p no:cacheprovider test",
-          "cwd": "src"
-        }
-      },
-      "api": {
-        "has_api": true,
-        "has_web_ui": false,
-        "api_path": "/",
-        "api_url": null,
-        "healthcheck_paths": [
-          "/health"
-        ],
-        "type": "custom-rest",
-        "base_path": "/",
-        "endpoint_count": 8,
-        "display_name": "Fleet Token Engine",
-        "description": "Owner-only token manager (list, reveal, generate, import, revoke, audit) and the mesh-only /v1/verify that introspect-proxy calls.",
-        "auth": "bearer"
       }
     },
     "cloud-cgc-pub-mcp": {
@@ -7856,149 +8584,23 @@
         "sdk": "@modelcontextprotocol/sdk@^1.12.0"
       }
     },
-    "db-agent": {
-      "category": "data",
-      "vm": "all",
-      "folder": "user-ai_db-agent",
-      "description": "Central DB Backup Agent (deployed on all VMs)",
-      "enabled": true,
-      "flake": "user-ai_db-agent",
-      "containers": {
-        "app": {
-          "container_name": "db-agent",
-          "public": false,
-          "env_file": false,
-          "read_only": false,
-          "protocol": "none"
-        }
-      },
-      "container_names": [
-        "db-agent"
-      ],
-      "all_ports": [],
-      "all_dns": [],
-      "compose": {
-        "containers": [],
-        "ports": [],
-        "networks": []
-      },
-      "taxonomy": {
-        "group": "Cloud Apps",
-        "category": "AGI"
-      },
-      "timezone": "UTC",
-      "resources": {
-        "mem_reservation": "16m"
-      },
-      "api": {
-        "has_api": false,
-        "has_web_ui": false,
-        "api_path": null,
-        "api_url": null,
-        "healthcheck_paths": []
-      }
-    },
-    "hermes-agent": {
-      "category": "agi",
-      "vm": "oci-A1-f_0",
-      "folder": "user-ai_hermes-agent",
-      "description": "Nous Research Hermes Agent (autonomous, persistent-memory AI agent) on oci-apps. Messaging gateway (Telegram live, Mattermost scaffolded) backed by claude-superset-api (subscription CLI, no metered key). WG-internal, never public.",
-      "enabled": true,
-      "flake": "user-ai_hermes-agent",
-      "port": 8642,
-      "dns": "hermes-agent.mesh.diegonmarcos.com",
-      "upstream": "10.0.0.6:8642",
-      "containers": {
-        "app": {
-          "container_name": "cloud-agi-hermes",
-          "image": "ghcr.io/diegonmarcos/hermes-agent:latest",
-          "port": 8642,
-          "port_env": null,
-          "dns": "hermes-agent.mesh.diegonmarcos.com",
-          "public": false,
-          "healthcheck": null,
-          "monitoring": null,
-          "env_file": true,
-          "depends_on": [],
-          "resources": null,
-          "read_only": false,
-          "protocol": "http"
-        }
-      },
-      "container_names": [
-        "cloud-agi-hermes"
-      ],
-      "all_ports": [
-        "8642"
-      ],
-      "all_dns": [
-        "hermes-agent.mesh.diegonmarcos.com"
-      ],
-      "compose": {
-        "containers": [],
-        "ports": [],
-        "networks": []
-      },
-      "proxy": {
-        "app_hub": false
-      },
-      "declared_ports": {
-        "api": 8642,
-        "dashboard": 9119
-      },
-      "taxonomy": {
-        "group": "Cloud Apps",
-        "category": "AGI"
-      },
-      "agent": {
-        "_comment": "The shared checkout (docker volume cloud-git-gh) mounts at ONE canonical path in EVERY agent container — /home/appuser/git — declared once in _shared/engine.nix and published to the container as AGENT_GIT_TREE. The per-container git_tree_mount field is GONE and setting it is now a build error. It used to claim to be 'this container's own $HOME/git' with nothing checking, and the three agent containers drifted to three different answers; hermes ended up with the tree at /opt/data/git while its running HOME was /root, so `ls $HOME/git` found nothing and the agent reported the repositories as missing. Read-write: an agent that can read the code but not commit it cannot do the job it exists for.",
-        "git_tree": true,
-        "git_tree_writable": true,
-        "_comment_working_directory": "Hermes' main process is an s6-supervised idle holder; the real work arrives as `docker exec`, which starts at the image WorkingDir (/opt/hermes) — outside the checkout. The agent then sees zero repositories and answers as if the code did not exist. Starting it in the tree is the point of mounting the tree.",
-        "git_tree_is_working_directory": true,
-        "_memory_briefing_env_doc": "#556. The memory system itself is declared once in _shared/agent-memory.nix and published by engine.nix as AGENT_MEMORY_DIR/_INDEX/_ENTRIES/_TYPES/_BRIEFING. hermes reads no AGENT_* var: its system-prompt extension is HERMES_EPHEMERAL_SYSTEM_PROMPT, which gateway/run_config_loaders.py resolves BEFORE display.personality / agent.system_prompt (neither is set in src/configs/config.yaml) and agent/turn_context.py APPENDS to the base prompt at API-call time, so the tool instructions hermes needs are not replaced. What is declared here is the env var NAME, never the briefing text — a second copy of the text is how claude, goose and hermes came to be told three different things. NOTE: HERMES_WRITE_SAFE_ROOT=/opt/data is an image default, so hermes must write entries with the terminal toolset; its file toolset is sandboxed away from the shared tree.",
-        "memory_briefing_env": "HERMES_EPHEMERAL_SYSTEM_PROMPT"
-      },
-      "upstream_image": "ghcr.io/diegonmarcos/hermes-agent:latest",
-      "tests": {
-        "jev-gate": {
-          "cmd": "python3 test-jev-gate.py",
-          "cwd": "../_shared"
-        },
-        "agent-toolbelt-declared": {
-          "cmd": "node ../_shared/test-agent-toolbelt.mjs"
-        }
-      },
-      "runtime": {
-        "model": "deepseek/deepseek-v4-flash-0731",
-        "backend_url": "https://openrouter.ai/api/v1",
-        "api_mode": "chat_completions"
-      },
-      "api": {
-        "has_api": false,
-        "has_web_ui": false,
-        "api_path": null,
-        "api_url": null,
-        "healthcheck_paths": []
-      }
-    },
-    "kg-store": {
+    "cloud-me-cgc-pvt-graph-api": {
       "category": "data",
       "vm": "oci-A1-f_0",
-      "folder": "user-ai_kg-store",
+      "folder": "user-ai_cloud-me-cgc-pvt-graph-api",
       "description": "SurrealDB Hybrid Knowledge Graph - Infrastructure topology + vector search",
       "enabled": true,
-      "flake": "user-ai_kg-store",
+      "flake": "user-ai_cloud-me-cgc-pvt-graph-api",
       "port": 8001,
-      "dns": "kg-store.mesh.diegonmarcos.com",
+      "dns": "cloud-me-cgc-pvt-graph-api.mesh.diegonmarcos.com",
       "upstream": "10.0.0.6:8001",
       "containers": {
         "app": {
-          "container_name": "kg-store",
+          "container_name": "cloud-me-cgc-pvt-graph-api",
           "port": 8001,
           "protocol": "http",
           "db_engine": "surrealdb",
-          "image": "ghcr.io/diegonmarcos/kg-store:latest",
+          "image": "ghcr.io/diegonmarcos/cloud-me-cgc-pvt-graph-api:latest",
           "resources": {
             "_comment": "THE ONE DECLARATION of this container's memory budget. src/compose.nix reads mem_limit as the cgroup ceiling (deploy.resources.limits.memory) and rocksdb_block_cache / rocksdb_write_buffer below as SurrealDB's own RocksDB budget (SURREAL_ROCKSDB_BLOCK_CACHE_SIZE, SURREAL_ROCKSDB_WRITE_BUFFER_SIZE). Both halves are required: the cgroup alone converts the leak into an OOM kill, and the engine budget alone leaves nothing enforcing it. No literal is written in compose.nix. Sized from measurement: kg-store's resident set on oci-apps 2026-09-24 was 140.6MiB at rest, but a full graph refresh peaked at ~945MiB on 2026-10-10, hence 2G. Raised to 4G on 2026-10-21: a pvt restore (407k-edge cloud-u-android repo-scoped delete) hit the 2G ceiling, the kernel OOM-killed surreal at 2.09GB anon-rss and the ingest aborted with ECONNREFUSED (#1061).",
             "mem_limit": "4G",
@@ -8010,7 +8612,7 @@
         }
       },
       "container_names": [
-        "kg-store"
+        "cloud-me-cgc-pvt-graph-api"
       ],
       "all_ports": [
         "8001"
@@ -8169,196 +8771,15 @@
           }
         ]
       },
-      "api": {
-        "has_api": false,
-        "has_web_ui": false,
-        "api_path": null,
-        "api_url": null,
-        "healthcheck_paths": []
-      }
-    },
-    "kg-store-pub": {
-      "category": "data",
-      "vm": "oci-A1-f_0",
-      "folder": "user-ai_kg-store-pub",
-      "description": "SurrealDB Hybrid Knowledge Graph - Infrastructure topology + vector search",
-      "enabled": true,
-      "flake": "user-ai_kg-store-pub",
-      "port": 8002,
-      "dns": "kg-store-pub.mesh.diegonmarcos.com",
-      "upstream": "10.0.0.6:8002",
-      "containers": {
-        "app": {
-          "container_name": "kg-store-pub",
-          "port": 8002,
-          "protocol": "http",
-          "db_engine": "surrealdb",
-          "image": "ghcr.io/diegonmarcos/kg-store-pub:latest",
-          "resources": {
-            "_comment": "THE ONE DECLARATION of this container's memory budget — see user-ai_kg-store/build.json for the full note. src/compose.nix takes the cgroup ceiling from mem_limit and SurrealDB's RocksDB budget from rocksdb_block_cache / rocksdb_write_buffer; no literal is written in compose.nix. Measured resident set on oci-apps 2026-09-24: 131.1MiB at rest; ~945MiB peak during a full graph refresh on 2026-10-10, hence 2G.",
-            "mem_limit": "2G",
-            "mem_reservation": "128M",
-            "_rocksdb_comment": "SurrealDB RocksDB engine budget, declared on its own so the cgroup ceiling above can grow without the cache growing with it. Raised mem_limit 1G -> 2G on 2026-10-10: a full cgc graph refresh (690k-edge cloud-u-containers ingest) peaked at ~945MiB of the 1G cap and restarted both stores once mid-ingest. The cache and memtables are kept exactly where they were (512M cache, 2 x 128M memtables) so the extra GiB is pure headroom for the process, WAL and compaction. compose.nix refuses a block cache above half of mem_limit, and _shared/test-kg-store-memory-ceiling.mjs asserts mem_limit >= 2G.",
-            "rocksdb_block_cache": "512M",
-            "rocksdb_write_buffer": "128M"
-          }
-        }
-      },
-      "container_names": [
-        "kg-store-pub"
-      ],
-      "all_ports": [
-        "8002"
-      ],
-      "all_dns": [],
-      "compose": {
-        "containers": [],
-        "ports": [],
-        "networks": []
-      },
-      "declared_ports": {
-        "app": 8002
-      },
-      "backup": {
-        "enabled": true
-      },
-      "taxonomy": {
-        "group": "Cloud Apps",
-        "category": "AGI"
-      },
-      "upstream_image": "surrealdb/surrealdb:v2",
-      "data_path": "/opt/data/surrealdb-pub",
-      "kg": {
-        "namespace": "infra",
-        "database": "production",
-        "embedder": {
-          "enabled": false,
-          "model": "nomic-embed-text",
-          "dim": 768,
-          "index_type": "MTREE",
-          "vector_dtype": "F32"
-        },
-        "ingest": {
-          "endpoint": "/import",
-          "idempotent": true,
-          "stale_strategy": "mark"
-        },
-        "node_tables": [
-          {
-            "table": "vm",
-            "key_source": "ssh_alias"
-          },
-          {
-            "table": "service",
-            "key_source": "name"
-          },
-          {
-            "table": "container",
-            "key_source": "container_name"
-          },
-          {
-            "table": "domain",
-            "key_source": "fqdn"
-          },
-          {
-            "table": "log",
-            "key_source": "auto"
-          },
-          {
-            "table": "documentation",
-            "key_source": "path"
-          },
-          {
-            "table": "audit_log",
-            "key_source": "auto"
-          },
-          {
-            "table": "repo",
-            "key_source": "name"
-          },
-          {
-            "table": "module",
-            "key_source": "name"
-          },
-          {
-            "table": "package",
-            "key_source": "name"
-          },
-          {
-            "_comment": "octocode code-graph file nodes (full file-level mirror). One table; node_type property = file|source_file|test_file|config_file. Populated by a_solutions/user-ai_cloud-cgc-pub-mcp/src/code/octocode-export.py reading octocode's Lance graphrag_nodes per repo. key = <repo>:<path>.",
-            "table": "file",
-            "key_source": "path"
-          }
+      "legacy_aliases": {
+        "names": [
+          "kg-store"
         ],
-        "edge_tables": [
-          {
-            "table": "hosted_on",
-            "in": "service",
-            "out": "vm"
-          },
-          {
-            "table": "runs_container",
-            "in": "service",
-            "out": "container"
-          },
-          {
-            "table": "depends_on",
-            "in": "service",
-            "out": "service"
-          },
-          {
-            "table": "proxied_by",
-            "in": "service",
-            "out": "service"
-          },
-          {
-            "table": "authenticated_by",
-            "in": "service",
-            "out": "service"
-          },
-          {
-            "table": "connected_to",
-            "in": "vm",
-            "out": "vm"
-          },
-          {
-            "table": "routes_to",
-            "in": "domain",
-            "out": "service"
-          },
-          {
-            "table": "caused_by",
-            "in": "log",
-            "out": "any"
-          },
-          {
-            "table": "belongs_to_repo",
-            "in": "module",
-            "out": "repo"
-          },
-          {
-            "table": "implements",
-            "in": "module",
-            "out": "service"
-          },
-          {
-            "table": "declares_tool",
-            "in": "repo",
-            "out": "package"
-          },
-          {
-            "table": "consumes",
-            "in": "repo",
-            "out": "repo"
-          },
-          {
-            "_comment": "octocode code-graph relationships (file→file), e.g. sibling_module. The exporter emits whatever relationship types octocode produced; SurrealDB RELATE auto-creates any not pre-defined here.",
-            "table": "sibling_module",
-            "in": "file",
-            "out": "file"
-          }
-        ]
+        "dns_aliases": [],
+        "base_paths": [],
+        "_doc": "API rebrand #1450: the old names stay served for one release (DNS alias, Caddy path rewrite from _rebrand-1450/caddy-legacy-redirects.caddy, old image tag). Remove after the alias release."
       },
+      "dns_aliases": [],
       "api": {
         "has_api": false,
         "has_web_ui": false,
@@ -8367,23 +8788,23 @@
         "healthcheck_paths": []
       }
     },
-    "my-ai-api": {
+    "cloudy-ai-agents-api": {
       "category": "agi",
       "vm": "oci-A1-f_0",
-      "folder": "user-ai_my-ai-api",
+      "folder": "user-ai_cloudy-ai-agents-api",
       "description": "my-ai API on oci-apps — one polyglot container: OpenAI /v1 + Ollama /api + Anthropic /v1/messages mimic backed by OpenRouter (no Claude subscription, no metered Anthropic key), with a vendored Headroom (Apache-2.0) compression hop and a savings dashboard. Sibling of claude-superset-api; the agent face for this stack is goose (my-ai wraps goose, claude-superset keeps claude-cli). Internal WG-only sidecar, never public.",
       "enabled": true,
-      "flake": "user-ai_my-ai-api",
+      "flake": "user-ai_cloudy-ai-agents-api",
       "port": 3217,
-      "dns": "my-ai-api.mesh.diegonmarcos.com",
+      "dns": "cloudy-ai-agents-api.mesh.diegonmarcos.com",
       "upstream": "10.0.0.6:3217",
       "containers": {
         "app": {
           "container_name": "cloud-agi-goose",
-          "image": "ghcr.io/diegonmarcos/my-ai-api:latest",
+          "image": "ghcr.io/diegonmarcos/cloudy-ai-agents-api:latest",
           "port": 3217,
           "port_env": "BRIDGE_PORT",
-          "dns": "my-ai-api.mesh.diegonmarcos.com",
+          "dns": "cloudy-ai-agents-api.mesh.diegonmarcos.com",
           "public": false,
           "healthcheck": "/health",
           "monitoring": null,
@@ -8401,7 +8822,7 @@
         "3217"
       ],
       "all_dns": [
-        "my-ai-api.mesh.diegonmarcos.com"
+        "cloudy-ai-agents-api.mesh.diegonmarcos.com"
       ],
       "compose": {
         "containers": [],
@@ -8554,6 +8975,19 @@
           "cwd": "../_shared"
         }
       },
+      "legacy_aliases": {
+        "names": [
+          "my-ai-api"
+        ],
+        "dns_aliases": [
+          "my-ai-api.mesh.diegonmarcos.com"
+        ],
+        "base_paths": [],
+        "_doc": "API rebrand #1450: the old names stay served for one release (DNS alias, Caddy path rewrite from _rebrand-1450/caddy-legacy-redirects.caddy, old image tag). Remove after the alias release."
+      },
+      "dns_aliases": [
+        "my-ai-api.mesh.diegonmarcos.com"
+      ],
       "api": {
         "has_api": false,
         "has_web_ui": false,
@@ -8564,13 +8998,13 @@
         ]
       }
     },
-    "my-ai_claude-api": {
+    "cloudy-ai-claude-api": {
       "category": "agi",
       "vm": "oci-A1-f_0",
-      "folder": "user-ai_my-ai_claude-api",
+      "folder": "user-ai_cloudy-ai-claude-api",
       "description": "Claude superset API on oci-apps — one polyglot container: OpenAI /v1 + Ollama /api + Anthropic /v1/messages mimic backed by the subscription `claude` CLI (no metered key), with a vendored Headroom (Apache-2.0) compression hop and a savings dashboard. Successor to kg-bridge; usable as a local/remote fallback. Internal WG-only sidecar, never public.",
       "enabled": true,
-      "flake": "user-ai_my-ai_claude-api",
+      "flake": "user-ai_cloudy-ai-claude-api",
       "port": 3117,
       "dns": "my-ai-claude-api.mesh.diegonmarcos.com",
       "upstream": "10.0.0.6:3117",
@@ -8765,6 +9199,15 @@
         "git_tree_writable": true,
         "git_tree_is_working_directory": false
       },
+      "legacy_aliases": {
+        "names": [
+          "my-ai_claude-api"
+        ],
+        "dns_aliases": [],
+        "base_paths": [],
+        "_doc": "API rebrand #1450: the old names stay served for one release (DNS alias, Caddy path rewrite from _rebrand-1450/caddy-legacy-redirects.caddy, old image tag). Remove after the alias release."
+      },
+      "dns_aliases": [],
       "api": {
         "has_api": false,
         "has_web_ui": false,
@@ -8773,6 +9216,412 @@
         "healthcheck_paths": [
           "/health"
         ]
+      }
+    },
+    "cloudy-ai-memory-api": {
+      "category": "agi",
+      "vm": "oci-A1-f_0",
+      "folder": "user-ai_cloudy-ai-memory-api",
+      "description": "Central SQLite store of all Claude Code session transcripts — push/list/fetch so a session started on one device can be resumed from any other. WG-only sidecar on oci-apps; Node 22 built-in node:sqlite (phone-portable, no native deps).",
+      "enabled": true,
+      "flake": "user-ai_cloudy-ai-memory-api",
+      "port": 3108,
+      "dns": "cloudy-ai-memory-api.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:3108",
+      "containers": {
+        "app": {
+          "container_name": "cloudy-ai-memory-api",
+          "image": "ghcr.io/diegonmarcos/cloudy-ai-memory-api:latest",
+          "port": 3108,
+          "port_env": "MEM_PORT",
+          "dns": "cloudy-ai-memory-api.mesh.diegonmarcos.com",
+          "public": false,
+          "healthcheck": "/health",
+          "monitoring": null,
+          "env_file": false,
+          "depends_on": [],
+          "resources": null,
+          "read_only": false,
+          "protocol": "http"
+        }
+      },
+      "container_names": [
+        "cloudy-ai-memory-api"
+      ],
+      "all_ports": [
+        "3108"
+      ],
+      "all_dns": [
+        "cloudy-ai-memory-api.mesh.diegonmarcos.com"
+      ],
+      "compose": {
+        "containers": [],
+        "ports": [],
+        "networks": []
+      },
+      "proxy": {
+        "app_hub": false
+      },
+      "declared_ports": {
+        "app": 3108
+      },
+      "health": {
+        "path": "/health"
+      },
+      "taxonomy": {
+        "group": "Cloud Apps",
+        "category": "AGI"
+      },
+      "agent": {
+        "_comment": "Explicit opt-OUT, required by 9_others/test/test_agent_git_tree_declared.sh in cloud-infra. session-memory is a SQLite transcript store, not a code-reading agent: it never opens a repository, so mounting the shared tree would widen its blast radius for nothing. This key exists so the decision is recorded rather than forgotten, which is how #416 happened.",
+        "git_tree": false
+      },
+      "legacy_aliases": {
+        "names": [
+          "session-memory"
+        ],
+        "dns_aliases": [
+          "session-memory.mesh.diegonmarcos.com"
+        ],
+        "base_paths": [],
+        "_doc": "API rebrand #1450: the old names stay served for one release (DNS alias, Caddy path rewrite from _rebrand-1450/caddy-legacy-redirects.caddy, old image tag). Remove after the alias release."
+      },
+      "dns_aliases": [
+        "session-memory.mesh.diegonmarcos.com"
+      ],
+      "api": {
+        "has_api": false,
+        "has_web_ui": false,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": [
+          "/health"
+        ]
+      }
+    },
+    "cloudy-cgc-pub-graph-api": {
+      "category": "data",
+      "vm": "oci-A1-f_0",
+      "folder": "user-ai_cloudy-cgc-pub-graph-api",
+      "description": "SurrealDB Hybrid Knowledge Graph - Infrastructure topology + vector search",
+      "enabled": true,
+      "flake": "user-ai_cloudy-cgc-pub-graph-api",
+      "port": 8002,
+      "dns": "cloudy-cgc-pub-graph-api.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:8002",
+      "containers": {
+        "app": {
+          "container_name": "cloudy-cgc-pub-graph-api",
+          "port": 8002,
+          "protocol": "http",
+          "db_engine": "surrealdb",
+          "image": "ghcr.io/diegonmarcos/cloudy-cgc-pub-graph-api:latest",
+          "resources": {
+            "_comment": "THE ONE DECLARATION of this container's memory budget — see user-ai_kg-store/build.json for the full note. src/compose.nix takes the cgroup ceiling from mem_limit and SurrealDB's RocksDB budget from rocksdb_block_cache / rocksdb_write_buffer; no literal is written in compose.nix. Measured resident set on oci-apps 2026-09-24: 131.1MiB at rest; ~945MiB peak during a full graph refresh on 2026-10-10, hence 2G.",
+            "mem_limit": "2G",
+            "mem_reservation": "128M",
+            "_rocksdb_comment": "SurrealDB RocksDB engine budget, declared on its own so the cgroup ceiling above can grow without the cache growing with it. Raised mem_limit 1G -> 2G on 2026-10-10: a full cgc graph refresh (690k-edge cloud-u-containers ingest) peaked at ~945MiB of the 1G cap and restarted both stores once mid-ingest. The cache and memtables are kept exactly where they were (512M cache, 2 x 128M memtables) so the extra GiB is pure headroom for the process, WAL and compaction. compose.nix refuses a block cache above half of mem_limit, and _shared/test-kg-store-memory-ceiling.mjs asserts mem_limit >= 2G.",
+            "rocksdb_block_cache": "512M",
+            "rocksdb_write_buffer": "128M"
+          }
+        }
+      },
+      "container_names": [
+        "cloudy-cgc-pub-graph-api"
+      ],
+      "all_ports": [
+        "8002"
+      ],
+      "all_dns": [],
+      "compose": {
+        "containers": [],
+        "ports": [],
+        "networks": []
+      },
+      "declared_ports": {
+        "app": 8002
+      },
+      "backup": {
+        "enabled": true
+      },
+      "taxonomy": {
+        "group": "Cloud Apps",
+        "category": "AGI"
+      },
+      "upstream_image": "surrealdb/surrealdb:v2",
+      "data_path": "/opt/data/surrealdb-pub",
+      "kg": {
+        "namespace": "infra",
+        "database": "production",
+        "embedder": {
+          "enabled": false,
+          "model": "nomic-embed-text",
+          "dim": 768,
+          "index_type": "MTREE",
+          "vector_dtype": "F32"
+        },
+        "ingest": {
+          "endpoint": "/import",
+          "idempotent": true,
+          "stale_strategy": "mark"
+        },
+        "node_tables": [
+          {
+            "table": "vm",
+            "key_source": "ssh_alias"
+          },
+          {
+            "table": "service",
+            "key_source": "name"
+          },
+          {
+            "table": "container",
+            "key_source": "container_name"
+          },
+          {
+            "table": "domain",
+            "key_source": "fqdn"
+          },
+          {
+            "table": "log",
+            "key_source": "auto"
+          },
+          {
+            "table": "documentation",
+            "key_source": "path"
+          },
+          {
+            "table": "audit_log",
+            "key_source": "auto"
+          },
+          {
+            "table": "repo",
+            "key_source": "name"
+          },
+          {
+            "table": "module",
+            "key_source": "name"
+          },
+          {
+            "table": "package",
+            "key_source": "name"
+          },
+          {
+            "_comment": "octocode code-graph file nodes (full file-level mirror). One table; node_type property = file|source_file|test_file|config_file. Populated by a_solutions/user-ai_cloud-cgc-pub-mcp/src/code/octocode-export.py reading octocode's Lance graphrag_nodes per repo. key = <repo>:<path>.",
+            "table": "file",
+            "key_source": "path"
+          }
+        ],
+        "edge_tables": [
+          {
+            "table": "hosted_on",
+            "in": "service",
+            "out": "vm"
+          },
+          {
+            "table": "runs_container",
+            "in": "service",
+            "out": "container"
+          },
+          {
+            "table": "depends_on",
+            "in": "service",
+            "out": "service"
+          },
+          {
+            "table": "proxied_by",
+            "in": "service",
+            "out": "service"
+          },
+          {
+            "table": "authenticated_by",
+            "in": "service",
+            "out": "service"
+          },
+          {
+            "table": "connected_to",
+            "in": "vm",
+            "out": "vm"
+          },
+          {
+            "table": "routes_to",
+            "in": "domain",
+            "out": "service"
+          },
+          {
+            "table": "caused_by",
+            "in": "log",
+            "out": "any"
+          },
+          {
+            "table": "belongs_to_repo",
+            "in": "module",
+            "out": "repo"
+          },
+          {
+            "table": "implements",
+            "in": "module",
+            "out": "service"
+          },
+          {
+            "table": "declares_tool",
+            "in": "repo",
+            "out": "package"
+          },
+          {
+            "table": "consumes",
+            "in": "repo",
+            "out": "repo"
+          },
+          {
+            "_comment": "octocode code-graph relationships (file→file), e.g. sibling_module. The exporter emits whatever relationship types octocode produced; SurrealDB RELATE auto-creates any not pre-defined here.",
+            "table": "sibling_module",
+            "in": "file",
+            "out": "file"
+          }
+        ]
+      },
+      "legacy_aliases": {
+        "names": [
+          "kg-store-pub"
+        ],
+        "dns_aliases": [],
+        "base_paths": [],
+        "_doc": "API rebrand #1450: the old names stay served for one release (DNS alias, Caddy path rewrite from _rebrand-1450/caddy-legacy-redirects.caddy, old image tag). Remove after the alias release."
+      },
+      "dns_aliases": [],
+      "api": {
+        "has_api": false,
+        "has_web_ui": false,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": []
+      }
+    },
+    "db-agent": {
+      "category": "data",
+      "vm": "all",
+      "folder": "user-ai_db-agent",
+      "description": "Central DB Backup Agent (deployed on all VMs)",
+      "enabled": true,
+      "flake": "user-ai_db-agent",
+      "containers": {
+        "app": {
+          "container_name": "db-agent",
+          "public": false,
+          "env_file": false,
+          "read_only": false,
+          "protocol": "none"
+        }
+      },
+      "container_names": [
+        "db-agent"
+      ],
+      "all_ports": [],
+      "all_dns": [],
+      "compose": {
+        "containers": [],
+        "ports": [],
+        "networks": []
+      },
+      "taxonomy": {
+        "group": "Cloud Apps",
+        "category": "AGI"
+      },
+      "timezone": "UTC",
+      "resources": {
+        "mem_reservation": "16m"
+      },
+      "api": {
+        "has_api": false,
+        "has_web_ui": false,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": []
+      }
+    },
+    "hermes-agent": {
+      "category": "agi",
+      "vm": "oci-A1-f_0",
+      "folder": "user-ai_hermes-agent",
+      "description": "Nous Research Hermes Agent (autonomous, persistent-memory AI agent) on oci-apps. Messaging gateway (Telegram live, Mattermost scaffolded) backed by claude-superset-api (subscription CLI, no metered key). WG-internal, never public.",
+      "enabled": true,
+      "flake": "user-ai_hermes-agent",
+      "port": 8642,
+      "dns": "hermes-agent.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:8642",
+      "containers": {
+        "app": {
+          "container_name": "cloud-agi-hermes",
+          "image": "ghcr.io/diegonmarcos/hermes-agent:latest",
+          "port": 8642,
+          "port_env": null,
+          "dns": "hermes-agent.mesh.diegonmarcos.com",
+          "public": false,
+          "healthcheck": null,
+          "monitoring": null,
+          "env_file": true,
+          "depends_on": [],
+          "resources": null,
+          "read_only": false,
+          "protocol": "http"
+        }
+      },
+      "container_names": [
+        "cloud-agi-hermes"
+      ],
+      "all_ports": [
+        "8642"
+      ],
+      "all_dns": [
+        "hermes-agent.mesh.diegonmarcos.com"
+      ],
+      "compose": {
+        "containers": [],
+        "ports": [],
+        "networks": []
+      },
+      "proxy": {
+        "app_hub": false
+      },
+      "declared_ports": {
+        "api": 8642,
+        "dashboard": 9119
+      },
+      "taxonomy": {
+        "group": "Cloud Apps",
+        "category": "AGI"
+      },
+      "agent": {
+        "_comment": "The shared checkout (docker volume cloud-git-gh) mounts at ONE canonical path in EVERY agent container — /home/appuser/git — declared once in _shared/engine.nix and published to the container as AGENT_GIT_TREE. The per-container git_tree_mount field is GONE and setting it is now a build error. It used to claim to be 'this container's own $HOME/git' with nothing checking, and the three agent containers drifted to three different answers; hermes ended up with the tree at /opt/data/git while its running HOME was /root, so `ls $HOME/git` found nothing and the agent reported the repositories as missing. Read-write: an agent that can read the code but not commit it cannot do the job it exists for.",
+        "git_tree": true,
+        "git_tree_writable": true,
+        "_comment_working_directory": "Hermes' main process is an s6-supervised idle holder; the real work arrives as `docker exec`, which starts at the image WorkingDir (/opt/hermes) — outside the checkout. The agent then sees zero repositories and answers as if the code did not exist. Starting it in the tree is the point of mounting the tree.",
+        "git_tree_is_working_directory": true,
+        "_memory_briefing_env_doc": "#556. The memory system itself is declared once in _shared/agent-memory.nix and published by engine.nix as AGENT_MEMORY_DIR/_INDEX/_ENTRIES/_TYPES/_BRIEFING. hermes reads no AGENT_* var: its system-prompt extension is HERMES_EPHEMERAL_SYSTEM_PROMPT, which gateway/run_config_loaders.py resolves BEFORE display.personality / agent.system_prompt (neither is set in src/configs/config.yaml) and agent/turn_context.py APPENDS to the base prompt at API-call time, so the tool instructions hermes needs are not replaced. What is declared here is the env var NAME, never the briefing text — a second copy of the text is how claude, goose and hermes came to be told three different things. NOTE: HERMES_WRITE_SAFE_ROOT=/opt/data is an image default, so hermes must write entries with the terminal toolset; its file toolset is sandboxed away from the shared tree.",
+        "memory_briefing_env": "HERMES_EPHEMERAL_SYSTEM_PROMPT"
+      },
+      "upstream_image": "ghcr.io/diegonmarcos/hermes-agent:latest",
+      "tests": {
+        "jev-gate": {
+          "cmd": "python3 test-jev-gate.py",
+          "cwd": "../_shared"
+        },
+        "agent-toolbelt-declared": {
+          "cmd": "node ../_shared/test-agent-toolbelt.mjs"
+        }
+      },
+      "runtime": {
+        "model": "deepseek/deepseek-v4-flash-0731",
+        "backend_url": "https://openrouter.ai/api/v1",
+        "api_mode": "chat_completions"
+      },
+      "api": {
+        "has_api": false,
+        "has_web_ui": false,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": []
       }
     },
     "openclaw": {
@@ -8864,74 +9713,6 @@
         "api_path": null,
         "api_url": null,
         "healthcheck_paths": []
-      }
-    },
-    "session-memory": {
-      "category": "agi",
-      "vm": "oci-A1-f_0",
-      "folder": "user-ai_session-memory",
-      "description": "Central SQLite store of all Claude Code session transcripts — push/list/fetch so a session started on one device can be resumed from any other. WG-only sidecar on oci-apps; Node 22 built-in node:sqlite (phone-portable, no native deps).",
-      "enabled": true,
-      "flake": "user-ai_session-memory",
-      "port": 3108,
-      "dns": "session-memory.mesh.diegonmarcos.com",
-      "upstream": "10.0.0.6:3108",
-      "containers": {
-        "app": {
-          "container_name": "session-memory",
-          "image": "ghcr.io/diegonmarcos/session-memory:latest",
-          "port": 3108,
-          "port_env": "MEM_PORT",
-          "dns": "session-memory.mesh.diegonmarcos.com",
-          "public": false,
-          "healthcheck": "/health",
-          "monitoring": null,
-          "env_file": false,
-          "depends_on": [],
-          "resources": null,
-          "read_only": false,
-          "protocol": "http"
-        }
-      },
-      "container_names": [
-        "session-memory"
-      ],
-      "all_ports": [
-        "3108"
-      ],
-      "all_dns": [
-        "session-memory.mesh.diegonmarcos.com"
-      ],
-      "compose": {
-        "containers": [],
-        "ports": [],
-        "networks": []
-      },
-      "proxy": {
-        "app_hub": false
-      },
-      "declared_ports": {
-        "app": 3108
-      },
-      "health": {
-        "path": "/health"
-      },
-      "taxonomy": {
-        "group": "Cloud Apps",
-        "category": "AGI"
-      },
-      "agent": {
-        "_comment": "Explicit opt-OUT, required by 9_others/test/test_agent_git_tree_declared.sh in cloud-infra. session-memory is a SQLite transcript store, not a code-reading agent: it never opens a repository, so mounting the shared tree would widen its blast radius for nothing. This key exists so the decision is recorded rather than forgotten, which is how #416 happened.",
-        "git_tree": false
-      },
-      "api": {
-        "has_api": false,
-        "has_web_ui": false,
-        "api_path": null,
-        "api_url": null,
-        "healthcheck_paths": [
-          "/health"
-        ]
       }
     },
     "chat-mattermost": {
@@ -10071,29 +10852,29 @@
         ]
       }
     },
-    "scrappers-api": {
+    "cloudy-browser-scrapper-api": {
       "category": "data",
       "vm": "oci-A1-f_0",
-      "folder": "user-data_scrappers-api",
+      "folder": "user-data_cloudy-browser-scrapper-api",
       "description": "Unified scrapers API (Instagram / Pinterest / LinkedIn / generic crawl) — retires crawlee-cloud. Lean single-container FastAPI, on-demand, flat-JSON output.",
       "enabled": true,
       "domain": "api.diegonmarcos.com",
-      "flake": "user-data_scrappers-api",
+      "flake": "user-data_cloudy-browser-scrapper-api",
       "port": 3020,
-      "dns": "scrappers-api.mesh.diegonmarcos.com",
+      "dns": "cloudy-browser-scrapper-api.mesh.diegonmarcos.com",
       "upstream": "10.0.0.6:3020",
       "containers": {
         "app": {
-          "container_name": "scrappers-api",
-          "image": "ghcr.io/diegonmarcos/scrappers-api:latest",
+          "container_name": "cloudy-browser-scrapper-api",
+          "image": "ghcr.io/diegonmarcos/cloudy-browser-scrapper-api:latest",
           "port": 3020,
           "port_env": "PORT",
           "protocol": "http",
-          "dns": "scrappers-api.mesh.diegonmarcos.com",
+          "dns": "cloudy-browser-scrapper-api.mesh.diegonmarcos.com",
           "public": true,
           "proxy": {
             "domain": "api.diegonmarcos.com",
-            "base_path": "/scrappers",
+            "base_path": "/cloudy-browser-scrapper-api",
             "auth": "two_factor"
           },
           "healthcheck": "curl -fsS http://127.0.0.1:3020/health >/dev/null 2>&1 || exit 1",
@@ -10101,13 +10882,13 @@
         }
       },
       "container_names": [
-        "scrappers-api"
+        "cloudy-browser-scrapper-api"
       ],
       "all_ports": [
         "3020"
       ],
       "all_dns": [
-        "scrappers-api.mesh.diegonmarcos.com"
+        "cloudy-browser-scrapper-api.mesh.diegonmarcos.com"
       ],
       "compose": {
         "containers": [],
@@ -10118,7 +10899,7 @@
         "primary": {
           "type": "path",
           "parent_domain": "api.diegonmarcos.com",
-          "base_path": "/scrappers",
+          "base_path": "/cloudy-browser-scrapper-api",
           "auth": "two_factor",
           "public_paths": [
             "/scrappers/health",
@@ -10160,6 +10941,21 @@
           "cwd": "src/code"
         }
       },
+      "legacy_aliases": {
+        "names": [
+          "scrappers-api"
+        ],
+        "dns_aliases": [
+          "scrappers-api.mesh.diegonmarcos.com"
+        ],
+        "base_paths": [
+          "/scrappers"
+        ],
+        "_doc": "API rebrand #1450: the old names stay served for one release (DNS alias, Caddy path rewrite from _rebrand-1450/caddy-legacy-redirects.caddy, old image tag). Remove after the alias release."
+      },
+      "dns_aliases": [
+        "scrappers-api.mesh.diegonmarcos.com"
+      ],
       "api": {
         "has_api": true,
         "has_web_ui": true,
@@ -10168,35 +10964,35 @@
         "healthcheck_paths": [],
         "type": "openapi",
         "spec_path": "/openapi.json",
-        "base_path": "/scrappers",
+        "base_path": "/cloudy-browser-scrapper-api",
         "display_name": "Scrapers API",
         "description": "Unified profile-scrape + generic-crawl API. Replaces crawlee-cloud.",
         "auth": "two_factor"
       }
     },
-    "capital-stack-finterminal-api": {
+    "capital-stack-finterm-api": {
       "category": "fin",
       "vm": "oci-A1-f_0",
-      "folder": "user-fin_capital-stack-finterminal-api",
+      "folder": "user-fin_capital-stack-finterm-api",
       "description": "Fincept Terminal backend (capital-stack-finterminal-api) — REST + WebSocket over DataHub, 35 data connectors, 7 analytics, 17 brokers, 6 investor personas, MCP tools",
       "enabled": true,
       "domain": "api.diegonmarcos.com/capital-stack-finterminal-api",
-      "flake": "user-fin_capital-stack-finterminal-api",
+      "flake": "user-fin_capital-stack-finterm-api",
       "port": 8340,
-      "dns": "capital-stack-finterminal-api.mesh.diegonmarcos.com",
+      "dns": "capital-stack-finterm-api.mesh.diegonmarcos.com",
       "upstream": "10.0.0.6:8340",
       "containers": {
         "app": {
-          "container_name": "capital-stack-finterminal-api",
-          "image": "ghcr.io/diegonmarcos/capital-stack-finterminal-api:latest",
+          "container_name": "capital-stack-finterm-api",
+          "image": "ghcr.io/diegonmarcos/capital-stack-finterm-api:latest",
           "port": 8340,
           "port_env": "FIN_API_PORT",
-          "dns": "capital-stack-finterminal-api.mesh.diegonmarcos.com",
+          "dns": "capital-stack-finterm-api.mesh.diegonmarcos.com",
           "public": true,
           "proxy": {
             "type": "path",
             "parent_domain": "api.diegonmarcos.com",
-            "base_path": "/capital-stack-finterminal-api",
+            "base_path": "/capital-stack-finterm-api",
             "auth": "two_factor"
           },
           "healthcheck": "/health",
@@ -10217,13 +11013,13 @@
         }
       },
       "container_names": [
-        "capital-stack-finterminal-api"
+        "capital-stack-finterm-api"
       ],
       "all_ports": [
         "8340"
       ],
       "all_dns": [
-        "capital-stack-finterminal-api.mesh.diegonmarcos.com"
+        "capital-stack-finterm-api.mesh.diegonmarcos.com"
       ],
       "compose": {
         "containers": [],
@@ -10234,7 +11030,7 @@
         "primary": {
           "type": "path",
           "parent_domain": "api.diegonmarcos.com",
-          "base_path": "/capital-stack-finterminal-api",
+          "base_path": "/capital-stack-finterm-api",
           "auth": "two_factor",
           "paths": {
             "/health": {
@@ -10261,16 +11057,31 @@
         "group": "Project Apps",
         "category": "Finance"
       },
+      "legacy_aliases": {
+        "names": [
+          "capital-stack-finterminal-api"
+        ],
+        "dns_aliases": [
+          "capital-stack-finterminal-api.mesh.diegonmarcos.com"
+        ],
+        "base_paths": [
+          "/capital-stack-finterminal-api"
+        ],
+        "_doc": "API rebrand #1450: the old names stay served for one release (DNS alias, Caddy path rewrite from _rebrand-1450/caddy-legacy-redirects.caddy, old image tag). Remove after the alias release."
+      },
+      "dns_aliases": [
+        "capital-stack-finterminal-api.mesh.diegonmarcos.com"
+      ],
       "api": {
         "has_api": true,
         "has_web_ui": true,
-        "api_path": "/capital-stack-finterminal-api",
-        "api_url": "https://api.diegonmarcos.com/capital-stack-finterminal-api/capital-stack-finterminal-api",
+        "api_path": "/capital-stack-finterm-api",
+        "api_url": "https://api.diegonmarcos.com/capital-stack-finterminal-api/capital-stack-finterm-api",
         "healthcheck_paths": [
           "/health"
         ],
         "type": "custom-rest",
-        "base_path": "/capital-stack-finterminal-api",
+        "base_path": "/capital-stack-finterm-api",
         "display_name": "Fincept Terminal (Rust)",
         "description": "Bloomberg-class financial intelligence platform with 35 data connectors, 7 analytics modules, 17 brokers, and 6 investor personas.",
         "auth": "bearer"
@@ -10638,27 +11449,27 @@
         "auth": "bearer"
       }
     },
-    "news-gdelt": {
+    "capital-stack-news-gdelt-api": {
       "category": "tools",
       "vm": "oci-A1-f_0",
-      "folder": "user-news_news-gdelt",
+      "folder": "user-news_capital-stack-news-gdelt-api",
       "description": "GDELT News Aggregator — Fastify API with SQLite cache",
       "enabled": true,
-      "flake": "user-news_news-gdelt",
+      "flake": "user-news_capital-stack-news-gdelt-api",
       "port": 3019,
-      "dns": "news-gdelt.mesh.diegonmarcos.com",
+      "dns": "capital-stack-news-gdelt-api.mesh.diegonmarcos.com",
       "upstream": "10.0.0.6:3019",
       "containers": {
         "app": {
-          "container_name": "news-gdelt",
-          "image": "ghcr.io/diegonmarcos/news-gdelt:latest",
+          "container_name": "capital-stack-news-gdelt-api",
+          "image": "ghcr.io/diegonmarcos/capital-stack-news-gdelt-api:latest",
           "port": 3019,
           "protocol": "http",
           "port_env": "PORT"
         }
       },
       "container_names": [
-        "news-gdelt"
+        "capital-stack-news-gdelt-api"
       ],
       "all_ports": [
         "3019"
@@ -10680,6 +11491,15 @@
         "category": "Inboxes"
       },
       "timezone": "Europe/Paris",
+      "legacy_aliases": {
+        "names": [
+          "news-gdelt"
+        ],
+        "dns_aliases": [],
+        "base_paths": [],
+        "_doc": "API rebrand #1450: the old names stay served for one release (DNS alias, Caddy path rewrite from _rebrand-1450/caddy-legacy-redirects.caddy, old image tag). Remove after the alias release."
+      },
+      "dns_aliases": [],
       "api": {
         "has_api": false,
         "has_web_ui": false,

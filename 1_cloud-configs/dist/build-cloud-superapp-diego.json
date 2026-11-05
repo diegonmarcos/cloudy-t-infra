@@ -1058,6 +1058,16 @@
   "services": {
     "public": [
       {
+        "name": "cloudy-ai-api",
+        "service": "cloudy-ai-api",
+        "vm": "oci-A1-f_0",
+        "public_url": "api.diegonmarcos.com/ai",
+        "auth": "none",
+        "private_dns": "cloudy-ai-api.mesh.diegonmarcos.com:4185",
+        "port": 4185,
+        "category": "sec"
+      },
+      {
         "name": "languagetool",
         "service": "languagetool",
         "vm": "oci-A1-f_0",
@@ -1068,16 +1078,6 @@
         "category": "tools"
       },
       {
-        "name": "c3-infra-api",
-        "service": "c3-infra-api",
-        "vm": "oci-A1-f_0",
-        "public_url": "api.diegonmarcos.com/c3-infra-api",
-        "auth": "two_factor",
-        "private_dns": "c3-infra-api.mesh.diegonmarcos.com:8081",
-        "port": 8081,
-        "category": "sec"
-      },
-      {
         "name": "c3-public-api",
         "service": "c3-public-api",
         "vm": "oci-E2-f_1",
@@ -1085,16 +1085,6 @@
         "auth": "two_factor",
         "private_dns": "c3-public-api.mesh.diegonmarcos.com:8087",
         "port": 8087,
-        "category": "obs"
-      },
-      {
-        "name": "c3-services-api",
-        "service": "c3-services-api",
-        "vm": "oci-A1-f_0",
-        "public_url": "api.diegonmarcos.com/c3-services-api",
-        "auth": "two_factor",
-        "private_dns": "c3-services-api.mesh.diegonmarcos.com:8082",
-        "port": 8082,
         "category": "obs"
       },
       {
@@ -1158,13 +1148,73 @@
         "category": "app"
       },
       {
-        "name": "git-proxy-api",
-        "service": "git-proxy-api",
-        "vm": "oci-E2-f_1",
-        "public_url": "api.diegonmarcos.com/git",
+        "name": "cloudy-all-api",
+        "service": "cloudy-all-api",
+        "vm": "oci-A1-f_0",
+        "public_url": "api.diegonmarcos.com/cloudy-all-api",
         "auth": "two_factor",
-        "private_dns": "git-proxy-api.mesh.diegonmarcos.com:8123",
+        "private_dns": "cloudy-all-api.mesh.diegonmarcos.com:8082",
+        "port": 8082,
+        "category": "obs"
+      },
+      {
+        "name": "cloudy-all-mcp",
+        "service": "cloudy-all-mcp",
+        "vm": "oci-A1-f_0",
+        "public_url": "mcp.diegonmarcos.com/cloudy-all-mcp",
+        "auth": "none",
+        "private_dns": "cloudy-all-mcp.mesh.diegonmarcos.com:3112",
+        "port": 3112,
+        "category": "obs"
+      },
+      {
+        "name": "cloudy-apps-communication-mcp",
+        "service": "cloudy-apps-communication-mcp",
+        "vm": "oci-A1-f_0",
+        "public_url": "mcp.diegonmarcos.com/cloudy-apps-communication-mcp",
+        "auth": "none",
+        "private_dns": "cloudy-apps-communication-mcp.mesh.diegonmarcos.com:3103",
+        "port": 3103,
+        "category": "app"
+      },
+      {
+        "name": "cloudy-apps-drive-mcp",
+        "service": "cloudy-apps-drive-mcp",
+        "vm": "oci-A1-f_0",
+        "public_url": "mcp.diegonmarcos.com/cloudy-apps-drive-mcp",
+        "auth": "none",
+        "private_dns": "cloudy-apps-drive-mcp.mesh.diegonmarcos.com:3109",
+        "port": 3109,
+        "category": "app"
+      },
+      {
+        "name": "cloudy-c3-api",
+        "service": "cloudy-c3-api",
+        "vm": "oci-A1-f_0",
+        "public_url": "api.diegonmarcos.com/cloudy-c3-api",
+        "auth": "two_factor",
+        "private_dns": "cloudy-c3-api.mesh.diegonmarcos.com:8081",
+        "port": 8081,
+        "category": "sec"
+      },
+      {
+        "name": "cloudy-drive-git-proxy-api",
+        "service": "cloudy-drive-git-proxy-api",
+        "vm": "oci-E2-f_1",
+        "public_url": "api.diegonmarcos.com/cloudy-drive-git-proxy-api",
+        "auth": "two_factor",
+        "private_dns": "cloudy-drive-git-proxy-api.mesh.diegonmarcos.com:8123",
         "port": 8123,
+        "category": "app"
+      },
+      {
+        "name": "cloudy-mail-http-to-smtp-api",
+        "service": "cloudy-mail-http-to-smtp-api",
+        "vm": "gcp-E2-f_0",
+        "public_url": "api.diegonmarcos.com/cloudy-mail-http-to-smtp-api",
+        "auth": "bearer",
+        "private_dns": "cloudy-mail-http-to-smtp-api.mesh.diegonmarcos.com:8090",
+        "port": 8090,
         "category": "app"
       },
       {
@@ -1185,16 +1235,6 @@
         "auth": "none",
         "private_dns": "g-workspace-mcp.mesh.diegonmarcos.com:3104",
         "port": 3104,
-        "category": "app"
-      },
-      {
-        "name": "http-to-smtp-proxy-api",
-        "service": "http-to-smtp-proxy-api",
-        "vm": "gcp-E2-f_0",
-        "public_url": "api.diegonmarcos.com/http-to-smtp-proxy-api",
-        "auth": "bearer",
-        "private_dns": "http-to-smtp-proxy-api.mesh.diegonmarcos.com:8090",
-        "port": 8090,
         "category": "app"
       },
       {
@@ -1358,22 +1398,22 @@
         "category": "app"
       },
       {
-        "name": "scrappers-api",
-        "service": "scrappers-api",
+        "name": "cloudy-browser-scrapper-api",
+        "service": "cloudy-browser-scrapper-api",
         "vm": "oci-A1-f_0",
         "public_url": "api.diegonmarcos.com",
         "auth": "two_factor",
-        "private_dns": "scrappers-api.mesh.diegonmarcos.com:3020",
+        "private_dns": "cloudy-browser-scrapper-api.mesh.diegonmarcos.com:3020",
         "port": 3020,
         "category": "data"
       },
       {
-        "name": "capital-stack-finterminal-api",
-        "service": "capital-stack-finterminal-api",
+        "name": "capital-stack-finterm-api",
+        "service": "capital-stack-finterm-api",
         "vm": "oci-A1-f_0",
-        "public_url": "api.diegonmarcos.com/capital-stack-finterminal-api",
+        "public_url": "api.diegonmarcos.com/capital-stack-finterm-api",
         "auth": "two_factor",
-        "private_dns": "capital-stack-finterminal-api.mesh.diegonmarcos.com:8340",
+        "private_dns": "capital-stack-finterm-api.mesh.diegonmarcos.com:8340",
         "port": 8340,
         "category": "fin"
       },
@@ -1520,10 +1560,10 @@
         "db_engine": null
       },
       {
-        "name": "embeddings-api",
-        "service": "embeddings-api",
+        "name": "cloudy-ai-embeddings-api",
+        "service": "cloudy-ai-embeddings-api",
         "vm": "oci-A1-f_0",
-        "private_dns": "embeddings-api.mesh.diegonmarcos.com:7997",
+        "private_dns": "cloudy-ai-embeddings-api.mesh.diegonmarcos.com:7997",
         "port": 7997,
         "protocol": "http",
         "category": "agi",
@@ -1740,20 +1780,20 @@
         "db_engine": null
       },
       {
-        "name": "rss-gateway",
+        "name": "capital-stack-news-rss-api",
         "service": "ntfy",
         "vm": "oci-A1-f_0",
-        "private_dns": "rss-gateway:8091",
+        "private_dns": "capital-stack-news-rss-api:8091",
         "port": 8091,
         "protocol": "http",
         "category": "tools",
         "db_engine": null
       },
       {
-        "name": "github-rss",
+        "name": "capital-stack-news-github-rss-api",
         "service": "ntfy",
         "vm": "oci-A1-f_0",
-        "private_dns": "github-rss",
+        "private_dns": "capital-stack-news-github-rss-api",
         "port": null,
         "protocol": "tcp",
         "category": "tools",
@@ -1810,40 +1850,40 @@
         "db_engine": null
       },
       {
-        "name": "auth-broker-google",
+        "name": "cloudy-auth-google-api",
         "service": "auth-broker",
         "vm": "oci-A1-f_0",
-        "private_dns": "auth-broker-google:4180",
+        "private_dns": "cloudy-auth-google-api:4180",
         "port": 4180,
         "protocol": "http",
         "category": "sec",
         "db_engine": null
       },
       {
-        "name": "auth-broker-github",
+        "name": "cloudy-auth-github-api",
         "service": "auth-broker",
         "vm": "oci-A1-f_0",
-        "private_dns": "auth-broker-github:4181",
+        "private_dns": "cloudy-auth-github-api:4181",
         "port": 4181,
         "protocol": "http",
         "category": "sec",
         "db_engine": null
       },
       {
-        "name": "auth-broker-cloudflare",
+        "name": "cloudy-auth-cloudflare-api",
         "service": "auth-broker",
         "vm": "oci-A1-f_0",
-        "private_dns": "auth-broker-cloudflare:4182",
+        "private_dns": "cloudy-auth-cloudflare-api:4182",
         "port": 4182,
         "protocol": "http",
         "category": "sec",
         "db_engine": null
       },
       {
-        "name": "auth-broker-email",
+        "name": "cloudy-auth-email-api",
         "service": "auth-broker",
         "vm": "oci-A1-f_0",
-        "private_dns": "auth-broker-email:4183",
+        "private_dns": "cloudy-auth-email-api:4183",
         "port": 4183,
         "protocol": "http",
         "category": "sec",
@@ -1900,6 +1940,16 @@
         "db_engine": null
       },
       {
+        "name": "cloudy-ai-tokens-api",
+        "service": "cloudy-ai-tokens-api",
+        "vm": "oci-A1-f_0",
+        "private_dns": "cloudy-ai-tokens-api.mesh.diegonmarcos.com:4184",
+        "port": 4184,
+        "protocol": "http",
+        "category": "sec",
+        "db_engine": null
+      },
+      {
         "name": "introspect-proxy",
         "service": "introspect-proxy",
         "vm": "gcp-E2-f_0",
@@ -1920,14 +1970,54 @@
         "db_engine": null
       },
       {
-        "name": "tokens-api",
-        "service": "tokens-api",
+        "name": "cloud-me-cgc-pvt-graph-api",
+        "service": "cloud-me-cgc-pvt-graph-api",
         "vm": "oci-A1-f_0",
-        "private_dns": "tokens-api.mesh.diegonmarcos.com:4184",
-        "port": 4184,
+        "private_dns": "cloud-me-cgc-pvt-graph-api:8001",
+        "port": 8001,
         "protocol": "http",
-        "category": "sec",
+        "category": "data",
+        "db_engine": "surrealdb"
+      },
+      {
+        "name": "cloud-agi-goose",
+        "service": "cloudy-ai-agents-api",
+        "vm": "oci-A1-f_0",
+        "private_dns": "cloudy-ai-agents-api.mesh.diegonmarcos.com:3217",
+        "port": 3217,
+        "protocol": "http",
+        "category": "agi",
         "db_engine": null
+      },
+      {
+        "name": "cloud-agi-claude",
+        "service": "cloudy-ai-claude-api",
+        "vm": "oci-A1-f_0",
+        "private_dns": "my-ai-claude-api.mesh.diegonmarcos.com:3117",
+        "port": 3117,
+        "protocol": "http",
+        "category": "agi",
+        "db_engine": null
+      },
+      {
+        "name": "cloudy-ai-memory-api",
+        "service": "cloudy-ai-memory-api",
+        "vm": "oci-A1-f_0",
+        "private_dns": "cloudy-ai-memory-api.mesh.diegonmarcos.com:3108",
+        "port": 3108,
+        "protocol": "http",
+        "category": "agi",
+        "db_engine": null
+      },
+      {
+        "name": "cloudy-cgc-pub-graph-api",
+        "service": "cloudy-cgc-pub-graph-api",
+        "vm": "oci-A1-f_0",
+        "private_dns": "cloudy-cgc-pub-graph-api:8002",
+        "port": 8002,
+        "protocol": "http",
+        "category": "data",
+        "db_engine": "surrealdb"
       },
       {
         "name": "db-agent",
@@ -1950,61 +2040,11 @@
         "db_engine": null
       },
       {
-        "name": "kg-store",
-        "service": "kg-store",
-        "vm": "oci-A1-f_0",
-        "private_dns": "kg-store:8001",
-        "port": 8001,
-        "protocol": "http",
-        "category": "data",
-        "db_engine": "surrealdb"
-      },
-      {
-        "name": "kg-store-pub",
-        "service": "kg-store-pub",
-        "vm": "oci-A1-f_0",
-        "private_dns": "kg-store-pub:8002",
-        "port": 8002,
-        "protocol": "http",
-        "category": "data",
-        "db_engine": "surrealdb"
-      },
-      {
-        "name": "cloud-agi-goose",
-        "service": "my-ai-api",
-        "vm": "oci-A1-f_0",
-        "private_dns": "my-ai-api.mesh.diegonmarcos.com:3217",
-        "port": 3217,
-        "protocol": "http",
-        "category": "agi",
-        "db_engine": null
-      },
-      {
-        "name": "cloud-agi-claude",
-        "service": "my-ai_claude-api",
-        "vm": "oci-A1-f_0",
-        "private_dns": "my-ai-claude-api.mesh.diegonmarcos.com:3117",
-        "port": 3117,
-        "protocol": "http",
-        "category": "agi",
-        "db_engine": null
-      },
-      {
         "name": "cloud-agi-openclaw",
         "service": "openclaw",
         "vm": "oci-A1-f_0",
         "private_dns": "openclaw.mesh.diegonmarcos.com:18789",
         "port": 18789,
-        "protocol": "http",
-        "category": "agi",
-        "db_engine": null
-      },
-      {
-        "name": "session-memory",
-        "service": "session-memory",
-        "vm": "oci-A1-f_0",
-        "private_dns": "session-memory.mesh.diegonmarcos.com:3108",
-        "port": 3108,
         "protocol": "http",
         "category": "agi",
         "db_engine": null
@@ -2110,10 +2150,10 @@
         "db_engine": null
       },
       {
-        "name": "news-gdelt",
-        "service": "news-gdelt",
+        "name": "capital-stack-news-gdelt-api",
+        "service": "capital-stack-news-gdelt-api",
         "vm": "oci-A1-f_0",
-        "private_dns": "news-gdelt:3019",
+        "private_dns": "capital-stack-news-gdelt-api:3019",
         "port": 3019,
         "protocol": "http",
         "category": "tools",

@@ -52,8 +52,12 @@
     "name": "build alerts api"
   },
   {
-    "file": "dist/build-embeddings-api.json",
-    "name": "build embeddings api"
+    "file": "dist/build-cloudy-ai-api.json",
+    "name": "build cloudy ai api"
+  },
+  {
+    "file": "dist/build-cloudy-ai-embeddings-api.json",
+    "name": "build cloudy ai embeddings api"
   },
   {
     "file": "dist/build-jev-sidecar.json",
@@ -64,16 +68,8 @@
     "name": "build languagetool"
   },
   {
-    "file": "dist/build-c3-infra-api.json",
-    "name": "build c3 infra api"
-  },
-  {
     "file": "dist/build-c3-public-api.json",
     "name": "build c3 public api"
-  },
-  {
-    "file": "dist/build-c3-services-api.json",
-    "name": "build c3 services api"
   },
   {
     "file": "dist/build-cloud-drive-mcp.json",
@@ -108,8 +104,32 @@
     "name": "build cloud vault mcp"
   },
   {
-    "file": "dist/build-git-proxy-api.json",
-    "name": "build git proxy api"
+    "file": "dist/build-cloudy-all-api.json",
+    "name": "build cloudy all api"
+  },
+  {
+    "file": "dist/build-cloudy-all-mcp.json",
+    "name": "build cloudy all mcp"
+  },
+  {
+    "file": "dist/build-cloudy-apps-communication-mcp.json",
+    "name": "build cloudy apps communication mcp"
+  },
+  {
+    "file": "dist/build-cloudy-apps-drive-mcp.json",
+    "name": "build cloudy apps drive mcp"
+  },
+  {
+    "file": "dist/build-cloudy-c3-api.json",
+    "name": "build cloudy c3 api"
+  },
+  {
+    "file": "dist/build-cloudy-drive-git-proxy-api.json",
+    "name": "build cloudy drive git proxy api"
+  },
+  {
+    "file": "dist/build-cloudy-mail-http-to-smtp-api.json",
+    "name": "build cloudy mail http to smtp api"
   },
   {
     "file": "dist/build-google-personal-mcp.json",
@@ -118,10 +138,6 @@
   {
     "file": "dist/build-google-workspace-mcp.json",
     "name": "build google workspace mcp"
-  },
-  {
-    "file": "dist/build-http-to-smtp-proxy-api.json",
-    "name": "build http to smtp proxy api"
   },
   {
     "file": "dist/build-cloud-builder-x.json",
@@ -216,12 +232,12 @@
     "name": "build syslog bridge"
   },
   {
-    "file": "dist/build-rss-gateway.json",
-    "name": "build rss gateway"
+    "file": "dist/build-capital-stack-news-rss-api.json",
+    "name": "build capital stack news rss api"
   },
   {
-    "file": "dist/build-github-rss.json",
-    "name": "build github rss"
+    "file": "dist/build-capital-stack-news-github-rss-api.json",
+    "name": "build capital stack news github rss api"
   },
   {
     "file": "dist/build-openobserve.json",
@@ -252,20 +268,20 @@
     "name": "build disk janitor"
   },
   {
-    "file": "dist/build-auth-broker-google.json",
-    "name": "build auth broker google"
+    "file": "dist/build-cloudy-auth-google-api.json",
+    "name": "build cloudy auth google api"
   },
   {
-    "file": "dist/build-auth-broker-github.json",
-    "name": "build auth broker github"
+    "file": "dist/build-cloudy-auth-github-api.json",
+    "name": "build cloudy auth github api"
   },
   {
-    "file": "dist/build-auth-broker-cloudflare.json",
-    "name": "build auth broker cloudflare"
+    "file": "dist/build-cloudy-auth-cloudflare-api.json",
+    "name": "build cloudy auth cloudflare api"
   },
   {
-    "file": "dist/build-auth-broker-email.json",
-    "name": "build auth broker email"
+    "file": "dist/build-cloudy-auth-email-api.json",
+    "name": "build cloudy auth email api"
   },
   {
     "file": "dist/build-authelia-redis.json",
@@ -284,6 +300,10 @@
     "name": "build caddy public"
   },
   {
+    "file": "dist/build-cloudy-ai-tokens-api.json",
+    "name": "build cloudy ai tokens api"
+  },
+  {
     "file": "dist/build-crowdsec.json",
     "name": "build crowdsec"
   },
@@ -296,10 +316,6 @@
     "name": "build mcp oauth"
   },
   {
-    "file": "dist/build-tokens-api.json",
-    "name": "build tokens api"
-  },
-  {
     "file": "dist/build-cloud-cgc-pub-mcp.json",
     "name": "build cloud cgc pub mcp"
   },
@@ -308,24 +324,8 @@
     "name": "build cloud cgc pvt mcp"
   },
   {
-    "file": "dist/build-db-agent.json",
-    "name": "build db agent"
-  },
-  {
-    "file": "dist/build-cloud-agi-hermes.json",
-    "name": "build cloud agi hermes"
-  },
-  {
-    "file": "dist/build-kg-store.json",
-    "name": "build kg store"
-  },
-  {
-    "file": "dist/build-surrealdb.json",
-    "name": "build surrealdb"
-  },
-  {
-    "file": "dist/build-kg-store-pub.json",
-    "name": "build kg store pub"
+    "file": "dist/build-cloud-me-cgc-pvt-graph-api.json",
+    "name": "build cloud me cgc pvt graph api"
   },
   {
     "file": "dist/build-cloud-agi-goose.json",
@@ -336,12 +336,24 @@
     "name": "build cloud agi claude"
   },
   {
-    "file": "dist/build-cloud-agi-openclaw.json",
-    "name": "build cloud agi openclaw"
+    "file": "dist/build-cloudy-ai-memory-api.json",
+    "name": "build cloudy ai memory api"
   },
   {
-    "file": "dist/build-session-memory.json",
-    "name": "build session memory"
+    "file": "dist/build-cloudy-cgc-pub-graph-api.json",
+    "name": "build cloudy cgc pub graph api"
+  },
+  {
+    "file": "dist/build-db-agent.json",
+    "name": "build db agent"
+  },
+  {
+    "file": "dist/build-cloud-agi-hermes.json",
+    "name": "build cloud agi hermes"
+  },
+  {
+    "file": "dist/build-cloud-agi-openclaw.json",
+    "name": "build cloud agi openclaw"
   },
   {
     "file": "dist/build-mattermost.json",
@@ -388,12 +400,12 @@
     "name": "build stalwart sorter"
   },
   {
-    "file": "dist/build-scrappers-api.json",
-    "name": "build scrappers api"
+    "file": "dist/build-cloudy-browser-scrapper-api.json",
+    "name": "build cloudy browser scrapper api"
   },
   {
-    "file": "dist/build-capital-stack-finterminal-api.json",
-    "name": "build capital stack finterminal api"
+    "file": "dist/build-capital-stack-finterm-api.json",
+    "name": "build capital stack finterm api"
   },
   {
     "file": "dist/build-capital-stack-finterminal-web.json",
@@ -420,8 +432,8 @@
     "name": "build playlist syncer"
   },
   {
-    "file": "dist/build-news-gdelt.json",
-    "name": "build news gdelt"
+    "file": "dist/build-capital-stack-news-gdelt-api.json",
+    "name": "build capital stack news gdelt api"
   },
   {
     "file": "dist/build-calendar-radicale.json",

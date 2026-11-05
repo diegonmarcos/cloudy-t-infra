@@ -660,12 +660,12 @@
       ]
     },
     {
-      "domain": "c3-infra-api.diegonmarcos.com",
-      "upstream": "10.0.0.6:8081",
+      "domain": "c3-cloudy-ai-api.diegonmarcos.com",
+      "upstream": "10.0.0.6:4185",
       "auth": "none",
       "wg_only": true,
-      "container": "c3-infra-api",
-      "comment": "c3 container c3-infra-api (mesh-only; c3-infra-api-http-8081.mesh.diegonmarcos.com)"
+      "container": "cloudy-ai-api",
+      "comment": "c3 container cloudy-ai-api (mesh-only; cloudy-ai-api-http-4185.mesh.diegonmarcos.com)"
     },
     {
       "domain": "c3-public-api.diegonmarcos.com",
@@ -674,14 +674,6 @@
       "wg_only": true,
       "container": "c3-public-api",
       "comment": "c3 container c3-public-api (mesh-only; c3-public-api-http-8087.mesh.diegonmarcos.com)"
-    },
-    {
-      "domain": "c3-services-api.diegonmarcos.com",
-      "upstream": "10.0.0.6:8082",
-      "auth": "none",
-      "wg_only": true,
-      "container": "c3-services-api",
-      "comment": "c3 container c3-services-api (mesh-only; c3-services-api-http-8082.mesh.diegonmarcos.com)"
     },
     {
       "domain": "c3-cloud-drive-mcp.diegonmarcos.com",
@@ -740,12 +732,52 @@
       "comment": "c3 container cloud-superapp-mcp (mesh-only; cloud-superapp-mcp-http-3110.mesh.diegonmarcos.com)"
     },
     {
-      "domain": "c3-git-proxy-api.diegonmarcos.com",
+      "domain": "c3-cloudy-all-api.diegonmarcos.com",
+      "upstream": "10.0.0.6:8082",
+      "auth": "none",
+      "wg_only": true,
+      "container": "cloudy-all-api",
+      "comment": "c3 container cloudy-all-api (mesh-only; cloudy-all-api-http-8082.mesh.diegonmarcos.com)"
+    },
+    {
+      "domain": "c3-cloudy-all-mcp.diegonmarcos.com",
+      "upstream": "10.0.0.6:3112",
+      "auth": "none",
+      "wg_only": true,
+      "container": "cloudy-all-mcp",
+      "comment": "c3 container cloudy-all-mcp (mesh-only; cloudy-all-mcp-http-3112.mesh.diegonmarcos.com)"
+    },
+    {
+      "domain": "c3-cloudy-apps-communication-mcp.diegonmarcos.com",
+      "upstream": "10.0.0.6:3103",
+      "auth": "none",
+      "wg_only": true,
+      "container": "cloudy-apps-communication-mcp",
+      "comment": "c3 container cloudy-apps-communication-mcp (mesh-only; cloudy-apps-communication-mcp-http-3103.mesh.diegonmarcos.com)"
+    },
+    {
+      "domain": "c3-cloudy-apps-drive-mcp.diegonmarcos.com",
+      "upstream": "10.0.0.6:3109",
+      "auth": "none",
+      "wg_only": true,
+      "container": "cloudy-apps-drive-mcp",
+      "comment": "c3 container cloudy-apps-drive-mcp (mesh-only; cloudy-apps-drive-mcp-http-3109.mesh.diegonmarcos.com)"
+    },
+    {
+      "domain": "c3-cloudy-c3-api.diegonmarcos.com",
+      "upstream": "10.0.0.6:8081",
+      "auth": "none",
+      "wg_only": true,
+      "container": "cloudy-c3-api",
+      "comment": "c3 container cloudy-c3-api (mesh-only; cloudy-c3-api-http-8081.mesh.diegonmarcos.com)"
+    },
+    {
+      "domain": "c3-cloudy-drive-git-proxy-api.diegonmarcos.com",
       "upstream": "10.0.0.4:8123",
       "auth": "none",
       "wg_only": true,
-      "container": "git-proxy-api",
-      "comment": "c3 container git-proxy-api (mesh-only; git-proxy-api-http-8123.mesh.diegonmarcos.com)"
+      "container": "cloudy-drive-git-proxy-api",
+      "comment": "c3 container cloudy-drive-git-proxy-api (mesh-only; cloudy-drive-git-proxy-api-http-8123.mesh.diegonmarcos.com)"
     },
     {
       "domain": "c3-google-personal-mcp.diegonmarcos.com",
@@ -844,20 +876,20 @@
       "comment": "c3 container authelia (mesh-only; authelia-http-9091.mesh.diegonmarcos.com)"
     },
     {
+      "domain": "c3-cloudy-ai-tokens-api.diegonmarcos.com",
+      "upstream": "10.0.0.6:4184",
+      "auth": "none",
+      "wg_only": true,
+      "container": "cloudy-ai-tokens-api",
+      "comment": "c3 container cloudy-ai-tokens-api (mesh-only; cloudy-ai-tokens-api-http-4184.mesh.diegonmarcos.com)"
+    },
+    {
       "domain": "c3-crowdsec.diegonmarcos.com",
       "upstream": "10.0.0.6:8088",
       "auth": "none",
       "wg_only": true,
       "container": "crowdsec",
       "comment": "c3 container crowdsec (mesh-only; crowdsec-http-8088.mesh.diegonmarcos.com)"
-    },
-    {
-      "domain": "c3-tokens-api.diegonmarcos.com",
-      "upstream": "10.0.0.6:4184",
-      "auth": "none",
-      "wg_only": true,
-      "container": "tokens-api",
-      "comment": "c3 container tokens-api (mesh-only; tokens-api-http-4184.mesh.diegonmarcos.com)"
     },
     {
       "domain": "c3-cloud-cgc-pub-mcp.diegonmarcos.com",
@@ -868,20 +900,20 @@
       "comment": "c3 container cloud-cgc-pub-mcp (mesh-only; cloud-cgc-pub-mcp-http-3105.mesh.diegonmarcos.com)"
     },
     {
-      "domain": "c3-kg-store.diegonmarcos.com",
+      "domain": "c3-cloud-me-cgc-pvt-graph-api.diegonmarcos.com",
       "upstream": "10.0.0.6:8001",
       "auth": "none",
       "wg_only": true,
-      "container": "kg-store",
-      "comment": "c3 container kg-store (mesh-only; kg-store-http-8001.mesh.diegonmarcos.com)"
+      "container": "cloud-me-cgc-pvt-graph-api",
+      "comment": "c3 container cloud-me-cgc-pvt-graph-api (mesh-only; cloud-me-cgc-pvt-graph-api-http-8001.mesh.diegonmarcos.com)"
     },
     {
-      "domain": "c3-kg-store-pub.diegonmarcos.com",
+      "domain": "c3-cloudy-cgc-pub-graph-api.diegonmarcos.com",
       "upstream": "10.0.0.6:8002",
       "auth": "none",
       "wg_only": true,
-      "container": "kg-store-pub",
-      "comment": "c3 container kg-store-pub (mesh-only; kg-store-pub-http-8002.mesh.diegonmarcos.com)"
+      "container": "cloudy-cgc-pub-graph-api",
+      "comment": "c3 container cloudy-cgc-pub-graph-api (mesh-only; cloudy-cgc-pub-graph-api-http-8002.mesh.diegonmarcos.com)"
     },
     {
       "domain": "c3-mattermost.diegonmarcos.com",
@@ -916,20 +948,20 @@
       "comment": "c3 container matrix-element (mesh-only; matrix-element-http-8083.mesh.diegonmarcos.com)"
     },
     {
-      "domain": "c3-scrappers-api.diegonmarcos.com",
+      "domain": "c3-cloudy-browser-scrapper-api.diegonmarcos.com",
       "upstream": "10.0.0.6:3020",
       "auth": "none",
       "wg_only": true,
-      "container": "scrappers-api",
-      "comment": "c3 container scrappers-api (mesh-only; scrappers-api-http-3020.mesh.diegonmarcos.com)"
+      "container": "cloudy-browser-scrapper-api",
+      "comment": "c3 container cloudy-browser-scrapper-api (mesh-only; cloudy-browser-scrapper-api-http-3020.mesh.diegonmarcos.com)"
     },
     {
-      "domain": "c3-capital-stack-finterminal-api.diegonmarcos.com",
+      "domain": "c3-capital-stack-finterm-api.diegonmarcos.com",
       "upstream": "10.0.0.6:8340",
       "auth": "none",
       "wg_only": true,
-      "container": "capital-stack-finterminal-api",
-      "comment": "c3 container capital-stack-finterminal-api (mesh-only; capital-stack-finterminal-api-http-8340.mesh.diegonmarcos.com)"
+      "container": "capital-stack-finterm-api",
+      "comment": "c3 container capital-stack-finterm-api (mesh-only; capital-stack-finterm-api-http-8340.mesh.diegonmarcos.com)"
     },
     {
       "domain": "c3-capital-stack-finterminal-web.diegonmarcos.com",
@@ -956,12 +988,12 @@
       "comment": "c3 container playlist-syncer (mesh-only; playlist-syncer-http-8090.mesh.diegonmarcos.com)"
     },
     {
-      "domain": "c3-news-gdelt.diegonmarcos.com",
+      "domain": "c3-capital-stack-news-gdelt-api.diegonmarcos.com",
       "upstream": "10.0.0.6:3019",
       "auth": "none",
       "wg_only": true,
-      "container": "news-gdelt",
-      "comment": "c3 container news-gdelt (mesh-only; news-gdelt-http-3019.mesh.diegonmarcos.com)"
+      "container": "capital-stack-news-gdelt-api",
+      "comment": "c3 container capital-stack-news-gdelt-api (mesh-only; capital-stack-news-gdelt-api-http-3019.mesh.diegonmarcos.com)"
     },
     {
       "domain": "c3-calendar-radicale.diegonmarcos.com",
@@ -1579,17 +1611,6 @@
       "parent_domain": "api.diegonmarcos.com",
       "paths": [
         {
-          "base_path": "/c3-infra-api",
-          "upstream": "10.0.0.6:8081",
-          "public_paths": [
-            "/c3-infra-api/docs/json",
-            "/c3-infra-api/public/logs",
-            "/c3-infra-api/public/events/*"
-          ],
-          "wg_only": true,
-          "comment": "C3 REST API — Cloud Control Center Fastify API"
-        },
-        {
           "base_path": "/pub",
           "upstream": "10.0.0.4:8087",
           "public_paths": [
@@ -1600,13 +1621,24 @@
           "comment": "C3 Public API — single public-edge listener on oci-analytics. Consolidates http-to-smtp-proxy-api (Bearer-gated /mail/*) and c3-analytics-api passthrough (public /analytics/*). Replaces split listeners across gcp-proxy + oci-analytics so gcp-proxy becomes a pure wg0 spoke."
         },
         {
-          "base_path": "/c3-services-api",
+          "base_path": "/cloudy-all-api",
           "upstream": "10.0.0.6:8082",
           "wg_only": true,
           "comment": "C3 Services REST API — service API gateway Fastify API"
         },
         {
-          "base_path": "/git",
+          "base_path": "/cloudy-c3-api",
+          "upstream": "10.0.0.6:8081",
+          "public_paths": [
+            "/c3-infra-api/docs/json",
+            "/c3-infra-api/public/logs",
+            "/c3-infra-api/public/events/*"
+          ],
+          "wg_only": true,
+          "comment": "C3 REST API — Cloud Control Center Fastify API"
+        },
+        {
+          "base_path": "/cloudy-drive-git-proxy-api",
           "upstream": "10.0.0.4:8123",
           "public_paths": [
             "/git/health"
@@ -1615,7 +1647,7 @@
           "comment": "Git Proxy API — Authelia-fronted read path to GitHub so the phone holds NO GitHub credential (#647, route 3 of #646's fallback chain). The caller authenticates to US with the Authelia bearer it already has; this service holds the GitHub token server-side and streams the result back."
         },
         {
-          "base_path": "/scrappers",
+          "base_path": "/cloudy-browser-scrapper-api",
           "upstream": "10.0.0.6:3020",
           "public_paths": [
             "/scrappers/health",
@@ -1625,7 +1657,7 @@
           "comment": "Unified scrapers API (Instagram / Pinterest / LinkedIn / generic crawl) — retires crawlee-cloud. Lean single-container FastAPI, on-demand, flat-JSON output."
         },
         {
-          "base_path": "/capital-stack-finterminal-api",
+          "base_path": "/capital-stack-finterm-api",
           "upstream": "10.0.0.6:8340",
           "wg_only": true,
           "comment": "Fincept Terminal backend (capital-stack-finterminal-api) — REST + WebSocket over DataHub, 35 data connectors, 7 analytics, 17 brokers, 6 investor personas, MCP tools"
@@ -1642,12 +1674,6 @@
           "upstream": "10.0.0.6:3080",
           "wg_only": true,
           "comment": "Unified Cloud Documentation Portal"
-        },
-        {
-          "base_path": "/probe",
-          "upstream": "10.0.0.6:8082",
-          "wg_only": true,
-          "comment": "c3-services-api proxy (extra_path declared by infra-obs_cloud-spec)"
         }
       ],
       "comment": "Cloud dashboard + spec viewer",
@@ -1802,6 +1828,11 @@
       "parent_domain": "mcp.diegonmarcos.com",
       "endpoints": [
         {
+          "base_path": "/ai",
+          "upstream": "10.0.0.6:4185",
+          "wg_only": true
+        },
+        {
           "base_path": "/cloud-drive-mcp",
           "upstream": "10.0.0.6:3109",
           "wg_only": true,
@@ -1843,6 +1874,21 @@
           "wg_only": true
         },
         {
+          "base_path": "/cloudy-all-mcp",
+          "upstream": "10.0.0.6:3112",
+          "wg_only": true
+        },
+        {
+          "base_path": "/cloudy-apps-communication-mcp",
+          "upstream": "10.0.0.6:3103",
+          "wg_only": true
+        },
+        {
+          "base_path": "/cloudy-apps-drive-mcp",
+          "upstream": "10.0.0.6:3109",
+          "wg_only": true
+        },
+        {
           "base_path": "/g-personal",
           "upstream": "10.0.0.6:3106",
           "wg_only": true,
@@ -1867,7 +1913,7 @@
         }
       ],
       "comment": "MCP -- Streamable HTTP endpoints for Claude Code MCP clients",
-      "fallback_message": "MCP Hub -- use /cloud-drive-mcp/mcp, /c3-infra-mcp/mcp, /mail-mcp/mcp, /mattermost-mcp/mcp, /c3-services-mcp/mcp, /cloud-superapp-mcp/mcp, /cloud-vault-mcp/mcp, /g-personal/mcp, /g-workspace/mcp, /cloud-cgc-pub-mcp/mcp, /cloud-cgc-pvt-mcp/mcp"
+      "fallback_message": "MCP Hub -- use /ai/mcp, /cloud-drive-mcp/mcp, /c3-infra-mcp/mcp, /mail-mcp/mcp, /mattermost-mcp/mcp, /c3-services-mcp/mcp, /cloud-superapp-mcp/mcp, /cloud-vault-mcp/mcp, /cloudy-all-mcp/mcp, /cloudy-apps-communication-mcp/mcp, /cloudy-apps-drive-mcp/mcp, /g-personal/mcp, /g-workspace/mcp, /cloud-cgc-pub-mcp/mcp, /cloud-cgc-pvt-mcp/mcp"
     }
   ],
   "oidc_public": {
@@ -1917,19 +1963,14 @@
   },
   "internal_routes": [
     {
-      "service": "c3-infra-api.mesh.diegonmarcos.com",
-      "upstream": "10.0.0.6:8081",
-      "private_name": "cloud.c3-infra-api.mesh.diegonmarcos.com"
+      "service": "cloudy-ai-api.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:4185",
+      "private_name": "cloud.cloudy-ai-api.mesh.diegonmarcos.com"
     },
     {
       "service": "c3-public-api.mesh.diegonmarcos.com",
       "upstream": "10.0.0.4:8087",
       "private_name": "cloud.c3-public-api.mesh.diegonmarcos.com"
-    },
-    {
-      "service": "c3-services-api.mesh.diegonmarcos.com",
-      "upstream": "10.0.0.6:8082",
-      "private_name": "cloud.c3-services-api.mesh.diegonmarcos.com"
     },
     {
       "service": "drive-mcp.mesh.diegonmarcos.com",
@@ -1995,6 +2036,46 @@
       "service": "cloud-superapp-mcp.mesh.diegonmarcos.com",
       "upstream": "10.0.0.6:3110",
       "private_name": "cloud.cloud-superapp-mcp.mesh.diegonmarcos.com"
+    },
+    {
+      "service": "cloudy-all-api.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:8082",
+      "private_name": "cloud.cloudy-all-api.mesh.diegonmarcos.com"
+    },
+    {
+      "service": "c3-services-api.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:8082",
+      "private_name": "cloud.c3-services-api.mesh.diegonmarcos.com"
+    },
+    {
+      "service": "cloudy-all-mcp.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:3112",
+      "private_name": "cloud.cloudy-all-mcp.mesh.diegonmarcos.com"
+    },
+    {
+      "service": "cloudy-apps-communication-mcp.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:3103",
+      "private_name": "cloud.cloudy-apps-communication-mcp.mesh.diegonmarcos.com"
+    },
+    {
+      "service": "cloudy-apps-drive-mcp.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:3109",
+      "private_name": "cloud.cloudy-apps-drive-mcp.mesh.diegonmarcos.com"
+    },
+    {
+      "service": "cloudy-c3-api.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:8081",
+      "private_name": "cloud.cloudy-c3-api.mesh.diegonmarcos.com"
+    },
+    {
+      "service": "c3-infra-api.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:8081",
+      "private_name": "cloud.c3-infra-api.mesh.diegonmarcos.com"
+    },
+    {
+      "service": "cloudy-drive-git-proxy-api.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.4:8123",
+      "private_name": "cloud.cloudy-drive-git-proxy-api.mesh.diegonmarcos.com"
     },
     {
       "service": "git-proxy-api.mesh.diegonmarcos.com",
@@ -2092,9 +2173,9 @@
       "private_name": "cloud.caddy-public.mesh.diegonmarcos.com"
     },
     {
-      "service": "crowdsec.mesh.diegonmarcos.com",
-      "upstream": "10.0.0.6:8088",
-      "private_name": "cloud.crowdsec.mesh.diegonmarcos.com"
+      "service": "cloudy-ai-tokens-api.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:4184",
+      "private_name": "cloud.cloudy-ai-tokens-api.mesh.diegonmarcos.com"
     },
     {
       "service": "tokens-api.mesh.diegonmarcos.com",
@@ -2102,19 +2183,24 @@
       "private_name": "cloud.tokens-api.mesh.diegonmarcos.com"
     },
     {
+      "service": "crowdsec.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:8088",
+      "private_name": "cloud.crowdsec.mesh.diegonmarcos.com"
+    },
+    {
       "service": "cloud-cgc-pub-mcp.mesh.diegonmarcos.com",
       "upstream": "10.0.0.6:3105",
       "private_name": "cloud.cloud-cgc-pub-mcp.mesh.diegonmarcos.com"
     },
     {
-      "service": "kg-store.mesh.diegonmarcos.com",
+      "service": "cloud-me-cgc-pvt-graph-api.mesh.diegonmarcos.com",
       "upstream": "10.0.0.6:8001",
-      "private_name": "cloud.kg-store.mesh.diegonmarcos.com"
+      "private_name": "cloud.cloud-me-cgc-pvt-graph-api.mesh.diegonmarcos.com"
     },
     {
-      "service": "kg-store-pub.mesh.diegonmarcos.com",
+      "service": "cloudy-cgc-pub-graph-api.mesh.diegonmarcos.com",
       "upstream": "10.0.0.6:8002",
-      "private_name": "cloud.kg-store-pub.mesh.diegonmarcos.com"
+      "private_name": "cloud.cloudy-cgc-pub-graph-api.mesh.diegonmarcos.com"
     },
     {
       "service": "mattermost.mesh.diegonmarcos.com",
@@ -2152,9 +2238,19 @@
       "private_name": "cloud.stalwart.mesh.diegonmarcos.com"
     },
     {
+      "service": "cloudy-browser-scrapper-api.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:3020",
+      "private_name": "cloud.cloudy-browser-scrapper-api.mesh.diegonmarcos.com"
+    },
+    {
       "service": "scrappers-api.mesh.diegonmarcos.com",
       "upstream": "10.0.0.6:3020",
       "private_name": "cloud.scrappers-api.mesh.diegonmarcos.com"
+    },
+    {
+      "service": "capital-stack-finterm-api.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:8340",
+      "private_name": "cloud.capital-stack-finterm-api.mesh.diegonmarcos.com"
     },
     {
       "service": "capital-stack-finterminal-api.mesh.diegonmarcos.com",
@@ -2177,9 +2273,9 @@
       "private_name": "cloud.playlist-syncer.mesh.diegonmarcos.com"
     },
     {
-      "service": "news-gdelt.mesh.diegonmarcos.com",
+      "service": "capital-stack-news-gdelt-api.mesh.diegonmarcos.com",
       "upstream": "10.0.0.6:3019",
-      "private_name": "cloud.news-gdelt.mesh.diegonmarcos.com"
+      "private_name": "cloud.capital-stack-news-gdelt-api.mesh.diegonmarcos.com"
     },
     {
       "service": "calendar.mesh.diegonmarcos.com",
@@ -2249,21 +2345,15 @@
   ],
   "private_mesh_routes": [
     {
-      "service": "cloud.c3-infra-api.mesh.diegonmarcos.com",
-      "upstream": "10.0.0.6:8081",
-      "alias_of": "c3-infra-api.mesh.diegonmarcos.com",
+      "service": "cloud.cloudy-ai-api.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:4185",
+      "alias_of": "cloudy-ai-api.mesh.diegonmarcos.com",
       "source": "internal_routes"
     },
     {
       "service": "cloud.c3-public-api.mesh.diegonmarcos.com",
       "upstream": "10.0.0.4:8087",
       "alias_of": "c3-public-api.mesh.diegonmarcos.com",
-      "source": "internal_routes"
-    },
-    {
-      "service": "cloud.c3-services-api.mesh.diegonmarcos.com",
-      "upstream": "10.0.0.6:8082",
-      "alias_of": "c3-services-api.mesh.diegonmarcos.com",
       "source": "internal_routes"
     },
     {
@@ -2342,6 +2432,54 @@
       "service": "cloud.cloud-superapp-mcp.mesh.diegonmarcos.com",
       "upstream": "10.0.0.6:3110",
       "alias_of": "cloud-superapp-mcp.mesh.diegonmarcos.com",
+      "source": "internal_routes"
+    },
+    {
+      "service": "cloud.cloudy-all-api.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:8082",
+      "alias_of": "cloudy-all-api.mesh.diegonmarcos.com",
+      "source": "internal_routes"
+    },
+    {
+      "service": "cloud.c3-services-api.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:8082",
+      "alias_of": "c3-services-api.mesh.diegonmarcos.com",
+      "source": "internal_routes"
+    },
+    {
+      "service": "cloud.cloudy-all-mcp.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:3112",
+      "alias_of": "cloudy-all-mcp.mesh.diegonmarcos.com",
+      "source": "internal_routes"
+    },
+    {
+      "service": "cloud.cloudy-apps-communication-mcp.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:3103",
+      "alias_of": "cloudy-apps-communication-mcp.mesh.diegonmarcos.com",
+      "source": "internal_routes"
+    },
+    {
+      "service": "cloud.cloudy-apps-drive-mcp.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:3109",
+      "alias_of": "cloudy-apps-drive-mcp.mesh.diegonmarcos.com",
+      "source": "internal_routes"
+    },
+    {
+      "service": "cloud.cloudy-c3-api.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:8081",
+      "alias_of": "cloudy-c3-api.mesh.diegonmarcos.com",
+      "source": "internal_routes"
+    },
+    {
+      "service": "cloud.c3-infra-api.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:8081",
+      "alias_of": "c3-infra-api.mesh.diegonmarcos.com",
+      "source": "internal_routes"
+    },
+    {
+      "service": "cloud.cloudy-drive-git-proxy-api.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.4:8123",
+      "alias_of": "cloudy-drive-git-proxy-api.mesh.diegonmarcos.com",
       "source": "internal_routes"
     },
     {
@@ -2459,9 +2597,9 @@
       "source": "internal_routes"
     },
     {
-      "service": "cloud.crowdsec.mesh.diegonmarcos.com",
-      "upstream": "10.0.0.6:8088",
-      "alias_of": "crowdsec.mesh.diegonmarcos.com",
+      "service": "cloud.cloudy-ai-tokens-api.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:4184",
+      "alias_of": "cloudy-ai-tokens-api.mesh.diegonmarcos.com",
       "source": "internal_routes"
     },
     {
@@ -2471,21 +2609,27 @@
       "source": "internal_routes"
     },
     {
+      "service": "cloud.crowdsec.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:8088",
+      "alias_of": "crowdsec.mesh.diegonmarcos.com",
+      "source": "internal_routes"
+    },
+    {
       "service": "cloud.cloud-cgc-pub-mcp.mesh.diegonmarcos.com",
       "upstream": "10.0.0.6:3105",
       "alias_of": "cloud-cgc-pub-mcp.mesh.diegonmarcos.com",
       "source": "internal_routes"
     },
     {
-      "service": "cloud.kg-store.mesh.diegonmarcos.com",
+      "service": "cloud.cloud-me-cgc-pvt-graph-api.mesh.diegonmarcos.com",
       "upstream": "10.0.0.6:8001",
-      "alias_of": "kg-store.mesh.diegonmarcos.com",
+      "alias_of": "cloud-me-cgc-pvt-graph-api.mesh.diegonmarcos.com",
       "source": "internal_routes"
     },
     {
-      "service": "cloud.kg-store-pub.mesh.diegonmarcos.com",
+      "service": "cloud.cloudy-cgc-pub-graph-api.mesh.diegonmarcos.com",
       "upstream": "10.0.0.6:8002",
-      "alias_of": "kg-store-pub.mesh.diegonmarcos.com",
+      "alias_of": "cloudy-cgc-pub-graph-api.mesh.diegonmarcos.com",
       "source": "internal_routes"
     },
     {
@@ -2531,9 +2675,21 @@
       "source": "internal_routes"
     },
     {
+      "service": "cloud.cloudy-browser-scrapper-api.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:3020",
+      "alias_of": "cloudy-browser-scrapper-api.mesh.diegonmarcos.com",
+      "source": "internal_routes"
+    },
+    {
       "service": "cloud.scrappers-api.mesh.diegonmarcos.com",
       "upstream": "10.0.0.6:3020",
       "alias_of": "scrappers-api.mesh.diegonmarcos.com",
+      "source": "internal_routes"
+    },
+    {
+      "service": "cloud.capital-stack-finterm-api.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:8340",
+      "alias_of": "capital-stack-finterm-api.mesh.diegonmarcos.com",
       "source": "internal_routes"
     },
     {
@@ -2561,9 +2717,9 @@
       "source": "internal_routes"
     },
     {
-      "service": "cloud.news-gdelt.mesh.diegonmarcos.com",
+      "service": "cloud.capital-stack-news-gdelt-api.mesh.diegonmarcos.com",
       "upstream": "10.0.0.6:3019",
-      "alias_of": "news-gdelt.mesh.diegonmarcos.com",
+      "alias_of": "capital-stack-news-gdelt-api.mesh.diegonmarcos.com",
       "source": "internal_routes"
     },
     {
@@ -2693,6 +2849,12 @@
       "source": "all_app_urls"
     },
     {
+      "service": "c3-cloudy-ai-api.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:4185",
+      "scheme": "c3",
+      "source": "url_scheme"
+    },
+    {
       "service": "c3-cloud-drive-mcp.mesh.diegonmarcos.com",
       "upstream": "10.0.0.6:3109",
       "scheme": "c3",
@@ -2735,7 +2897,37 @@
       "source": "url_scheme"
     },
     {
-      "service": "c3-git-proxy-api.mesh.diegonmarcos.com",
+      "service": "c3-cloudy-all-api.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:8082",
+      "scheme": "c3",
+      "source": "url_scheme"
+    },
+    {
+      "service": "c3-cloudy-all-mcp.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:3112",
+      "scheme": "c3",
+      "source": "url_scheme"
+    },
+    {
+      "service": "c3-cloudy-apps-communication-mcp.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:3103",
+      "scheme": "c3",
+      "source": "url_scheme"
+    },
+    {
+      "service": "c3-cloudy-apps-drive-mcp.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:3109",
+      "scheme": "c3",
+      "source": "url_scheme"
+    },
+    {
+      "service": "c3-cloudy-c3-api.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:8081",
+      "scheme": "c3",
+      "source": "url_scheme"
+    },
+    {
+      "service": "c3-cloudy-drive-git-proxy-api.mesh.diegonmarcos.com",
       "upstream": "10.0.0.4:8123",
       "scheme": "c3",
       "source": "url_scheme"
@@ -2813,14 +3005,14 @@
       "source": "url_scheme"
     },
     {
-      "service": "c3-crowdsec.mesh.diegonmarcos.com",
-      "upstream": "10.0.0.6:8088",
+      "service": "c3-cloudy-ai-tokens-api.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:4184",
       "scheme": "c3",
       "source": "url_scheme"
     },
     {
-      "service": "c3-tokens-api.mesh.diegonmarcos.com",
-      "upstream": "10.0.0.6:4184",
+      "service": "c3-crowdsec.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:8088",
       "scheme": "c3",
       "source": "url_scheme"
     },
@@ -2831,13 +3023,13 @@
       "source": "url_scheme"
     },
     {
-      "service": "c3-kg-store.mesh.diegonmarcos.com",
+      "service": "c3-cloud-me-cgc-pvt-graph-api.mesh.diegonmarcos.com",
       "upstream": "10.0.0.6:8001",
       "scheme": "c3",
       "source": "url_scheme"
     },
     {
-      "service": "c3-kg-store-pub.mesh.diegonmarcos.com",
+      "service": "c3-cloudy-cgc-pub-graph-api.mesh.diegonmarcos.com",
       "upstream": "10.0.0.6:8002",
       "scheme": "c3",
       "source": "url_scheme"
@@ -2867,13 +3059,13 @@
       "source": "url_scheme"
     },
     {
-      "service": "c3-scrappers-api.mesh.diegonmarcos.com",
+      "service": "c3-cloudy-browser-scrapper-api.mesh.diegonmarcos.com",
       "upstream": "10.0.0.6:3020",
       "scheme": "c3",
       "source": "url_scheme"
     },
     {
-      "service": "c3-capital-stack-finterminal-api.mesh.diegonmarcos.com",
+      "service": "c3-capital-stack-finterm-api.mesh.diegonmarcos.com",
       "upstream": "10.0.0.6:8340",
       "scheme": "c3",
       "source": "url_scheme"
@@ -2897,7 +3089,7 @@
       "source": "url_scheme"
     },
     {
-      "service": "c3-news-gdelt.mesh.diegonmarcos.com",
+      "service": "c3-capital-stack-news-gdelt-api.mesh.diegonmarcos.com",
       "upstream": "10.0.0.6:3019",
       "scheme": "c3",
       "source": "url_scheme"
@@ -3052,19 +3244,14 @@
     },
     "container_hosts": [
       {
-        "host": "c3-infra-api.diegonmarcos.com",
-        "container": "c3-infra-api",
-        "private": "c3-infra-api.mesh.diegonmarcos.com"
+        "host": "c3-cloudy-ai-api.diegonmarcos.com",
+        "container": "cloudy-ai-api",
+        "private": "c3-cloudy-ai-api.mesh.diegonmarcos.com"
       },
       {
         "host": "c3-public-api.diegonmarcos.com",
         "container": "c3-public-api",
         "private": "c3-public-api.mesh.diegonmarcos.com"
-      },
-      {
-        "host": "c3-services-api.diegonmarcos.com",
-        "container": "c3-services-api",
-        "private": "c3-services-api.mesh.diegonmarcos.com"
       },
       {
         "host": "c3-cloud-drive-mcp.diegonmarcos.com",
@@ -3102,9 +3289,34 @@
         "private": "c3-cloud-superapp-mcp.mesh.diegonmarcos.com"
       },
       {
-        "host": "c3-git-proxy-api.diegonmarcos.com",
-        "container": "git-proxy-api",
-        "private": "c3-git-proxy-api.mesh.diegonmarcos.com"
+        "host": "c3-cloudy-all-api.diegonmarcos.com",
+        "container": "cloudy-all-api",
+        "private": "c3-cloudy-all-api.mesh.diegonmarcos.com"
+      },
+      {
+        "host": "c3-cloudy-all-mcp.diegonmarcos.com",
+        "container": "cloudy-all-mcp",
+        "private": "c3-cloudy-all-mcp.mesh.diegonmarcos.com"
+      },
+      {
+        "host": "c3-cloudy-apps-communication-mcp.diegonmarcos.com",
+        "container": "cloudy-apps-communication-mcp",
+        "private": "c3-cloudy-apps-communication-mcp.mesh.diegonmarcos.com"
+      },
+      {
+        "host": "c3-cloudy-apps-drive-mcp.diegonmarcos.com",
+        "container": "cloudy-apps-drive-mcp",
+        "private": "c3-cloudy-apps-drive-mcp.mesh.diegonmarcos.com"
+      },
+      {
+        "host": "c3-cloudy-c3-api.diegonmarcos.com",
+        "container": "cloudy-c3-api",
+        "private": "c3-cloudy-c3-api.mesh.diegonmarcos.com"
+      },
+      {
+        "host": "c3-cloudy-drive-git-proxy-api.diegonmarcos.com",
+        "container": "cloudy-drive-git-proxy-api",
+        "private": "c3-cloudy-drive-git-proxy-api.mesh.diegonmarcos.com"
       },
       {
         "host": "c3-google-personal-mcp.diegonmarcos.com",
@@ -3167,14 +3379,14 @@
         "private": "c3-authelia.mesh.diegonmarcos.com"
       },
       {
+        "host": "c3-cloudy-ai-tokens-api.diegonmarcos.com",
+        "container": "cloudy-ai-tokens-api",
+        "private": "c3-cloudy-ai-tokens-api.mesh.diegonmarcos.com"
+      },
+      {
         "host": "c3-crowdsec.diegonmarcos.com",
         "container": "crowdsec",
         "private": "c3-crowdsec.mesh.diegonmarcos.com"
-      },
-      {
-        "host": "c3-tokens-api.diegonmarcos.com",
-        "container": "tokens-api",
-        "private": "c3-tokens-api.mesh.diegonmarcos.com"
       },
       {
         "host": "c3-cloud-cgc-pub-mcp.diegonmarcos.com",
@@ -3182,14 +3394,14 @@
         "private": "c3-cloud-cgc-pub-mcp.mesh.diegonmarcos.com"
       },
       {
-        "host": "c3-kg-store.diegonmarcos.com",
-        "container": "kg-store",
-        "private": "c3-kg-store.mesh.diegonmarcos.com"
+        "host": "c3-cloud-me-cgc-pvt-graph-api.diegonmarcos.com",
+        "container": "cloud-me-cgc-pvt-graph-api",
+        "private": "c3-cloud-me-cgc-pvt-graph-api.mesh.diegonmarcos.com"
       },
       {
-        "host": "c3-kg-store-pub.diegonmarcos.com",
-        "container": "kg-store-pub",
-        "private": "c3-kg-store-pub.mesh.diegonmarcos.com"
+        "host": "c3-cloudy-cgc-pub-graph-api.diegonmarcos.com",
+        "container": "cloudy-cgc-pub-graph-api",
+        "private": "c3-cloudy-cgc-pub-graph-api.mesh.diegonmarcos.com"
       },
       {
         "host": "c3-mattermost.diegonmarcos.com",
@@ -3212,14 +3424,14 @@
         "private": "c3-matrix-element.mesh.diegonmarcos.com"
       },
       {
-        "host": "c3-scrappers-api.diegonmarcos.com",
-        "container": "scrappers-api",
-        "private": "c3-scrappers-api.mesh.diegonmarcos.com"
+        "host": "c3-cloudy-browser-scrapper-api.diegonmarcos.com",
+        "container": "cloudy-browser-scrapper-api",
+        "private": "c3-cloudy-browser-scrapper-api.mesh.diegonmarcos.com"
       },
       {
-        "host": "c3-capital-stack-finterminal-api.diegonmarcos.com",
-        "container": "capital-stack-finterminal-api",
-        "private": "c3-capital-stack-finterminal-api.mesh.diegonmarcos.com"
+        "host": "c3-capital-stack-finterm-api.diegonmarcos.com",
+        "container": "capital-stack-finterm-api",
+        "private": "c3-capital-stack-finterm-api.mesh.diegonmarcos.com"
       },
       {
         "host": "c3-capital-stack-finterminal-web.diegonmarcos.com",
@@ -3237,9 +3449,9 @@
         "private": "c3-playlist-syncer.mesh.diegonmarcos.com"
       },
       {
-        "host": "c3-news-gdelt.diegonmarcos.com",
-        "container": "news-gdelt",
-        "private": "c3-news-gdelt.mesh.diegonmarcos.com"
+        "host": "c3-capital-stack-news-gdelt-api.diegonmarcos.com",
+        "container": "capital-stack-news-gdelt-api",
+        "private": "c3-capital-stack-news-gdelt-api.mesh.diegonmarcos.com"
       },
       {
         "host": "c3-calendar-radicale.diegonmarcos.com",
@@ -3698,23 +3910,23 @@
   "all_app_urls": [
     {
       "kind": "redirect",
-      "service": "c3-infra-api.mesh.diegonmarcos.com",
-      "redirect_to": "https://c3-infra-api-http-8081.mesh.diegonmarcos.com",
-      "container": "c3-infra-api",
+      "service": "cloudy-ai-api.mesh.diegonmarcos.com",
+      "redirect_to": "https://cloudy-ai-api-http-4185.mesh.diegonmarcos.com",
+      "container": "cloudy-ai-api",
       "container_key": "app",
-      "svc": "c3-infra-api",
+      "svc": "cloudy-ai-api",
       "vm": "oci-A1-f_0"
     },
     {
       "kind": "canonical",
-      "service": "c3-infra-api-http-8081.mesh.diegonmarcos.com",
-      "container": "c3-infra-api",
+      "service": "cloudy-ai-api-http-4185.mesh.diegonmarcos.com",
+      "container": "cloudy-ai-api",
       "container_key": "app",
-      "svc": "c3-infra-api",
+      "svc": "cloudy-ai-api",
       "vm": "oci-A1-f_0",
-      "port": 8081,
+      "port": 4185,
       "protocol": "http",
-      "upstream": "10.0.0.6:8081",
+      "upstream": "10.0.0.6:4185",
       "source": "containers.app.port"
     },
     {
@@ -3736,27 +3948,6 @@
       "port": 8087,
       "protocol": "http",
       "upstream": "10.0.0.4:8087",
-      "source": "containers.app.port"
-    },
-    {
-      "kind": "redirect",
-      "service": "c3-services-api.mesh.diegonmarcos.com",
-      "redirect_to": "https://c3-services-api-http-8082.mesh.diegonmarcos.com",
-      "container": "c3-services-api",
-      "container_key": "app",
-      "svc": "c3-services-api",
-      "vm": "oci-A1-f_0"
-    },
-    {
-      "kind": "canonical",
-      "service": "c3-services-api-http-8082.mesh.diegonmarcos.com",
-      "container": "c3-services-api",
-      "container_key": "app",
-      "svc": "c3-services-api",
-      "vm": "oci-A1-f_0",
-      "port": 8082,
-      "protocol": "http",
-      "upstream": "10.0.0.6:8082",
       "source": "containers.app.port"
     },
     {
@@ -3908,19 +4099,124 @@
     },
     {
       "kind": "redirect",
-      "service": "git-proxy-api.mesh.diegonmarcos.com",
-      "redirect_to": "https://git-proxy-api-http-8123.mesh.diegonmarcos.com",
-      "container": "git-proxy-api",
+      "service": "cloudy-all-api.mesh.diegonmarcos.com",
+      "redirect_to": "https://cloudy-all-api-http-8082.mesh.diegonmarcos.com",
+      "container": "cloudy-all-api",
       "container_key": "app",
-      "svc": "git-proxy-api",
+      "svc": "cloudy-all-api",
+      "vm": "oci-A1-f_0"
+    },
+    {
+      "kind": "canonical",
+      "service": "cloudy-all-api-http-8082.mesh.diegonmarcos.com",
+      "container": "cloudy-all-api",
+      "container_key": "app",
+      "svc": "cloudy-all-api",
+      "vm": "oci-A1-f_0",
+      "port": 8082,
+      "protocol": "http",
+      "upstream": "10.0.0.6:8082",
+      "source": "containers.app.port"
+    },
+    {
+      "kind": "redirect",
+      "service": "cloudy-all-mcp.mesh.diegonmarcos.com",
+      "redirect_to": "https://cloudy-all-mcp-http-3112.mesh.diegonmarcos.com",
+      "container": "cloudy-all-mcp",
+      "container_key": "app",
+      "svc": "cloudy-all-mcp",
+      "vm": "oci-A1-f_0"
+    },
+    {
+      "kind": "canonical",
+      "service": "cloudy-all-mcp-http-3112.mesh.diegonmarcos.com",
+      "container": "cloudy-all-mcp",
+      "container_key": "app",
+      "svc": "cloudy-all-mcp",
+      "vm": "oci-A1-f_0",
+      "port": 3112,
+      "protocol": "http",
+      "upstream": "10.0.0.6:3112",
+      "source": "containers.app.port"
+    },
+    {
+      "kind": "redirect",
+      "service": "cloudy-apps-communication-mcp.mesh.diegonmarcos.com",
+      "redirect_to": "https://cloudy-apps-communication-mcp-http-3103.mesh.diegonmarcos.com",
+      "container": "cloudy-apps-communication-mcp",
+      "container_key": "app",
+      "svc": "cloudy-apps-communication-mcp",
+      "vm": "oci-A1-f_0"
+    },
+    {
+      "kind": "canonical",
+      "service": "cloudy-apps-communication-mcp-http-3103.mesh.diegonmarcos.com",
+      "container": "cloudy-apps-communication-mcp",
+      "container_key": "app",
+      "svc": "cloudy-apps-communication-mcp",
+      "vm": "oci-A1-f_0",
+      "port": 3103,
+      "protocol": "http",
+      "upstream": "10.0.0.6:3103",
+      "source": "containers.app.port"
+    },
+    {
+      "kind": "redirect",
+      "service": "cloudy-apps-drive-mcp.mesh.diegonmarcos.com",
+      "redirect_to": "https://cloudy-apps-drive-mcp-http-3109.mesh.diegonmarcos.com",
+      "container": "cloudy-apps-drive-mcp",
+      "container_key": "app",
+      "svc": "cloudy-apps-drive-mcp",
+      "vm": "oci-A1-f_0"
+    },
+    {
+      "kind": "canonical",
+      "service": "cloudy-apps-drive-mcp-http-3109.mesh.diegonmarcos.com",
+      "container": "cloudy-apps-drive-mcp",
+      "container_key": "app",
+      "svc": "cloudy-apps-drive-mcp",
+      "vm": "oci-A1-f_0",
+      "port": 3109,
+      "protocol": "http",
+      "upstream": "10.0.0.6:3109",
+      "source": "containers.app.port"
+    },
+    {
+      "kind": "redirect",
+      "service": "cloudy-c3-api.mesh.diegonmarcos.com",
+      "redirect_to": "https://cloudy-c3-api-http-8081.mesh.diegonmarcos.com",
+      "container": "cloudy-c3-api",
+      "container_key": "app",
+      "svc": "cloudy-c3-api",
+      "vm": "oci-A1-f_0"
+    },
+    {
+      "kind": "canonical",
+      "service": "cloudy-c3-api-http-8081.mesh.diegonmarcos.com",
+      "container": "cloudy-c3-api",
+      "container_key": "app",
+      "svc": "cloudy-c3-api",
+      "vm": "oci-A1-f_0",
+      "port": 8081,
+      "protocol": "http",
+      "upstream": "10.0.0.6:8081",
+      "source": "containers.app.port"
+    },
+    {
+      "kind": "redirect",
+      "service": "cloudy-drive-git-proxy-api.mesh.diegonmarcos.com",
+      "redirect_to": "https://cloudy-drive-git-proxy-api-http-8123.mesh.diegonmarcos.com",
+      "container": "cloudy-drive-git-proxy-api",
+      "container_key": "app",
+      "svc": "cloudy-drive-git-proxy-api",
       "vm": "oci-E2-f_1"
     },
     {
       "kind": "canonical",
-      "service": "git-proxy-api-http-8123.mesh.diegonmarcos.com",
-      "container": "git-proxy-api",
+      "service": "cloudy-drive-git-proxy-api-http-8123.mesh.diegonmarcos.com",
+      "container": "cloudy-drive-git-proxy-api",
       "container_key": "app",
-      "svc": "git-proxy-api",
+      "svc": "cloudy-drive-git-proxy-api",
       "vm": "oci-E2-f_1",
       "port": 8123,
       "protocol": "http",
@@ -4244,6 +4540,27 @@
     },
     {
       "kind": "redirect",
+      "service": "cloudy-ai-tokens-api.mesh.diegonmarcos.com",
+      "redirect_to": "https://cloudy-ai-tokens-api-http-4184.mesh.diegonmarcos.com",
+      "container": "cloudy-ai-tokens-api",
+      "container_key": "app",
+      "svc": "cloudy-ai-tokens-api",
+      "vm": "oci-A1-f_0"
+    },
+    {
+      "kind": "canonical",
+      "service": "cloudy-ai-tokens-api-http-4184.mesh.diegonmarcos.com",
+      "container": "cloudy-ai-tokens-api",
+      "container_key": "app",
+      "svc": "cloudy-ai-tokens-api",
+      "vm": "oci-A1-f_0",
+      "port": 4184,
+      "protocol": "http",
+      "upstream": "10.0.0.6:4184",
+      "source": "containers.app.port"
+    },
+    {
+      "kind": "redirect",
       "service": "crowdsec.mesh.diegonmarcos.com",
       "redirect_to": "https://crowdsec-http-8088.mesh.diegonmarcos.com",
       "container": "crowdsec",
@@ -4261,27 +4578,6 @@
       "port": 8088,
       "protocol": "http",
       "upstream": "10.0.0.6:8088",
-      "source": "containers.app.port"
-    },
-    {
-      "kind": "redirect",
-      "service": "tokens-api.mesh.diegonmarcos.com",
-      "redirect_to": "https://tokens-api-http-4184.mesh.diegonmarcos.com",
-      "container": "tokens-api",
-      "container_key": "app",
-      "svc": "tokens-api",
-      "vm": "oci-A1-f_0"
-    },
-    {
-      "kind": "canonical",
-      "service": "tokens-api-http-4184.mesh.diegonmarcos.com",
-      "container": "tokens-api",
-      "container_key": "app",
-      "svc": "tokens-api",
-      "vm": "oci-A1-f_0",
-      "port": 4184,
-      "protocol": "http",
-      "upstream": "10.0.0.6:4184",
       "source": "containers.app.port"
     },
     {
@@ -4307,19 +4603,19 @@
     },
     {
       "kind": "redirect",
-      "service": "kg-store.mesh.diegonmarcos.com",
-      "redirect_to": "https://kg-store-http-8001.mesh.diegonmarcos.com",
-      "container": "kg-store",
+      "service": "cloud-me-cgc-pvt-graph-api.mesh.diegonmarcos.com",
+      "redirect_to": "https://cloud-me-cgc-pvt-graph-api-http-8001.mesh.diegonmarcos.com",
+      "container": "cloud-me-cgc-pvt-graph-api",
       "container_key": "app",
-      "svc": "kg-store",
+      "svc": "cloud-me-cgc-pvt-graph-api",
       "vm": "oci-A1-f_0"
     },
     {
       "kind": "canonical",
-      "service": "kg-store-http-8001.mesh.diegonmarcos.com",
-      "container": "kg-store",
+      "service": "cloud-me-cgc-pvt-graph-api-http-8001.mesh.diegonmarcos.com",
+      "container": "cloud-me-cgc-pvt-graph-api",
       "container_key": "app",
-      "svc": "kg-store",
+      "svc": "cloud-me-cgc-pvt-graph-api",
       "vm": "oci-A1-f_0",
       "port": 8001,
       "protocol": "http",
@@ -4328,19 +4624,19 @@
     },
     {
       "kind": "redirect",
-      "service": "kg-store-pub.mesh.diegonmarcos.com",
-      "redirect_to": "https://kg-store-pub-http-8002.mesh.diegonmarcos.com",
-      "container": "kg-store-pub",
+      "service": "cloudy-cgc-pub-graph-api.mesh.diegonmarcos.com",
+      "redirect_to": "https://cloudy-cgc-pub-graph-api-http-8002.mesh.diegonmarcos.com",
+      "container": "cloudy-cgc-pub-graph-api",
       "container_key": "app",
-      "svc": "kg-store-pub",
+      "svc": "cloudy-cgc-pub-graph-api",
       "vm": "oci-A1-f_0"
     },
     {
       "kind": "canonical",
-      "service": "kg-store-pub-http-8002.mesh.diegonmarcos.com",
-      "container": "kg-store-pub",
+      "service": "cloudy-cgc-pub-graph-api-http-8002.mesh.diegonmarcos.com",
+      "container": "cloudy-cgc-pub-graph-api",
       "container_key": "app",
-      "svc": "kg-store-pub",
+      "svc": "cloudy-cgc-pub-graph-api",
       "vm": "oci-A1-f_0",
       "port": 8002,
       "protocol": "http",
@@ -4531,19 +4827,19 @@
     },
     {
       "kind": "redirect",
-      "service": "scrappers-api.mesh.diegonmarcos.com",
-      "redirect_to": "https://scrappers-api-http-3020.mesh.diegonmarcos.com",
-      "container": "scrappers-api",
+      "service": "cloudy-browser-scrapper-api.mesh.diegonmarcos.com",
+      "redirect_to": "https://cloudy-browser-scrapper-api-http-3020.mesh.diegonmarcos.com",
+      "container": "cloudy-browser-scrapper-api",
       "container_key": "app",
-      "svc": "scrappers-api",
+      "svc": "cloudy-browser-scrapper-api",
       "vm": "oci-A1-f_0"
     },
     {
       "kind": "canonical",
-      "service": "scrappers-api-http-3020.mesh.diegonmarcos.com",
-      "container": "scrappers-api",
+      "service": "cloudy-browser-scrapper-api-http-3020.mesh.diegonmarcos.com",
+      "container": "cloudy-browser-scrapper-api",
       "container_key": "app",
-      "svc": "scrappers-api",
+      "svc": "cloudy-browser-scrapper-api",
       "vm": "oci-A1-f_0",
       "port": 3020,
       "protocol": "http",
@@ -4552,19 +4848,19 @@
     },
     {
       "kind": "redirect",
-      "service": "capital-stack-finterminal-api.mesh.diegonmarcos.com",
-      "redirect_to": "https://capital-stack-finterminal-api-http-8340.mesh.diegonmarcos.com",
-      "container": "capital-stack-finterminal-api",
+      "service": "capital-stack-finterm-api.mesh.diegonmarcos.com",
+      "redirect_to": "https://capital-stack-finterm-api-http-8340.mesh.diegonmarcos.com",
+      "container": "capital-stack-finterm-api",
       "container_key": "app",
-      "svc": "capital-stack-finterminal-api",
+      "svc": "capital-stack-finterm-api",
       "vm": "oci-A1-f_0"
     },
     {
       "kind": "canonical",
-      "service": "capital-stack-finterminal-api-http-8340.mesh.diegonmarcos.com",
-      "container": "capital-stack-finterminal-api",
+      "service": "capital-stack-finterm-api-http-8340.mesh.diegonmarcos.com",
+      "container": "capital-stack-finterm-api",
       "container_key": "app",
-      "svc": "capital-stack-finterminal-api",
+      "svc": "capital-stack-finterm-api",
       "vm": "oci-A1-f_0",
       "port": 8340,
       "protocol": "http",
@@ -4636,19 +4932,19 @@
     },
     {
       "kind": "redirect",
-      "service": "news-gdelt.mesh.diegonmarcos.com",
-      "redirect_to": "https://news-gdelt-http-3019.mesh.diegonmarcos.com",
-      "container": "news-gdelt",
+      "service": "capital-stack-news-gdelt-api.mesh.diegonmarcos.com",
+      "redirect_to": "https://capital-stack-news-gdelt-api-http-3019.mesh.diegonmarcos.com",
+      "container": "capital-stack-news-gdelt-api",
       "container_key": "app",
-      "svc": "news-gdelt",
+      "svc": "capital-stack-news-gdelt-api",
       "vm": "oci-A1-f_0"
     },
     {
       "kind": "canonical",
-      "service": "news-gdelt-http-3019.mesh.diegonmarcos.com",
-      "container": "news-gdelt",
+      "service": "capital-stack-news-gdelt-api-http-3019.mesh.diegonmarcos.com",
+      "container": "capital-stack-news-gdelt-api",
       "container_key": "app",
-      "svc": "news-gdelt",
+      "svc": "capital-stack-news-gdelt-api",
       "vm": "oci-A1-f_0",
       "port": 3019,
       "protocol": "http",
@@ -4957,10 +5253,10 @@
     },
     {
       "kind": "container",
-      "service": "kg-store-surrealdb-8001.db",
-      "container": "kg-store",
+      "service": "cloud-me-cgc-pvt-graph-api-surrealdb-8001.db",
+      "container": "cloud-me-cgc-pvt-graph-api",
       "container_key": "app",
-      "svc": "kg-store",
+      "svc": "cloud-me-cgc-pvt-graph-api",
       "vm": "oci-A1-f_0",
       "engine": "surrealdb",
       "port": 8001,
@@ -4968,10 +5264,10 @@
     },
     {
       "kind": "container",
-      "service": "kg-store-pub-surrealdb-8002.db",
-      "container": "kg-store-pub",
+      "service": "cloudy-cgc-pub-graph-api-surrealdb-8002.db",
+      "container": "cloudy-cgc-pub-graph-api",
       "container_key": "app",
-      "svc": "kg-store-pub",
+      "svc": "cloudy-cgc-pub-graph-api",
       "vm": "oci-A1-f_0",
       "engine": "surrealdb",
       "port": 8002,
@@ -5034,6 +5330,16 @@
     }
   ],
   "public_A_mcp": [
+    {
+      "host": "mcp.diegonmarcos.com",
+      "path": "/ai",
+      "upstream": "10.0.0.6:4185",
+      "kind": "reverse_proxy",
+      "tls": "public",
+      "zone": "com",
+      "service": null,
+      "notes": null
+    },
     {
       "host": "mcp.diegonmarcos.com",
       "path": "/cloud-drive-mcp",
@@ -5106,6 +5412,36 @@
     },
     {
       "host": "mcp.diegonmarcos.com",
+      "path": "/cloudy-all-mcp",
+      "upstream": "10.0.0.6:3112",
+      "kind": "reverse_proxy",
+      "tls": "public",
+      "zone": "com",
+      "service": null,
+      "notes": null
+    },
+    {
+      "host": "mcp.diegonmarcos.com",
+      "path": "/cloudy-apps-communication-mcp",
+      "upstream": "10.0.0.6:3103",
+      "kind": "reverse_proxy",
+      "tls": "public",
+      "zone": "com",
+      "service": null,
+      "notes": null
+    },
+    {
+      "host": "mcp.diegonmarcos.com",
+      "path": "/cloudy-apps-drive-mcp",
+      "upstream": "10.0.0.6:3109",
+      "kind": "reverse_proxy",
+      "tls": "public",
+      "zone": "com",
+      "service": null,
+      "notes": null
+    },
+    {
+      "host": "mcp.diegonmarcos.com",
       "path": "/g-personal",
       "upstream": "10.0.0.6:3106",
       "kind": "reverse_proxy",
@@ -5148,16 +5484,6 @@
   "public_B_apis": [
     {
       "host": "api.diegonmarcos.com",
-      "path": "/c3-infra-api",
-      "upstream": "10.0.0.6:8081",
-      "kind": "reverse_proxy",
-      "tls": "public",
-      "zone": "com",
-      "service": null,
-      "notes": "C3 REST API — Cloud Control Center Fastify API"
-    },
-    {
-      "host": "api.diegonmarcos.com",
       "path": "/pub",
       "upstream": "10.0.0.4:8087",
       "kind": "reverse_proxy",
@@ -5168,7 +5494,7 @@
     },
     {
       "host": "api.diegonmarcos.com",
-      "path": "/c3-services-api",
+      "path": "/cloudy-all-api",
       "upstream": "10.0.0.6:8082",
       "kind": "reverse_proxy",
       "tls": "public",
@@ -5178,7 +5504,17 @@
     },
     {
       "host": "api.diegonmarcos.com",
-      "path": "/git",
+      "path": "/cloudy-c3-api",
+      "upstream": "10.0.0.6:8081",
+      "kind": "reverse_proxy",
+      "tls": "public",
+      "zone": "com",
+      "service": null,
+      "notes": "C3 REST API — Cloud Control Center Fastify API"
+    },
+    {
+      "host": "api.diegonmarcos.com",
+      "path": "/cloudy-drive-git-proxy-api",
       "upstream": "10.0.0.4:8123",
       "kind": "reverse_proxy",
       "tls": "public",
@@ -5188,7 +5524,7 @@
     },
     {
       "host": "api.diegonmarcos.com",
-      "path": "/scrappers",
+      "path": "/cloudy-browser-scrapper-api",
       "upstream": "10.0.0.6:3020",
       "kind": "reverse_proxy",
       "tls": "public",
@@ -5198,7 +5534,7 @@
     },
     {
       "host": "api.diegonmarcos.com",
-      "path": "/capital-stack-finterminal-api",
+      "path": "/capital-stack-finterm-api",
       "upstream": "10.0.0.6:8340",
       "kind": "reverse_proxy",
       "tls": "public",
@@ -5471,14 +5807,14 @@
       "notes": "Bitwarden password manager"
     },
     {
-      "host": "c3-infra-api.diegonmarcos.com",
+      "host": "c3-cloudy-ai-api.diegonmarcos.com",
       "path": null,
-      "upstream": "10.0.0.6:8081",
+      "upstream": "10.0.0.6:4185",
       "kind": "reverse_proxy",
       "tls": "public",
       "zone": "com",
       "service": null,
-      "notes": "c3 container c3-infra-api (mesh-only; c3-infra-api-http-8081.mesh.diegonmarcos.com)"
+      "notes": "c3 container cloudy-ai-api (mesh-only; cloudy-ai-api-http-4185.mesh.diegonmarcos.com)"
     },
     {
       "host": "c3-public-api.diegonmarcos.com",
@@ -5489,16 +5825,6 @@
       "zone": "com",
       "service": null,
       "notes": "c3 container c3-public-api (mesh-only; c3-public-api-http-8087.mesh.diegonmarcos.com)"
-    },
-    {
-      "host": "c3-services-api.diegonmarcos.com",
-      "path": null,
-      "upstream": "10.0.0.6:8082",
-      "kind": "reverse_proxy",
-      "tls": "public",
-      "zone": "com",
-      "service": null,
-      "notes": "c3 container c3-services-api (mesh-only; c3-services-api-http-8082.mesh.diegonmarcos.com)"
     },
     {
       "host": "c3-cloud-drive-mcp.diegonmarcos.com",
@@ -5571,14 +5897,64 @@
       "notes": "c3 container cloud-superapp-mcp (mesh-only; cloud-superapp-mcp-http-3110.mesh.diegonmarcos.com)"
     },
     {
-      "host": "c3-git-proxy-api.diegonmarcos.com",
+      "host": "c3-cloudy-all-api.diegonmarcos.com",
+      "path": null,
+      "upstream": "10.0.0.6:8082",
+      "kind": "reverse_proxy",
+      "tls": "public",
+      "zone": "com",
+      "service": null,
+      "notes": "c3 container cloudy-all-api (mesh-only; cloudy-all-api-http-8082.mesh.diegonmarcos.com)"
+    },
+    {
+      "host": "c3-cloudy-all-mcp.diegonmarcos.com",
+      "path": null,
+      "upstream": "10.0.0.6:3112",
+      "kind": "reverse_proxy",
+      "tls": "public",
+      "zone": "com",
+      "service": null,
+      "notes": "c3 container cloudy-all-mcp (mesh-only; cloudy-all-mcp-http-3112.mesh.diegonmarcos.com)"
+    },
+    {
+      "host": "c3-cloudy-apps-communication-mcp.diegonmarcos.com",
+      "path": null,
+      "upstream": "10.0.0.6:3103",
+      "kind": "reverse_proxy",
+      "tls": "public",
+      "zone": "com",
+      "service": null,
+      "notes": "c3 container cloudy-apps-communication-mcp (mesh-only; cloudy-apps-communication-mcp-http-3103.mesh.diegonmarcos.com)"
+    },
+    {
+      "host": "c3-cloudy-apps-drive-mcp.diegonmarcos.com",
+      "path": null,
+      "upstream": "10.0.0.6:3109",
+      "kind": "reverse_proxy",
+      "tls": "public",
+      "zone": "com",
+      "service": null,
+      "notes": "c3 container cloudy-apps-drive-mcp (mesh-only; cloudy-apps-drive-mcp-http-3109.mesh.diegonmarcos.com)"
+    },
+    {
+      "host": "c3-cloudy-c3-api.diegonmarcos.com",
+      "path": null,
+      "upstream": "10.0.0.6:8081",
+      "kind": "reverse_proxy",
+      "tls": "public",
+      "zone": "com",
+      "service": null,
+      "notes": "c3 container cloudy-c3-api (mesh-only; cloudy-c3-api-http-8081.mesh.diegonmarcos.com)"
+    },
+    {
+      "host": "c3-cloudy-drive-git-proxy-api.diegonmarcos.com",
       "path": null,
       "upstream": "10.0.0.4:8123",
       "kind": "reverse_proxy",
       "tls": "public",
       "zone": "com",
       "service": null,
-      "notes": "c3 container git-proxy-api (mesh-only; git-proxy-api-http-8123.mesh.diegonmarcos.com)"
+      "notes": "c3 container cloudy-drive-git-proxy-api (mesh-only; cloudy-drive-git-proxy-api-http-8123.mesh.diegonmarcos.com)"
     },
     {
       "host": "c3-google-personal-mcp.diegonmarcos.com",
@@ -5701,6 +6077,16 @@
       "notes": "c3 container authelia (mesh-only; authelia-http-9091.mesh.diegonmarcos.com)"
     },
     {
+      "host": "c3-cloudy-ai-tokens-api.diegonmarcos.com",
+      "path": null,
+      "upstream": "10.0.0.6:4184",
+      "kind": "reverse_proxy",
+      "tls": "public",
+      "zone": "com",
+      "service": null,
+      "notes": "c3 container cloudy-ai-tokens-api (mesh-only; cloudy-ai-tokens-api-http-4184.mesh.diegonmarcos.com)"
+    },
+    {
       "host": "c3-crowdsec.diegonmarcos.com",
       "path": null,
       "upstream": "10.0.0.6:8088",
@@ -5709,16 +6095,6 @@
       "zone": "com",
       "service": null,
       "notes": "c3 container crowdsec (mesh-only; crowdsec-http-8088.mesh.diegonmarcos.com)"
-    },
-    {
-      "host": "c3-tokens-api.diegonmarcos.com",
-      "path": null,
-      "upstream": "10.0.0.6:4184",
-      "kind": "reverse_proxy",
-      "tls": "public",
-      "zone": "com",
-      "service": null,
-      "notes": "c3 container tokens-api (mesh-only; tokens-api-http-4184.mesh.diegonmarcos.com)"
     },
     {
       "host": "c3-cloud-cgc-pub-mcp.diegonmarcos.com",
@@ -5731,24 +6107,24 @@
       "notes": "c3 container cloud-cgc-pub-mcp (mesh-only; cloud-cgc-pub-mcp-http-3105.mesh.diegonmarcos.com)"
     },
     {
-      "host": "c3-kg-store.diegonmarcos.com",
+      "host": "c3-cloud-me-cgc-pvt-graph-api.diegonmarcos.com",
       "path": null,
       "upstream": "10.0.0.6:8001",
       "kind": "reverse_proxy",
       "tls": "public",
       "zone": "com",
       "service": null,
-      "notes": "c3 container kg-store (mesh-only; kg-store-http-8001.mesh.diegonmarcos.com)"
+      "notes": "c3 container cloud-me-cgc-pvt-graph-api (mesh-only; cloud-me-cgc-pvt-graph-api-http-8001.mesh.diegonmarcos.com)"
     },
     {
-      "host": "c3-kg-store-pub.diegonmarcos.com",
+      "host": "c3-cloudy-cgc-pub-graph-api.diegonmarcos.com",
       "path": null,
       "upstream": "10.0.0.6:8002",
       "kind": "reverse_proxy",
       "tls": "public",
       "zone": "com",
       "service": null,
-      "notes": "c3 container kg-store-pub (mesh-only; kg-store-pub-http-8002.mesh.diegonmarcos.com)"
+      "notes": "c3 container cloudy-cgc-pub-graph-api (mesh-only; cloudy-cgc-pub-graph-api-http-8002.mesh.diegonmarcos.com)"
     },
     {
       "host": "c3-mattermost.diegonmarcos.com",
@@ -5791,24 +6167,24 @@
       "notes": "c3 container matrix-element (mesh-only; matrix-element-http-8083.mesh.diegonmarcos.com)"
     },
     {
-      "host": "c3-scrappers-api.diegonmarcos.com",
+      "host": "c3-cloudy-browser-scrapper-api.diegonmarcos.com",
       "path": null,
       "upstream": "10.0.0.6:3020",
       "kind": "reverse_proxy",
       "tls": "public",
       "zone": "com",
       "service": null,
-      "notes": "c3 container scrappers-api (mesh-only; scrappers-api-http-3020.mesh.diegonmarcos.com)"
+      "notes": "c3 container cloudy-browser-scrapper-api (mesh-only; cloudy-browser-scrapper-api-http-3020.mesh.diegonmarcos.com)"
     },
     {
-      "host": "c3-capital-stack-finterminal-api.diegonmarcos.com",
+      "host": "c3-capital-stack-finterm-api.diegonmarcos.com",
       "path": null,
       "upstream": "10.0.0.6:8340",
       "kind": "reverse_proxy",
       "tls": "public",
       "zone": "com",
       "service": null,
-      "notes": "c3 container capital-stack-finterminal-api (mesh-only; capital-stack-finterminal-api-http-8340.mesh.diegonmarcos.com)"
+      "notes": "c3 container capital-stack-finterm-api (mesh-only; capital-stack-finterm-api-http-8340.mesh.diegonmarcos.com)"
     },
     {
       "host": "c3-capital-stack-finterminal-web.diegonmarcos.com",
@@ -5841,14 +6217,14 @@
       "notes": "c3 container playlist-syncer (mesh-only; playlist-syncer-http-8090.mesh.diegonmarcos.com)"
     },
     {
-      "host": "c3-news-gdelt.diegonmarcos.com",
+      "host": "c3-capital-stack-news-gdelt-api.diegonmarcos.com",
       "path": null,
       "upstream": "10.0.0.6:3019",
       "kind": "reverse_proxy",
       "tls": "public",
       "zone": "com",
       "service": null,
-      "notes": "c3 container news-gdelt (mesh-only; news-gdelt-http-3019.mesh.diegonmarcos.com)"
+      "notes": "c3 container capital-stack-news-gdelt-api (mesh-only; capital-stack-news-gdelt-api-http-3019.mesh.diegonmarcos.com)"
     },
     {
       "host": "c3-calendar-radicale.diegonmarcos.com",
@@ -6311,16 +6687,6 @@
       "notes": "Unified Cloud Documentation Portal"
     },
     {
-      "host": "cloud.diegonmarcos.com",
-      "path": "/probe",
-      "upstream": "10.0.0.6:8082",
-      "kind": "reverse_proxy",
-      "tls": "public",
-      "zone": "com",
-      "service": null,
-      "notes": "c3-services-api proxy (extra_path declared by infra-obs_cloud-spec)"
-    },
-    {
       "host": "analytics.diegonmarcos.com",
       "path": "/matomo",
       "upstream": "10.0.0.6:8080",
@@ -6423,9 +6789,9 @@
   ],
   "private_A0_app_short": [
     {
-      "host": "c3-infra-api.mesh.diegonmarcos.com",
+      "host": "cloudy-ai-api.mesh.diegonmarcos.com",
       "path": null,
-      "upstream": "10.0.0.6:8081",
+      "upstream": "10.0.0.6:4185",
       "kind": "reverse_proxy",
       "tls": "internal",
       "zone": "com",
@@ -6436,16 +6802,6 @@
       "host": "c3-public-api.mesh.diegonmarcos.com",
       "path": null,
       "upstream": "10.0.0.4:8087",
-      "kind": "reverse_proxy",
-      "tls": "internal",
-      "zone": "com",
-      "service": null,
-      "notes": null
-    },
-    {
-      "host": "c3-services-api.mesh.diegonmarcos.com",
-      "path": null,
-      "upstream": "10.0.0.6:8082",
       "kind": "reverse_proxy",
       "tls": "internal",
       "zone": "com",
@@ -6576,6 +6932,86 @@
       "host": "cloud-superapp-mcp.mesh.diegonmarcos.com",
       "path": null,
       "upstream": "10.0.0.6:3110",
+      "kind": "reverse_proxy",
+      "tls": "internal",
+      "zone": "com",
+      "service": null,
+      "notes": null
+    },
+    {
+      "host": "cloudy-all-api.mesh.diegonmarcos.com",
+      "path": null,
+      "upstream": "10.0.0.6:8082",
+      "kind": "reverse_proxy",
+      "tls": "internal",
+      "zone": "com",
+      "service": null,
+      "notes": null
+    },
+    {
+      "host": "c3-services-api.mesh.diegonmarcos.com",
+      "path": null,
+      "upstream": "10.0.0.6:8082",
+      "kind": "reverse_proxy",
+      "tls": "internal",
+      "zone": "com",
+      "service": null,
+      "notes": null
+    },
+    {
+      "host": "cloudy-all-mcp.mesh.diegonmarcos.com",
+      "path": null,
+      "upstream": "10.0.0.6:3112",
+      "kind": "reverse_proxy",
+      "tls": "internal",
+      "zone": "com",
+      "service": null,
+      "notes": null
+    },
+    {
+      "host": "cloudy-apps-communication-mcp.mesh.diegonmarcos.com",
+      "path": null,
+      "upstream": "10.0.0.6:3103",
+      "kind": "reverse_proxy",
+      "tls": "internal",
+      "zone": "com",
+      "service": null,
+      "notes": null
+    },
+    {
+      "host": "cloudy-apps-drive-mcp.mesh.diegonmarcos.com",
+      "path": null,
+      "upstream": "10.0.0.6:3109",
+      "kind": "reverse_proxy",
+      "tls": "internal",
+      "zone": "com",
+      "service": null,
+      "notes": null
+    },
+    {
+      "host": "cloudy-c3-api.mesh.diegonmarcos.com",
+      "path": null,
+      "upstream": "10.0.0.6:8081",
+      "kind": "reverse_proxy",
+      "tls": "internal",
+      "zone": "com",
+      "service": null,
+      "notes": null
+    },
+    {
+      "host": "c3-infra-api.mesh.diegonmarcos.com",
+      "path": null,
+      "upstream": "10.0.0.6:8081",
+      "kind": "reverse_proxy",
+      "tls": "internal",
+      "zone": "com",
+      "service": null,
+      "notes": null
+    },
+    {
+      "host": "cloudy-drive-git-proxy-api.mesh.diegonmarcos.com",
+      "path": null,
+      "upstream": "10.0.0.4:8123",
       "kind": "reverse_proxy",
       "tls": "internal",
       "zone": "com",
@@ -6773,9 +7209,9 @@
       "notes": null
     },
     {
-      "host": "crowdsec.mesh.diegonmarcos.com",
+      "host": "cloudy-ai-tokens-api.mesh.diegonmarcos.com",
       "path": null,
-      "upstream": "10.0.0.6:8088",
+      "upstream": "10.0.0.6:4184",
       "kind": "reverse_proxy",
       "tls": "internal",
       "zone": "com",
@@ -6793,6 +7229,16 @@
       "notes": null
     },
     {
+      "host": "crowdsec.mesh.diegonmarcos.com",
+      "path": null,
+      "upstream": "10.0.0.6:8088",
+      "kind": "reverse_proxy",
+      "tls": "internal",
+      "zone": "com",
+      "service": null,
+      "notes": null
+    },
+    {
       "host": "cloud-cgc-pub-mcp.mesh.diegonmarcos.com",
       "path": null,
       "upstream": "10.0.0.6:3105",
@@ -6803,7 +7249,7 @@
       "notes": null
     },
     {
-      "host": "kg-store.mesh.diegonmarcos.com",
+      "host": "cloud-me-cgc-pvt-graph-api.mesh.diegonmarcos.com",
       "path": null,
       "upstream": "10.0.0.6:8001",
       "kind": "reverse_proxy",
@@ -6813,7 +7259,7 @@
       "notes": null
     },
     {
-      "host": "kg-store-pub.mesh.diegonmarcos.com",
+      "host": "cloudy-cgc-pub-graph-api.mesh.diegonmarcos.com",
       "path": null,
       "upstream": "10.0.0.6:8002",
       "kind": "reverse_proxy",
@@ -6893,9 +7339,29 @@
       "notes": null
     },
     {
+      "host": "cloudy-browser-scrapper-api.mesh.diegonmarcos.com",
+      "path": null,
+      "upstream": "10.0.0.6:3020",
+      "kind": "reverse_proxy",
+      "tls": "internal",
+      "zone": "com",
+      "service": null,
+      "notes": null
+    },
+    {
       "host": "scrappers-api.mesh.diegonmarcos.com",
       "path": null,
       "upstream": "10.0.0.6:3020",
+      "kind": "reverse_proxy",
+      "tls": "internal",
+      "zone": "com",
+      "service": null,
+      "notes": null
+    },
+    {
+      "host": "capital-stack-finterm-api.mesh.diegonmarcos.com",
+      "path": null,
+      "upstream": "10.0.0.6:8340",
       "kind": "reverse_proxy",
       "tls": "internal",
       "zone": "com",
@@ -6943,7 +7409,7 @@
       "notes": null
     },
     {
-      "host": "news-gdelt.mesh.diegonmarcos.com",
+      "host": "capital-stack-news-gdelt-api.mesh.diegonmarcos.com",
       "path": null,
       "upstream": "10.0.0.6:3019",
       "kind": "reverse_proxy",
@@ -7085,13 +7551,13 @@
   ],
   "private_A1_app_canonical": [
     {
-      "host": "c3-infra-api-http-8081.mesh.diegonmarcos.com",
+      "host": "cloudy-ai-api-http-4185.mesh.diegonmarcos.com",
       "path": null,
-      "upstream": "10.0.0.6:8081",
+      "upstream": "10.0.0.6:4185",
       "kind": "reverse_proxy",
       "tls": "on_demand",
       "zone": "com",
-      "service": "c3-infra-api",
+      "service": "cloudy-ai-api",
       "notes": null
     },
     {
@@ -7102,16 +7568,6 @@
       "tls": "on_demand",
       "zone": "com",
       "service": "c3-public-api",
-      "notes": null
-    },
-    {
-      "host": "c3-services-api-http-8082.mesh.diegonmarcos.com",
-      "path": null,
-      "upstream": "10.0.0.6:8082",
-      "kind": "reverse_proxy",
-      "tls": "on_demand",
-      "zone": "com",
-      "service": "c3-services-api",
       "notes": null
     },
     {
@@ -7185,13 +7641,63 @@
       "notes": null
     },
     {
-      "host": "git-proxy-api-http-8123.mesh.diegonmarcos.com",
+      "host": "cloudy-all-api-http-8082.mesh.diegonmarcos.com",
+      "path": null,
+      "upstream": "10.0.0.6:8082",
+      "kind": "reverse_proxy",
+      "tls": "on_demand",
+      "zone": "com",
+      "service": "cloudy-all-api",
+      "notes": null
+    },
+    {
+      "host": "cloudy-all-mcp-http-3112.mesh.diegonmarcos.com",
+      "path": null,
+      "upstream": "10.0.0.6:3112",
+      "kind": "reverse_proxy",
+      "tls": "on_demand",
+      "zone": "com",
+      "service": "cloudy-all-mcp",
+      "notes": null
+    },
+    {
+      "host": "cloudy-apps-communication-mcp-http-3103.mesh.diegonmarcos.com",
+      "path": null,
+      "upstream": "10.0.0.6:3103",
+      "kind": "reverse_proxy",
+      "tls": "on_demand",
+      "zone": "com",
+      "service": "cloudy-apps-communication-mcp",
+      "notes": null
+    },
+    {
+      "host": "cloudy-apps-drive-mcp-http-3109.mesh.diegonmarcos.com",
+      "path": null,
+      "upstream": "10.0.0.6:3109",
+      "kind": "reverse_proxy",
+      "tls": "on_demand",
+      "zone": "com",
+      "service": "cloudy-apps-drive-mcp",
+      "notes": null
+    },
+    {
+      "host": "cloudy-c3-api-http-8081.mesh.diegonmarcos.com",
+      "path": null,
+      "upstream": "10.0.0.6:8081",
+      "kind": "reverse_proxy",
+      "tls": "on_demand",
+      "zone": "com",
+      "service": "cloudy-c3-api",
+      "notes": null
+    },
+    {
+      "host": "cloudy-drive-git-proxy-api-http-8123.mesh.diegonmarcos.com",
       "path": null,
       "upstream": "10.0.0.4:8123",
       "kind": "reverse_proxy",
       "tls": "on_demand",
       "zone": "com",
-      "service": "git-proxy-api",
+      "service": "cloudy-drive-git-proxy-api",
       "notes": null
     },
     {
@@ -7345,6 +7851,16 @@
       "notes": null
     },
     {
+      "host": "cloudy-ai-tokens-api-http-4184.mesh.diegonmarcos.com",
+      "path": null,
+      "upstream": "10.0.0.6:4184",
+      "kind": "reverse_proxy",
+      "tls": "on_demand",
+      "zone": "com",
+      "service": "cloudy-ai-tokens-api",
+      "notes": null
+    },
+    {
       "host": "crowdsec-http-8088.mesh.diegonmarcos.com",
       "path": null,
       "upstream": "10.0.0.6:8088",
@@ -7352,16 +7868,6 @@
       "tls": "on_demand",
       "zone": "com",
       "service": "crowdsec",
-      "notes": null
-    },
-    {
-      "host": "tokens-api-http-4184.mesh.diegonmarcos.com",
-      "path": null,
-      "upstream": "10.0.0.6:4184",
-      "kind": "reverse_proxy",
-      "tls": "on_demand",
-      "zone": "com",
-      "service": "tokens-api",
       "notes": null
     },
     {
@@ -7375,23 +7881,23 @@
       "notes": null
     },
     {
-      "host": "kg-store-http-8001.mesh.diegonmarcos.com",
+      "host": "cloud-me-cgc-pvt-graph-api-http-8001.mesh.diegonmarcos.com",
       "path": null,
       "upstream": "10.0.0.6:8001",
       "kind": "reverse_proxy",
       "tls": "on_demand",
       "zone": "com",
-      "service": "kg-store",
+      "service": "cloud-me-cgc-pvt-graph-api",
       "notes": null
     },
     {
-      "host": "kg-store-pub-http-8002.mesh.diegonmarcos.com",
+      "host": "cloudy-cgc-pub-graph-api-http-8002.mesh.diegonmarcos.com",
       "path": null,
       "upstream": "10.0.0.6:8002",
       "kind": "reverse_proxy",
       "tls": "on_demand",
       "zone": "com",
-      "service": "kg-store-pub",
+      "service": "cloudy-cgc-pub-graph-api",
       "notes": null
     },
     {
@@ -7495,23 +8001,23 @@
       "notes": null
     },
     {
-      "host": "scrappers-api-http-3020.mesh.diegonmarcos.com",
+      "host": "cloudy-browser-scrapper-api-http-3020.mesh.diegonmarcos.com",
       "path": null,
       "upstream": "10.0.0.6:3020",
       "kind": "reverse_proxy",
       "tls": "on_demand",
       "zone": "com",
-      "service": "scrappers-api",
+      "service": "cloudy-browser-scrapper-api",
       "notes": null
     },
     {
-      "host": "capital-stack-finterminal-api-http-8340.mesh.diegonmarcos.com",
+      "host": "capital-stack-finterm-api-http-8340.mesh.diegonmarcos.com",
       "path": null,
       "upstream": "10.0.0.6:8340",
       "kind": "reverse_proxy",
       "tls": "on_demand",
       "zone": "com",
-      "service": "capital-stack-finterminal-api",
+      "service": "capital-stack-finterm-api",
       "notes": null
     },
     {
@@ -7545,13 +8051,13 @@
       "notes": null
     },
     {
-      "host": "news-gdelt-http-3019.mesh.diegonmarcos.com",
+      "host": "capital-stack-news-gdelt-api-http-3019.mesh.diegonmarcos.com",
       "path": null,
       "upstream": "10.0.0.6:3019",
       "kind": "reverse_proxy",
       "tls": "on_demand",
       "zone": "com",
-      "service": "news-gdelt",
+      "service": "capital-stack-news-gdelt-api",
       "notes": null
     },
     {
@@ -7739,23 +8245,23 @@
       "notes": "engine=sqlite vm=gcp-E2-f_0"
     },
     {
-      "host": "kg-store-surrealdb-8001.db",
+      "host": "cloud-me-cgc-pvt-graph-api-surrealdb-8001.db",
       "path": null,
       "upstream": "10.0.0.6:8001",
       "kind": "catalog",
       "tls": "on_demand",
       "zone": "db",
-      "service": "kg-store",
+      "service": "cloud-me-cgc-pvt-graph-api",
       "notes": "engine=surrealdb vm=oci-A1-f_0"
     },
     {
-      "host": "kg-store-pub-surrealdb-8002.db",
+      "host": "cloudy-cgc-pub-graph-api-surrealdb-8002.db",
       "path": null,
       "upstream": "10.0.0.6:8002",
       "kind": "catalog",
       "tls": "on_demand",
       "zone": "db",
-      "service": "kg-store-pub",
+      "service": "cloudy-cgc-pub-graph-api",
       "notes": "engine=surrealdb vm=oci-A1-f_0"
     },
     {

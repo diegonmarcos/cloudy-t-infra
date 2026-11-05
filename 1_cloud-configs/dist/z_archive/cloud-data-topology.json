@@ -52,7 +52,7 @@
         "alerts-api",
         "c3-public-api",
         "cloud-me-api",
-        "git-proxy-api",
+        "cloudy-drive-git-proxy-api",
         "unbound-dns64",
         "caddy-public"
       ],
@@ -79,11 +79,10 @@
         "min_free_gb": 12
       },
       "containers": [
-        "embeddings-api",
+        "cloudy-ai-api",
+        "cloudy-ai-embeddings-api",
         "jev-sidecar",
         "languagetool",
-        "c3-infra-api",
-        "c3-services-api",
         "cloud-drive-mcp",
         "cloud-infra-mcp",
         "cloud-mail-mcp",
@@ -91,6 +90,11 @@
         "cloud-services-mcp",
         "cloud-superapp-mcp",
         "cloud-vault-mcp",
+        "cloudy-all-api",
+        "cloudy-all-mcp",
+        "cloudy-apps-communication-mcp",
+        "cloudy-apps-drive-mcp",
+        "cloudy-c3-api",
         "google-personal-mcp",
         "google-workspace-mcp",
         "gha-runner",
@@ -106,29 +110,29 @@
         "matomo-hybrid",
         "ntfy",
         "syslog-bridge",
-        "rss-gateway",
-        "github-rss",
+        "capital-stack-news-rss-api",
+        "capital-stack-news-github-rss-api",
         "openobserve",
         "umami",
         "umami-db",
         "umami-setup",
         "agents-tmp-reaper",
         "disk-janitor",
-        "auth-broker-google",
-        "auth-broker-github",
-        "auth-broker-cloudflare",
-        "auth-broker-email",
+        "cloudy-auth-google-api",
+        "cloudy-auth-github-api",
+        "cloudy-auth-cloudflare-api",
+        "cloudy-auth-email-api",
+        "cloudy-ai-tokens-api",
         "crowdsec",
-        "tokens-api",
         "cloud-cgc-pub-mcp",
         "cloud-cgc-pvt-mcp",
-        "cloud-agi-hermes",
-        "kg-store",
-        "kg-store-pub",
+        "cloud-me-cgc-pvt-graph-api",
         "cloud-agi-goose",
         "cloud-agi-claude",
+        "cloudy-ai-memory-api",
+        "cloudy-cgc-pub-graph-api",
+        "cloud-agi-hermes",
         "cloud-agi-openclaw",
-        "session-memory",
         "mattermost",
         "mattermost-postgres",
         "mattermost-bots",
@@ -136,14 +140,14 @@
         "continuwuity",
         "matrix-element",
         "mautrix-whatsapp",
-        "scrappers-api",
-        "capital-stack-finterminal-api",
+        "cloudy-browser-scrapper-api",
+        "capital-stack-finterm-api",
         "capital-stack-finterminal-web",
         "photoprism_app",
         "photoprism_mariadb",
         "photoprism_rclone",
         "playlist-syncer",
-        "news-gdelt",
+        "capital-stack-news-gdelt-api",
         "calendar-radicale",
         "cloud-notes-sync",
         "cloud-notes-web",
@@ -185,7 +189,7 @@
         "user_secret": "GCP_PROXY_USER"
       },
       "containers": [
-        "http-to-smtp-proxy-api",
+        "cloudy-mail-http-to-smtp-api",
         "postlite-npm",
         "postlite-vaultwarden",
         "postlite-ntfy",
@@ -617,10 +621,16 @@
         "service": "alerts-api"
       },
       {
-        "name": "embeddings-api.mesh.diegonmarcos.com",
+        "name": "cloudy-ai-api.mesh.diegonmarcos.com",
         "type": "A",
         "value": "10.0.0.6",
-        "service": "embeddings-api"
+        "service": "cloudy-ai-api"
+      },
+      {
+        "name": "cloudy-ai-embeddings-api.mesh.diegonmarcos.com",
+        "type": "A",
+        "value": "10.0.0.6",
+        "service": "cloudy-ai-embeddings-api"
       },
       {
         "name": "jev-sidecar.mesh.diegonmarcos.com",
@@ -635,22 +645,10 @@
         "service": "languagetool"
       },
       {
-        "name": "c3-infra-api.mesh.diegonmarcos.com",
-        "type": "A",
-        "value": "10.0.0.6",
-        "service": "c3-infra-api"
-      },
-      {
         "name": "c3-public-api.mesh.diegonmarcos.com",
         "type": "A",
         "value": "10.0.0.4",
         "service": "c3-public-api"
-      },
-      {
-        "name": "c3-services-api.mesh.diegonmarcos.com",
-        "type": "A",
-        "value": "10.0.0.6",
-        "service": "c3-services-api"
       },
       {
         "name": "drive-mcp.mesh.diegonmarcos.com",
@@ -701,10 +699,46 @@
         "service": "cloud-vault-mcp"
       },
       {
-        "name": "git-proxy-api.mesh.diegonmarcos.com",
+        "name": "cloudy-all-api.mesh.diegonmarcos.com",
+        "type": "A",
+        "value": "10.0.0.6",
+        "service": "cloudy-all-api"
+      },
+      {
+        "name": "cloudy-all-mcp.mesh.diegonmarcos.com",
+        "type": "A",
+        "value": "10.0.0.6",
+        "service": "cloudy-all-mcp"
+      },
+      {
+        "name": "cloudy-apps-communication-mcp.mesh.diegonmarcos.com",
+        "type": "A",
+        "value": "10.0.0.6",
+        "service": "cloudy-apps-communication-mcp"
+      },
+      {
+        "name": "cloudy-apps-drive-mcp.mesh.diegonmarcos.com",
+        "type": "A",
+        "value": "10.0.0.6",
+        "service": "cloudy-apps-drive-mcp"
+      },
+      {
+        "name": "cloudy-c3-api.mesh.diegonmarcos.com",
+        "type": "A",
+        "value": "10.0.0.6",
+        "service": "cloudy-c3-api"
+      },
+      {
+        "name": "cloudy-drive-git-proxy-api.mesh.diegonmarcos.com",
         "type": "A",
         "value": "10.0.0.4",
-        "service": "git-proxy-api"
+        "service": "cloudy-drive-git-proxy-api"
+      },
+      {
+        "name": "cloudy-mail-http-to-smtp-api.mesh.diegonmarcos.com",
+        "type": "A",
+        "value": "10.0.0.1",
+        "service": "cloudy-mail-http-to-smtp-api"
       },
       {
         "name": "g-personal-mcp.mesh.diegonmarcos.com",
@@ -717,12 +751,6 @@
         "type": "A",
         "value": "10.0.0.6",
         "service": "google-workspace-mcp"
-      },
-      {
-        "name": "http-to-smtp-proxy-api.mesh.diegonmarcos.com",
-        "type": "A",
-        "value": "10.0.0.1",
-        "service": "http-to-smtp-proxy-api"
       },
       {
         "name": "gitea.mesh.diegonmarcos.com",
@@ -827,6 +855,12 @@
         "service": "caddy-public"
       },
       {
+        "name": "cloudy-ai-tokens-api.mesh.diegonmarcos.com",
+        "type": "A",
+        "value": "10.0.0.6",
+        "service": "cloudy-ai-tokens-api"
+      },
+      {
         "name": "crowdsec.mesh.diegonmarcos.com",
         "type": "A",
         "value": "10.0.0.6",
@@ -839,16 +873,28 @@
         "service": "introspect-proxy"
       },
       {
-        "name": "tokens-api.mesh.diegonmarcos.com",
-        "type": "A",
-        "value": "10.0.0.6",
-        "service": "tokens-api"
-      },
-      {
         "name": "cloud-cgc-pub-mcp.mesh.diegonmarcos.com",
         "type": "A",
         "value": "10.0.0.6",
         "service": "cloud-cgc-pub-mcp"
+      },
+      {
+        "name": "cloudy-ai-agents-api.mesh.diegonmarcos.com",
+        "type": "A",
+        "value": "10.0.0.6",
+        "service": "cloudy-ai-agents-api"
+      },
+      {
+        "name": "my-ai-claude-api.mesh.diegonmarcos.com",
+        "type": "A",
+        "value": "10.0.0.6",
+        "service": "cloudy-ai-claude-api"
+      },
+      {
+        "name": "cloudy-ai-memory-api.mesh.diegonmarcos.com",
+        "type": "A",
+        "value": "10.0.0.6",
+        "service": "cloudy-ai-memory-api"
       },
       {
         "name": "hermes-agent.mesh.diegonmarcos.com",
@@ -857,28 +903,10 @@
         "service": "hermes-agent"
       },
       {
-        "name": "my-ai-api.mesh.diegonmarcos.com",
-        "type": "A",
-        "value": "10.0.0.6",
-        "service": "my-ai-api"
-      },
-      {
-        "name": "my-ai-claude-api.mesh.diegonmarcos.com",
-        "type": "A",
-        "value": "10.0.0.6",
-        "service": "my-ai_claude-api"
-      },
-      {
         "name": "openclaw.mesh.diegonmarcos.com",
         "type": "A",
         "value": "10.0.0.6",
         "service": "openclaw"
-      },
-      {
-        "name": "session-memory.mesh.diegonmarcos.com",
-        "type": "A",
-        "value": "10.0.0.6",
-        "service": "session-memory"
       },
       {
         "name": "mattermost.mesh.diegonmarcos.com",
@@ -935,16 +963,16 @@
         "service": "stalwart"
       },
       {
-        "name": "scrappers-api.mesh.diegonmarcos.com",
+        "name": "cloudy-browser-scrapper-api.mesh.diegonmarcos.com",
         "type": "A",
         "value": "10.0.0.6",
-        "service": "scrappers-api"
+        "service": "cloudy-browser-scrapper-api"
       },
       {
-        "name": "capital-stack-finterminal-api.mesh.diegonmarcos.com",
+        "name": "capital-stack-finterm-api.mesh.diegonmarcos.com",
         "type": "A",
         "value": "10.0.0.6",
-        "service": "capital-stack-finterminal-api"
+        "service": "capital-stack-finterm-api"
       },
       {
         "name": "capital-stack-finterminal-web.mesh.diegonmarcos.com",
@@ -1080,21 +1108,94 @@
         "networks": []
       }
     },
-    "embeddings-api": {
+    "cloudy-ai-api": {
+      "category": "sec",
+      "vm": "oci-A1-f_0",
+      "folder": "infra-ai_cloudy-ai-api",
+      "description": "AI gateway: /ai/{tokens,embeddings,agents,claude,memory} -> separate backend containers (cloudy-ai-*-api); legacy /<old-name>/ paths kept for one release.",
+      "port": 4185,
+      "dns": "cloudy-ai-api.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:4185",
+      "containers": {
+        "app": {
+          "container_name": "cloudy-ai-api",
+          "image": "ghcr.io/diegonmarcos/tokens-api-binaries:latest",
+          "port": 4185,
+          "port_env": null,
+          "dns": "cloudy-ai-api.mesh.diegonmarcos.com",
+          "public": true,
+          "healthcheck": "/health",
+          "monitoring": {
+            "tls_check": false,
+            "dns_check": true,
+            "endpoint_check": true
+          },
+          "volumes": [
+            "tokens_api_data:/data"
+          ],
+          "env_file": true,
+          "depends_on": [],
+          "resources": null,
+          "read_only": false,
+          "protocol": "http",
+          "proxy": {
+            "streaming": true,
+            "type": "path",
+            "parent_domain": "api.diegonmarcos.com",
+            "base_path": "/ai"
+          }
+        }
+      },
+      "container_names": [
+        "cloudy-ai-api"
+      ],
+      "all_ports": [
+        "4185"
+      ],
+      "all_dns": [
+        "cloudy-ai-api.mesh.diegonmarcos.com"
+      ],
+      "compose": {
+        "containers": [],
+        "ports": [],
+        "networks": []
+      },
+      "proxy": {
+        "primary": {
+          "streaming": true,
+          "type": "path",
+          "parent_domain": "api.diegonmarcos.com",
+          "base_path": "/ai"
+        }
+      },
+      "declared_ports": {
+        "app": 4185
+      },
+      "health": {
+        "path": "/health"
+      },
+      "monitoring": {
+        "tls_check": false,
+        "dns_check": true,
+        "endpoint_check": true
+      },
+      "flake": "infra-ai_cloudy-ai-api"
+    },
+    "cloudy-ai-embeddings-api": {
       "category": "agi",
       "vm": "oci-A1-f_0",
-      "folder": "infra-ai_embeddings-api",
+      "folder": "infra-ai_cloudy-ai-embeddings-api",
       "description": "Fleet embeddings + rerank + PDF text server, CPU, mesh-only on oci-apps. OpenAI-compatible POST /embeddings (BAAI/bge-m3) and POST /rerank (BAAI/bge-reranker-v2-m3) served by Infinity, plus POST /pdf (raw application/pdf body to plain text, pypdf), GET /models and GET /health. Consumers: Cloud SuperIntel Notebook retrieval and Cloud Tools Retrieval steps. Mesh address http://embeddings-api.mesh.diegonmarcos.com:7997 (direct, plain HTTP inside WireGuard); no public route.",
       "port": 7997,
-      "dns": "embeddings-api.mesh.diegonmarcos.com",
+      "dns": "cloudy-ai-embeddings-api.mesh.diegonmarcos.com",
       "upstream": "10.0.0.6:7997",
       "containers": {
         "app": {
-          "container_name": "embeddings-api",
+          "container_name": "cloudy-ai-embeddings-api",
           "image": "ghcr.io/diegonmarcos/embeddings-api-binaries:latest",
           "port": 7997,
           "port_env": null,
-          "dns": "embeddings-api.mesh.diegonmarcos.com",
+          "dns": "cloudy-ai-embeddings-api.mesh.diegonmarcos.com",
           "public": false,
           "healthcheck": "/health",
           "monitoring": null,
@@ -1109,13 +1210,13 @@
         }
       },
       "container_names": [
-        "embeddings-api"
+        "cloudy-ai-embeddings-api"
       ],
       "all_ports": [
         "7997"
       ],
       "all_dns": [
-        "embeddings-api.mesh.diegonmarcos.com"
+        "cloudy-ai-embeddings-api.mesh.diegonmarcos.com"
       ],
       "compose": {
         "containers": [],
@@ -1134,7 +1235,7 @@
         "endpoint_check": false,
         "_doc": "Mesh-only plain HTTP on a direct-dial port, like c3-infra-api: no TLS and no hub route to probe."
       },
-      "flake": "infra-ai_embeddings-api"
+      "flake": "infra-ai_cloudy-ai-embeddings-api"
     },
     "jev-sidecar": {
       "category": "tools",
@@ -1264,89 +1365,6 @@
       },
       "flake": "infra-ai_languagetool"
     },
-    "c3-infra-api": {
-      "category": "sec",
-      "vm": "oci-A1-f_0",
-      "folder": "infra-api_c3-infra-api",
-      "description": "C3 REST API — Cloud Control Center Fastify API",
-      "domain": "api.diegonmarcos.com/c3-infra-api",
-      "port": 8081,
-      "dns": "c3-infra-api.mesh.diegonmarcos.com",
-      "upstream": "10.0.0.6:8081",
-      "containers": {
-        "app": {
-          "container_name": "c3-infra-api",
-          "image": "ghcr.io/diegonmarcos/c3-infra-api:latest",
-          "port": 8081,
-          "port_env": "PORT",
-          "dns": "c3-infra-api.mesh.diegonmarcos.com",
-          "public": true,
-          "proxy": {
-            "type": "path",
-            "parent_domain": "api.diegonmarcos.com",
-            "base_path": "/c3-infra-api",
-            "auth": "two_factor"
-          },
-          "healthcheck": "/health",
-          "monitoring": {
-            "tls_check": true,
-            "dns_check": true,
-            "endpoint_check": true
-          },
-          "volumes": [
-            "/opt/ssh-keys/c3-infra-api:/root/.ssh:ro",
-            "/nix/store:/nix/store:ro",
-            "/home/ubuntu/.nix-profile/bin:/usr/local/nix-bin:ro",
-            "~/.config/gcloud:/root/.config/gcloud",
-            "octocode_repos:/root/git"
-          ],
-          "env_file": true,
-          "depends_on": [],
-          "resources": null,
-          "read_only": false,
-          "protocol": "http"
-        }
-      },
-      "container_names": [
-        "c3-infra-api"
-      ],
-      "all_ports": [
-        "8081"
-      ],
-      "all_dns": [
-        "c3-infra-api.mesh.diegonmarcos.com"
-      ],
-      "compose": {
-        "containers": [],
-        "ports": [],
-        "networks": []
-      },
-      "proxy": {
-        "primary": {
-          "auth": "two_factor",
-          "type": "path",
-          "parent_domain": "api.diegonmarcos.com",
-          "base_path": "/c3-infra-api",
-          "public_paths": [
-            "/c3-infra-api/docs/json",
-            "/c3-infra-api/public/logs",
-            "/c3-infra-api/public/events/*"
-          ]
-        }
-      },
-      "declared_ports": {
-        "app": 8081
-      },
-      "health": {
-        "path": "/c3-infra-api/health"
-      },
-      "monitoring": {
-        "tls_check": true,
-        "dns_check": true,
-        "endpoint_check": true
-      },
-      "flake": "infra-api_c3-infra-api"
-    },
     "c3-public-api": {
       "category": "obs",
       "vm": "oci-E2-f_1",
@@ -1430,83 +1448,6 @@
         "endpoint_check": true
       },
       "flake": "infra-api_c3-public-api"
-    },
-    "c3-services-api": {
-      "category": "obs",
-      "vm": "oci-A1-f_0",
-      "folder": "infra-api_c3-services-api",
-      "description": "C3 Services REST API — service API gateway Fastify API",
-      "domain": "api.diegonmarcos.com/c3-services-api",
-      "port": 8082,
-      "dns": "c3-services-api.mesh.diegonmarcos.com",
-      "upstream": "10.0.0.6:8082",
-      "containers": {
-        "app": {
-          "container_name": "c3-services-api",
-          "image": "ghcr.io/diegonmarcos/c3-services-api:latest",
-          "port": 8082,
-          "port_env": "PORT",
-          "dns": "c3-services-api.mesh.diegonmarcos.com",
-          "public": true,
-          "proxy": {
-            "type": "path",
-            "parent_domain": "api.diegonmarcos.com",
-            "base_path": "/c3-services-api",
-            "auth": "two_factor"
-          },
-          "healthcheck": "/health",
-          "monitoring": {
-            "tls_check": true,
-            "dns_check": true,
-            "endpoint_check": true
-          },
-          "volumes": [],
-          "env_file": true,
-          "depends_on": [],
-          "resources": null,
-          "read_only": false,
-          "protocol": "http"
-        }
-      },
-      "container_names": [
-        "c3-services-api"
-      ],
-      "all_ports": [
-        "8082"
-      ],
-      "all_dns": [
-        "c3-services-api.mesh.diegonmarcos.com"
-      ],
-      "compose": {
-        "containers": [],
-        "ports": [],
-        "networks": []
-      },
-      "proxy": {
-        "primary": {
-          "type": "path",
-          "parent_domain": "api.diegonmarcos.com",
-          "base_path": "/c3-services-api",
-          "auth": "two_factor",
-          "paths": {
-            "/docs/json": {
-              "auth": "public"
-            }
-          }
-        }
-      },
-      "declared_ports": {
-        "app": 8082
-      },
-      "health": {
-        "path": "/c3-services-api/health"
-      },
-      "monitoring": {
-        "tls_check": true,
-        "dns_check": true,
-        "endpoint_check": true
-      },
-      "flake": "infra-api_c3-services-api"
     },
     "cloud-drive-mcp": {
       "category": "app",
@@ -2016,28 +1957,384 @@
       },
       "flake": "infra-api_cloud-vault-mcp"
     },
-    "git-proxy-api": {
+    "cloudy-all-api": {
+      "category": "obs",
+      "vm": "oci-A1-f_0",
+      "folder": "infra-api_cloudy-all-api",
+      "description": "C3 Services REST API — service API gateway Fastify API",
+      "domain": "api.diegonmarcos.com/c3-services-api",
+      "port": 8082,
+      "dns": "cloudy-all-api.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:8082",
+      "containers": {
+        "app": {
+          "container_name": "cloudy-all-api",
+          "image": "ghcr.io/diegonmarcos/cloudy-all-api:latest",
+          "port": 8082,
+          "port_env": "PORT",
+          "dns": "cloudy-all-api.mesh.diegonmarcos.com",
+          "public": true,
+          "proxy": {
+            "type": "path",
+            "parent_domain": "api.diegonmarcos.com",
+            "base_path": "/cloudy-all-api",
+            "auth": "two_factor"
+          },
+          "healthcheck": "/health",
+          "monitoring": {
+            "tls_check": true,
+            "dns_check": true,
+            "endpoint_check": true
+          },
+          "volumes": [],
+          "env_file": true,
+          "depends_on": [],
+          "resources": null,
+          "read_only": false,
+          "protocol": "http"
+        }
+      },
+      "container_names": [
+        "cloudy-all-api"
+      ],
+      "all_ports": [
+        "8082"
+      ],
+      "all_dns": [
+        "cloudy-all-api.mesh.diegonmarcos.com"
+      ],
+      "compose": {
+        "containers": [],
+        "ports": [],
+        "networks": []
+      },
+      "proxy": {
+        "primary": {
+          "type": "path",
+          "parent_domain": "api.diegonmarcos.com",
+          "base_path": "/cloudy-all-api",
+          "auth": "two_factor",
+          "paths": {
+            "/docs/json": {
+              "auth": "public"
+            }
+          }
+        }
+      },
+      "declared_ports": {
+        "app": 8082
+      },
+      "health": {
+        "path": "/c3-services-api/health"
+      },
+      "monitoring": {
+        "tls_check": true,
+        "dns_check": true,
+        "endpoint_check": true
+      },
+      "flake": "infra-api_cloudy-all-api"
+    },
+    "cloudy-all-mcp": {
+      "category": "obs",
+      "vm": "oci-A1-f_0",
+      "folder": "infra-api_cloudy-all-mcp",
+      "description": "Fleet MCP router: list_servers, list_tools(server), call(server, tool, args)",
+      "port": 3112,
+      "dns": "cloudy-all-mcp.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:3112",
+      "containers": {
+        "app": {
+          "container_name": "cloudy-all-mcp",
+          "image": "ghcr.io/diegonmarcos/cloudy-all-mcp:latest",
+          "port": 3112,
+          "port_env": "MCP_HTTP_PORT",
+          "dns": "cloudy-all-mcp.mesh.diegonmarcos.com",
+          "public": true,
+          "proxy": {
+            "streaming": true,
+            "type": "path",
+            "parent_domain": "mcp.diegonmarcos.com",
+            "base_path": "/cloudy-all-mcp"
+          },
+          "healthcheck": "/mcp",
+          "monitoring": null,
+          "volumes": [],
+          "env_file": true,
+          "depends_on": [],
+          "resources": {
+            "mem_reservation": "256M",
+            "pids_limit": 256
+          },
+          "restart_policy": "unless-stopped",
+          "read_only": false,
+          "protocol": "http"
+        }
+      },
+      "container_names": [
+        "cloudy-all-mcp"
+      ],
+      "all_ports": [
+        "3112"
+      ],
+      "all_dns": [
+        "cloudy-all-mcp.mesh.diegonmarcos.com"
+      ],
+      "compose": {
+        "containers": [],
+        "ports": [],
+        "networks": []
+      },
+      "proxy": {
+        "app_hub": false,
+        "primary": {
+          "streaming": true,
+          "type": "path",
+          "parent_domain": "mcp.diegonmarcos.com",
+          "base_path": "/cloudy-all-mcp",
+          "wg_only": true
+        }
+      },
+      "declared_ports": {
+        "app": 3112
+      },
+      "health": {
+        "path": "/mcp"
+      },
+      "flake": "infra-api_cloudy-all-mcp"
+    },
+    "cloudy-apps-communication-mcp": {
+      "category": "app",
+      "vm": "oci-A1-f_0",
+      "folder": "infra-api_cloudy-apps-communication-mcp",
+      "description": "Mail MCP server — IMAP/SMTP/Admin via Stalwart REST API",
+      "domain": "mcp.diegonmarcos.com",
+      "port": 3103,
+      "dns": "cloudy-apps-communication-mcp.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:3103",
+      "containers": {
+        "app": {
+          "container_name": "cloudy-apps-communication-mcp",
+          "image": "ghcr.io/diegonmarcos/cloudy-apps-communication-mcp:latest",
+          "port": 3103,
+          "port_env": "PORT",
+          "dns": "cloudy-apps-communication-mcp.mesh.diegonmarcos.com",
+          "public": true,
+          "proxy": {
+            "streaming": true,
+            "type": "path",
+            "parent_domain": "mcp.diegonmarcos.com",
+            "base_path": "/cloudy-apps-communication-mcp"
+          },
+          "healthcheck": null,
+          "monitoring": null,
+          "volumes": [],
+          "env_file": true,
+          "depends_on": [],
+          "resources": {
+            "mem_reservation": "256M",
+            "pids_limit": 256
+          },
+          "read_only": false,
+          "protocol": "http",
+          "restart_policy": "unless-stopped"
+        }
+      },
+      "container_names": [
+        "cloudy-apps-communication-mcp"
+      ],
+      "all_ports": [
+        "3103"
+      ],
+      "all_dns": [
+        "cloudy-apps-communication-mcp.mesh.diegonmarcos.com"
+      ],
+      "compose": {
+        "containers": [],
+        "ports": [],
+        "networks": []
+      },
+      "proxy": {
+        "app_hub": false,
+        "primary": {
+          "streaming": true,
+          "type": "path",
+          "parent_domain": "mcp.diegonmarcos.com",
+          "base_path": "/cloudy-apps-communication-mcp",
+          "wg_only": true
+        }
+      },
+      "declared_ports": {
+        "app": 3103
+      },
+      "flake": "infra-api_cloudy-apps-communication-mcp"
+    },
+    "cloudy-apps-drive-mcp": {
+      "category": "app",
+      "vm": "oci-A1-f_0",
+      "folder": "infra-api_cloudy-apps-drive-mcp",
+      "description": "Drive MCP server — one facade over every storage unit: repos, files, photos, sync, scrapes, S3 and conversion",
+      "domain": "mcp.diegonmarcos.com",
+      "port": 3109,
+      "dns": "cloudy-apps-drive-mcp.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:3109",
+      "containers": {
+        "app": {
+          "container_name": "cloudy-apps-drive-mcp",
+          "image": "ghcr.io/diegonmarcos/cloudy-apps-drive-mcp:latest",
+          "port": 3109,
+          "port_env": "PORT",
+          "dns": "cloudy-apps-drive-mcp.mesh.diegonmarcos.com",
+          "public": true,
+          "proxy": {
+            "streaming": true,
+            "type": "path",
+            "parent_domain": "mcp.diegonmarcos.com",
+            "base_path": "/cloudy-apps-drive-mcp"
+          },
+          "healthcheck": null,
+          "monitoring": null,
+          "volumes": [],
+          "env_file": true,
+          "depends_on": [],
+          "resources": null,
+          "read_only": false,
+          "protocol": "http"
+        }
+      },
+      "container_names": [
+        "cloudy-apps-drive-mcp"
+      ],
+      "all_ports": [
+        "3109"
+      ],
+      "all_dns": [
+        "cloudy-apps-drive-mcp.mesh.diegonmarcos.com"
+      ],
+      "compose": {
+        "containers": [],
+        "ports": [],
+        "networks": []
+      },
+      "proxy": {
+        "app_hub": false,
+        "primary": {
+          "streaming": true,
+          "type": "path",
+          "parent_domain": "mcp.diegonmarcos.com",
+          "base_path": "/cloudy-apps-drive-mcp",
+          "wg_only": true
+        }
+      },
+      "declared_ports": {
+        "app": 3109
+      },
+      "flake": "infra-api_cloudy-apps-drive-mcp"
+    },
+    "cloudy-c3-api": {
+      "category": "sec",
+      "vm": "oci-A1-f_0",
+      "folder": "infra-api_cloudy-c3-api",
+      "description": "C3 REST API — Cloud Control Center Fastify API",
+      "domain": "api.diegonmarcos.com/c3-infra-api",
+      "port": 8081,
+      "dns": "cloudy-c3-api.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:8081",
+      "containers": {
+        "app": {
+          "container_name": "cloudy-c3-api",
+          "image": "ghcr.io/diegonmarcos/cloudy-c3-api:latest",
+          "port": 8081,
+          "port_env": "PORT",
+          "dns": "cloudy-c3-api.mesh.diegonmarcos.com",
+          "public": true,
+          "proxy": {
+            "type": "path",
+            "parent_domain": "api.diegonmarcos.com",
+            "base_path": "/cloudy-c3-api",
+            "auth": "two_factor"
+          },
+          "healthcheck": "/health",
+          "monitoring": {
+            "tls_check": true,
+            "dns_check": true,
+            "endpoint_check": true
+          },
+          "volumes": [
+            "/opt/ssh-keys/c3-infra-api:/root/.ssh:ro",
+            "/nix/store:/nix/store:ro",
+            "/home/ubuntu/.nix-profile/bin:/usr/local/nix-bin:ro",
+            "~/.config/gcloud:/root/.config/gcloud",
+            "octocode_repos:/root/git"
+          ],
+          "env_file": true,
+          "depends_on": [],
+          "resources": null,
+          "read_only": false,
+          "protocol": "http"
+        }
+      },
+      "container_names": [
+        "cloudy-c3-api"
+      ],
+      "all_ports": [
+        "8081"
+      ],
+      "all_dns": [
+        "cloudy-c3-api.mesh.diegonmarcos.com"
+      ],
+      "compose": {
+        "containers": [],
+        "ports": [],
+        "networks": []
+      },
+      "proxy": {
+        "primary": {
+          "auth": "two_factor",
+          "type": "path",
+          "parent_domain": "api.diegonmarcos.com",
+          "base_path": "/cloudy-c3-api",
+          "public_paths": [
+            "/c3-infra-api/docs/json",
+            "/c3-infra-api/public/logs",
+            "/c3-infra-api/public/events/*"
+          ]
+        }
+      },
+      "declared_ports": {
+        "app": 8081
+      },
+      "health": {
+        "path": "/c3-infra-api/health"
+      },
+      "monitoring": {
+        "tls_check": true,
+        "dns_check": true,
+        "endpoint_check": true
+      },
+      "flake": "infra-api_cloudy-c3-api"
+    },
+    "cloudy-drive-git-proxy-api": {
       "category": "app",
       "vm": "oci-E2-f_1",
-      "folder": "infra-api_git-proxy-api",
+      "folder": "infra-api_cloudy-drive-git-proxy-api",
       "description": "Git Proxy API — Authelia-fronted read path to GitHub so the phone holds NO GitHub credential (#647, route 3 of #646's fallback chain). The caller authenticates to US with the Authelia bearer it already has; this service holds the GitHub token server-side and streams the result back.",
       "domain": "api.diegonmarcos.com/git",
       "port": 8123,
-      "dns": "git-proxy-api.mesh.diegonmarcos.com",
+      "dns": "cloudy-drive-git-proxy-api.mesh.diegonmarcos.com",
       "upstream": "10.0.0.4:8123",
       "containers": {
         "app": {
-          "container_name": "git-proxy-api",
-          "image": "ghcr.io/diegonmarcos/git-proxy-api:latest",
+          "container_name": "cloudy-drive-git-proxy-api",
+          "image": "ghcr.io/diegonmarcos/cloudy-drive-git-proxy-api:latest",
           "port": 8123,
           "port_env": "PORT",
-          "dns": "git-proxy-api.mesh.diegonmarcos.com",
+          "dns": "cloudy-drive-git-proxy-api.mesh.diegonmarcos.com",
           "public": true,
           "proxy": {
             "auth": "two_factor",
             "type": "path",
             "parent_domain": "api.diegonmarcos.com",
-            "base_path": "/git",
+            "base_path": "/cloudy-drive-git-proxy-api",
             "public_paths": [
               "/git/health"
             ]
@@ -2057,13 +2354,13 @@
         }
       },
       "container_names": [
-        "git-proxy-api"
+        "cloudy-drive-git-proxy-api"
       ],
       "all_ports": [
         "8123"
       ],
       "all_dns": [
-        "git-proxy-api.mesh.diegonmarcos.com"
+        "cloudy-drive-git-proxy-api.mesh.diegonmarcos.com"
       ],
       "compose": {
         "containers": [],
@@ -2076,7 +2373,7 @@
           "auth": "two_factor",
           "type": "path",
           "parent_domain": "api.diegonmarcos.com",
-          "base_path": "/git",
+          "base_path": "/cloudy-drive-git-proxy-api",
           "public_paths": [
             "/git/health"
           ]
@@ -2093,7 +2390,60 @@
         "dns_check": true,
         "endpoint_check": true
       },
-      "flake": "infra-api_git-proxy-api"
+      "flake": "infra-api_cloudy-drive-git-proxy-api"
+    },
+    "cloudy-mail-http-to-smtp-api": {
+      "category": "app",
+      "vm": "gcp-E2-f_0",
+      "folder": "infra-api_cloudy-mail-http-to-smtp-api",
+      "description": "HTTP-to-SMTP bridge sidecar of Caddy on gcp-proxy. CF Worker POSTs JSON email payloads to this container (because GCP blocks outbound TCP/25); container speaks SMTP over WG to maddy:25 + stalwart:2025 on oci-mail. Public path: api.diegonmarcos.com/http-to-smtp-proxy-api/ [DECOMMISSIONED 2026-05-21]",
+      "domain": "api.diegonmarcos.com/http-to-smtp-proxy-api",
+      "port": 8090,
+      "dns": "cloudy-mail-http-to-smtp-api.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.1:8090",
+      "containers": {
+        "app": {
+          "container_name": "cloudy-mail-http-to-smtp-api",
+          "port": 8090,
+          "port_env": "LISTEN_PORT",
+          "dns": "cloudy-mail-http-to-smtp-api.mesh.diegonmarcos.com",
+          "public": true,
+          "proxy": {
+            "type": "path",
+            "parent_domain": "api.diegonmarcos.com",
+            "base_path": "/cloudy-mail-http-to-smtp-api",
+            "auth": "bearer"
+          },
+          "protocol": "http"
+        }
+      },
+      "container_names": [
+        "cloudy-mail-http-to-smtp-api"
+      ],
+      "all_ports": [
+        "8090"
+      ],
+      "all_dns": [
+        "cloudy-mail-http-to-smtp-api.mesh.diegonmarcos.com"
+      ],
+      "compose": {
+        "containers": [],
+        "ports": [],
+        "networks": []
+      },
+      "proxy": {
+        "app_hub": false,
+        "primary": {
+          "type": "path",
+          "parent_domain": "api.diegonmarcos.com",
+          "base_path": "/cloudy-mail-http-to-smtp-api",
+          "auth": "bearer"
+        }
+      },
+      "declared_ports": {
+        "app": 8090
+      },
+      "flake": "infra-api_cloudy-mail-http-to-smtp-api"
     },
     "google-personal-mcp": {
       "category": "app",
@@ -2226,59 +2576,6 @@
         "path": "/health"
       },
       "flake": "infra-api_google-workspace-mcp"
-    },
-    "http-to-smtp-proxy-api": {
-      "category": "app",
-      "vm": "gcp-E2-f_0",
-      "folder": "infra-api_tools-http-to-smtp-proxy-api",
-      "description": "HTTP-to-SMTP bridge sidecar of Caddy on gcp-proxy. CF Worker POSTs JSON email payloads to this container (because GCP blocks outbound TCP/25); container speaks SMTP over WG to maddy:25 + stalwart:2025 on oci-mail. Public path: api.diegonmarcos.com/http-to-smtp-proxy-api/ [DECOMMISSIONED 2026-05-21]",
-      "domain": "api.diegonmarcos.com/http-to-smtp-proxy-api",
-      "port": 8090,
-      "dns": "http-to-smtp-proxy-api.mesh.diegonmarcos.com",
-      "upstream": "10.0.0.1:8090",
-      "containers": {
-        "app": {
-          "container_name": "http-to-smtp-proxy-api",
-          "port": 8090,
-          "port_env": "LISTEN_PORT",
-          "dns": "http-to-smtp-proxy-api.mesh.diegonmarcos.com",
-          "public": true,
-          "proxy": {
-            "type": "path",
-            "parent_domain": "api.diegonmarcos.com",
-            "base_path": "/http-to-smtp-proxy-api",
-            "auth": "bearer"
-          },
-          "protocol": "http"
-        }
-      },
-      "container_names": [
-        "http-to-smtp-proxy-api"
-      ],
-      "all_ports": [
-        "8090"
-      ],
-      "all_dns": [
-        "http-to-smtp-proxy-api.mesh.diegonmarcos.com"
-      ],
-      "compose": {
-        "containers": [],
-        "ports": [],
-        "networks": []
-      },
-      "proxy": {
-        "app_hub": false,
-        "primary": {
-          "type": "path",
-          "parent_domain": "api.diegonmarcos.com",
-          "base_path": "/http-to-smtp-proxy-api",
-          "auth": "bearer"
-        }
-      },
-      "declared_ports": {
-        "app": 8090
-      },
-      "flake": "infra-api_tools-http-to-smtp-proxy-api"
     },
     "cloud-builder-x": {
       "category": "tools",
@@ -3429,7 +3726,7 @@
           "read_only": false
         },
         "rss-gateway": {
-          "container_name": "rss-gateway",
+          "container_name": "capital-stack-news-rss-api",
           "image": "python:3.11-slim",
           "port": 8091,
           "protocol": "http",
@@ -3456,7 +3753,7 @@
           "read_only": false
         },
         "github-rss": {
-          "container_name": "github-rss",
+          "container_name": "capital-stack-news-github-rss-api",
           "image": "python:3.11-slim",
           "port": null,
           "port_env": null,
@@ -3484,8 +3781,8 @@
       "container_names": [
         "ntfy",
         "syslog-bridge",
-        "rss-gateway",
-        "github-rss"
+        "capital-stack-news-rss-api",
+        "capital-stack-news-github-rss-api"
       ],
       "all_ports": [
         "8090",
@@ -3832,7 +4129,7 @@
       "dns": "auth-broker.mesh.diegonmarcos.com",
       "containers": {
         "google": {
-          "container_name": "auth-broker-google",
+          "container_name": "cloudy-auth-google-api",
           "image": "ghcr.io/diegonmarcos/auth-broker-binaries:latest",
           "port": 4180,
           "public": false,
@@ -3846,7 +4143,7 @@
           "protocol": "http"
         },
         "github": {
-          "container_name": "auth-broker-github",
+          "container_name": "cloudy-auth-github-api",
           "image": "ghcr.io/diegonmarcos/auth-broker-binaries:latest",
           "port": 4181,
           "public": false,
@@ -3860,7 +4157,7 @@
           "protocol": "http"
         },
         "cloudflare": {
-          "container_name": "auth-broker-cloudflare",
+          "container_name": "cloudy-auth-cloudflare-api",
           "image": "ghcr.io/diegonmarcos/auth-broker-binaries:latest",
           "port": 4182,
           "public": false,
@@ -3874,7 +4171,7 @@
           "protocol": "http"
         },
         "email": {
-          "container_name": "auth-broker-email",
+          "container_name": "cloudy-auth-email-api",
           "image": "ghcr.io/diegonmarcos/auth-broker-binaries:latest",
           "port": 4183,
           "public": false,
@@ -3889,10 +4186,10 @@
         }
       },
       "container_names": [
-        "auth-broker-google",
-        "auth-broker-github",
-        "auth-broker-cloudflare",
-        "auth-broker-email"
+        "cloudy-auth-google-api",
+        "cloudy-auth-github-api",
+        "cloudy-auth-cloudflare-api",
+        "cloudy-auth-email-api"
       ],
       "all_ports": [
         "4180",
@@ -4317,6 +4614,65 @@
       },
       "flake": "infra-sec_caddy-public"
     },
+    "cloudy-ai-tokens-api": {
+      "category": "sec",
+      "vm": "oci-A1-f_0",
+      "folder": "infra-sec_cloudy-ai-tokens-api",
+      "description": "Fleet token engine: lists, generates, reveals and revokes every fleet bearer token (fleet ft_ tokens and adopted Authelia JWTs); introspect-proxy asks it before accepting a Bearer, so a revoked token stops working within 60 seconds. Public address: c3-pvt.diegonmarcos.com/tokens-api (shared gate, #1104); mesh tokens-api.mesh.diegonmarcos.com",
+      "port": 4184,
+      "dns": "cloudy-ai-tokens-api.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:4184",
+      "containers": {
+        "app": {
+          "container_name": "cloudy-ai-tokens-api",
+          "image": "ghcr.io/diegonmarcos/tokens-api-binaries:latest",
+          "port": 4184,
+          "port_env": null,
+          "dns": "cloudy-ai-tokens-api.mesh.diegonmarcos.com",
+          "public": true,
+          "healthcheck": "/health",
+          "monitoring": {
+            "tls_check": false,
+            "dns_check": true,
+            "endpoint_check": true
+          },
+          "volumes": [
+            "tokens_api_data:/data"
+          ],
+          "env_file": true,
+          "depends_on": [],
+          "resources": null,
+          "read_only": false,
+          "protocol": "http"
+        }
+      },
+      "container_names": [
+        "cloudy-ai-tokens-api"
+      ],
+      "all_ports": [
+        "4184"
+      ],
+      "all_dns": [
+        "cloudy-ai-tokens-api.mesh.diegonmarcos.com"
+      ],
+      "compose": {
+        "containers": [],
+        "ports": [],
+        "networks": []
+      },
+      "declared_ports": {
+        "app": 4184
+      },
+      "health": {
+        "path": "/health"
+      },
+      "monitoring": {
+        "tls_check": false,
+        "dns_check": true,
+        "endpoint_check": true
+      },
+      "flake": "infra-sec_cloudy-ai-tokens-api"
+    },
     "crowdsec": {
       "category": "sec",
       "vm": "oci-A1-f_0",
@@ -4501,65 +4857,6 @@
       },
       "flake": "infra-sec_mcp-oauth"
     },
-    "tokens-api": {
-      "category": "sec",
-      "vm": "oci-A1-f_0",
-      "folder": "infra-sec_tokens-api",
-      "description": "Fleet token engine: lists, generates, reveals and revokes every fleet bearer token (fleet ft_ tokens and adopted Authelia JWTs); introspect-proxy asks it before accepting a Bearer, so a revoked token stops working within 60 seconds. Public address: c3-pvt.diegonmarcos.com/tokens-api (shared gate, #1104); mesh tokens-api.mesh.diegonmarcos.com",
-      "port": 4184,
-      "dns": "tokens-api.mesh.diegonmarcos.com",
-      "upstream": "10.0.0.6:4184",
-      "containers": {
-        "app": {
-          "container_name": "tokens-api",
-          "image": "ghcr.io/diegonmarcos/tokens-api-binaries:latest",
-          "port": 4184,
-          "port_env": null,
-          "dns": "tokens-api.mesh.diegonmarcos.com",
-          "public": true,
-          "healthcheck": "/health",
-          "monitoring": {
-            "tls_check": false,
-            "dns_check": true,
-            "endpoint_check": true
-          },
-          "volumes": [
-            "tokens_api_data:/data"
-          ],
-          "env_file": true,
-          "depends_on": [],
-          "resources": null,
-          "read_only": false,
-          "protocol": "http"
-        }
-      },
-      "container_names": [
-        "tokens-api"
-      ],
-      "all_ports": [
-        "4184"
-      ],
-      "all_dns": [
-        "tokens-api.mesh.diegonmarcos.com"
-      ],
-      "compose": {
-        "containers": [],
-        "ports": [],
-        "networks": []
-      },
-      "declared_ports": {
-        "app": 4184
-      },
-      "health": {
-        "path": "/health"
-      },
-      "monitoring": {
-        "tls_check": false,
-        "dns_check": true,
-        "endpoint_check": true
-      },
-      "flake": "infra-sec_tokens-api"
-    },
     "cloud-cgc-pub-mcp": {
       "category": "obs",
       "vm": "oci-A1-f_0",
@@ -4654,6 +4951,253 @@
       },
       "flake": "user-ai_cloud-cgc-pub-mcp"
     },
+    "cloud-me-cgc-pvt-graph-api": {
+      "category": "data",
+      "vm": "oci-A1-f_0",
+      "folder": "user-ai_cloud-me-cgc-pvt-graph-api",
+      "description": "SurrealDB Hybrid Knowledge Graph - Infrastructure topology + vector search",
+      "port": 8001,
+      "dns": "cloud-me-cgc-pvt-graph-api.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:8001",
+      "containers": {
+        "app": {
+          "container_name": "cloud-me-cgc-pvt-graph-api",
+          "port": 8001,
+          "protocol": "http",
+          "db_engine": "surrealdb",
+          "image": "ghcr.io/diegonmarcos/cloud-me-cgc-pvt-graph-api:latest",
+          "resources": {
+            "_comment": "THE ONE DECLARATION of this container's memory budget. src/compose.nix reads mem_limit as the cgroup ceiling (deploy.resources.limits.memory) and rocksdb_block_cache / rocksdb_write_buffer below as SurrealDB's own RocksDB budget (SURREAL_ROCKSDB_BLOCK_CACHE_SIZE, SURREAL_ROCKSDB_WRITE_BUFFER_SIZE). Both halves are required: the cgroup alone converts the leak into an OOM kill, and the engine budget alone leaves nothing enforcing it. No literal is written in compose.nix. Sized from measurement: kg-store's resident set on oci-apps 2026-09-24 was 140.6MiB at rest, but a full graph refresh peaked at ~945MiB on 2026-10-10, hence 2G. Raised to 4G on 2026-10-21: a pvt restore (407k-edge cloud-u-android repo-scoped delete) hit the 2G ceiling, the kernel OOM-killed surreal at 2.09GB anon-rss and the ingest aborted with ECONNREFUSED (#1061).",
+            "mem_limit": "4G",
+            "mem_reservation": "128M",
+            "_rocksdb_comment": "SurrealDB RocksDB engine budget, declared on its own so the cgroup ceiling above can grow without the cache growing with it. Raised mem_limit 1G -> 2G on 2026-10-10: a full cgc graph refresh (690k-edge cloud-u-containers ingest) peaked at ~945MiB of the 1G cap and restarted both stores once mid-ingest. The cache and memtables are kept exactly where they were (512M cache, 2 x 128M memtables) so the extra GiB is pure headroom for the process, WAL and compaction. compose.nix refuses a block cache above half of mem_limit, and _shared/test-kg-store-memory-ceiling.mjs asserts mem_limit >= 2G.",
+            "rocksdb_block_cache": "512M",
+            "rocksdb_write_buffer": "128M"
+          }
+        }
+      },
+      "container_names": [
+        "cloud-me-cgc-pvt-graph-api"
+      ],
+      "all_ports": [
+        "8001"
+      ],
+      "all_dns": [],
+      "compose": {
+        "containers": [],
+        "ports": [],
+        "networks": []
+      },
+      "declared_ports": {
+        "app": 8001
+      },
+      "backup": {
+        "enabled": true
+      },
+      "flake": "user-ai_cloud-me-cgc-pvt-graph-api"
+    },
+    "cloudy-ai-agents-api": {
+      "category": "agi",
+      "vm": "oci-A1-f_0",
+      "folder": "user-ai_cloudy-ai-agents-api",
+      "description": "my-ai API on oci-apps — one polyglot container: OpenAI /v1 + Ollama /api + Anthropic /v1/messages mimic backed by OpenRouter (no Claude subscription, no metered Anthropic key), with a vendored Headroom (Apache-2.0) compression hop and a savings dashboard. Sibling of claude-superset-api; the agent face for this stack is goose (my-ai wraps goose, claude-superset keeps claude-cli). Internal WG-only sidecar, never public.",
+      "port": 3217,
+      "dns": "cloudy-ai-agents-api.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:3217",
+      "containers": {
+        "app": {
+          "container_name": "cloud-agi-goose",
+          "image": "ghcr.io/diegonmarcos/cloudy-ai-agents-api:latest",
+          "port": 3217,
+          "port_env": "BRIDGE_PORT",
+          "dns": "cloudy-ai-agents-api.mesh.diegonmarcos.com",
+          "public": false,
+          "healthcheck": "/health",
+          "monitoring": null,
+          "env_file": true,
+          "depends_on": [],
+          "resources": null,
+          "read_only": false,
+          "protocol": "http"
+        }
+      },
+      "container_names": [
+        "cloud-agi-goose"
+      ],
+      "all_ports": [
+        "3217"
+      ],
+      "all_dns": [
+        "cloudy-ai-agents-api.mesh.diegonmarcos.com"
+      ],
+      "compose": {
+        "containers": [],
+        "ports": [],
+        "networks": []
+      },
+      "proxy": {
+        "app_hub": false
+      },
+      "declared_ports": {
+        "app": 3217,
+        "ollama": 12436,
+        "headroom": 8890,
+        "goosed": 3227,
+        "_goosed_doc": "goosed = goose agent ACP/REST+SSE server (goose serve, X-Secret-Key auth, WireGuard-only)"
+      },
+      "health": {
+        "path": "/health"
+      },
+      "flake": "user-ai_cloudy-ai-agents-api"
+    },
+    "cloudy-ai-claude-api": {
+      "category": "agi",
+      "vm": "oci-A1-f_0",
+      "folder": "user-ai_cloudy-ai-claude-api",
+      "description": "Claude superset API on oci-apps — one polyglot container: OpenAI /v1 + Ollama /api + Anthropic /v1/messages mimic backed by the subscription `claude` CLI (no metered key), with a vendored Headroom (Apache-2.0) compression hop and a savings dashboard. Successor to kg-bridge; usable as a local/remote fallback. Internal WG-only sidecar, never public.",
+      "port": 3117,
+      "dns": "my-ai-claude-api.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:3117",
+      "containers": {
+        "app": {
+          "container_name": "cloud-agi-claude",
+          "image": "ghcr.io/diegonmarcos/claude-superset-api:latest",
+          "port": 3117,
+          "port_env": "BRIDGE_PORT",
+          "dns": "my-ai-claude-api.mesh.diegonmarcos.com",
+          "public": false,
+          "healthcheck": "/health",
+          "monitoring": null,
+          "env_file": true,
+          "depends_on": [],
+          "resources": null,
+          "read_only": false,
+          "protocol": "http"
+        }
+      },
+      "container_names": [
+        "cloud-agi-claude"
+      ],
+      "all_ports": [
+        "3117"
+      ],
+      "all_dns": [
+        "my-ai-claude-api.mesh.diegonmarcos.com"
+      ],
+      "compose": {
+        "containers": [],
+        "ports": [],
+        "networks": []
+      },
+      "proxy": {
+        "app_hub": false
+      },
+      "declared_ports": {
+        "app": 3117,
+        "ollama": 11436,
+        "headroom": 8788,
+        "proxy": 8789
+      },
+      "health": {
+        "path": "/health"
+      },
+      "flake": "user-ai_cloudy-ai-claude-api"
+    },
+    "cloudy-ai-memory-api": {
+      "category": "agi",
+      "vm": "oci-A1-f_0",
+      "folder": "user-ai_cloudy-ai-memory-api",
+      "description": "Central SQLite store of all Claude Code session transcripts — push/list/fetch so a session started on one device can be resumed from any other. WG-only sidecar on oci-apps; Node 22 built-in node:sqlite (phone-portable, no native deps).",
+      "port": 3108,
+      "dns": "cloudy-ai-memory-api.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:3108",
+      "containers": {
+        "app": {
+          "container_name": "cloudy-ai-memory-api",
+          "image": "ghcr.io/diegonmarcos/cloudy-ai-memory-api:latest",
+          "port": 3108,
+          "port_env": "MEM_PORT",
+          "dns": "cloudy-ai-memory-api.mesh.diegonmarcos.com",
+          "public": false,
+          "healthcheck": "/health",
+          "monitoring": null,
+          "env_file": false,
+          "depends_on": [],
+          "resources": null,
+          "read_only": false,
+          "protocol": "http"
+        }
+      },
+      "container_names": [
+        "cloudy-ai-memory-api"
+      ],
+      "all_ports": [
+        "3108"
+      ],
+      "all_dns": [
+        "cloudy-ai-memory-api.mesh.diegonmarcos.com"
+      ],
+      "compose": {
+        "containers": [],
+        "ports": [],
+        "networks": []
+      },
+      "proxy": {
+        "app_hub": false
+      },
+      "declared_ports": {
+        "app": 3108
+      },
+      "health": {
+        "path": "/health"
+      },
+      "flake": "user-ai_cloudy-ai-memory-api"
+    },
+    "cloudy-cgc-pub-graph-api": {
+      "category": "data",
+      "vm": "oci-A1-f_0",
+      "folder": "user-ai_cloudy-cgc-pub-graph-api",
+      "description": "SurrealDB Hybrid Knowledge Graph - Infrastructure topology + vector search",
+      "port": 8002,
+      "dns": "cloudy-cgc-pub-graph-api.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:8002",
+      "containers": {
+        "app": {
+          "container_name": "cloudy-cgc-pub-graph-api",
+          "port": 8002,
+          "protocol": "http",
+          "db_engine": "surrealdb",
+          "image": "ghcr.io/diegonmarcos/cloudy-cgc-pub-graph-api:latest",
+          "resources": {
+            "_comment": "THE ONE DECLARATION of this container's memory budget — see user-ai_kg-store/build.json for the full note. src/compose.nix takes the cgroup ceiling from mem_limit and SurrealDB's RocksDB budget from rocksdb_block_cache / rocksdb_write_buffer; no literal is written in compose.nix. Measured resident set on oci-apps 2026-09-24: 131.1MiB at rest; ~945MiB peak during a full graph refresh on 2026-10-10, hence 2G.",
+            "mem_limit": "2G",
+            "mem_reservation": "128M",
+            "_rocksdb_comment": "SurrealDB RocksDB engine budget, declared on its own so the cgroup ceiling above can grow without the cache growing with it. Raised mem_limit 1G -> 2G on 2026-10-10: a full cgc graph refresh (690k-edge cloud-u-containers ingest) peaked at ~945MiB of the 1G cap and restarted both stores once mid-ingest. The cache and memtables are kept exactly where they were (512M cache, 2 x 128M memtables) so the extra GiB is pure headroom for the process, WAL and compaction. compose.nix refuses a block cache above half of mem_limit, and _shared/test-kg-store-memory-ceiling.mjs asserts mem_limit >= 2G.",
+            "rocksdb_block_cache": "512M",
+            "rocksdb_write_buffer": "128M"
+          }
+        }
+      },
+      "container_names": [
+        "cloudy-cgc-pub-graph-api"
+      ],
+      "all_ports": [
+        "8002"
+      ],
+      "all_dns": [],
+      "compose": {
+        "containers": [],
+        "ports": [],
+        "networks": []
+      },
+      "declared_ports": {
+        "app": 8002
+      },
+      "backup": {
+        "enabled": true
+      },
+      "flake": "user-ai_cloudy-cgc-pub-graph-api"
+    },
     "db-agent": {
       "category": "data",
       "vm": "all",
@@ -4728,203 +5272,6 @@
       },
       "flake": "user-ai_hermes-agent"
     },
-    "kg-store": {
-      "category": "data",
-      "vm": "oci-A1-f_0",
-      "folder": "user-ai_kg-store",
-      "description": "SurrealDB Hybrid Knowledge Graph - Infrastructure topology + vector search",
-      "port": 8001,
-      "dns": "kg-store.mesh.diegonmarcos.com",
-      "upstream": "10.0.0.6:8001",
-      "containers": {
-        "app": {
-          "container_name": "kg-store",
-          "port": 8001,
-          "protocol": "http",
-          "db_engine": "surrealdb",
-          "image": "ghcr.io/diegonmarcos/kg-store:latest",
-          "resources": {
-            "_comment": "THE ONE DECLARATION of this container's memory budget. src/compose.nix reads mem_limit as the cgroup ceiling (deploy.resources.limits.memory) and rocksdb_block_cache / rocksdb_write_buffer below as SurrealDB's own RocksDB budget (SURREAL_ROCKSDB_BLOCK_CACHE_SIZE, SURREAL_ROCKSDB_WRITE_BUFFER_SIZE). Both halves are required: the cgroup alone converts the leak into an OOM kill, and the engine budget alone leaves nothing enforcing it. No literal is written in compose.nix. Sized from measurement: kg-store's resident set on oci-apps 2026-09-24 was 140.6MiB at rest, but a full graph refresh peaked at ~945MiB on 2026-10-10, hence 2G. Raised to 4G on 2026-10-21: a pvt restore (407k-edge cloud-u-android repo-scoped delete) hit the 2G ceiling, the kernel OOM-killed surreal at 2.09GB anon-rss and the ingest aborted with ECONNREFUSED (#1061).",
-            "mem_limit": "4G",
-            "mem_reservation": "128M",
-            "_rocksdb_comment": "SurrealDB RocksDB engine budget, declared on its own so the cgroup ceiling above can grow without the cache growing with it. Raised mem_limit 1G -> 2G on 2026-10-10: a full cgc graph refresh (690k-edge cloud-u-containers ingest) peaked at ~945MiB of the 1G cap and restarted both stores once mid-ingest. The cache and memtables are kept exactly where they were (512M cache, 2 x 128M memtables) so the extra GiB is pure headroom for the process, WAL and compaction. compose.nix refuses a block cache above half of mem_limit, and _shared/test-kg-store-memory-ceiling.mjs asserts mem_limit >= 2G.",
-            "rocksdb_block_cache": "512M",
-            "rocksdb_write_buffer": "128M"
-          }
-        }
-      },
-      "container_names": [
-        "kg-store"
-      ],
-      "all_ports": [
-        "8001"
-      ],
-      "all_dns": [],
-      "compose": {
-        "containers": [],
-        "ports": [],
-        "networks": []
-      },
-      "declared_ports": {
-        "app": 8001
-      },
-      "backup": {
-        "enabled": true
-      },
-      "flake": "user-ai_kg-store"
-    },
-    "kg-store-pub": {
-      "category": "data",
-      "vm": "oci-A1-f_0",
-      "folder": "user-ai_kg-store-pub",
-      "description": "SurrealDB Hybrid Knowledge Graph - Infrastructure topology + vector search",
-      "port": 8002,
-      "dns": "kg-store-pub.mesh.diegonmarcos.com",
-      "upstream": "10.0.0.6:8002",
-      "containers": {
-        "app": {
-          "container_name": "kg-store-pub",
-          "port": 8002,
-          "protocol": "http",
-          "db_engine": "surrealdb",
-          "image": "ghcr.io/diegonmarcos/kg-store-pub:latest",
-          "resources": {
-            "_comment": "THE ONE DECLARATION of this container's memory budget — see user-ai_kg-store/build.json for the full note. src/compose.nix takes the cgroup ceiling from mem_limit and SurrealDB's RocksDB budget from rocksdb_block_cache / rocksdb_write_buffer; no literal is written in compose.nix. Measured resident set on oci-apps 2026-09-24: 131.1MiB at rest; ~945MiB peak during a full graph refresh on 2026-10-10, hence 2G.",
-            "mem_limit": "2G",
-            "mem_reservation": "128M",
-            "_rocksdb_comment": "SurrealDB RocksDB engine budget, declared on its own so the cgroup ceiling above can grow without the cache growing with it. Raised mem_limit 1G -> 2G on 2026-10-10: a full cgc graph refresh (690k-edge cloud-u-containers ingest) peaked at ~945MiB of the 1G cap and restarted both stores once mid-ingest. The cache and memtables are kept exactly where they were (512M cache, 2 x 128M memtables) so the extra GiB is pure headroom for the process, WAL and compaction. compose.nix refuses a block cache above half of mem_limit, and _shared/test-kg-store-memory-ceiling.mjs asserts mem_limit >= 2G.",
-            "rocksdb_block_cache": "512M",
-            "rocksdb_write_buffer": "128M"
-          }
-        }
-      },
-      "container_names": [
-        "kg-store-pub"
-      ],
-      "all_ports": [
-        "8002"
-      ],
-      "all_dns": [],
-      "compose": {
-        "containers": [],
-        "ports": [],
-        "networks": []
-      },
-      "declared_ports": {
-        "app": 8002
-      },
-      "backup": {
-        "enabled": true
-      },
-      "flake": "user-ai_kg-store-pub"
-    },
-    "my-ai-api": {
-      "category": "agi",
-      "vm": "oci-A1-f_0",
-      "folder": "user-ai_my-ai-api",
-      "description": "my-ai API on oci-apps — one polyglot container: OpenAI /v1 + Ollama /api + Anthropic /v1/messages mimic backed by OpenRouter (no Claude subscription, no metered Anthropic key), with a vendored Headroom (Apache-2.0) compression hop and a savings dashboard. Sibling of claude-superset-api; the agent face for this stack is goose (my-ai wraps goose, claude-superset keeps claude-cli). Internal WG-only sidecar, never public.",
-      "port": 3217,
-      "dns": "my-ai-api.mesh.diegonmarcos.com",
-      "upstream": "10.0.0.6:3217",
-      "containers": {
-        "app": {
-          "container_name": "cloud-agi-goose",
-          "image": "ghcr.io/diegonmarcos/my-ai-api:latest",
-          "port": 3217,
-          "port_env": "BRIDGE_PORT",
-          "dns": "my-ai-api.mesh.diegonmarcos.com",
-          "public": false,
-          "healthcheck": "/health",
-          "monitoring": null,
-          "env_file": true,
-          "depends_on": [],
-          "resources": null,
-          "read_only": false,
-          "protocol": "http"
-        }
-      },
-      "container_names": [
-        "cloud-agi-goose"
-      ],
-      "all_ports": [
-        "3217"
-      ],
-      "all_dns": [
-        "my-ai-api.mesh.diegonmarcos.com"
-      ],
-      "compose": {
-        "containers": [],
-        "ports": [],
-        "networks": []
-      },
-      "proxy": {
-        "app_hub": false
-      },
-      "declared_ports": {
-        "app": 3217,
-        "ollama": 12436,
-        "headroom": 8890,
-        "goosed": 3227,
-        "_goosed_doc": "goosed = goose agent ACP/REST+SSE server (goose serve, X-Secret-Key auth, WireGuard-only)"
-      },
-      "health": {
-        "path": "/health"
-      },
-      "flake": "user-ai_my-ai-api"
-    },
-    "my-ai_claude-api": {
-      "category": "agi",
-      "vm": "oci-A1-f_0",
-      "folder": "user-ai_my-ai_claude-api",
-      "description": "Claude superset API on oci-apps — one polyglot container: OpenAI /v1 + Ollama /api + Anthropic /v1/messages mimic backed by the subscription `claude` CLI (no metered key), with a vendored Headroom (Apache-2.0) compression hop and a savings dashboard. Successor to kg-bridge; usable as a local/remote fallback. Internal WG-only sidecar, never public.",
-      "port": 3117,
-      "dns": "my-ai-claude-api.mesh.diegonmarcos.com",
-      "upstream": "10.0.0.6:3117",
-      "containers": {
-        "app": {
-          "container_name": "cloud-agi-claude",
-          "image": "ghcr.io/diegonmarcos/claude-superset-api:latest",
-          "port": 3117,
-          "port_env": "BRIDGE_PORT",
-          "dns": "my-ai-claude-api.mesh.diegonmarcos.com",
-          "public": false,
-          "healthcheck": "/health",
-          "monitoring": null,
-          "env_file": true,
-          "depends_on": [],
-          "resources": null,
-          "read_only": false,
-          "protocol": "http"
-        }
-      },
-      "container_names": [
-        "cloud-agi-claude"
-      ],
-      "all_ports": [
-        "3117"
-      ],
-      "all_dns": [
-        "my-ai-claude-api.mesh.diegonmarcos.com"
-      ],
-      "compose": {
-        "containers": [],
-        "ports": [],
-        "networks": []
-      },
-      "proxy": {
-        "app_hub": false
-      },
-      "declared_ports": {
-        "app": 3117,
-        "ollama": 11436,
-        "headroom": 8788,
-        "proxy": 8789
-      },
-      "health": {
-        "path": "/health"
-      },
-      "flake": "user-ai_my-ai_claude-api"
-    },
     "openclaw": {
       "category": "agi",
       "vm": "oci-A1-f_0",
@@ -4977,56 +5324,6 @@
         "app": 18789
       },
       "flake": "user-ai_openclaw"
-    },
-    "session-memory": {
-      "category": "agi",
-      "vm": "oci-A1-f_0",
-      "folder": "user-ai_session-memory",
-      "description": "Central SQLite store of all Claude Code session transcripts — push/list/fetch so a session started on one device can be resumed from any other. WG-only sidecar on oci-apps; Node 22 built-in node:sqlite (phone-portable, no native deps).",
-      "port": 3108,
-      "dns": "session-memory.mesh.diegonmarcos.com",
-      "upstream": "10.0.0.6:3108",
-      "containers": {
-        "app": {
-          "container_name": "session-memory",
-          "image": "ghcr.io/diegonmarcos/session-memory:latest",
-          "port": 3108,
-          "port_env": "MEM_PORT",
-          "dns": "session-memory.mesh.diegonmarcos.com",
-          "public": false,
-          "healthcheck": "/health",
-          "monitoring": null,
-          "env_file": false,
-          "depends_on": [],
-          "resources": null,
-          "read_only": false,
-          "protocol": "http"
-        }
-      },
-      "container_names": [
-        "session-memory"
-      ],
-      "all_ports": [
-        "3108"
-      ],
-      "all_dns": [
-        "session-memory.mesh.diegonmarcos.com"
-      ],
-      "compose": {
-        "containers": [],
-        "ports": [],
-        "networks": []
-      },
-      "proxy": {
-        "app_hub": false
-      },
-      "declared_ports": {
-        "app": 3108
-      },
-      "health": {
-        "path": "/health"
-      },
-      "flake": "user-ai_session-memory"
     },
     "chat-mattermost": {
       "category": "app",
@@ -5860,27 +6157,27 @@
       },
       "flake": "user-comm_tools-stalwart"
     },
-    "scrappers-api": {
+    "cloudy-browser-scrapper-api": {
       "category": "data",
       "vm": "oci-A1-f_0",
-      "folder": "user-data_scrappers-api",
+      "folder": "user-data_cloudy-browser-scrapper-api",
       "description": "Unified scrapers API (Instagram / Pinterest / LinkedIn / generic crawl) — retires crawlee-cloud. Lean single-container FastAPI, on-demand, flat-JSON output.",
       "domain": "api.diegonmarcos.com",
       "port": 3020,
-      "dns": "scrappers-api.mesh.diegonmarcos.com",
+      "dns": "cloudy-browser-scrapper-api.mesh.diegonmarcos.com",
       "upstream": "10.0.0.6:3020",
       "containers": {
         "app": {
-          "container_name": "scrappers-api",
-          "image": "ghcr.io/diegonmarcos/scrappers-api:latest",
+          "container_name": "cloudy-browser-scrapper-api",
+          "image": "ghcr.io/diegonmarcos/cloudy-browser-scrapper-api:latest",
           "port": 3020,
           "port_env": "PORT",
           "protocol": "http",
-          "dns": "scrappers-api.mesh.diegonmarcos.com",
+          "dns": "cloudy-browser-scrapper-api.mesh.diegonmarcos.com",
           "public": true,
           "proxy": {
             "domain": "api.diegonmarcos.com",
-            "base_path": "/scrappers",
+            "base_path": "/cloudy-browser-scrapper-api",
             "auth": "two_factor"
           },
           "healthcheck": "curl -fsS http://127.0.0.1:3020/health >/dev/null 2>&1 || exit 1",
@@ -5888,13 +6185,13 @@
         }
       },
       "container_names": [
-        "scrappers-api"
+        "cloudy-browser-scrapper-api"
       ],
       "all_ports": [
         "3020"
       ],
       "all_dns": [
-        "scrappers-api.mesh.diegonmarcos.com"
+        "cloudy-browser-scrapper-api.mesh.diegonmarcos.com"
       ],
       "compose": {
         "containers": [],
@@ -5905,7 +6202,7 @@
         "primary": {
           "type": "path",
           "parent_domain": "api.diegonmarcos.com",
-          "base_path": "/scrappers",
+          "base_path": "/cloudy-browser-scrapper-api",
           "auth": "two_factor",
           "public_paths": [
             "/scrappers/health",
@@ -5928,29 +6225,29 @@
       "backup": {
         "enabled": true
       },
-      "flake": "user-data_scrappers-api"
+      "flake": "user-data_cloudy-browser-scrapper-api"
     },
-    "capital-stack-finterminal-api": {
+    "capital-stack-finterm-api": {
       "category": "fin",
       "vm": "oci-A1-f_0",
-      "folder": "user-fin_capital-stack-finterminal-api",
+      "folder": "user-fin_capital-stack-finterm-api",
       "description": "Fincept Terminal backend (capital-stack-finterminal-api) — REST + WebSocket over DataHub, 35 data connectors, 7 analytics, 17 brokers, 6 investor personas, MCP tools",
       "domain": "api.diegonmarcos.com/capital-stack-finterminal-api",
       "port": 8340,
-      "dns": "capital-stack-finterminal-api.mesh.diegonmarcos.com",
+      "dns": "capital-stack-finterm-api.mesh.diegonmarcos.com",
       "upstream": "10.0.0.6:8340",
       "containers": {
         "app": {
-          "container_name": "capital-stack-finterminal-api",
-          "image": "ghcr.io/diegonmarcos/capital-stack-finterminal-api:latest",
+          "container_name": "capital-stack-finterm-api",
+          "image": "ghcr.io/diegonmarcos/capital-stack-finterm-api:latest",
           "port": 8340,
           "port_env": "FIN_API_PORT",
-          "dns": "capital-stack-finterminal-api.mesh.diegonmarcos.com",
+          "dns": "capital-stack-finterm-api.mesh.diegonmarcos.com",
           "public": true,
           "proxy": {
             "type": "path",
             "parent_domain": "api.diegonmarcos.com",
-            "base_path": "/capital-stack-finterminal-api",
+            "base_path": "/capital-stack-finterm-api",
             "auth": "two_factor"
           },
           "healthcheck": "/health",
@@ -5971,13 +6268,13 @@
         }
       },
       "container_names": [
-        "capital-stack-finterminal-api"
+        "capital-stack-finterm-api"
       ],
       "all_ports": [
         "8340"
       ],
       "all_dns": [
-        "capital-stack-finterminal-api.mesh.diegonmarcos.com"
+        "capital-stack-finterm-api.mesh.diegonmarcos.com"
       ],
       "compose": {
         "containers": [],
@@ -5988,7 +6285,7 @@
         "primary": {
           "type": "path",
           "parent_domain": "api.diegonmarcos.com",
-          "base_path": "/capital-stack-finterminal-api",
+          "base_path": "/capital-stack-finterm-api",
           "auth": "two_factor",
           "paths": {
             "/health": {
@@ -6011,7 +6308,7 @@
       "backup": {
         "enabled": false
       },
-      "flake": "user-fin_capital-stack-finterminal-api"
+      "flake": "user-fin_capital-stack-finterm-api"
     },
     "capital-stack-finterminal-web": {
       "category": "fin",
@@ -6299,25 +6596,25 @@
       },
       "flake": "user-media_playlist-syncer"
     },
-    "news-gdelt": {
+    "capital-stack-news-gdelt-api": {
       "category": "tools",
       "vm": "oci-A1-f_0",
-      "folder": "user-news_news-gdelt",
+      "folder": "user-news_capital-stack-news-gdelt-api",
       "description": "GDELT News Aggregator — Fastify API with SQLite cache",
       "port": 3019,
-      "dns": "news-gdelt.mesh.diegonmarcos.com",
+      "dns": "capital-stack-news-gdelt-api.mesh.diegonmarcos.com",
       "upstream": "10.0.0.6:3019",
       "containers": {
         "app": {
-          "container_name": "news-gdelt",
-          "image": "ghcr.io/diegonmarcos/news-gdelt:latest",
+          "container_name": "capital-stack-news-gdelt-api",
+          "image": "ghcr.io/diegonmarcos/capital-stack-news-gdelt-api:latest",
           "port": 3019,
           "protocol": "http",
           "port_env": "PORT"
         }
       },
       "container_names": [
-        "news-gdelt"
+        "capital-stack-news-gdelt-api"
       ],
       "all_ports": [
         "3019"
@@ -6334,7 +6631,7 @@
       "health": {
         "path": "/health"
       },
-      "flake": "user-news_news-gdelt"
+      "flake": "user-news_capital-stack-news-gdelt-api"
     },
     "calendar-radicale": {
       "category": "app",

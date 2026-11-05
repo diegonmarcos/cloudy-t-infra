@@ -12,25 +12,11 @@
       "service": "languagetool"
     },
     {
-      "name": "api.diegonmarcos.com/c3-infra-api",
-      "type": "CNAME",
-      "content": "diegonmarcos.com",
-      "proxied": true,
-      "service": "c3-infra-api"
-    },
-    {
       "name": "api.diegonmarcos.com/pub",
       "type": "CNAME",
       "content": "diegonmarcos.com",
       "proxied": true,
       "service": "c3-public-api"
-    },
-    {
-      "name": "api.diegonmarcos.com/c3-services-api",
-      "type": "CNAME",
-      "content": "diegonmarcos.com",
-      "proxied": true,
-      "service": "c3-services-api"
     },
     {
       "name": "mcp.diegonmarcos.com",
@@ -68,11 +54,46 @@
       "service": "cloud-vault-mcp"
     },
     {
+      "name": "api.diegonmarcos.com/c3-services-api",
+      "type": "CNAME",
+      "content": "diegonmarcos.com",
+      "proxied": true,
+      "service": "cloudy-all-api"
+    },
+    {
+      "name": "mcp.diegonmarcos.com",
+      "type": "CNAME",
+      "content": "diegonmarcos.com",
+      "proxied": true,
+      "service": "cloudy-apps-communication-mcp"
+    },
+    {
+      "name": "mcp.diegonmarcos.com",
+      "type": "CNAME",
+      "content": "diegonmarcos.com",
+      "proxied": true,
+      "service": "cloudy-apps-drive-mcp"
+    },
+    {
+      "name": "api.diegonmarcos.com/c3-infra-api",
+      "type": "CNAME",
+      "content": "diegonmarcos.com",
+      "proxied": true,
+      "service": "cloudy-c3-api"
+    },
+    {
       "name": "api.diegonmarcos.com/git",
       "type": "CNAME",
       "content": "diegonmarcos.com",
       "proxied": true,
-      "service": "git-proxy-api"
+      "service": "cloudy-drive-git-proxy-api"
+    },
+    {
+      "name": "api.diegonmarcos.com/http-to-smtp-proxy-api",
+      "type": "CNAME",
+      "content": "diegonmarcos.com",
+      "proxied": true,
+      "service": "cloudy-mail-http-to-smtp-api"
     },
     {
       "name": "mcp.diegonmarcos.com",
@@ -87,13 +108,6 @@
       "content": "diegonmarcos.com",
       "proxied": true,
       "service": "google-workspace-mcp"
-    },
-    {
-      "name": "api.diegonmarcos.com/http-to-smtp-proxy-api",
-      "type": "CNAME",
-      "content": "diegonmarcos.com",
-      "proxied": true,
-      "service": "http-to-smtp-proxy-api"
     },
     {
       "name": "git.diegonmarcos.com",
@@ -233,14 +247,14 @@
       "type": "CNAME",
       "content": "diegonmarcos.com",
       "proxied": true,
-      "service": "scrappers-api"
+      "service": "cloudy-browser-scrapper-api"
     },
     {
       "name": "api.diegonmarcos.com/capital-stack-finterminal-api",
       "type": "CNAME",
       "content": "diegonmarcos.com",
       "proxied": true,
-      "service": "capital-stack-finterminal-api"
+      "service": "capital-stack-finterm-api"
     },
     {
       "name": "photos.diegonmarcos.com",

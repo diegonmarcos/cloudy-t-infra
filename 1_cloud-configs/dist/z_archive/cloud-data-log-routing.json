@@ -20,8 +20,8 @@
         "log_level": "info"
       },
       {
-        "container": "git-proxy-api",
-        "service": "git-proxy-api",
+        "container": "cloudy-drive-git-proxy-api",
+        "service": "cloudy-drive-git-proxy-api",
         "log_level": "info"
       },
       {
@@ -37,8 +37,13 @@
     ],
     "oci-apps": [
       {
-        "container": "embeddings-api",
-        "service": "embeddings-api",
+        "container": "cloudy-ai-api",
+        "service": "cloudy-ai-api",
+        "log_level": "info"
+      },
+      {
+        "container": "cloudy-ai-embeddings-api",
+        "service": "cloudy-ai-embeddings-api",
         "log_level": "info"
       },
       {
@@ -49,16 +54,6 @@
       {
         "container": "languagetool",
         "service": "languagetool",
-        "log_level": "info"
-      },
-      {
-        "container": "c3-infra-api",
-        "service": "c3-infra-api",
-        "log_level": "info"
-      },
-      {
-        "container": "c3-services-api",
-        "service": "c3-services-api",
         "log_level": "info"
       },
       {
@@ -94,6 +89,31 @@
       {
         "container": "cloud-vault-mcp",
         "service": "cloud-vault-mcp",
+        "log_level": "info"
+      },
+      {
+        "container": "cloudy-all-api",
+        "service": "cloudy-all-api",
+        "log_level": "info"
+      },
+      {
+        "container": "cloudy-all-mcp",
+        "service": "cloudy-all-mcp",
+        "log_level": "info"
+      },
+      {
+        "container": "cloudy-apps-communication-mcp",
+        "service": "cloudy-apps-communication-mcp",
+        "log_level": "info"
+      },
+      {
+        "container": "cloudy-apps-drive-mcp",
+        "service": "cloudy-apps-drive-mcp",
+        "log_level": "info"
+      },
+      {
+        "container": "cloudy-c3-api",
+        "service": "cloudy-c3-api",
         "log_level": "info"
       },
       {
@@ -172,12 +192,12 @@
         "log_level": "info"
       },
       {
-        "container": "rss-gateway",
+        "container": "capital-stack-news-rss-api",
         "service": "ntfy",
         "log_level": "info"
       },
       {
-        "container": "github-rss",
+        "container": "capital-stack-news-github-rss-api",
         "service": "ntfy",
         "log_level": "info"
       },
@@ -212,33 +232,33 @@
         "log_level": "info"
       },
       {
-        "container": "auth-broker-google",
+        "container": "cloudy-auth-google-api",
         "service": "auth-broker",
         "log_level": "info"
       },
       {
-        "container": "auth-broker-github",
+        "container": "cloudy-auth-github-api",
         "service": "auth-broker",
         "log_level": "info"
       },
       {
-        "container": "auth-broker-cloudflare",
+        "container": "cloudy-auth-cloudflare-api",
         "service": "auth-broker",
         "log_level": "info"
       },
       {
-        "container": "auth-broker-email",
+        "container": "cloudy-auth-email-api",
         "service": "auth-broker",
+        "log_level": "info"
+      },
+      {
+        "container": "cloudy-ai-tokens-api",
+        "service": "cloudy-ai-tokens-api",
         "log_level": "info"
       },
       {
         "container": "crowdsec",
         "service": "crowdsec",
-        "log_level": "info"
-      },
-      {
-        "container": "tokens-api",
-        "service": "tokens-api",
         "log_level": "info"
       },
       {
@@ -252,38 +272,38 @@
         "log_level": "info"
       },
       {
+        "container": "cloud-me-cgc-pvt-graph-api",
+        "service": "cloud-me-cgc-pvt-graph-api",
+        "log_level": "info"
+      },
+      {
+        "container": "cloud-agi-goose",
+        "service": "cloudy-ai-agents-api",
+        "log_level": "info"
+      },
+      {
+        "container": "cloud-agi-claude",
+        "service": "cloudy-ai-claude-api",
+        "log_level": "info"
+      },
+      {
+        "container": "cloudy-ai-memory-api",
+        "service": "cloudy-ai-memory-api",
+        "log_level": "info"
+      },
+      {
+        "container": "cloudy-cgc-pub-graph-api",
+        "service": "cloudy-cgc-pub-graph-api",
+        "log_level": "info"
+      },
+      {
         "container": "cloud-agi-hermes",
         "service": "hermes-agent",
         "log_level": "info"
       },
       {
-        "container": "kg-store",
-        "service": "kg-store",
-        "log_level": "info"
-      },
-      {
-        "container": "kg-store-pub",
-        "service": "kg-store-pub",
-        "log_level": "info"
-      },
-      {
-        "container": "cloud-agi-goose",
-        "service": "my-ai-api",
-        "log_level": "info"
-      },
-      {
-        "container": "cloud-agi-claude",
-        "service": "my-ai_claude-api",
-        "log_level": "info"
-      },
-      {
         "container": "cloud-agi-openclaw",
         "service": "openclaw",
-        "log_level": "info"
-      },
-      {
-        "container": "session-memory",
-        "service": "session-memory",
         "log_level": "info"
       },
       {
@@ -322,13 +342,13 @@
         "log_level": "info"
       },
       {
-        "container": "scrappers-api",
-        "service": "scrappers-api",
+        "container": "cloudy-browser-scrapper-api",
+        "service": "cloudy-browser-scrapper-api",
         "log_level": "info"
       },
       {
-        "container": "capital-stack-finterminal-api",
-        "service": "capital-stack-finterminal-api",
+        "container": "capital-stack-finterm-api",
+        "service": "capital-stack-finterm-api",
         "log_level": "info"
       },
       {
@@ -357,8 +377,8 @@
         "log_level": "info"
       },
       {
-        "container": "news-gdelt",
-        "service": "news-gdelt",
+        "container": "capital-stack-news-gdelt-api",
+        "service": "capital-stack-news-gdelt-api",
         "log_level": "info"
       },
       {
@@ -439,8 +459,8 @@
     ],
     "gcp-proxy": [
       {
-        "container": "http-to-smtp-proxy-api",
-        "service": "http-to-smtp-proxy-api",
+        "container": "cloudy-mail-http-to-smtp-api",
+        "service": "cloudy-mail-http-to-smtp-api",
         "log_level": "info"
       },
       {

@@ -51,6 +51,17 @@
             "public_url": null
           },
           {
+            "id": "cloudy-ai-api",
+            "name": "cloudy-ai-api",
+            "vm": "oci-A1-f_0",
+            "category": "sec",
+            "subgroup": "Security",
+            "port": 4185,
+            "private_ip": "10.0.0.6",
+            "private_url": "https://cloudy-ai-api.mesh.diegonmarcos.com",
+            "public_url": null
+          },
+          {
             "id": "languagetool",
             "name": "languagetool",
             "vm": "oci-A1-f_0",
@@ -62,17 +73,6 @@
             "public_url": "https://languagetool.diegonmarcos.com"
           },
           {
-            "id": "c3-infra-api",
-            "name": "c3-infra-api",
-            "vm": "oci-A1-f_0",
-            "category": "sec",
-            "subgroup": "APIs-MCPs",
-            "port": 8081,
-            "private_ip": "10.0.0.6",
-            "private_url": "https://c3-infra-api.mesh.diegonmarcos.com",
-            "public_url": "https://api.diegonmarcos.com/c3-infra-api"
-          },
-          {
             "id": "c3-public-api",
             "name": "c3-public-api",
             "vm": "oci-E2-f_1",
@@ -82,17 +82,6 @@
             "private_ip": "10.0.0.4",
             "private_url": "https://c3-public-api.mesh.diegonmarcos.com",
             "public_url": "https://api.diegonmarcos.com/pub"
-          },
-          {
-            "id": "c3-services-api",
-            "name": "c3-services-api",
-            "vm": "oci-A1-f_0",
-            "category": "obs",
-            "subgroup": "APIs-MCPs",
-            "port": 8082,
-            "private_ip": "10.0.0.6",
-            "private_url": "https://c3-services-api.mesh.diegonmarcos.com",
-            "public_url": "https://api.diegonmarcos.com/c3-services-api"
           },
           {
             "id": "cloud-infra-mcp",
@@ -129,6 +118,40 @@
             "private_url": "https://cloud-vault-mcp.mesh.diegonmarcos.com",
             "public_url": "https://mcp.diegonmarcos.com",
             "mcp": true
+          },
+          {
+            "id": "cloudy-all-api",
+            "name": "cloudy-all-api",
+            "vm": "oci-A1-f_0",
+            "category": "obs",
+            "subgroup": "Observability",
+            "port": 8082,
+            "private_ip": "10.0.0.6",
+            "private_url": "https://cloudy-all-api.mesh.diegonmarcos.com",
+            "public_url": "https://api.diegonmarcos.com/c3-services-api"
+          },
+          {
+            "id": "cloudy-all-mcp",
+            "name": "cloudy-all-mcp",
+            "vm": "oci-A1-f_0",
+            "category": "obs",
+            "subgroup": "Observability",
+            "port": 3112,
+            "private_ip": "10.0.0.6",
+            "private_url": "https://cloudy-all-mcp.mesh.diegonmarcos.com",
+            "public_url": null,
+            "mcp": true
+          },
+          {
+            "id": "cloudy-c3-api",
+            "name": "cloudy-c3-api",
+            "vm": "oci-A1-f_0",
+            "category": "sec",
+            "subgroup": "Security",
+            "port": 8081,
+            "private_ip": "10.0.0.6",
+            "private_url": "https://cloudy-c3-api.mesh.diegonmarcos.com",
+            "public_url": "https://api.diegonmarcos.com/c3-infra-api"
           },
           {
             "id": "gha-runner",
@@ -384,6 +407,17 @@
             "public_url": null
           },
           {
+            "id": "cloudy-ai-tokens-api",
+            "name": "cloudy-ai-tokens-api",
+            "vm": "oci-A1-f_0",
+            "category": "sec",
+            "subgroup": "Security",
+            "port": 4184,
+            "private_ip": "10.0.0.6",
+            "private_url": "https://cloudy-ai-tokens-api.mesh.diegonmarcos.com",
+            "public_url": null
+          },
+          {
             "id": "crowdsec",
             "name": "crowdsec",
             "vm": "oci-A1-f_0",
@@ -403,17 +437,6 @@
             "port": 4182,
             "private_ip": "10.0.0.1",
             "private_url": "https://introspect-proxy.mesh.diegonmarcos.com",
-            "public_url": null
-          },
-          {
-            "id": "tokens-api",
-            "name": "tokens-api",
-            "vm": "oci-A1-f_0",
-            "category": "sec",
-            "subgroup": "Security",
-            "port": 4184,
-            "private_ip": "10.0.0.6",
-            "private_url": "https://tokens-api.mesh.diegonmarcos.com",
             "public_url": null
           },
           {
@@ -438,62 +461,18 @@
             "private_ip": null,
             "private_url": null,
             "public_url": null
-          },
-          {
-            "id": "kg-store",
-            "name": "kg-store",
-            "vm": "oci-A1-f_0",
-            "category": "data",
-            "subgroup": "Data",
-            "port": 8001,
-            "private_ip": "10.0.0.6",
-            "private_url": "https://kg-store.mesh.diegonmarcos.com",
-            "public_url": null
-          },
-          {
-            "id": "kg-store-pub",
-            "name": "kg-store-pub",
-            "vm": "oci-A1-f_0",
-            "category": "data",
-            "subgroup": "Data",
-            "port": 8002,
-            "private_ip": "10.0.0.6",
-            "private_url": "https://kg-store-pub.mesh.diegonmarcos.com",
-            "public_url": null
-          },
-          {
-            "id": "scrappers-api",
-            "name": "scrappers-api",
-            "vm": "oci-A1-f_0",
-            "category": "data",
-            "subgroup": "APIs-MCPs",
-            "port": 3020,
-            "private_ip": "10.0.0.6",
-            "private_url": "https://scrappers-api.mesh.diegonmarcos.com",
-            "public_url": "https://api.diegonmarcos.com"
-          },
-          {
-            "id": "news-gdelt",
-            "name": "news-gdelt",
-            "vm": "oci-A1-f_0",
-            "category": "tools",
-            "subgroup": "Data",
-            "port": 3019,
-            "private_ip": "10.0.0.6",
-            "private_url": "https://news-gdelt.mesh.diegonmarcos.com",
-            "public_url": null
           }
         ],
         "user-apps": [
           {
-            "id": "embeddings-api",
-            "name": "embeddings-api",
+            "id": "cloudy-ai-embeddings-api",
+            "name": "cloudy-ai-embeddings-api",
             "vm": "oci-A1-f_0",
             "category": "agi",
             "subgroup": "AI-Agents",
             "port": 7997,
             "private_ip": "10.0.0.6",
-            "private_url": "https://embeddings-api.mesh.diegonmarcos.com",
+            "private_url": "https://cloudy-ai-embeddings-api.mesh.diegonmarcos.com",
             "public_url": null
           },
           {
@@ -556,15 +535,50 @@
             "mcp": true
           },
           {
-            "id": "git-proxy-api",
-            "name": "git-proxy-api",
+            "id": "cloudy-apps-communication-mcp",
+            "name": "cloudy-apps-communication-mcp",
+            "vm": "oci-A1-f_0",
+            "category": "app",
+            "subgroup": "Productivity",
+            "port": 3103,
+            "private_ip": "10.0.0.6",
+            "private_url": "https://cloudy-apps-communication-mcp.mesh.diegonmarcos.com",
+            "public_url": "https://mcp.diegonmarcos.com",
+            "mcp": true
+          },
+          {
+            "id": "cloudy-apps-drive-mcp",
+            "name": "cloudy-apps-drive-mcp",
+            "vm": "oci-A1-f_0",
+            "category": "app",
+            "subgroup": "Productivity",
+            "port": 3109,
+            "private_ip": "10.0.0.6",
+            "private_url": "https://cloudy-apps-drive-mcp.mesh.diegonmarcos.com",
+            "public_url": "https://mcp.diegonmarcos.com",
+            "mcp": true
+          },
+          {
+            "id": "cloudy-drive-git-proxy-api",
+            "name": "cloudy-drive-git-proxy-api",
             "vm": "oci-E2-f_1",
             "category": "app",
             "subgroup": "Productivity",
             "port": 8123,
             "private_ip": "10.0.0.4",
-            "private_url": "https://git-proxy-api.mesh.diegonmarcos.com",
+            "private_url": "https://cloudy-drive-git-proxy-api.mesh.diegonmarcos.com",
             "public_url": "https://api.diegonmarcos.com/git"
+          },
+          {
+            "id": "cloudy-mail-http-to-smtp-api",
+            "name": "cloudy-mail-http-to-smtp-api",
+            "vm": "gcp-E2-f_0",
+            "category": "app",
+            "subgroup": "Productivity",
+            "port": 8090,
+            "private_ip": "10.0.0.1",
+            "private_url": "https://cloudy-mail-http-to-smtp-api.mesh.diegonmarcos.com",
+            "public_url": "https://api.diegonmarcos.com/http-to-smtp-proxy-api"
           },
           {
             "id": "google-personal-mcp",
@@ -591,15 +605,37 @@
             "mcp": true
           },
           {
-            "id": "http-to-smtp-proxy-api",
-            "name": "http-to-smtp-proxy-api",
-            "vm": "gcp-E2-f_0",
-            "category": "app",
-            "subgroup": "Communications",
-            "port": 8090,
-            "private_ip": "10.0.0.1",
-            "private_url": "https://http-to-smtp-proxy-api.mesh.diegonmarcos.com",
-            "public_url": "https://api.diegonmarcos.com/http-to-smtp-proxy-api"
+            "id": "cloudy-ai-agents-api",
+            "name": "cloudy-ai-agents-api",
+            "vm": "oci-A1-f_0",
+            "category": "agi",
+            "subgroup": "AI-Agents",
+            "port": 3217,
+            "private_ip": "10.0.0.6",
+            "private_url": "https://cloudy-ai-agents-api.mesh.diegonmarcos.com",
+            "public_url": null
+          },
+          {
+            "id": "cloudy-ai-claude-api",
+            "name": "cloudy-ai-claude-api",
+            "vm": "oci-A1-f_0",
+            "category": "agi",
+            "subgroup": "AI-Agents",
+            "port": 3117,
+            "private_ip": "10.0.0.6",
+            "private_url": "https://cloudy-ai-claude-api.mesh.diegonmarcos.com",
+            "public_url": null
+          },
+          {
+            "id": "cloudy-ai-memory-api",
+            "name": "cloudy-ai-memory-api",
+            "vm": "oci-A1-f_0",
+            "category": "agi",
+            "subgroup": "AI-Agents",
+            "port": 3108,
+            "private_ip": "10.0.0.6",
+            "private_url": "https://cloudy-ai-memory-api.mesh.diegonmarcos.com",
+            "public_url": null
           },
           {
             "id": "hermes-agent",
@@ -613,28 +649,6 @@
             "public_url": null
           },
           {
-            "id": "my-ai-api",
-            "name": "my-ai-api",
-            "vm": "oci-A1-f_0",
-            "category": "agi",
-            "subgroup": "AI-Agents",
-            "port": 3217,
-            "private_ip": "10.0.0.6",
-            "private_url": "https://my-ai-api.mesh.diegonmarcos.com",
-            "public_url": null
-          },
-          {
-            "id": "my-ai_claude-api",
-            "name": "my-ai_claude-api",
-            "vm": "oci-A1-f_0",
-            "category": "agi",
-            "subgroup": "AI-Agents",
-            "port": 3117,
-            "private_ip": "10.0.0.6",
-            "private_url": "https://my-ai_claude-api.mesh.diegonmarcos.com",
-            "public_url": null
-          },
-          {
             "id": "openclaw",
             "name": "openclaw",
             "vm": "oci-A1-f_0",
@@ -643,17 +657,6 @@
             "port": 18789,
             "private_ip": "10.0.0.6",
             "private_url": "https://openclaw.mesh.diegonmarcos.com",
-            "public_url": null
-          },
-          {
-            "id": "session-memory",
-            "name": "session-memory",
-            "vm": "oci-A1-f_0",
-            "category": "agi",
-            "subgroup": "AI-Agents",
-            "port": 3108,
-            "private_ip": "10.0.0.6",
-            "private_url": "https://session-memory.mesh.diegonmarcos.com",
             "public_url": null
           },
           {
@@ -745,14 +748,14 @@
             "public_url": "https://jmap.diegonmarcos.com"
           },
           {
-            "id": "capital-stack-finterminal-api",
-            "name": "capital-stack-finterminal-api",
+            "id": "capital-stack-finterm-api",
+            "name": "capital-stack-finterm-api",
             "vm": "oci-A1-f_0",
             "category": "fin",
             "subgroup": "Finance",
             "port": 8340,
             "private_ip": "10.0.0.6",
-            "private_url": "https://capital-stack-finterminal-api.mesh.diegonmarcos.com",
+            "private_url": "https://capital-stack-finterm-api.mesh.diegonmarcos.com",
             "public_url": "https://api.diegonmarcos.com/capital-stack-finterminal-api"
           },
           {
@@ -979,8 +982,8 @@
             }
           },
           {
-            "id": "kg-store/app",
-            "service": "kg-store",
+            "id": "cloud-me-cgc-pvt-graph-api/app",
+            "service": "cloud-me-cgc-pvt-graph-api",
             "container": "app",
             "engine": "surrealdb",
             "kind": "container",
@@ -997,8 +1000,8 @@
             }
           },
           {
-            "id": "kg-store-pub/app",
-            "service": "kg-store-pub",
+            "id": "cloudy-cgc-pub-graph-api/app",
+            "service": "cloudy-cgc-pub-graph-api",
             "container": "app",
             "engine": "surrealdb",
             "kind": "container",
@@ -4145,17 +4148,6 @@
           "public_url": "https://languagetool.diegonmarcos.com"
         },
         {
-          "id": "c3-infra-api",
-          "name": "c3-infra-api",
-          "vm": "oci-A1-f_0",
-          "category": "sec",
-          "subgroup": "APIs-MCPs",
-          "port": 8081,
-          "private_ip": "10.0.0.6",
-          "private_url": "https://c3-infra-api.mesh.diegonmarcos.com",
-          "public_url": "https://api.diegonmarcos.com/c3-infra-api"
-        },
-        {
           "id": "c3-public-api",
           "name": "c3-public-api",
           "vm": "oci-E2-f_1",
@@ -4167,15 +4159,26 @@
           "public_url": "https://api.diegonmarcos.com/pub"
         },
         {
-          "id": "c3-services-api",
-          "name": "c3-services-api",
+          "id": "cloudy-all-api",
+          "name": "cloudy-all-api",
           "vm": "oci-A1-f_0",
           "category": "obs",
-          "subgroup": "APIs-MCPs",
+          "subgroup": "Observability",
           "port": 8082,
           "private_ip": "10.0.0.6",
-          "private_url": "https://c3-services-api.mesh.diegonmarcos.com",
+          "private_url": "https://cloudy-all-api.mesh.diegonmarcos.com",
           "public_url": "https://api.diegonmarcos.com/c3-services-api"
+        },
+        {
+          "id": "cloudy-c3-api",
+          "name": "cloudy-c3-api",
+          "vm": "oci-A1-f_0",
+          "category": "sec",
+          "subgroup": "Security",
+          "port": 8081,
+          "private_ip": "10.0.0.6",
+          "private_url": "https://cloudy-c3-api.mesh.diegonmarcos.com",
+          "public_url": "https://api.diegonmarcos.com/c3-infra-api"
         },
         {
           "id": "gitea",
@@ -4332,36 +4335,25 @@
           "public_url": "https://crowdsec.diegonmarcos.com"
         },
         {
-          "id": "scrappers-api",
-          "name": "scrappers-api",
-          "vm": "oci-A1-f_0",
-          "category": "data",
-          "subgroup": "APIs-MCPs",
-          "port": 3020,
-          "private_ip": "10.0.0.6",
-          "private_url": "https://scrappers-api.mesh.diegonmarcos.com",
-          "public_url": "https://api.diegonmarcos.com"
-        },
-        {
-          "id": "git-proxy-api",
-          "name": "git-proxy-api",
+          "id": "cloudy-drive-git-proxy-api",
+          "name": "cloudy-drive-git-proxy-api",
           "vm": "oci-E2-f_1",
           "category": "app",
           "subgroup": "Productivity",
           "port": 8123,
           "private_ip": "10.0.0.4",
-          "private_url": "https://git-proxy-api.mesh.diegonmarcos.com",
+          "private_url": "https://cloudy-drive-git-proxy-api.mesh.diegonmarcos.com",
           "public_url": "https://api.diegonmarcos.com/git"
         },
         {
-          "id": "http-to-smtp-proxy-api",
-          "name": "http-to-smtp-proxy-api",
+          "id": "cloudy-mail-http-to-smtp-api",
+          "name": "cloudy-mail-http-to-smtp-api",
           "vm": "gcp-E2-f_0",
           "category": "app",
-          "subgroup": "Communications",
+          "subgroup": "Productivity",
           "port": 8090,
           "private_ip": "10.0.0.1",
-          "private_url": "https://http-to-smtp-proxy-api.mesh.diegonmarcos.com",
+          "private_url": "https://cloudy-mail-http-to-smtp-api.mesh.diegonmarcos.com",
           "public_url": "https://api.diegonmarcos.com/http-to-smtp-proxy-api"
         },
         {
@@ -4442,14 +4434,14 @@
           "public_url": "https://jmap.diegonmarcos.com"
         },
         {
-          "id": "capital-stack-finterminal-api",
-          "name": "capital-stack-finterminal-api",
+          "id": "capital-stack-finterm-api",
+          "name": "capital-stack-finterm-api",
           "vm": "oci-A1-f_0",
           "category": "fin",
           "subgroup": "Finance",
           "port": 8340,
           "private_ip": "10.0.0.6",
-          "private_url": "https://capital-stack-finterminal-api.mesh.diegonmarcos.com",
+          "private_url": "https://capital-stack-finterm-api.mesh.diegonmarcos.com",
           "public_url": "https://api.diegonmarcos.com/capital-stack-finterminal-api"
         },
         {
@@ -4634,6 +4626,18 @@
           "mcp": true
         },
         {
+          "id": "cloudy-all-mcp",
+          "name": "cloudy-all-mcp",
+          "vm": "oci-A1-f_0",
+          "category": "obs",
+          "subgroup": "Observability",
+          "port": 3112,
+          "private_ip": "10.0.0.6",
+          "private_url": "https://cloudy-all-mcp.mesh.diegonmarcos.com",
+          "public_url": null,
+          "mcp": true
+        },
+        {
           "id": "cloud-cgc-pub-mcp",
           "name": "cloud-cgc-pub-mcp",
           "vm": "oci-A1-f_0",
@@ -4690,6 +4694,30 @@
           "port": 3110,
           "private_ip": "10.0.0.6",
           "private_url": "https://cloud-superapp-mcp.mesh.diegonmarcos.com",
+          "public_url": "https://mcp.diegonmarcos.com",
+          "mcp": true
+        },
+        {
+          "id": "cloudy-apps-communication-mcp",
+          "name": "cloudy-apps-communication-mcp",
+          "vm": "oci-A1-f_0",
+          "category": "app",
+          "subgroup": "Productivity",
+          "port": 3103,
+          "private_ip": "10.0.0.6",
+          "private_url": "https://cloudy-apps-communication-mcp.mesh.diegonmarcos.com",
+          "public_url": "https://mcp.diegonmarcos.com",
+          "mcp": true
+        },
+        {
+          "id": "cloudy-apps-drive-mcp",
+          "name": "cloudy-apps-drive-mcp",
+          "vm": "oci-A1-f_0",
+          "category": "app",
+          "subgroup": "Productivity",
+          "port": 3109,
+          "private_ip": "10.0.0.6",
+          "private_url": "https://cloudy-apps-drive-mcp.mesh.diegonmarcos.com",
           "public_url": "https://mcp.diegonmarcos.com",
           "mcp": true
         },
@@ -4774,8 +4802,8 @@
           }
         },
         {
-          "id": "kg-store/app",
-          "service": "kg-store",
+          "id": "cloud-me-cgc-pvt-graph-api/app",
+          "service": "cloud-me-cgc-pvt-graph-api",
           "container": "app",
           "engine": "surrealdb",
           "kind": "container",
@@ -4792,8 +4820,8 @@
           }
         },
         {
-          "id": "kg-store-pub/app",
-          "service": "kg-store-pub",
+          "id": "cloudy-cgc-pub-graph-api/app",
+          "service": "cloudy-cgc-pub-graph-api",
           "container": "app",
           "engine": "surrealdb",
           "kind": "container",

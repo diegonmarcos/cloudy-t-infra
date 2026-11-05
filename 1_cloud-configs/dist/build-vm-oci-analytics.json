@@ -29,11 +29,11 @@
       "has_docker_build": true
     },
     {
-      "name": "git-proxy-api",
-      "dir": "infra-api_git-proxy-api",
-      "compose_path": "/opt/containers/git-proxy-api",
+      "name": "cloudy-drive-git-proxy-api",
+      "dir": "infra-api_cloudy-drive-git-proxy-api",
+      "compose_path": "/opt/containers/cloudy-drive-git-proxy-api",
       "images": [
-        "ghcr.io/diegonmarcos/git-proxy-api:latest"
+        "ghcr.io/diegonmarcos/cloudy-drive-git-proxy-api:latest"
       ],
       "has_docker_build": true
     },

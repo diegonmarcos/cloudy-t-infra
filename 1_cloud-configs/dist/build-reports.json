@@ -14,19 +14,19 @@
   ],
   "endpoint_checks": [
     {
-      "service": "c3-infra-api",
-      "url": "https://api.diegonmarcos.com/c3-infra-api/health"
-    },
-    {
       "service": "c3-public-api",
       "url": "https://api.diegonmarcos.com/pub/health"
     },
     {
-      "service": "c3-services-api",
+      "service": "cloudy-all-api",
       "url": "https://api.diegonmarcos.com/c3-services-api/health"
     },
     {
-      "service": "git-proxy-api",
+      "service": "cloudy-c3-api",
+      "url": "https://api.diegonmarcos.com/c3-infra-api/health"
+    },
+    {
+      "service": "cloudy-drive-git-proxy-api",
       "url": "https://api.diegonmarcos.com/git/health"
     },
     {
@@ -82,11 +82,11 @@
       "url": "https://jmap.diegonmarcos.com/"
     },
     {
-      "service": "scrappers-api",
+      "service": "cloudy-browser-scrapper-api",
       "url": "https://api.diegonmarcos.com/health"
     },
     {
-      "service": "capital-stack-finterminal-api",
+      "service": "capital-stack-finterm-api",
       "url": "https://api.diegonmarcos.com/capital-stack-finterminal-api/health"
     },
     {
@@ -148,19 +148,19 @@
       "domain": "languagetool.diegonmarcos.com"
     },
     {
-      "service": "c3-infra-api",
-      "domain": "api.diegonmarcos.com/c3-infra-api"
-    },
-    {
       "service": "c3-public-api",
       "domain": "api.diegonmarcos.com/pub"
     },
     {
-      "service": "c3-services-api",
+      "service": "cloudy-all-api",
       "domain": "api.diegonmarcos.com/c3-services-api"
     },
     {
-      "service": "git-proxy-api",
+      "service": "cloudy-c3-api",
+      "domain": "api.diegonmarcos.com/c3-infra-api"
+    },
+    {
+      "service": "cloudy-drive-git-proxy-api",
       "domain": "api.diegonmarcos.com/git"
     },
     {
@@ -224,11 +224,11 @@
       "domain": "jmap.diegonmarcos.com"
     },
     {
-      "service": "scrappers-api",
+      "service": "cloudy-browser-scrapper-api",
       "domain": "api.diegonmarcos.com"
     },
     {
-      "service": "capital-stack-finterminal-api",
+      "service": "capital-stack-finterm-api",
       "domain": "api.diegonmarcos.com/capital-stack-finterminal-api"
     },
     {
@@ -290,19 +290,19 @@
       "domain": "languagetool.diegonmarcos.com"
     },
     {
-      "service": "c3-infra-api",
-      "domain": "api.diegonmarcos.com/c3-infra-api"
-    },
-    {
       "service": "c3-public-api",
       "domain": "api.diegonmarcos.com/pub"
     },
     {
-      "service": "c3-services-api",
+      "service": "cloudy-all-api",
       "domain": "api.diegonmarcos.com/c3-services-api"
     },
     {
-      "service": "git-proxy-api",
+      "service": "cloudy-c3-api",
+      "domain": "api.diegonmarcos.com/c3-infra-api"
+    },
+    {
+      "service": "cloudy-drive-git-proxy-api",
       "domain": "api.diegonmarcos.com/git"
     },
     {
@@ -370,11 +370,11 @@
       "domain": "jmap.diegonmarcos.com"
     },
     {
-      "service": "scrappers-api",
+      "service": "cloudy-browser-scrapper-api",
       "domain": "api.diegonmarcos.com"
     },
     {
-      "service": "capital-stack-finterminal-api",
+      "service": "capital-stack-finterm-api",
       "domain": "api.diegonmarcos.com/capital-stack-finterminal-api"
     },
     {
@@ -462,8 +462,21 @@
       "ports": null,
       "health": null
     },
-    "embeddings-api": {
-      "name": "embeddings-api",
+    "cloudy-ai-api": {
+      "name": "cloudy-ai-api",
+      "vm": "oci-A1-f_0",
+      "domain": null,
+      "enabled": true,
+      "category": "sec",
+      "ports": {
+        "app": 4185
+      },
+      "health": {
+        "path": "/health"
+      }
+    },
+    "cloudy-ai-embeddings-api": {
+      "name": "cloudy-ai-embeddings-api",
       "vm": "oci-A1-f_0",
       "domain": null,
       "enabled": true,
@@ -501,19 +514,6 @@
         "path": "/v2/check"
       }
     },
-    "c3-infra-api": {
-      "name": "c3-infra-api",
-      "vm": "oci-A1-f_0",
-      "domain": "api.diegonmarcos.com/c3-infra-api",
-      "enabled": true,
-      "category": "sec",
-      "ports": {
-        "app": 8081
-      },
-      "health": {
-        "path": "/c3-infra-api/health"
-      }
-    },
     "c3-public-api": {
       "name": "c3-public-api",
       "vm": "oci-E2-f_1",
@@ -525,19 +525,6 @@
       },
       "health": {
         "path": "/pub/health"
-      }
-    },
-    "c3-services-api": {
-      "name": "c3-services-api",
-      "vm": "oci-A1-f_0",
-      "domain": "api.diegonmarcos.com/c3-services-api",
-      "enabled": true,
-      "category": "obs",
-      "ports": {
-        "app": 8082
-      },
-      "health": {
-        "path": "/c3-services-api/health"
       }
     },
     "cloud-drive-mcp": {
@@ -634,8 +621,69 @@
       },
       "health": null
     },
-    "git-proxy-api": {
-      "name": "git-proxy-api",
+    "cloudy-all-api": {
+      "name": "cloudy-all-api",
+      "vm": "oci-A1-f_0",
+      "domain": "api.diegonmarcos.com/c3-services-api",
+      "enabled": true,
+      "category": "obs",
+      "ports": {
+        "app": 8082
+      },
+      "health": {
+        "path": "/c3-services-api/health"
+      }
+    },
+    "cloudy-all-mcp": {
+      "name": "cloudy-all-mcp",
+      "vm": "oci-A1-f_0",
+      "domain": null,
+      "enabled": true,
+      "category": "obs",
+      "ports": {
+        "app": 3112
+      },
+      "health": {
+        "path": "/mcp"
+      }
+    },
+    "cloudy-apps-communication-mcp": {
+      "name": "cloudy-apps-communication-mcp",
+      "vm": "oci-A1-f_0",
+      "domain": "mcp.diegonmarcos.com",
+      "enabled": true,
+      "category": "app",
+      "ports": {
+        "app": 3103
+      },
+      "health": null
+    },
+    "cloudy-apps-drive-mcp": {
+      "name": "cloudy-apps-drive-mcp",
+      "vm": "oci-A1-f_0",
+      "domain": "mcp.diegonmarcos.com",
+      "enabled": true,
+      "category": "app",
+      "ports": {
+        "app": 3109
+      },
+      "health": null
+    },
+    "cloudy-c3-api": {
+      "name": "cloudy-c3-api",
+      "vm": "oci-A1-f_0",
+      "domain": "api.diegonmarcos.com/c3-infra-api",
+      "enabled": true,
+      "category": "sec",
+      "ports": {
+        "app": 8081
+      },
+      "health": {
+        "path": "/c3-infra-api/health"
+      }
+    },
+    "cloudy-drive-git-proxy-api": {
+      "name": "cloudy-drive-git-proxy-api",
       "vm": "oci-E2-f_1",
       "domain": "api.diegonmarcos.com/git",
       "enabled": true,
@@ -646,6 +694,17 @@
       "health": {
         "path": "/git/health"
       }
+    },
+    "cloudy-mail-http-to-smtp-api": {
+      "name": "cloudy-mail-http-to-smtp-api",
+      "vm": "gcp-E2-f_0",
+      "domain": "api.diegonmarcos.com/http-to-smtp-proxy-api",
+      "enabled": false,
+      "category": "app",
+      "ports": {
+        "app": 8090
+      },
+      "health": null
     },
     "google-personal-mcp": {
       "name": "google-personal-mcp",
@@ -672,17 +731,6 @@
       "health": {
         "path": "/health"
       }
-    },
-    "http-to-smtp-proxy-api": {
-      "name": "http-to-smtp-proxy-api",
-      "vm": "gcp-E2-f_0",
-      "domain": "api.diegonmarcos.com/http-to-smtp-proxy-api",
-      "enabled": false,
-      "category": "app",
-      "ports": {
-        "app": 8090
-      },
-      "health": null
     },
     "cloud-builder-x": {
       "name": "cloud-builder-x",
@@ -1030,6 +1078,19 @@
       "ports": null,
       "health": null
     },
+    "cloudy-ai-tokens-api": {
+      "name": "cloudy-ai-tokens-api",
+      "vm": "oci-A1-f_0",
+      "domain": null,
+      "enabled": true,
+      "category": "sec",
+      "ports": {
+        "app": 4184
+      },
+      "health": {
+        "path": "/health"
+      }
+    },
     "crowdsec": {
       "name": "crowdsec",
       "vm": "oci-A1-f_0",
@@ -1070,19 +1131,6 @@
         "path": "/health"
       }
     },
-    "tokens-api": {
-      "name": "tokens-api",
-      "vm": "oci-A1-f_0",
-      "domain": null,
-      "enabled": true,
-      "category": "sec",
-      "ports": {
-        "app": 4184
-      },
-      "health": {
-        "path": "/health"
-      }
-    },
     "cloud-cgc-pub-mcp": {
       "name": "cloud-cgc-pub-mcp",
       "vm": "oci-A1-f_0",
@@ -1096,6 +1144,74 @@
       "health": {
         "path": "/mcp"
       }
+    },
+    "cloud-me-cgc-pvt-graph-api": {
+      "name": "cloud-me-cgc-pvt-graph-api",
+      "vm": "oci-A1-f_0",
+      "domain": null,
+      "enabled": true,
+      "category": "data",
+      "ports": {
+        "app": 8001
+      },
+      "health": null
+    },
+    "cloudy-ai-agents-api": {
+      "name": "cloudy-ai-agents-api",
+      "vm": "oci-A1-f_0",
+      "domain": null,
+      "enabled": true,
+      "category": "agi",
+      "ports": {
+        "app": 3217,
+        "ollama": 12436,
+        "headroom": 8890,
+        "goosed": 3227,
+        "_goosed_doc": "goosed = goose agent ACP/REST+SSE server (goose serve, X-Secret-Key auth, WireGuard-only)"
+      },
+      "health": {
+        "path": "/health"
+      }
+    },
+    "cloudy-ai-claude-api": {
+      "name": "cloudy-ai-claude-api",
+      "vm": "oci-A1-f_0",
+      "domain": null,
+      "enabled": true,
+      "category": "agi",
+      "ports": {
+        "app": 3117,
+        "ollama": 11436,
+        "headroom": 8788,
+        "proxy": 8789
+      },
+      "health": {
+        "path": "/health"
+      }
+    },
+    "cloudy-ai-memory-api": {
+      "name": "cloudy-ai-memory-api",
+      "vm": "oci-A1-f_0",
+      "domain": null,
+      "enabled": true,
+      "category": "agi",
+      "ports": {
+        "app": 3108
+      },
+      "health": {
+        "path": "/health"
+      }
+    },
+    "cloudy-cgc-pub-graph-api": {
+      "name": "cloudy-cgc-pub-graph-api",
+      "vm": "oci-A1-f_0",
+      "domain": null,
+      "enabled": true,
+      "category": "data",
+      "ports": {
+        "app": 8002
+      },
+      "health": null
     },
     "db-agent": {
       "name": "db-agent",
@@ -1118,61 +1234,6 @@
       },
       "health": null
     },
-    "kg-store": {
-      "name": "kg-store",
-      "vm": "oci-A1-f_0",
-      "domain": null,
-      "enabled": true,
-      "category": "data",
-      "ports": {
-        "app": 8001
-      },
-      "health": null
-    },
-    "kg-store-pub": {
-      "name": "kg-store-pub",
-      "vm": "oci-A1-f_0",
-      "domain": null,
-      "enabled": true,
-      "category": "data",
-      "ports": {
-        "app": 8002
-      },
-      "health": null
-    },
-    "my-ai-api": {
-      "name": "my-ai-api",
-      "vm": "oci-A1-f_0",
-      "domain": null,
-      "enabled": true,
-      "category": "agi",
-      "ports": {
-        "app": 3217,
-        "ollama": 12436,
-        "headroom": 8890,
-        "goosed": 3227,
-        "_goosed_doc": "goosed = goose agent ACP/REST+SSE server (goose serve, X-Secret-Key auth, WireGuard-only)"
-      },
-      "health": {
-        "path": "/health"
-      }
-    },
-    "my-ai_claude-api": {
-      "name": "my-ai_claude-api",
-      "vm": "oci-A1-f_0",
-      "domain": null,
-      "enabled": true,
-      "category": "agi",
-      "ports": {
-        "app": 3117,
-        "ollama": 11436,
-        "headroom": 8788,
-        "proxy": 8789
-      },
-      "health": {
-        "path": "/health"
-      }
-    },
     "openclaw": {
       "name": "openclaw",
       "vm": "oci-A1-f_0",
@@ -1183,19 +1244,6 @@
         "app": 18789
       },
       "health": null
-    },
-    "session-memory": {
-      "name": "session-memory",
-      "vm": "oci-A1-f_0",
-      "domain": null,
-      "enabled": true,
-      "category": "agi",
-      "ports": {
-        "app": 3108
-      },
-      "health": {
-        "path": "/health"
-      }
     },
     "chat-mattermost": {
       "name": "chat-mattermost",
@@ -1300,8 +1348,8 @@
         "path": "/"
       }
     },
-    "scrappers-api": {
-      "name": "scrappers-api",
+    "cloudy-browser-scrapper-api": {
+      "name": "cloudy-browser-scrapper-api",
       "vm": "oci-A1-f_0",
       "domain": "api.diegonmarcos.com",
       "enabled": true,
@@ -1313,8 +1361,8 @@
         "path": "/health"
       }
     },
-    "capital-stack-finterminal-api": {
-      "name": "capital-stack-finterminal-api",
+    "capital-stack-finterm-api": {
+      "name": "capital-stack-finterm-api",
       "vm": "oci-A1-f_0",
       "domain": "api.diegonmarcos.com/capital-stack-finterminal-api",
       "enabled": true,
@@ -1365,8 +1413,8 @@
         "path": "/api/health"
       }
     },
-    "news-gdelt": {
-      "name": "news-gdelt",
+    "capital-stack-news-gdelt-api": {
+      "name": "capital-stack-news-gdelt-api",
       "vm": "oci-A1-f_0",
       "domain": null,
       "enabled": true,
@@ -1555,13 +1603,22 @@
       "dns": "alerts-api.mesh.diegonmarcos.com"
     },
     {
-      "service": "embeddings-api",
-      "dns": "embeddings-api.mesh.diegonmarcos.com"
+      "service": "cloudy-ai-api",
+      "dns": "cloudy-ai-api.mesh.diegonmarcos.com"
     },
     {
-      "service": "embeddings-api",
+      "service": "cloudy-ai-api",
       "container": "app",
-      "dns": "embeddings-api.mesh.diegonmarcos.com"
+      "dns": "cloudy-ai-api.mesh.diegonmarcos.com"
+    },
+    {
+      "service": "cloudy-ai-embeddings-api",
+      "dns": "cloudy-ai-embeddings-api.mesh.diegonmarcos.com"
+    },
+    {
+      "service": "cloudy-ai-embeddings-api",
+      "container": "app",
+      "dns": "cloudy-ai-embeddings-api.mesh.diegonmarcos.com"
     },
     {
       "service": "jev-sidecar",
@@ -1582,15 +1639,6 @@
       "dns": "languagetool.mesh.diegonmarcos.com"
     },
     {
-      "service": "c3-infra-api",
-      "dns": "c3-infra-api.mesh.diegonmarcos.com"
-    },
-    {
-      "service": "c3-infra-api",
-      "container": "app",
-      "dns": "c3-infra-api.mesh.diegonmarcos.com"
-    },
-    {
       "service": "c3-public-api",
       "dns": "c3-public-api.mesh.diegonmarcos.com"
     },
@@ -1598,15 +1646,6 @@
       "service": "c3-public-api",
       "container": "app",
       "dns": "c3-public-api.mesh.diegonmarcos.com"
-    },
-    {
-      "service": "c3-services-api",
-      "dns": "c3-services-api.mesh.diegonmarcos.com"
-    },
-    {
-      "service": "c3-services-api",
-      "container": "app",
-      "dns": "c3-services-api.mesh.diegonmarcos.com"
     },
     {
       "service": "cloud-drive-mcp",
@@ -1681,13 +1720,67 @@
       "dns": "vault-mcp.mesh.diegonmarcos.com"
     },
     {
-      "service": "git-proxy-api",
-      "dns": "git-proxy-api.mesh.diegonmarcos.com"
+      "service": "cloudy-all-api",
+      "dns": "cloudy-all-api.mesh.diegonmarcos.com"
     },
     {
-      "service": "git-proxy-api",
+      "service": "cloudy-all-api",
       "container": "app",
-      "dns": "git-proxy-api.mesh.diegonmarcos.com"
+      "dns": "cloudy-all-api.mesh.diegonmarcos.com"
+    },
+    {
+      "service": "cloudy-all-mcp",
+      "dns": "cloudy-all-mcp.mesh.diegonmarcos.com"
+    },
+    {
+      "service": "cloudy-all-mcp",
+      "container": "app",
+      "dns": "cloudy-all-mcp.mesh.diegonmarcos.com"
+    },
+    {
+      "service": "cloudy-apps-communication-mcp",
+      "dns": "cloudy-apps-communication-mcp.mesh.diegonmarcos.com"
+    },
+    {
+      "service": "cloudy-apps-communication-mcp",
+      "container": "app",
+      "dns": "cloudy-apps-communication-mcp.mesh.diegonmarcos.com"
+    },
+    {
+      "service": "cloudy-apps-drive-mcp",
+      "dns": "cloudy-apps-drive-mcp.mesh.diegonmarcos.com"
+    },
+    {
+      "service": "cloudy-apps-drive-mcp",
+      "container": "app",
+      "dns": "cloudy-apps-drive-mcp.mesh.diegonmarcos.com"
+    },
+    {
+      "service": "cloudy-c3-api",
+      "dns": "cloudy-c3-api.mesh.diegonmarcos.com"
+    },
+    {
+      "service": "cloudy-c3-api",
+      "container": "app",
+      "dns": "cloudy-c3-api.mesh.diegonmarcos.com"
+    },
+    {
+      "service": "cloudy-drive-git-proxy-api",
+      "dns": "cloudy-drive-git-proxy-api.mesh.diegonmarcos.com"
+    },
+    {
+      "service": "cloudy-drive-git-proxy-api",
+      "container": "app",
+      "dns": "cloudy-drive-git-proxy-api.mesh.diegonmarcos.com"
+    },
+    {
+      "service": "cloudy-mail-http-to-smtp-api",
+      "dns": "cloudy-mail-http-to-smtp-api.mesh.diegonmarcos.com"
+    },
+    {
+      "service": "cloudy-mail-http-to-smtp-api",
+      "container": "app",
+      "dns": "cloudy-mail-http-to-smtp-api.mesh.diegonmarcos.com"
     },
     {
       "service": "google-personal-mcp",
@@ -1706,15 +1799,6 @@
       "service": "google-workspace-mcp",
       "container": "app",
       "dns": "g-workspace-mcp.mesh.diegonmarcos.com"
-    },
-    {
-      "service": "http-to-smtp-proxy-api",
-      "dns": "http-to-smtp-proxy-api.mesh.diegonmarcos.com"
-    },
-    {
-      "service": "http-to-smtp-proxy-api",
-      "container": "app",
-      "dns": "http-to-smtp-proxy-api.mesh.diegonmarcos.com"
     },
     {
       "service": "backup-borg",
@@ -1878,6 +1962,15 @@
       "dns": "caddy-public.mesh.diegonmarcos.com"
     },
     {
+      "service": "cloudy-ai-tokens-api",
+      "dns": "cloudy-ai-tokens-api.mesh.diegonmarcos.com"
+    },
+    {
+      "service": "cloudy-ai-tokens-api",
+      "container": "app",
+      "dns": "cloudy-ai-tokens-api.mesh.diegonmarcos.com"
+    },
+    {
       "service": "crowdsec",
       "dns": "crowdsec.mesh.diegonmarcos.com"
     },
@@ -1905,15 +1998,6 @@
       "dns": "mcp-oauth.mesh.diegonmarcos.com"
     },
     {
-      "service": "tokens-api",
-      "dns": "tokens-api.mesh.diegonmarcos.com"
-    },
-    {
-      "service": "tokens-api",
-      "container": "app",
-      "dns": "tokens-api.mesh.diegonmarcos.com"
-    },
-    {
       "service": "cloud-cgc-pub-mcp",
       "dns": "cloud-cgc-pub-mcp.mesh.diegonmarcos.com"
     },
@@ -1921,6 +2005,41 @@
       "service": "cloud-cgc-pub-mcp",
       "container": "app",
       "dns": "cloud-cgc-pub-mcp.mesh.diegonmarcos.com"
+    },
+    {
+      "service": "cloud-me-cgc-pvt-graph-api",
+      "dns": "cloud-me-cgc-pvt-graph-api.mesh.diegonmarcos.com"
+    },
+    {
+      "service": "cloudy-ai-agents-api",
+      "dns": "cloudy-ai-agents-api.mesh.diegonmarcos.com"
+    },
+    {
+      "service": "cloudy-ai-agents-api",
+      "container": "app",
+      "dns": "cloudy-ai-agents-api.mesh.diegonmarcos.com"
+    },
+    {
+      "service": "cloudy-ai-claude-api",
+      "dns": "my-ai-claude-api.mesh.diegonmarcos.com"
+    },
+    {
+      "service": "cloudy-ai-claude-api",
+      "container": "app",
+      "dns": "my-ai-claude-api.mesh.diegonmarcos.com"
+    },
+    {
+      "service": "cloudy-ai-memory-api",
+      "dns": "cloudy-ai-memory-api.mesh.diegonmarcos.com"
+    },
+    {
+      "service": "cloudy-ai-memory-api",
+      "container": "app",
+      "dns": "cloudy-ai-memory-api.mesh.diegonmarcos.com"
+    },
+    {
+      "service": "cloudy-cgc-pub-graph-api",
+      "dns": "cloudy-cgc-pub-graph-api.mesh.diegonmarcos.com"
     },
     {
       "service": "hermes-agent",
@@ -1932,32 +2051,6 @@
       "dns": "hermes-agent.mesh.diegonmarcos.com"
     },
     {
-      "service": "kg-store",
-      "dns": "kg-store.mesh.diegonmarcos.com"
-    },
-    {
-      "service": "kg-store-pub",
-      "dns": "kg-store-pub.mesh.diegonmarcos.com"
-    },
-    {
-      "service": "my-ai-api",
-      "dns": "my-ai-api.mesh.diegonmarcos.com"
-    },
-    {
-      "service": "my-ai-api",
-      "container": "app",
-      "dns": "my-ai-api.mesh.diegonmarcos.com"
-    },
-    {
-      "service": "my-ai_claude-api",
-      "dns": "my-ai-claude-api.mesh.diegonmarcos.com"
-    },
-    {
-      "service": "my-ai_claude-api",
-      "container": "app",
-      "dns": "my-ai-claude-api.mesh.diegonmarcos.com"
-    },
-    {
       "service": "openclaw",
       "dns": "openclaw.mesh.diegonmarcos.com"
     },
@@ -1965,15 +2058,6 @@
       "service": "openclaw",
       "container": "app",
       "dns": "openclaw.mesh.diegonmarcos.com"
-    },
-    {
-      "service": "session-memory",
-      "dns": "session-memory.mesh.diegonmarcos.com"
-    },
-    {
-      "service": "session-memory",
-      "container": "app",
-      "dns": "session-memory.mesh.diegonmarcos.com"
     },
     {
       "service": "chat-mattermost",
@@ -2053,22 +2137,22 @@
       "dns": "stalwart.mesh.diegonmarcos.com"
     },
     {
-      "service": "scrappers-api",
-      "dns": "scrappers-api.mesh.diegonmarcos.com"
+      "service": "cloudy-browser-scrapper-api",
+      "dns": "cloudy-browser-scrapper-api.mesh.diegonmarcos.com"
     },
     {
-      "service": "scrappers-api",
+      "service": "cloudy-browser-scrapper-api",
       "container": "app",
-      "dns": "scrappers-api.mesh.diegonmarcos.com"
+      "dns": "cloudy-browser-scrapper-api.mesh.diegonmarcos.com"
     },
     {
-      "service": "capital-stack-finterminal-api",
-      "dns": "capital-stack-finterminal-api.mesh.diegonmarcos.com"
+      "service": "capital-stack-finterm-api",
+      "dns": "capital-stack-finterm-api.mesh.diegonmarcos.com"
     },
     {
-      "service": "capital-stack-finterminal-api",
+      "service": "capital-stack-finterm-api",
       "container": "app",
-      "dns": "capital-stack-finterminal-api.mesh.diegonmarcos.com"
+      "dns": "capital-stack-finterm-api.mesh.diegonmarcos.com"
     },
     {
       "service": "capital-stack-finterminal-web",
@@ -2098,8 +2182,8 @@
       "dns": "playlist-syncer.mesh.diegonmarcos.com"
     },
     {
-      "service": "news-gdelt",
-      "dns": "news-gdelt.mesh.diegonmarcos.com"
+      "service": "capital-stack-news-gdelt-api",
+      "dns": "capital-stack-news-gdelt-api.mesh.diegonmarcos.com"
     },
     {
       "service": "calendar-radicale",
@@ -2241,7 +2325,7 @@
       "db_user": null
     },
     {
-      "service": "kg-store",
+      "service": "cloud-me-cgc-pvt-graph-api",
       "container": "app",
       "engine": "surrealdb",
       "port": 8001,
@@ -2249,7 +2333,7 @@
       "db_user": null
     },
     {
-      "service": "kg-store-pub",
+      "service": "cloudy-cgc-pub-graph-api",
       "container": "app",
       "engine": "surrealdb",
       "port": 8002,
@@ -2313,7 +2397,7 @@
           "alerts-api",
           "c3-public-api",
           "cloud-me-api",
-          "git-proxy-api",
+          "cloudy-drive-git-proxy-api",
           "unbound-dns64",
           "caddy-public"
         ]
@@ -2325,11 +2409,10 @@
         "user": "ubuntu",
         "provider": null,
         "services": [
-          "embeddings-api",
+          "cloudy-ai-api",
+          "cloudy-ai-embeddings-api",
           "jev-sidecar",
           "languagetool",
-          "c3-infra-api",
-          "c3-services-api",
           "cloud-drive-mcp",
           "cloud-infra-mcp",
           "cloud-mail-mcp",
@@ -2337,6 +2420,11 @@
           "cloud-services-mcp",
           "cloud-superapp-mcp",
           "cloud-vault-mcp",
+          "cloudy-all-api",
+          "cloudy-all-mcp",
+          "cloudy-apps-communication-mcp",
+          "cloudy-apps-drive-mcp",
+          "cloudy-c3-api",
           "google-personal-mcp",
           "google-workspace-mcp",
           "gha-runner",
@@ -2356,27 +2444,27 @@
           "agents-tmp-reaper",
           "disk-janitor",
           "auth-broker",
+          "cloudy-ai-tokens-api",
           "crowdsec",
-          "tokens-api",
           "cloud-cgc-pub-mcp",
+          "cloud-me-cgc-pvt-graph-api",
+          "cloudy-ai-agents-api",
+          "cloudy-ai-claude-api",
+          "cloudy-ai-memory-api",
+          "cloudy-cgc-pub-graph-api",
           "hermes-agent",
-          "kg-store",
-          "kg-store-pub",
-          "my-ai-api",
-          "my-ai_claude-api",
           "openclaw",
-          "session-memory",
           "chat-mattermost",
           "cloud-webmail",
           "matrix-continuwuity",
           "matrix-element",
           "matrix-mautrix-whatsapp",
-          "scrappers-api",
-          "capital-stack-finterminal-api",
+          "cloudy-browser-scrapper-api",
+          "capital-stack-finterm-api",
           "capital-stack-finterminal-web",
           "photoprism",
           "playlist-syncer",
-          "news-gdelt",
+          "capital-stack-news-gdelt-api",
           "calendar-radicale",
           "cloud-notes-sync",
           "cloud-notes-web",
@@ -2398,7 +2486,7 @@
         "user": "diego",
         "provider": null,
         "services": [
-          "http-to-smtp-proxy-api",
+          "cloudy-mail-http-to-smtp-api",
           "postlite",
           "redis",
           "hickory-dns",
@@ -2435,8 +2523,21 @@
         "ports": null,
         "health": null
       },
-      "embeddings-api": {
-        "name": "embeddings-api",
+      "cloudy-ai-api": {
+        "name": "cloudy-ai-api",
+        "vm": "oci-A1-f_0",
+        "domain": null,
+        "enabled": true,
+        "category": "sec",
+        "ports": {
+          "app": 4185
+        },
+        "health": {
+          "path": "/health"
+        }
+      },
+      "cloudy-ai-embeddings-api": {
+        "name": "cloudy-ai-embeddings-api",
         "vm": "oci-A1-f_0",
         "domain": null,
         "enabled": true,
@@ -2474,19 +2575,6 @@
           "path": "/v2/check"
         }
       },
-      "c3-infra-api": {
-        "name": "c3-infra-api",
-        "vm": "oci-A1-f_0",
-        "domain": "api.diegonmarcos.com/c3-infra-api",
-        "enabled": true,
-        "category": "sec",
-        "ports": {
-          "app": 8081
-        },
-        "health": {
-          "path": "/c3-infra-api/health"
-        }
-      },
       "c3-public-api": {
         "name": "c3-public-api",
         "vm": "oci-E2-f_1",
@@ -2498,19 +2586,6 @@
         },
         "health": {
           "path": "/pub/health"
-        }
-      },
-      "c3-services-api": {
-        "name": "c3-services-api",
-        "vm": "oci-A1-f_0",
-        "domain": "api.diegonmarcos.com/c3-services-api",
-        "enabled": true,
-        "category": "obs",
-        "ports": {
-          "app": 8082
-        },
-        "health": {
-          "path": "/c3-services-api/health"
         }
       },
       "cloud-drive-mcp": {
@@ -2607,8 +2682,69 @@
         },
         "health": null
       },
-      "git-proxy-api": {
-        "name": "git-proxy-api",
+      "cloudy-all-api": {
+        "name": "cloudy-all-api",
+        "vm": "oci-A1-f_0",
+        "domain": "api.diegonmarcos.com/c3-services-api",
+        "enabled": true,
+        "category": "obs",
+        "ports": {
+          "app": 8082
+        },
+        "health": {
+          "path": "/c3-services-api/health"
+        }
+      },
+      "cloudy-all-mcp": {
+        "name": "cloudy-all-mcp",
+        "vm": "oci-A1-f_0",
+        "domain": null,
+        "enabled": true,
+        "category": "obs",
+        "ports": {
+          "app": 3112
+        },
+        "health": {
+          "path": "/mcp"
+        }
+      },
+      "cloudy-apps-communication-mcp": {
+        "name": "cloudy-apps-communication-mcp",
+        "vm": "oci-A1-f_0",
+        "domain": "mcp.diegonmarcos.com",
+        "enabled": true,
+        "category": "app",
+        "ports": {
+          "app": 3103
+        },
+        "health": null
+      },
+      "cloudy-apps-drive-mcp": {
+        "name": "cloudy-apps-drive-mcp",
+        "vm": "oci-A1-f_0",
+        "domain": "mcp.diegonmarcos.com",
+        "enabled": true,
+        "category": "app",
+        "ports": {
+          "app": 3109
+        },
+        "health": null
+      },
+      "cloudy-c3-api": {
+        "name": "cloudy-c3-api",
+        "vm": "oci-A1-f_0",
+        "domain": "api.diegonmarcos.com/c3-infra-api",
+        "enabled": true,
+        "category": "sec",
+        "ports": {
+          "app": 8081
+        },
+        "health": {
+          "path": "/c3-infra-api/health"
+        }
+      },
+      "cloudy-drive-git-proxy-api": {
+        "name": "cloudy-drive-git-proxy-api",
         "vm": "oci-E2-f_1",
         "domain": "api.diegonmarcos.com/git",
         "enabled": true,
@@ -2619,6 +2755,17 @@
         "health": {
           "path": "/git/health"
         }
+      },
+      "cloudy-mail-http-to-smtp-api": {
+        "name": "cloudy-mail-http-to-smtp-api",
+        "vm": "gcp-E2-f_0",
+        "domain": "api.diegonmarcos.com/http-to-smtp-proxy-api",
+        "enabled": false,
+        "category": "app",
+        "ports": {
+          "app": 8090
+        },
+        "health": null
       },
       "google-personal-mcp": {
         "name": "google-personal-mcp",
@@ -2645,17 +2792,6 @@
         "health": {
           "path": "/health"
         }
-      },
-      "http-to-smtp-proxy-api": {
-        "name": "http-to-smtp-proxy-api",
-        "vm": "gcp-E2-f_0",
-        "domain": "api.diegonmarcos.com/http-to-smtp-proxy-api",
-        "enabled": false,
-        "category": "app",
-        "ports": {
-          "app": 8090
-        },
-        "health": null
       },
       "cloud-builder-x": {
         "name": "cloud-builder-x",
@@ -3003,6 +3139,19 @@
         "ports": null,
         "health": null
       },
+      "cloudy-ai-tokens-api": {
+        "name": "cloudy-ai-tokens-api",
+        "vm": "oci-A1-f_0",
+        "domain": null,
+        "enabled": true,
+        "category": "sec",
+        "ports": {
+          "app": 4184
+        },
+        "health": {
+          "path": "/health"
+        }
+      },
       "crowdsec": {
         "name": "crowdsec",
         "vm": "oci-A1-f_0",
@@ -3043,19 +3192,6 @@
           "path": "/health"
         }
       },
-      "tokens-api": {
-        "name": "tokens-api",
-        "vm": "oci-A1-f_0",
-        "domain": null,
-        "enabled": true,
-        "category": "sec",
-        "ports": {
-          "app": 4184
-        },
-        "health": {
-          "path": "/health"
-        }
-      },
       "cloud-cgc-pub-mcp": {
         "name": "cloud-cgc-pub-mcp",
         "vm": "oci-A1-f_0",
@@ -3069,6 +3205,74 @@
         "health": {
           "path": "/mcp"
         }
+      },
+      "cloud-me-cgc-pvt-graph-api": {
+        "name": "cloud-me-cgc-pvt-graph-api",
+        "vm": "oci-A1-f_0",
+        "domain": null,
+        "enabled": true,
+        "category": "data",
+        "ports": {
+          "app": 8001
+        },
+        "health": null
+      },
+      "cloudy-ai-agents-api": {
+        "name": "cloudy-ai-agents-api",
+        "vm": "oci-A1-f_0",
+        "domain": null,
+        "enabled": true,
+        "category": "agi",
+        "ports": {
+          "app": 3217,
+          "ollama": 12436,
+          "headroom": 8890,
+          "goosed": 3227,
+          "_goosed_doc": "goosed = goose agent ACP/REST+SSE server (goose serve, X-Secret-Key auth, WireGuard-only)"
+        },
+        "health": {
+          "path": "/health"
+        }
+      },
+      "cloudy-ai-claude-api": {
+        "name": "cloudy-ai-claude-api",
+        "vm": "oci-A1-f_0",
+        "domain": null,
+        "enabled": true,
+        "category": "agi",
+        "ports": {
+          "app": 3117,
+          "ollama": 11436,
+          "headroom": 8788,
+          "proxy": 8789
+        },
+        "health": {
+          "path": "/health"
+        }
+      },
+      "cloudy-ai-memory-api": {
+        "name": "cloudy-ai-memory-api",
+        "vm": "oci-A1-f_0",
+        "domain": null,
+        "enabled": true,
+        "category": "agi",
+        "ports": {
+          "app": 3108
+        },
+        "health": {
+          "path": "/health"
+        }
+      },
+      "cloudy-cgc-pub-graph-api": {
+        "name": "cloudy-cgc-pub-graph-api",
+        "vm": "oci-A1-f_0",
+        "domain": null,
+        "enabled": true,
+        "category": "data",
+        "ports": {
+          "app": 8002
+        },
+        "health": null
       },
       "db-agent": {
         "name": "db-agent",
@@ -3091,61 +3295,6 @@
         },
         "health": null
       },
-      "kg-store": {
-        "name": "kg-store",
-        "vm": "oci-A1-f_0",
-        "domain": null,
-        "enabled": true,
-        "category": "data",
-        "ports": {
-          "app": 8001
-        },
-        "health": null
-      },
-      "kg-store-pub": {
-        "name": "kg-store-pub",
-        "vm": "oci-A1-f_0",
-        "domain": null,
-        "enabled": true,
-        "category": "data",
-        "ports": {
-          "app": 8002
-        },
-        "health": null
-      },
-      "my-ai-api": {
-        "name": "my-ai-api",
-        "vm": "oci-A1-f_0",
-        "domain": null,
-        "enabled": true,
-        "category": "agi",
-        "ports": {
-          "app": 3217,
-          "ollama": 12436,
-          "headroom": 8890,
-          "goosed": 3227,
-          "_goosed_doc": "goosed = goose agent ACP/REST+SSE server (goose serve, X-Secret-Key auth, WireGuard-only)"
-        },
-        "health": {
-          "path": "/health"
-        }
-      },
-      "my-ai_claude-api": {
-        "name": "my-ai_claude-api",
-        "vm": "oci-A1-f_0",
-        "domain": null,
-        "enabled": true,
-        "category": "agi",
-        "ports": {
-          "app": 3117,
-          "ollama": 11436,
-          "headroom": 8788,
-          "proxy": 8789
-        },
-        "health": {
-          "path": "/health"
-        }
-      },
       "openclaw": {
         "name": "openclaw",
         "vm": "oci-A1-f_0",
@@ -3156,19 +3305,6 @@
           "app": 18789
         },
         "health": null
-      },
-      "session-memory": {
-        "name": "session-memory",
-        "vm": "oci-A1-f_0",
-        "domain": null,
-        "enabled": true,
-        "category": "agi",
-        "ports": {
-          "app": 3108
-        },
-        "health": {
-          "path": "/health"
-        }
       },
       "chat-mattermost": {
         "name": "chat-mattermost",
@@ -3273,8 +3409,8 @@
           "path": "/"
         }
       },
-      "scrappers-api": {
-        "name": "scrappers-api",
+      "cloudy-browser-scrapper-api": {
+        "name": "cloudy-browser-scrapper-api",
         "vm": "oci-A1-f_0",
         "domain": "api.diegonmarcos.com",
         "enabled": true,
@@ -3286,8 +3422,8 @@
           "path": "/health"
         }
       },
-      "capital-stack-finterminal-api": {
-        "name": "capital-stack-finterminal-api",
+      "capital-stack-finterm-api": {
+        "name": "capital-stack-finterm-api",
         "vm": "oci-A1-f_0",
         "domain": "api.diegonmarcos.com/capital-stack-finterminal-api",
         "enabled": true,
@@ -3338,8 +3474,8 @@
           "path": "/api/health"
         }
       },
-      "news-gdelt": {
-        "name": "news-gdelt",
+      "capital-stack-news-gdelt-api": {
+        "name": "capital-stack-news-gdelt-api",
         "vm": "oci-A1-f_0",
         "domain": null,
         "enabled": true,

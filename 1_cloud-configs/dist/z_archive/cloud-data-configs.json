@@ -59,10 +59,10 @@
       "ports": [],
       "networks": [],
       "containers": [
-        "auth-broker-google",
-        "auth-broker-github",
-        "auth-broker-cloudflare",
-        "auth-broker-email"
+        "cloudy-auth-google-api",
+        "cloudy-auth-github-api",
+        "cloudy-auth-cloudflare-api",
+        "cloudy-auth-email-api"
       ]
     },
     {
@@ -104,18 +104,6 @@
       ]
     },
     {
-      "name": "c3-infra-api",
-      "category": "sec",
-      "vm": "oci-A1-f_0",
-      "description": "C3 REST API — Cloud Control Center Fastify API",
-      "domain": "api.diegonmarcos.com/c3-infra-api",
-      "ports": [],
-      "networks": [],
-      "containers": [
-        "c3-infra-api"
-      ]
-    },
-    {
       "name": "c3-public-api",
       "category": "obs",
       "vm": "oci-E2-f_1",
@@ -125,18 +113,6 @@
       "networks": [],
       "containers": [
         "c3-public-api"
-      ]
-    },
-    {
-      "name": "c3-services-api",
-      "category": "obs",
-      "vm": "oci-A1-f_0",
-      "description": "C3 Services REST API — service API gateway Fastify API",
-      "domain": "api.diegonmarcos.com/c3-services-api",
-      "ports": [],
-      "networks": [],
-      "containers": [
-        "c3-services-api"
       ]
     },
     {
@@ -188,7 +164,7 @@
       ]
     },
     {
-      "name": "capital-stack-finterminal-api",
+      "name": "capital-stack-finterm-api",
       "category": "fin",
       "vm": "oci-A1-f_0",
       "description": "Fincept Terminal backend (capital-stack-finterminal-api) — REST + WebSocket over DataHub, 35 data connectors, 7 analytics, 17 brokers, 6 investor personas, MCP tools",
@@ -196,7 +172,7 @@
       "ports": [],
       "networks": [],
       "containers": [
-        "capital-stack-finterminal-api"
+        "capital-stack-finterm-api"
       ]
     },
     {
@@ -209,6 +185,18 @@
       "networks": [],
       "containers": [
         "capital-stack-finterminal-web"
+      ]
+    },
+    {
+      "name": "capital-stack-news-gdelt-api",
+      "category": "tools",
+      "vm": "oci-A1-f_0",
+      "description": "GDELT News Aggregator — Fastify API with SQLite cache",
+      "domain": "—",
+      "ports": [],
+      "networks": [],
+      "containers": [
+        "capital-stack-news-gdelt-api"
       ]
     },
     {
@@ -308,6 +296,18 @@
       "networks": [],
       "containers": [
         "cloud-me-api"
+      ]
+    },
+    {
+      "name": "cloud-me-cgc-pvt-graph-api",
+      "category": "data",
+      "vm": "oci-A1-f_0",
+      "description": "SurrealDB Hybrid Knowledge Graph - Infrastructure topology + vector search",
+      "domain": "—",
+      "ports": [],
+      "networks": [],
+      "containers": [
+        "cloud-me-cgc-pvt-graph-api"
       ]
     },
     {
@@ -419,6 +419,186 @@
       ]
     },
     {
+      "name": "cloudy-ai-agents-api",
+      "category": "agi",
+      "vm": "oci-A1-f_0",
+      "description": "my-ai API on oci-apps — one polyglot container: OpenAI /v1 + Ollama /api + Anthropic /v1/messages mimic backed by OpenRouter (no Claude subscription, no metered Anthropic key), with a vendored Headroom (Apache-2.0) compression hop and a savings dashboard. Sibling of claude-superset-api; the agent face for this stack is goose (my-ai wraps goose, claude-superset keeps claude-cli). Internal WG-only sidecar, never public.",
+      "domain": "—",
+      "ports": [],
+      "networks": [],
+      "containers": [
+        "cloud-agi-goose"
+      ]
+    },
+    {
+      "name": "cloudy-ai-api",
+      "category": "sec",
+      "vm": "oci-A1-f_0",
+      "description": "AI gateway: /ai/{tokens,embeddings,agents,claude,memory} -> separate backend containers (cloudy-ai-*-api); legacy /<old-name>/ paths kept for one release.",
+      "domain": "—",
+      "ports": [],
+      "networks": [],
+      "containers": [
+        "cloudy-ai-api"
+      ]
+    },
+    {
+      "name": "cloudy-ai-claude-api",
+      "category": "agi",
+      "vm": "oci-A1-f_0",
+      "description": "Claude superset API on oci-apps — one polyglot container: OpenAI /v1 + Ollama /api + Anthropic /v1/messages mimic backed by the subscription `claude` CLI (no metered key), with a vendored Headroom (Apache-2.0) compression hop and a savings dashboard. Successor to kg-bridge; usable as a local/remote fallback. Internal WG-only sidecar, never public.",
+      "domain": "—",
+      "ports": [],
+      "networks": [],
+      "containers": [
+        "cloud-agi-claude"
+      ]
+    },
+    {
+      "name": "cloudy-ai-embeddings-api",
+      "category": "agi",
+      "vm": "oci-A1-f_0",
+      "description": "Fleet embeddings + rerank + PDF text server, CPU, mesh-only on oci-apps. OpenAI-compatible POST /embeddings (BAAI/bge-m3) and POST /rerank (BAAI/bge-reranker-v2-m3) served by Infinity, plus POST /pdf (raw application/pdf body to plain text, pypdf), GET /models and GET /health. Consumers: Cloud SuperIntel Notebook retrieval and Cloud Tools Retrieval steps. Mesh address http://embeddings-api.mesh.diegonmarcos.com:7997 (direct, plain HTTP inside WireGuard); no public route.",
+      "domain": "—",
+      "ports": [],
+      "networks": [],
+      "containers": [
+        "cloudy-ai-embeddings-api"
+      ]
+    },
+    {
+      "name": "cloudy-ai-memory-api",
+      "category": "agi",
+      "vm": "oci-A1-f_0",
+      "description": "Central SQLite store of all Claude Code session transcripts — push/list/fetch so a session started on one device can be resumed from any other. WG-only sidecar on oci-apps; Node 22 built-in node:sqlite (phone-portable, no native deps).",
+      "domain": "—",
+      "ports": [],
+      "networks": [],
+      "containers": [
+        "cloudy-ai-memory-api"
+      ]
+    },
+    {
+      "name": "cloudy-ai-tokens-api",
+      "category": "sec",
+      "vm": "oci-A1-f_0",
+      "description": "Fleet token engine: lists, generates, reveals and revokes every fleet bearer token (fleet ft_ tokens and adopted Authelia JWTs); introspect-proxy asks it before accepting a Bearer, so a revoked token stops working within 60 seconds. Public address: c3-pvt.diegonmarcos.com/tokens-api (shared gate, #1104); mesh tokens-api.mesh.diegonmarcos.com",
+      "domain": "—",
+      "ports": [],
+      "networks": [],
+      "containers": [
+        "cloudy-ai-tokens-api"
+      ]
+    },
+    {
+      "name": "cloudy-all-api",
+      "category": "obs",
+      "vm": "oci-A1-f_0",
+      "description": "C3 Services REST API — service API gateway Fastify API",
+      "domain": "api.diegonmarcos.com/c3-services-api",
+      "ports": [],
+      "networks": [],
+      "containers": [
+        "cloudy-all-api"
+      ]
+    },
+    {
+      "name": "cloudy-all-mcp",
+      "category": "obs",
+      "vm": "oci-A1-f_0",
+      "description": "Fleet MCP router: list_servers, list_tools(server), call(server, tool, args)",
+      "domain": "—",
+      "ports": [],
+      "networks": [],
+      "containers": [
+        "cloudy-all-mcp"
+      ]
+    },
+    {
+      "name": "cloudy-apps-communication-mcp",
+      "category": "app",
+      "vm": "oci-A1-f_0",
+      "description": "Mail MCP server — IMAP/SMTP/Admin via Stalwart REST API",
+      "domain": "mcp.diegonmarcos.com",
+      "ports": [],
+      "networks": [],
+      "containers": [
+        "cloudy-apps-communication-mcp"
+      ]
+    },
+    {
+      "name": "cloudy-apps-drive-mcp",
+      "category": "app",
+      "vm": "oci-A1-f_0",
+      "description": "Drive MCP server — one facade over every storage unit: repos, files, photos, sync, scrapes, S3 and conversion",
+      "domain": "mcp.diegonmarcos.com",
+      "ports": [],
+      "networks": [],
+      "containers": [
+        "cloudy-apps-drive-mcp"
+      ]
+    },
+    {
+      "name": "cloudy-browser-scrapper-api",
+      "category": "data",
+      "vm": "oci-A1-f_0",
+      "description": "Unified scrapers API (Instagram / Pinterest / LinkedIn / generic crawl) — retires crawlee-cloud. Lean single-container FastAPI, on-demand, flat-JSON output.",
+      "domain": "api.diegonmarcos.com",
+      "ports": [],
+      "networks": [],
+      "containers": [
+        "cloudy-browser-scrapper-api"
+      ]
+    },
+    {
+      "name": "cloudy-c3-api",
+      "category": "sec",
+      "vm": "oci-A1-f_0",
+      "description": "C3 REST API — Cloud Control Center Fastify API",
+      "domain": "api.diegonmarcos.com/c3-infra-api",
+      "ports": [],
+      "networks": [],
+      "containers": [
+        "cloudy-c3-api"
+      ]
+    },
+    {
+      "name": "cloudy-cgc-pub-graph-api",
+      "category": "data",
+      "vm": "oci-A1-f_0",
+      "description": "SurrealDB Hybrid Knowledge Graph - Infrastructure topology + vector search",
+      "domain": "—",
+      "ports": [],
+      "networks": [],
+      "containers": [
+        "cloudy-cgc-pub-graph-api"
+      ]
+    },
+    {
+      "name": "cloudy-drive-git-proxy-api",
+      "category": "app",
+      "vm": "oci-E2-f_1",
+      "description": "Git Proxy API — Authelia-fronted read path to GitHub so the phone holds NO GitHub credential (#647, route 3 of #646's fallback chain). The caller authenticates to US with the Authelia bearer it already has; this service holds the GitHub token server-side and streams the result back.",
+      "domain": "api.diegonmarcos.com/git",
+      "ports": [],
+      "networks": [],
+      "containers": [
+        "cloudy-drive-git-proxy-api"
+      ]
+    },
+    {
+      "name": "cloudy-mail-http-to-smtp-api",
+      "category": "app",
+      "vm": "gcp-E2-f_0",
+      "description": "HTTP-to-SMTP bridge sidecar of Caddy on gcp-proxy. CF Worker POSTs JSON email payloads to this container (because GCP blocks outbound TCP/25); container speaks SMTP over WG to maddy:25 + stalwart:2025 on oci-mail. Public path: api.diegonmarcos.com/http-to-smtp-proxy-api/ [DECOMMISSIONED 2026-05-21]",
+      "domain": "api.diegonmarcos.com/http-to-smtp-proxy-api",
+      "ports": [],
+      "networks": [],
+      "containers": [
+        "cloudy-mail-http-to-smtp-api"
+      ]
+    },
+    {
       "name": "code-server",
       "category": "app",
       "vm": "oci-A1-f_0",
@@ -515,18 +695,6 @@
       ]
     },
     {
-      "name": "embeddings-api",
-      "category": "agi",
-      "vm": "oci-A1-f_0",
-      "description": "Fleet embeddings + rerank + PDF text server, CPU, mesh-only on oci-apps. OpenAI-compatible POST /embeddings (BAAI/bge-m3) and POST /rerank (BAAI/bge-reranker-v2-m3) served by Infinity, plus POST /pdf (raw application/pdf body to plain text, pypdf), GET /models and GET /health. Consumers: Cloud SuperIntel Notebook retrieval and Cloud Tools Retrieval steps. Mesh address http://embeddings-api.mesh.diegonmarcos.com:7997 (direct, plain HTTP inside WireGuard); no public route.",
-      "domain": "—",
-      "ports": [],
-      "networks": [],
-      "containers": [
-        "embeddings-api"
-      ]
-    },
-    {
       "name": "etherpad",
       "category": "app",
       "vm": "oci-A1-f_0",
@@ -585,18 +753,6 @@
       "networks": [],
       "containers": [
         "gha-runner"
-      ]
-    },
-    {
-      "name": "git-proxy-api",
-      "category": "app",
-      "vm": "oci-E2-f_1",
-      "description": "Git Proxy API — Authelia-fronted read path to GitHub so the phone holds NO GitHub credential (#647, route 3 of #646's fallback chain). The caller authenticates to US with the Authelia bearer it already has; this service holds the GitHub token server-side and streams the result back.",
-      "domain": "api.diegonmarcos.com/git",
-      "ports": [],
-      "networks": [],
-      "containers": [
-        "git-proxy-api"
       ]
     },
     {
@@ -685,18 +841,6 @@
       ]
     },
     {
-      "name": "http-to-smtp-proxy-api",
-      "category": "app",
-      "vm": "gcp-E2-f_0",
-      "description": "HTTP-to-SMTP bridge sidecar of Caddy on gcp-proxy. CF Worker POSTs JSON email payloads to this container (because GCP blocks outbound TCP/25); container speaks SMTP over WG to maddy:25 + stalwart:2025 on oci-mail. Public path: api.diegonmarcos.com/http-to-smtp-proxy-api/ [DECOMMISSIONED 2026-05-21]",
-      "domain": "api.diegonmarcos.com/http-to-smtp-proxy-api",
-      "ports": [],
-      "networks": [],
-      "containers": [
-        "http-to-smtp-proxy-api"
-      ]
-    },
-    {
       "name": "introspect-proxy",
       "category": "sec",
       "vm": "gcp-E2-f_0",
@@ -718,30 +862,6 @@
       "networks": [],
       "containers": [
         "jev-sidecar"
-      ]
-    },
-    {
-      "name": "kg-store",
-      "category": "data",
-      "vm": "oci-A1-f_0",
-      "description": "SurrealDB Hybrid Knowledge Graph - Infrastructure topology + vector search",
-      "domain": "—",
-      "ports": [],
-      "networks": [],
-      "containers": [
-        "kg-store"
-      ]
-    },
-    {
-      "name": "kg-store-pub",
-      "category": "data",
-      "vm": "oci-A1-f_0",
-      "description": "SurrealDB Hybrid Knowledge Graph - Infrastructure topology + vector search",
-      "domain": "—",
-      "ports": [],
-      "networks": [],
-      "containers": [
-        "kg-store-pub"
       ]
     },
     {
@@ -841,42 +961,6 @@
       ]
     },
     {
-      "name": "my-ai_claude-api",
-      "category": "agi",
-      "vm": "oci-A1-f_0",
-      "description": "Claude superset API on oci-apps — one polyglot container: OpenAI /v1 + Ollama /api + Anthropic /v1/messages mimic backed by the subscription `claude` CLI (no metered key), with a vendored Headroom (Apache-2.0) compression hop and a savings dashboard. Successor to kg-bridge; usable as a local/remote fallback. Internal WG-only sidecar, never public.",
-      "domain": "—",
-      "ports": [],
-      "networks": [],
-      "containers": [
-        "cloud-agi-claude"
-      ]
-    },
-    {
-      "name": "my-ai-api",
-      "category": "agi",
-      "vm": "oci-A1-f_0",
-      "description": "my-ai API on oci-apps — one polyglot container: OpenAI /v1 + Ollama /api + Anthropic /v1/messages mimic backed by OpenRouter (no Claude subscription, no metered Anthropic key), with a vendored Headroom (Apache-2.0) compression hop and a savings dashboard. Sibling of claude-superset-api; the agent face for this stack is goose (my-ai wraps goose, claude-superset keeps claude-cli). Internal WG-only sidecar, never public.",
-      "domain": "—",
-      "ports": [],
-      "networks": [],
-      "containers": [
-        "cloud-agi-goose"
-      ]
-    },
-    {
-      "name": "news-gdelt",
-      "category": "tools",
-      "vm": "oci-A1-f_0",
-      "description": "GDELT News Aggregator — Fastify API with SQLite cache",
-      "domain": "—",
-      "ports": [],
-      "networks": [],
-      "containers": [
-        "news-gdelt"
-      ]
-    },
-    {
       "name": "ntfy",
       "category": "tools",
       "vm": "oci-A1-f_0",
@@ -887,8 +971,8 @@
       "containers": [
         "ntfy",
         "syslog-bridge",
-        "rss-gateway",
-        "github-rss"
+        "capital-stack-news-rss-api",
+        "capital-stack-news-github-rss-api"
       ]
     },
     {
@@ -992,18 +1076,6 @@
       ]
     },
     {
-      "name": "scrappers-api",
-      "category": "data",
-      "vm": "oci-A1-f_0",
-      "description": "Unified scrapers API (Instagram / Pinterest / LinkedIn / generic crawl) — retires crawlee-cloud. Lean single-container FastAPI, on-demand, flat-JSON output.",
-      "domain": "api.diegonmarcos.com",
-      "ports": [],
-      "networks": [],
-      "containers": [
-        "scrappers-api"
-      ]
-    },
-    {
       "name": "send",
       "category": "app",
       "vm": "oci-A1-f_0",
@@ -1017,18 +1089,6 @@
       ]
     },
     {
-      "name": "session-memory",
-      "category": "agi",
-      "vm": "oci-A1-f_0",
-      "description": "Central SQLite store of all Claude Code session transcripts — push/list/fetch so a session started on one device can be resumed from any other. WG-only sidecar on oci-apps; Node 22 built-in node:sqlite (phone-portable, no native deps).",
-      "domain": "—",
-      "ports": [],
-      "networks": [],
-      "containers": [
-        "session-memory"
-      ]
-    },
-    {
       "name": "stalwart",
       "category": "app",
       "vm": "oci-E2-f_0",
@@ -1039,18 +1099,6 @@
       "containers": [
         "stalwart",
         "stalwart-sorter"
-      ]
-    },
-    {
-      "name": "tokens-api",
-      "category": "sec",
-      "vm": "oci-A1-f_0",
-      "description": "Fleet token engine: lists, generates, reveals and revokes every fleet bearer token (fleet ft_ tokens and adopted Authelia JWTs); introspect-proxy asks it before accepting a Bearer, so a revoked token stops working within 60 seconds. Public address: c3-pvt.diegonmarcos.com/tokens-api (shared gate, #1104); mesh tokens-api.mesh.diegonmarcos.com",
-      "domain": "—",
-      "ports": [],
-      "networks": [],
-      "containers": [
-        "tokens-api"
       ]
     },
     {
@@ -1162,10 +1210,10 @@
       "ports": [],
       "networks": [],
       "containers": [
-        "auth-broker-google",
-        "auth-broker-github",
-        "auth-broker-cloudflare",
-        "auth-broker-email"
+        "cloudy-auth-google-api",
+        "cloudy-auth-github-api",
+        "cloudy-auth-cloudflare-api",
+        "cloudy-auth-email-api"
       ]
     },
     {
@@ -1207,18 +1255,6 @@
       ]
     },
     {
-      "name": "c3-infra-api",
-      "category": "sec",
-      "vm": "oci-A1-f_0",
-      "description": "C3 REST API — Cloud Control Center Fastify API",
-      "domain": "api.diegonmarcos.com/c3-infra-api",
-      "ports": [],
-      "networks": [],
-      "containers": [
-        "c3-infra-api"
-      ]
-    },
-    {
       "name": "caddy",
       "category": "sec",
       "vm": "gcp-E2-f_0",
@@ -1255,6 +1291,18 @@
       ]
     },
     {
+      "name": "capital-stack-news-gdelt-api",
+      "category": "tools",
+      "vm": "oci-A1-f_0",
+      "description": "GDELT News Aggregator — Fastify API with SQLite cache",
+      "domain": "—",
+      "ports": [],
+      "networks": [],
+      "containers": [
+        "capital-stack-news-gdelt-api"
+      ]
+    },
+    {
       "name": "cloud-builder-x",
       "category": "tools",
       "vm": "local",
@@ -1276,6 +1324,18 @@
       "networks": [],
       "containers": [
         "cloud-infra-mcp"
+      ]
+    },
+    {
+      "name": "cloud-me-cgc-pvt-graph-api",
+      "category": "data",
+      "vm": "oci-A1-f_0",
+      "description": "SurrealDB Hybrid Knowledge Graph - Infrastructure topology + vector search",
+      "domain": "—",
+      "ports": [],
+      "networks": [],
+      "containers": [
+        "cloud-me-cgc-pvt-graph-api"
       ]
     },
     {
@@ -1312,6 +1372,66 @@
       "networks": [],
       "containers": [
         "cloudflare-worker"
+      ]
+    },
+    {
+      "name": "cloudy-ai-api",
+      "category": "sec",
+      "vm": "oci-A1-f_0",
+      "description": "AI gateway: /ai/{tokens,embeddings,agents,claude,memory} -> separate backend containers (cloudy-ai-*-api); legacy /<old-name>/ paths kept for one release.",
+      "domain": "—",
+      "ports": [],
+      "networks": [],
+      "containers": [
+        "cloudy-ai-api"
+      ]
+    },
+    {
+      "name": "cloudy-ai-tokens-api",
+      "category": "sec",
+      "vm": "oci-A1-f_0",
+      "description": "Fleet token engine: lists, generates, reveals and revokes every fleet bearer token (fleet ft_ tokens and adopted Authelia JWTs); introspect-proxy asks it before accepting a Bearer, so a revoked token stops working within 60 seconds. Public address: c3-pvt.diegonmarcos.com/tokens-api (shared gate, #1104); mesh tokens-api.mesh.diegonmarcos.com",
+      "domain": "—",
+      "ports": [],
+      "networks": [],
+      "containers": [
+        "cloudy-ai-tokens-api"
+      ]
+    },
+    {
+      "name": "cloudy-browser-scrapper-api",
+      "category": "data",
+      "vm": "oci-A1-f_0",
+      "description": "Unified scrapers API (Instagram / Pinterest / LinkedIn / generic crawl) — retires crawlee-cloud. Lean single-container FastAPI, on-demand, flat-JSON output.",
+      "domain": "api.diegonmarcos.com",
+      "ports": [],
+      "networks": [],
+      "containers": [
+        "cloudy-browser-scrapper-api"
+      ]
+    },
+    {
+      "name": "cloudy-c3-api",
+      "category": "sec",
+      "vm": "oci-A1-f_0",
+      "description": "C3 REST API — Cloud Control Center Fastify API",
+      "domain": "api.diegonmarcos.com/c3-infra-api",
+      "ports": [],
+      "networks": [],
+      "containers": [
+        "cloudy-c3-api"
+      ]
+    },
+    {
+      "name": "cloudy-cgc-pub-graph-api",
+      "category": "data",
+      "vm": "oci-A1-f_0",
+      "description": "SurrealDB Hybrid Knowledge Graph - Infrastructure topology + vector search",
+      "domain": "—",
+      "ports": [],
+      "networks": [],
+      "containers": [
+        "cloudy-cgc-pub-graph-api"
       ]
     },
     {
@@ -1447,30 +1567,6 @@
       ]
     },
     {
-      "name": "kg-store",
-      "category": "data",
-      "vm": "oci-A1-f_0",
-      "description": "SurrealDB Hybrid Knowledge Graph - Infrastructure topology + vector search",
-      "domain": "—",
-      "ports": [],
-      "networks": [],
-      "containers": [
-        "kg-store"
-      ]
-    },
-    {
-      "name": "kg-store-pub",
-      "category": "data",
-      "vm": "oci-A1-f_0",
-      "description": "SurrealDB Hybrid Knowledge Graph - Infrastructure topology + vector search",
-      "domain": "—",
-      "ports": [],
-      "networks": [],
-      "containers": [
-        "kg-store-pub"
-      ]
-    },
-    {
       "name": "languagetool",
       "category": "tools",
       "vm": "oci-A1-f_0",
@@ -1507,18 +1603,6 @@
       ]
     },
     {
-      "name": "news-gdelt",
-      "category": "tools",
-      "vm": "oci-A1-f_0",
-      "description": "GDELT News Aggregator — Fastify API with SQLite cache",
-      "domain": "—",
-      "ports": [],
-      "networks": [],
-      "containers": [
-        "news-gdelt"
-      ]
-    },
-    {
       "name": "ntfy",
       "category": "tools",
       "vm": "oci-A1-f_0",
@@ -1529,8 +1613,8 @@
       "containers": [
         "ntfy",
         "syslog-bridge",
-        "rss-gateway",
-        "github-rss"
+        "capital-stack-news-rss-api",
+        "capital-stack-news-github-rss-api"
       ]
     },
     {
@@ -1581,30 +1665,6 @@
       "networks": [],
       "containers": [
         "reports"
-      ]
-    },
-    {
-      "name": "scrappers-api",
-      "category": "data",
-      "vm": "oci-A1-f_0",
-      "description": "Unified scrapers API (Instagram / Pinterest / LinkedIn / generic crawl) — retires crawlee-cloud. Lean single-container FastAPI, on-demand, flat-JSON output.",
-      "domain": "api.diegonmarcos.com",
-      "ports": [],
-      "networks": [],
-      "containers": [
-        "scrappers-api"
-      ]
-    },
-    {
-      "name": "tokens-api",
-      "category": "sec",
-      "vm": "oci-A1-f_0",
-      "description": "Fleet token engine: lists, generates, reveals and revokes every fleet bearer token (fleet ft_ tokens and adopted Authelia JWTs); introspect-proxy asks it before accepting a Bearer, so a revoked token stops working within 60 seconds. Public address: c3-pvt.diegonmarcos.com/tokens-api (shared gate, #1104); mesh tokens-api.mesh.diegonmarcos.com",
-      "domain": "—",
-      "ports": [],
-      "networks": [],
-      "containers": [
-        "tokens-api"
       ]
     },
     {
@@ -1660,7 +1720,7 @@
       ]
     },
     {
-      "name": "capital-stack-finterminal-api",
+      "name": "capital-stack-finterm-api",
       "category": "fin",
       "vm": "oci-A1-f_0",
       "description": "Fincept Terminal backend (capital-stack-finterminal-api) — REST + WebSocket over DataHub, 35 data connectors, 7 analytics, 17 brokers, 6 investor personas, MCP tools",
@@ -1668,7 +1728,7 @@
       "ports": [],
       "networks": [],
       "containers": [
-        "capital-stack-finterminal-api"
+        "capital-stack-finterm-api"
       ]
     },
     {
@@ -1794,6 +1854,102 @@
       ]
     },
     {
+      "name": "cloudy-ai-agents-api",
+      "category": "agi",
+      "vm": "oci-A1-f_0",
+      "description": "my-ai API on oci-apps — one polyglot container: OpenAI /v1 + Ollama /api + Anthropic /v1/messages mimic backed by OpenRouter (no Claude subscription, no metered Anthropic key), with a vendored Headroom (Apache-2.0) compression hop and a savings dashboard. Sibling of claude-superset-api; the agent face for this stack is goose (my-ai wraps goose, claude-superset keeps claude-cli). Internal WG-only sidecar, never public.",
+      "domain": "—",
+      "ports": [],
+      "networks": [],
+      "containers": [
+        "cloud-agi-goose"
+      ]
+    },
+    {
+      "name": "cloudy-ai-claude-api",
+      "category": "agi",
+      "vm": "oci-A1-f_0",
+      "description": "Claude superset API on oci-apps — one polyglot container: OpenAI /v1 + Ollama /api + Anthropic /v1/messages mimic backed by the subscription `claude` CLI (no metered key), with a vendored Headroom (Apache-2.0) compression hop and a savings dashboard. Successor to kg-bridge; usable as a local/remote fallback. Internal WG-only sidecar, never public.",
+      "domain": "—",
+      "ports": [],
+      "networks": [],
+      "containers": [
+        "cloud-agi-claude"
+      ]
+    },
+    {
+      "name": "cloudy-ai-embeddings-api",
+      "category": "agi",
+      "vm": "oci-A1-f_0",
+      "description": "Fleet embeddings + rerank + PDF text server, CPU, mesh-only on oci-apps. OpenAI-compatible POST /embeddings (BAAI/bge-m3) and POST /rerank (BAAI/bge-reranker-v2-m3) served by Infinity, plus POST /pdf (raw application/pdf body to plain text, pypdf), GET /models and GET /health. Consumers: Cloud SuperIntel Notebook retrieval and Cloud Tools Retrieval steps. Mesh address http://embeddings-api.mesh.diegonmarcos.com:7997 (direct, plain HTTP inside WireGuard); no public route.",
+      "domain": "—",
+      "ports": [],
+      "networks": [],
+      "containers": [
+        "cloudy-ai-embeddings-api"
+      ]
+    },
+    {
+      "name": "cloudy-ai-memory-api",
+      "category": "agi",
+      "vm": "oci-A1-f_0",
+      "description": "Central SQLite store of all Claude Code session transcripts — push/list/fetch so a session started on one device can be resumed from any other. WG-only sidecar on oci-apps; Node 22 built-in node:sqlite (phone-portable, no native deps).",
+      "domain": "—",
+      "ports": [],
+      "networks": [],
+      "containers": [
+        "cloudy-ai-memory-api"
+      ]
+    },
+    {
+      "name": "cloudy-apps-communication-mcp",
+      "category": "app",
+      "vm": "oci-A1-f_0",
+      "description": "Mail MCP server — IMAP/SMTP/Admin via Stalwart REST API",
+      "domain": "mcp.diegonmarcos.com",
+      "ports": [],
+      "networks": [],
+      "containers": [
+        "cloudy-apps-communication-mcp"
+      ]
+    },
+    {
+      "name": "cloudy-apps-drive-mcp",
+      "category": "app",
+      "vm": "oci-A1-f_0",
+      "description": "Drive MCP server — one facade over every storage unit: repos, files, photos, sync, scrapes, S3 and conversion",
+      "domain": "mcp.diegonmarcos.com",
+      "ports": [],
+      "networks": [],
+      "containers": [
+        "cloudy-apps-drive-mcp"
+      ]
+    },
+    {
+      "name": "cloudy-drive-git-proxy-api",
+      "category": "app",
+      "vm": "oci-E2-f_1",
+      "description": "Git Proxy API — Authelia-fronted read path to GitHub so the phone holds NO GitHub credential (#647, route 3 of #646's fallback chain). The caller authenticates to US with the Authelia bearer it already has; this service holds the GitHub token server-side and streams the result back.",
+      "domain": "api.diegonmarcos.com/git",
+      "ports": [],
+      "networks": [],
+      "containers": [
+        "cloudy-drive-git-proxy-api"
+      ]
+    },
+    {
+      "name": "cloudy-mail-http-to-smtp-api",
+      "category": "app",
+      "vm": "gcp-E2-f_0",
+      "description": "HTTP-to-SMTP bridge sidecar of Caddy on gcp-proxy. CF Worker POSTs JSON email payloads to this container (because GCP blocks outbound TCP/25); container speaks SMTP over WG to maddy:25 + stalwart:2025 on oci-mail. Public path: api.diegonmarcos.com/http-to-smtp-proxy-api/ [DECOMMISSIONED 2026-05-21]",
+      "domain": "api.diegonmarcos.com/http-to-smtp-proxy-api",
+      "ports": [],
+      "networks": [],
+      "containers": [
+        "cloudy-mail-http-to-smtp-api"
+      ]
+    },
+    {
       "name": "code-server",
       "category": "app",
       "vm": "oci-A1-f_0",
@@ -1815,18 +1971,6 @@
       "networks": [],
       "containers": [
         "contacts-radicale"
-      ]
-    },
-    {
-      "name": "embeddings-api",
-      "category": "agi",
-      "vm": "oci-A1-f_0",
-      "description": "Fleet embeddings + rerank + PDF text server, CPU, mesh-only on oci-apps. OpenAI-compatible POST /embeddings (BAAI/bge-m3) and POST /rerank (BAAI/bge-reranker-v2-m3) served by Infinity, plus POST /pdf (raw application/pdf body to plain text, pypdf), GET /models and GET /health. Consumers: Cloud SuperIntel Notebook retrieval and Cloud Tools Retrieval steps. Mesh address http://embeddings-api.mesh.diegonmarcos.com:7997 (direct, plain HTTP inside WireGuard); no public route.",
-      "domain": "—",
-      "ports": [],
-      "networks": [],
-      "containers": [
-        "embeddings-api"
       ]
     },
     {
@@ -1864,18 +2008,6 @@
       "networks": [],
       "containers": [
         "front-end"
-      ]
-    },
-    {
-      "name": "git-proxy-api",
-      "category": "app",
-      "vm": "oci-E2-f_1",
-      "description": "Git Proxy API — Authelia-fronted read path to GitHub so the phone holds NO GitHub credential (#647, route 3 of #646's fallback chain). The caller authenticates to US with the Authelia bearer it already has; this service holds the GitHub token server-side and streams the result back.",
-      "domain": "api.diegonmarcos.com/git",
-      "ports": [],
-      "networks": [],
-      "containers": [
-        "git-proxy-api"
       ]
     },
     {
@@ -1940,18 +2072,6 @@
       ]
     },
     {
-      "name": "http-to-smtp-proxy-api",
-      "category": "app",
-      "vm": "gcp-E2-f_0",
-      "description": "HTTP-to-SMTP bridge sidecar of Caddy on gcp-proxy. CF Worker POSTs JSON email payloads to this container (because GCP blocks outbound TCP/25); container speaks SMTP over WG to maddy:25 + stalwart:2025 on oci-mail. Public path: api.diegonmarcos.com/http-to-smtp-proxy-api/ [DECOMMISSIONED 2026-05-21]",
-      "domain": "api.diegonmarcos.com/http-to-smtp-proxy-api",
-      "ports": [],
-      "networks": [],
-      "containers": [
-        "http-to-smtp-proxy-api"
-      ]
-    },
-    {
       "name": "maddy",
       "category": "app",
       "vm": "oci-E2-f_0",
@@ -2009,30 +2129,6 @@
       "networks": [],
       "containers": [
         "mautrix-whatsapp"
-      ]
-    },
-    {
-      "name": "my-ai_claude-api",
-      "category": "agi",
-      "vm": "oci-A1-f_0",
-      "description": "Claude superset API on oci-apps — one polyglot container: OpenAI /v1 + Ollama /api + Anthropic /v1/messages mimic backed by the subscription `claude` CLI (no metered key), with a vendored Headroom (Apache-2.0) compression hop and a savings dashboard. Successor to kg-bridge; usable as a local/remote fallback. Internal WG-only sidecar, never public.",
-      "domain": "—",
-      "ports": [],
-      "networks": [],
-      "containers": [
-        "cloud-agi-claude"
-      ]
-    },
-    {
-      "name": "my-ai-api",
-      "category": "agi",
-      "vm": "oci-A1-f_0",
-      "description": "my-ai API on oci-apps — one polyglot container: OpenAI /v1 + Ollama /api + Anthropic /v1/messages mimic backed by OpenRouter (no Claude subscription, no metered Anthropic key), with a vendored Headroom (Apache-2.0) compression hop and a savings dashboard. Sibling of claude-superset-api; the agent face for this stack is goose (my-ai wraps goose, claude-superset keeps claude-cli). Internal WG-only sidecar, never public.",
-      "domain": "—",
-      "ports": [],
-      "networks": [],
-      "containers": [
-        "cloud-agi-goose"
       ]
     },
     {
@@ -2096,18 +2192,6 @@
       "containers": [
         "send_app",
         "send_redis"
-      ]
-    },
-    {
-      "name": "session-memory",
-      "category": "agi",
-      "vm": "oci-A1-f_0",
-      "description": "Central SQLite store of all Claude Code session transcripts — push/list/fetch so a session started on one device can be resumed from any other. WG-only sidecar on oci-apps; Node 22 built-in node:sqlite (phone-portable, no native deps).",
-      "domain": "—",
-      "ports": [],
-      "networks": [],
-      "containers": [
-        "session-memory"
       ]
     },
     {

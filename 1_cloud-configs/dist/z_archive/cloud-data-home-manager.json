@@ -107,7 +107,7 @@
         "alerts-api",
         "c3-public-api",
         "cloud-me-api",
-        "git-proxy-api",
+        "cloudy-drive-git-proxy-api",
         "unbound-dns64",
         "caddy-public"
       ],
@@ -151,11 +151,10 @@
       "is_public_ingress": false,
       "idle_shutdown": null,
       "containers": [
-        "embeddings-api",
+        "cloudy-ai-api",
+        "cloudy-ai-embeddings-api",
         "jev-sidecar",
         "languagetool",
-        "c3-infra-api",
-        "c3-services-api",
         "cloud-drive-mcp",
         "cloud-infra-mcp",
         "cloud-mail-mcp",
@@ -163,6 +162,11 @@
         "cloud-services-mcp",
         "cloud-superapp-mcp",
         "cloud-vault-mcp",
+        "cloudy-all-api",
+        "cloudy-all-mcp",
+        "cloudy-apps-communication-mcp",
+        "cloudy-apps-drive-mcp",
+        "cloudy-c3-api",
         "google-personal-mcp",
         "google-workspace-mcp",
         "gha-runner",
@@ -182,27 +186,27 @@
         "agents-tmp-reaper",
         "disk-janitor",
         "auth-broker",
+        "cloudy-ai-tokens-api",
         "crowdsec",
-        "tokens-api",
         "cloud-cgc-pub-mcp",
+        "cloud-me-cgc-pvt-graph-api",
+        "cloudy-ai-agents-api",
+        "cloudy-ai-claude-api",
+        "cloudy-ai-memory-api",
+        "cloudy-cgc-pub-graph-api",
         "hermes-agent",
-        "kg-store",
-        "kg-store-pub",
-        "my-ai-api",
-        "my-ai_claude-api",
         "openclaw",
-        "session-memory",
         "chat-mattermost",
         "cloud-webmail",
         "matrix-continuwuity",
         "matrix-element",
         "matrix-mautrix-whatsapp",
-        "scrappers-api",
-        "capital-stack-finterminal-api",
+        "cloudy-browser-scrapper-api",
+        "capital-stack-finterm-api",
         "capital-stack-finterminal-web",
         "photoprism",
         "playlist-syncer",
-        "news-gdelt",
+        "capital-stack-news-gdelt-api",
         "calendar-radicale",
         "cloud-notes-sync",
         "cloud-notes-web",
@@ -233,18 +237,6 @@
         "unshed_delay_secs": 5
       },
       "ssh_containers": [
-        {
-          "name": "c3-infra-api",
-          "uid": 0,
-          "ssh_dir": "/root/.ssh",
-          "keys": [
-            "vault_id_rsa",
-            "vault_id_rsa.pub",
-            "google_compute_engine",
-            "google_compute_engine.pub"
-          ],
-          "extra_hosts": []
-        },
         {
           "name": "cloud-infra-mcp",
           "uid": 0,
@@ -335,6 +327,28 @@
           ]
         },
         {
+          "name": "cloudy-apps-communication-mcp",
+          "uid": 0,
+          "ssh_dir": "/root/.ssh",
+          "keys": [
+            "vault_id_rsa",
+            "vault_id_rsa.pub"
+          ],
+          "extra_hosts": []
+        },
+        {
+          "name": "cloudy-c3-api",
+          "uid": 0,
+          "ssh_dir": "/root/.ssh",
+          "keys": [
+            "vault_id_rsa",
+            "vault_id_rsa.pub",
+            "google_compute_engine",
+            "google_compute_engine.pub"
+          ],
+          "extra_hosts": []
+        },
+        {
           "name": "dagu",
           "uid": 0,
           "ssh_dir": "/root/.ssh",
@@ -416,7 +430,7 @@
       "is_public_ingress": true,
       "idle_shutdown": null,
       "containers": [
-        "http-to-smtp-proxy-api",
+        "cloudy-mail-http-to-smtp-api",
         "postlite",
         "redis",
         "hickory-dns",

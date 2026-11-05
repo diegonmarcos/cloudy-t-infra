@@ -61,8 +61,13 @@
       "vm": "oci-analytics",
       "has_docker": true
     },
-    "embeddings-api": {
-      "dir": "infra-ai_embeddings-api",
+    "cloudy-ai-api": {
+      "dir": "infra-ai_cloudy-ai-api",
+      "vm": "oci-apps",
+      "has_docker": true
+    },
+    "cloudy-ai-embeddings-api": {
+      "dir": "infra-ai_cloudy-ai-embeddings-api",
       "vm": "oci-apps",
       "has_docker": true
     },
@@ -76,19 +81,9 @@
       "vm": "oci-apps",
       "has_docker": false
     },
-    "c3-infra-api": {
-      "dir": "infra-api_c3-infra-api",
-      "vm": "oci-apps",
-      "has_docker": true
-    },
     "c3-public-api": {
       "dir": "infra-api_c3-public-api",
       "vm": "oci-analytics",
-      "has_docker": true
-    },
-    "c3-services-api": {
-      "dir": "infra-api_c3-services-api",
-      "vm": "oci-apps",
       "has_docker": true
     },
     "cloud-drive-mcp": {
@@ -131,9 +126,39 @@
       "vm": "oci-apps",
       "has_docker": true
     },
-    "git-proxy-api": {
-      "dir": "infra-api_git-proxy-api",
+    "cloudy-all-api": {
+      "dir": "infra-api_cloudy-all-api",
+      "vm": "oci-apps",
+      "has_docker": true
+    },
+    "cloudy-all-mcp": {
+      "dir": "infra-api_cloudy-all-mcp",
+      "vm": "oci-apps",
+      "has_docker": true
+    },
+    "cloudy-apps-communication-mcp": {
+      "dir": "infra-api_cloudy-apps-communication-mcp",
+      "vm": "oci-apps",
+      "has_docker": true
+    },
+    "cloudy-apps-drive-mcp": {
+      "dir": "infra-api_cloudy-apps-drive-mcp",
+      "vm": "oci-apps",
+      "has_docker": true
+    },
+    "cloudy-c3-api": {
+      "dir": "infra-api_cloudy-c3-api",
+      "vm": "oci-apps",
+      "has_docker": true
+    },
+    "cloudy-drive-git-proxy-api": {
+      "dir": "infra-api_cloudy-drive-git-proxy-api",
       "vm": "oci-analytics",
+      "has_docker": true
+    },
+    "cloudy-mail-http-to-smtp-api": {
+      "dir": "infra-api_cloudy-mail-http-to-smtp-api",
+      "vm": "gcp-proxy",
       "has_docker": true
     },
     "google-personal-mcp": {
@@ -144,11 +169,6 @@
     "google-workspace-mcp": {
       "dir": "infra-api_google-workspace-mcp",
       "vm": "oci-apps",
-      "has_docker": true
-    },
-    "http-to-smtp-proxy-api": {
-      "dir": "infra-api_tools-http-to-smtp-proxy-api",
-      "vm": "gcp-proxy",
       "has_docker": true
     },
     "gha-runner": {
@@ -276,6 +296,11 @@
       "vm": "oci-analytics",
       "has_docker": true
     },
+    "cloudy-ai-tokens-api": {
+      "dir": "infra-sec_cloudy-ai-tokens-api",
+      "vm": "oci-apps",
+      "has_docker": true
+    },
     "crowdsec": {
       "dir": "infra-sec_crowdsec",
       "vm": "oci-apps",
@@ -286,13 +311,33 @@
       "vm": "gcp-proxy",
       "has_docker": true
     },
-    "tokens-api": {
-      "dir": "infra-sec_tokens-api",
+    "cloud-cgc-pub-mcp": {
+      "dir": "user-ai_cloud-cgc-pub-mcp",
       "vm": "oci-apps",
       "has_docker": true
     },
-    "cloud-cgc-pub-mcp": {
-      "dir": "user-ai_cloud-cgc-pub-mcp",
+    "cloud-me-cgc-pvt-graph-api": {
+      "dir": "user-ai_cloud-me-cgc-pvt-graph-api",
+      "vm": "oci-apps",
+      "has_docker": true
+    },
+    "cloudy-ai-agents-api": {
+      "dir": "user-ai_cloudy-ai-agents-api",
+      "vm": "oci-apps",
+      "has_docker": true
+    },
+    "cloudy-ai-claude-api": {
+      "dir": "user-ai_cloudy-ai-claude-api",
+      "vm": "oci-apps",
+      "has_docker": true
+    },
+    "cloudy-ai-memory-api": {
+      "dir": "user-ai_cloudy-ai-memory-api",
+      "vm": "oci-apps",
+      "has_docker": true
+    },
+    "cloudy-cgc-pub-graph-api": {
+      "dir": "user-ai_cloudy-cgc-pub-graph-api",
       "vm": "oci-apps",
       "has_docker": true
     },
@@ -301,35 +346,10 @@
       "vm": "oci-apps",
       "has_docker": true
     },
-    "kg-store": {
-      "dir": "user-ai_kg-store",
-      "vm": "oci-apps",
-      "has_docker": true
-    },
-    "kg-store-pub": {
-      "dir": "user-ai_kg-store-pub",
-      "vm": "oci-apps",
-      "has_docker": true
-    },
-    "my-ai-api": {
-      "dir": "user-ai_my-ai-api",
-      "vm": "oci-apps",
-      "has_docker": true
-    },
-    "my-ai_claude-api": {
-      "dir": "user-ai_my-ai_claude-api",
-      "vm": "oci-apps",
-      "has_docker": true
-    },
     "openclaw": {
       "dir": "user-ai_openclaw",
       "vm": "oci-apps",
       "has_docker": false
-    },
-    "session-memory": {
-      "dir": "user-ai_session-memory",
-      "vm": "oci-apps",
-      "has_docker": true
     },
     "chat-mattermost": {
       "dir": "user-comm_chat-mattermost",
@@ -371,13 +391,13 @@
       "vm": "oci-mail",
       "has_docker": true
     },
-    "scrappers-api": {
-      "dir": "user-data_scrappers-api",
+    "cloudy-browser-scrapper-api": {
+      "dir": "user-data_cloudy-browser-scrapper-api",
       "vm": "oci-apps",
       "has_docker": true
     },
-    "capital-stack-finterminal-api": {
-      "dir": "user-fin_capital-stack-finterminal-api",
+    "capital-stack-finterm-api": {
+      "dir": "user-fin_capital-stack-finterm-api",
       "vm": "oci-apps",
       "has_docker": true
     },
@@ -396,8 +416,8 @@
       "vm": "oci-apps",
       "has_docker": true
     },
-    "news-gdelt": {
-      "dir": "user-news_news-gdelt",
+    "capital-stack-news-gdelt-api": {
+      "dir": "user-news_capital-stack-news-gdelt-api",
       "vm": "oci-apps",
       "has_docker": true
     },

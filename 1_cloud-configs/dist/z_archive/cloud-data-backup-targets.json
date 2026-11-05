@@ -114,28 +114,28 @@
       ]
     },
     {
-      "service": "kg-store",
+      "service": "cloud-me-cgc-pvt-graph-api",
       "vm": "oci-A1-f_0",
       "vm_alias": "oci-apps",
       "volumes": [],
       "databases": [
         {
-          "service": "kg-store",
-          "container": "kg-store",
+          "service": "cloud-me-cgc-pvt-graph-api",
+          "container": "cloud-me-cgc-pvt-graph-api",
           "container_key": "app",
           "type": "surrealdb"
         }
       ]
     },
     {
-      "service": "kg-store-pub",
+      "service": "cloudy-cgc-pub-graph-api",
       "vm": "oci-A1-f_0",
       "vm_alias": "oci-apps",
       "volumes": [],
       "databases": [
         {
-          "service": "kg-store-pub",
-          "container": "kg-store-pub",
+          "service": "cloudy-cgc-pub-graph-api",
+          "container": "cloudy-cgc-pub-graph-api",
           "container_key": "app",
           "type": "surrealdb"
         }
@@ -239,7 +239,7 @@
       ]
     },
     {
-      "service": "scrappers-api",
+      "service": "cloudy-browser-scrapper-api",
       "vm": "oci-A1-f_0",
       "vm_alias": "oci-apps",
       "volumes": [],
@@ -377,14 +377,14 @@
           "db": "umami"
         },
         {
-          "service": "kg-store",
-          "container": "kg-store",
+          "service": "cloud-me-cgc-pvt-graph-api",
+          "container": "cloud-me-cgc-pvt-graph-api",
           "container_key": "app",
           "type": "surrealdb"
         },
         {
-          "service": "kg-store-pub",
-          "container": "kg-store-pub",
+          "service": "cloudy-cgc-pub-graph-api",
+          "container": "cloudy-cgc-pub-graph-api",
           "container_key": "app",
           "type": "surrealdb"
         },

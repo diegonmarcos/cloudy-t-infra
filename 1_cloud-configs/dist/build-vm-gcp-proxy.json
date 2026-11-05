@@ -4,9 +4,9 @@
   "vm_id": "gcp-E2-f_0",
   "services": [
     {
-      "name": "http-to-smtp-proxy-api",
-      "dir": "infra-api_tools-http-to-smtp-proxy-api",
-      "compose_path": "/opt/containers/http-to-smtp-proxy-api",
+      "name": "cloudy-mail-http-to-smtp-api",
+      "dir": "infra-api_cloudy-mail-http-to-smtp-api",
+      "compose_path": "/opt/containers/cloudy-mail-http-to-smtp-api",
       "images": [],
       "has_docker_build": true
     },

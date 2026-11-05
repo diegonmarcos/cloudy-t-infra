@@ -975,17 +975,6 @@
       "parent_domain": "api.diegonmarcos.com",
       "paths": [
         {
-          "base_path": "/c3-infra-api",
-          "upstream": "10.0.0.6:8081",
-          "public_paths": [
-            "/c3-infra-api/docs/json",
-            "/c3-infra-api/public/logs",
-            "/c3-infra-api/public/events/*"
-          ],
-          "wg_only": true,
-          "comment": "C3 REST API — Cloud Control Center Fastify API"
-        },
-        {
           "base_path": "/pub",
           "upstream": "10.0.0.4:8087",
           "public_paths": [
@@ -996,7 +985,18 @@
           "comment": "C3 Public API — single public-edge listener on oci-analytics. Consolidates http-to-smtp-proxy-api (Bearer-gated /mail/*) and c3-analytics-api passthrough (public /analytics/*). Replaces split listeners across gcp-proxy + oci-analytics so gcp-proxy becomes a pure wg0 spoke."
         },
         {
-          "base_path": "/git",
+          "base_path": "/cloudy-c3-api",
+          "upstream": "10.0.0.6:8081",
+          "public_paths": [
+            "/c3-infra-api/docs/json",
+            "/c3-infra-api/public/logs",
+            "/c3-infra-api/public/events/*"
+          ],
+          "wg_only": true,
+          "comment": "C3 REST API — Cloud Control Center Fastify API"
+        },
+        {
+          "base_path": "/cloudy-drive-git-proxy-api",
           "upstream": "10.0.0.4:8123",
           "public_paths": [
             "/git/health"
@@ -1005,7 +1005,7 @@
           "comment": "Git Proxy API — Authelia-fronted read path to GitHub so the phone holds NO GitHub credential (#647, route 3 of #646's fallback chain). The caller authenticates to US with the Authelia bearer it already has; this service holds the GitHub token server-side and streams the result back."
         },
         {
-          "base_path": "/scrappers",
+          "base_path": "/cloudy-browser-scrapper-api",
           "upstream": "10.0.0.6:3020",
           "public_paths": [
             "/scrappers/health",

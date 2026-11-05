@@ -6,9 +6,9 @@
   "base": "https://rss.diegonmarcos.com/feed",
   "counts": {
     "declared": 22,
-    "logs": 103,
-    "apps": 38,
-    "total": 163
+    "logs": 107,
+    "apps": 40,
+    "total": 169
   },
   "channels": [
     {
@@ -221,14 +221,25 @@
       "quiet": true
     },
     {
-      "id": "logs_embeddings-api",
-      "topic": "logs_embeddings-api",
-      "title": "embeddings-api",
-      "path": "Cloud-Infra/Logs/oci-apps/embeddings-api",
+      "id": "logs_cloudy-ai-api",
+      "topic": "logs_cloudy-ai-api",
+      "title": "cloudy-ai-api",
+      "path": "Cloud-Infra/Logs/oci-apps/cloudy-ai-api",
       "category": "logs",
       "source": "logs",
       "vm": "oci-apps",
-      "feed": "/feed/c/logs_embeddings-api.atom",
+      "feed": "/feed/c/logs_cloudy-ai-api.atom",
+      "quiet": true
+    },
+    {
+      "id": "logs_cloudy-ai-embeddings-api",
+      "topic": "logs_cloudy-ai-embeddings-api",
+      "title": "cloudy-ai-embeddings-api",
+      "path": "Cloud-Infra/Logs/oci-apps/cloudy-ai-embeddings-api",
+      "category": "logs",
+      "source": "logs",
+      "vm": "oci-apps",
+      "feed": "/feed/c/logs_cloudy-ai-embeddings-api.atom",
       "quiet": true
     },
     {
@@ -254,17 +265,6 @@
       "quiet": true
     },
     {
-      "id": "logs_c3-infra-api",
-      "topic": "logs_c3-infra-api",
-      "title": "c3-infra-api",
-      "path": "Cloud-Infra/Logs/oci-apps/c3-infra-api",
-      "category": "logs",
-      "source": "logs",
-      "vm": "oci-apps",
-      "feed": "/feed/c/logs_c3-infra-api.atom",
-      "quiet": true
-    },
-    {
       "id": "logs_c3-public-api",
       "topic": "logs_c3-public-api",
       "title": "c3-public-api",
@@ -273,17 +273,6 @@
       "source": "logs",
       "vm": "oci-analytics",
       "feed": "/feed/c/logs_c3-public-api.atom",
-      "quiet": true
-    },
-    {
-      "id": "logs_c3-services-api",
-      "topic": "logs_c3-services-api",
-      "title": "c3-services-api",
-      "path": "Cloud-Infra/Logs/oci-apps/c3-services-api",
-      "category": "logs",
-      "source": "logs",
-      "vm": "oci-apps",
-      "feed": "/feed/c/logs_c3-services-api.atom",
       "quiet": true
     },
     {
@@ -375,14 +364,69 @@
       "quiet": true
     },
     {
-      "id": "logs_git-proxy-api",
-      "topic": "logs_git-proxy-api",
-      "title": "git-proxy-api",
-      "path": "Cloud-Infra/Logs/oci-analytics/git-proxy-api",
+      "id": "logs_cloudy-all-api",
+      "topic": "logs_cloudy-all-api",
+      "title": "cloudy-all-api",
+      "path": "Cloud-Infra/Logs/oci-apps/cloudy-all-api",
+      "category": "logs",
+      "source": "logs",
+      "vm": "oci-apps",
+      "feed": "/feed/c/logs_cloudy-all-api.atom",
+      "quiet": true
+    },
+    {
+      "id": "logs_cloudy-all-mcp",
+      "topic": "logs_cloudy-all-mcp",
+      "title": "cloudy-all-mcp",
+      "path": "Cloud-Infra/Logs/oci-apps/cloudy-all-mcp",
+      "category": "logs",
+      "source": "logs",
+      "vm": "oci-apps",
+      "feed": "/feed/c/logs_cloudy-all-mcp.atom",
+      "quiet": true
+    },
+    {
+      "id": "logs_cloudy-apps-communication-mcp",
+      "topic": "logs_cloudy-apps-communication-mcp",
+      "title": "cloudy-apps-communication-mcp",
+      "path": "Cloud-Infra/Logs/oci-apps/cloudy-apps-communication-mcp",
+      "category": "logs",
+      "source": "logs",
+      "vm": "oci-apps",
+      "feed": "/feed/c/logs_cloudy-apps-communication-mcp.atom",
+      "quiet": true
+    },
+    {
+      "id": "logs_cloudy-apps-drive-mcp",
+      "topic": "logs_cloudy-apps-drive-mcp",
+      "title": "cloudy-apps-drive-mcp",
+      "path": "Cloud-Infra/Logs/oci-apps/cloudy-apps-drive-mcp",
+      "category": "logs",
+      "source": "logs",
+      "vm": "oci-apps",
+      "feed": "/feed/c/logs_cloudy-apps-drive-mcp.atom",
+      "quiet": true
+    },
+    {
+      "id": "logs_cloudy-c3-api",
+      "topic": "logs_cloudy-c3-api",
+      "title": "cloudy-c3-api",
+      "path": "Cloud-Infra/Logs/oci-apps/cloudy-c3-api",
+      "category": "logs",
+      "source": "logs",
+      "vm": "oci-apps",
+      "feed": "/feed/c/logs_cloudy-c3-api.atom",
+      "quiet": true
+    },
+    {
+      "id": "logs_cloudy-drive-git-proxy-api",
+      "topic": "logs_cloudy-drive-git-proxy-api",
+      "title": "cloudy-drive-git-proxy-api",
+      "path": "Cloud-Infra/Logs/oci-analytics/cloudy-drive-git-proxy-api",
       "category": "logs",
       "source": "logs",
       "vm": "oci-analytics",
-      "feed": "/feed/c/logs_git-proxy-api.atom",
+      "feed": "/feed/c/logs_cloudy-drive-git-proxy-api.atom",
       "quiet": true
     },
     {
@@ -606,25 +650,25 @@
       "quiet": true
     },
     {
-      "id": "logs_rss-gateway",
-      "topic": "logs_rss-gateway",
-      "title": "rss-gateway",
-      "path": "Cloud-Infra/Logs/oci-apps/rss-gateway",
+      "id": "logs_capital-stack-news-rss-api",
+      "topic": "logs_capital-stack-news-rss-api",
+      "title": "capital-stack-news-rss-api",
+      "path": "Cloud-Infra/Logs/oci-apps/capital-stack-news-rss-api",
       "category": "logs",
       "source": "logs",
       "vm": "oci-apps",
-      "feed": "/feed/c/logs_rss-gateway.atom",
+      "feed": "/feed/c/logs_capital-stack-news-rss-api.atom",
       "quiet": true
     },
     {
-      "id": "logs_github-rss",
-      "topic": "logs_github-rss",
-      "title": "github-rss",
-      "path": "Cloud-Infra/Logs/oci-apps/github-rss",
+      "id": "logs_capital-stack-news-github-rss-api",
+      "topic": "logs_capital-stack-news-github-rss-api",
+      "title": "capital-stack-news-github-rss-api",
+      "path": "Cloud-Infra/Logs/oci-apps/capital-stack-news-github-rss-api",
       "category": "logs",
       "source": "logs",
       "vm": "oci-apps",
-      "feed": "/feed/c/logs_github-rss.atom",
+      "feed": "/feed/c/logs_capital-stack-news-github-rss-api.atom",
       "quiet": true
     },
     {
@@ -705,47 +749,47 @@
       "quiet": true
     },
     {
-      "id": "logs_auth-broker-google",
-      "topic": "logs_auth-broker-google",
-      "title": "auth-broker-google",
-      "path": "Cloud-Infra/Logs/oci-apps/auth-broker-google",
+      "id": "logs_cloudy-auth-google-api",
+      "topic": "logs_cloudy-auth-google-api",
+      "title": "cloudy-auth-google-api",
+      "path": "Cloud-Infra/Logs/oci-apps/cloudy-auth-google-api",
       "category": "logs",
       "source": "logs",
       "vm": "oci-apps",
-      "feed": "/feed/c/logs_auth-broker-google.atom",
+      "feed": "/feed/c/logs_cloudy-auth-google-api.atom",
       "quiet": true
     },
     {
-      "id": "logs_auth-broker-github",
-      "topic": "logs_auth-broker-github",
-      "title": "auth-broker-github",
-      "path": "Cloud-Infra/Logs/oci-apps/auth-broker-github",
+      "id": "logs_cloudy-auth-github-api",
+      "topic": "logs_cloudy-auth-github-api",
+      "title": "cloudy-auth-github-api",
+      "path": "Cloud-Infra/Logs/oci-apps/cloudy-auth-github-api",
       "category": "logs",
       "source": "logs",
       "vm": "oci-apps",
-      "feed": "/feed/c/logs_auth-broker-github.atom",
+      "feed": "/feed/c/logs_cloudy-auth-github-api.atom",
       "quiet": true
     },
     {
-      "id": "logs_auth-broker-cloudflare",
-      "topic": "logs_auth-broker-cloudflare",
-      "title": "auth-broker-cloudflare",
-      "path": "Cloud-Infra/Logs/oci-apps/auth-broker-cloudflare",
+      "id": "logs_cloudy-auth-cloudflare-api",
+      "topic": "logs_cloudy-auth-cloudflare-api",
+      "title": "cloudy-auth-cloudflare-api",
+      "path": "Cloud-Infra/Logs/oci-apps/cloudy-auth-cloudflare-api",
       "category": "logs",
       "source": "logs",
       "vm": "oci-apps",
-      "feed": "/feed/c/logs_auth-broker-cloudflare.atom",
+      "feed": "/feed/c/logs_cloudy-auth-cloudflare-api.atom",
       "quiet": true
     },
     {
-      "id": "logs_auth-broker-email",
-      "topic": "logs_auth-broker-email",
-      "title": "auth-broker-email",
-      "path": "Cloud-Infra/Logs/oci-apps/auth-broker-email",
+      "id": "logs_cloudy-auth-email-api",
+      "topic": "logs_cloudy-auth-email-api",
+      "title": "cloudy-auth-email-api",
+      "path": "Cloud-Infra/Logs/oci-apps/cloudy-auth-email-api",
       "category": "logs",
       "source": "logs",
       "vm": "oci-apps",
-      "feed": "/feed/c/logs_auth-broker-email.atom",
+      "feed": "/feed/c/logs_cloudy-auth-email-api.atom",
       "quiet": true
     },
     {
@@ -815,6 +859,17 @@
       "quiet": true
     },
     {
+      "id": "logs_cloudy-ai-tokens-api",
+      "topic": "logs_cloudy-ai-tokens-api",
+      "title": "cloudy-ai-tokens-api",
+      "path": "Cloud-Infra/Logs/oci-apps/cloudy-ai-tokens-api",
+      "category": "logs",
+      "source": "logs",
+      "vm": "oci-apps",
+      "feed": "/feed/c/logs_cloudy-ai-tokens-api.atom",
+      "quiet": true
+    },
+    {
       "id": "logs_crowdsec",
       "topic": "logs_crowdsec",
       "title": "crowdsec",
@@ -848,17 +903,6 @@
       "quiet": true
     },
     {
-      "id": "logs_tokens-api",
-      "topic": "logs_tokens-api",
-      "title": "tokens-api",
-      "path": "Cloud-Infra/Logs/oci-apps/tokens-api",
-      "category": "logs",
-      "source": "logs",
-      "vm": "oci-apps",
-      "feed": "/feed/c/logs_tokens-api.atom",
-      "quiet": true
-    },
-    {
       "id": "logs_cloud-cgc-pub-mcp",
       "topic": "logs_cloud-cgc-pub-mcp",
       "title": "cloud-cgc-pub-mcp",
@@ -881,47 +925,14 @@
       "quiet": true
     },
     {
-      "id": "logs_db-agent",
-      "topic": "logs_db-agent",
-      "title": "db-agent",
-      "path": "Cloud-Infra/Logs/all/db-agent",
-      "category": "logs",
-      "source": "logs",
-      "vm": "all",
-      "feed": "/feed/c/logs_db-agent.atom",
-      "quiet": true
-    },
-    {
-      "id": "logs_cloud-agi-hermes",
-      "topic": "logs_cloud-agi-hermes",
-      "title": "cloud-agi-hermes",
-      "path": "Cloud-Infra/Logs/oci-apps/cloud-agi-hermes",
+      "id": "logs_cloud-me-cgc-pvt-graph-api",
+      "topic": "logs_cloud-me-cgc-pvt-graph-api",
+      "title": "cloud-me-cgc-pvt-graph-api",
+      "path": "Cloud-Infra/Logs/oci-apps/cloud-me-cgc-pvt-graph-api",
       "category": "logs",
       "source": "logs",
       "vm": "oci-apps",
-      "feed": "/feed/c/logs_cloud-agi-hermes.atom",
-      "quiet": true
-    },
-    {
-      "id": "logs_kg-store",
-      "topic": "logs_kg-store",
-      "title": "kg-store",
-      "path": "Cloud-Infra/Logs/oci-apps/kg-store",
-      "category": "logs",
-      "source": "logs",
-      "vm": "oci-apps",
-      "feed": "/feed/c/logs_kg-store.atom",
-      "quiet": true
-    },
-    {
-      "id": "logs_kg-store-pub",
-      "topic": "logs_kg-store-pub",
-      "title": "kg-store-pub",
-      "path": "Cloud-Infra/Logs/oci-apps/kg-store-pub",
-      "category": "logs",
-      "source": "logs",
-      "vm": "oci-apps",
-      "feed": "/feed/c/logs_kg-store-pub.atom",
+      "feed": "/feed/c/logs_cloud-me-cgc-pvt-graph-api.atom",
       "quiet": true
     },
     {
@@ -947,6 +958,50 @@
       "quiet": true
     },
     {
+      "id": "logs_cloudy-ai-memory-api",
+      "topic": "logs_cloudy-ai-memory-api",
+      "title": "cloudy-ai-memory-api",
+      "path": "Cloud-Infra/Logs/oci-apps/cloudy-ai-memory-api",
+      "category": "logs",
+      "source": "logs",
+      "vm": "oci-apps",
+      "feed": "/feed/c/logs_cloudy-ai-memory-api.atom",
+      "quiet": true
+    },
+    {
+      "id": "logs_cloudy-cgc-pub-graph-api",
+      "topic": "logs_cloudy-cgc-pub-graph-api",
+      "title": "cloudy-cgc-pub-graph-api",
+      "path": "Cloud-Infra/Logs/oci-apps/cloudy-cgc-pub-graph-api",
+      "category": "logs",
+      "source": "logs",
+      "vm": "oci-apps",
+      "feed": "/feed/c/logs_cloudy-cgc-pub-graph-api.atom",
+      "quiet": true
+    },
+    {
+      "id": "logs_db-agent",
+      "topic": "logs_db-agent",
+      "title": "db-agent",
+      "path": "Cloud-Infra/Logs/all/db-agent",
+      "category": "logs",
+      "source": "logs",
+      "vm": "all",
+      "feed": "/feed/c/logs_db-agent.atom",
+      "quiet": true
+    },
+    {
+      "id": "logs_cloud-agi-hermes",
+      "topic": "logs_cloud-agi-hermes",
+      "title": "cloud-agi-hermes",
+      "path": "Cloud-Infra/Logs/oci-apps/cloud-agi-hermes",
+      "category": "logs",
+      "source": "logs",
+      "vm": "oci-apps",
+      "feed": "/feed/c/logs_cloud-agi-hermes.atom",
+      "quiet": true
+    },
+    {
       "id": "logs_cloud-agi-openclaw",
       "topic": "logs_cloud-agi-openclaw",
       "title": "cloud-agi-openclaw",
@@ -955,17 +1010,6 @@
       "source": "logs",
       "vm": "oci-apps",
       "feed": "/feed/c/logs_cloud-agi-openclaw.atom",
-      "quiet": true
-    },
-    {
-      "id": "logs_session-memory",
-      "topic": "logs_session-memory",
-      "title": "session-memory",
-      "path": "Cloud-Infra/Logs/oci-apps/session-memory",
-      "category": "logs",
-      "source": "logs",
-      "vm": "oci-apps",
-      "feed": "/feed/c/logs_session-memory.atom",
       "quiet": true
     },
     {
@@ -1090,25 +1134,25 @@
       "quiet": true
     },
     {
-      "id": "logs_scrappers-api",
-      "topic": "logs_scrappers-api",
-      "title": "scrappers-api",
-      "path": "Cloud-Infra/Logs/oci-apps/scrappers-api",
+      "id": "logs_cloudy-browser-scrapper-api",
+      "topic": "logs_cloudy-browser-scrapper-api",
+      "title": "cloudy-browser-scrapper-api",
+      "path": "Cloud-Infra/Logs/oci-apps/cloudy-browser-scrapper-api",
       "category": "logs",
       "source": "logs",
       "vm": "oci-apps",
-      "feed": "/feed/c/logs_scrappers-api.atom",
+      "feed": "/feed/c/logs_cloudy-browser-scrapper-api.atom",
       "quiet": true
     },
     {
-      "id": "logs_capital-stack-finterminal-api",
-      "topic": "logs_capital-stack-finterminal-api",
-      "title": "capital-stack-finterminal-api",
-      "path": "Cloud-Infra/Logs/oci-apps/capital-stack-finterminal-api",
+      "id": "logs_capital-stack-finterm-api",
+      "topic": "logs_capital-stack-finterm-api",
+      "title": "capital-stack-finterm-api",
+      "path": "Cloud-Infra/Logs/oci-apps/capital-stack-finterm-api",
       "category": "logs",
       "source": "logs",
       "vm": "oci-apps",
-      "feed": "/feed/c/logs_capital-stack-finterminal-api.atom",
+      "feed": "/feed/c/logs_capital-stack-finterm-api.atom",
       "quiet": true
     },
     {
@@ -1167,14 +1211,14 @@
       "quiet": true
     },
     {
-      "id": "logs_news-gdelt",
-      "topic": "logs_news-gdelt",
-      "title": "news-gdelt",
-      "path": "Cloud-Infra/Logs/oci-apps/news-gdelt",
+      "id": "logs_capital-stack-news-gdelt-api",
+      "topic": "logs_capital-stack-news-gdelt-api",
+      "title": "capital-stack-news-gdelt-api",
+      "path": "Cloud-Infra/Logs/oci-apps/capital-stack-news-gdelt-api",
       "category": "logs",
       "source": "logs",
       "vm": "oci-apps",
-      "feed": "/feed/c/logs_news-gdelt.atom",
+      "feed": "/feed/c/logs_capital-stack-news-gdelt-api.atom",
       "quiet": true
     },
     {
@@ -1343,13 +1387,13 @@
       "quiet": true
     },
     {
-      "id": "app_embeddings-api",
-      "topic": "app_embeddings-api",
+      "id": "app_cloudy-ai-embeddings-api",
+      "topic": "app_cloudy-ai-embeddings-api",
       "title": "Fleet embeddings + rerank + PDF text server, CPU, mesh-only on oci-apps. OpenAI-compatible POST /embeddings (BAAI/bge-m3) and POST /rerank (BAAI/bge-reranker-v2-m3) served by Infinity, plus POST /pdf (raw application/pdf body to plain text, pypdf), GET /models and GET /health. Consumers: Cloud SuperIntel Notebook retrieval and Cloud Tools Retrieval steps. Mesh address http://embeddings-api.mesh.diegonmarcos.com:7997 (direct, plain HTTP inside WireGuard); no public route.",
-      "path": "Cloud-Apps/agi/embeddings-api",
+      "path": "Cloud-Apps/agi/cloudy-ai-embeddings-api",
       "category": "apps",
       "source": "apps",
-      "feed": "/feed/c/app_embeddings-api.atom",
+      "feed": "/feed/c/app_cloudy-ai-embeddings-api.atom",
       "quiet": true
     },
     {
@@ -1403,13 +1447,33 @@
       "quiet": true
     },
     {
-      "id": "app_git-proxy-api",
-      "topic": "app_git-proxy-api",
-      "title": "Git Proxy API — Authelia-fronted read path to GitHub so the phone holds NO GitHub credential (#647, route 3 of #646's fallback chain). The caller authenticates to US with the Authelia bearer it already has; this service holds the GitHub token server-side and streams the result back.",
-      "path": "Cloud-Apps/app/git-proxy-api",
+      "id": "app_cloudy-apps-communication-mcp",
+      "topic": "app_cloudy-apps-communication-mcp",
+      "title": "Mail MCP server — IMAP/SMTP/Admin via Stalwart REST API",
+      "path": "Cloud-Apps/app/cloudy-apps-communication-mcp",
       "category": "apps",
       "source": "apps",
-      "feed": "/feed/c/app_git-proxy-api.atom",
+      "feed": "/feed/c/app_cloudy-apps-communication-mcp.atom",
+      "quiet": true
+    },
+    {
+      "id": "app_cloudy-apps-drive-mcp",
+      "topic": "app_cloudy-apps-drive-mcp",
+      "title": "Drive MCP server — one facade over every storage unit: repos, files, photos, sync, scrapes, S3 and conversion",
+      "path": "Cloud-Apps/app/cloudy-apps-drive-mcp",
+      "category": "apps",
+      "source": "apps",
+      "feed": "/feed/c/app_cloudy-apps-drive-mcp.atom",
+      "quiet": true
+    },
+    {
+      "id": "app_cloudy-drive-git-proxy-api",
+      "topic": "app_cloudy-drive-git-proxy-api",
+      "title": "Git Proxy API — Authelia-fronted read path to GitHub so the phone holds NO GitHub credential (#647, route 3 of #646's fallback chain). The caller authenticates to US with the Authelia bearer it already has; this service holds the GitHub token server-side and streams the result back.",
+      "path": "Cloud-Apps/app/cloudy-drive-git-proxy-api",
+      "category": "apps",
+      "source": "apps",
+      "feed": "/feed/c/app_cloudy-drive-git-proxy-api.atom",
       "quiet": true
     },
     {
@@ -1433,6 +1497,36 @@
       "quiet": true
     },
     {
+      "id": "app_cloudy-ai-agents-api",
+      "topic": "app_cloudy-ai-agents-api",
+      "title": "my-ai API on oci-apps — one polyglot container: OpenAI /v1 + Ollama /api + Anthropic /v1/messages mimic backed by OpenRouter (no Claude subscription, no metered Anthropic key), with a vendored Headroom (Apache-2.0) compression hop and a savings dashboard. Sibling of claude-superset-api; the agent face for this stack is goose (my-ai wraps goose, claude-superset keeps claude-cli). Internal WG-only sidecar, never public.",
+      "path": "Cloud-Apps/agi/cloudy-ai-agents-api",
+      "category": "apps",
+      "source": "apps",
+      "feed": "/feed/c/app_cloudy-ai-agents-api.atom",
+      "quiet": true
+    },
+    {
+      "id": "app_cloudy-ai-claude-api",
+      "topic": "app_cloudy-ai-claude-api",
+      "title": "Claude superset API on oci-apps — one polyglot container: OpenAI /v1 + Ollama /api + Anthropic /v1/messages mimic backed by the subscription `claude` CLI (no metered key), with a vendored Headroom (Apache-2.0) compression hop and a savings dashboard. Successor to kg-bridge; usable as a local/remote fallback. Internal WG-only sidecar, never public.",
+      "path": "Cloud-Apps/agi/cloudy-ai-claude-api",
+      "category": "apps",
+      "source": "apps",
+      "feed": "/feed/c/app_cloudy-ai-claude-api.atom",
+      "quiet": true
+    },
+    {
+      "id": "app_cloudy-ai-memory-api",
+      "topic": "app_cloudy-ai-memory-api",
+      "title": "Central SQLite store of all Claude Code session transcripts — push/list/fetch so a session started on one device can be resumed from any other. WG-only sidecar on oci-apps; Node 22 built-in node:sqlite (phone-portable, no native deps).",
+      "path": "Cloud-Apps/agi/cloudy-ai-memory-api",
+      "category": "apps",
+      "source": "apps",
+      "feed": "/feed/c/app_cloudy-ai-memory-api.atom",
+      "quiet": true
+    },
+    {
       "id": "app_hermes-agent",
       "topic": "app_hermes-agent",
       "title": "Nous Research Hermes Agent (autonomous, persistent-memory AI agent) on oci-apps. Messaging gateway (Telegram live, Mattermost scaffolded) backed by claude-superset-api (subscription CLI, no metered key). WG-internal, never public.",
@@ -1443,26 +1537,6 @@
       "quiet": true
     },
     {
-      "id": "app_my-ai-api",
-      "topic": "app_my-ai-api",
-      "title": "my-ai API on oci-apps — one polyglot container: OpenAI /v1 + Ollama /api + Anthropic /v1/messages mimic backed by OpenRouter (no Claude subscription, no metered Anthropic key), with a vendored Headroom (Apache-2.0) compression hop and a savings dashboard. Sibling of claude-superset-api; the agent face for this stack is goose (my-ai wraps goose, claude-superset keeps claude-cli). Internal WG-only sidecar, never public.",
-      "path": "Cloud-Apps/agi/my-ai-api",
-      "category": "apps",
-      "source": "apps",
-      "feed": "/feed/c/app_my-ai-api.atom",
-      "quiet": true
-    },
-    {
-      "id": "app_my-ai_claude-api",
-      "topic": "app_my-ai_claude-api",
-      "title": "Claude superset API on oci-apps — one polyglot container: OpenAI /v1 + Ollama /api + Anthropic /v1/messages mimic backed by the subscription `claude` CLI (no metered key), with a vendored Headroom (Apache-2.0) compression hop and a savings dashboard. Successor to kg-bridge; usable as a local/remote fallback. Internal WG-only sidecar, never public.",
-      "path": "Cloud-Apps/agi/my-ai_claude-api",
-      "category": "apps",
-      "source": "apps",
-      "feed": "/feed/c/app_my-ai_claude-api.atom",
-      "quiet": true
-    },
-    {
       "id": "app_openclaw",
       "topic": "app_openclaw",
       "title": "OpenClaw (MIT, github.com/openclaw/openclaw) on oci-apps — the open-source personal agent gateway, as a fourth fleet agent next to hermes, goose and claude. Upstream's own image, unmodified. Its gateway listens on 127.0.0.1 only (host network, auth mode none, the documented trusted-loopback setup) with the OpenAI-compatible /v1/chat/completions enabled; the fleet reaches it ONLY through the agent gateway my-ai-api (X-Agent-Mode: openclaw). Its model calls go back through that same gateway's OpenRouter face, which holds the key, so this service has no secret at all. Never public, never on the mesh directly.",
@@ -1470,16 +1544,6 @@
       "category": "apps",
       "source": "apps",
       "feed": "/feed/c/app_openclaw.atom",
-      "quiet": true
-    },
-    {
-      "id": "app_session-memory",
-      "topic": "app_session-memory",
-      "title": "Central SQLite store of all Claude Code session transcripts — push/list/fetch so a session started on one device can be resumed from any other. WG-only sidecar on oci-apps; Node 22 built-in node:sqlite (phone-portable, no native deps).",
-      "path": "Cloud-Apps/agi/session-memory",
-      "category": "apps",
-      "source": "apps",
-      "feed": "/feed/c/app_session-memory.atom",
       "quiet": true
     },
     {
@@ -1563,13 +1627,13 @@
       "quiet": true
     },
     {
-      "id": "app_capital-stack-finterminal-api",
-      "topic": "app_capital-stack-finterminal-api",
+      "id": "app_capital-stack-finterm-api",
+      "topic": "app_capital-stack-finterm-api",
       "title": "Fincept Terminal backend (capital-stack-finterminal-api) — REST + WebSocket over DataHub, 35 data connectors, 7 analytics, 17 brokers, 6 investor personas, MCP tools",
-      "path": "Cloud-Apps/fin/capital-stack-finterminal-api",
+      "path": "Cloud-Apps/fin/capital-stack-finterm-api",
       "category": "apps",
       "source": "apps",
-      "feed": "/feed/c/app_capital-stack-finterminal-api.atom",
+      "feed": "/feed/c/app_capital-stack-finterm-api.atom",
       "quiet": true
     },
     {

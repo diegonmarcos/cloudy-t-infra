@@ -9,7 +9,11 @@
       "ip": "10.0.0.1",
       "desc": "Security Alert Aggregation API"
     },
-    "embeddings-api": {
+    "cloudy-ai-api": {
+      "ip": "10.0.0.1",
+      "desc": "AI gateway: /ai/{tokens,embeddings,agents,claude,memory} -> separate backend containers (cloudy-ai-*-api); legacy /<old-name>/ paths kept for one release."
+    },
+    "cloudy-ai-embeddings-api": {
       "ip": "10.0.0.1",
       "desc": "Fleet embeddings + rerank + PDF text server, CPU, mesh-only on oci-apps. OpenAI-compatible POST /embeddings (BAAI/bge-m3) and POST /rerank (BAAI/bge-reranker-v2-m3) served by Infinity, plus POST /pdf (raw application/pdf body to plain text, pypdf), GET /models and GET /health. Consumers: Cloud SuperIntel Notebook retrieval and Cloud Tools Retrieval steps. Mesh address http://embeddings-api.mesh.diegonmarcos.com:7997 (direct, plain HTTP inside WireGuard); no public route."
     },
@@ -21,17 +25,9 @@
       "ip": "10.0.0.1",
       "desc": "LanguageTool grammar/spell-check HTTP API — rules-only, no n-grams, WG-only sidecar on oci-apps"
     },
-    "c3-infra-api": {
-      "ip": "10.0.0.1",
-      "desc": "C3 REST API — Cloud Control Center Fastify API"
-    },
     "c3-public-api": {
       "ip": "10.0.0.1",
       "desc": "C3 Public API — single public-edge listener on oci-analytics. Consolidates http-to-smtp-proxy-api (Bearer-gated /mail/*) and c3-analytics-api passthrough (public /analytics/*). Replaces split listeners across gcp-proxy + oci-analytics so gcp-proxy becomes a pure wg0 spoke."
-    },
-    "c3-services-api": {
-      "ip": "10.0.0.1",
-      "desc": "C3 Services REST API — service API gateway Fastify API"
     },
     "drive-mcp": {
       "ip": "10.0.0.1",
@@ -65,9 +61,33 @@
       "ip": "10.0.0.1",
       "desc": "MCP server — READ-ONLY personal data access (vault metadata, identity, comms, media, finance, health)"
     },
-    "git-proxy-api": {
+    "cloudy-all-api": {
+      "ip": "10.0.0.1",
+      "desc": "C3 Services REST API — service API gateway Fastify API"
+    },
+    "cloudy-all-mcp": {
+      "ip": "10.0.0.1",
+      "desc": "Fleet MCP router: list_servers, list_tools(server), call(server, tool, args)"
+    },
+    "cloudy-apps-communication-mcp": {
+      "ip": "10.0.0.1",
+      "desc": "Mail MCP server — IMAP/SMTP/Admin via Stalwart REST API"
+    },
+    "cloudy-apps-drive-mcp": {
+      "ip": "10.0.0.1",
+      "desc": "Drive MCP server — one facade over every storage unit: repos, files, photos, sync, scrapes, S3 and conversion"
+    },
+    "cloudy-c3-api": {
+      "ip": "10.0.0.1",
+      "desc": "C3 REST API — Cloud Control Center Fastify API"
+    },
+    "cloudy-drive-git-proxy-api": {
       "ip": "10.0.0.1",
       "desc": "Git Proxy API — Authelia-fronted read path to GitHub so the phone holds NO GitHub credential (#647, route 3 of #646's fallback chain). The caller authenticates to US with the Authelia bearer it already has; this service holds the GitHub token server-side and streams the result back."
+    },
+    "cloudy-mail-http-to-smtp-api": {
+      "ip": "10.0.0.1",
+      "desc": "HTTP-to-SMTP bridge sidecar of Caddy on gcp-proxy. CF Worker POSTs JSON email payloads to this container (because GCP blocks outbound TCP/25); container speaks SMTP over WG to maddy:25 + stalwart:2025 on oci-mail. Public path: api.diegonmarcos.com/http-to-smtp-proxy-api/ [DECOMMISSIONED 2026-05-21]"
     },
     "g-personal-mcp": {
       "ip": "10.0.0.1",
@@ -76,10 +96,6 @@
     "g-workspace-mcp": {
       "ip": "10.0.0.1",
       "desc": "Google Workspace MCP server — Gmail, Calendar, Drive, Docs, Sheets via HTTP transport"
-    },
-    "http-to-smtp-proxy-api": {
-      "ip": "10.0.0.1",
-      "desc": "HTTP-to-SMTP bridge sidecar of Caddy on gcp-proxy. CF Worker POSTs JSON email payloads to this container (because GCP blocks outbound TCP/25); container speaks SMTP over WG to maddy:25 + stalwart:2025 on oci-mail. Public path: api.diegonmarcos.com/http-to-smtp-proxy-api/ [DECOMMISSIONED 2026-05-21]"
     },
     "backup-borg": {
       "ip": "10.0.0.1",
@@ -169,6 +185,10 @@
       "ip": "10.0.0.1",
       "desc": "Caddy public-edge L7 allowlist on oci-analytics. Terminates TLS on :8443, serves ONLY the declared-public allowlist (build-caddy-public.json: gh-pages, no-auth subdomains, well-known, explicit public_paths), and FORWARDS everything else to the private hub gcp-proxy over wg-public (10.1.0.2:443). Fail-closed: any host/path not explicitly allowlisted is forwarded to gcp-proxy, whose @wg gate 403s public clients."
     },
+    "cloudy-ai-tokens-api": {
+      "ip": "10.0.0.1",
+      "desc": "Fleet token engine: lists, generates, reveals and revokes every fleet bearer token (fleet ft_ tokens and adopted Authelia JWTs); introspect-proxy asks it before accepting a Bearer, so a revoked token stops working within 60 seconds. Public address: c3-pvt.diegonmarcos.com/tokens-api (shared gate, #1104); mesh tokens-api.mesh.diegonmarcos.com"
+    },
     "crowdsec": {
       "ip": "10.0.0.1",
       "desc": "CrowdSec behavioral IDS/IPS engine — DORMANT placeholder (Cloudflare-off fallback). Container runs but detects/remediates nothing: empty acquisition, online API (CAPI) disabled, no bouncers wired."
@@ -177,27 +197,15 @@
       "ip": "10.0.0.1",
       "desc": "OIDC token introspection sidecar for Caddy Bearer auth"
     },
-    "tokens-api": {
-      "ip": "10.0.0.1",
-      "desc": "Fleet token engine: lists, generates, reveals and revokes every fleet bearer token (fleet ft_ tokens and adopted Authelia JWTs); introspect-proxy asks it before accepting a Bearer, so a revoked token stops working within 60 seconds. Public address: c3-pvt.diegonmarcos.com/tokens-api (shared gate, #1104); mesh tokens-api.mesh.diegonmarcos.com"
-    },
     "cloud-cgc-pub-mcp": {
       "ip": "10.0.0.1",
       "desc": "Cloud CGC Pub MCP — Code Graph Context: infra knowledge, specs, docs, semantic code search"
     },
-    "hermes-agent": {
-      "ip": "10.0.0.1",
-      "desc": "Nous Research Hermes Agent (autonomous, persistent-memory AI agent) on oci-apps. Messaging gateway (Telegram live, Mattermost scaffolded) backed by claude-superset-api (subscription CLI, no metered key). WG-internal, never public."
-    },
-    "kg-store": {
+    "cloud-me-cgc-pvt-graph-api": {
       "ip": "10.0.0.1",
       "desc": "SurrealDB Hybrid Knowledge Graph - Infrastructure topology + vector search"
     },
-    "kg-store-pub": {
-      "ip": "10.0.0.1",
-      "desc": "SurrealDB Hybrid Knowledge Graph - Infrastructure topology + vector search"
-    },
-    "my-ai-api": {
+    "cloudy-ai-agents-api": {
       "ip": "10.0.0.1",
       "desc": "my-ai API on oci-apps — one polyglot container: OpenAI /v1 + Ollama /api + Anthropic /v1/messages mimic backed by OpenRouter (no Claude subscription, no metered Anthropic key), with a vendored Headroom (Apache-2.0) compression hop and a savings dashboard. Sibling of claude-superset-api; the agent face for this stack is goose (my-ai wraps goose, claude-superset keeps claude-cli). Internal WG-only sidecar, never public."
     },
@@ -205,13 +213,21 @@
       "ip": "10.0.0.1",
       "desc": "Claude superset API on oci-apps — one polyglot container: OpenAI /v1 + Ollama /api + Anthropic /v1/messages mimic backed by the subscription `claude` CLI (no metered key), with a vendored Headroom (Apache-2.0) compression hop and a savings dashboard. Successor to kg-bridge; usable as a local/remote fallback. Internal WG-only sidecar, never public."
     },
+    "cloudy-ai-memory-api": {
+      "ip": "10.0.0.1",
+      "desc": "Central SQLite store of all Claude Code session transcripts — push/list/fetch so a session started on one device can be resumed from any other. WG-only sidecar on oci-apps; Node 22 built-in node:sqlite (phone-portable, no native deps)."
+    },
+    "cloudy-cgc-pub-graph-api": {
+      "ip": "10.0.0.1",
+      "desc": "SurrealDB Hybrid Knowledge Graph - Infrastructure topology + vector search"
+    },
+    "hermes-agent": {
+      "ip": "10.0.0.1",
+      "desc": "Nous Research Hermes Agent (autonomous, persistent-memory AI agent) on oci-apps. Messaging gateway (Telegram live, Mattermost scaffolded) backed by claude-superset-api (subscription CLI, no metered key). WG-internal, never public."
+    },
     "openclaw": {
       "ip": "10.0.0.1",
       "desc": "OpenClaw (MIT, github.com/openclaw/openclaw) on oci-apps — the open-source personal agent gateway, as a fourth fleet agent next to hermes, goose and claude. Upstream's own image, unmodified. Its gateway listens on 127.0.0.1 only (host network, auth mode none, the documented trusted-loopback setup) with the OpenAI-compatible /v1/chat/completions enabled; the fleet reaches it ONLY through the agent gateway my-ai-api (X-Agent-Mode: openclaw). Its model calls go back through that same gateway's OpenRouter face, which holds the key, so this service has no secret at all. Never public, never on the mesh directly."
-    },
-    "session-memory": {
-      "ip": "10.0.0.1",
-      "desc": "Central SQLite store of all Claude Code session transcripts — push/list/fetch so a session started on one device can be resumed from any other. WG-only sidecar on oci-apps; Node 22 built-in node:sqlite (phone-portable, no native deps)."
     },
     "mattermost": {
       "ip": "10.0.0.1",
@@ -253,11 +269,11 @@
       "ip": "10.0.0.1",
       "desc": "Stalwart Mail Server — JMAP webmail backend (jmap.diegonmarcos.com)"
     },
-    "scrappers-api": {
+    "cloudy-browser-scrapper-api": {
       "ip": "10.0.0.1",
       "desc": "Unified scrapers API (Instagram / Pinterest / LinkedIn / generic crawl) — retires crawlee-cloud. Lean single-container FastAPI, on-demand, flat-JSON output."
     },
-    "capital-stack-finterminal-api": {
+    "capital-stack-finterm-api": {
       "ip": "10.0.0.1",
       "desc": "Fincept Terminal backend (capital-stack-finterminal-api) — REST + WebSocket over DataHub, 35 data connectors, 7 analytics, 17 brokers, 6 investor personas, MCP tools"
     },
@@ -273,7 +289,7 @@
       "ip": "10.0.0.1",
       "desc": "Spotube — bidirectional Spotify <-> YouTube Music playlist sync (playlist.diegonmarcos.com). Self-hosted Soundiiz alternative."
     },
-    "news-gdelt": {
+    "capital-stack-news-gdelt-api": {
       "ip": "10.0.0.1",
       "desc": "GDELT News Aggregator — Fastify API with SQLite cache"
     },

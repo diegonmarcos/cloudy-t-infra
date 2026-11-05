@@ -2,25 +2,5 @@
   "_warning": "GENERATED — DO NOT EDIT. Derived by 1_cloud-configs/src/derive/derive-mcp-json.ts (writeProjectMcp) from the same inputs as dist/mcp.json.",
   "_schema": "mcp-servers/v1",
   "_doc": "Owner decision 31: mesh first (no auth), else public https://c3-pvt.diegonmarcos.com/<container>/mcp with Authorization: Bearer $FLEET_BEARER (fallback $AUTHELIA_BEARER_TOKEN). No OAuth/DCR. Set FLEET_BEARER in the Claude Code cloud environment secrets / your shell. Bridge: .claude/mcp-connect.mjs.",
-  "mcpServers": {
-    "cloud-infra-mcp": {
-      "type": "http",
-      "url": "https://c3-pvt.diegonmarcos.com/cloud-infra-mcp/mcp",
-      "headers": {
-        "Authorization": "Bearer ${AUTHELIA_BEARER_TOKEN:-}"
-      },
-      "headersHelper": "sh \"${CLAUDE_PROJECT_DIR:-.}/.claude/mcp-auth-headers.sh\""
-    },
-    "cloud-superapp-mcp": {
-      "type": "stdio",
-      "command": "node",
-      "args": [
-        "${CLAUDE_PROJECT_DIR:-.}/.claude/mcp-connect.mjs",
-        "--mesh",
-        "https://c3-cloud-superapp-mcp.mesh.diegonmarcos.com/mcp",
-        "--public",
-        "https://c3-pvt.diegonmarcos.com/cloud-superapp-mcp/mcp"
-      ]
-    }
-  }
+  "mcpServers": {}
 }

@@ -52,8 +52,12 @@
     "name": "build alerts api"
   },
   {
-    "file": "build-embeddings-api.json",
-    "name": "build embeddings api"
+    "file": "build-cloudy-ai-api.json",
+    "name": "build cloudy ai api"
+  },
+  {
+    "file": "build-cloudy-ai-embeddings-api.json",
+    "name": "build cloudy ai embeddings api"
   },
   {
     "file": "build-jev-sidecar.json",
@@ -64,16 +68,8 @@
     "name": "build languagetool"
   },
   {
-    "file": "build-c3-infra-api.json",
-    "name": "build c3 infra api"
-  },
-  {
     "file": "build-c3-public-api.json",
     "name": "build c3 public api"
-  },
-  {
-    "file": "build-c3-services-api.json",
-    "name": "build c3 services api"
   },
   {
     "file": "build-cloud-drive-mcp.json",
@@ -108,8 +104,32 @@
     "name": "build cloud vault mcp"
   },
   {
-    "file": "build-git-proxy-api.json",
-    "name": "build git proxy api"
+    "file": "build-cloudy-all-api.json",
+    "name": "build cloudy all api"
+  },
+  {
+    "file": "build-cloudy-all-mcp.json",
+    "name": "build cloudy all mcp"
+  },
+  {
+    "file": "build-cloudy-apps-communication-mcp.json",
+    "name": "build cloudy apps communication mcp"
+  },
+  {
+    "file": "build-cloudy-apps-drive-mcp.json",
+    "name": "build cloudy apps drive mcp"
+  },
+  {
+    "file": "build-cloudy-c3-api.json",
+    "name": "build cloudy c3 api"
+  },
+  {
+    "file": "build-cloudy-drive-git-proxy-api.json",
+    "name": "build cloudy drive git proxy api"
+  },
+  {
+    "file": "build-cloudy-mail-http-to-smtp-api.json",
+    "name": "build cloudy mail http to smtp api"
   },
   {
     "file": "build-google-personal-mcp.json",
@@ -118,10 +138,6 @@
   {
     "file": "build-google-workspace-mcp.json",
     "name": "build google workspace mcp"
-  },
-  {
-    "file": "build-http-to-smtp-proxy-api.json",
-    "name": "build http to smtp proxy api"
   },
   {
     "file": "build-cloud-builder-x.json",
@@ -216,12 +232,12 @@
     "name": "build syslog bridge"
   },
   {
-    "file": "build-rss-gateway.json",
-    "name": "build rss gateway"
+    "file": "build-capital-stack-news-rss-api.json",
+    "name": "build capital stack news rss api"
   },
   {
-    "file": "build-github-rss.json",
-    "name": "build github rss"
+    "file": "build-capital-stack-news-github-rss-api.json",
+    "name": "build capital stack news github rss api"
   },
   {
     "file": "build-openobserve.json",
@@ -252,20 +268,20 @@
     "name": "build disk janitor"
   },
   {
-    "file": "build-auth-broker-google.json",
-    "name": "build auth broker google"
+    "file": "build-cloudy-auth-google-api.json",
+    "name": "build cloudy auth google api"
   },
   {
-    "file": "build-auth-broker-github.json",
-    "name": "build auth broker github"
+    "file": "build-cloudy-auth-github-api.json",
+    "name": "build cloudy auth github api"
   },
   {
-    "file": "build-auth-broker-cloudflare.json",
-    "name": "build auth broker cloudflare"
+    "file": "build-cloudy-auth-cloudflare-api.json",
+    "name": "build cloudy auth cloudflare api"
   },
   {
-    "file": "build-auth-broker-email.json",
-    "name": "build auth broker email"
+    "file": "build-cloudy-auth-email-api.json",
+    "name": "build cloudy auth email api"
   },
   {
     "file": "build-authelia-redis.json",
@@ -284,6 +300,10 @@
     "name": "build caddy public"
   },
   {
+    "file": "build-cloudy-ai-tokens-api.json",
+    "name": "build cloudy ai tokens api"
+  },
+  {
     "file": "build-crowdsec.json",
     "name": "build crowdsec"
   },
@@ -296,10 +316,6 @@
     "name": "build mcp oauth"
   },
   {
-    "file": "build-tokens-api.json",
-    "name": "build tokens api"
-  },
-  {
     "file": "build-cloud-cgc-pub-mcp.json",
     "name": "build cloud cgc pub mcp"
   },
@@ -308,24 +324,8 @@
     "name": "build cloud cgc pvt mcp"
   },
   {
-    "file": "build-db-agent.json",
-    "name": "build db agent"
-  },
-  {
-    "file": "build-cloud-agi-hermes.json",
-    "name": "build cloud agi hermes"
-  },
-  {
-    "file": "build-kg-store.json",
-    "name": "build kg store"
-  },
-  {
-    "file": "build-surrealdb.json",
-    "name": "build surrealdb"
-  },
-  {
-    "file": "build-kg-store-pub.json",
-    "name": "build kg store pub"
+    "file": "build-cloud-me-cgc-pvt-graph-api.json",
+    "name": "build cloud me cgc pvt graph api"
   },
   {
     "file": "build-cloud-agi-goose.json",
@@ -336,12 +336,24 @@
     "name": "build cloud agi claude"
   },
   {
-    "file": "build-cloud-agi-openclaw.json",
-    "name": "build cloud agi openclaw"
+    "file": "build-cloudy-ai-memory-api.json",
+    "name": "build cloudy ai memory api"
   },
   {
-    "file": "build-session-memory.json",
-    "name": "build session memory"
+    "file": "build-cloudy-cgc-pub-graph-api.json",
+    "name": "build cloudy cgc pub graph api"
+  },
+  {
+    "file": "build-db-agent.json",
+    "name": "build db agent"
+  },
+  {
+    "file": "build-cloud-agi-hermes.json",
+    "name": "build cloud agi hermes"
+  },
+  {
+    "file": "build-cloud-agi-openclaw.json",
+    "name": "build cloud agi openclaw"
   },
   {
     "file": "build-mattermost.json",
@@ -388,12 +400,12 @@
     "name": "build stalwart sorter"
   },
   {
-    "file": "build-scrappers-api.json",
-    "name": "build scrappers api"
+    "file": "build-cloudy-browser-scrapper-api.json",
+    "name": "build cloudy browser scrapper api"
   },
   {
-    "file": "build-capital-stack-finterminal-api.json",
-    "name": "build capital stack finterminal api"
+    "file": "build-capital-stack-finterm-api.json",
+    "name": "build capital stack finterm api"
   },
   {
     "file": "build-capital-stack-finterminal-web.json",
@@ -420,8 +432,8 @@
     "name": "build playlist syncer"
   },
   {
-    "file": "build-news-gdelt.json",
-    "name": "build news gdelt"
+    "file": "build-capital-stack-news-gdelt-api.json",
+    "name": "build capital stack news gdelt api"
   },
   {
     "file": "build-calendar-radicale.json",

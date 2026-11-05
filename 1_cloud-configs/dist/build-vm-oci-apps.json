@@ -4,9 +4,18 @@
   "vm_id": "oci-A1-f_0",
   "services": [
     {
-      "name": "embeddings-api",
-      "dir": "infra-ai_embeddings-api",
-      "compose_path": "/opt/containers/embeddings-api",
+      "name": "cloudy-ai-api",
+      "dir": "infra-ai_cloudy-ai-api",
+      "compose_path": "/opt/containers/cloudy-ai-api",
+      "images": [
+        "ghcr.io/diegonmarcos/tokens-api-binaries:latest"
+      ],
+      "has_docker_build": true
+    },
+    {
+      "name": "cloudy-ai-embeddings-api",
+      "dir": "infra-ai_cloudy-ai-embeddings-api",
+      "compose_path": "/opt/containers/cloudy-ai-embeddings-api",
       "images": [
         "ghcr.io/diegonmarcos/embeddings-api-binaries:latest"
       ],
@@ -29,24 +38,6 @@
         "erikvl87/languagetool:latest"
       ],
       "has_docker_build": false
-    },
-    {
-      "name": "c3-infra-api",
-      "dir": "infra-api_c3-infra-api",
-      "compose_path": "/opt/containers/c3-infra-api",
-      "images": [
-        "ghcr.io/diegonmarcos/c3-infra-api:latest"
-      ],
-      "has_docker_build": true
-    },
-    {
-      "name": "c3-services-api",
-      "dir": "infra-api_c3-services-api",
-      "compose_path": "/opt/containers/c3-services-api",
-      "images": [
-        "ghcr.io/diegonmarcos/c3-services-api:latest"
-      ],
-      "has_docker_build": true
     },
     {
       "name": "cloud-drive-mcp",
@@ -108,6 +99,51 @@
       "compose_path": "/opt/containers/cloud-vault-mcp",
       "images": [
         "ghcr.io/diegonmarcos/cloud-vault-mcp:latest"
+      ],
+      "has_docker_build": true
+    },
+    {
+      "name": "cloudy-all-api",
+      "dir": "infra-api_cloudy-all-api",
+      "compose_path": "/opt/containers/cloudy-all-api",
+      "images": [
+        "ghcr.io/diegonmarcos/cloudy-all-api:latest"
+      ],
+      "has_docker_build": true
+    },
+    {
+      "name": "cloudy-all-mcp",
+      "dir": "infra-api_cloudy-all-mcp",
+      "compose_path": "/opt/containers/cloudy-all-mcp",
+      "images": [
+        "ghcr.io/diegonmarcos/cloudy-all-mcp:latest"
+      ],
+      "has_docker_build": true
+    },
+    {
+      "name": "cloudy-apps-communication-mcp",
+      "dir": "infra-api_cloudy-apps-communication-mcp",
+      "compose_path": "/opt/containers/cloudy-apps-communication-mcp",
+      "images": [
+        "ghcr.io/diegonmarcos/cloudy-apps-communication-mcp:latest"
+      ],
+      "has_docker_build": true
+    },
+    {
+      "name": "cloudy-apps-drive-mcp",
+      "dir": "infra-api_cloudy-apps-drive-mcp",
+      "compose_path": "/opt/containers/cloudy-apps-drive-mcp",
+      "images": [
+        "ghcr.io/diegonmarcos/cloudy-apps-drive-mcp:latest"
+      ],
+      "has_docker_build": true
+    },
+    {
+      "name": "cloudy-c3-api",
+      "dir": "infra-api_cloudy-c3-api",
+      "compose_path": "/opt/containers/cloudy-c3-api",
+      "images": [
+        "ghcr.io/diegonmarcos/cloudy-c3-api:latest"
       ],
       "has_docker_build": true
     },
@@ -277,20 +313,20 @@
       "has_docker_build": true
     },
     {
+      "name": "cloudy-ai-tokens-api",
+      "dir": "infra-sec_cloudy-ai-tokens-api",
+      "compose_path": "/opt/containers/cloudy-ai-tokens-api",
+      "images": [
+        "ghcr.io/diegonmarcos/tokens-api-binaries:latest"
+      ],
+      "has_docker_build": true
+    },
+    {
       "name": "crowdsec",
       "dir": "infra-sec_crowdsec",
       "compose_path": "/opt/containers/crowdsec",
       "images": [
         "crowdsecurity/crowdsec:v1.7.8"
-      ],
-      "has_docker_build": true
-    },
-    {
-      "name": "tokens-api",
-      "dir": "infra-sec_tokens-api",
-      "compose_path": "/opt/containers/tokens-api",
-      "images": [
-        "ghcr.io/diegonmarcos/tokens-api-binaries:latest"
       ],
       "has_docker_build": true
     },
@@ -305,47 +341,56 @@
       "has_docker_build": true
     },
     {
+      "name": "cloud-me-cgc-pvt-graph-api",
+      "dir": "user-ai_cloud-me-cgc-pvt-graph-api",
+      "compose_path": "/opt/containers/cloud-me-cgc-pvt-graph-api",
+      "images": [
+        "ghcr.io/diegonmarcos/cloud-me-cgc-pvt-graph-api:latest"
+      ],
+      "has_docker_build": true
+    },
+    {
+      "name": "cloudy-ai-agents-api",
+      "dir": "user-ai_cloudy-ai-agents-api",
+      "compose_path": "/opt/containers/cloudy-ai-agents-api",
+      "images": [
+        "ghcr.io/diegonmarcos/cloudy-ai-agents-api:latest"
+      ],
+      "has_docker_build": true
+    },
+    {
+      "name": "cloudy-ai-claude-api",
+      "dir": "user-ai_cloudy-ai-claude-api",
+      "compose_path": "/opt/containers/cloudy-ai-claude-api",
+      "images": [
+        "ghcr.io/diegonmarcos/claude-superset-api:latest"
+      ],
+      "has_docker_build": true
+    },
+    {
+      "name": "cloudy-ai-memory-api",
+      "dir": "user-ai_cloudy-ai-memory-api",
+      "compose_path": "/opt/containers/cloudy-ai-memory-api",
+      "images": [
+        "ghcr.io/diegonmarcos/cloudy-ai-memory-api:latest"
+      ],
+      "has_docker_build": true
+    },
+    {
+      "name": "cloudy-cgc-pub-graph-api",
+      "dir": "user-ai_cloudy-cgc-pub-graph-api",
+      "compose_path": "/opt/containers/cloudy-cgc-pub-graph-api",
+      "images": [
+        "ghcr.io/diegonmarcos/cloudy-cgc-pub-graph-api:latest"
+      ],
+      "has_docker_build": true
+    },
+    {
       "name": "hermes-agent",
       "dir": "user-ai_hermes-agent",
       "compose_path": "/opt/containers/hermes-agent",
       "images": [
         "ghcr.io/diegonmarcos/hermes-agent:latest"
-      ],
-      "has_docker_build": true
-    },
-    {
-      "name": "kg-store",
-      "dir": "user-ai_kg-store",
-      "compose_path": "/opt/containers/kg-store",
-      "images": [
-        "ghcr.io/diegonmarcos/kg-store:latest"
-      ],
-      "has_docker_build": true
-    },
-    {
-      "name": "kg-store-pub",
-      "dir": "user-ai_kg-store-pub",
-      "compose_path": "/opt/containers/kg-store-pub",
-      "images": [
-        "ghcr.io/diegonmarcos/kg-store-pub:latest"
-      ],
-      "has_docker_build": true
-    },
-    {
-      "name": "my-ai-api",
-      "dir": "user-ai_my-ai-api",
-      "compose_path": "/opt/containers/my-ai-api",
-      "images": [
-        "ghcr.io/diegonmarcos/my-ai-api:latest"
-      ],
-      "has_docker_build": true
-    },
-    {
-      "name": "my-ai_claude-api",
-      "dir": "user-ai_my-ai_claude-api",
-      "compose_path": "/opt/containers/my-ai_claude-api",
-      "images": [
-        "ghcr.io/diegonmarcos/claude-superset-api:latest"
       ],
       "has_docker_build": true
     },
@@ -357,15 +402,6 @@
         "ghcr.io/openclaw/openclaw:2026.9.9"
       ],
       "has_docker_build": false
-    },
-    {
-      "name": "session-memory",
-      "dir": "user-ai_session-memory",
-      "compose_path": "/opt/containers/session-memory",
-      "images": [
-        "ghcr.io/diegonmarcos/session-memory:latest"
-      ],
-      "has_docker_build": true
     },
     {
       "name": "chat-mattermost",
@@ -415,20 +451,20 @@
       "has_docker_build": true
     },
     {
-      "name": "scrappers-api",
-      "dir": "user-data_scrappers-api",
-      "compose_path": "/opt/containers/scrappers-api",
+      "name": "cloudy-browser-scrapper-api",
+      "dir": "user-data_cloudy-browser-scrapper-api",
+      "compose_path": "/opt/containers/cloudy-browser-scrapper-api",
       "images": [
-        "ghcr.io/diegonmarcos/scrappers-api:latest"
+        "ghcr.io/diegonmarcos/cloudy-browser-scrapper-api:latest"
       ],
       "has_docker_build": true
     },
     {
-      "name": "capital-stack-finterminal-api",
-      "dir": "user-fin_capital-stack-finterminal-api",
-      "compose_path": "/opt/containers/capital-stack-finterminal-api",
+      "name": "capital-stack-finterm-api",
+      "dir": "user-fin_capital-stack-finterm-api",
+      "compose_path": "/opt/containers/capital-stack-finterm-api",
       "images": [
-        "ghcr.io/diegonmarcos/capital-stack-finterminal-api:latest"
+        "ghcr.io/diegonmarcos/capital-stack-finterm-api:latest"
       ],
       "has_docker_build": true
     },
@@ -462,11 +498,11 @@
       "has_docker_build": true
     },
     {
-      "name": "news-gdelt",
-      "dir": "user-news_news-gdelt",
-      "compose_path": "/opt/containers/news-gdelt",
+      "name": "capital-stack-news-gdelt-api",
+      "dir": "user-news_capital-stack-news-gdelt-api",
+      "compose_path": "/opt/containers/capital-stack-news-gdelt-api",
       "images": [
-        "ghcr.io/diegonmarcos/news-gdelt:latest"
+        "ghcr.io/diegonmarcos/capital-stack-news-gdelt-api:latest"
       ],
       "has_docker_build": true
     },
@@ -584,18 +620,6 @@
   ],
   "ssh_containers": [
     {
-      "name": "c3-infra-api",
-      "uid": 0,
-      "ssh_dir": "/root/.ssh",
-      "keys": [
-        "vault_id_rsa",
-        "vault_id_rsa.pub",
-        "google_compute_engine",
-        "google_compute_engine.pub"
-      ],
-      "extra_hosts": []
-    },
-    {
       "name": "cloud-infra-mcp",
       "uid": 0,
       "ssh_dir": "/root/.ssh",
@@ -683,6 +707,28 @@
           "identity_file": "~/.ssh/vault_id_rsa"
         }
       ]
+    },
+    {
+      "name": "cloudy-apps-communication-mcp",
+      "uid": 0,
+      "ssh_dir": "/root/.ssh",
+      "keys": [
+        "vault_id_rsa",
+        "vault_id_rsa.pub"
+      ],
+      "extra_hosts": []
+    },
+    {
+      "name": "cloudy-c3-api",
+      "uid": 0,
+      "ssh_dir": "/root/.ssh",
+      "keys": [
+        "vault_id_rsa",
+        "vault_id_rsa.pub",
+        "google_compute_engine",
+        "google_compute_engine.pub"
+      ],
+      "extra_hosts": []
     },
     {
       "name": "dagu",
