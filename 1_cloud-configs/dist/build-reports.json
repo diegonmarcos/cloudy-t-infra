@@ -82,6 +82,10 @@
       "url": "https://jmap.diegonmarcos.com/"
     },
     {
+      "service": "cloudy-browser-headless",
+      "url": "https://mcp.diegonmarcos.com/health"
+    },
+    {
       "service": "cloudy-browser-scrapper-api",
       "url": "https://api.diegonmarcos.com/health"
     },
@@ -222,6 +226,10 @@
     {
       "service": "stalwart",
       "domain": "jmap.diegonmarcos.com"
+    },
+    {
+      "service": "cloudy-browser-headless",
+      "domain": "mcp.diegonmarcos.com"
     },
     {
       "service": "cloudy-browser-scrapper-api",
@@ -368,6 +376,10 @@
     {
       "service": "stalwart",
       "domain": "jmap.diegonmarcos.com"
+    },
+    {
+      "service": "cloudy-browser-headless",
+      "domain": "mcp.diegonmarcos.com"
     },
     {
       "service": "cloudy-browser-scrapper-api",
@@ -1348,6 +1360,19 @@
         "path": "/"
       }
     },
+    "cloudy-browser-headless": {
+      "name": "cloudy-browser-headless",
+      "vm": "oci-A1-f_0",
+      "domain": "mcp.diegonmarcos.com",
+      "enabled": true,
+      "category": "data",
+      "ports": {
+        "app": 3118
+      },
+      "health": {
+        "path": "/health"
+      }
+    },
     "cloudy-browser-scrapper-api": {
       "name": "cloudy-browser-scrapper-api",
       "vm": "oci-A1-f_0",
@@ -2137,6 +2162,15 @@
       "dns": "stalwart.mesh.diegonmarcos.com"
     },
     {
+      "service": "cloudy-browser-headless",
+      "dns": "cloudy-browser-headless.mesh.diegonmarcos.com"
+    },
+    {
+      "service": "cloudy-browser-headless",
+      "container": "app",
+      "dns": "cloudy-browser-headless.mesh.diegonmarcos.com"
+    },
+    {
       "service": "cloudy-browser-scrapper-api",
       "dns": "cloudy-browser-scrapper-api.mesh.diegonmarcos.com"
     },
@@ -2459,6 +2493,7 @@
           "matrix-continuwuity",
           "matrix-element",
           "matrix-mautrix-whatsapp",
+          "cloudy-browser-headless",
           "cloudy-browser-scrapper-api",
           "capital-stack-finterm-api",
           "capital-stack-finterminal-web",
@@ -3407,6 +3442,19 @@
         "ports": null,
         "health": {
           "path": "/"
+        }
+      },
+      "cloudy-browser-headless": {
+        "name": "cloudy-browser-headless",
+        "vm": "oci-A1-f_0",
+        "domain": "mcp.diegonmarcos.com",
+        "enabled": true,
+        "category": "data",
+        "ports": {
+          "app": 3118
+        },
+        "health": {
+          "path": "/health"
         }
       },
       "cloudy-browser-scrapper-api": {

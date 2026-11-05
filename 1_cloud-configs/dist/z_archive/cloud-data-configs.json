@@ -539,6 +539,18 @@
       ]
     },
     {
+      "name": "cloudy-browser-headless",
+      "category": "data",
+      "vm": "oci-A1-f_0",
+      "description": "Headless browser for agents: official Playwright image (Apache-2.0, not browserless/SSPL) plus a small Node server implementing the shared headless-api JSON command API (open/wait/eval/click/type/scroll/html/text/readable/screenshot/cookies/storage/network, run(steps), sessions). Bearer-gated, mesh-only.",
+      "domain": "mcp.diegonmarcos.com",
+      "ports": [],
+      "networks": [],
+      "containers": [
+        "cloudy-browser-headless"
+      ]
+    },
+    {
       "name": "cloudy-browser-scrapper-api",
       "category": "data",
       "vm": "oci-A1-f_0",
@@ -1396,6 +1408,18 @@
       "networks": [],
       "containers": [
         "cloudy-ai-tokens-api"
+      ]
+    },
+    {
+      "name": "cloudy-browser-headless",
+      "category": "data",
+      "vm": "oci-A1-f_0",
+      "description": "Headless browser for agents: official Playwright image (Apache-2.0, not browserless/SSPL) plus a small Node server implementing the shared headless-api JSON command API (open/wait/eval/click/type/scroll/html/text/readable/screenshot/cookies/storage/network, run(steps), sessions). Bearer-gated, mesh-only.",
+      "domain": "mcp.diegonmarcos.com",
+      "ports": [],
+      "networks": [],
+      "containers": [
+        "cloudy-browser-headless"
       ]
     },
     {

@@ -948,6 +948,14 @@
       "comment": "c3 container matrix-element (mesh-only; matrix-element-http-8083.mesh.diegonmarcos.com)"
     },
     {
+      "domain": "c3-cloudy-browser-headless.diegonmarcos.com",
+      "upstream": "10.0.0.6:3118",
+      "auth": "none",
+      "wg_only": true,
+      "container": "cloudy-browser-headless",
+      "comment": "c3 container cloudy-browser-headless (mesh-only; cloudy-browser-headless-http-3118.mesh.diegonmarcos.com)"
+    },
+    {
       "domain": "c3-cloudy-browser-scrapper-api.diegonmarcos.com",
       "upstream": "10.0.0.6:3020",
       "auth": "none",
@@ -1715,6 +1723,18 @@
       "comment": ""
     },
     {
+      "parent_domain": "mcp.diegonmarcos.com",
+      "paths": [
+        {
+          "base_path": "/cloudy-browser-headless",
+          "upstream": "10.0.0.6:3118",
+          "wg_only": true,
+          "comment": "Headless browser for agents: official Playwright image (Apache-2.0, not browserless/SSPL) plus a small Node server implementing the shared headless-api JSON command API (open/wait/eval/click/type/scroll/html/text/readable/screenshot/cookies/storage/network, run(steps), sessions). Bearer-gated, mesh-only."
+        }
+      ],
+      "comment": "MCP -- Streamable HTTP endpoints for Claude Code MCP clients"
+    },
+    {
       "parent_domain": "app.diegonmarcos.com",
       "paths": [
         {
@@ -2238,6 +2258,11 @@
       "private_name": "cloud.stalwart.mesh.diegonmarcos.com"
     },
     {
+      "service": "cloudy-browser-headless.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:3118",
+      "private_name": "cloud.cloudy-browser-headless.mesh.diegonmarcos.com"
+    },
+    {
       "service": "cloudy-browser-scrapper-api.mesh.diegonmarcos.com",
       "upstream": "10.0.0.6:3020",
       "private_name": "cloud.cloudy-browser-scrapper-api.mesh.diegonmarcos.com"
@@ -2675,6 +2700,12 @@
       "source": "internal_routes"
     },
     {
+      "service": "cloud.cloudy-browser-headless.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:3118",
+      "alias_of": "cloudy-browser-headless.mesh.diegonmarcos.com",
+      "source": "internal_routes"
+    },
+    {
       "service": "cloud.cloudy-browser-scrapper-api.mesh.diegonmarcos.com",
       "upstream": "10.0.0.6:3020",
       "alias_of": "cloudy-browser-scrapper-api.mesh.diegonmarcos.com",
@@ -3059,6 +3090,12 @@
       "source": "url_scheme"
     },
     {
+      "service": "c3-cloudy-browser-headless.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:3118",
+      "scheme": "c3",
+      "source": "url_scheme"
+    },
+    {
       "service": "c3-cloudy-browser-scrapper-api.mesh.diegonmarcos.com",
       "upstream": "10.0.0.6:3020",
       "scheme": "c3",
@@ -3422,6 +3459,11 @@
         "host": "c3-matrix-element.diegonmarcos.com",
         "container": "matrix-element",
         "private": "c3-matrix-element.mesh.diegonmarcos.com"
+      },
+      {
+        "host": "c3-cloudy-browser-headless.diegonmarcos.com",
+        "container": "cloudy-browser-headless",
+        "private": "c3-cloudy-browser-headless.mesh.diegonmarcos.com"
       },
       {
         "host": "c3-cloudy-browser-scrapper-api.diegonmarcos.com",
@@ -4827,6 +4869,27 @@
     },
     {
       "kind": "redirect",
+      "service": "cloudy-browser-headless.mesh.diegonmarcos.com",
+      "redirect_to": "https://cloudy-browser-headless-http-3118.mesh.diegonmarcos.com",
+      "container": "cloudy-browser-headless",
+      "container_key": "app",
+      "svc": "cloudy-browser-headless",
+      "vm": "oci-A1-f_0"
+    },
+    {
+      "kind": "canonical",
+      "service": "cloudy-browser-headless-http-3118.mesh.diegonmarcos.com",
+      "container": "cloudy-browser-headless",
+      "container_key": "app",
+      "svc": "cloudy-browser-headless",
+      "vm": "oci-A1-f_0",
+      "port": 3118,
+      "protocol": "http",
+      "upstream": "10.0.0.6:3118",
+      "source": "containers.app.port"
+    },
+    {
+      "kind": "redirect",
       "service": "cloudy-browser-scrapper-api.mesh.diegonmarcos.com",
       "redirect_to": "https://cloudy-browser-scrapper-api-http-3020.mesh.diegonmarcos.com",
       "container": "cloudy-browser-scrapper-api",
@@ -5330,6 +5393,16 @@
     }
   ],
   "public_A_mcp": [
+    {
+      "host": "mcp.diegonmarcos.com",
+      "path": "/cloudy-browser-headless",
+      "upstream": "10.0.0.6:3118",
+      "kind": "reverse_proxy",
+      "tls": "public",
+      "zone": "com",
+      "service": null,
+      "notes": "Headless browser for agents: official Playwright image (Apache-2.0, not browserless/SSPL) plus a small Node server implementing the shared headless-api JSON command API (open/wait/eval/click/type/scroll/html/text/readable/screenshot/cookies/storage/network, run(steps), sessions). Bearer-gated, mesh-only."
+    },
     {
       "host": "mcp.diegonmarcos.com",
       "path": "/ai",
@@ -6165,6 +6238,16 @@
       "zone": "com",
       "service": null,
       "notes": "c3 container matrix-element (mesh-only; matrix-element-http-8083.mesh.diegonmarcos.com)"
+    },
+    {
+      "host": "c3-cloudy-browser-headless.diegonmarcos.com",
+      "path": null,
+      "upstream": "10.0.0.6:3118",
+      "kind": "reverse_proxy",
+      "tls": "public",
+      "zone": "com",
+      "service": null,
+      "notes": "c3 container cloudy-browser-headless (mesh-only; cloudy-browser-headless-http-3118.mesh.diegonmarcos.com)"
     },
     {
       "host": "c3-cloudy-browser-scrapper-api.diegonmarcos.com",
@@ -7339,6 +7422,16 @@
       "notes": null
     },
     {
+      "host": "cloudy-browser-headless.mesh.diegonmarcos.com",
+      "path": null,
+      "upstream": "10.0.0.6:3118",
+      "kind": "reverse_proxy",
+      "tls": "internal",
+      "zone": "com",
+      "service": null,
+      "notes": null
+    },
+    {
       "host": "cloudy-browser-scrapper-api.mesh.diegonmarcos.com",
       "path": null,
       "upstream": "10.0.0.6:3020",
@@ -7998,6 +8091,16 @@
       "tls": "on_demand",
       "zone": "com",
       "service": "stalwart",
+      "notes": null
+    },
+    {
+      "host": "cloudy-browser-headless-http-3118.mesh.diegonmarcos.com",
+      "path": null,
+      "upstream": "10.0.0.6:3118",
+      "kind": "reverse_proxy",
+      "tls": "on_demand",
+      "zone": "com",
+      "service": "cloudy-browser-headless",
       "notes": null
     },
     {

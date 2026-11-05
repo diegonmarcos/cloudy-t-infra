@@ -184,6 +184,11 @@
       "service": "stalwart"
     },
     {
+      "name": "Headless browser for agents: official Playwright image (Apache-2.0, not browserless/SSPL) plus a small Node server implementing the shared headless-api JSON command API (open/wait/eval/click/type/scroll/html/text/readable/screenshot/cookies/storage/network, run(steps), sessions). Bearer-gated, mesh-only.",
+      "url": "https://mcp.diegonmarcos.com",
+      "service": "cloudy-browser-headless"
+    },
+    {
       "name": "Unified scrapers API (Instagram / Pinterest / LinkedIn / generic crawl) — retires crawlee-cloud. Lean single-container FastAPI, on-demand, flat-JSON output.",
       "url": "https://api.diegonmarcos.com",
       "service": "cloudy-browser-scrapper-api"

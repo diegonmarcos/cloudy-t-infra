@@ -783,6 +783,19 @@
         }
       }
     },
+    "cloudy-browser-headless": {
+      "vm": "oci-apps",
+      "vm_ram_gb": 24,
+      "vm_cpu": 4,
+      "containers": [
+        "cloudy-browser-headless"
+      ],
+      "resources": {
+        "mem_limit": "2G",
+        "mem_reservation": "512m",
+        "pids_limit": 1024
+      }
+    },
     "cloudy-browser-scrapper-api": {
       "vm": "oci-apps",
       "vm_ram_gb": 24,

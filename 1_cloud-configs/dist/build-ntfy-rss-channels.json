@@ -6,9 +6,9 @@
   "base": "https://rss.diegonmarcos.com/feed",
   "counts": {
     "declared": 22,
-    "logs": 107,
+    "logs": 108,
     "apps": 40,
-    "total": 169
+    "total": 170
   },
   "channels": [
     {
@@ -1131,6 +1131,17 @@
       "source": "logs",
       "vm": "oci-mail",
       "feed": "/feed/c/logs_stalwart-sorter.atom",
+      "quiet": true
+    },
+    {
+      "id": "logs_cloudy-browser-headless",
+      "topic": "logs_cloudy-browser-headless",
+      "title": "cloudy-browser-headless",
+      "path": "Cloud-Infra/Logs/oci-apps/cloudy-browser-headless",
+      "category": "logs",
+      "source": "logs",
+      "vm": "oci-apps",
+      "feed": "/feed/c/logs_cloudy-browser-headless.atom",
       "quiet": true
     },
     {

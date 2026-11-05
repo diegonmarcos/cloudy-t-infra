@@ -451,6 +451,15 @@
       "has_docker_build": true
     },
     {
+      "name": "cloudy-browser-headless",
+      "dir": "user-data_cloudy-browser-headless",
+      "compose_path": "/opt/containers/cloudy-browser-headless",
+      "images": [
+        "ghcr.io/diegonmarcos/cloudy-browser-headless:latest"
+      ],
+      "has_docker_build": true
+    },
+    {
       "name": "cloudy-browser-scrapper-api",
       "dir": "user-data_cloudy-browser-scrapper-api",
       "compose_path": "/opt/containers/cloudy-browser-scrapper-api",

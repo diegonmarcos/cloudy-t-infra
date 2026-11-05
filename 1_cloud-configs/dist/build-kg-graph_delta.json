@@ -33,15 +33,15 @@
   "_generated": "",
   "_source": "_cloud-data-consolidated.json via cloud-data-config-derive.ts/kg-delta",
   "counts": {
-    "nodes": 362,
-    "edges": 499,
+    "nodes": 365,
+    "edges": 505,
     "by_table": {
       "vm": 4,
-      "service": 88,
-      "container": 107,
+      "service": 89,
+      "container": 108,
       "domain": 44,
       "repo": 3,
-      "module": 88,
+      "module": 89,
       "package": 28
     }
   },
@@ -2108,6 +2108,32 @@
     },
     {
       "table": "service",
+      "id": "cloudy_browser_headless",
+      "key": "service:cloudy_browser_headless",
+      "properties": {
+        "name": "cloudy-browser-headless",
+        "category": "data",
+        "description": "Headless browser for agents: official Playwright image (Apache-2.0, not browserless/SSPL) plus a small Node server implementing the shared headless-api JSON command API (open/wait/eval/click/type/scroll/html/text/readable/screenshot/cookies/storage/network, run(steps), sessions). Bearer-gated, mesh-only.",
+        "domain": "mcp.diegonmarcos.com",
+        "port": 3118,
+        "vm": "oci-apps",
+        "folder": "user-data_cloudy-browser-headless"
+      }
+    },
+    {
+      "table": "container",
+      "id": "cloudy_browser_headless",
+      "key": "container:cloudy_browser_headless",
+      "properties": {
+        "name": "cloudy-browser-headless",
+        "image": "ghcr.io/diegonmarcos/cloudy-browser-headless:latest",
+        "role": "app",
+        "port": 3118,
+        "public": true
+      }
+    },
+    {
+      "table": "service",
       "id": "cloudy_browser_scrapper_api",
       "key": "service:cloudy_browser_scrapper_api",
       "properties": {
@@ -3763,6 +3789,17 @@
         "repo": "cloud",
         "category": "app",
         "service": "stalwart"
+      }
+    },
+    {
+      "table": "module",
+      "id": "user_data_cloudy_browser_headless",
+      "key": "module:user_data_cloudy_browser_headless",
+      "properties": {
+        "name": "user-data_cloudy-browser-headless",
+        "repo": "cloud",
+        "category": "data",
+        "service": "cloudy-browser-headless"
       }
     },
     {
@@ -5534,6 +5571,22 @@
     },
     {
       "table": "hosted_on",
+      "from": "service:cloudy_browser_headless",
+      "to": "vm:oci_apps",
+      "key": "service:cloudy_browser_headless->hosted_on->vm:oci_apps",
+      "properties": {}
+    },
+    {
+      "table": "runs_container",
+      "from": "service:cloudy_browser_headless",
+      "to": "container:cloudy_browser_headless",
+      "key": "service:cloudy_browser_headless->runs_container->container:cloudy_browser_headless",
+      "properties": {
+        "role": "app"
+      }
+    },
+    {
+      "table": "hosted_on",
       "from": "service:cloudy_browser_scrapper_api",
       "to": "vm:oci_apps",
       "key": "service:cloudy_browser_scrapper_api->hosted_on->vm:oci_apps",
@@ -6184,6 +6237,15 @@
     },
     {
       "table": "proxied_by",
+      "from": "service:cloudy_browser_headless",
+      "to": "service:caddy",
+      "key": "service:cloudy_browser_headless->proxied_by->service:caddy",
+      "properties": {
+        "domain": "mcp.diegonmarcos.com"
+      }
+    },
+    {
+      "table": "proxied_by",
       "from": "service:cloudy_browser_scrapper_api",
       "to": "service:caddy",
       "key": "service:cloudy_browser_scrapper_api->proxied_by->service:caddy",
@@ -6567,6 +6629,13 @@
       "from": "domain:jmap_diegonmarcos_com",
       "to": "service:stalwart",
       "key": "domain:jmap_diegonmarcos_com->routes_to->service:stalwart",
+      "properties": {}
+    },
+    {
+      "table": "routes_to",
+      "from": "domain:mcp_diegonmarcos_com",
+      "to": "service:cloudy_browser_headless",
+      "key": "domain:mcp_diegonmarcos_com->routes_to->service:cloudy_browser_headless",
       "properties": {}
     },
     {
@@ -7652,6 +7721,20 @@
       "from": "module:user_comm_tools_stalwart",
       "to": "service:stalwart",
       "key": "module:user_comm_tools_stalwart->implements->service:stalwart",
+      "properties": {}
+    },
+    {
+      "table": "belongs_to_repo",
+      "from": "module:user_data_cloudy_browser_headless",
+      "to": "repo:cloud",
+      "key": "module:user_data_cloudy_browser_headless->belongs_to_repo->repo:cloud",
+      "properties": {}
+    },
+    {
+      "table": "implements",
+      "from": "module:user_data_cloudy_browser_headless",
+      "to": "service:cloudy_browser_headless",
+      "key": "module:user_data_cloudy_browser_headless->implements->service:cloudy_browser_headless",
       "properties": {}
     },
     {

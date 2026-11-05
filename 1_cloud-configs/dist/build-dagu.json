@@ -1710,6 +1710,28 @@
         }
       }
     },
+    "cloudy-browser-headless": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 3118
+      },
+      "vm": "oci-apps",
+      "healthcheck": "node -e \"fetch('http://'+(process.env.HTTP_HOST||'127.0.0.1')+':3118/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))\"",
+      "domain": "mcp.diegonmarcos.com",
+      "description": "Headless browser for agents: official Playwright image (Apache-2.0, not browserless/SSPL) plus a small Node server implementing the shared headless-api JSON command API (open/wait/eval/click/type/scroll/html/text/readable/screenshot/cookies/storage/network, run(steps), sessions). Bearer-gated, mesh-only.",
+      "api": {
+        "has_api": true,
+        "has_web_ui": true,
+        "api_path": "/cloudy-browser-headless",
+        "api_url": "https://mcp.diegonmarcos.com/cloudy-browser-headless",
+        "healthcheck_paths": [],
+        "type": "rest",
+        "base_path": "/cloudy-browser-headless",
+        "display_name": "Headless Browser",
+        "description": "Agent headless browser (headless-api v1 command API, sessions, run(steps)).",
+        "auth": "bearer"
+      }
+    },
     "cloudy-browser-scrapper-api": {
       "ip": "10.0.0.6",
       "ports": {
