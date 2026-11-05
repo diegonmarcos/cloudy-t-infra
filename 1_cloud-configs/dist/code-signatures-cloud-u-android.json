@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 23421,
+    "files": 23422,
     "by_lang": {
       "sh": 678,
       "js": 543,
       "py": 203,
-      "kotlin": 12726,
+      "kotlin": 12727,
       "ts": 8470,
       "java": 649,
       "nix": 36,
@@ -24,7 +24,7 @@
       "script": 294,
       "module": 6477,
       "java": 648,
-      "kotlin": 12723,
+      "kotlin": 12724,
       "python": 68,
       "flake": 32,
       "rust-module": 116,
@@ -84511,6 +84511,7 @@
         "theShippedAllowlistParsesAndDeniesByDefault()",
         "aSegmentedCallerMayChainOnlyAllowedSegments()",
         "anExactLineIsAllowedWhole()",
+        "theMeshEntryCoversThePeersToolsAndNothingRaw()",
         "class AllowlistTest"
       ]
     },
@@ -99591,6 +99592,7 @@
         "authorize",
         "route",
         "browser",
+        "shell",
         "start",
         "Mesh"
       ],
@@ -99620,6 +99622,7 @@
         "digits(v: Option<&str>, max: u32)",
         "route(m: &Mesh, apps: &[App], req: &Req, token: Option<&str>, src: &LogSource)",
         "browser(m: &Mesh, rest: &str, req: &Req, src: &LogSource)",
+        "shell(m: &Mesh, rest: &str, req: &Req, src: &LogSource)",
         "start(m: Mesh, stop: Arc<std::sync::atomic::AtomicBool>)",
         "mesh()",
         "apps()",
@@ -99634,6 +99637,8 @@
         "post(path: &str, auth: Option<&str>, body: &str)",
         "browser_routes_are_bearer_gated_and_call_only_the_browser_provider()",
         "browser_wrong_verb_unknown_path_and_dead_phone()",
+        "shell_routes_are_bearer_gated_and_call_only_the_broker_provider()",
+        "shell_maps_the_brokers_answer_and_refuses_a_bad_request_before_the_phone()",
         "a_dead_app_is_a_502_not_a_hang()",
         "the_bind_is_never_public_loopback_or_wildcard()",
         "only_mesh_peers_are_answered()",
@@ -188421,12 +188426,43 @@
         "com.diegonmarcos.clouddrive.ui.DriveTags",
         "com.diegonmarcos.clouddrive.ui.Pill",
         "com.diegonmarcos.clouddrive.ui.PillRow",
-        "com.diegonmarcos.clouddrive.ui.StatusLight",
-        "com.diegonmarcos.superapp.adbdebug.AdbShellPage"
+        "com.diegonmarcos.clouddrive.ui.StatusLight"
       ],
       "symbols": [
         "OthersSection(prefs: DrivePrefs, actions: DriveActions, rcloneVersion: String?, modifier: Modifier = Modifier)",
         "AboutRow(label: String, value: String, tag: String? = null, onClick: (()"
+      ]
+    },
+    {
+      "path": "ac_cloud-drive/app/src/main/java/com/diegonmarcos/clouddrive/configs/ShellBrokerCard.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ShellBrokerCard"
+      ],
+      "imports": [
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableIntStateOf",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.remember",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.runtime.LaunchedEffect",
+        "androidx.compose.ui.platform.LocalContext",
+        "androidx.compose.ui.res.stringResource",
+        "com.diegonmarcos.clouddrive.R",
+        "com.diegonmarcos.clouddrive.ui.DriveCard",
+        "com.diegonmarcos.clouddrive.ui.DriveTags",
+        "com.diegonmarcos.clouddrive.ui.Pill",
+        "com.diegonmarcos.clouddrive.ui.PillRow",
+        "com.diegonmarcos.clouddrive.ui.StatusLight",
+        "com.diegonmarcos.superapp.shellclient.ShellClient",
+        "com.diegonmarcos.superapp.shellclient.ShellStatus",
+        "kotlinx.coroutines.Dispatchers",
+        "kotlinx.coroutines.withContext"
+      ],
+      "symbols": [
+        "ShellBrokerCard()"
       ]
     },
     {
@@ -190039,10 +190075,12 @@
         "android.os.Process",
         "android.os.storage.StorageManager",
         "com.diegonmarcos.cloudlib.disk.AppSizes",
-        "com.diegonmarcos.superapp.adbdebug.ShellChannels"
+        "com.diegonmarcos.superapp.shellclient.ShellClient",
+        "com.diegonmarcos.superapp.shellclient.ShellResult"
       ],
       "symbols": [
         "collect(ctx: Context, useShell: Boolean = true)",
+        "sh(cmd: String)",
         "class AppSnapshot",
         "class Snapshot"
       ]
