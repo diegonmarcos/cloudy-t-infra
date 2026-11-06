@@ -3000,6 +3000,7 @@
         "call",
         "readUrl",
         "Backend",
+        "DEFAULT_CONTAINER_URL",
         "Target"
       ],
       "imports": [],
@@ -5281,12 +5282,7 @@
       "role": "compose",
       "exports": [
         "buildJson",
-        "container",
-        "services",
-        "which",
-        "never",
-        "phone1\";",
-        "host"
+        "container"
       ],
       "imports": [],
       "symbols": [
@@ -5315,7 +5311,6 @@
         "PATH",
         "CLOUDSDK_CONFIG",
         "SUPERAPP_PHONES",
-        "C3_BROWSER_URL",
         "volumes",
         "healthcheck",
         "test",
@@ -61499,6 +61494,7 @@
         "image",
         "container_name",
         "network_mode",
+        "env_file",
         "environment",
         "PORT",
         "HTTP_HOST",
