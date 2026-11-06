@@ -1,0 +1,75 @@
+# ╔══════════════════════════════════════════════════════════════════╗
+# ║                                                                  ║
+# ║   GENERATED FILE — DO NOT EDIT                                   ║
+# ║                                                                  ║
+# ║   Source : 1_cicd/src/cicd/sops-create.yml
+# ║   Engine : 1_cicd/src/scripts/cloud-ship-repo-workflow-engine.sh
+# ║   Rebuild: ./9_others/build.sh
+# ║                                                                  ║
+# ║   Manual edits will be overwritten on next build.                ║
+# ║                                                                  ║
+# ╚══════════════════════════════════════════════════════════════════╝
+
+name: "Sops create (new secret generated in CI, encrypted file as artifact)"
+
+# Creates ONE new sops-encrypted secrets file whose single value is generated inside this job
+# (openssl rand -hex 32), encrypted to the PUBLIC fleet age recipient with `sops -e`, and handed back as a
+# one-day artifact. The plaintext never leaves the job (masked, never printed, never uploaded); the artifact
+# holds the encrypted file only, so the caller commits it to the private vault at
+# Linux-Containers/<service>/src/secrets.yaml (the Ship overlay copies it into the service dir).
+# The file carries a `_credentials` record (secrets-schema.md) that points at the key, never at the value.
+on:
+  workflow_dispatch:
+    inputs:
+      key:
+        description: "secret key name, e.g. BROWSER_TOKEN"
+        required: true
+        type: string
+      service:
+        description: "service dir name (documentation only, goes into the _credentials note)"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  create:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            2_sops
+      - name: Install sops
+        run: |
+          set -eu
+          curl -fsSL -o /tmp/sops https://github.com/getsops/sops/releases/download/v3.11.0/sops-v3.11.0.linux.amd64
+          sudo install -m 0755 /tmp/sops /usr/local/bin/sops
+          sops --version
+      - name: Generate and encrypt
+        env:
+          T_KEY: ${{ inputs.key }}
+          T_SERVICE: ${{ inputs.service }}
+        run: |
+          set -eu
+          case "$T_KEY$T_SERVICE" in *[!A-Za-z0-9_.-]*) echo "::error::refusing odd key/service"; exit 1;; esac
+          RECIP="$(grep -m1 -oE 'age1[a-z0-9]+' 2_sops/sops.yaml)"
+          [ -n "$RECIP" ] || { echo "::error::no age recipient in 2_sops/sops.yaml"; exit 1; }
+          VAL="$(openssl rand -hex 32)"
+          [ "${#VAL}" -eq 64 ] || { echo "::error::generation failed"; exit 1; }
+          echo "::add-mask::$VAL"
+          mkdir -p out
+          umask 077
+          printf '%s: %s\n_credentials:\n  %s:\n    type: token\n    token: %s\n    note: "generated in CI for %s; app-consumed key %s"\n' \
+            "$T_KEY" "$VAL" "$T_KEY" "$VAL" "$T_SERVICE" "$T_KEY" > plain.yaml
+          sops -e --age "$RECIP" --input-type yaml --output-type yaml plain.yaml > out/secrets.yaml
+          shred -u plain.yaml 2>/dev/null || rm -f plain.yaml
+          grep -q '^sops:' out/secrets.yaml
+          if grep -q "$VAL" out/secrets.yaml; then echo "::error::plaintext leaked into the encrypted file"; exit 1; fi
+          echo "encrypted file ready: $(grep -c 'ENC\[' out/secrets.yaml) encrypted values"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sops-create-result
+          path: out/secrets.yaml
+          retention-days: 1
