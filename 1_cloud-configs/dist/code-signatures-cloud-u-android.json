@@ -36609,6 +36609,7 @@
         "fetch(ctx: Context, app: Fleet.App, userStarted: Boolean = true)",
         "join(ctx: Context, app: Fleet.App)",
         "waitFor(ctx: Context, app: Fleet.App, e: DownloadEngine)",
+        "landedBytes(j: DlJob)",
         "verified(ctx: Context, app: Fleet.App, j: DlJob)",
         "status(ctx: Context, app: Fleet.App, force: Boolean)",
         "pass(apps: List<Fleet.App>, each: (Fleet.App)",
@@ -79716,31 +79717,7 @@
       ]
     },
     {
-      "path": "ab_cloud-libs-shared/libs/ml-l-voice-vosk/src/main/java/com/diegonmarcos/superapp/voice/LocalVoiceEngineClient.kt",
-      "lang": "kotlin",
-      "role": "kotlin",
-      "exports": [
-        "LocalVoiceEngineClient"
-      ],
-      "imports": [
-        "android.content.Context",
-        "android.os.Handler",
-        "android.os.Looper",
-        "org.json.JSONObject",
-        "org.vosk.Model",
-        "org.vosk.Recognizer"
-      ],
-      "symbols": [
-        "start( onPartial: (String)",
-        "feed(pcm: ByteArray, len: Int)",
-        "stop()",
-        "isConnected()",
-        "loadOrCacheModel(dir: String)",
-        "class LocalVoiceEngineClient"
-      ]
-    },
-    {
-      "path": "ab_cloud-libs-shared/libs/ml-vision/src/main/java/com/diegonmarcos/superapp/vision/AnalyzerLifecycle.kt",
+      "path": "ab_cloud-libs-shared/libs/ml-l-vision-mlkit/src/main/java/com/diegonmarcos/superapp/vision/AnalyzerLifecycle.kt",
       "lang": "kotlin",
       "role": "kotlin",
       "exports": [
@@ -79762,7 +79739,7 @@
       ]
     },
     {
-      "path": "ab_cloud-libs-shared/libs/ml-vision/src/main/java/com/diegonmarcos/superapp/vision/ColorLut.kt",
+      "path": "ab_cloud-libs-shared/libs/ml-l-vision-mlkit/src/main/java/com/diegonmarcos/superapp/vision/ColorLut.kt",
       "lang": "kotlin",
       "role": "kotlin",
       "exports": [
@@ -79781,7 +79758,7 @@
       ]
     },
     {
-      "path": "ab_cloud-libs-shared/libs/ml-vision/src/main/java/com/diegonmarcos/superapp/vision/CompositeFrameView.kt",
+      "path": "ab_cloud-libs-shared/libs/ml-l-vision-mlkit/src/main/java/com/diegonmarcos/superapp/vision/CompositeFrameView.kt",
       "lang": "kotlin",
       "role": "kotlin",
       "exports": [
@@ -79811,7 +79788,7 @@
       ]
     },
     {
-      "path": "ab_cloud-libs-shared/libs/ml-vision/src/main/java/com/diegonmarcos/superapp/vision/Detection.kt",
+      "path": "ab_cloud-libs-shared/libs/ml-l-vision-mlkit/src/main/java/com/diegonmarcos/superapp/vision/Detection.kt",
       "lang": "kotlin",
       "role": "kotlin",
       "exports": [
@@ -79835,7 +79812,7 @@
       ]
     },
     {
-      "path": "ab_cloud-libs-shared/libs/ml-vision/src/main/java/com/diegonmarcos/superapp/vision/DetectionOverlayView.kt",
+      "path": "ab_cloud-libs-shared/libs/ml-l-vision-mlkit/src/main/java/com/diegonmarcos/superapp/vision/DetectionOverlayView.kt",
       "lang": "kotlin",
       "role": "kotlin",
       "exports": [
@@ -79869,7 +79846,7 @@
       ]
     },
     {
-      "path": "ab_cloud-libs-shared/libs/ml-vision/src/main/java/com/diegonmarcos/superapp/vision/FaceModel.kt",
+      "path": "ab_cloud-libs-shared/libs/ml-l-vision-mlkit/src/main/java/com/diegonmarcos/superapp/vision/FaceModel.kt",
       "lang": "kotlin",
       "role": "kotlin",
       "exports": [
@@ -79896,7 +79873,7 @@
       ]
     },
     {
-      "path": "ab_cloud-libs-shared/libs/ml-vision/src/main/java/com/diegonmarcos/superapp/vision/FilterAnchors.kt",
+      "path": "ab_cloud-libs-shared/libs/ml-l-vision-mlkit/src/main/java/com/diegonmarcos/superapp/vision/FilterAnchors.kt",
       "lang": "kotlin",
       "role": "kotlin",
       "exports": [
@@ -79926,7 +79903,7 @@
       ]
     },
     {
-      "path": "ab_cloud-libs-shared/libs/ml-vision/src/main/java/com/diegonmarcos/superapp/vision/FilterCatalog.kt",
+      "path": "ab_cloud-libs-shared/libs/ml-l-vision-mlkit/src/main/java/com/diegonmarcos/superapp/vision/FilterCatalog.kt",
       "lang": "kotlin",
       "role": "kotlin",
       "exports": [
@@ -79960,7 +79937,7 @@
       ]
     },
     {
-      "path": "ab_cloud-libs-shared/libs/ml-vision/src/main/java/com/diegonmarcos/superapp/vision/FrameMapping.kt",
+      "path": "ab_cloud-libs-shared/libs/ml-l-vision-mlkit/src/main/java/com/diegonmarcos/superapp/vision/FrameMapping.kt",
       "lang": "kotlin",
       "role": "kotlin",
       "exports": [
@@ -79979,7 +79956,7 @@
       ]
     },
     {
-      "path": "ab_cloud-libs-shared/libs/ml-vision/src/main/java/com/diegonmarcos/superapp/vision/MlKitFaceDetector.kt",
+      "path": "ab_cloud-libs-shared/libs/ml-l-vision-mlkit/src/main/java/com/diegonmarcos/superapp/vision/MlKitFaceDetector.kt",
       "lang": "kotlin",
       "role": "kotlin",
       "exports": [
@@ -80004,7 +79981,7 @@
       ]
     },
     {
-      "path": "ab_cloud-libs-shared/libs/ml-vision/src/main/java/com/diegonmarcos/superapp/vision/MlKitPersonSegmenter.kt",
+      "path": "ab_cloud-libs-shared/libs/ml-l-vision-mlkit/src/main/java/com/diegonmarcos/superapp/vision/MlKitPersonSegmenter.kt",
       "lang": "kotlin",
       "role": "kotlin",
       "exports": [
@@ -80024,7 +80001,7 @@
       ]
     },
     {
-      "path": "ab_cloud-libs-shared/libs/ml-vision/src/main/java/com/diegonmarcos/superapp/vision/VrCompositor.kt",
+      "path": "ab_cloud-libs-shared/libs/ml-l-vision-mlkit/src/main/java/com/diegonmarcos/superapp/vision/VrCompositor.kt",
       "lang": "kotlin",
       "role": "kotlin",
       "exports": [
@@ -80053,6 +80030,30 @@
         "drawArt(c: Canvas, art: Art, p: Placement)",
         "class VrScene",
         "class VrCompositor"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/ml-l-voice-vosk/src/main/java/com/diegonmarcos/superapp/voice/LocalVoiceEngineClient.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "LocalVoiceEngineClient"
+      ],
+      "imports": [
+        "android.content.Context",
+        "android.os.Handler",
+        "android.os.Looper",
+        "org.json.JSONObject",
+        "org.vosk.Model",
+        "org.vosk.Recognizer"
+      ],
+      "symbols": [
+        "start( onPartial: (String)",
+        "feed(pcm: ByteArray, len: Int)",
+        "stop()",
+        "isConnected()",
+        "loadOrCacheModel(dir: String)",
+        "class LocalVoiceEngineClient"
       ]
     },
     {
@@ -391373,7 +391374,10 @@
         "android.webkit.WebChromeClient",
         "android.webkit.WebResourceRequest",
         "android.webkit.WebView",
-        "android.webkit.WebViewClient",
+        "com.diegonmarcos.cloudlib.web.CloudChromeClient",
+        "com.diegonmarcos.cloudlib.web.CloudWeb",
+        "com.diegonmarcos.cloudlib.web.CloudWebClient",
+        "com.diegonmarcos.cloudlib.web.WebProfile",
         "android.widget.FrameLayout",
         "android.widget.TextView",
         "androidx.core.view.WindowInsetsCompat",
@@ -605220,7 +605224,6 @@
         "android.text.format.DateUtils",
         "android.widget.Toast",
         "androidx.activity.compose.BackHandler",
-        "androidx.activity.compose.ManagedActivityResultLauncher",
         "androidx.activity.compose.rememberLauncherForActivityResult",
         "androidx.activity.compose.setContent",
         "androidx.activity.result.contract.ActivityResultContracts",
@@ -605244,7 +605247,8 @@
         "androidx.compose.material.icons.rounded.Checklist",
         "androidx.compose.material.icons.rounded.FileOpen",
         "androidx.compose.material.icons.rounded.FullscreenExit",
-        "androidx.compose.material.icons.rounded.Link"
+        "androidx.compose.material.icons.rounded.Link",
+        "androidx.compose.material.icons.rounded.PhotoCamera"
       ],
       "symbols": [
         "onCreate(savedInstanceState: Bundle?)",
@@ -605284,9 +605288,9 @@
         "step(matches: List<IntRange>, by: Int)",
         "OutlineSheet(text: String, focus: FocusRequester)",
         "OptionsSheet()",
-        "requestListen(ask: ManagedActivityResultLauncher<Array<String>, Map<String, Boolean>>)",
+        "requestListen()",
         "startListen()",
-        "ListenPanel(ask: ManagedActivityResultLauncher<Array<String>, Map<String, Boolean>>)"
+        "ListenPanel()"
       ]
     },
     {
