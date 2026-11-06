@@ -17,6 +17,11 @@ on:
         description: "service dir name (documentation only, goes into the _credentials note)"
         required: true
         type: string
+      consumer_key:
+        description: "optional: key name under which a second consumer reads the SAME value (written as a fragment secrets.<name>.yaml)"
+        required: false
+        type: string
+        default: ""
 
 permissions:
   contents: read
@@ -39,9 +44,10 @@ jobs:
         env:
           T_KEY: ${{ inputs.key }}
           T_SERVICE: ${{ inputs.service }}
+          T_CONSUMER: ${{ inputs.consumer_key }}
         run: |
           set -eu
-          case "$T_KEY$T_SERVICE" in *[!A-Za-z0-9_.-]*) echo "::error::refusing odd key/service"; exit 1;; esac
+          case "$T_KEY$T_SERVICE$T_CONSUMER" in *[!A-Za-z0-9_.-]*) echo "::error::refusing odd key/service"; exit 1;; esac
           RECIP="$(grep -m1 -oE 'age1[a-z0-9]+' 2_sops/sops.yaml)"
           [ -n "$RECIP" ] || { echo "::error::no age recipient in 2_sops/sops.yaml"; exit 1; }
           VAL="$(openssl rand -hex 32)"
@@ -53,11 +59,20 @@ jobs:
             "$T_KEY" "$VAL" "$T_KEY" "$VAL" "$T_SERVICE" "$T_KEY" > pl/secrets.yaml
           sops --config 2_sops/sops.yaml -e --input-type yaml --output-type yaml pl/secrets.yaml > out/secrets.yaml
           shred -u pl/secrets.yaml 2>/dev/null || rm -f pl/secrets.yaml
+          if [ -n "$T_CONSUMER" ]; then
+            mkdir -p pl2
+            printf '%s: %s\n_credentials:\n  %s:\n    type: token\n    token: %s\n    note: "same value as %s of %s; consumer key %s"\n' \
+              "$T_CONSUMER" "$VAL" "$T_CONSUMER" "$VAL" "$T_KEY" "$T_SERVICE" "$T_CONSUMER" > pl2/secrets.yaml
+            sops --config 2_sops/sops.yaml -e --input-type yaml --output-type yaml pl2/secrets.yaml > out/secrets.consumer.yaml
+            shred -u pl2/secrets.yaml 2>/dev/null || rm -f pl2/secrets.yaml
+            grep -q '^sops:' out/secrets.consumer.yaml
+            if grep -q "$VAL" out/secrets.consumer.yaml; then echo "::error::plaintext leaked into the consumer file"; exit 1; fi
+          fi
           grep -q '^sops:' out/secrets.yaml
           if grep -q "$VAL" out/secrets.yaml; then echo "::error::plaintext leaked into the encrypted file"; exit 1; fi
           echo "encrypted file ready: $(grep -c 'ENC\[' out/secrets.yaml) encrypted values"
       - uses: actions/upload-artifact@v4
         with:
           name: sops-create-result
-          path: out/secrets.yaml
+          path: out/
           retention-days: 1
