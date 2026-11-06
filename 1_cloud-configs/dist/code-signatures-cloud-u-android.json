@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 23616,
+    "files": 23623,
     "by_lang": {
-      "sh": 683,
+      "sh": 684,
       "js": 547,
-      "py": 207,
-      "kotlin": 12908,
+      "py": 208,
+      "kotlin": 12913,
       "ts": 8470,
       "java": 649,
       "nix": 36,
@@ -20,11 +20,11 @@
     "by_role": {
       "hook": 158,
       "file": 2304,
-      "shell": 547,
-      "script": 295,
+      "shell": 548,
+      "script": 296,
       "module": 6480,
       "java": 648,
-      "kotlin": 12905,
+      "kotlin": 12910,
       "python": 71,
       "flake": 32,
       "rust-module": 116,
@@ -13504,6 +13504,8 @@
         "toggleAllCollapsed()",
         "tryHandleBack()",
         "onCreate(savedInstanceState: Bundle?)",
+        "onViewCreated(view: android.view.View, savedInstanceState: Bundle?)",
+        "dropPaneChildren()",
         "palette()",
         "Content()",
         "startIndex(pages: List<Sections.Page>, saved: Bundle?)",
@@ -23331,6 +23333,37 @@
       ],
       "symbols": [
         "class PlaceholderPagesComposeTest"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/test/java/com/diegonmarcos/superapp/launcher/SectionTabsPaneRestoreTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "SectionTabsPaneRestoreTest"
+      ],
+      "imports": [
+        "android.app.Application",
+        "android.os.Bundle",
+        "android.view.LayoutInflater",
+        "android.view.View",
+        "android.view.ViewGroup",
+        "androidx.fragment.app.Fragment",
+        "com.diegonmarcos.superapp.R",
+        "com.diegonmarcos.superapp.ui.KitPageHarness",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "org.junit.runner.RunWith",
+        "org.robolectric.RobolectricTestRunner",
+        "org.robolectric.annotation.Config"
+      ],
+      "symbols": [
+        "onCreateView(i: LayoutInflater, c: ViewGroup?, s: Bundle?)",
+        "stripWithPage()",
+        "class SectionTabsPaneRestoreTest",
+        "class PanePage",
+        "class Other"
       ]
     },
     {
@@ -606935,6 +606968,102 @@
       ]
     },
     {
+      "path": "ad_Capital-Stack-FinTerminal/app/src/main/java/com/diegonmarcos/capitalfinterm/Quotes.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "FutSpec",
+        "FutClass",
+        "Ccy",
+        "CommodityDecl",
+        "ExpiryRule",
+        "QuoteSource",
+        "QuotesDecl",
+        "Quote",
+        "QuotesSnapshot",
+        "Expiry",
+        "Contract",
+        "Quotes"
+      ],
+      "imports": [
+        "java.time.DayOfWeek",
+        "java.time.Instant",
+        "java.time.LocalDate",
+        "java.time.YearMonth",
+        "java.time.ZoneOffset",
+        "java.util.Locale",
+        "kotlin.math.abs",
+        "kotlin.math.ceil",
+        "kotlin.math.log10",
+        "kotlin.math.max",
+        "kotlin.math.roundToLong",
+        "org.json.JSONObject"
+      ],
+      "symbols": [
+        "word(k: String)",
+        "spec(root: String)",
+        "parse(json: String)",
+        "overlay(live: Map<String, Quote>)",
+        "d(o: JSONObject, k: String)",
+        "quote(o: JSONObject)",
+        "isBday(d: LocalDate)",
+        "addBdays(from: LocalDate, n: Int)",
+        "lastBday(ym: YearMonth)",
+        "nthWeekday(ym: YearMonth, dow: DayOfWeek, n: Int)",
+        "lastWeekday(ym: YearMonth, dow: DayOfWeek)",
+        "of(rule: ExpiryRule, year: Int, month: Int)",
+        "label(root: String)",
+        "contracts(decl: QuotesDecl, spec: FutSpec, today: LocalDate)",
+        "symbolsFx(decl: QuotesDecl)",
+        "symbolsClass(decl: QuotesDecl, cls: FutClass, today: LocalDate)",
+        "symbolsCommodities(decl: QuotesDecl)",
+        "utc(t: Long)",
+        "parseChart(text: String)",
+        "over(ago: Int)",
+        "r6(v: Double)",
+        "decimals(tick: Double)",
+        "price(v: Double, decimals: Int)",
+        "signed(v: Double, decimals: Int)",
+        "fmtPct(v: Double?)",
+        "date(d: LocalDate)",
+        "time(epoch: Long)",
+        "tint(decl: QuotesDecl, key: String, v: Double?)",
+        "perUsd(decl: QuotesDecl, snap: QuotesSnapshot, c: String)",
+        "legChange(decl: QuotesDecl, snap: QuotesSnapshot, c: String, pick: (Quote)",
+        "cross(decl: QuotesDecl, snap: QuotesSnapshot, base: String, quote: String)",
+        "crossChange(decl: QuotesDecl, snap: QuotesSnapshot, base: String, quote: String, pick: (Quote)",
+        "fxDec(v: Double)",
+        "fxTable(decl: QuotesDecl, snap: QuotesSnapshot, base: String)",
+        "fxMatrix(decl: QuotesDecl, snap: QuotesSnapshot)",
+        "commodityTable(decl: QuotesDecl, snap: QuotesSnapshot)",
+        "front(decl: QuotesDecl, snap: QuotesSnapshot, spec: FutSpec, today: LocalDate)",
+        "board(decl: QuotesDecl, snap: QuotesSnapshot, cls: FutClass, today: LocalDate)",
+        "shape(prices: List<Double>)",
+        "implied(price: Double)"
+      ]
+    },
+    {
+      "path": "ad_Capital-Stack-FinTerminal/app/src/main/java/com/diegonmarcos/capitalfinterm/QuotesStore.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "QuotesStore"
+      ],
+      "imports": [
+        "android.content.Context",
+        "java.net.URLEncoder",
+        "java.util.concurrent.ConcurrentHashMap",
+        "java.util.concurrent.Executors",
+        "java.util.concurrent.TimeUnit"
+      ],
+      "symbols": [
+        "decl(ctx: Context)",
+        "snapshot(ctx: Context)",
+        "refresh(decl: QuotesDecl, symbols: List<String>, force: Boolean, http: Http = UrlHttp()",
+        "class QuotesStore"
+      ]
+    },
+    {
       "path": "ad_Capital-Stack-FinTerminal/app/src/main/java/com/diegonmarcos/capitalfinterm/Requests.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -608183,6 +608312,78 @@
       ]
     },
     {
+      "path": "ad_Capital-Stack-FinTerminal/app/src/main/java/com/diegonmarcos/capitalfinterm/ui/QuotePages.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "QUOTE_PAGE",
+        "FUT_PAGE",
+        "FUT_ROW",
+        "HEDGE_PAGE",
+        "QuoteBoardPage",
+        "FuturesBoardPage",
+        "HedgePage"
+      ],
+      "imports": [
+        "androidx.compose.foundation.Canvas",
+        "androidx.compose.foundation.clickable",
+        "androidx.compose.foundation.horizontalScroll",
+        "androidx.compose.foundation.layout.Arrangement",
+        "androidx.compose.foundation.layout.BoxWithConstraints",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.Row",
+        "androidx.compose.foundation.layout.fillMaxSize",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.foundation.layout.height",
+        "androidx.compose.foundation.layout.width",
+        "androidx.compose.foundation.rememberScrollState",
+        "androidx.compose.foundation.text.BasicTextField",
+        "androidx.compose.foundation.text.KeyboardOptions",
+        "androidx.compose.foundation.verticalScroll",
+        "androidx.compose.material3.Text",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.LaunchedEffect",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.remember",
+        "androidx.compose.runtime.rememberCoroutineScope",
+        "androidx.compose.runtime.saveable.rememberSaveable",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.geometry.Offset",
+        "androidx.compose.ui.platform.LocalContext",
+        "androidx.compose.ui.platform.testTag",
+        "androidx.compose.ui.text.input.KeyboardType",
+        "androidx.compose.ui.unit.dp",
+        "com.diegonmarcos.capitalfinterm.CbTable",
+        "com.diegonmarcos.capitalfinterm.FutClass",
+        "com.diegonmarcos.capitalfinterm.FutSpec",
+        "com.diegonmarcos.capitalfinterm.Quotes",
+        "com.diegonmarcos.capitalfinterm.QuotesDecl",
+        "com.diegonmarcos.capitalfinterm.QuotesSnapshot",
+        "com.diegonmarcos.capitalfinterm.QuotesStore",
+        "com.diegonmarcos.capitalfinterm.ui.fin.FinChip",
+        "com.diegonmarcos.capitalfinterm.ui.fin.FinDim",
+        "com.diegonmarcos.capitalfinterm.ui.fin.FinMatrix"
+      ],
+      "symbols": [
+        "rememberLive(symbols: (QuotesDecl)",
+        "run(force: Boolean)",
+        "Chips(content: @Composable ()",
+        "Footer(l: Live, note: String, newest: Long?)",
+        "Table(id: String, t: CbTable, screen: androidx.compose.ui.unit.Dp, label: androidx.compose.ui.unit.Dp, onRow: ((Int)",
+        "RefreshChip(l: Live)",
+        "QuoteBoardPage(view: String)",
+        "FuturesBoardPage(classId: String)",
+        "TermStructure(l: Live, spec: FutSpec, today: LocalDate, screen: androidx.compose.ui.unit.Dp, onBack: ()",
+        "Curve(prices: List<Double>)",
+        "at(i: Int)",
+        "HedgePage()",
+        "class Live",
+        "class of"
+      ]
+    },
+    {
       "path": "ad_Capital-Stack-FinTerminal/app/src/main/java/com/diegonmarcos/capitalfinterm/ui/RemoteTickers.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -608550,6 +608751,7 @@
       "symbols": [
         "find(vararg candidates: String)",
         "cbFixture(name: String)",
+        "quotesFixture(name: String)",
         "class DataFiles"
       ]
     },
@@ -609053,6 +609255,44 @@
       ]
     },
     {
+      "path": "ad_Capital-Stack-FinTerminal/app/src/test/java/com/diegonmarcos/capitalfinterm/QuotesTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "QuotesTest"
+      ],
+      "imports": [
+        "java.io.IOException",
+        "java.time.LocalDate",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNotNull",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "q(last: Double, pct: Double? = null, w1: Double? = null, vol: Long? = null)",
+        "snap(vararg e: Pair<String, Quote>)",
+        "spec(id: String)",
+        "theChartAnswerBecomesAQuoteWithTheSourcesTimestampAndTheChangeAgainstThePreviousClose()",
+        "crossRatesAreTheRatioOfTheTwoUsdLegsAndTheirChangesAreTheRatioOfTheFactors()",
+        "theFxTableAndMatrixShowNaWhereThereIsNoQuote()",
+        "expiryRulesFollowTheContractCalendarsOnAWeekdayCalendar()",
+        "e(rule: String, y: Int, m: Int)",
+        "theListedContractsStartAtTheFirstUnexpiredMonthAndUseTheDeclaredSymbolPattern()",
+        "theBoardShowsNaForARootWithNoFreeSourceAndForEveryFigureTheSourceDoesNotCarry()",
+        "termStructureFlagsContangoBackwardationAndFlatAndGivesTheCalendarSpreadsAndTheImpliedRate()",
+        "hedgeMathContractsFromExposureRatioAndTheDeclaredNotional()",
+        "theBakedSnapshotCarriesTheSourcesTimestampOnEveryQuoteAndOnlyDeclaredSymbols()",
+        "aRefreshAsksTheDeclaredSymbolsWithTheDeclaredUserAgentOnceWithinTheTtlAndKeepsTheLaterTimestamp()",
+        "get(url: String)",
+        "post(url: String)",
+        "send(url: String, headers: Map<String, String>, body: String?)",
+        "class QuotesTest"
+      ]
+    },
+    {
       "path": "ad_Capital-Stack-FinTerminal/app/src/test/java/com/diegonmarcos/capitalfinterm/SectionHomeTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -609301,6 +609541,31 @@
       ]
     },
     {
+      "path": "ad_Capital-Stack-FinTerminal/scripts/gen-quotes-snapshot.py",
+      "lang": "py",
+      "role": "script",
+      "exports": [
+        "parse_chart(text)",
+        "get(url, ua, tries=2)",
+        "contract_candidates(root, months, codes, today, count)",
+        "symbols(q, today)",
+        "main(out)",
+        "selftest()"
+      ],
+      "imports": [
+        "concurrent.futures",
+        "datetime"
+      ],
+      "symbols": [
+        "parse_chart(text)",
+        "get(url, ua, tries=2)",
+        "contract_candidates(root, months, codes, today, count)",
+        "symbols(q, today)",
+        "main(out)",
+        "selftest()"
+      ]
+    },
+    {
       "path": "ad_Capital-Stack-FinTerminal/test/emulator-assert.sh",
       "lang": "sh",
       "role": "shell",
@@ -609364,6 +609629,24 @@
     },
     {
       "path": "ad_Capital-Stack-FinTerminal/test/test-finterm-pm.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "check()",
+        "ok()",
+        "bad()",
+        "mutant()"
+      ],
+      "imports": [],
+      "symbols": [
+        "check()",
+        "ok()",
+        "bad()",
+        "mutant()"
+      ]
+    },
+    {
+      "path": "ad_Capital-Stack-FinTerminal/test/test-finterm-quotes.sh",
       "lang": "sh",
       "role": "shell",
       "exports": [
@@ -611140,7 +611423,7 @@
         "main()"
       ],
       "imports": [
-        "datetime"
+        "copy"
       ],
       "symbols": [
         "sha256(path)",

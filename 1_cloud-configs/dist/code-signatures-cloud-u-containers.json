@@ -6,13 +6,13 @@
   },
   "repo": "cloud-u-containers",
   "counts": {
-    "files": 2612,
+    "files": 2617,
     "by_lang": {
       "sh": 177,
       "js": 106,
       "nix": 189,
       "py": 510,
-      "ts": 1260,
+      "ts": 1265,
       "rust": 370
     },
     "by_role": {
@@ -20,12 +20,12 @@
       "file": 345,
       "nix-module": 19,
       "python": 496,
-      "module": 767,
+      "module": 771,
       "script": 8,
       "flake": 86,
       "entrypoint": 71,
       "compose": 84,
-      "mcp-tool": 144,
+      "mcp-tool": 145,
       "workflow-dag": 5,
       "rust-module": 366,
       "hook": 53
@@ -3751,6 +3751,46 @@
         "foldBucket(values: number[])",
         "mergeWeightedAvg(existingAvg: number, existingCount: number, incomingAvg: number, incomingCount: number)",
         "bucket5m(ts: Date)"
+      ]
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/shared/libs/ai-tokens.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "validateTokensBody",
+        "emptyTokStore",
+        "applyTokens",
+        "loadTokStore",
+        "saveTokStore",
+        "loadCatalogue",
+        "familyOf",
+        "tokensView",
+        "Tok",
+        "TokRow",
+        "TokSample",
+        "TokStore",
+        "Family",
+        "Catalogue",
+        "MAX_ROWS",
+        "KEEP_DAYS",
+        "MAX_HOSTS",
+        "VIEW_DAYS"
+      ],
+      "imports": [
+        "node:fs",
+        "node:path"
+      ],
+      "symbols": [
+        "validateTokensBody(body: unknown, now: number)",
+        "emptyTokStore()",
+        "applyTokens(store: TokStore, s: TokSample, now: number)",
+        "loadTokStore(dir: string)",
+        "saveTokStore(dir: string, st: TokStore)",
+        "loadCatalogue(path: string = new URL(\"./claude-models.json\", import.meta.url)",
+        "familyOf(model: string, cat: Catalogue)",
+        "periods(byKey: Map<string, Map<string, Tok>>, cat: Catalogue)",
+        "tokensView(st: TokStore, now: number, cat: Catalogue = loadCatalogue()"
       ]
     },
     {
@@ -9614,7 +9654,8 @@
         "node:path",
         "node:fs",
         "node:os",
-        "../../shared/libs/ai-usage.js"
+        "../../shared/libs/ai-usage.js",
+        "../../shared/libs/ai-tokens.js"
       ],
       "symbols": [
         "registerAiUsageRoutes(app: FastifyInstance)"
@@ -9994,6 +10035,46 @@
         "foldBucket(values: number[])",
         "mergeWeightedAvg(existingAvg: number, existingCount: number, incomingAvg: number, incomingCount: number)",
         "bucket5m(ts: Date)"
+      ]
+    },
+    {
+      "path": "infra-api_cloudy-c3-api/src/code/shared/libs/ai-tokens.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "validateTokensBody",
+        "emptyTokStore",
+        "applyTokens",
+        "loadTokStore",
+        "saveTokStore",
+        "loadCatalogue",
+        "familyOf",
+        "tokensView",
+        "Tok",
+        "TokRow",
+        "TokSample",
+        "TokStore",
+        "Family",
+        "Catalogue",
+        "MAX_ROWS",
+        "KEEP_DAYS",
+        "MAX_HOSTS",
+        "VIEW_DAYS"
+      ],
+      "imports": [
+        "node:fs",
+        "node:path"
+      ],
+      "symbols": [
+        "validateTokensBody(body: unknown, now: number)",
+        "emptyTokStore()",
+        "applyTokens(store: TokStore, s: TokSample, now: number)",
+        "loadTokStore(dir: string)",
+        "saveTokStore(dir: string, st: TokStore)",
+        "loadCatalogue(path: string = new URL(\"./claude-models.json\", import.meta.url)",
+        "familyOf(model: string, cat: Catalogue)",
+        "periods(byKey: Map<string, Map<string, Tok>>, cat: Catalogue)",
+        "tokensView(st: TokStore, now: number, cat: Catalogue = loadCatalogue()"
       ]
     },
     {
@@ -11456,6 +11537,20 @@
         "apt",
         "title"
       ]
+    },
+    {
+      "path": "infra-api_cloudy-c3-api/src/test-ai-tokens.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [],
+      "imports": [
+        "node:assert/strict",
+        "node:fs",
+        "node:os",
+        "node:path",
+        "./code/shared/libs/ai-tokens.ts"
+      ],
+      "symbols": []
     },
     {
       "path": "infra-api_cloudy-c3-api/src/test-ai-usage.ts",
@@ -22705,6 +22800,46 @@
       ]
     },
     {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/shared/libs/ai-tokens.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "validateTokensBody",
+        "emptyTokStore",
+        "applyTokens",
+        "loadTokStore",
+        "saveTokStore",
+        "loadCatalogue",
+        "familyOf",
+        "tokensView",
+        "Tok",
+        "TokRow",
+        "TokSample",
+        "TokStore",
+        "Family",
+        "Catalogue",
+        "MAX_ROWS",
+        "KEEP_DAYS",
+        "MAX_HOSTS",
+        "VIEW_DAYS"
+      ],
+      "imports": [
+        "node:fs",
+        "node:path"
+      ],
+      "symbols": [
+        "validateTokensBody(body: unknown, now: number)",
+        "emptyTokStore()",
+        "applyTokens(store: TokStore, s: TokSample, now: number)",
+        "loadTokStore(dir: string)",
+        "saveTokStore(dir: string, st: TokStore)",
+        "loadCatalogue(path: string = new URL(\"./claude-models.json\", import.meta.url)",
+        "familyOf(model: string, cat: Catalogue)",
+        "periods(byKey: Map<string, Map<string, Tok>>, cat: Catalogue)",
+        "tokensView(st: TokStore, now: number, cat: Catalogue = loadCatalogue()"
+      ]
+    },
+    {
       "path": "user-ai_cloud-cgc-pub-mcp/src/code/shared/libs/ai-usage.ts",
       "lang": "ts",
       "role": "module",
@@ -24317,6 +24452,46 @@
         "foldBucket(values: number[])",
         "mergeWeightedAvg(existingAvg: number, existingCount: number, incomingAvg: number, incomingCount: number)",
         "bucket5m(ts: Date)"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/tools/shared/libs/ai-tokens.ts",
+      "lang": "ts",
+      "role": "mcp-tool",
+      "exports": [
+        "validateTokensBody",
+        "emptyTokStore",
+        "applyTokens",
+        "loadTokStore",
+        "saveTokStore",
+        "loadCatalogue",
+        "familyOf",
+        "tokensView",
+        "Tok",
+        "TokRow",
+        "TokSample",
+        "TokStore",
+        "Family",
+        "Catalogue",
+        "MAX_ROWS",
+        "KEEP_DAYS",
+        "MAX_HOSTS",
+        "VIEW_DAYS"
+      ],
+      "imports": [
+        "node:fs",
+        "node:path"
+      ],
+      "symbols": [
+        "validateTokensBody(body: unknown, now: number)",
+        "emptyTokStore()",
+        "applyTokens(store: TokStore, s: TokSample, now: number)",
+        "loadTokStore(dir: string)",
+        "saveTokStore(dir: string, st: TokStore)",
+        "loadCatalogue(path: string = new URL(\"./claude-models.json\", import.meta.url)",
+        "familyOf(model: string, cat: Catalogue)",
+        "periods(byKey: Map<string, Map<string, Tok>>, cat: Catalogue)",
+        "tokensView(st: TokStore, now: number, cat: Catalogue = loadCatalogue()"
       ]
     },
     {
