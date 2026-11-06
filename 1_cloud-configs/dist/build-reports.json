@@ -1143,6 +1143,32 @@
         "path": "/health"
       }
     },
+    "steel-browser": {
+      "name": "steel-browser",
+      "vm": "oci-A1-f_0",
+      "domain": null,
+      "enabled": true,
+      "category": "sec",
+      "ports": {
+        "app": 3000
+      },
+      "health": {
+        "path": "/health"
+      }
+    },
+    "zap": {
+      "name": "zap",
+      "vm": "oci-A1-f_0",
+      "domain": null,
+      "enabled": true,
+      "category": "sec",
+      "ports": {
+        "app": 8086
+      },
+      "health": {
+        "path": "/"
+      }
+    },
     "cloud-cgc-pub-mcp": {
       "name": "cloud-cgc-pub-mcp",
       "vm": "oci-A1-f_0",
@@ -2023,6 +2049,24 @@
       "dns": "mcp-oauth.mesh.diegonmarcos.com"
     },
     {
+      "service": "steel-browser",
+      "dns": "steel-browser.mesh.diegonmarcos.com"
+    },
+    {
+      "service": "steel-browser",
+      "container": "app",
+      "dns": "steel-browser.mesh.diegonmarcos.com"
+    },
+    {
+      "service": "zap",
+      "dns": "zap.mesh.diegonmarcos.com"
+    },
+    {
+      "service": "zap",
+      "container": "app",
+      "dns": "zap.mesh.diegonmarcos.com"
+    },
+    {
       "service": "cloud-cgc-pub-mcp",
       "dns": "cloud-cgc-pub-mcp.mesh.diegonmarcos.com"
     },
@@ -2480,6 +2524,8 @@
           "auth-broker",
           "cloudy-ai-tokens-api",
           "crowdsec",
+          "steel-browser",
+          "zap",
           "cloud-cgc-pub-mcp",
           "cloud-me-cgc-pvt-graph-api",
           "cloudy-ai-agents-api",
@@ -3225,6 +3271,32 @@
         },
         "health": {
           "path": "/health"
+        }
+      },
+      "steel-browser": {
+        "name": "steel-browser",
+        "vm": "oci-A1-f_0",
+        "domain": null,
+        "enabled": true,
+        "category": "sec",
+        "ports": {
+          "app": 3000
+        },
+        "health": {
+          "path": "/health"
+        }
+      },
+      "zap": {
+        "name": "zap",
+        "vm": "oci-A1-f_0",
+        "domain": null,
+        "enabled": true,
+        "category": "sec",
+        "ports": {
+          "app": 8086
+        },
+        "health": {
+          "path": "/"
         }
       },
       "cloud-cgc-pub-mcp": {

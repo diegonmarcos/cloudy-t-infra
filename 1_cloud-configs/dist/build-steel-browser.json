@@ -1,0 +1,2159 @@
+{
+  "_warning": "DO NOT EDIT — AUTO-GENERATED FILE. Source of truth lives in a_solutions/*/build.json + config.json + b_infra/*/build.json. Edits here are overwritten on every `bash 9_others/build.sh all`.",
+  "_meta": {
+    "description": "steel-browser container config (service=steel-browser, role=app)",
+    "format_version": 1,
+    "generated_at": "",
+    "generated_by": "1_cloud-configs/src/derive/cloud-data-config-derive.ts",
+    "pipeline": {
+      "description": "Two-stage build: consolidator merges all build.json + config.json sources into the master file; derive emits per-container + archived split files from the master.",
+      "source_inputs": [
+        "a_solutions/*/build.json (per-service declarations)",
+        "config.json (global topology + vms + dns + wireguard)",
+        "b_infra/*/build.json (per-VM HM config)",
+        "vault/secrets.yaml (sops-encrypted secrets per service, key names extracted)"
+      ],
+      "engines": {
+        "consolidator": "1_cloud-configs/src/derive/cloud-data-config-consolidated.ts",
+        "derive": "1_cloud-configs/src/derive/cloud-data-config-derive.ts (THIS engine)"
+      },
+      "outputs": {
+        "master": "1_cloud-configs/dist/_cloud-data-consolidated.json (consolidator output)",
+        "per_container": "1_cloud-configs/dist/build-{container_or_service_name}.json (one per container, plus one per container-less service — derive output)",
+        "archived": "1_cloud-configs/dist/z_archive/cloud-data-{slice}.json (deprecated split files — kept for soft-transition fallbacks; consumers should read consolidated instead)"
+      },
+      "rebuild_command": "bash 9_others/build.sh all"
+    }
+  },
+  "_generated": "",
+  "_source": "_cloud-data-consolidated.json via cloud-data-config-derive.ts/container-configs",
+  "container": {
+    "container_name": "steel-browser",
+    "image": "ghcr.io/steel-dev/steel-browser@sha256:c94f9ef7f18cf0a2c3c44e5b754119099488f62b4dea411e37459d6281c19799",
+    "port": 3000,
+    "port_env": "PORT",
+    "protocol": "http",
+    "dns": "steel-browser.mesh.diegonmarcos.com",
+    "public": false,
+    "proxy": null,
+    "healthcheck": "wget -qO /dev/null http://127.0.0.1:13000/health || exit 1",
+    "volumes": [],
+    "env_file": true,
+    "depends_on": [],
+    "resources": {
+      "mem_limit": "2G",
+      "cpus": "1.5",
+      "_comment": "Set in src/compose.nix; recorded here for inventory. Chromium is memory-hungry; bounded so it cannot starve oci-apps."
+    },
+    "read_only": false
+  },
+  "service": "steel-browser",
+  "role": "app",
+  "vm": "oci-apps",
+  "services": {
+    "alerts-api": {
+      "ip": "10.0.0.4",
+      "ports": {
+        "app": 5050
+      },
+      "vm": "oci-analytics",
+      "description": "Security Alert Aggregation API",
+      "api": {
+        "has_api": false,
+        "has_web_ui": false,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": []
+      }
+    },
+    "cloudy-ai-api": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 4185
+      },
+      "vm": "oci-apps",
+      "healthcheck": "/health",
+      "description": "AI gateway: /ai/{tokens,embeddings,agents,claude,memory} -> separate backend containers (cloudy-ai-*-api); legacy /<old-name>/ paths kept for one release.",
+      "api": {
+        "has_api": true,
+        "has_web_ui": false,
+        "api_path": "/ai",
+        "api_url": null,
+        "healthcheck_paths": [
+          "/health"
+        ],
+        "type": "custom-rest",
+        "base_path": "/ai",
+        "endpoint_count": 6,
+        "display_name": "Cloudy AI gateway",
+        "description": "One public prefix /ai/{tokens,embeddings,agents,claude,memory} in front of the five AI backend containers; legacy /<old-name>/ paths kept for one release; GET /health.",
+        "auth": "bearer"
+      }
+    },
+    "cloudy-ai-embeddings-api": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 7997
+      },
+      "vm": "oci-apps",
+      "healthcheck": "/health",
+      "description": "Fleet embeddings + rerank + PDF text server, CPU, mesh-only on oci-apps. OpenAI-compatible POST /embeddings (BAAI/bge-m3) and POST /rerank (BAAI/bge-reranker-v2-m3) served by Infinity, plus POST /pdf (raw application/pdf body to plain text, pypdf), GET /models and GET /health. Consumers: Cloud SuperIntel Notebook retrieval and Cloud Tools Retrieval steps. Mesh address http://embeddings-api.mesh.diegonmarcos.com:7997 (direct, plain HTTP inside WireGuard); no public route.",
+      "api": {
+        "has_api": true,
+        "has_web_ui": false,
+        "api_path": "/",
+        "api_url": null,
+        "healthcheck_paths": [
+          "/health"
+        ],
+        "type": "custom-rest",
+        "base_path": "/",
+        "endpoint_count": 5,
+        "display_name": "Fleet Embeddings, Rerank and PDF",
+        "description": "OpenAI-compatible embeddings, rerank, PDF to text; mesh-only, no auth (WireGuard is the gate).",
+        "auth": "none"
+      }
+    },
+    "jev-sidecar": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 3110
+      },
+      "vm": "oci-apps",
+      "healthcheck": "/health",
+      "description": "Jev decisions sidecar on oci-apps (#881) — `jev-gate serve`: POST /decide/<use> with {state, questions} on the WireGuard mesh for the sites that cannot carry a gate of their own (Dagu DAGs, journal-ntfy.sh, maddy post-hoc). One OPENROUTER_API_KEY, one answer cache, one daily USD cap and per-use hourly limits, one journal on stdout for the fleet's log-shipper (OpenObserve). Jev only suggests: every failure answers {ok:false, reason} and the caller keeps today's behaviour. Uses are declared in _shared/jev-gate/jev-gate.json, the same file the agent CLIs' gate reads. WG-only, never public.",
+      "api": {
+        "has_api": false,
+        "has_web_ui": false,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": [
+          "/health"
+        ]
+      }
+    },
+    "languagetool": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 8010
+      },
+      "vm": "oci-apps",
+      "domain": "languagetool.diegonmarcos.com",
+      "description": "LanguageTool grammar/spell-check HTTP API — rules-only, no n-grams, WG-only sidecar on oci-apps",
+      "api": {
+        "has_api": false,
+        "has_web_ui": true,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": []
+      }
+    },
+    "c3-public-api": {
+      "ip": "10.0.0.4",
+      "ports": {
+        "app": 8087
+      },
+      "vm": "oci-analytics",
+      "healthcheck": "/health",
+      "domain": "api.diegonmarcos.com/pub",
+      "description": "C3 Public API — single public-edge listener on oci-analytics. Consolidates http-to-smtp-proxy-api (Bearer-gated /mail/*) and c3-analytics-api passthrough (public /analytics/*). Replaces split listeners across gcp-proxy + oci-analytics so gcp-proxy becomes a pure wg0 spoke.",
+      "api": {
+        "has_api": true,
+        "has_web_ui": true,
+        "api_path": "/pub",
+        "api_url": "https://api.diegonmarcos.com/pub/pub",
+        "healthcheck_paths": [
+          "/health"
+        ],
+        "type": "custom-rest",
+        "base_path": "/pub",
+        "endpoint_count": 7,
+        "display_name": "C3 Public API",
+        "description": "Single public-edge API on oci-analytics. /mail/http-to-smtp (Bearer) bridges CF Worker -> Maddy over WG (Maddy dual-writes to Stalwart). /analytics/{matomo|umami|openobserve}/* (public) passes through to first-party analytics backends.",
+        "auth": "mixed"
+      }
+    },
+    "cloud-drive-mcp": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 3109
+      },
+      "vm": "oci-apps",
+      "domain": "mcp.diegonmarcos.com",
+      "description": "Drive MCP server — one facade over every storage unit: repos, files, photos, sync, scrapes, S3 and conversion",
+      "api": {
+        "has_api": false,
+        "has_web_ui": false,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": []
+      },
+      "mcp": {
+        "has_mcp": true,
+        "mcp_url": "https://mcp.diegonmarcos.com/mcp",
+        "transport": "streamable-http",
+        "endpoint_path": "/mcp",
+        "tools_count": 1,
+        "resources_count": 0,
+        "prompts_count": 0,
+        "display_name": "Drive MCP",
+        "description": "One `drive` tool routing to repos (gitea), files (filebrowser), photos (photoprism), scrapes, syncthing, S3 and local conversion.",
+        "auth": "none",
+        "sdk": "@modelcontextprotocol/sdk@^1.12.0"
+      }
+    },
+    "cloud-infra-mcp": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 3100
+      },
+      "vm": "oci-apps",
+      "healthcheck": "/mcp",
+      "domain": "mcp.diegonmarcos.com/c3-infra-mcp",
+      "description": "C3 MCP Server — Cloud Control Center MCP transport (stdio + HTTP)",
+      "api": {
+        "has_api": false,
+        "has_web_ui": false,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": [
+          "/mcp"
+        ]
+      },
+      "mcp": {
+        "has_mcp": true,
+        "mcp_url": "https://mcp.diegonmarcos.com/c3-infra-mcp/mcp",
+        "transport": "streamable-http",
+        "endpoint_path": "/mcp",
+        "tools_count": 182,
+        "resources_count": 0,
+        "prompts_count": 0,
+        "display_name": "C3 Infra MCP",
+        "description": "Cloud health, DevOps operations, workflows, cost tracking, security scanning, observability, front-end deployment, plus the peers-control phone tools (merged from cloudy-android-mcp). Tools are served as the legacy infra_* dispatchers and as the Cloud-C3 app's hierarchy (c3_infra, c3_containers, c3_home, c3_ops, c3_observ, c3_configs, c3_tree).",
+        "auth": "none",
+        "sdk": "@modelcontextprotocol/sdk@^1.12.0"
+      }
+    },
+    "cloud-mail-mcp": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 3103
+      },
+      "vm": "oci-apps",
+      "domain": "mcp.diegonmarcos.com",
+      "description": "Mail MCP server — IMAP/SMTP/Admin via Stalwart REST API",
+      "api": {
+        "has_api": false,
+        "has_web_ui": false,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": []
+      },
+      "mcp": {
+        "has_mcp": true,
+        "mcp_url": "https://mcp.diegonmarcos.com/mcp",
+        "transport": "streamable-http",
+        "endpoint_path": "/mcp",
+        "tools_count": 28,
+        "resources_count": 0,
+        "prompts_count": 0,
+        "display_name": "Mail MCP",
+        "description": "IMAP/SMTP/Admin via Stalwart REST API; proxies google-personal-mcp tools.",
+        "auth": "none",
+        "sdk": "@modelcontextprotocol/sdk@^1.12.0"
+      }
+    },
+    "cloud-mattermost-mcp": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 3102
+      },
+      "vm": "oci-apps",
+      "description": "Mattermost MCP server — chat tools via HTTP transport",
+      "api": {
+        "has_api": false,
+        "has_web_ui": false,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": []
+      },
+      "mcp": {
+        "has_mcp": true,
+        "mcp_url": null,
+        "transport": "streamable-http",
+        "endpoint_path": "/mcp",
+        "tools_count": 10,
+        "resources_count": 0,
+        "prompts_count": 0,
+        "display_name": "Mattermost MCP",
+        "description": "Mattermost chat read, post, react, channel management via Mattermost API.",
+        "auth": "bearer",
+        "sdk": "@modelcontextprotocol/sdk@^1.12.0"
+      }
+    },
+    "cloud-me-api": {
+      "ip": "10.0.0.4",
+      "ports": {
+        "app": 8124
+      },
+      "vm": "oci-analytics",
+      "healthcheck": "/health",
+      "description": "Cloud Me API: read-only, authenticated read path to the owner's private cloud-me-* repos. The service holds one READ-ONLY deploy key per repo server-side, keeps a shallow clone of each declared repo, and serves declared JSON datasets (and filtered config files) to fleet apps, so no app holds a GitHub credential (#1079). First consumer: the cloud-webapps c3-* sites (#1063).",
+      "api": {
+        "has_api": true,
+        "has_web_ui": false,
+        "api_path": "/me",
+        "api_url": null,
+        "healthcheck_paths": [
+          "/health"
+        ],
+        "type": "custom-rest",
+        "base_path": "/me",
+        "endpoint_count": 6,
+        "display_name": "Cloud Me API",
+        "description": "Authenticated read-only access to declared datasets and config files of the owner's private cloud-me-* repos. Deploy keys stay server-side; secret-looking files are never served.",
+        "auth": "mixed"
+      }
+    },
+    "cloud-services-mcp": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 3101
+      },
+      "vm": "oci-apps",
+      "healthcheck": "/mcp",
+      "description": "C3 Services MCP Server — service API gateway MCP transport (stdio + HTTP)",
+      "api": {
+        "has_api": false,
+        "has_web_ui": false,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": [
+          "/mcp"
+        ]
+      },
+      "mcp": {
+        "has_mcp": true,
+        "mcp_url": null,
+        "transport": "streamable-http",
+        "endpoint_path": "/mcp",
+        "tools_count": 127,
+        "resources_count": 0,
+        "prompts_count": 0,
+        "display_name": "C3 Services MCP",
+        "description": "Unified service API gateway: Grafana, Matomo, Umami, Ntfy, Syncthing, Crawlee, Authelia, NocoDB, PhotoPrism, Gitea, Grist, HedgeDoc, Etherpad, Vaultwarden; proxies infra and user MCPs.",
+        "auth": "none",
+        "sdk": "@modelcontextprotocol/sdk@^1.12.0"
+      }
+    },
+    "cloud-superapp-mcp": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 3110
+      },
+      "vm": "oci-apps",
+      "domain": "mcp.diegonmarcos.com",
+      "description": "MCP + HTTP faces over the Android constellation's on-device debug API (libs:devtools AppDebugServer, behind the SuperApp mesh gateway), reached over ssh. lib-api/lib-mcp shared, one module per app under mcps-apps/, one server process.",
+      "api": {
+        "has_api": false,
+        "has_web_ui": false,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": []
+      },
+      "mcp": {
+        "has_mcp": true,
+        "mcp_url": "https://mcp.diegonmarcos.com/mcp",
+        "transport": "streamable-http",
+        "endpoint_path": "/mcp",
+        "tools_count": 6,
+        "resources_count": 0,
+        "prompts_count": 0,
+        "display_name": "Cloud SuperApp MCP",
+        "description": "Discovers every constellation app behind the phone's SuperApp mesh gateway (127.0.0.1:38080 /api/fleet/apps, each app at /app/<pkg>/api/<op> over Android IPC; a pre-gateway phone's apps on 38090-38389) and proxies its routes: logcat, crashes, docs, fleet wake, and any app-registered route via superapp_call. App aliases come from mcps-apps/<id>/, so cloud-mail resolves without asking the device.",
+        "auth": "none",
+        "sdk": "@modelcontextprotocol/sdk@^1.12.0",
+        "_doc_stdio": "How .mcp.json should launch this. Through mcp-local-launch.sh, not `npm start`: the entry is cloud-superapp-mcp/src/index.ts but it imports ../../lib-mcp/src/, and Node walks up from the IMPORTING file — so a node_modules beside the entry alone leaves lib-mcp and every mcps-apps module unresolved (ERR_MODULE_NOT_FOUND on the SDK). The launcher links the solution root, which the walk reaches from all of them, and self-heals if it is missing or dangling. Run through `sh -c` so ${VAR:-default} is expanded by a shell we know does it — the same trick headersHelper already uses in that file. MCP_LOCAL_LAUNCH and CLOUD_INFRA_DIR override the two paths.",
+        "stdio": {
+          "command": "sh",
+          "args": [
+            "-c",
+            "\"${MCP_LOCAL_LAUNCH:-$HOME/.claude/mcp-local-launch.sh}\" \"${CLOUD_INFRA_DIR:-$HOME/git/cloud-t-infra}/a_solutions/infra-api_cloud-superapp-mcp/src/code/cloud-superapp-mcp/src/index.ts\""
+          ]
+        }
+      }
+    },
+    "cloud-vault-mcp": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 3111
+      },
+      "vm": "oci-apps",
+      "domain": "mcp.diegonmarcos.com",
+      "description": "MCP server — READ-ONLY personal data access (vault metadata, identity, comms, media, finance, health)",
+      "api": {
+        "has_api": false,
+        "has_web_ui": false,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": []
+      },
+      "mcp": {
+        "has_mcp": true,
+        "mcp_url": "https://mcp.diegonmarcos.com/mcp",
+        "transport": "streamable-http",
+        "endpoint_path": "/mcp",
+        "tools_count": 17,
+        "resources_count": 0,
+        "prompts_count": 0,
+        "display_name": "Cloud Vault MCP",
+        "description": "READ-ONLY personal data access: vault metadata, identity docs, communications, media, finance, health (redacted).",
+        "auth": "none",
+        "sdk": "@modelcontextprotocol/sdk@^1.12.0"
+      }
+    },
+    "cloudy-all-api": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 8082
+      },
+      "vm": "oci-apps",
+      "healthcheck": "/health",
+      "domain": "api.diegonmarcos.com/c3-services-api",
+      "description": "C3 Services REST API — service API gateway Fastify API",
+      "api": {
+        "has_api": true,
+        "has_web_ui": true,
+        "api_path": "/docs/json",
+        "api_url": "https://api.diegonmarcos.com/c3-services-api/docs/json",
+        "healthcheck_paths": [
+          "/health"
+        ],
+        "type": "openapi",
+        "spec_path": "/docs/json",
+        "base_path": "/cloudy-all-api",
+        "endpoint_count": 25,
+        "display_name": "C3 Services API Gateway",
+        "description": "Unified service API gateway that proxies and wraps OpenAPI services and custom REST/protocol endpoints.",
+        "auth": "bearer"
+      }
+    },
+    "cloudy-all-mcp": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 3112
+      },
+      "vm": "oci-apps",
+      "healthcheck": "/mcp",
+      "description": "Fleet MCP router: list_servers, list_tools(server), call(server, tool, args)",
+      "api": {
+        "has_api": false,
+        "has_web_ui": false,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": [
+          "/mcp"
+        ]
+      },
+      "mcp": {
+        "has_mcp": true,
+        "mcp_url": null,
+        "transport": "streamable-http",
+        "endpoint_path": "/mcp",
+        "tools_count": 3,
+        "resources_count": 0,
+        "prompts_count": 0,
+        "display_name": "Cloudy All MCP",
+        "description": "Fleet MCP router (3 tools).",
+        "auth": "none",
+        "sdk": "@modelcontextprotocol/sdk@^1.12.0"
+      }
+    },
+    "cloudy-apps-communication-mcp": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 3103
+      },
+      "vm": "oci-apps",
+      "domain": "mcp.diegonmarcos.com",
+      "description": "Mail MCP server — IMAP/SMTP/Admin via Stalwart REST API",
+      "api": {
+        "has_api": false,
+        "has_web_ui": false,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": []
+      },
+      "mcp": {
+        "has_mcp": true,
+        "mcp_url": "https://mcp.diegonmarcos.com/mcp",
+        "transport": "streamable-http",
+        "endpoint_path": "/mcp",
+        "tools_count": 29,
+        "resources_count": 0,
+        "prompts_count": 0,
+        "display_name": "Mail MCP",
+        "description": "Mail (IMAP/SMTP/Stalwart/Resend) + Mattermost; proxies google-personal-mcp tools.",
+        "auth": "none",
+        "sdk": "@modelcontextprotocol/sdk@^1.12.0"
+      }
+    },
+    "cloudy-apps-drive-mcp": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 3109
+      },
+      "vm": "oci-apps",
+      "domain": "mcp.diegonmarcos.com",
+      "description": "Drive MCP server — one facade over every storage unit: repos, files, photos, sync, scrapes, S3 and conversion",
+      "api": {
+        "has_api": false,
+        "has_web_ui": false,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": []
+      },
+      "mcp": {
+        "has_mcp": true,
+        "mcp_url": "https://mcp.diegonmarcos.com/mcp",
+        "transport": "streamable-http",
+        "endpoint_path": "/mcp",
+        "tools_count": 1,
+        "resources_count": 0,
+        "prompts_count": 0,
+        "display_name": "Drive MCP",
+        "description": "Drive facade; plus cloud_vault only on a direct mesh hit (gate.ts).",
+        "auth": "none",
+        "sdk": "@modelcontextprotocol/sdk@^1.12.0"
+      }
+    },
+    "cloudy-c3-api": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 8081
+      },
+      "vm": "oci-apps",
+      "healthcheck": "/health",
+      "domain": "api.diegonmarcos.com/c3-infra-api",
+      "description": "C3 REST API — Cloud Control Center Fastify API",
+      "api": {
+        "has_api": true,
+        "has_web_ui": true,
+        "api_path": "/docs/json",
+        "api_url": "https://api.diegonmarcos.com/c3-infra-api/docs/json",
+        "healthcheck_paths": [
+          "/health"
+        ],
+        "type": "openapi",
+        "spec_path": "/docs/json",
+        "base_path": "/cloudy-c3-api",
+        "endpoint_count": 100,
+        "display_name": "C3 Cloud Control Center API",
+        "description": "REST API for cloud infrastructure operations, lifecycle control, and observability across inventory, operations, security, and FinOps.",
+        "auth": "bearer"
+      }
+    },
+    "cloudy-drive-git-proxy-api": {
+      "ip": "10.0.0.4",
+      "ports": {
+        "app": 8123
+      },
+      "vm": "oci-analytics",
+      "healthcheck": "/health",
+      "domain": "api.diegonmarcos.com/git",
+      "description": "Git Proxy API — Authelia-fronted read path to GitHub so the phone holds NO GitHub credential (#647, route 3 of #646's fallback chain). The caller authenticates to US with the Authelia bearer it already has; this service holds the GitHub token server-side and streams the result back.",
+      "api": {
+        "has_api": true,
+        "has_web_ui": true,
+        "api_path": "/git",
+        "api_url": "https://api.diegonmarcos.com/git/git",
+        "healthcheck_paths": [
+          "/health"
+        ],
+        "type": "custom-rest",
+        "base_path": "/git",
+        "endpoint_count": 9,
+        "display_name": "Git Proxy API",
+        "description": "Authelia-fronted read path to GitHub: list repos, stream a tarball, clone/fetch over smart HTTP, and read recent commits / workflow runs of declared repos (cached, to keep the Store's feeds off the anonymous quota). The GitHub credential stays server-side; the caller presents an Authelia bearer or an Authelia session cookie. Fleet APK release assets (Range-capable, sha256/source sidecars) are also mirrored for direct mesh callers without a credential (#837).",
+        "auth": "mixed"
+      }
+    },
+    "cloudy-mail-http-to-smtp-api": {
+      "ip": "10.0.0.1",
+      "ports": {
+        "app": 8090
+      },
+      "vm": "gcp-proxy",
+      "domain": "api.diegonmarcos.com/http-to-smtp-proxy-api",
+      "description": "HTTP-to-SMTP bridge sidecar of Caddy on gcp-proxy. CF Worker POSTs JSON email payloads to this container (because GCP blocks outbound TCP/25); container speaks SMTP over WG to maddy:25 + stalwart:2025 on oci-mail. Public path: api.diegonmarcos.com/http-to-smtp-proxy-api/ [DECOMMISSIONED 2026-05-21]",
+      "api": {
+        "has_api": true,
+        "has_web_ui": true,
+        "api_path": "/cloudy-mail-http-to-smtp-api",
+        "api_url": "https://api.diegonmarcos.com/http-to-smtp-proxy-api/cloudy-mail-http-to-smtp-api",
+        "healthcheck_paths": [],
+        "type": "custom-rest",
+        "base_path": "/cloudy-mail-http-to-smtp-api",
+        "endpoint_count": 1,
+        "display_name": "HTTP-to-SMTP Proxy API",
+        "description": "POST raw RFC 5322 email body. Translates to SMTP and dual-delivers to maddy:25 + Stalwart:2025 over WG. Used by CF email-forwarder Worker for inbound mail (because CF Workers cannot make outbound TCP/25 connections — port 25 is GCP-blocked end-to-end).",
+        "auth": "bearer"
+      }
+    },
+    "google-personal-mcp": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 3106
+      },
+      "vm": "oci-apps",
+      "healthcheck": "/health",
+      "domain": "mcp.diegonmarcos.com",
+      "description": "Google Personal Account MCP server — Gmail (IMAP/SMTP via App Password) for personal Google accounts, multi-account",
+      "api": {
+        "has_api": false,
+        "has_web_ui": false,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": [
+          "/health"
+        ]
+      },
+      "mcp": {
+        "has_mcp": true,
+        "mcp_url": "https://mcp.diegonmarcos.com/mcp",
+        "transport": "streamable-http",
+        "endpoint_path": "/mcp",
+        "tools_count": 9,
+        "resources_count": 0,
+        "prompts_count": 0,
+        "display_name": "Google Personal MCP",
+        "description": "IMAP/SMTP access for personal Google accounts via App Password, multi-account support.",
+        "auth": "none",
+        "sdk": "@modelcontextprotocol/sdk@^1.12.0"
+      }
+    },
+    "google-workspace-mcp": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 3104
+      },
+      "vm": "oci-apps",
+      "healthcheck": "/health",
+      "domain": "mcp.diegonmarcos.com",
+      "description": "Google Workspace MCP server — Gmail, Calendar, Drive, Docs, Sheets via HTTP transport",
+      "api": {
+        "has_api": false,
+        "has_web_ui": false,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": [
+          "/health"
+        ]
+      },
+      "mcp": {
+        "has_mcp": true,
+        "mcp_url": "https://mcp.diegonmarcos.com/mcp",
+        "transport": "streamable-http",
+        "endpoint_path": "/mcp",
+        "tools_count": 114,
+        "resources_count": 0,
+        "prompts_count": 0,
+        "display_name": "Google Workspace MCP",
+        "description": "Gmail, Calendar, Drive, Docs, Sheets, Forms, Slides, Chat, Tasks, Contacts, Search, Apps Script via OAuth 2.0/2.1.",
+        "auth": "oidc",
+        "sdk": "fastmcp@3.1.1"
+      }
+    },
+    "gha-runner": {
+      "ip": "10.0.0.6",
+      "ports": {},
+      "vm": "oci-apps",
+      "description": "GitHub Actions self-hosted runner on oci-apps — ARM64, no 6h timeout cap",
+      "api": {
+        "has_api": false,
+        "has_web_ui": false,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": []
+      }
+    },
+    "backup-borg": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 2224
+      },
+      "vm": "oci-apps",
+      "description": "Media Backups SSH Server (Borg deduplication)",
+      "api": {
+        "has_api": false,
+        "has_web_ui": false,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": []
+      }
+    },
+    "backup-bup": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 2223
+      },
+      "vm": "oci-apps",
+      "description": "Database Backups SSH Server (bup)",
+      "api": {
+        "has_api": false,
+        "has_web_ui": false,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": []
+      }
+    },
+    "gitea": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 3002
+      },
+      "vm": "oci-apps",
+      "healthcheck": "curl -f http://localhost:3002/",
+      "domain": "git.diegonmarcos.com",
+      "description": "Self-hosted Git service",
+      "api": {
+        "has_api": true,
+        "has_web_ui": true,
+        "api_path": "/swagger.v1.json",
+        "api_url": "https://git.diegonmarcos.com/swagger.v1.json",
+        "healthcheck_paths": [],
+        "type": "openapi",
+        "spec_path": "/swagger.v1.json",
+        "base_path": "/api/v1",
+        "display_name": "Gitea",
+        "description": "Self-hosted Git service with REST API and repository management.",
+        "auth": "bearer"
+      }
+    },
+    "postlite": {
+      "ip": "10.0.0.1",
+      "ports": {
+        "npm_rest": 8890,
+        "vaultwarden_rest": 8891,
+        "ntfy_rest": 8892,
+        "authelia_rest": 8893,
+        "npm_pg": 5433,
+        "vaultwarden_pg": 5434,
+        "ntfy_pg": 5435,
+        "authelia_pg": 5436
+      },
+      "vm": "gcp-proxy",
+      "description": "SQLite REST API (WireGuard only)",
+      "api": {
+        "has_api": false,
+        "has_web_ui": false,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": []
+      }
+    },
+    "redis": {
+      "ip": "10.0.0.1",
+      "ports": {
+        "app": 6379
+      },
+      "vm": "gcp-proxy",
+      "healthcheck": "redis-cli -a \"$REDIS_PASSWORD\" --no-auth-warning ping | grep -q PONG",
+      "description": "In-memory data store",
+      "api": {
+        "has_api": false,
+        "has_web_ui": false,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": []
+      }
+    },
+    "cloudflared": {
+      "ip": "10.0.0.6",
+      "ports": {},
+      "vm": "oci-apps",
+      "description": "Cloudflare Tunnel connector (remotely-managed tunnel 'fleet-edge') — the network half of the Cloudflare One (Zero Trust) edge. Outbound-only: no inbound port is opened anywhere. Hostnames, Access apps and ingress rules are declared in cloud-infra c_vps/ba-clo_cloudflare (terraform.json .zero_trust + zero-trust.tf); this container only carries the connector. Origins are reached over the WireGuard mesh (10.0.0.0/24), so one tunnel can front any VM. Design: cloud-infra a0_docs/eng-specs/cloudflare-zero-trust.md. Caddy + Authelia on gcp-proxy stay the fallback path and do not depend on this.",
+      "api": {
+        "has_api": false,
+        "has_web_ui": false,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": []
+      }
+    },
+    "hickory-dns": {
+      "ip": "10.0.0.1",
+      "ports": {
+        "dns": 53,
+        "app": 53
+      },
+      "vm": "gcp-proxy",
+      "domain": "dns.internal",
+      "description": "Internal DNS server for WireGuard mesh (per-service mesh zone)",
+      "api": {
+        "has_api": false,
+        "has_web_ui": false,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": []
+      }
+    },
+    "unbound-dns64": {
+      "ip": "10.0.0.4",
+      "ports": {
+        "dns": 53,
+        "app": 53
+      },
+      "vm": "oci-analytics",
+      "domain": "dns64.internal",
+      "description": "DNS64 resolver for NAT64 — synthesises AAAA records for IPv4-only names so IPv6-only clients can reach the internet via the Tayga NAT64 translator",
+      "api": {
+        "has_api": false,
+        "has_web_ui": true,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": []
+      }
+    },
+    "wireguard-mesh": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 8084
+      },
+      "vm": "oci-apps",
+      "healthcheck": {
+        "test": [
+          "CMD",
+          "wget",
+          "-qO-",
+          "http://127.0.0.1:8080/"
+        ],
+        "interval": "30s",
+        "timeout": "5s",
+        "retries": 3
+      },
+      "domain": "mesh.diegonmarcos.com",
+      "description": "Read-only data-driven control panel for the WireGuard mesh + wstunnel TCP/443 fallback. Mimics Headscale's UI shape but holds zero state and exposes zero mutations — pure observability over the existing declarative VPN data (cloud-data-topology.json + bb-net_vpn/build.json + terraform.json). Snapshot is frozen at deploy time; the page hydrates from PORTAL_DATA, no runtime fetch.",
+      "api": {
+        "has_api": false,
+        "has_web_ui": true,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": []
+      }
+    },
+    "wireguard-mesh-ws-tunnel": {
+      "ip": "10.0.0.1",
+      "ports": {
+        "ws": 8080,
+        "app": 8080
+      },
+      "vm": "gcp-proxy",
+      "domain": "vpn.diegonmarcos.com",
+      "description": "WireGuard-over-TCP/443 fallback for hostile networks (airport / hotel / corporate guest Wi-Fi blocking UDP). Sibling to bb-net_wireguard-mesh (the panel) — this folder owns the wstunnel-server that terminates WSS on gcp-proxy and forwards UDP to the kernel WG listener at 127.0.0.1:51820. UDP/51820 remains the primary transport; this kicks in only when clients can't reach UDP.",
+      "api": {
+        "has_api": false,
+        "has_web_ui": true,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": []
+      }
+    },
+    "cloud-spec": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 3080
+      },
+      "vm": "oci-apps",
+      "description": "Unified Cloud Documentation Portal",
+      "api": {
+        "has_api": false,
+        "has_web_ui": false,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": []
+      }
+    },
+    "configs-sync": {
+      "ip": "10.0.0.6",
+      "ports": {},
+      "vm": "oci-apps",
+      "description": "configs-sync engine (#1148): the fleet's configs pipeline as its own container. On a schedule it checks out cloud-u-containers (the declared inputs) and cloud-t-infra (the derive code, 1_cloud-configs), regenerates the consolidated JSON, the per-app build-*.json and the C3 containers-declared.json, runs the containers guard, and commits the result to the public data repo cloud_db_infra-ops-obsv_configs-sync. c3-infra-api and cloud-infra-mcp serve those files from the data repo. CANONICAL: the derivation of containers-declared.json lives HERE (src/code/containers-declared.mjs); the consolidated and per-app derivation stays in cloud-t-infra 1_cloud-configs, which this engine runs. cloud-t-infra keeps generating into its own dist/ as a thin wrapper until this engine is live.",
+      "api": {
+        "has_api": false,
+        "has_web_ui": false,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": []
+      }
+    },
+    "dagu": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 8070
+      },
+      "vm": "oci-apps",
+      "healthcheck": "/",
+      "domain": "workflows.diegonmarcos.com",
+      "description": "Dagu - Lightweight DAG-based workflow scheduler",
+      "api": {
+        "has_api": true,
+        "has_web_ui": true,
+        "api_path": "/api/v1",
+        "api_url": "https://workflows.diegonmarcos.com/api/v1",
+        "healthcheck_paths": [
+          "/"
+        ],
+        "type": "custom-rest",
+        "base_path": "/api/v1",
+        "display_name": "Dagu Workflow Scheduler",
+        "description": "Lightweight DAG-based workflow scheduler for orchestrating cloud infrastructure automation.",
+        "auth": "none"
+      }
+    },
+    "dbgate": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 8086
+      },
+      "vm": "oci-apps",
+      "healthcheck": "/",
+      "domain": "db.diegonmarcos.com",
+      "description": "DBGate - Universal database manager for all cloud databases",
+      "api": {
+        "has_api": false,
+        "has_web_ui": true,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": [
+          "/"
+        ]
+      }
+    },
+    "matomo": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 8080
+      },
+      "vm": "oci-apps",
+      "healthcheck": "/",
+      "domain": "analytics.diegonmarcos.com/matomo",
+      "description": "Matomo hybrid analytics (oci-apps)",
+      "api": {
+        "has_api": true,
+        "has_web_ui": true,
+        "api_path": "/?module=API",
+        "api_url": "https://analytics.diegonmarcos.com/matomo/?module=API",
+        "healthcheck_paths": [
+          "/"
+        ],
+        "type": "custom-rest",
+        "base_path": "/?module=API",
+        "display_name": "Matomo Reporting API",
+        "description": "Web analytics platform with Matomo Reporting API for tracking and admin operations.",
+        "auth": "api-key"
+      }
+    },
+    "ntfy": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 8090,
+        "rss_gateway": 8091,
+        "rss-gateway": 8091
+      },
+      "vm": "oci-apps",
+      "healthcheck": "/",
+      "domain": "rss.diegonmarcos.com",
+      "description": "Push notification server",
+      "api": {
+        "has_api": true,
+        "has_web_ui": true,
+        "api_path": "/v1",
+        "api_url": "https://rss.diegonmarcos.com/v1",
+        "healthcheck_paths": [
+          "/"
+        ],
+        "type": "custom-rest",
+        "base_path": "/v1",
+        "display_name": "ntfy Push Notifications",
+        "description": "Push notification server with HTTP POST interface for sending messages to topics.",
+        "auth": "bearer"
+      }
+    },
+    "openobserve": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 5080
+      },
+      "vm": "oci-apps",
+      "domain": "analytics.diegonmarcos.com/openobserve",
+      "description": "OpenObserve - single-binary observability platform (logs + traces + metrics + RUM). Replaces LGTM stack.",
+      "api": {
+        "has_api": true,
+        "has_web_ui": true,
+        "api_path": "/swagger/index.html",
+        "api_url": "https://analytics.diegonmarcos.com/openobserve/swagger/index.html",
+        "healthcheck_paths": [],
+        "type": "openapi",
+        "spec_path": "/swagger/index.html",
+        "base_path": "/api",
+        "display_name": "OpenObserve HTTP API",
+        "description": "Logs/metrics/traces/RUM ingest + SQL query API. OTLP-compatible. Auth via Bearer tokens (issued by OO admin).",
+        "auth": "bearer"
+      }
+    },
+    "umami": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 3006,
+        "db": 5442
+      },
+      "vm": "oci-apps",
+      "healthcheck": "curl -sf http://localhost:3006/api/heartbeat || exit 1",
+      "domain": "analytics.diegonmarcos.com",
+      "description": "Umami Analytics - lightweight privacy-focused web analytics",
+      "api": {
+        "has_api": true,
+        "has_web_ui": true,
+        "api_path": "/umami",
+        "api_url": "https://analytics.diegonmarcos.com/umami",
+        "healthcheck_paths": [],
+        "type": "custom-rest",
+        "base_path": "/umami",
+        "display_name": "Umami Analytics API",
+        "description": "Lightweight privacy-focused web analytics with tracking API and admin interface.",
+        "auth": "bearer"
+      }
+    },
+    "agents-tmp-reaper": {
+      "ip": "10.0.0.6",
+      "ports": {},
+      "vm": "oci-apps",
+      "description": "Agent /tmp reaper — periodically clears stale agent scratch from the /tmp of the agent containers on oci-apps, so a runaway agent cache cannot fill the host root filesystem (task 442 / issue 410). Cron-driven maintenance container in the db-agent pattern: docker.sock (read-only) + docker exec, scope locked to the declared AGENT_CONTAINERS' /tmp and STALE_MINUTES of age.",
+      "api": {
+        "has_api": false,
+        "has_web_ui": false,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": []
+      }
+    },
+    "disk-janitor": {
+      "ip": "10.0.0.6",
+      "ports": {},
+      "vm": "oci-apps",
+      "description": "oci-apps disk janitor (#811) — declared, scheduled cleanup so agents and ships never hit disk-full: unused images older than N hours (keeping every image a container references and the newest K per repository), build cache, ANONYMOUS dangling volumes only after an age + label safety check, finished dispatch _work slots via the dispatcher's own reap.sh (slots with unpushed or uncommitted work are kept and reported), and dispatch logs past retention. Alerts ntfy when root free space is below a threshold and writes a metrics JSON each pass. MODE=dry-run reports only; MODE=enforce deletes.",
+      "api": {
+        "has_api": false,
+        "has_web_ui": false,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": []
+      }
+    },
+    "auth-broker": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "google": 4180,
+        "github": 4181,
+        "cloudflare": 4182,
+        "email": 4183
+      },
+      "vm": "oci-apps",
+      "healthcheck": "/oauth2/google/health",
+      "description": "Identity broker for the multi-SSO sign-in: GitHub (device flow + web), Google (web code flow + PKCE) and Cloudflare One (Access JWT) and Email code (one-time code), owner only (#1066, #1083, #1118)",
+      "api": {
+        "has_api": false,
+        "has_web_ui": false,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": [
+          "/oauth2/google/health",
+          "/oauth2/github/health",
+          "/oauth2/cloudflare/health",
+          "/oauth2/email/health"
+        ]
+      }
+    },
+    "authelia": {
+      "ip": "10.0.0.1",
+      "ports": {
+        "app": 9091,
+        "redis": 6380
+      },
+      "vm": "gcp-proxy",
+      "healthcheck": "/api/health",
+      "domain": "auth.diegonmarcos.com",
+      "description": "SSO and 2FA authentication portal",
+      "api": {
+        "has_api": true,
+        "has_web_ui": true,
+        "api_path": "/api",
+        "api_url": "https://auth.diegonmarcos.com/api",
+        "healthcheck_paths": [
+          "/api/health"
+        ],
+        "type": "custom-rest",
+        "base_path": "/api",
+        "display_name": "Authelia Auth API",
+        "description": "OpenID Connect/OAuth2 authorization and 2FA authentication server with WebAuthn support.",
+        "auth": "oidc"
+      }
+    },
+    "caddy": {
+      "ip": "10.0.0.1",
+      "ports": {
+        "app": 443
+      },
+      "vm": "gcp-proxy",
+      "domain": "proxy.diegonmarcos.com",
+      "description": "Caddy reverse proxy + security dashboard (gcp-proxy, wg0 bind)",
+      "api": {
+        "has_api": false,
+        "has_web_ui": true,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": []
+      },
+      "extra_ports": {
+        "80": {
+          "protocol": "http",
+          "bind": null,
+          "desc": null,
+          "role": "app"
+        },
+        "2019": {
+          "protocol": "http",
+          "bind": null,
+          "desc": null,
+          "role": "app"
+        }
+      }
+    },
+    "caddy-public": {
+      "ip": "10.0.0.4",
+      "ports": {
+        "app": 443
+      },
+      "vm": "oci-analytics",
+      "description": "Caddy public-edge L7 allowlist on oci-analytics. Terminates TLS on :8443, serves ONLY the declared-public allowlist (build-caddy-public.json: gh-pages, no-auth subdomains, well-known, explicit public_paths), and FORWARDS everything else to the private hub gcp-proxy over wg-public (10.1.0.2:443). Fail-closed: any host/path not explicitly allowlisted is forwarded to gcp-proxy, whose @wg gate 403s public clients.",
+      "api": {
+        "has_api": false,
+        "has_web_ui": false,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": []
+      },
+      "extra_ports": {
+        "2019": {
+          "protocol": "http",
+          "bind": null,
+          "desc": null,
+          "role": "app"
+        },
+        "8443": {
+          "protocol": "https",
+          "bind": null,
+          "desc": null,
+          "role": "app"
+        }
+      }
+    },
+    "cloudy-ai-tokens-api": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 4184
+      },
+      "vm": "oci-apps",
+      "healthcheck": "/health",
+      "description": "Fleet token engine: lists, generates, reveals and revokes every fleet bearer token (fleet ft_ tokens and adopted Authelia JWTs); introspect-proxy asks it before accepting a Bearer, so a revoked token stops working within 60 seconds. Public address: c3-pvt.diegonmarcos.com/tokens-api (shared gate, #1104); mesh tokens-api.mesh.diegonmarcos.com",
+      "api": {
+        "has_api": true,
+        "has_web_ui": false,
+        "api_path": "/",
+        "api_url": null,
+        "healthcheck_paths": [
+          "/health"
+        ],
+        "type": "custom-rest",
+        "base_path": "/",
+        "endpoint_count": 8,
+        "display_name": "Fleet Token Engine",
+        "description": "Owner-only token manager (list, reveal, generate, import, revoke, audit) and the mesh-only /v1/verify that introspect-proxy calls.",
+        "auth": "bearer"
+      }
+    },
+    "crowdsec": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "lapi": 8088,
+        "metrics": 6062,
+        "app": 8088
+      },
+      "vm": "oci-apps",
+      "healthcheck": "cmd",
+      "domain": "crowdsec.diegonmarcos.com",
+      "description": "CrowdSec behavioral IDS/IPS engine — DORMANT placeholder (Cloudflare-off fallback). Container runs but detects/remediates nothing: empty acquisition, online API (CAPI) disabled, no bouncers wired.",
+      "api": {
+        "has_api": false,
+        "has_web_ui": true,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": []
+      }
+    },
+    "introspect-proxy": {
+      "ip": "10.0.0.1",
+      "ports": {
+        "app": 4182
+      },
+      "vm": "gcp-proxy",
+      "healthcheck": "/health",
+      "description": "OIDC token introspection sidecar for Caddy Bearer auth",
+      "api": {
+        "has_api": true,
+        "has_web_ui": false,
+        "api_path": "/",
+        "api_url": null,
+        "healthcheck_paths": [
+          "/health"
+        ],
+        "type": "custom-rest",
+        "base_path": "/",
+        "endpoint_count": 2,
+        "display_name": "JWT Introspection Proxy",
+        "description": "Validates bearer JWT tokens locally using Authelia JWKS public keys for Caddy forward_auth.",
+        "auth": "bearer"
+      }
+    },
+    "steel-browser": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 3000,
+        "auth": 3000
+      },
+      "vm": "oci-apps",
+      "healthcheck": "wget -qO /dev/null http://127.0.0.1:13000/health || exit 1",
+      "description": "Steel Browser — owner-authorized ethical-hacking/security-testing headless browser (own services only). Private mesh, token-gated via a Caddy bearer sidecar, declared target allowlist enforced in the c3 MCP layer. Apache-2.0.",
+      "api": {
+        "has_api": false,
+        "has_web_ui": false,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": []
+      }
+    },
+    "zap": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 8086
+      },
+      "vm": "oci-apps",
+      "healthcheck": "curl -fsS http://10.0.0.6:8086/ >/dev/null 2>&1 || exit 1",
+      "description": "OWASP ZAP — owner-authorized ethical-hacking/security scanner (own services only), headless daemon. Private mesh (bound to wg0), native API-key auth from vault, declared allowlist enforced as ZAP context/scope and in the c3 MCP layer. Apache-2.0.",
+      "api": {
+        "has_api": false,
+        "has_web_ui": false,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": []
+      }
+    },
+    "cloud-cgc-pub-mcp": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 3105,
+        "pvt": 3107
+      },
+      "vm": "oci-apps",
+      "healthcheck": "/mcp",
+      "description": "Cloud CGC Pub MCP — Code Graph Context: infra knowledge, specs, docs, semantic code search",
+      "api": {
+        "has_api": false,
+        "has_web_ui": false,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": [
+          "/mcp",
+          "/mcp"
+        ]
+      },
+      "mcp": {
+        "has_mcp": true,
+        "mcp_url": null,
+        "transport": "streamable-http",
+        "endpoint_path": "/mcp",
+        "tools_count": 16,
+        "resources_count": 2,
+        "prompts_count": 0,
+        "display_name": "Cloud CGC Pub MCP",
+        "description": "Code Graph Context: cloud specs, docs, inventory, configs, skills; Octocode semantic search; CodeGraph analysis (future).",
+        "auth": "none",
+        "sdk": "@modelcontextprotocol/sdk@^1.12.0"
+      }
+    },
+    "cloud-me-cgc-pvt-graph-api": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 8001
+      },
+      "vm": "oci-apps",
+      "description": "SurrealDB Hybrid Knowledge Graph - Infrastructure topology + vector search",
+      "api": {
+        "has_api": false,
+        "has_web_ui": false,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": []
+      }
+    },
+    "cloudy-ai-agents-api": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 3217,
+        "ollama": 12436,
+        "headroom": 8890,
+        "goosed": 3227
+      },
+      "vm": "oci-apps",
+      "healthcheck": "/health",
+      "description": "my-ai API on oci-apps — one polyglot container: OpenAI /v1 + Ollama /api + Anthropic /v1/messages mimic backed by OpenRouter (no Claude subscription, no metered Anthropic key), with a vendored Headroom (Apache-2.0) compression hop and a savings dashboard. Sibling of claude-superset-api; the agent face for this stack is goose (my-ai wraps goose, claude-superset keeps claude-cli). Internal WG-only sidecar, never public.",
+      "api": {
+        "has_api": false,
+        "has_web_ui": false,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": [
+          "/health"
+        ]
+      }
+    },
+    "cloudy-ai-claude-api": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 3117,
+        "ollama": 11436,
+        "headroom": 8788,
+        "proxy": 8789
+      },
+      "vm": "oci-apps",
+      "healthcheck": "/health",
+      "description": "Claude superset API on oci-apps — one polyglot container: OpenAI /v1 + Ollama /api + Anthropic /v1/messages mimic backed by the subscription `claude` CLI (no metered key), with a vendored Headroom (Apache-2.0) compression hop and a savings dashboard. Successor to kg-bridge; usable as a local/remote fallback. Internal WG-only sidecar, never public.",
+      "api": {
+        "has_api": false,
+        "has_web_ui": false,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": [
+          "/health"
+        ]
+      }
+    },
+    "cloudy-ai-memory-api": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 3108
+      },
+      "vm": "oci-apps",
+      "healthcheck": "/health",
+      "description": "Central SQLite store of all Claude Code session transcripts — push/list/fetch so a session started on one device can be resumed from any other. WG-only sidecar on oci-apps; Node 22 built-in node:sqlite (phone-portable, no native deps).",
+      "api": {
+        "has_api": false,
+        "has_web_ui": false,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": [
+          "/health"
+        ]
+      }
+    },
+    "cloudy-cgc-pub-graph-api": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 8002
+      },
+      "vm": "oci-apps",
+      "description": "SurrealDB Hybrid Knowledge Graph - Infrastructure topology + vector search",
+      "api": {
+        "has_api": false,
+        "has_web_ui": false,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": []
+      }
+    },
+    "hermes-agent": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "api": 8642,
+        "dashboard": 9119,
+        "app": 8642
+      },
+      "vm": "oci-apps",
+      "description": "Nous Research Hermes Agent (autonomous, persistent-memory AI agent) on oci-apps. Messaging gateway (Telegram live, Mattermost scaffolded) backed by claude-superset-api (subscription CLI, no metered key). WG-internal, never public.",
+      "api": {
+        "has_api": false,
+        "has_web_ui": false,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": []
+      }
+    },
+    "openclaw": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 18789
+      },
+      "vm": "oci-apps",
+      "description": "OpenClaw (MIT, github.com/openclaw/openclaw) on oci-apps — the open-source personal agent gateway, as a fourth fleet agent next to hermes, goose and claude. Upstream's own image, unmodified. Its gateway listens on 127.0.0.1 only (host network, auth mode none, the documented trusted-loopback setup) with the OpenAI-compatible /v1/chat/completions enabled; the fleet reaches it ONLY through the agent gateway my-ai-api (X-Agent-Mode: openclaw). Its model calls go back through that same gateway's OpenRouter face, which holds the key, so this service has no secret at all. Never public, never on the mesh directly.",
+      "api": {
+        "has_api": false,
+        "has_web_ui": false,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": []
+      }
+    },
+    "chat-mattermost": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 8065,
+        "db": 5435
+      },
+      "vm": "oci-apps",
+      "healthcheck": "/api/v4/system/ping",
+      "domain": "chat.diegonmarcos.com",
+      "description": "Mattermost team chat (TE 11.x ESR) with ntfy bridge and C3 command bot",
+      "api": {
+        "has_api": true,
+        "has_web_ui": true,
+        "api_path": "/api/v4",
+        "api_url": "https://chat.diegonmarcos.com/api/v4",
+        "healthcheck_paths": [
+          "/api/v4/system/ping"
+        ],
+        "type": "custom-rest",
+        "base_path": "/api/v4",
+        "display_name": "Mattermost",
+        "description": "Open-source team chat platform with REST API.",
+        "auth": "bearer"
+      }
+    },
+    "cloud-webmail": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 3000
+      },
+      "vm": "oci-apps",
+      "healthcheck": "/api/health",
+      "domain": "webmail.diegonmarcos.com",
+      "description": "Cloud Webmail — Stalwart-native JMAP webmail with multi-account/multi-server (webmail.diegonmarcos.com); OUR build of bulwarkmail/webmail 1.9.2. Replaces SnappyMail.",
+      "api": {
+        "has_api": false,
+        "has_web_ui": true,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": [
+          "/api/health"
+        ]
+      }
+    },
+    "mail-puller": {
+      "ip": "10.0.0.3",
+      "ports": {},
+      "vm": "oci-mail",
+      "domain": "mail-puller.diegonmarcos.com",
+      "description": "Rust sidecar — IMAP-IDLE pulls from external providers (Gmail, Outlook/Live, …) and delivers into Maddy via SMTP submission (:465 implicit TLS; Maddy dual-writes to Stalwart). Declarative source list in src/sources.json; OAuth2 creds via sops.",
+      "api": {
+        "has_api": false,
+        "has_web_ui": true,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": []
+      }
+    },
+    "matrix-continuwuity": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 8008
+      },
+      "vm": "oci-apps",
+      "healthcheck": "/_matrix/client/versions",
+      "domain": "matrix.diegonmarcos.com",
+      "description": "Continuwuity Matrix homeserver (maintained conduwuit fork, Rust/RocksDB) — central hub for chat bridges. Federation enabled via .well-known delegation over :443.",
+      "api": {
+        "has_api": true,
+        "has_web_ui": true,
+        "api_path": "/_matrix",
+        "api_url": "https://matrix.diegonmarcos.com/_matrix",
+        "healthcheck_paths": [
+          "/_matrix/client/versions"
+        ],
+        "type": "custom-rest",
+        "base_path": "/_matrix",
+        "display_name": "Matrix (Continuwuity)",
+        "description": "Matrix client-server + federation API served by the Continuwuity homeserver.",
+        "auth": "bearer"
+      }
+    },
+    "matrix-element": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 8083
+      },
+      "vm": "oci-apps",
+      "healthcheck": "/",
+      "domain": "messenger.diegonmarcos.com",
+      "description": "Element Web — browser Matrix client for the Continuwuity homeserver. Served at messenger.diegonmarcos.com behind Authelia 2FA.",
+      "api": {
+        "has_api": false,
+        "has_web_ui": true,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": [
+          "/"
+        ],
+        "type": "no-api"
+      }
+    },
+    "matrix-mautrix-whatsapp": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 29318
+      },
+      "vm": "oci-apps",
+      "description": "mautrix-whatsapp bridge (appservice) for the Continuwuity homeserver. WG-only, no public route. Links a WhatsApp account via QR into Matrix.",
+      "api": {
+        "has_api": false,
+        "has_web_ui": false,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": [],
+        "type": "no-api"
+      }
+    },
+    "maddy": {
+      "ip": "10.0.0.3",
+      "ports": {
+        "app": 993,
+        "smtp": 465,
+        "imap": 993
+      },
+      "vm": "oci-mail",
+      "domain": "mail.diegonmarcos.com",
+      "description": "Maddy Mail Server (mail.diegonmarcos.com)",
+      "api": {
+        "has_api": false,
+        "has_web_ui": true,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": []
+      },
+      "users": {
+        "42": {
+          "name": "42",
+          "pass_env": "MAIL_DEFAULT_PASSWORD"
+        },
+        "admin": {
+          "name": "me",
+          "pass_env": "ME_PASSWORD"
+        },
+        "noreply": {
+          "name": "no-reply",
+          "pass_env": "NOREPLY_PASSWORD",
+          "aliases": [
+            "noreply"
+          ]
+        },
+        "mailadmin": {
+          "name": "admin",
+          "pass_env": "ADMIN_PASSWORD"
+        },
+        "yo": {
+          "name": "yo",
+          "pass_env": "MAIL_DEFAULT_PASSWORD"
+        }
+      },
+      "extra_ports": {
+        "25": {
+          "protocol": "tcp",
+          "bind": [
+            "10.0.0.3",
+            "10.1.0.3"
+          ],
+          "desc": "MX delivery endpoint — dual-bind wg0+wg-public; CF Worker → Caddy → http-to-smtp-proxy-api → SMTP over WG is the public bridge (Phase 5)",
+          "service": "smtp_mx",
+          "role": "app"
+        },
+        "143": {
+          "protocol": "tcp",
+          "bind": [
+            "10.0.0.3",
+            "10.1.0.3"
+          ],
+          "desc": "IMAP plain — dual-bind wg0+wg-public",
+          "service": "imap_plain",
+          "role": "app"
+        },
+        "465": {
+          "protocol": "tls",
+          "bind": [
+            "10.0.0.3",
+            "10.1.0.3"
+          ],
+          "desc": "SMTPS — dual-bind wg0+wg-public, reached via Caddy L4 from oci-analytics",
+          "service": "smtp_ssl",
+          "role": "app"
+        },
+        "993": {
+          "protocol": "tls",
+          "bind": [
+            "10.0.0.3",
+            "10.1.0.3"
+          ],
+          "desc": "IMAPS — dual-bind wg0+wg-public, reached via Caddy L4 from oci-analytics",
+          "service": "imap_ssl",
+          "role": "app"
+        }
+      }
+    },
+    "stalwart": {
+      "ip": "10.0.0.3",
+      "ports": {
+        "app": 2443
+      },
+      "vm": "oci-mail",
+      "healthcheck": "/",
+      "domain": "jmap.diegonmarcos.com",
+      "description": "Stalwart Mail Server — JMAP webmail backend (jmap.diegonmarcos.com)",
+      "api": {
+        "has_api": false,
+        "has_web_ui": true,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": [
+          "/"
+        ]
+      },
+      "users": {
+        "42": {
+          "name": "42",
+          "pass_env": "MAIL_DEFAULT_PASSWORD"
+        },
+        "admin": {
+          "name": "me",
+          "pass_env": "ME_PASSWORD"
+        },
+        "noreply": {
+          "name": "no-reply",
+          "pass_env": "NOREPLY_PASSWORD",
+          "aliases": [
+            "noreply"
+          ]
+        },
+        "noreply-auth": {
+          "name": "noreply-auth",
+          "pass_env": "AUTH_NOREPLY_PASSWORD"
+        },
+        "mailadmin": {
+          "name": "admin",
+          "pass_env": "ADMIN_PASSWORD"
+        },
+        "yo": {
+          "name": "yo",
+          "pass_env": "MAIL_DEFAULT_PASSWORD"
+        }
+      },
+      "extra_ports": {
+        "2025": {
+          "protocol": "starttls",
+          "bind": [
+            "10.0.0.3",
+            "10.1.0.3"
+          ],
+          "desc": "SMTP shadow (host:2025 → stalwart:25)",
+          "service": "smtp_shadow",
+          "role": "app"
+        },
+        "2080": {
+          "protocol": "http",
+          "bind": [
+            "10.0.0.3",
+            "10.1.0.3"
+          ],
+          "desc": "Plain-HTTP JMAP on the MESH ONLY (host:2080 → stalwart:8080). Bound on wg0/wg-public, never on a public interface: .app is WireGuard-only and WG already encrypts, so the mesh endpoint stalwart.mesh.diegonmarcos.com is plain http (fleet convention, #1093). Cloud Mail and the fleet apps reach JMAP here first and fall back to the public jmap.diegonmarcos.com with the bearer.",
+          "service": "jmap_mesh_http",
+          "role": "app"
+        },
+        "2443": {
+          "protocol": "tls",
+          "bind": [
+            "10.0.0.3",
+            "10.1.0.3"
+          ],
+          "desc": "HTTPS admin/JMAP (host:2443 → stalwart:443)",
+          "service": "jmap_tls",
+          "role": "app"
+        },
+        "2465": {
+          "protocol": "tls",
+          "bind": [
+            "10.0.0.3",
+            "10.1.0.3"
+          ],
+          "desc": "SMTPS (host:2465 → stalwart:465)",
+          "service": "smtp_ssl",
+          "role": "app"
+        },
+        "2993": {
+          "protocol": "tls",
+          "bind": [
+            "10.0.0.3",
+            "10.1.0.3"
+          ],
+          "desc": "IMAPS (host:2993 → stalwart:993)",
+          "service": "imap_ssl",
+          "role": "app"
+        },
+        "6190": {
+          "protocol": "tls",
+          "bind": [
+            "10.0.0.3",
+            "10.1.0.3"
+          ],
+          "desc": "ManageSieve (host:6190 → stalwart:4190)",
+          "service": "manage_sieve",
+          "role": "app"
+        }
+      }
+    },
+    "cloudy-browser-headless": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 3118
+      },
+      "vm": "oci-apps",
+      "healthcheck": "node -e \"fetch('http://'+(process.env.HTTP_HOST||'127.0.0.1')+':3118/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))\"",
+      "domain": "mcp.diegonmarcos.com",
+      "description": "Headless browser for agents: official Playwright image (Apache-2.0, not browserless/SSPL) plus a small Node server implementing the shared headless-api JSON command API (open/wait/eval/click/type/scroll/html/text/readable (markdown|json|xml)/screenshot/cookies/storage/network, run(steps), sessions). Bearer-gated, mesh-only.",
+      "api": {
+        "has_api": true,
+        "has_web_ui": true,
+        "api_path": "/cloudy-browser-headless",
+        "api_url": "https://mcp.diegonmarcos.com/cloudy-browser-headless",
+        "healthcheck_paths": [],
+        "type": "rest",
+        "base_path": "/cloudy-browser-headless",
+        "display_name": "Headless Browser",
+        "description": "Agent headless browser (headless-api v1 command API, sessions, run(steps)).",
+        "auth": "bearer"
+      }
+    },
+    "cloudy-browser-scrapper-api": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 3020
+      },
+      "vm": "oci-apps",
+      "healthcheck": "curl -fsS http://127.0.0.1:3020/health >/dev/null 2>&1 || exit 1",
+      "domain": "api.diegonmarcos.com",
+      "description": "Unified scrapers API (Instagram / Pinterest / LinkedIn / generic crawl) — retires crawlee-cloud. Lean single-container FastAPI, on-demand, flat-JSON output.",
+      "api": {
+        "has_api": true,
+        "has_web_ui": true,
+        "api_path": "/openapi.json",
+        "api_url": "https://api.diegonmarcos.com/openapi.json",
+        "healthcheck_paths": [],
+        "type": "openapi",
+        "spec_path": "/openapi.json",
+        "base_path": "/cloudy-browser-scrapper-api",
+        "display_name": "Scrapers API",
+        "description": "Unified profile-scrape + generic-crawl API. Replaces crawlee-cloud.",
+        "auth": "two_factor"
+      }
+    },
+    "capital-stack-finterm-api": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 8340
+      },
+      "vm": "oci-apps",
+      "healthcheck": "/health",
+      "domain": "api.diegonmarcos.com/capital-stack-finterminal-api",
+      "description": "Fincept Terminal backend (capital-stack-finterminal-api) — REST + WebSocket over DataHub, 35 data connectors, 7 analytics, 17 brokers, 6 investor personas, MCP tools",
+      "api": {
+        "has_api": true,
+        "has_web_ui": true,
+        "api_path": "/capital-stack-finterm-api",
+        "api_url": "https://api.diegonmarcos.com/capital-stack-finterminal-api/capital-stack-finterm-api",
+        "healthcheck_paths": [
+          "/health"
+        ],
+        "type": "custom-rest",
+        "base_path": "/capital-stack-finterm-api",
+        "display_name": "Fincept Terminal (Rust)",
+        "description": "Bloomberg-class financial intelligence platform with 35 data connectors, 7 analytics modules, 17 brokers, and 6 investor personas.",
+        "auth": "bearer"
+      }
+    },
+    "capital-stack-finterminal-web": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 8341
+      },
+      "vm": "oci-apps",
+      "healthcheck": "/healthz",
+      "description": "Capital-Stack-FinTerminal web (#1351, design 3.5): the FinTerm pages of the SvelteKit webapps site served as static files behind the shared c3-pvt gate (Authelia 2FA session or fleet bearer) at c3-pvt.diegonmarcos.com/capital-stack-finterminal-web/. Same origin as c3-pvt.diegonmarcos.com/capital-stack-finterminal-api, so the page reads the /v1 API with the gate's session: no CORS, no token in the page. Built by cloudy-h-webapps-mob (ghcr.io/diegonmarcos/capital-stack-finterminal-web).",
+      "api": {
+        "has_api": false,
+        "has_web_ui": false,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": [
+          "/healthz"
+        ],
+        "type": "no-api"
+      }
+    },
+    "photoprism": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 3013
+      },
+      "vm": "oci-apps",
+      "healthcheck": "/api/v1/status",
+      "domain": "photos.diegonmarcos.com",
+      "description": "PhotoPrism AI-powered photo management (oci-flex-1)",
+      "api": {
+        "has_api": true,
+        "has_web_ui": true,
+        "api_path": "/api/v1",
+        "api_url": "https://photos.diegonmarcos.com/api/v1",
+        "healthcheck_paths": [
+          "/api/v1/status"
+        ],
+        "type": "custom-rest",
+        "base_path": "/api/v1",
+        "display_name": "PhotoPrism",
+        "description": "AI-powered photo management system with REST API.",
+        "auth": "bearer"
+      }
+    },
+    "playlist-syncer": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 8090
+      },
+      "vm": "oci-apps",
+      "healthcheck": "/api/health",
+      "domain": "playlist.diegonmarcos.com",
+      "description": "Spotube — bidirectional Spotify <-> YouTube Music playlist sync (playlist.diegonmarcos.com). Self-hosted Soundiiz alternative.",
+      "api": {
+        "has_api": true,
+        "has_web_ui": true,
+        "api_path": "/api",
+        "api_url": "https://playlist.diegonmarcos.com/api",
+        "healthcheck_paths": [
+          "/api/health"
+        ],
+        "type": "custom-rest",
+        "base_path": "/api",
+        "display_name": "Playlist Syncer",
+        "description": "Bidirectional Spotify / YouTube Music playlist sync (Spotube fork). REST API + web UI.",
+        "auth": "bearer"
+      }
+    },
+    "capital-stack-news-gdelt-api": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 3019
+      },
+      "vm": "oci-apps",
+      "description": "GDELT News Aggregator — Fastify API with SQLite cache",
+      "api": {
+        "has_api": false,
+        "has_web_ui": false,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": []
+      }
+    },
+    "calendar-radicale": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 5232
+      },
+      "vm": "oci-apps",
+      "healthcheck": "/.web/",
+      "domain": "cal.diegonmarcos.com",
+      "description": "Radicale CalDAV server (calendars only) — cal.diegonmarcos.com",
+      "api": {
+        "has_api": true,
+        "has_web_ui": true,
+        "api_path": "/.well-known/caldav",
+        "api_url": "https://cal.diegonmarcos.com/.well-known/caldav",
+        "healthcheck_paths": [
+          "/.web/"
+        ],
+        "type": "custom-protocol",
+        "base_path": "/.well-known/caldav",
+        "display_name": "Radicale CalDAV Server (Calendars)",
+        "description": "WebDAV-based CalDAV server for calendar synchronization.",
+        "auth": "basic"
+      }
+    },
+    "cloud-notes-sync": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 8098
+      },
+      "vm": "oci-apps",
+      "healthcheck": "/healthz",
+      "domain": "notes-sync.diegonmarcos.com",
+      "description": "Cloud Notes sync server: Yjs documents (Hocuspocus) and the HTTP delta API at notes-sync.diegonmarcos.com behind the edge gate (fleet Bearer or Authelia). Built by cloud-u-android ship-cloud-notes.yml (ghcr.io/diegonmarcos/cloud-notes-sync).",
+      "api": {
+        "has_api": false,
+        "has_web_ui": true,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": [
+          "/healthz"
+        ],
+        "type": "no-api"
+      }
+    },
+    "cloud-notes-web": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 8097
+      },
+      "vm": "oci-apps",
+      "healthcheck": "/healthz",
+      "domain": "notes.diegonmarcos.com",
+      "description": "Cloud Notes web: the notes app (Miro + Notion + Obsidian) served as static files at notes.diegonmarcos.com behind the edge gate (Authelia 2FA or fleet Bearer). Built by cloud-u-android ship-cloud-notes.yml (ghcr.io/diegonmarcos/cloud-notes-web).",
+      "api": {
+        "has_api": false,
+        "has_web_ui": true,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": [
+          "/healthz"
+        ],
+        "type": "no-api"
+      }
+    },
+    "code-server": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 8443
+      },
+      "vm": "oci-apps",
+      "healthcheck": "/",
+      "domain": "ide.diegonmarcos.com",
+      "description": "VS Code IDE (ide.diegonmarcos.com)",
+      "api": {
+        "has_api": false,
+        "has_web_ui": true,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": [
+          "/"
+        ]
+      }
+    },
+    "contacts-radicale": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 5233
+      },
+      "vm": "oci-apps",
+      "healthcheck": "/.web/",
+      "domain": "contacts.diegonmarcos.com",
+      "description": "Radicale CardDAV server (contacts / address books) — contacts.diegonmarcos.com",
+      "api": {
+        "has_api": true,
+        "has_web_ui": true,
+        "api_path": "/.well-known/carddav",
+        "api_url": "https://contacts.diegonmarcos.com/.well-known/carddav",
+        "healthcheck_paths": [
+          "/.web/"
+        ],
+        "type": "custom-protocol",
+        "base_path": "/.well-known/carddav",
+        "display_name": "Radicale CardDAV Server (Contacts)",
+        "description": "WebDAV-based CardDAV server for contact / address-book synchronization.",
+        "auth": "basic"
+      }
+    },
+    "etherpad": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 3012,
+        "db": 5436
+      },
+      "vm": "oci-apps",
+      "healthcheck": {
+        "test": [
+          "CMD",
+          "node",
+          "-e",
+          "require('http').get('http://127.0.0.1:3012/',r=>process.exit(r.statusCode<500?0:1)).on('error',()=>process.exit(1))"
+        ],
+        "interval": "30s",
+        "timeout": "10s",
+        "retries": 3,
+        "start_period": "40s"
+      },
+      "domain": "app.diegonmarcos.com/etherpad",
+      "description": "Etherpad collaborative editor",
+      "api": {
+        "has_api": true,
+        "has_web_ui": true,
+        "api_path": "/api/1",
+        "api_url": "https://app.diegonmarcos.com/etherpad/api/1",
+        "healthcheck_paths": [],
+        "type": "custom-rest",
+        "base_path": "/api/1",
+        "display_name": "Etherpad",
+        "description": "Collaborative real-time text editor with HTTP API.",
+        "auth": "api-key"
+      }
+    },
+    "filebrowser": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 3015
+      },
+      "vm": "oci-apps",
+      "healthcheck": "/health",
+      "domain": "app.diegonmarcos.com/filebrowser",
+      "description": "FileBrowser web file manager (NEW - not deployed yet)",
+      "api": {
+        "has_api": true,
+        "has_web_ui": true,
+        "api_path": "/api",
+        "api_url": "https://app.diegonmarcos.com/filebrowser/api",
+        "healthcheck_paths": [
+          "/health"
+        ],
+        "type": "custom-rest",
+        "base_path": "/api",
+        "display_name": "FileBrowser",
+        "description": "Web-based file manager with REST API.",
+        "auth": "bearer"
+      }
+    },
+    "grist": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 3011
+      },
+      "vm": "oci-apps",
+      "healthcheck": "/",
+      "domain": "sheets.diegonmarcos.com",
+      "description": "Grist spreadsheet/database (sheets.diegonmarcos.com)",
+      "api": {
+        "has_api": true,
+        "has_web_ui": true,
+        "api_path": "/api",
+        "api_url": "https://sheets.diegonmarcos.com/api",
+        "healthcheck_paths": [
+          "/"
+        ],
+        "type": "custom-rest",
+        "base_path": "/api",
+        "display_name": "Grist",
+        "description": "Self-hosted spreadsheet and database with REST API.",
+        "auth": "api-key"
+      }
+    },
+    "hedgedoc": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 3018,
+        "db": 5439
+      },
+      "vm": "oci-apps",
+      "healthcheck": "/",
+      "domain": "app.diegonmarcos.com/hedgedoc",
+      "description": "Collaborative markdown editor",
+      "api": {
+        "has_api": true,
+        "has_web_ui": true,
+        "api_path": "/api/v1",
+        "api_url": "https://app.diegonmarcos.com/hedgedoc/api/v1",
+        "healthcheck_paths": [
+          "/"
+        ],
+        "type": "custom-rest",
+        "base_path": "/api/v1",
+        "display_name": "HedgeDoc",
+        "description": "Collaborative markdown editor with REST API.",
+        "auth": "bearer"
+      }
+    },
+    "revealmd": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 3014
+      },
+      "vm": "oci-apps",
+      "description": "Reveal.js markdown presentations (not deployed)",
+      "api": {
+        "has_api": false,
+        "has_web_ui": false,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": []
+      }
+    },
+    "send": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 3016
+      },
+      "vm": "oci-apps",
+      "healthcheck": "/__lbheartbeat__",
+      "domain": "send.diegonmarcos.com",
+      "description": "Send — self-hosted end-to-end encrypted ephemeral file sharing (timvisee/send, Firefox Send fork). Files encrypted client-side; server sees only ciphertext. Links self-destruct after configured downloads or time.",
+      "api": {
+        "has_api": false,
+        "has_web_ui": true,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": [
+          "/__lbheartbeat__"
+        ]
+      }
+    },
+    "vaultwarden": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 8880
+      },
+      "vm": "oci-apps",
+      "healthcheck": "/alive",
+      "domain": "vault.diegonmarcos.com",
+      "description": "Bitwarden password manager",
+      "api": {
+        "has_api": true,
+        "has_web_ui": true,
+        "api_path": "/api",
+        "api_url": "https://vault.diegonmarcos.com/api",
+        "healthcheck_paths": [
+          "/alive"
+        ],
+        "type": "custom-rest",
+        "base_path": "/api",
+        "display_name": "Vaultwarden",
+        "description": "Bitwarden-compatible password manager with REST API.",
+        "auth": "bearer"
+      }
+    }
+  },
+  "taxonomy": {
+    "group": "Infra Apps",
+    "category": "Net-Routing & Security"
+  },
+  "timezone": "Europe/Madrid"
+}

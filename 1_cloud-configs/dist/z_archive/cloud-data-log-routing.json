@@ -262,6 +262,21 @@
         "log_level": "info"
       },
       {
+        "container": "steel-browser",
+        "service": "steel-browser",
+        "log_level": "info"
+      },
+      {
+        "container": "steel-browser-auth",
+        "service": "steel-browser",
+        "log_level": "info"
+      },
+      {
+        "container": "zap",
+        "service": "zap",
+        "log_level": "info"
+      },
+      {
         "container": "cloud-cgc-pub-mcp",
         "service": "cloud-cgc-pub-mcp",
         "log_level": "info"

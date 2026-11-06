@@ -1235,6 +1235,39 @@
         "auth": "bearer"
       }
     },
+    "steel-browser": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 3000,
+        "auth": 3000
+      },
+      "vm": "oci-apps",
+      "healthcheck": "wget -qO /dev/null http://127.0.0.1:13000/health || exit 1",
+      "description": "Steel Browser — owner-authorized ethical-hacking/security-testing headless browser (own services only). Private mesh, token-gated via a Caddy bearer sidecar, declared target allowlist enforced in the c3 MCP layer. Apache-2.0.",
+      "api": {
+        "has_api": false,
+        "has_web_ui": false,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": []
+      }
+    },
+    "zap": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 8086
+      },
+      "vm": "oci-apps",
+      "healthcheck": "curl -fsS http://10.0.0.6:8086/ >/dev/null 2>&1 || exit 1",
+      "description": "OWASP ZAP — owner-authorized ethical-hacking/security scanner (own services only), headless daemon. Private mesh (bound to wg0), native API-key auth from vault, declared allowlist enforced as ZAP context/scope and in the c3 MCP layer. Apache-2.0.",
+      "api": {
+        "has_api": false,
+        "has_web_ui": false,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": []
+      }
+    },
     "cloud-cgc-pub-mcp": {
       "ip": "10.0.0.6",
       "ports": {

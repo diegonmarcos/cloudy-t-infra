@@ -6,9 +6,9 @@
   "base": "https://rss.diegonmarcos.com/feed",
   "counts": {
     "declared": 22,
-    "logs": 108,
+    "logs": 111,
     "apps": 40,
-    "total": 170
+    "total": 173
   },
   "channels": [
     {
@@ -900,6 +900,39 @@
       "source": "logs",
       "vm": "local",
       "feed": "/feed/c/logs_mcp-oauth.atom",
+      "quiet": true
+    },
+    {
+      "id": "logs_steel-browser",
+      "topic": "logs_steel-browser",
+      "title": "steel-browser",
+      "path": "Cloud-Infra/Logs/oci-apps/steel-browser",
+      "category": "logs",
+      "source": "logs",
+      "vm": "oci-apps",
+      "feed": "/feed/c/logs_steel-browser.atom",
+      "quiet": true
+    },
+    {
+      "id": "logs_steel-browser-auth",
+      "topic": "logs_steel-browser-auth",
+      "title": "steel-browser-auth",
+      "path": "Cloud-Infra/Logs/oci-apps/steel-browser-auth",
+      "category": "logs",
+      "source": "logs",
+      "vm": "oci-apps",
+      "feed": "/feed/c/logs_steel-browser-auth.atom",
+      "quiet": true
+    },
+    {
+      "id": "logs_zap",
+      "topic": "logs_zap",
+      "title": "zap",
+      "path": "Cloud-Infra/Logs/oci-apps/zap",
+      "category": "logs",
+      "source": "logs",
+      "vm": "oci-apps",
+      "feed": "/feed/c/logs_zap.atom",
       "quiet": true
     },
     {

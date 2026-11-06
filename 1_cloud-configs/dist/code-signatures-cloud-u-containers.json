@@ -6,26 +6,26 @@
   },
   "repo": "cloud-u-containers",
   "counts": {
-    "files": 2623,
+    "files": 2633,
     "by_lang": {
-      "sh": 177,
-      "js": 106,
-      "nix": 189,
+      "sh": 179,
+      "js": 109,
+      "nix": 193,
       "py": 510,
-      "ts": 1271,
+      "ts": 1272,
       "rust": 370
     },
     "by_role": {
-      "shell": 168,
-      "file": 345,
+      "shell": 170,
+      "file": 348,
       "nix-module": 19,
       "python": 496,
       "module": 776,
       "script": 8,
-      "flake": 86,
+      "flake": 88,
       "entrypoint": 71,
-      "compose": 84,
-      "mcp-tool": 146,
+      "compose": 86,
+      "mcp-tool": 147,
       "workflow-dag": 5,
       "rust-module": 366,
       "hook": 53
@@ -371,6 +371,18 @@
       "symbols": []
     },
     {
+      "path": "_shared/gen-security-testing-allowlist.mjs",
+      "lang": "js",
+      "role": "file",
+      "exports": [],
+      "imports": [
+        "node:fs",
+        "node:url",
+        "node:path"
+      ],
+      "symbols": []
+    },
+    {
       "path": "_shared/jev-gate.nix",
       "lang": "nix",
       "role": "nix-module",
@@ -661,6 +673,23 @@
       ]
     },
     {
+      "path": "_shared/security-testing-allowlist.mjs",
+      "lang": "js",
+      "role": "file",
+      "exports": [
+        "targetHost",
+        "checkTarget"
+      ],
+      "imports": [],
+      "symbols": [
+        "v4ToInt(ip)",
+        "v4InCidr(ip, cidr)",
+        "v6InCidr(ip, cidr)",
+        "targetHost(target)",
+        "checkTarget(target, allowlist)"
+      ]
+    },
+    {
       "path": "_shared/templates/app-db.nix",
       "lang": "nix",
       "role": "nix-module",
@@ -939,6 +968,19 @@
       "imports": [
         "node:fs",
         "node:path"
+      ],
+      "symbols": []
+    },
+    {
+      "path": "_shared/test-security-testing-allowlist.mjs",
+      "lang": "js",
+      "role": "file",
+      "exports": [],
+      "imports": [
+        "node:fs",
+        "node:url",
+        "node:path",
+        "./security-testing-allowlist.mjs"
       ],
       "symbols": []
     },
@@ -3359,6 +3401,7 @@
         "../../shared/libs/cloud/aws.js",
         "../../shared/libs/notify.js",
         "../../shared/libs/security.js",
+        "./security-testing.js",
         "os"
       ],
       "symbols": [
@@ -3556,6 +3599,35 @@
       ],
       "symbols": [
         "registerPluginTools(server: McpServer)"
+      ]
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/mcp/tools/security-testing.ts",
+      "lang": "ts",
+      "role": "mcp-tool",
+      "exports": [
+        "targetHost",
+        "checkTarget",
+        "handleSteelZap",
+        "AllowRules",
+        "STEEL_ZAP_METHODS"
+      ],
+      "imports": [
+        "../../shared/libs/http.js",
+        "../../shared/libs/config.js"
+      ],
+      "symbols": [
+        "allowlist()",
+        "v4ToInt(ip: string)",
+        "v4InCidr(ip: string, cidr: string)",
+        "v6InCidr(ip: string, cidr: string)",
+        "targetHost(target: string)",
+        "checkTarget(target: string, rules: AllowRules = allowlist()",
+        "refuse(tool: string, target: string, c: { host: string; reason: string })",
+        "requireKey(which: \"steel\" | \"zap\")",
+        "steelCall(path: string, method: string, body?: unknown)",
+        "zapCall(apiPath: string, params: Record<string, string>)",
+        "handleSteelZap(method: string, p: any)"
       ]
     },
     {
@@ -22649,6 +22721,220 @@
       "imports": [],
       "symbols": [
         "render()"
+      ]
+    },
+    {
+      "path": "infra-sec_steel-browser/build.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "get_config()",
+        "get_config_array()",
+        "get_lifecycle()",
+        "detect_layout()",
+        "rewrite_compose_image_refs()",
+        "log()",
+        "log_warn()",
+        "log_error()",
+        "declared_container_names()",
+        "ssh_with_retry()",
+        "ssh_run_detached()",
+        "rsync_with_retry()",
+        "_ship_build_phase()"
+      ],
+      "imports": [],
+      "symbols": [
+        "get_config()",
+        "get_config_array()",
+        "get_lifecycle()",
+        "detect_layout()",
+        "rewrite_compose_image_refs()",
+        "log()",
+        "log_warn()",
+        "log_error()",
+        "declared_container_names()",
+        "ssh_with_retry()",
+        "ssh_run_detached()",
+        "rsync_with_retry()",
+        "_ship_build_phase()"
+      ]
+    },
+    {
+      "path": "infra-sec_steel-browser/src/compose.nix",
+      "lang": "nix",
+      "role": "compose",
+      "exports": [
+        "buildJson",
+        "container"
+      ],
+      "imports": [],
+      "symbols": [
+        "app",
+        "auth",
+        "steelImage",
+        "caddyImage",
+        "wgIp",
+        "steelPort",
+        "meshPort",
+        "caddyEntry",
+        "services",
+        "image",
+        "container_name",
+        "networks",
+        "init",
+        "env_file",
+        "environment",
+        "TZ",
+        "PORT",
+        "healthcheck",
+        "test",
+        "interval",
+        "timeout",
+        "retries",
+        "start_period",
+        "limits",
+        "reservations",
+        "entrypoint",
+        "command",
+        "ports",
+        "volumes",
+        "depends_on",
+        "steelnet"
+      ]
+    },
+    {
+      "path": "infra-sec_steel-browser/src/flake.nix",
+      "lang": "nix",
+      "role": "flake",
+      "exports": [
+        "description",
+        "Type",
+        "nixpkgs"
+      ],
+      "imports": [
+        "../../_shared/engine.nix",
+        "./compose.nix",
+        "../_shared/engine.nix",
+        "compose.nix"
+      ],
+      "symbols": [
+        "description",
+        "outputs",
+        "forAllSystems",
+        "buildJson",
+        "container",
+        "engine",
+        "steelAuthCaddyfile",
+        "packages",
+        "pkgs",
+        "default",
+        "srcDir",
+        "templates",
+        "composeSpec",
+        "title"
+      ]
+    },
+    {
+      "path": "infra-sec_zap/build.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "get_config()",
+        "get_config_array()",
+        "get_lifecycle()",
+        "detect_layout()",
+        "rewrite_compose_image_refs()",
+        "log()",
+        "log_warn()",
+        "log_error()",
+        "declared_container_names()",
+        "ssh_with_retry()",
+        "ssh_run_detached()",
+        "rsync_with_retry()",
+        "_ship_build_phase()"
+      ],
+      "imports": [],
+      "symbols": [
+        "get_config()",
+        "get_config_array()",
+        "get_lifecycle()",
+        "detect_layout()",
+        "rewrite_compose_image_refs()",
+        "log()",
+        "log_warn()",
+        "log_error()",
+        "declared_container_names()",
+        "ssh_with_retry()",
+        "ssh_run_detached()",
+        "rsync_with_retry()",
+        "_ship_build_phase()"
+      ]
+    },
+    {
+      "path": "infra-sec_zap/src/compose.nix",
+      "lang": "nix",
+      "role": "compose",
+      "exports": [
+        "buildJson",
+        "container"
+      ],
+      "imports": [],
+      "symbols": [
+        "app",
+        "zapImage",
+        "wgIp",
+        "port",
+        "zapEntry",
+        "services",
+        "image",
+        "container_name",
+        "network_mode",
+        "init",
+        "user",
+        "env_file",
+        "environment",
+        "TZ",
+        "entrypoint",
+        "command",
+        "healthcheck",
+        "test",
+        "interval",
+        "timeout",
+        "retries",
+        "start_period",
+        "limits",
+        "reservations"
+      ]
+    },
+    {
+      "path": "infra-sec_zap/src/flake.nix",
+      "lang": "nix",
+      "role": "flake",
+      "exports": [
+        "description",
+        "Type",
+        "nixpkgs"
+      ],
+      "imports": [
+        "../../_shared/engine.nix",
+        "./compose.nix",
+        "../_shared/engine.nix",
+        "compose.nix"
+      ],
+      "symbols": [
+        "description",
+        "outputs",
+        "forAllSystems",
+        "buildJson",
+        "container",
+        "engine",
+        "packages",
+        "pkgs",
+        "default",
+        "srcDir",
+        "templates",
+        "composeSpec",
+        "title"
       ]
     },
     {

@@ -1114,6 +1114,19 @@
       ]
     },
     {
+      "name": "steel-browser",
+      "category": "sec",
+      "vm": "oci-A1-f_0",
+      "description": "Steel Browser — owner-authorized ethical-hacking/security-testing headless browser (own services only). Private mesh, token-gated via a Caddy bearer sidecar, declared target allowlist enforced in the c3 MCP layer. Apache-2.0.",
+      "domain": "—",
+      "ports": [],
+      "networks": [],
+      "containers": [
+        "steel-browser",
+        "steel-browser-auth"
+      ]
+    },
+    {
       "name": "umami",
       "category": "tools",
       "vm": "oci-A1-f_0",
@@ -1185,6 +1198,18 @@
       "networks": [],
       "containers": [
         "wireguard-public"
+      ]
+    },
+    {
+      "name": "zap",
+      "category": "sec",
+      "vm": "oci-A1-f_0",
+      "description": "OWASP ZAP — owner-authorized ethical-hacking/security scanner (own services only), headless daemon. Private mesh (bound to wg0), native API-key auth from vault, declared allowlist enforced as ZAP context/scope and in the c3 MCP layer. Apache-2.0.",
+      "domain": "—",
+      "ports": [],
+      "networks": [],
+      "containers": [
+        "zap"
       ]
     }
   ],
@@ -1692,6 +1717,19 @@
       ]
     },
     {
+      "name": "steel-browser",
+      "category": "sec",
+      "vm": "oci-A1-f_0",
+      "description": "Steel Browser — owner-authorized ethical-hacking/security-testing headless browser (own services only). Private mesh, token-gated via a Caddy bearer sidecar, declared target allowlist enforced in the c3 MCP layer. Apache-2.0.",
+      "domain": "—",
+      "ports": [],
+      "networks": [],
+      "containers": [
+        "steel-browser",
+        "steel-browser-auth"
+      ]
+    },
+    {
       "name": "umami",
       "category": "tools",
       "vm": "oci-A1-f_0",
@@ -1727,6 +1765,18 @@
       "networks": [],
       "containers": [
         "wireguard-mesh-ws-tunnel"
+      ]
+    },
+    {
+      "name": "zap",
+      "category": "sec",
+      "vm": "oci-A1-f_0",
+      "description": "OWASP ZAP — owner-authorized ethical-hacking/security scanner (own services only), headless daemon. Private mesh (bound to wg0), native API-key auth from vault, declared allowlist enforced as ZAP context/scope and in the c3 MCP layer. Apache-2.0.",
+      "domain": "—",
+      "ports": [],
+      "networks": [],
+      "containers": [
+        "zap"
       ]
     }
   ],

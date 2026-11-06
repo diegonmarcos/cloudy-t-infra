@@ -431,6 +431,28 @@
           "public_url": null
         },
         {
+          "id": "steel-browser",
+          "name": "steel-browser",
+          "vm": "oci-A1-f_0",
+          "category": "sec",
+          "subgroup": "Security",
+          "port": 3000,
+          "private_ip": "10.0.0.6",
+          "private_url": "https://steel-browser.mesh.diegonmarcos.com",
+          "public_url": null
+        },
+        {
+          "id": "zap",
+          "name": "zap",
+          "vm": "oci-A1-f_0",
+          "category": "sec",
+          "subgroup": "Security",
+          "port": 8086,
+          "private_ip": "10.0.0.6",
+          "private_url": "https://zap.mesh.diegonmarcos.com",
+          "public_url": null
+        },
+        {
           "id": "cloud-cgc-pub-mcp",
           "name": "cloud-cgc-pub-mcp",
           "vm": "oci-A1-f_0",

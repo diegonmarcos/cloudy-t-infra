@@ -197,6 +197,14 @@
       "ip": "10.0.0.1",
       "desc": "OIDC token introspection sidecar for Caddy Bearer auth"
     },
+    "steel-browser": {
+      "ip": "10.0.0.1",
+      "desc": "Steel Browser — owner-authorized ethical-hacking/security-testing headless browser (own services only). Private mesh, token-gated via a Caddy bearer sidecar, declared target allowlist enforced in the c3 MCP layer. Apache-2.0."
+    },
+    "zap": {
+      "ip": "10.0.0.1",
+      "desc": "OWASP ZAP — owner-authorized ethical-hacking/security scanner (own services only), headless daemon. Private mesh (bound to wg0), native API-key auth from vault, declared allowlist enforced as ZAP context/scope and in the c3 MCP layer. Apache-2.0."
+    },
     "cloud-cgc-pub-mcp": {
       "ip": "10.0.0.1",
       "desc": "Cloud CGC Pub MCP — Code Graph Context: infra knowledge, specs, docs, semantic code search"

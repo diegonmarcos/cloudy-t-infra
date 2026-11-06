@@ -331,6 +331,25 @@
       "has_docker_build": true
     },
     {
+      "name": "steel-browser",
+      "dir": "infra-sec_steel-browser",
+      "compose_path": "/opt/containers/steel-browser",
+      "images": [
+        "ghcr.io/steel-dev/steel-browser@sha256:c94f9ef7f18cf0a2c3c44e5b754119099488f62b4dea411e37459d6281c19799",
+        "caddy:2.11.2-alpine@sha256:834468128c7696cec0ceea6172f7d692daf645ae51983ca76e39da54a97c570d"
+      ],
+      "has_docker_build": true
+    },
+    {
+      "name": "zap",
+      "dir": "infra-sec_zap",
+      "compose_path": "/opt/containers/zap",
+      "images": [
+        "ghcr.io/zaproxy/zaproxy@sha256:9624669db72f54d86c4b46a7064518bd9bf79d8c61a4c31befa9923489f328af"
+      ],
+      "has_docker_build": true
+    },
+    {
       "name": "cloud-cgc-pub-mcp",
       "dir": "user-ai_cloud-cgc-pub-mcp",
       "compose_path": "/opt/containers/cloud-cgc-pub-mcp",

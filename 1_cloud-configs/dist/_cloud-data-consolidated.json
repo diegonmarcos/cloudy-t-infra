@@ -199,6 +199,8 @@
         "auth-broker",
         "cloudy-ai-tokens-api",
         "crowdsec",
+        "steel-browser",
+        "zap",
         "cloud-cgc-pub-mcp",
         "cloud-me-cgc-pvt-graph-api",
         "cloudy-ai-agents-api",
@@ -232,7 +234,7 @@
         "send",
         "vaultwarden"
       ],
-      "container_count": 82
+      "container_count": 85
     },
     "gcp-E2-f_0": {
       "ip": "35.226.147.64",
@@ -8496,6 +8498,170 @@
         "auth": "oauth2"
       }
     },
+    "steel-browser": {
+      "category": "sec",
+      "vm": "oci-A1-f_0",
+      "folder": "infra-sec_steel-browser",
+      "description": "Steel Browser — owner-authorized ethical-hacking/security-testing headless browser (own services only). Private mesh, token-gated via a Caddy bearer sidecar, declared target allowlist enforced in the c3 MCP layer. Apache-2.0.",
+      "enabled": true,
+      "flake": "infra-sec_steel-browser",
+      "port": 3000,
+      "dns": "steel-browser.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:3000",
+      "containers": {
+        "app": {
+          "container_name": "steel-browser",
+          "image": "ghcr.io/steel-dev/steel-browser@sha256:c94f9ef7f18cf0a2c3c44e5b754119099488f62b4dea411e37459d6281c19799",
+          "port": 3000,
+          "port_env": "PORT",
+          "protocol": "http",
+          "dns": "steel-browser.mesh.diegonmarcos.com",
+          "public": false,
+          "proxy": null,
+          "healthcheck": "wget -qO /dev/null http://127.0.0.1:13000/health || exit 1",
+          "volumes": [],
+          "env_file": true,
+          "depends_on": [],
+          "resources": {
+            "mem_limit": "2G",
+            "cpus": "1.5",
+            "_comment": "Set in src/compose.nix; recorded here for inventory. Chromium is memory-hungry; bounded so it cannot starve oci-apps."
+          },
+          "read_only": false
+        },
+        "auth": {
+          "container_name": "steel-browser-auth",
+          "image": "caddy:2.11.2-alpine@sha256:834468128c7696cec0ceea6172f7d692daf645ae51983ca76e39da54a97c570d",
+          "port": 3000,
+          "port_env": null,
+          "protocol": "http",
+          "dns": null,
+          "public": false,
+          "proxy": null,
+          "healthcheck": "cmd",
+          "volumes": [],
+          "env_file": true,
+          "depends_on": [
+            "app"
+          ],
+          "resources": {
+            "mem_limit": "64M",
+            "cpus": "0.5",
+            "_comment": "Bearer-auth reverse proxy in front of Steel. Set in src/compose.nix."
+          },
+          "read_only": false
+        }
+      },
+      "container_names": [
+        "steel-browser",
+        "steel-browser-auth"
+      ],
+      "all_ports": [
+        "3000",
+        "3000"
+      ],
+      "all_dns": [
+        "steel-browser.mesh.diegonmarcos.com"
+      ],
+      "compose": {
+        "containers": [],
+        "ports": [],
+        "networks": []
+      },
+      "declared_ports": {
+        "app": 3000
+      },
+      "health": {
+        "path": "/health"
+      },
+      "monitoring": {
+        "tls_check": false,
+        "dns_check": false,
+        "endpoint_check": false
+      },
+      "taxonomy": {
+        "group": "Infra Apps",
+        "category": "Net-Routing & Security"
+      },
+      "timezone": "Europe/Madrid",
+      "api": {
+        "has_api": false,
+        "has_web_ui": false,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": []
+      }
+    },
+    "zap": {
+      "category": "sec",
+      "vm": "oci-A1-f_0",
+      "folder": "infra-sec_zap",
+      "description": "OWASP ZAP — owner-authorized ethical-hacking/security scanner (own services only), headless daemon. Private mesh (bound to wg0), native API-key auth from vault, declared allowlist enforced as ZAP context/scope and in the c3 MCP layer. Apache-2.0.",
+      "enabled": true,
+      "flake": "infra-sec_zap",
+      "port": 8086,
+      "dns": "zap.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:8086",
+      "containers": {
+        "app": {
+          "container_name": "zap",
+          "image": "ghcr.io/zaproxy/zaproxy@sha256:9624669db72f54d86c4b46a7064518bd9bf79d8c61a4c31befa9923489f328af",
+          "port": 8086,
+          "port_env": null,
+          "protocol": "http",
+          "dns": "zap.mesh.diegonmarcos.com",
+          "public": false,
+          "proxy": null,
+          "healthcheck": "curl -fsS http://10.0.0.6:8086/ >/dev/null 2>&1 || exit 1",
+          "volumes": [],
+          "env_file": true,
+          "depends_on": [],
+          "resources": {
+            "mem_limit": "2G",
+            "cpus": "1.5",
+            "_comment": "Set in src/compose.nix; recorded for inventory. JVM scanner; bounded so it cannot starve oci-apps."
+          },
+          "read_only": false
+        }
+      },
+      "container_names": [
+        "zap"
+      ],
+      "all_ports": [
+        "8086"
+      ],
+      "all_dns": [
+        "zap.mesh.diegonmarcos.com"
+      ],
+      "compose": {
+        "containers": [],
+        "ports": [],
+        "networks": []
+      },
+      "declared_ports": {
+        "app": 8086
+      },
+      "health": {
+        "path": "/"
+      },
+      "monitoring": {
+        "tls_check": false,
+        "dns_check": false,
+        "endpoint_check": false
+      },
+      "taxonomy": {
+        "group": "Infra Apps",
+        "category": "Net-Routing & Security"
+      },
+      "timezone": "Europe/Madrid",
+      "api": {
+        "has_api": false,
+        "has_web_ui": false,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": []
+      }
+    },
     "cloud-cgc-pub-mcp": {
       "category": "obs",
       "vm": "oci-A1-f_0",
@@ -16005,6 +16171,18 @@
         "service": "introspect-proxy"
       },
       {
+        "name": "steel-browser.mesh.diegonmarcos.com",
+        "type": "A",
+        "value": "10.0.0.6",
+        "service": "steel-browser"
+      },
+      {
+        "name": "zap.mesh.diegonmarcos.com",
+        "type": "A",
+        "value": "10.0.0.6",
+        "service": "zap"
+      },
+      {
         "name": "cloud-cgc-pub-mcp.mesh.diegonmarcos.com",
         "type": "A",
         "value": "10.0.0.6",
@@ -16786,6 +16964,8 @@
           "auth-broker",
           "cloudy-ai-tokens-api",
           "crowdsec",
+          "steel-browser",
+          "zap",
           "cloud-cgc-pub-mcp",
           "cloud-me-cgc-pvt-graph-api",
           "cloudy-ai-agents-api",
@@ -17535,6 +17715,16 @@
       "introspect-proxy": {
         "dir": "infra-sec_introspect-proxy",
         "vm": "gcp-proxy",
+        "has_docker": true
+      },
+      "steel-browser": {
+        "dir": "infra-sec_steel-browser",
+        "vm": "oci-apps",
+        "has_docker": true
+      },
+      "zap": {
+        "dir": "infra-sec_zap",
+        "vm": "oci-apps",
         "has_docker": true
       },
       "cloud-cgc-pub-mcp": {

@@ -587,6 +587,33 @@
       ],
       "resources": null
     },
+    "steel-browser": {
+      "vm": "oci-apps",
+      "vm_ram_gb": 24,
+      "vm_cpu": 4,
+      "containers": [
+        "steel-browser",
+        "steel-browser-auth"
+      ],
+      "resources": {
+        "mem_limit": "2G",
+        "cpus": "1.5",
+        "_comment": "Set in src/compose.nix; recorded here for inventory. Chromium is memory-hungry; bounded so it cannot starve oci-apps."
+      }
+    },
+    "zap": {
+      "vm": "oci-apps",
+      "vm_ram_gb": 24,
+      "vm_cpu": 4,
+      "containers": [
+        "zap"
+      ],
+      "resources": {
+        "mem_limit": "2G",
+        "cpus": "1.5",
+        "_comment": "Set in src/compose.nix; recorded for inventory. JVM scanner; bounded so it cannot starve oci-apps."
+      }
+    },
     "cloud-cgc-pub-mcp": {
       "vm": "oci-apps",
       "vm_ram_gb": 24,

@@ -33,15 +33,15 @@
   "_generated": "",
   "_source": "_cloud-data-consolidated.json via cloud-data-config-derive.ts/kg-delta",
   "counts": {
-    "nodes": 365,
-    "edges": 505,
+    "nodes": 372,
+    "edges": 514,
     "by_table": {
       "vm": 4,
-      "service": 89,
-      "container": 108,
+      "service": 91,
+      "container": 111,
       "domain": 44,
       "repo": 3,
-      "module": 89,
+      "module": 91,
       "package": 28
     }
   },
@@ -1613,6 +1613,70 @@
         "image": "ghcr.io/diegonmarcos/mcp-oauth:latest",
         "role": "app",
         "port": 4183,
+        "public": false
+      }
+    },
+    {
+      "table": "service",
+      "id": "steel_browser",
+      "key": "service:steel_browser",
+      "properties": {
+        "name": "steel-browser",
+        "category": "sec",
+        "description": "Steel Browser — owner-authorized ethical-hacking/security-testing headless browser (own services only). Private mesh, token-gated via a Caddy bearer sidecar, declared target allowlist enforced in the c3 MCP layer. Apache-2.0.",
+        "domain": null,
+        "port": 3000,
+        "vm": "oci-apps",
+        "folder": "infra-sec_steel-browser"
+      }
+    },
+    {
+      "table": "container",
+      "id": "steel_browser",
+      "key": "container:steel_browser",
+      "properties": {
+        "name": "steel-browser",
+        "image": "ghcr.io/steel-dev/steel-browser@sha256:c94f9ef7f18cf0a2c3c44e5b754119099488f62b4dea411e37459d6281c19799",
+        "role": "app",
+        "port": 3000,
+        "public": false
+      }
+    },
+    {
+      "table": "container",
+      "id": "steel_browser_auth",
+      "key": "container:steel_browser_auth",
+      "properties": {
+        "name": "steel-browser-auth",
+        "image": "caddy:2.11.2-alpine@sha256:834468128c7696cec0ceea6172f7d692daf645ae51983ca76e39da54a97c570d",
+        "role": "auth",
+        "port": 3000,
+        "public": false
+      }
+    },
+    {
+      "table": "service",
+      "id": "zap",
+      "key": "service:zap",
+      "properties": {
+        "name": "zap",
+        "category": "sec",
+        "description": "OWASP ZAP — owner-authorized ethical-hacking/security scanner (own services only), headless daemon. Private mesh (bound to wg0), native API-key auth from vault, declared allowlist enforced as ZAP context/scope and in the c3 MCP layer. Apache-2.0.",
+        "domain": null,
+        "port": 8086,
+        "vm": "oci-apps",
+        "folder": "infra-sec_zap"
+      }
+    },
+    {
+      "table": "container",
+      "id": "zap",
+      "key": "container:zap",
+      "properties": {
+        "name": "zap",
+        "image": "ghcr.io/zaproxy/zaproxy@sha256:9624669db72f54d86c4b46a7064518bd9bf79d8c61a4c31befa9923489f328af",
+        "role": "app",
+        "port": 8086,
         "public": false
       }
     },
@@ -3606,6 +3670,28 @@
     },
     {
       "table": "module",
+      "id": "infra_sec_steel_browser",
+      "key": "module:infra_sec_steel_browser",
+      "properties": {
+        "name": "infra-sec_steel-browser",
+        "repo": "cloud",
+        "category": "sec",
+        "service": "steel-browser"
+      }
+    },
+    {
+      "table": "module",
+      "id": "infra_sec_zap",
+      "key": "module:infra_sec_zap",
+      "properties": {
+        "name": "infra-sec_zap",
+        "repo": "cloud",
+        "category": "sec",
+        "service": "zap"
+      }
+    },
+    {
+      "table": "module",
       "id": "user_ai_cloud_cgc_pub_mcp",
       "key": "module:user_ai_cloud_cgc_pub_mcp",
       "properties": {
@@ -5264,6 +5350,47 @@
       "from": "service:mcp_oauth",
       "to": "container:mcp_oauth",
       "key": "service:mcp_oauth->runs_container->container:mcp_oauth",
+      "properties": {
+        "role": "app"
+      }
+    },
+    {
+      "table": "hosted_on",
+      "from": "service:steel_browser",
+      "to": "vm:oci_apps",
+      "key": "service:steel_browser->hosted_on->vm:oci_apps",
+      "properties": {}
+    },
+    {
+      "table": "runs_container",
+      "from": "service:steel_browser",
+      "to": "container:steel_browser",
+      "key": "service:steel_browser->runs_container->container:steel_browser",
+      "properties": {
+        "role": "app"
+      }
+    },
+    {
+      "table": "runs_container",
+      "from": "service:steel_browser",
+      "to": "container:steel_browser_auth",
+      "key": "service:steel_browser->runs_container->container:steel_browser_auth",
+      "properties": {
+        "role": "auth"
+      }
+    },
+    {
+      "table": "hosted_on",
+      "from": "service:zap",
+      "to": "vm:oci_apps",
+      "key": "service:zap->hosted_on->vm:oci_apps",
+      "properties": {}
+    },
+    {
+      "table": "runs_container",
+      "from": "service:zap",
+      "to": "container:zap",
+      "key": "service:zap->runs_container->container:zap",
       "properties": {
         "role": "app"
       }
@@ -7483,6 +7610,34 @@
       "from": "module:infra_sec_mcp_oauth",
       "to": "service:mcp_oauth",
       "key": "module:infra_sec_mcp_oauth->implements->service:mcp_oauth",
+      "properties": {}
+    },
+    {
+      "table": "belongs_to_repo",
+      "from": "module:infra_sec_steel_browser",
+      "to": "repo:cloud",
+      "key": "module:infra_sec_steel_browser->belongs_to_repo->repo:cloud",
+      "properties": {}
+    },
+    {
+      "table": "implements",
+      "from": "module:infra_sec_steel_browser",
+      "to": "service:steel_browser",
+      "key": "module:infra_sec_steel_browser->implements->service:steel_browser",
+      "properties": {}
+    },
+    {
+      "table": "belongs_to_repo",
+      "from": "module:infra_sec_zap",
+      "to": "repo:cloud",
+      "key": "module:infra_sec_zap->belongs_to_repo->repo:cloud",
+      "properties": {}
+    },
+    {
+      "table": "implements",
+      "from": "module:infra_sec_zap",
+      "to": "service:zap",
+      "key": "module:infra_sec_zap->implements->service:zap",
       "properties": {}
     },
     {

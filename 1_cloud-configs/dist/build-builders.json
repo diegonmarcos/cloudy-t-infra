@@ -313,6 +313,16 @@
         "vm": "gcp-proxy",
         "has_docker": true
       },
+      "steel-browser": {
+        "dir": "infra-sec_steel-browser",
+        "vm": "oci-apps",
+        "has_docker": true
+      },
+      "zap": {
+        "dir": "infra-sec_zap",
+        "vm": "oci-apps",
+        "has_docker": true
+      },
       "cloud-cgc-pub-mcp": {
         "dir": "user-ai_cloud-cgc-pub-mcp",
         "vm": "oci-apps",
