@@ -645,6 +645,9 @@ function deriveCaddy(c: any): DerivedFile[] {
       // caddyfile.nix mkPathEntry wraps the per-path handle (incl. public_paths)
       // in a `remote_ip 10.0.0.0/24` gate → 403 off-mesh.
       ...(wgOnly(proxy) ? { wg_only: true } : {}),
+      // auth:"none" (build.json proxy.primary.auth): the app gates itself with its own bearer. mkPathEntry
+      // honours it only behind the WG gate (cloudy-browser-headless: BROWSER_TOKEN).
+      ...(proxy.auth === "none" ? { auth: "none" } : {}),
       comment: svc.description,
     });
     // extra_paths: additional routes on the same parent_domain that proxy to a
