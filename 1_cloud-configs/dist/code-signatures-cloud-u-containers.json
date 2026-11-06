@@ -6,10 +6,10 @@
   },
   "repo": "cloud-u-containers",
   "counts": {
-    "files": 2610,
+    "files": 2612,
     "by_lang": {
       "sh": 177,
-      "js": 104,
+      "js": 106,
       "nix": 189,
       "py": 510,
       "ts": 1260,
@@ -20,7 +20,7 @@
       "file": 345,
       "nix-module": 19,
       "python": 496,
-      "module": 765,
+      "module": 767,
       "script": 8,
       "flake": 86,
       "entrypoint": 71,
@@ -2999,15 +2999,55 @@
         "target",
         "call",
         "readUrl",
+        "detectBotWall",
+        "configFromEnv",
+        "cfConf",
+        "cfRequest",
+        "cfRequestFor",
+        "cfNormalize",
+        "wallSignalsOf",
+        "defaultState",
+        "viaSession",
+        "extractJsonViaOpenRouter",
+        "validateAgainstSchema",
+        "gateway",
         "Backend",
         "DEFAULT_CONTAINER_URL",
-        "Target"
+        "Target",
+        "WallSignals",
+        "TITLE_RE",
+        "TEXT_RE",
+        "CHALLENGE_URL_RE",
+        "SHORT_BODY",
+        "PROBE_JS",
+        "BrowserConfig",
+        "DEFAULT_CONFIG",
+        "UsageEntry",
+        "BrowserState",
+        "GwBackend",
+        "GwOp"
       ],
-      "imports": [],
+      "imports": [
+        "node:fs"
+      ],
       "symbols": [
-        "target(backend: Backend, kind: \"command\" | \"run\", env: Record<string, string | undefined> = process.env)",
-        "call(backend: Backend, kind: \"command\" | \"run\", body: unknown, f: typeof fetch = fetch, env = process.env)",
-        "readUrl(args: any, f: typeof fetch = fetch, env = process.env)"
+        "target(backend: \"phone\" | \"container\", kind: \"command\" | \"run\", env: Record<string, string | undefined> = process.env)",
+        "call(backend: \"phone\" | \"container\", kind: \"command\" | \"run\", body: unknown, f: typeof fetch = fetch, env = process.env)",
+        "readUrl(args: any, f: typeof fetch = fetch, env = process.env)",
+        "detectBotWall(s: WallSignals)",
+        "configFromEnv(env: Record<string, string | undefined> = process.env)",
+        "cfConf(env: Record<string, string | undefined> = process.env)",
+        "cfRequest(endpoint: string, body: unknown, conf: CfConf, f: typeof fetch = fetch, binary = false, wait: (ms: number)",
+        "cfRequestFor(op: GwOp, a: any)",
+        "cfNormalize(op: GwOp, a: any, r: CfRaw)",
+        "wallSignalsOf(op: GwOp, res: any, url: string)",
+        "defaultState(env: Record<string, string | undefined> = process.env)",
+        "viaSession(backend: \"container\" | \"phone\", op: GwOp, a: any, d: GwDeps)",
+        "extractJsonViaOpenRouter(markdown: string, a: any, f: typeof fetch = fetch, env: Record<string, string | undefined> = process.env)",
+        "validateAgainstSchema(v: any, s: any, path = \"$\")",
+        "viaCloudflare(op: GwOp, a: any, d: GwDeps, state: BrowserState, reason: string | null)",
+        "gateway(op: GwOp, a: any, d: GwDeps = {})",
+        "class BrowserState"
       ]
     },
     {
@@ -3018,7 +3058,8 @@
         "registerBrowserTools",
         "target",
         "call",
-        "readUrl"
+        "readUrl",
+        "gateway"
       ],
       "imports": [
         "@modelcontextprotocol/sdk/server/mcp.js",
@@ -3026,6 +3067,7 @@
         "./browser-core.js"
       ],
       "symbols": [
+        "sessionTool(cmd: string, args: any, f: typeof fetch)",
         "registerBrowserTools(server: McpServer, f: typeof fetch = fetch)"
       ]
     },
@@ -5091,7 +5133,8 @@
       "exports": [],
       "imports": [
         "node:assert/strict",
-        "./mcp/tools/browser-core.ts"
+        "./mcp/tools/browser-core.ts",
+        "node:fs"
       ],
       "symbols": []
     },
@@ -61381,12 +61424,24 @@
       "imports": [
         "playwright-core",
         "./api.js",
-        "./readable.js"
+        "./readable.js",
+        "./extract.js"
       ],
       "symbols": [
         "gotoWithRetry(page, url, opts, { tries = 4, delayMs = 400 } = {})",
         "createEngine({ executablePath } = {})"
       ]
+    },
+    {
+      "path": "user-data_cloudy-browser-headless/src/code/extract.js",
+      "lang": "js",
+      "role": "module",
+      "exports": [
+        "linksFn",
+        "scrapeFn"
+      ],
+      "imports": [],
+      "symbols": []
     },
     {
       "path": "user-data_cloudy-browser-headless/src/code/readable.js",
@@ -61459,6 +61514,19 @@
         "node:assert/strict",
         "node:fs",
         "../readable.js"
+      ],
+      "symbols": []
+    },
+    {
+      "path": "user-data_cloudy-browser-headless/src/code/test/extract.test.js",
+      "lang": "js",
+      "role": "module",
+      "exports": [],
+      "imports": [
+        "node:test",
+        "node:assert/strict",
+        "jsdom",
+        "../extract.js"
       ],
       "symbols": []
     },

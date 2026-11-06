@@ -1840,7 +1840,11 @@
         "_doc": "#1495 cloudy-android-mcp (cloud-superapp-mcp) is merged into this server as the peers-control tool group. Its old names stay as aliases for one release (#1450 alias policy): the old DNS names and the base paths /cloud-superapp-mcp and /cloudy-android-mcp are rewritten by the edge to this container's /mcp-android endpoint, which serves the same server plus the old `superapp` + `superapp_help` dispatchers so a client keeps its tool names. Remove with the other #1450 aliases and delete infra-api_cloud-superapp-mcp."
       },
       "env_config": {
-        "mattermost_url": "http://mattermost.mesh.diegonmarcos.com"
+        "mattermost_url": "http://mattermost.mesh.diegonmarcos.com",
+        "browser_cf_daily_cap": 200,
+        "browser_cf_daily_usd_cap": 1,
+        "browser_domain_ttl_h": 24,
+        "_browser_doc": "#1540 browser.* cloudflare backend (Cloudflare Browser Run REST): max Cloudflare calls per UTC day, max estimated spend per day (USD, browser hours at the paid rate) and how long a domain that needed Cloudflare is remembered. Secrets by NAME in .secrets: CF_BROWSER_ACCOUNT_ID (or CF_ACCOUNT_ID), CF_BROWSER_API_TOKEN (or CF_API_TOKEN) with the Browser Run - Edit permission, OPENROUTER_API_KEY for browser.json on container/phone."
       },
       "runtime": {
         "init": true,

@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 23502,
+    "files": 23616,
     "by_lang": {
-      "sh": 680,
-      "js": 543,
-      "py": 204,
-      "kotlin": 12804,
+      "sh": 683,
+      "js": 547,
+      "py": 207,
+      "kotlin": 12908,
       "ts": 8470,
       "java": 649,
       "nix": 36,
@@ -19,13 +19,13 @@
     },
     "by_role": {
       "hook": 158,
-      "file": 2303,
-      "shell": 544,
-      "script": 294,
-      "module": 6477,
+      "file": 2304,
+      "shell": 547,
+      "script": 295,
+      "module": 6480,
       "java": 648,
-      "kotlin": 12801,
-      "python": 69,
+      "kotlin": 12905,
+      "python": 71,
       "flake": 32,
       "rust-module": 116,
       "nix-module": 4,
@@ -6910,12 +6910,16 @@
       "role": "script",
       "exports": [
         "mk()",
-        "chk()"
+        "chk()",
+        "mk2()",
+        "chk2()"
       ],
       "imports": [],
       "symbols": [
         "mk()",
-        "chk()"
+        "chk()",
+        "mk2()",
+        "chk2()"
       ]
     },
     {
@@ -45962,7 +45966,8 @@
         "draw()",
         "render()",
         "resize()",
-        "frame(obj)"
+        "frame(obj)",
+        "applyWire()"
       ]
     },
     {
@@ -46034,6 +46039,7 @@
       "role": "kotlin",
       "exports": [
         "ModelView",
+        "ModelCategory",
         "Model",
         "ModelManifest"
       ],
@@ -46042,9 +46048,51 @@
       ],
       "symbols": [
         "parse(json: String)",
+        "categories(json: String)",
+        "view(o: JSONObject)",
+        "strs(a: org.json.JSONArray?)",
+        "nums(a: org.json.JSONArray?)",
         "class ModelView",
+        "class ModelCategory",
         "class Model",
         "class ModelManifest"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/cad-core/src/main/java/com/diegonmarcos/superapp/cad/ModelTable.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ModelTable",
+        "DetailRow",
+        "ModelDetail"
+      ],
+      "imports": [],
+      "symbols": [
+        "extOf(path: String)",
+        "extension(m: Model)",
+        "extensions(m: Model)",
+        "categoryOptions(models: List<Model>, declared: List<ModelCategory>)",
+        "extensionOptions(models: List<Model>)",
+        "softwareOptions(models: List<Model>)",
+        "filter(models: List<Model>, f: Filters)",
+        "triangles(m: Model)",
+        "vertices(m: Model)",
+        "sort(models: List<Model>, s: Sort)",
+        "toggle(s: Sort, c: Column)",
+        "categoryLabel(m: Model, declared: List<ModelCategory>)",
+        "sizeText(bytes: Long)",
+        "countText(n: Long)",
+        "geometryText(m: Model)",
+        "rows(m: Model, declared: List<ModelCategory> = emptyList()",
+        "row(k: String, v: String)",
+        "names(count: Int, names: List<String>)",
+        "class ModelTable",
+        "class Column",
+        "class Filters",
+        "class Sort",
+        "class DetailRow",
+        "class ModelDetail"
       ]
     },
     {
@@ -46069,6 +46117,28 @@
         "defaultModelPerPage()",
         "modelsFilteredByFormat()",
         "class CadCoreTest"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/cad-core/src/test/kotlin/com/diegonmarcos/superapp/cad/ModelTableTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ModelTableTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "categoriesAreDeclaredAndKeepAnEmptyOne()",
+        "extensionAndSoftwareFiltersComeFromTheData()",
+        "filtersCombineAndAllIsTheDefault()",
+        "sortFlipsOnASecondTapAndNumbersSortByValue()",
+        "cellTexts()",
+        "modelPageShowsEveryDeclaredFact()",
+        "class ModelTableTest"
       ]
     },
     {
@@ -48237,6 +48307,8 @@
       ],
       "symbols": [
         "create(context: Context, fileName: String)",
+        "unencryptedFallback(app: Context, fileName: String, e: Throwable)",
+        "createEncrypted(app: Context, fileName: String)",
         "prefs(context: Context, fileName: String)",
         "wasReset(context: Context, fileName: String)",
         "acknowledgeReset(context: Context, fileName: String)",
@@ -51596,6 +51668,33 @@
       ]
     },
     {
+      "path": "ab_cloud-libs-shared/libs/editor-core/src/main/java/com/diegonmarcos/cloudlib/editorcore/FileSniffer.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "Magic",
+        "SniffRules",
+        "FileSniffer"
+      ],
+      "imports": [
+        "java.nio.ByteBuffer",
+        "java.nio.CharBuffer",
+        "java.nio.charset.CodingErrorAction"
+      ],
+      "symbols": [
+        "matches(head: ByteArray, n: Int)",
+        "sniff(head: ByteArray, rules: SniffRules)",
+        "isText(b: ByteArray, n: Int, rules: SniffRules)",
+        "hasBom(b: ByteArray, n: Int)",
+        "validUtf8(b: ByteArray, n: Int)",
+        "class Magic",
+        "class SniffRules",
+        "class FileSniffer",
+        "class Kind",
+        "class Result"
+      ]
+    },
+    {
       "path": "ab_cloud-libs-shared/libs/editor-core/src/main/java/com/diegonmarcos/cloudlib/editorcore/FileTypeRouter.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -51605,6 +51704,7 @@
         "FileTypeRouter"
       ],
       "imports": [
+        "java.io.File",
         "kotlinx.serialization.json.Json",
         "kotlinx.serialization.json.JsonArray",
         "kotlinx.serialization.json.JsonObject",
@@ -51614,14 +51714,57 @@
         "kotlinx.serialization.json.jsonPrimitive"
       ],
       "symbols": [
+        "parseSniff(o: JsonObject)",
+        "hex(s: String)",
         "modesOf(e: kotlinx.serialization.json.JsonElement?)",
         "route(path: String)",
+        "route(path: String, head: ByteArray?)",
+        "routeFile(file: File)",
+        "readHead(file: File, max: Int)",
         "supportedExtensions()",
         "default()",
         "class Viewers",
         "class Route",
         "class FileTypeRouter",
         "class Entry"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/editor-core/src/main/java/com/diegonmarcos/cloudlib/editorcore/HexView.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "HexTags",
+        "HexDump",
+        "HexView"
+      ],
+      "imports": [
+        "androidx.compose.foundation.horizontalScroll",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.fillMaxSize",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.foundation.lazy.LazyColumn",
+        "androidx.compose.foundation.lazy.items",
+        "androidx.compose.foundation.rememberScrollState",
+        "androidx.compose.material3.MaterialTheme",
+        "androidx.compose.material3.Text",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.DisposableEffect",
+        "androidx.compose.runtime.remember",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.platform.testTag",
+        "androidx.compose.ui.text.font.FontFamily",
+        "com.diegonmarcos.superapp.uikit.KitDensity",
+        "java.io.File",
+        "java.io.RandomAccessFile"
+      ],
+      "symbols": [
+        "line(offset: Long, bytes: ByteArray, n: Int = bytes.size)",
+        "lineCount(length: Long)",
+        "lines(bytes: ByteArray)",
+        "HexView(file: File, modifier: Modifier = Modifier, title: String = \"Binary file · hex view\")",
+        "class HexTags",
+        "class HexDump"
       ]
     },
     {
@@ -51657,6 +51800,25 @@
       ]
     },
     {
+      "path": "ab_cloud-libs-shared/libs/editor-core/src/test/java/com/diegonmarcos/cloudlib/editorcore/FileSnifferTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "FileSnifferTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "kind(b: ByteArray)",
+        "riff(tag: String)",
+        "class FileSnifferTest"
+      ]
+    },
+    {
       "path": "ab_cloud-libs-shared/libs/editor-core/src/test/java/com/diegonmarcos/cloudlib/editorcore/FileTypeRouterTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -51671,6 +51833,22 @@
       ],
       "symbols": [
         "class FileTypeRouterTest"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/editor-core/src/test/java/com/diegonmarcos/cloudlib/editorcore/HexDumpTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "HexDumpTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "class HexDumpTest"
       ]
     },
     {
@@ -56424,6 +56602,20 @@
       ]
     },
     {
+      "path": "ab_cloud-libs-shared/libs/headless-browser/src/main/java/com/diegonmarcos/superapp/headless/HeadlessExtract.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "HeadlessExtract"
+      ],
+      "imports": [],
+      "symbols": [
+        "linksScript(sameOrigin: Boolean, visibleOnly: Boolean)",
+        "scrapeScript(elementsJson: String, limit: Int)",
+        "class HeadlessExtract"
+      ]
+    },
+    {
       "path": "ab_cloud-libs-shared/libs/headless-browser/src/main/java/com/diegonmarcos/superapp/headless/HeadlessLoopback.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -56673,7 +56865,7 @@
         "storageJs(c: JSONObject)",
         "cookieManager(h: H)",
         "cookies(h: H, c: JSONObject)",
-        "shot(h: H)",
+        "shot(h: H, c: JSONObject)",
         "shutdown()",
         "class WebViewEngine",
         "class H"
@@ -56712,6 +56904,7 @@
         "auditRingIsCappedAndTagged()",
         "dispatcherEnforcesLimitsIdleTimeoutScreenAndAudits()",
         "runStepsStopOnError()",
+        "browserRunStyleCommandsAreValidated()",
         "readableOptionsAreValidatedAndMatchTheSharedSchema()",
         "readableScriptCarriesTheOptionsAsOneJsonLiteralAndStripsBoilerplate()",
         "class HeadlessContractTest",
@@ -77358,6 +77551,142 @@
       ]
     },
     {
+      "path": "ab_cloud-libs-shared/libs/media-viewer/src/main/java/com/diegonmarcos/cloudlib/mediaviewer/ExifFormat.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ExifValues",
+        "ExifFormat"
+      ],
+      "imports": [
+        "java.util.Locale"
+      ],
+      "symbols": [
+        "exposure(seconds: Double)",
+        "aperture(f: Double)",
+        "focal(mm: Double)",
+        "gps(lat: Double, lon: Double)",
+        "megapixels(w: Int, h: Int)",
+        "bytes(n: Long)",
+        "trim(d: Double)",
+        "rows(name: String, sizeBytes: Long, width: Int, height: Int, e: ExifValues)",
+        "class ExifValues",
+        "class ExifFormat"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/media-viewer/src/main/java/com/diegonmarcos/cloudlib/mediaviewer/ImageEditMath.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "P",
+        "Stroke",
+        "CropFractions",
+        "SavePlan",
+        "ImageEditMath"
+      ],
+      "imports": [],
+      "symbols": [
+        "orientation(tag: Int)",
+        "rotatedSize(w: Int, h: Int, turns: Int)",
+        "rotatePoint(p: P, turns: Int)",
+        "cropRect(w: Int, h: Int, c: CropFractions)",
+        "fit(w: Int, h: Int, cw: Float, ch: Float)",
+        "normalize(px: Float, py: Float, fit: FloatArray)",
+        "savePlan(fileName: String)",
+        "class P",
+        "class Stroke",
+        "class CropFractions",
+        "class SavePlan",
+        "class ImageEditMath"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/media-viewer/src/main/java/com/diegonmarcos/cloudlib/mediaviewer/ImageEditor.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ImageEditTags"
+      ],
+      "imports": [
+        "android.graphics.Bitmap",
+        "androidx.compose.foundation.Canvas",
+        "androidx.compose.foundation.background",
+        "androidx.compose.foundation.clickable",
+        "androidx.compose.foundation.gestures.detectDragGestures",
+        "androidx.compose.foundation.horizontalScroll",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.Row",
+        "androidx.compose.foundation.layout.fillMaxSize",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.foundation.rememberScrollState",
+        "androidx.compose.foundation.shape.RoundedCornerShape",
+        "androidx.compose.material3.MaterialTheme",
+        "androidx.compose.material3.Slider",
+        "androidx.compose.material3.Text",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.LaunchedEffect",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableIntStateOf",
+        "androidx.compose.runtime.mutableStateListOf",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.remember",
+        "androidx.compose.runtime.rememberCoroutineScope",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.ui.Alignment",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.draw.clip",
+        "androidx.compose.ui.geometry.Offset",
+        "androidx.compose.ui.geometry.Size",
+        "androidx.compose.ui.graphics.Color",
+        "androidx.compose.ui.graphics.Path",
+        "androidx.compose.ui.graphics.asImageBitmap",
+        "androidx.compose.ui.graphics.drawscope.Stroke",
+        "androidx.compose.ui.input.pointer.pointerInput",
+        "androidx.compose.ui.platform.testTag",
+        "androidx.compose.ui.unit.IntOffset",
+        "androidx.compose.ui.unit.IntSize",
+        "com.diegonmarcos.superapp.uikit.KitDensity",
+        "java.io.File"
+      ],
+      "symbols": [
+        "ImageEditor(path: String, modifier: Modifier, labels: MediaLabels)",
+        "turn(by: Int)",
+        "draw(c: Int, pts: List<P>)",
+        "Tool(label: String, tag: String, on: Boolean, swatch: Color? = null, onClick: ()",
+        "CropSlider(label: String, value: Float, onValue: (Float)",
+        "class ImageEditTags"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/media-viewer/src/main/java/com/diegonmarcos/cloudlib/mediaviewer/ImageRender.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [],
+      "imports": [
+        "android.graphics.Bitmap",
+        "android.graphics.BitmapFactory",
+        "android.graphics.Canvas",
+        "android.graphics.ImageDecoder",
+        "android.graphics.Matrix",
+        "android.graphics.Paint",
+        "android.graphics.Path",
+        "android.media.ExifInterface",
+        "android.os.Build",
+        "java.io.File"
+      ],
+      "symbols": [
+        "decode(path: String, maxSide: Int)",
+        "orientationTag(path: String)",
+        "transform(src: Bitmap, exifTag: Int, turns: Int)",
+        "base(path: String, turns: Int, maxSide: Int)",
+        "info(path: String)",
+        "save(path: String, turns: Int, crop: CropFractions, strokes: List<Stroke>)",
+        "class ImageRender"
+      ]
+    },
+    {
       "path": "ab_cloud-libs-shared/libs/media-viewer/src/main/java/com/diegonmarcos/cloudlib/mediaviewer/MediaKind.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -77386,7 +77715,6 @@
       ],
       "imports": [
         "android.graphics.Bitmap",
-        "android.graphics.BitmapFactory",
         "android.media.MediaPlayer",
         "android.net.Uri",
         "android.widget.MediaController",
@@ -77394,6 +77722,7 @@
         "androidx.compose.foundation.Image",
         "androidx.compose.foundation.clickable",
         "androidx.compose.foundation.gestures.detectTransformGestures",
+        "androidx.compose.foundation.layout.Arrangement",
         "androidx.compose.foundation.layout.Column",
         "androidx.compose.foundation.layout.Row",
         "androidx.compose.foundation.layout.fillMaxSize",
@@ -77432,6 +77761,40 @@
         "VideoViewer(path: String, modifier: Modifier)",
         "class MediaViewerTags",
         "class MediaLabels"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/media-viewer/src/test/java/com/diegonmarcos/cloudlib/mediaviewer/ExifFormatTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ExifFormatTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "class ExifFormatTest"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/media-viewer/src/test/java/com/diegonmarcos/cloudlib/mediaviewer/ImageEditMathTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ImageEditMathTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertArrayEquals",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "class ImageEditMathTest"
       ]
     },
     {
@@ -78560,6 +78923,322 @@
         "isConnected()",
         "loadOrCacheModel(dir: String)",
         "class LocalVoiceEngineClient"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/ml-vision/src/main/java/com/diegonmarcos/superapp/vision/AnalyzerLifecycle.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "AnalysisGate",
+        "AnalyzerLifecycle"
+      ],
+      "imports": [],
+      "symbols": [
+        "admits()",
+        "attach()",
+        "detach()",
+        "onShown()",
+        "onHidden()",
+        "setPaused(paused: Boolean)",
+        "sync()",
+        "class AnalysisGate",
+        "class AnalyzerLifecycle",
+        "class Host"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/ml-vision/src/main/java/com/diegonmarcos/superapp/vision/ColorLut.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "LutDecl",
+        "ColorLut"
+      ],
+      "imports": [
+        "kotlin.math.pow"
+      ],
+      "symbols": [
+        "apply(px: IntArray)",
+        "from(d: LutDecl)",
+        "channel(gain: Float, lift: Float)",
+        "class LutDecl",
+        "class ColorLut"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/ml-vision/src/main/java/com/diegonmarcos/superapp/vision/CompositeFrameView.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "CompositeFrameView"
+      ],
+      "imports": [
+        "android.content.Context",
+        "android.graphics.Bitmap",
+        "android.graphics.Paint",
+        "android.graphics.Rect",
+        "android.util.AttributeSet",
+        "androidx.compose.foundation.Canvas",
+        "androidx.compose.foundation.layout.fillMaxSize",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.graphics.nativeCanvas",
+        "androidx.compose.ui.platform.AbstractComposeView"
+      ],
+      "symbols": [
+        "show(bitmap: Bitmap?, mirror: Boolean)",
+        "Content()",
+        "class CompositeFrameView",
+        "class Shown"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/ml-vision/src/main/java/com/diegonmarcos/superapp/vision/Detection.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "Detection",
+        "FrameResult",
+        "ObjectDetector"
+      ],
+      "imports": [
+        "android.graphics.Bitmap",
+        "org.json.JSONArray",
+        "org.json.JSONObject"
+      ],
+      "symbols": [
+        "caption()",
+        "atLeast(min: Float)",
+        "toJson(minConfidence: Float)",
+        "detect(frame: Bitmap)",
+        "class Detection",
+        "class FrameResult",
+        "class ObjectDetector"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/ml-vision/src/main/java/com/diegonmarcos/superapp/vision/DetectionOverlayView.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "DetectionOverlayView"
+      ],
+      "imports": [
+        "android.content.Context",
+        "android.graphics.Paint",
+        "android.util.AttributeSet",
+        "androidx.compose.foundation.Canvas",
+        "androidx.compose.foundation.layout.fillMaxSize",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.geometry.Offset",
+        "androidx.compose.ui.geometry.Size",
+        "androidx.compose.ui.graphics.Color",
+        "androidx.compose.ui.graphics.drawscope.Stroke",
+        "androidx.compose.ui.graphics.nativeCanvas",
+        "androidx.compose.ui.platform.AbstractComposeView"
+      ],
+      "symbols": [
+        "show(list: List<Detection>, w: Int, h: Int, rotationDegrees: Int = 0, mirror: Boolean = false)",
+        "clear()",
+        "Content()",
+        "class with",
+        "class DetectionOverlayView",
+        "class Frame"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/ml-vision/src/main/java/com/diegonmarcos/superapp/vision/FaceModel.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "Pt",
+        "FaceInfo",
+        "FaceDetector",
+        "PersonMask",
+        "PersonSegmenter",
+        "scaled"
+      ],
+      "imports": [
+        "android.graphics.Bitmap",
+        "java.io.Closeable"
+      ],
+      "symbols": [
+        "detect(frame: Bitmap)",
+        "segment(frame: Bitmap)",
+        "scaled(k: Float)",
+        "class Pt",
+        "class FaceInfo",
+        "class FaceDetector",
+        "class PersonMask",
+        "class PersonSegmenter"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/ml-vision/src/main/java/com/diegonmarcos/superapp/vision/FilterAnchors.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "Placement",
+        "FilterAnchors"
+      ],
+      "imports": [
+        "kotlin.math.atan2",
+        "kotlin.math.cos",
+        "kotlin.math.hypot",
+        "kotlin.math.sin"
+      ],
+      "symbols": [
+        "eyes(face: FaceInfo)",
+        "rollDegrees(face: FaceInfo)",
+        "eyeDistance(face: FaceInfo)",
+        "unitLength(face: FaceInfo, unit: String)",
+        "point(name: String, face: FaceInfo)",
+        "at(base: Pt, right: Float, down: Float)",
+        "place(anchor: AnchorDecl, artW: Float, artH: Float, face: FaceInfo)",
+        "boxPoint(name: String, box: Box)",
+        "placeOnBox(anchor: AnchorDecl, artW: Float, artH: Float, box: Box)",
+        "class Placement",
+        "class box",
+        "class FilterAnchors",
+        "class landmark"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/ml-vision/src/main/java/com/diegonmarcos/superapp/vision/FilterCatalog.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "FilterKind",
+        "AnchorDecl",
+        "ArtPath",
+        "Art",
+        "BackgroundDecl",
+        "FilterDecl",
+        "FilterCatalog"
+      ],
+      "imports": [
+        "org.json.JSONArray",
+        "org.json.JSONObject"
+      ],
+      "symbols": [
+        "parse(json: String)",
+        "load(stream: java.io.InputStream)",
+        "filter(o: JSONObject)",
+        "three(name: String, def: Float)",
+        "anchor(id: String, kind: FilterKind, a: JSONObject)",
+        "art(id: String, a: JSONObject)",
+        "color(s: String)",
+        "class FilterKind",
+        "class AnchorDecl",
+        "class ArtPath",
+        "class Art",
+        "class BackgroundDecl",
+        "class FilterDecl",
+        "class FilterCatalog"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/ml-vision/src/main/java/com/diegonmarcos/superapp/vision/FrameMapping.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "Box",
+        "FrameMapping"
+      ],
+      "imports": [],
+      "symbols": [
+        "uprightSize(imageW: Int, imageH: Int, rotationDegrees: Int)",
+        "toUpright(x: Float, y: Float, imageW: Int, imageH: Int, rotationDegrees: Int, mirrored: Boolean)",
+        "pointToView( x: Float, y: Float, imageW: Int, imageH: Int, rotationDegrees: Int, mirrored: Boolean, viewW: Int, viewH: Int, cover: Boolean = true, )",
+        "boxToView( box: Box, imageW: Int, imageH: Int, rotationDegrees: Int, mirrored: Boolean, viewW: Int, viewH: Int, cover: Boolean = true, )",
+        "norm(deg: Int)",
+        "class Box",
+        "class FrameMapping"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/ml-vision/src/main/java/com/diegonmarcos/superapp/vision/MlKitFaceDetector.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "MlKitFaceDetector"
+      ],
+      "imports": [
+        "android.graphics.Bitmap",
+        "com.google.android.gms.tasks.Tasks",
+        "com.google.mlkit.vision.common.InputImage",
+        "com.google.mlkit.vision.face.Face",
+        "com.google.mlkit.vision.face.FaceContour",
+        "com.google.mlkit.vision.face.FaceDetection",
+        "com.google.mlkit.vision.face.FaceDetectorOptions",
+        "com.google.mlkit.vision.face.FaceLandmark"
+      ],
+      "symbols": [
+        "detect(frame: Bitmap)",
+        "close()",
+        "toInfo(f: Face)",
+        "lm(type: Int)",
+        "class MlKitFaceDetector"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/ml-vision/src/main/java/com/diegonmarcos/superapp/vision/MlKitPersonSegmenter.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "MlKitPersonSegmenter"
+      ],
+      "imports": [
+        "android.graphics.Bitmap",
+        "com.google.android.gms.tasks.Tasks",
+        "com.google.mlkit.vision.common.InputImage",
+        "com.google.mlkit.vision.segmentation.Segmentation",
+        "com.google.mlkit.vision.segmentation.selfie.SelfieSegmenterOptions"
+      ],
+      "symbols": [
+        "segment(frame: Bitmap)",
+        "close()",
+        "class MlKitPersonSegmenter"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/ml-vision/src/main/java/com/diegonmarcos/superapp/vision/VrCompositor.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "VrScene",
+        "VrCompositor"
+      ],
+      "imports": [
+        "android.content.res.AssetManager",
+        "android.graphics.Bitmap",
+        "android.graphics.BitmapFactory",
+        "android.graphics.Canvas",
+        "android.graphics.LinearGradient",
+        "android.graphics.Paint",
+        "android.graphics.Path",
+        "android.graphics.PorterDuff",
+        "android.graphics.PorterDuffXfermode",
+        "android.graphics.Rect",
+        "android.graphics.Shader",
+        "androidx.core.graphics.PathParser"
+      ],
+      "symbols": [
+        "composite(frame: Bitmap, scene: VrScene)",
+        "drawBackground(c: Canvas, frame: Bitmap, bg: BackgroundDecl, w: Int, h: Int)",
+        "drawPerson(c: Canvas, frame: Bitmap, mask: PersonMask, w: Int, h: Int)",
+        "applyLut(bitmap: Bitmap, f: FilterDecl)",
+        "drawArt(c: Canvas, art: Art, p: Placement)",
+        "class VrScene",
+        "class VrCompositor"
       ]
     },
     {
@@ -89584,6 +90263,62 @@
       ]
     },
     {
+      "path": "ab_cloud-libs-shared/libs/ui-kit/src/main/kotlin/com/diegonmarcos/superapp/uikit/KitLauncherGrid.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "KitLauncher",
+        "KitLauncherTile",
+        "KitLauncherFolderTile",
+        "KitLauncherRows",
+        "KitLauncherFolderPopup"
+      ],
+      "imports": [
+        "androidx.compose.foundation.ExperimentalFoundationApi",
+        "androidx.compose.foundation.background",
+        "androidx.compose.foundation.border",
+        "androidx.compose.foundation.combinedClickable",
+        "androidx.compose.foundation.layout.Box",
+        "androidx.compose.foundation.layout.BoxWithConstraints",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.Row",
+        "androidx.compose.foundation.layout.Spacer",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.foundation.layout.heightIn",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.foundation.layout.size",
+        "androidx.compose.foundation.rememberScrollState",
+        "androidx.compose.foundation.shape.RoundedCornerShape",
+        "androidx.compose.foundation.verticalScroll",
+        "androidx.compose.material3.MaterialTheme",
+        "androidx.compose.material3.Text",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.ui.Alignment",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.draw.alpha",
+        "androidx.compose.ui.draw.clip",
+        "androidx.compose.ui.graphics.Color",
+        "androidx.compose.ui.text.style.TextAlign",
+        "androidx.compose.ui.text.style.TextOverflow",
+        "androidx.compose.ui.unit.Dp",
+        "androidx.compose.ui.unit.dp",
+        "androidx.compose.ui.unit.sp",
+        "androidx.compose.ui.window.Dialog",
+        "androidx.compose.ui.window.DialogProperties"
+      ],
+      "symbols": [
+        "previewEdge(members: Int)",
+        "previewCount(members: Int)",
+        "rows(items: Int, cols: Int = COLUMNS)",
+        "iconDp(cellDp: Float, want: Float = ICON_DP.toFloat()",
+        "KitLauncherTile( label: String, modifier: Modifier = Modifier, enabled: Boolean = true, onClick: ()",
+        "KitLauncherFolderTile( label: String, previews: List<@Composable (Dp)",
+        "KitLauncherRows(items: List<T>, cols: Int = KitLauncher.POPUP_COLUMNS, cell: @Composable (T, Modifier)",
+        "KitLauncherFolderPopup(title: String, onDismiss: ()",
+        "class KitLauncher"
+      ]
+    },
+    {
       "path": "ab_cloud-libs-shared/libs/ui-nav-bars/src/main/kotlin/com/diegonmarcos/superapp/fleetconfigs/FleetAboutPage.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -93377,6 +94112,7 @@
       "exports": [
         "CloudChromeClient",
         "FullscreenListener",
+        "onConsoleMessage",
         "onShowCustomView",
         "onHideCustomView"
       ],
@@ -93386,6 +94122,7 @@
         "android.content.ContextWrapper",
         "android.view.View",
         "android.view.ViewGroup",
+        "android.webkit.ConsoleMessage",
         "android.webkit.WebChromeClient",
         "android.widget.FrameLayout",
         "androidx.core.view.WindowCompat",
@@ -93395,6 +94132,7 @@
         "CloudChromeClient()",
         "CloudChromeClient(Activity activity)",
         "activityOf(Context c)",
+        "onConsoleMessage(ConsoleMessage m)",
         "onShowCustomView(View view, CustomViewCallback cb)",
         "onHideCustomView()",
         "class CloudChromeClient",
@@ -93490,6 +94228,7 @@
       ],
       "imports": [],
       "symbols": [
+        "banner(c: GpuCaps, osDebuggable: Boolean)",
         "providerRow(pkg: String?, version: String?)",
         "adapterRow(c: GpuCaps)",
         "rows(pkg: String?, version: String?, caps: GpuCaps?)",
@@ -93536,6 +94275,46 @@
       ]
     },
     {
+      "path": "ab_cloud-libs-shared/libs/web-core/src/main/java/com/diegonmarcos/cloudlib/web/PageConsole.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "PageConsole"
+      ],
+      "imports": [],
+      "symbols": [
+        "location()",
+        "isError()",
+        "priority(level: String)",
+        "record(level: String, message: String?, source: String?, line: Int, page: String?, now: Long = System.currentTimeMillis()",
+        "snapshot()",
+        "errors(page: String? = null)",
+        "clear()",
+        "format(e: Entry)",
+        "text(entries: List<Entry>)",
+        "class PageConsole",
+        "class Entry"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/web-core/src/main/java/com/diegonmarcos/cloudlib/web/PageDiag.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "PageDiag"
+      ],
+      "imports": [
+        "org.json.JSONObject"
+      ],
+      "symbols": [
+        "rows()",
+        "text(errors: List<PageConsole.Entry>)",
+        "parse(raw: String?)",
+        "class PageDiag",
+        "class is"
+      ]
+    },
+    {
       "path": "ab_cloud-libs-shared/libs/web-core/src/main/java/com/diegonmarcos/cloudlib/web/SiteCache.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -93555,11 +94334,13 @@
         "save(host: String, m: JSONObject)",
         "put(host: String, url: String, status: Int, mime: String, headers: Map<String, String>, body: ByteArray, now: Long = System.currentTimeMillis()",
         "lookup(host: String, url: String)",
-        "serve(host: String, url: String, range: String? = null)",
+        "serve(host: String, url: String, range: String? = null, origin: String? = null)",
         "stats(host: String)",
         "hosts()",
         "urls(host: String)",
         "delete(host: String)",
+        "keepHeaders(h: Map<String, String>)",
+        "charsetOf(contentType: String?)",
         "normalise(url: String)",
         "mimeFor(url: String, declared: String)",
         "sha256(b: ByteArray)",
@@ -93671,7 +94452,7 @@
         "prefs(ctx: Context)",
         "pinned(ctx: Context, defaults: List<String>)",
         "setPinned(ctx: Context, list: List<String>)",
-        "intercept(ctx: Context, pinned: List<String>, req: WebResourceRequest)",
+        "intercept(ctx: Context, pinned: List<String>, req: WebResourceRequest, refresh: Boolean = false)",
         "response(s: SiteCache.Served)",
         "publish(s: State)",
         "env()",
@@ -98119,6 +98900,7 @@
         "Chrome()",
         "onWebScroll(delta: Float)",
         "openSection(id: String)",
+        "openHistory()",
         "openUrl(url: String)",
         "openConfigsPage(id: String)",
         "onNewIntent(intent: Intent)",
@@ -98162,6 +98944,7 @@
         "com.diegonmarcos.cloudlib.web.GpuCaps",
         "com.diegonmarcos.cloudlib.web.GpuPageModel",
         "com.diegonmarcos.cloudlib.web.GpuProbe",
+        "com.diegonmarcos.cloudlib.web.PageConsole",
         "com.diegonmarcos.superapp.uikit.KitSectionHeader",
         "com.diegonmarcos.superapp.uikit.KitSettingsRow",
         "com.diegonmarcos.superapp.uikit.LocalKitPalette"
@@ -98444,6 +99227,7 @@
       "role": "kotlin",
       "exports": [
         "CloudyEntry",
+        "WebserverTarget",
         "Cloudy"
       ],
       "imports": [
@@ -98458,7 +99242,10 @@
         "declaredWebserver(decl: JSONObject)",
         "storeEntries(json: String?)",
         "probe(port: Int, timeoutMs: Int)",
+        "fleetUrls(routes: JSONArray?, private_: Boolean, privateScheme: String, publicScheme: String)",
+        "webserverTarget(decl: JSONObject)",
         "class CloudyEntry",
+        "class WebserverTarget",
         "class Cloudy"
       ]
     },
@@ -98561,6 +99348,7 @@
         "VisitLogStore",
         "AndroidSiteExec",
         "CloudyCache",
+        "iconGet",
         "onMain"
       ],
       "imports": [
@@ -98585,6 +99373,7 @@
         "resetPerms(host: String)",
         "pagesJson()",
         "refresh(url: String, timeoutMs: Int)",
+        "iconGet(url: String, max: Int, userAgent: String)",
         "onMain(f: ()",
         "class VisitLogStore",
         "class AndroidSiteExec",
@@ -98612,6 +99401,19 @@
       ]
     },
     {
+      "path": "ac_cloud-browser/app/src/main/java/com/diegonmarcos/cloudbrowser/sites/SitesRoute.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "SitesRoute"
+      ],
+      "imports": [],
+      "symbols": [
+        "history(has: (section: String, page: String)",
+        "class SitesRoute"
+      ]
+    },
+    {
       "path": "ac_cloud-browser/app/src/main/java/com/diegonmarcos/cloudbrowser/sites/SitesUi.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -98622,6 +99424,14 @@
       ],
       "imports": [
         "androidx.compose.foundation.ExperimentalFoundationApi",
+        "androidx.compose.foundation.Image",
+        "androidx.compose.ui.graphics.Color",
+        "androidx.compose.ui.graphics.asImageBitmap",
+        "androidx.compose.ui.layout.ContentScale",
+        "com.diegonmarcos.superapp.uikit.KitLauncherFolderPopup",
+        "com.diegonmarcos.superapp.uikit.KitLauncherFolderTile",
+        "com.diegonmarcos.superapp.uikit.KitLauncherRows",
+        "com.diegonmarcos.superapp.uikit.KitLauncherTile",
         "androidx.compose.foundation.background",
         "androidx.compose.foundation.clickable",
         "androidx.compose.foundation.combinedClickable",
@@ -98652,22 +99462,17 @@
         "androidx.compose.material3.TextField",
         "androidx.compose.runtime.Composable",
         "androidx.compose.runtime.DisposableEffect",
-        "androidx.compose.runtime.State",
-        "androidx.compose.runtime.getValue",
-        "androidx.compose.runtime.mutableIntStateOf",
-        "androidx.compose.runtime.mutableStateOf",
-        "androidx.compose.runtime.remember",
-        "androidx.compose.runtime.setValue",
-        "androidx.compose.runtime.mutableStateListOf",
-        "androidx.compose.ui.Alignment",
-        "androidx.compose.ui.Modifier"
+        "androidx.compose.runtime.State"
       ],
       "symbols": [
         "loaded(initial: T, key: Any?, work: ()",
         "rel(ts: Long)",
+        "WebyIcon(tile: WebyTile, sz: androidx.compose.ui.unit.Dp, icons: WebyIconCache, rev: Int)",
+        "WebyCell( cell: WebyLayout.Cell, path: String, modifier: Modifier, icons: WebyIconCache, rev: Int, onTile: (WebyTile)",
         "WebyPage(decl: SitesDecl, onOpen: (String)",
         "commit(n: List<WebyFolder>)",
         "CloudyPage(page: String?, decl: SitesDecl, onOpen: (String)",
+        "openWebserver(ctx: android.content.Context, ws: org.json.JSONObject, t: (String)",
         "CloudyList(entries: List<CloudyEntry>, empty: String, tag: String, up: (CloudyEntry)",
         "DomainsPage(page: String?, decl: SitesDecl)",
         "FilesPage(t: (String)",
@@ -98681,7 +99486,7 @@
         "class WebyDialog",
         "class AddBookmark",
         "class AddFolder",
-        "class RemoveTile",
+        "class TileMenu",
         "class RemoveFolder"
       ]
     },
@@ -98693,6 +99498,7 @@
         "WebyTile",
         "WebyFolder",
         "WebySeed",
+        "WebyLayout",
         "WebyOps",
         "WebyStore"
       ],
@@ -98704,6 +99510,10 @@
       "symbols": [
         "derive(decl: JSONObject)",
         "tiles(arr: JSONArray?)",
+        "cells(f: WebyFolder)",
+        "previewTiles(f: WebyFolder)",
+        "allTiles(f: WebyFolder)",
+        "rows(n: Int, cols: Int = COLUMNS)",
         "normFolder(path: String)",
         "normalizeUrl(input: String)",
         "edit(list: List<WebyFolder>, path: List<String>, create: Boolean, f: (WebyFolder)",
@@ -98720,8 +99530,66 @@
         "class WebyTile",
         "class WebyFolder",
         "class WebySeed",
+        "class WebyLayout",
+        "class Cell",
+        "class App",
+        "class Folder",
         "class WebyOps",
         "class WebyStore"
+      ]
+    },
+    {
+      "path": "ac_cloud-browser/app/src/main/java/com/diegonmarcos/cloudbrowser/sites/WebyIcons.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "IconCandidate",
+        "WebyIcons",
+        "WebyIconCache"
+      ],
+      "imports": [
+        "android.content.Context",
+        "android.content.pm.PackageManager",
+        "android.graphics.Bitmap",
+        "android.graphics.BitmapFactory",
+        "android.util.LruCache",
+        "org.json.JSONArray",
+        "org.json.JSONObject",
+        "java.io.File",
+        "java.net.URI",
+        "java.security.MessageDigest",
+        "java.util.concurrent.Executors"
+      ],
+      "symbols": [
+        "attrs(tag: String)",
+        "sizeOf(sizes: String?)",
+        "resolve(base: String, href: String)",
+        "isSvg(url: String)",
+        "parseHtml(html: String, base: String)",
+        "parseManifest(json: String, manifestUrl: String)",
+        "rank(list: List<IconCandidate>, want: Int = WANT)",
+        "sizeGroup(size: Int, want: Int)",
+        "sizeKey(size: Int, want: Int)",
+        "fallbacks(site: String)",
+        "candidates(site: String, fetchText: (String)",
+        "pick(list: List<IconCandidate>, download: (String)",
+        "initial(label: String)",
+        "hostOf(url: String)",
+        "overrideOf(overrides: JSONObject, id: String, site: String?)",
+        "website(url: String?, id: String, keys: List<String>, lookup: (String, String)",
+        "peek(tile: WebyTile)",
+        "request(tile: WebyTile, done: (Bitmap?)",
+        "refresh(tile: WebyTile, done: (Bitmap?)",
+        "metaLookup(pkg: String, key: String)",
+        "siteOf(t: WebyTile)",
+        "keyOf(t: WebyTile)",
+        "sha(s: String)",
+        "load(t: WebyTile)",
+        "scaled(b: ByteArray)",
+        "fetch(url: String, max: Int)",
+        "class IconCandidate",
+        "class WebyIcons",
+        "class WebyIconCache"
       ]
     },
     {
@@ -100290,6 +101158,48 @@
       ]
     },
     {
+      "path": "ac_cloud-browser/app/src/test/java/com/diegonmarcos/cloudbrowser/offline/WebEngineTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "WebEngineTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.cloudlib.web.GpuCaps",
+        "com.diegonmarcos.cloudlib.web.GpuPageModel",
+        "com.diegonmarcos.cloudlib.web.PageConsole",
+        "com.diegonmarcos.cloudlib.web.PageDiag",
+        "com.diegonmarcos.cloudlib.web.SiteCache",
+        "org.junit.After",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNotNull",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Before",
+        "org.junit.Rule",
+        "org.junit.Test",
+        "org.junit.rules.TemporaryFolder"
+      ],
+      "symbols": [
+        "cache()",
+        "quiet()",
+        "reset()",
+        "keepHeadersKeepsWhatABrowserActsOnAndDropsTheRest()",
+        "serveKeepsContentTypeCharsetCoopCoepAndContentLength()",
+        "corsEchoesTheRequestOriginElseWildcard()",
+        "anUpstreamCorsHeaderSurvivesWhenNoOriginIsAsked()",
+        "wasmIsAlwaysApplicationWasmAndKeepsItsLength()",
+        "aRangeSliceCarriesItsOwnLength()",
+        "caps(webgpu: Boolean, adapter: Boolean)",
+        "bannerNamesTheReasonCloudBrowserAndTheFlagAndNeverAnotherBrowser()",
+        "capabilityDetectionFromThePageProbe()",
+        "consoleRingIsBoundedKeepsErrorsAndFormats()",
+        "theSinkReceivesEveryEntry()",
+        "class WebEngineTest"
+      ]
+    },
+    {
       "path": "ac_cloud-browser/app/src/test/java/com/diegonmarcos/cloudbrowser/PageTopicsTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -100374,6 +101284,7 @@
       "imports": [
         "org.json.JSONObject",
         "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertNull",
         "org.junit.Assert.assertTrue",
         "org.junit.Test"
       ],
@@ -100407,6 +101318,45 @@
         "run(id: String, host: String)",
         "class DomainsTest",
         "class Fake"
+      ]
+    },
+    {
+      "path": "ac_cloud-browser/app/src/test/java/com/diegonmarcos/cloudbrowser/sites/SitesRouteTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "SitesRouteTest"
+      ],
+      "imports": [
+        "org.json.JSONObject",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.io.File"
+      ],
+      "symbols": [
+        "class SitesRouteTest"
+      ]
+    },
+    {
+      "path": "ac_cloud-browser/app/src/test/java/com/diegonmarcos/cloudbrowser/sites/WebyIconsTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "WebyIconsTest"
+      ],
+      "imports": [
+        "org.json.JSONObject",
+        "org.junit.Assert.assertArrayEquals",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "fetch(pages: Map<String, String>)",
+        "class WebyIconsTest"
       ]
     },
     {
@@ -112719,6 +113669,28 @@
       ]
     },
     {
+      "path": "ac_cloud-camera/app/src/androidTest/java/cld/camera/PreviewAboveNavRegressionTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "PreviewAboveNavRegressionTest"
+      ],
+      "imports": [
+        "android.view.View",
+        "androidx.test.core.app.ActivityScenario",
+        "cld.camera.ui.NavLayout",
+        "cld.camera.ui.activities.MainActivity",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "box()",
+        "previewDoesNotIntersectTheNav()",
+        "class PreviewAboveNavRegressionTest"
+      ]
+    },
+    {
       "path": "ac_cloud-camera/app/src/androidTest/java/cld/camera/SafTreeGrantsRegressionTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -114219,6 +115191,107 @@
       ]
     },
     {
+      "path": "ac_cloud-camera/app/src/main/java/cld/camera/objects/EngineObjectDetector.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "EngineObjectDetector"
+      ],
+      "imports": [
+        "android.graphics.Bitmap",
+        "cld.camera.analyzer.ImageContentScanner",
+        "com.diegonmarcos.superapp.image.mlkit.Recognition",
+        "com.diegonmarcos.superapp.vision.Detection",
+        "com.diegonmarcos.superapp.vision.FrameResult",
+        "com.diegonmarcos.superapp.vision.ObjectDetector"
+      ],
+      "symbols": [
+        "detect(frame: Bitmap)",
+        "toFrameResult(r: Recognition)",
+        "class EngineObjectDetector"
+      ]
+    },
+    {
+      "path": "ac_cloud-camera/app/src/main/java/cld/camera/objects/ObjectsController.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ObjectsController"
+      ],
+      "imports": [
+        "android.os.SystemClock",
+        "android.view.View",
+        "android.widget.Button",
+        "android.widget.SeekBar",
+        "android.widget.TextView",
+        "android.widget.Toast",
+        "androidx.camera.core.CameraSelector",
+        "androidx.camera.core.ImageAnalysis",
+        "androidx.camera.core.ImageCapture",
+        "androidx.camera.core.ImageCaptureException",
+        "androidx.camera.core.ImageProxy",
+        "androidx.camera.core.resolutionselector.AspectRatioStrategy",
+        "androidx.camera.core.resolutionselector.ResolutionSelector",
+        "cld.camera.R",
+        "cld.camera.analyzer.ImageContentScanner",
+        "cld.camera.ui.activities.MainActivity",
+        "com.diegonmarcos.superapp.image.mlkit.RecognitionConfig",
+        "com.diegonmarcos.superapp.vision.AnalysisGate",
+        "com.diegonmarcos.superapp.vision.AnalyzerLifecycle",
+        "com.diegonmarcos.superapp.vision.DetectionOverlayView",
+        "com.diegonmarcos.superapp.vision.FrameResult",
+        "java.io.File",
+        "java.util.concurrent.ExecutorService",
+        "java.util.concurrent.Executors"
+      ],
+      "symbols": [
+        "attach()",
+        "detach()",
+        "onProgressChanged(bar: SeekBar, progress: Int, fromUser: Boolean)",
+        "onStartTrackingTouch(bar: SeekBar)",
+        "onStopTrackingTouch(bar: SeekBar)",
+        "percent()",
+        "analysisUseCase(aspectRatio: Int)",
+        "enter()",
+        "leave()",
+        "onActivityPaused()",
+        "setPaused(p: Boolean)",
+        "analyze(image: ImageProxy)",
+        "render()",
+        "snapshot()",
+        "onImageSaved(output: ImageCapture.OutputFileResults)",
+        "onError(e: ImageCaptureException)",
+        "toast(msg: String)",
+        "class detection",
+        "class ObjectsController"
+      ]
+    },
+    {
+      "path": "ac_cloud-camera/app/src/main/java/cld/camera/objects/ObjectsSnapshot.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ObjectsSnapshot"
+      ],
+      "imports": [
+        "android.content.ContentValues",
+        "android.content.Context",
+        "android.net.Uri",
+        "android.provider.MediaStore",
+        "androidxc.exifinterface.media.ExifInterface",
+        "cld.camera.capturer.DEFAULT_MEDIA_STORE_CAPTURE_PATH",
+        "com.diegonmarcos.superapp.vision.FrameResult",
+        "java.io.File",
+        "java.text.SimpleDateFormat",
+        "java.util.Date",
+        "java.util.Locale"
+      ],
+      "symbols": [
+        "save(ctx: Context, jpeg: File, result: FrameResult?, minConfidence: Float)",
+        "class ObjectsSnapshot"
+      ]
+    },
+    {
       "path": "ac_cloud-camera/app/src/main/java/cld/camera/TunePlayer.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -114843,6 +115916,23 @@
       ]
     },
     {
+      "path": "ac_cloud-camera/app/src/main/java/cld/camera/ui/NavLayout.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "NavLayout"
+      ],
+      "imports": [],
+      "symbols": [
+        "intersects(o: Box)",
+        "navBounds(windowW: Int, windowH: Int, navHeight: Int, bottomInset: Int)",
+        "frameBounds(windowW: Int, windowH: Int, topInset: Int, navHeight: Int, bottomInset: Int)",
+        "previewBounds(frame: Box, ratioW: Int, ratioH: Int)",
+        "class NavLayout",
+        "class Box"
+      ]
+    },
+    {
       "path": "ac_cloud-camera/app/src/main/java/cld/camera/ui/QROverlay.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -115360,6 +116450,316 @@
         "isEngineReachable()",
         "class VoiceShutterController",
         "class EngineAccess"
+      ]
+    },
+    {
+      "path": "ac_cloud-camera/app/src/main/java/cld/camera/vr/VrController.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "VrController"
+      ],
+      "imports": [
+        "android.graphics.Bitmap",
+        "android.graphics.ImageDecoder",
+        "android.os.SystemClock",
+        "android.util.Size",
+        "android.view.View",
+        "android.widget.Button",
+        "android.widget.LinearLayout",
+        "android.widget.TextView",
+        "android.widget.Toast",
+        "androidx.camera.core.CameraSelector",
+        "androidx.camera.core.ImageAnalysis",
+        "androidx.camera.core.ImageCapture",
+        "androidx.camera.core.ImageCaptureException",
+        "androidx.camera.core.ImageProxy",
+        "androidx.camera.core.resolutionselector.AspectRatioStrategy",
+        "androidx.camera.core.resolutionselector.ResolutionSelector",
+        "androidx.camera.core.resolutionselector.ResolutionStrategy",
+        "cld.camera.R",
+        "cld.camera.analyzer.ImageContentScanner",
+        "cld.camera.objects.EngineObjectDetector",
+        "cld.camera.ui.activities.MainActivity",
+        "com.diegonmarcos.superapp.image.mlkit.RecognitionConfig",
+        "com.diegonmarcos.superapp.vision.AnalysisGate",
+        "com.diegonmarcos.superapp.vision.AnalyzerLifecycle",
+        "com.diegonmarcos.superapp.vision.CompositeFrameView",
+        "com.diegonmarcos.superapp.vision.Detection",
+        "com.diegonmarcos.superapp.vision.FaceDetector",
+        "com.diegonmarcos.superapp.vision.FaceInfo",
+        "com.diegonmarcos.superapp.vision.FilterCatalog",
+        "com.diegonmarcos.superapp.vision.FilterDecl",
+        "com.diegonmarcos.superapp.vision.FilterKind",
+        "com.diegonmarcos.superapp.vision.MlKitFaceDetector",
+        "com.diegonmarcos.superapp.vision.MlKitPersonSegmenter",
+        "com.diegonmarcos.superapp.vision.PersonMask",
+        "com.diegonmarcos.superapp.vision.PersonSegmenter",
+        "com.diegonmarcos.superapp.vision.VrCompositor",
+        "com.diegonmarcos.superapp.vision.VrScene",
+        "com.diegonmarcos.superapp.vision.scaled",
+        "org.json.JSONObject",
+        "java.io.File"
+      ],
+      "symbols": [
+        "attach()",
+        "detach()",
+        "toggle(f: FilterDecl)",
+        "analysisUseCase(aspectRatio: Int)",
+        "enter()",
+        "leave()",
+        "onActivityPaused()",
+        "models()",
+        "releaseModels()",
+        "analyze(image: ImageProxy)",
+        "scene(frame: Bitmap, filters: List<FilterDecl>, cached: Boolean)",
+        "say(msg: String)",
+        "snapshot()",
+        "onImageSaved(output: ImageCapture.OutputFileResults)",
+        "onError(e: ImageCaptureException)",
+        "savePhoto(jpeg: File, filters: List<FilterDecl>)",
+        "toggleRecord()",
+        "stopRecording(announce: Boolean = false)",
+        "toast(msg: String)",
+        "class detector",
+        "class asks",
+        "class VrController"
+      ]
+    },
+    {
+      "path": "ac_cloud-camera/app/src/main/java/cld/camera/vr/VrRecorder.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "VrRecorder"
+      ],
+      "imports": [
+        "android.Manifest",
+        "android.content.ContentValues",
+        "android.content.Context",
+        "android.content.pm.PackageManager",
+        "android.graphics.Bitmap",
+        "android.graphics.Rect",
+        "android.media.MediaRecorder",
+        "android.net.Uri",
+        "android.os.Build",
+        "android.os.ParcelFileDescriptor",
+        "android.provider.MediaStore",
+        "android.view.Surface",
+        "androidx.core.content.ContextCompat",
+        "cld.camera.capturer.DEFAULT_MEDIA_STORE_CAPTURE_PATH",
+        "java.text.SimpleDateFormat",
+        "java.util.Date",
+        "java.util.Locale"
+      ],
+      "symbols": [
+        "start(first: Bitmap, mirror: Boolean)",
+        "add(frame: Bitmap)",
+        "stop()",
+        "abort()",
+        "release()",
+        "class never",
+        "class VrRecorder"
+      ]
+    },
+    {
+      "path": "ac_cloud-camera/app/src/main/java/cld/camera/vr/VrSnapshot.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "VrSnapshot"
+      ],
+      "imports": [
+        "android.content.ContentValues",
+        "android.content.Context",
+        "android.graphics.Bitmap",
+        "android.net.Uri",
+        "android.provider.MediaStore",
+        "cld.camera.capturer.DEFAULT_MEDIA_STORE_CAPTURE_PATH",
+        "java.text.SimpleDateFormat",
+        "java.util.Date",
+        "java.util.Locale"
+      ],
+      "symbols": [
+        "save(ctx: Context, composited: Bitmap)",
+        "class VrSnapshot"
+      ]
+    },
+    {
+      "path": "ac_cloud-camera/app/src/test/java/cld/camera/AnalyzerLifecycleTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "AnalyzerLifecycleTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.vision.AnalysisGate",
+        "com.diegonmarcos.superapp.vision.AnalyzerLifecycle",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "attach()",
+        "detach()",
+        "nothingRunsUntilThePageIsShown()",
+        "shownInstallsTheAnalyzerOnce()",
+        "hiddenStopsTheAnalyzer()",
+        "pauseStopsTheAnalyzerAndResumeRestartsIt()",
+        "resumingWhileHiddenStaysStopped()",
+        "shownWhilePausedStaysStopped()",
+        "framesAreSpacedByTheInterval()",
+        "class AnalyzerLifecycleTest",
+        "class FakeHost"
+      ]
+    },
+    {
+      "path": "ac_cloud-camera/app/src/test/java/cld/camera/FilterAnchorsTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "FilterAnchorsTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.vision.AnchorDecl",
+        "com.diegonmarcos.superapp.vision.Box",
+        "com.diegonmarcos.superapp.vision.FaceInfo",
+        "com.diegonmarcos.superapp.vision.FilterAnchors",
+        "com.diegonmarcos.superapp.vision.Pt",
+        "com.diegonmarcos.superapp.vision.scaled",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Test",
+        "kotlin.math.cos",
+        "kotlin.math.sin"
+      ],
+      "symbols": [
+        "level(scale: Float = 1f, labelsSwapped: Boolean = false)",
+        "anchor(landmark: String, ox: Float = 0f, oy: Float = 0f, scale: Float = 1f, unit: String = \"face\", rotate: Boolean = true, extra: Float = 0f)",
+        "levelFaceHasNoRoll()",
+        "glassesSitOnTheEyesAndScaleWithTheEyeDistance()",
+        "placementScalesLinearlyWithTheFace()",
+        "headTopIsTheTopOfTheBoxAndTheOffsetPushesDown()",
+        "tiltedHeadTurnsTheOverlayAndItsOffset()",
+        "rotateFalseKeepsTheArtUprightAndExtraRotationAdds()",
+        "rollIsTheSameWhateverTheDetectorCallsLeftAndRight()",
+        "withoutEyesTheRollFallsBackToTheDetectorsEulerZ()",
+        "objectStickersFollowTheBox()",
+        "aFaceFoundOnAShrunkCopyScalesBackToTheFullFrame()",
+        "class FilterAnchorsTest"
+      ]
+    },
+    {
+      "path": "ac_cloud-camera/app/src/test/java/cld/camera/FilterCatalogTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "FilterCatalogTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.vision.ColorLut",
+        "com.diegonmarcos.superapp.vision.FilterAnchors",
+        "com.diegonmarcos.superapp.vision.FilterCatalog",
+        "com.diegonmarcos.superapp.vision.FilterKind",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNotNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Assert.fail",
+        "org.junit.Test",
+        "java.io.File"
+      ],
+      "symbols": [
+        "theDeclaredFiltersLoad()",
+        "everyDeclaredKindHasFilters()",
+        "hatsAreOnTheHeadAndGlassesOnTheEyes()",
+        "overlaysDeclareAnchorAndArtAndStickersFollowObjects()",
+        "backgroundsAndLooksCarryTheirBlock()",
+        "colours()",
+        "rejects(why: String, json: String)",
+        "filterJson(body: String)",
+        "invalidDeclarationsAreRejected()",
+        "aValidMinimalCatalogueParses()",
+        "identityLutLeavesPixelsAndWarmAddsRed()",
+        "monoLutMakesGrey()",
+        "class FilterCatalogTest"
+      ]
+    },
+    {
+      "path": "ac_cloud-camera/app/src/test/java/cld/camera/FrameMappingTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "FrameMappingTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.vision.Box",
+        "com.diegonmarcos.superapp.vision.FrameMapping",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "near(want: Box, got: Box)",
+        "uprightImageSameAspectIsPlainScaling()",
+        "coverCropsTheOverflowAndCentres()",
+        "fitLetterboxes()",
+        "rotation90TurnsTheSensorImageUpright()",
+        "rotation180And270()",
+        "mirroringFlipsLeftRightInTheUprightImage()",
+        "rotationAndMirroringCompose()",
+        "negativeAndLargeRotationsNormalise()",
+        "degenerateSizesMapToNothing()",
+        "class FrameMappingTest"
+      ]
+    },
+    {
+      "path": "ac_cloud-camera/app/src/test/java/cld/camera/NavLayoutTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "NavLayoutTest"
+      ],
+      "imports": [
+        "cld.camera.ui.NavLayout",
+        "cld.camera.ui.NavLayout.Box",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "previewNeverIntersectsNav()",
+        "navIsAtTheVeryBottom()",
+        "previewEndsAtNavTopWhenTheFrameIsTheLimit()",
+        "intersectsIsFalseForTouchingEdges()",
+        "cameraModesAreDeclaredInNavOrder()",
+        "declaredNavOrderIsQrObjectsCameraVideoVr()",
+        "class NavLayoutTest"
+      ]
+    },
+    {
+      "path": "ac_cloud-camera/app/src/test/java/cld/camera/ObjectDetectionTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ObjectDetectionTest"
+      ],
+      "imports": [
+        "cld.camera.objects.EngineObjectDetector",
+        "com.diegonmarcos.superapp.image.mlkit.Recognition",
+        "com.diegonmarcos.superapp.vision.Detection",
+        "com.diegonmarcos.superapp.vision.FrameResult",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertNull",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "engineBoxesBecomeDetections()",
+        "captionShowsLabelConfidenceAndTrackingId()",
+        "thresholdSliderFiltersByConfidence()",
+        "snapshotJsonCarriesTheDetectionsAboveTheThreshold()",
+        "anEmptyFrameStillSerialises()",
+        "class ObjectDetectionTest"
       ]
     },
     {
@@ -185658,6 +187058,7 @@
       ],
       "imports": [
         "org.fossify.phone.configs.DialerConfigsActivity",
+        "org.fossify.phone.sim.SimsNavState",
         "org.fossify.phone.sim.SimsOverviewPage",
         "android.annotation.SuppressLint",
         "android.app.Activity",
@@ -185695,8 +187096,7 @@
         "com.diegonmarcos.superapp.bottomnav.FleetChrome",
         "com.diegonmarcos.superapp.bottomnav.LocalNavChromeCollapse",
         "com.diegonmarcos.superapp.bottomnav.TopBarDrawer",
-        "com.diegonmarcos.superapp.bottomnav.rememberAccountLauncher",
-        "com.diegonmarcos.superapp.navbarbottom.NavBarBottomHost"
+        "com.diegonmarcos.superapp.bottomnav.rememberAccountLauncher"
       ],
       "symbols": [
         "onCreate(savedInstanceState: Bundle?)",
@@ -187859,6 +189259,26 @@
       ]
     },
     {
+      "path": "ac_cloud-dialer/app/src/main/kotlin/org/fossify/phone/nav/ContactCandidates.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ContactCandidates"
+      ],
+      "imports": [
+        "android.content.Context",
+        "android.provider.CallLog",
+        "org.fossify.phone.sms.ContactLookup"
+      ],
+      "symbols": [
+        "tail(number: String)",
+        "load(ctx: Context)",
+        "callStats(ctx: Context)",
+        "class ContactCandidates",
+        "class Stat"
+      ]
+    },
+    {
       "path": "ac_cloud-dialer/app/src/main/kotlin/org/fossify/phone/nav/DialerNav.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -187895,6 +189315,8 @@
         "androidx.compose.foundation.layout.height",
         "androidx.compose.foundation.layout.padding",
         "androidx.compose.foundation.layout.size",
+        "androidx.compose.foundation.lazy.LazyColumn",
+        "androidx.compose.foundation.lazy.items",
         "androidx.compose.foundation.shape.CircleShape",
         "androidx.compose.material.icons.Icons",
         "androidx.compose.material.icons.automirrored.filled.Backspace",
@@ -187903,25 +189325,131 @@
         "androidx.compose.material3.Text",
         "androidx.compose.material3.TextButton",
         "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.LaunchedEffect",
         "androidx.compose.runtime.getValue",
         "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.remember",
         "androidx.compose.runtime.saveable.rememberSaveable",
         "androidx.compose.runtime.setValue",
         "androidx.compose.ui.Alignment",
         "androidx.compose.ui.Modifier",
         "androidx.compose.ui.draw.clip",
+        "androidx.compose.ui.platform.LocalContext",
         "androidx.compose.ui.platform.testTag",
         "androidx.compose.ui.semantics.Role",
         "androidx.compose.ui.semantics.contentDescription",
         "androidx.compose.ui.semantics.semantics",
         "androidx.compose.ui.text.style.TextOverflow",
         "androidx.compose.ui.unit.dp",
-        "androidx.compose.ui.unit.sp",
-        "com.diegonmarcos.superapp.themebg.ThemeColors"
+        "com.diegonmarcos.superapp.themebg.ThemeColors",
+        "com.diegonmarcos.superapp.uikit.KitStoreCaption",
+        "com.diegonmarcos.superapp.uikit.KitStoreName"
       ],
       "symbols": [
         "KeypadPage(c: ThemeColors, onCall: (String)",
         "class KeypadPageSpec"
+      ]
+    },
+    {
+      "path": "ac_cloud-dialer/app/src/main/kotlin/org/fossify/phone/nav/T9.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "KeypadKey",
+        "T9Limits",
+        "KeypadSpec",
+        "T9Contact",
+        "T9Tier",
+        "T9Hit",
+        "T9"
+      ],
+      "imports": [
+        "android.content.Context",
+        "kotlinx.serialization.SerialName",
+        "kotlinx.serialization.Serializable",
+        "kotlinx.serialization.json.Json",
+        "java.text.Normalizer"
+      ],
+      "symbols": [
+        "parse(raw: String)",
+        "load(ctx: Context)",
+        "words(name: String, map: Map<Char, Char>)",
+        "flush()",
+        "digits(s: String)",
+        "nameTier(q: String, words: List<String>, minSub: Int)",
+        "numberTier(q: String, number: String, minSub: Int)",
+        "search(typed: String, contacts: List<T9Contact>, spec: KeypadSpec)",
+        "class KeypadKey",
+        "class T9Limits",
+        "class KeypadSpec",
+        "class T9Contact",
+        "class T9Tier",
+        "class T9Hit",
+        "class T9"
+      ]
+    },
+    {
+      "path": "ac_cloud-dialer/app/src/main/kotlin/org/fossify/phone/nav/VoipPage.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "VoipProvider",
+        "VoipSpec",
+        "VoipTarget",
+        "Voip",
+        "VoipPage"
+      ],
+      "imports": [
+        "android.content.Context",
+        "android.content.Intent",
+        "android.net.Uri",
+        "android.widget.Toast",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.Spacer",
+        "androidx.compose.foundation.layout.fillMaxSize",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.foundation.layout.height",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.foundation.lazy.LazyColumn",
+        "androidx.compose.foundation.lazy.items",
+        "androidx.compose.foundation.text.KeyboardOptions",
+        "androidx.compose.material3.OutlinedTextField",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.LaunchedEffect",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.remember",
+        "androidx.compose.runtime.saveable.rememberSaveable",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.platform.LocalContext",
+        "androidx.compose.ui.platform.testTag",
+        "androidx.compose.ui.text.TextStyle",
+        "androidx.compose.ui.text.input.KeyboardType",
+        "com.diegonmarcos.superapp.themebg.ThemeColors",
+        "com.diegonmarcos.superapp.uikit.KitStoreCaption",
+        "com.diegonmarcos.superapp.uikit.KitStoreName",
+        "com.diegonmarcos.superapp.uikit.KitStoreQuick",
+        "com.diegonmarcos.superapp.uikit.KitStoreRow",
+        "com.diegonmarcos.superapp.uikit.KitStoreRowLine",
+        "kotlinx.coroutines.Dispatchers",
+        "kotlinx.coroutines.withContext",
+        "kotlinx.serialization.SerialName",
+        "kotlinx.serialization.Serializable",
+        "kotlinx.serialization.json.Json",
+        "org.fossify.phone.helpers.isPackageInstalled"
+      ],
+      "symbols": [
+        "parse(raw: String)",
+        "load(ctx: Context)",
+        "resolve(p: VoipProvider, number: String, isInstalled: (String)",
+        "intent(t: VoipTarget)",
+        "recents(all: List<T9Contact>, limit: Int)",
+        "VoipPage(c: ThemeColors)",
+        "class VoipProvider",
+        "class VoipSpec",
+        "class VoipTarget",
+        "class Voip"
       ]
     },
     {
@@ -188010,6 +189538,30 @@
       ]
     },
     {
+      "path": "ac_cloud-dialer/app/src/main/kotlin/org/fossify/phone/sim/SimDetect.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "SubRecord",
+        "SubLive",
+        "SubSource",
+        "SimDetect"
+      ],
+      "imports": [],
+      "symbols": [
+        "active()",
+        "accessible()",
+        "live(subscriptionId: Int)",
+        "cards(src: SubSource)",
+        "card(src: SubSource, r: SubRecord, l: SubLive, active: Boolean)",
+        "class mapped",
+        "class SubRecord",
+        "class SubLive",
+        "class SubSource",
+        "class SimDetect"
+      ]
+    },
+    {
       "path": "ac_cloud-dialer/app/src/main/kotlin/org/fossify/phone/sim/SimManualStore.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -188023,8 +189575,8 @@
       ],
       "symbols": [
         "load(key: String)",
-        "save(key: String, m: SimManual)",
-        "get(key: String, f: String)",
+        "save(key: String, id: String, value: String)",
+        "secret(key: String, id: String)",
         "class SimManualStore"
       ]
     },
@@ -188041,12 +189593,15 @@
       ],
       "imports": [],
       "symbols": [
+        "get(id: String)",
         "mask(value: String?, keep: Int = 4)",
         "secret(value: String?)",
         "v(s: String?)",
         "yn(b: Boolean?)",
-        "rows(c: SimCard, m: SimManual, reveal: Boolean = false)",
+        "na(s: String?, needs: String)",
+        "detected(c: SimCard, m: SimManual, reveal: Boolean = false)",
         "key(c: SimCard)",
+        "title(c: SimCard)",
         "class SimCard",
         "class SimManual",
         "class SimRow",
@@ -188063,17 +189618,14 @@
         "SimPermsGate",
         "SimCardsPage",
         "SimStatusPage",
-        "SimUsagePage",
-        "SimsOverviewPage"
+        "SimUsagePage"
       ],
       "imports": [
         "android.content.Intent",
         "androidx.compose.foundation.layout.Arrangement",
         "androidx.compose.foundation.layout.Column",
-        "androidx.compose.foundation.layout.Row",
         "androidx.compose.foundation.layout.Spacer",
         "androidx.compose.foundation.layout.fillMaxSize",
-        "androidx.compose.foundation.layout.fillMaxWidth",
         "androidx.compose.foundation.layout.height",
         "androidx.compose.foundation.layout.padding",
         "androidx.compose.foundation.lazy.LazyColumn",
@@ -188083,9 +189635,7 @@
         "androidx.compose.material.icons.filled.NetworkCell",
         "androidx.compose.material.icons.filled.SimCard",
         "androidx.compose.material3.Button",
-        "androidx.compose.material3.OutlinedTextField",
         "androidx.compose.material3.Text",
-        "androidx.compose.material3.TextButton",
         "androidx.compose.runtime.Composable",
         "androidx.compose.runtime.LaunchedEffect",
         "androidx.compose.runtime.getValue",
@@ -188095,7 +189645,6 @@
         "androidx.compose.ui.Modifier",
         "androidx.compose.ui.platform.LocalContext",
         "androidx.compose.ui.platform.testTag",
-        "androidx.compose.ui.text.input.PasswordVisualTransformation",
         "androidx.compose.ui.unit.dp",
         "com.diegonmarcos.superapp.fleetconfigs.ConfigsCard",
         "com.diegonmarcos.superapp.fleetconfigs.ConfigsRow",
@@ -188108,17 +189657,13 @@
         "kotlinx.coroutines.withContext"
       ],
       "symbols": [
-        "title(c: SimCard)",
         "PageList(tag: String, content: androidx.compose.foundation.lazy.LazyListScope.()",
         "SimPermsGate(c: ThemeColors, body: @Composable ()",
         "SimCardsPage(c: ThemeColors)",
-        "SimCardView(card: SimCard, store: SimManualStore, c: ThemeColors, editable: Boolean)",
-        "ManualEditor(initial: SimManual, onSave: (SimManual)",
         "SimStatusPage(c: ThemeColors)",
         "rememberUsage()",
         "UsageCard(b: SimUsageBlock, c: ThemeColors)",
         "SimUsagePage(c: ThemeColors)",
-        "SimsOverviewPage(c: ThemeColors)",
         "class SimPages",
         "class SimUsageBlock"
       ]
@@ -188158,13 +189703,64 @@
         "subs()",
         "tmFor(subId: Int)",
         "cards()",
+        "active()",
+        "accessible()",
+        "live(subscriptionId: Int)",
+        "record(s: SubscriptionInfo)",
         "number(s: SubscriptionInfo)",
         "status()",
         "callState(t: TelephonyManager?)",
         "cellId(t: TelephonyManager?)",
         "cellular(subId: Int)",
         "monthUsage()",
-        "class SimReader"
+        "class SimReader",
+        "class AndroidSubSource"
+      ]
+    },
+    {
+      "path": "ac_cloud-dialer/app/src/main/kotlin/org/fossify/phone/sim/SimSchema.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "SimGroup",
+        "SimField",
+        "SimVaultDecl",
+        "SimSchema"
+      ],
+      "imports": [
+        "android.content.Context",
+        "kotlinx.serialization.Serializable",
+        "kotlinx.serialization.json.Json"
+      ],
+      "symbols": [
+        "inGroup(group: String)",
+        "parse(raw: String)",
+        "load(ctx: Context)",
+        "class SimGroup",
+        "class SimField",
+        "class SimVaultDecl",
+        "class SimSchema"
+      ]
+    },
+    {
+      "path": "ac_cloud-dialer/app/src/main/kotlin/org/fossify/phone/sim/SimSecretVault.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "SimSecretVault",
+        "AccountSimSecretVault"
+      ],
+      "imports": [
+        "android.content.Context",
+        "android.net.Uri",
+        "android.os.Bundle"
+      ],
+      "symbols": [
+        "get(key: String, field: String)",
+        "put(key: String, field: String, value: String)",
+        "call(method: String, arg: String, extras: Bundle?)",
+        "class SimSecretVault",
+        "class AccountSimSecretVault"
       ]
     },
     {
@@ -188190,6 +189786,68 @@
         "table(list: List<SimStatus>)",
         "class SimStatus",
         "class StatusFormat"
+      ]
+    },
+    {
+      "path": "ac_cloud-dialer/app/src/main/kotlin/org/fossify/phone/sim/SimSubPages.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "SimsNavState",
+        "SimSubPages",
+        "copyToClipboard",
+        "SimsOverviewPage"
+      ],
+      "imports": [
+        "android.content.ClipData",
+        "android.content.ClipboardManager",
+        "android.content.Context",
+        "android.os.PersistableBundle",
+        "android.widget.Toast",
+        "androidx.compose.foundation.ExperimentalFoundationApi",
+        "androidx.compose.foundation.combinedClickable",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.Spacer",
+        "androidx.compose.foundation.layout.fillMaxSize",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.foundation.layout.height",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.foundation.lazy.LazyColumn",
+        "androidx.compose.foundation.lazy.items",
+        "androidx.compose.foundation.text.KeyboardOptions",
+        "androidx.compose.material3.OutlinedTextField",
+        "androidx.compose.material3.Text",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.LaunchedEffect",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.remember",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.platform.LocalContext",
+        "androidx.compose.ui.platform.testTag",
+        "androidx.compose.ui.text.TextStyle",
+        "androidx.compose.ui.text.input.KeyboardType",
+        "androidx.compose.ui.text.style.TextOverflow",
+        "com.diegonmarcos.superapp.themebg.ThemeColors",
+        "com.diegonmarcos.superapp.uikit.KitStoreCaption",
+        "com.diegonmarcos.superapp.uikit.KitStoreDot",
+        "com.diegonmarcos.superapp.uikit.KitStoreName",
+        "com.diegonmarcos.superapp.uikit.KitStoreQuick",
+        "com.diegonmarcos.superapp.uikit.KitStoreRow",
+        "com.diegonmarcos.superapp.uikit.KitStoreRowLine",
+        "kotlinx.coroutines.Dispatchers",
+        "kotlinx.coroutines.withContext"
+      ],
+      "symbols": [
+        "copyToClipboard(ctx: Context, label: String, text: String, sensitive: Boolean)",
+        "SimsOverviewPage(c: ThemeColors)",
+        "SimListPage(data: List<SimUsageBlock>, c: ThemeColors)",
+        "SimLine(tag: String, label: String, value: String, c: ThemeColors, onClick: (()",
+        "SimEditor(f: SimField, initial: String, c: ThemeColors, onSave: (String)",
+        "SimDetailPage(b: SimUsageBlock, store: SimManualStore, schema: SimSchema, c: ThemeColors)",
+        "class SimsNavState",
+        "class SimSubPages"
       ]
     },
     {
@@ -189171,6 +190829,7 @@
         "securityCryptoIsOnTheAppsRuntimeClasspath()",
         "configsPagesAreTheDeclaredTopNavInOrder()",
         "bottomNavOrder()",
+        "keypadVoipAndSimsAreNotPagerPages()",
         "tablesHaveOneCellPerHeaderColumn()",
         "class DialerConfigsTest"
       ]
@@ -189207,6 +190866,54 @@
       ]
     },
     {
+      "path": "ac_cloud-dialer/app/src/test/kotlin/org/fossify/phone/nav/T9Test.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "T9Test"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.io.File"
+      ],
+      "symbols": [
+        "names(typed: String, all: List<T9Contact>)",
+        "lettersUnderTheDigits()",
+        "nameSpellsDigitsPerWordAndFoldsAccents()",
+        "wordStartAndFullNameMatch()",
+        "numberSubstringMatches()",
+        "rankedExactPrefixWordStartSubstringThenRecentThenFrequent()",
+        "severalNamesAndNumberExactAndLimit()",
+        "duplicatesCollapseAndNothingTypedIsNothing()",
+        "class T9Test"
+      ]
+    },
+    {
+      "path": "ac_cloud-dialer/app/src/test/kotlin/org/fossify/phone/nav/VoipTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "VoipTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.io.File"
+      ],
+      "symbols": [
+        "declaredProviderIsWhatsAppBusinessWithFallback()",
+        "resolvesToW4bWhenInstalled()",
+        "fallsBackToWhatsAppThenToThePlainLink()",
+        "noDigitsNoTarget()",
+        "recentsAreNewestFirstDistinctAndLimited()",
+        "class VoipTest"
+      ]
+    },
+    {
       "path": "ac_cloud-dialer/app/src/test/kotlin/org/fossify/phone/sim/SimConfigsTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -189225,10 +190932,83 @@
         "row(rows: List<SimRow>, l: String)",
         "mapsFields()",
         "masksIdsUnlessRevealed()",
-        "pinPukAlwaysMasked()",
+        "allowanceTakesBareGigabytes()",
         "statusFormatting()",
         "usagePeriodsAndTotals()",
         "class SimConfigsTest"
+      ]
+    },
+    {
+      "path": "ac_cloud-dialer/app/src/test/kotlin/org/fossify/phone/sim/SimFakes.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "FakePrefs",
+        "FakeVault",
+        "FakeSubSource",
+        "simSchema"
+      ],
+      "imports": [
+        "android.content.SharedPreferences",
+        "java.io.File"
+      ],
+      "symbols": [
+        "getAll()",
+        "getString(key: String?, defValue: String?)",
+        "getStringSet(key: String?, defValues: MutableSet<String>?)",
+        "getInt(key: String?, defValue: Int)",
+        "getLong(key: String?, defValue: Long)",
+        "getFloat(key: String?, defValue: Float)",
+        "getBoolean(key: String?, defValue: Boolean)",
+        "contains(key: String?)",
+        "registerOnSharedPreferenceChangeListener(l: SharedPreferences.OnSharedPreferenceChangeListener?)",
+        "unregisterOnSharedPreferenceChangeListener(l: SharedPreferences.OnSharedPreferenceChangeListener?)",
+        "edit()",
+        "putString(key: String?, value: String?)",
+        "putStringSet(key: String?, values: MutableSet<String>?)",
+        "putInt(key: String?, value: Int)",
+        "putLong(key: String?, value: Long)",
+        "putFloat(key: String?, value: Float)",
+        "putBoolean(key: String?, value: Boolean)",
+        "remove(key: String?)",
+        "clear()",
+        "commit()",
+        "apply()",
+        "get(key: String, field: String)",
+        "put(key: String, field: String, value: String)",
+        "active()",
+        "accessible()",
+        "live(subscriptionId: Int)",
+        "class FakePrefs",
+        "class FakeVault",
+        "class FakeSubSource"
+      ]
+    },
+    {
+      "path": "ac_cloud-dialer/app/src/test/kotlin/org/fossify/phone/sim/SimSubPagesTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "SimSubPagesTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "rec(id: Int, slot: Int, embedded: Boolean, iccid: String? = \"89340711000012345$id\", name: String = \"SIM $id\")",
+        "onePageForEachPhysicalSlotAndEachEsimProfileIncludingInactive()",
+        "keyIsIccidThenSubscriptionIdThenSlot()",
+        "detectedRowsShowStatusTailAndNaWithWhatIsNeeded()",
+        "editableFieldsAreDeclaredAndPersistPerSubscription()",
+        "fresh(prefs: FakePrefs, vault: FakeVault)",
+        "pinAndPukNeverReachThePlainPrefsOnlyTheVault()",
+        "withoutTheVaultASecretIsNotSavedAnywhere()",
+        "maskHidesEveryPinDigit()",
+        "class SimSubPagesTest"
       ]
     },
     {
@@ -190892,13 +192672,13 @@
         "hubOf(github: String)",
         "cloneable(github: String)",
         "routable(id: String)",
+        "resolveRoute(tab: String, page: String, routes: List<LegacyRoute> = legacyRoutes)",
         "decode(b64: String)",
         "parseWebserver(text: String)",
         "element(text: String)",
         "str(key: String, default: String = \"\")",
         "bool(key: String, default: Boolean = false)",
-        "boolOrNull(key: String)",
-        "int(key: String)"
+        "boolOrNull(key: String)"
       ]
     },
     {
@@ -191164,6 +192944,7 @@
         "com.diegonmarcos.cloudlib.editorcore.EditorTab",
         "com.diegonmarcos.cloudlib.editorcore.EditorTabs",
         "com.diegonmarcos.cloudlib.editorcore.FileTabsStore",
+        "com.diegonmarcos.cloudlib.editorcore.HexView",
         "com.diegonmarcos.cloudlib.editorcore.Route",
         "com.diegonmarcos.cloudlib.editorcore.Viewers",
         "com.diegonmarcos.cloudlib.jsonviewer.JsonViewer",
@@ -191175,14 +192956,36 @@
         "com.diegonmarcos.cloudlib.wysiwyg.TextFormat",
         "com.diegonmarcos.cloudlib.wysiwyg.WysiwygEditor",
         "com.diegonmarcos.cloudlib.wysiwyg.WysiwygView",
-        "java.io.File",
-        "java.util.concurrent.atomic.AtomicReference"
+        "java.io.File"
       ],
       "symbols": [
         "EditorScreen(actions: DriveActions, openInExplorer: (String)",
         "EditorBody(tab: EditorTab, route: Route)",
         "TextBody(path: String, format: TextFormat, editable: Boolean, json: Boolean = false)",
         "flush()"
+      ]
+    },
+    {
+      "path": "ac_cloud-drive/app/src/main/java/com/diegonmarcos/clouddrive/editor/ExternalOpen.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ExternalOpen"
+      ],
+      "imports": [
+        "android.content.Context",
+        "android.net.Uri",
+        "android.provider.OpenableColumns",
+        "java.io.File"
+      ],
+      "symbols": [
+        "safeName(raw: String?)",
+        "slot(uri: String)",
+        "resolve(ctx: Context, uri: Uri)",
+        "copy(ctx: Context, uri: Uri)",
+        "displayName(ctx: Context, uri: Uri)",
+        "sweep(root: File)",
+        "class ExternalOpen"
       ]
     },
     {
@@ -191868,7 +193671,7 @@
         "PlaceRow(p: Places.Place, onRemove: (()",
         "list()",
         "ExplorerSearchBar(query: String, onQuery: (String)",
-        "ScopedResults(search: FilesController.ScopedSearch, decl: Declarations.FilesSearchDecl, onOpen: (FileOps.Entry)",
+        "ScopedResults(search: FilesController.ScopedSearch, inPlace: List<FileOps.Entry>, recursive: Boolean, decl: Declarations.FilesSearchDecl, onOpen: (FileOps.Entry)",
         "class FilesDialog",
         "class NewFolder",
         "class NewFile",
@@ -192024,6 +193827,80 @@
       ]
     },
     {
+      "path": "ac_cloud-drive/app/src/main/java/com/diegonmarcos/clouddrive/files/SearchResultsTable.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "SearchResultsTable"
+      ],
+      "imports": [
+        "androidx.compose.foundation.ExperimentalFoundationApi",
+        "androidx.compose.foundation.background",
+        "androidx.compose.foundation.clickable",
+        "androidx.compose.foundation.horizontalScroll",
+        "androidx.compose.foundation.layout.Box",
+        "androidx.compose.foundation.layout.Row",
+        "androidx.compose.foundation.layout.fillMaxSize",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.foundation.layout.width",
+        "androidx.compose.foundation.lazy.LazyColumn",
+        "androidx.compose.foundation.lazy.items",
+        "androidx.compose.foundation.rememberScrollState",
+        "androidx.compose.material3.MaterialTheme",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.ui.Alignment",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.platform.testTag",
+        "androidx.compose.ui.res.stringResource",
+        "androidx.compose.ui.text.style.TextAlign",
+        "androidx.compose.ui.unit.Dp",
+        "com.diegonmarcos.clouddrive.R",
+        "com.diegonmarcos.clouddrive.ui.DriveMetrics",
+        "com.diegonmarcos.clouddrive.ui.DriveTags",
+        "com.diegonmarcos.clouddrive.ui.Hairline",
+        "com.diegonmarcos.superapp.uikit.KitStoreCaption",
+        "com.diegonmarcos.superapp.uikit.KitStoreName",
+        "com.diegonmarcos.superapp.uikit.KitStoreRow",
+        "com.diegonmarcos.superapp.uikit.KitStoreRowLine"
+      ],
+      "symbols": [
+        "label(c: SearchColumn)",
+        "widthOf(c: SearchColumn)",
+        "SearchResultsTable(rows: List<SearchRow>, sort: SearchSort, onSort: (SearchColumn)"
+      ]
+    },
+    {
+      "path": "ac_cloud-drive/app/src/main/java/com/diegonmarcos/clouddrive/files/SearchTable.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "SearchColumn",
+        "SearchSort",
+        "SearchRow",
+        "SearchTable"
+      ],
+      "imports": [
+        "java.nio.file.Files",
+        "java.nio.file.Paths",
+        "java.nio.file.attribute.BasicFileAttributes",
+        "java.text.SimpleDateFormat",
+        "java.util.Date",
+        "java.util.Locale"
+      ],
+      "symbols": [
+        "tap(c: SearchColumn)",
+        "createdTime(path: String, fallback: Long)",
+        "rows(entries: List<FileOps.Entry>, createdOf: (String, Long)",
+        "sort(rows: List<SearchRow>, s: SearchSort)",
+        "date(ms: Long, zone: java.util.TimeZone = java.util.TimeZone.getDefault()",
+        "sizeText(r: SearchRow)",
+        "class SearchColumn",
+        "class SearchSort",
+        "class SearchRow",
+        "class SearchTable"
+      ]
+    },
+    {
       "path": "ac_cloud-drive/app/src/main/java/com/diegonmarcos/clouddrive/GitSyncWorker.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -192058,62 +193935,6 @@
         "networkUnmetered(context: Context)",
         "schedule(context: Context)",
         "class GitSyncWorker"
-      ]
-    },
-    {
-      "path": "ac_cloud-drive/app/src/main/java/com/diegonmarcos/clouddrive/home/HomeScreen.kt",
-      "lang": "kotlin",
-      "role": "kotlin",
-      "exports": [
-        "HomeScreen"
-      ],
-      "imports": [
-        "android.os.Environment",
-        "android.os.StatFs",
-        "androidx.compose.foundation.layout.Box",
-        "androidx.compose.foundation.layout.Column",
-        "androidx.compose.foundation.layout.consumeWindowInsets",
-        "androidx.compose.foundation.layout.fillMaxSize",
-        "androidx.compose.foundation.layout.fillMaxWidth",
-        "androidx.compose.foundation.layout.padding",
-        "androidx.compose.foundation.lazy.LazyColumn",
-        "androidx.compose.material3.MaterialTheme",
-        "androidx.compose.material3.Text",
-        "androidx.compose.runtime.Composable",
-        "androidx.compose.runtime.LaunchedEffect",
-        "androidx.compose.runtime.collectAsState",
-        "androidx.compose.runtime.getValue",
-        "androidx.compose.runtime.mutableStateOf",
-        "androidx.compose.runtime.remember",
-        "androidx.compose.runtime.saveable.rememberSaveable",
-        "androidx.compose.runtime.setValue",
-        "androidx.compose.ui.Modifier",
-        "androidx.compose.ui.platform.testTag",
-        "androidx.compose.ui.res.stringResource",
-        "com.diegonmarcos.clouddrive.Declarations",
-        "com.diegonmarcos.clouddrive.DriveActions",
-        "com.diegonmarcos.clouddrive.R",
-        "com.diegonmarcos.clouddrive.SharedStore",
-        "com.diegonmarcos.clouddrive.apps.AppsGrid",
-        "com.diegonmarcos.clouddrive.files.FileOps",
-        "com.diegonmarcos.clouddrive.sync.GitSyncCoordinator",
-        "com.diegonmarcos.clouddrive.ui.DriveCard",
-        "com.diegonmarcos.clouddrive.ui.DriveMetrics",
-        "com.diegonmarcos.clouddrive.ui.DriveTags",
-        "com.diegonmarcos.clouddrive.ui.EmptyState",
-        "com.diegonmarcos.clouddrive.ui.IconCatalog",
-        "com.diegonmarcos.clouddrive.ui.topIslandInsets",
-        "com.diegonmarcos.clouddrive.ui.Pill",
-        "com.diegonmarcos.clouddrive.ui.PillRow",
-        "com.diegonmarcos.clouddrive.ui.SectionHeader",
-        "com.diegonmarcos.clouddrive.ui.StatusLight",
-        "com.diegonmarcos.clouddrive.ui.StorageBar"
-      ],
-      "symbols": [
-        "HomeScreen( git: GitSyncCoordinator, actions: DriveActions, onOpenFiles: ()",
-        "HomeAppsPage( git: GitSyncCoordinator, actions: DriveActions, onOpenFiles: ()",
-        "dirOf(sectionId: String)",
-        "statOf(dir: File?)"
       ]
     },
     {
@@ -192213,6 +194034,7 @@
         "startup()",
         "guarded(phase: String, optional: Boolean = false, block: ()",
         "onNewIntent(intent: Intent)",
+        "handleOpenIntent(i: Intent?)",
         "onResume()",
         "Root()",
         "requestStorageAccess()",
@@ -192230,6 +194052,31 @@
         "openAuthProfile(pkg: String, target: String, extra: String)",
         "mimeOf(file: File)",
         "class MainActivity"
+      ]
+    },
+    {
+      "path": "ac_cloud-drive/app/src/main/java/com/diegonmarcos/clouddrive/manage/AndroidVolumeProbe.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "AndroidVolumeProbe"
+      ],
+      "imports": [
+        "android.content.Context",
+        "android.os.Environment",
+        "android.os.StatFs",
+        "com.diegonmarcos.clouddrive.Declarations",
+        "com.diegonmarcos.clouddrive.SharedStore",
+        "com.diegonmarcos.superapp.usbdrive.StorageVolumes",
+        "java.io.File"
+      ],
+      "symbols": [
+        "emulated()",
+        "terminalHome()",
+        "appHome(fleet: String, relative: String)",
+        "externalDrives()",
+        "stat(dir: File)",
+        "class AndroidVolumeProbe"
       ]
     },
     {
@@ -192307,7 +194154,7 @@
       ],
       "symbols": [
         "roots()",
-        "scan(scope: CoroutineScope, full: Boolean = false)",
+        "scan(scope: CoroutineScope, full: Boolean = false, volumeRoots: List<File> = roots()",
         "cancel()",
         "forget(path: String)",
         "get(ctx: Context)",
@@ -192358,8 +194205,10 @@
       "symbols": [
         "inGroup(g: DataGroup)",
         "extensionOf(name: String)",
+        "classifyOrOthers(name: String, mime: String? = null)",
         "classify(name: String, mime: String? = null)",
         "groupState(g: DataGroup)",
+        "of(kinds: Set<DataKind>)",
         "toggleGroup(g: DataGroup)",
         "toggle(k: DataKind)",
         "accepts(k: DataKind?)",
@@ -192378,6 +194227,7 @@
       "role": "kotlin",
       "exports": [
         "ManageScreen",
+        "LocalAppsPage",
         "AppsPage",
         "AppsTable",
         "DataFilters",
@@ -192403,6 +194253,7 @@
         "androidx.compose.foundation.lazy.LazyColumn",
         "androidx.compose.foundation.lazy.items",
         "androidx.compose.foundation.rememberScrollState",
+        "androidx.compose.foundation.verticalScroll",
         "androidx.compose.material3.DropdownMenu",
         "androidx.compose.material3.DropdownMenuItem",
         "androidx.compose.material3.LinearProgressIndicator",
@@ -192422,11 +194273,11 @@
         "androidx.compose.ui.Alignment",
         "androidx.compose.ui.Modifier",
         "androidx.compose.ui.platform.LocalContext",
-        "androidx.compose.ui.platform.testTag",
-        "androidx.compose.ui.res.stringResource"
+        "androidx.compose.ui.platform.testTag"
       ],
       "symbols": [
-        "ManageScreen(actions: DriveActions, prefs: DrivePrefs, onShowInExplorer: (String)",
+        "ManageScreen( actions: DriveActions, prefs: DrivePrefs, storage: StorageCoordinator, onShowInExplorer: (String)",
+        "LocalAppsPage(actions: DriveActions, prefs: DrivePrefs, onRoute: (tab: String, page: String)",
         "AppsPage(prefs: DrivePrefs, collect: (android.content.Context)",
         "columnLabel(c: AppColumn)",
         "AppsTable(rows: List<AppRow>, column: AppColumn, descending: Boolean, onSort: (AppColumn)",
@@ -192437,6 +194288,98 @@
         "DataFilters(filter: DataFilter, onChange: (DataFilter)",
         "DataPage(actions: DriveActions, prefs: DrivePrefs, onShowInExplorer: (String)",
         "open(actions: DriveActions, path: String)"
+      ]
+    },
+    {
+      "path": "ac_cloud-drive/app/src/main/java/com/diegonmarcos/clouddrive/manage/OverviewPage.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "OverviewPage"
+      ],
+      "imports": [
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.Row",
+        "androidx.compose.foundation.layout.Spacer",
+        "androidx.compose.foundation.layout.fillMaxSize",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.foundation.layout.height",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.foundation.layout.size",
+        "androidx.compose.foundation.layout.width",
+        "androidx.compose.foundation.lazy.LazyColumn",
+        "androidx.compose.foundation.lazy.items",
+        "androidx.compose.material3.Icon",
+        "androidx.compose.material3.LinearProgressIndicator",
+        "androidx.compose.material3.MaterialTheme",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.LaunchedEffect",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.remember",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.ui.Alignment",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.platform.LocalContext",
+        "androidx.compose.ui.platform.testTag",
+        "androidx.compose.ui.res.stringResource",
+        "com.diegonmarcos.clouddrive.Declarations",
+        "com.diegonmarcos.clouddrive.R",
+        "com.diegonmarcos.clouddrive.files.FileOps",
+        "com.diegonmarcos.clouddrive.storage.StorageCoordinator",
+        "com.diegonmarcos.clouddrive.ui.DriveMetrics",
+        "com.diegonmarcos.clouddrive.ui.DriveTags",
+        "com.diegonmarcos.clouddrive.ui.Hairline",
+        "com.diegonmarcos.clouddrive.ui.IconCatalog",
+        "com.diegonmarcos.clouddrive.ui.SectionHeader",
+        "com.diegonmarcos.superapp.uikit.KitStoreCaption",
+        "com.diegonmarcos.superapp.uikit.KitStoreName",
+        "com.diegonmarcos.superapp.uikit.KitStoreRow",
+        "com.diegonmarcos.superapp.uikit.KitStoreRowLine",
+        "kotlinx.coroutines.Dispatchers",
+        "kotlinx.coroutines.withContext"
+      ],
+      "symbols": [
+        "OverviewPage(storage: StorageCoordinator)",
+        "VolumeRow(label: String, icon: String, usage: VolumeUsage?, id: String = usage?.id.orEmpty()",
+        "usageLine(u: VolumeUsage)"
+      ]
+    },
+    {
+      "path": "ac_cloud-drive/app/src/main/java/com/diegonmarcos/clouddrive/manage/VolumeOverview.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "VolumeUsage",
+        "ExternalDrive",
+        "VolumeProbe",
+        "CloudAbout",
+        "CloudTarget",
+        "VolumeOverview"
+      ],
+      "imports": [
+        "com.diegonmarcos.clouddrive.Declarations",
+        "com.diegonmarcos.superapp.usbdrive.UsbVolumeModel",
+        "java.io.File"
+      ],
+      "symbols": [
+        "emulated()",
+        "terminalHome()",
+        "appHome(fleet: String, relative: String)",
+        "externalDrives()",
+        "stat(dir: File)",
+        "externalFrom(volumes: List<UsbVolumeModel.Volume>)",
+        "rootsOf(s: Declarations.ManageSource, probe: VolumeProbe)",
+        "local(sources: List<Declarations.ManageSource>, probe: VolumeProbe)",
+        "dirRow(s: Declarations.ManageSource, dir: File?, probe: VolumeProbe, missing: String)",
+        "cloudTargets(sources: List<Declarations.ManageSource>, remotes: List<Declarations.RemoteDecl>, providers: List<Declarations.MountProviderDecl>)",
+        "cloudUsage(t: CloudTarget, about: (String)",
+        "class VolumeUsage",
+        "class ExternalDrive",
+        "class VolumeProbe",
+        "class CloudAbout",
+        "class CloudTarget",
+        "class VolumeOverview"
       ]
     },
     {
@@ -196331,13 +198274,16 @@
         "hostToken(id: String)",
         "hostSignIn(id: String)",
         "filesSearchScope(id: String)",
-        "homePage(id: String)",
         "appTile(label: String)",
         "explorerPage(id: String)",
         "managePage(id: String)",
         "appsHeader(column: String)",
         "dataGroup(id: String)",
         "dataKind(id: String)",
+        "searchHeader(column: String)",
+        "overviewRow(id: String)",
+        "appsView(id: String)",
+        "dataVolume(id: String)",
         "topIslandInsets()",
         "ToolbarIsland( title: String, subtitle: String? = null, modifier: Modifier = Modifier, leading: (@Composable ()",
         "IslandAction(icon: ImageVector, description: String, enabled: Boolean = true, tint: Color = MaterialTheme.colorScheme.onSurface, onClick: ()",
@@ -197111,7 +199057,7 @@
         "syncPagesAndPeriods()",
         "cloudListAndGitHostsAreDeclared()",
         "volumesAreReachableUnderExplorerCloud()",
-        "homeAndFsyncDeclareTheirSubPages()",
+        "manageAndFsyncDeclareTheirSubPages()",
         "volumesDeclaresTheFourClassesAndTheirRules()",
         "noFolderRuleIsDeclaredAndARuleStillMapsOntoOneRcloneJob()",
         "filesDeclaresTwoSectionsAndEveryPlaceNamesOne()",
@@ -197123,6 +199069,9 @@
         "e(name: String, dir: Boolean = false, mime: String = \"text/plain\", size: Long = 1)",
         "dataFilesKeepTheirShape()",
         "blankAndBrokenInputParseToEmpty()",
+        "legacy()",
+        "theDeletedHomeRoutesLandOnTheirNewPlaces()",
+        "manageDeclaresItsVolumeSources()",
         "class DeclarationsTest",
         "class is"
       ]
@@ -197180,6 +199129,49 @@
       "symbols": [
         "reset()",
         "class EditorHookTest"
+      ]
+    },
+    {
+      "path": "ac_cloud-drive/app/src/test/java/com/diegonmarcos/clouddrive/editor/ExternalOpenTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ExternalOpenTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "class ExternalOpenTest"
+      ]
+    },
+    {
+      "path": "ac_cloud-drive/app/src/test/java/com/diegonmarcos/clouddrive/editor/ManifestOpenWithTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ManifestOpenWithTest"
+      ],
+      "imports": [
+        "java.io.File",
+        "javax.xml.parsers.DocumentBuilderFactory",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNotNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "org.w3c.dom.Element"
+      ],
+      "symbols": [
+        "attr(name: String)",
+        "kids(tag: String)",
+        "filters(activity: String)",
+        "claims(mimes: Set<String>, type: String)",
+        "class ManifestOpenWithTest",
+        "class Filter"
       ]
     },
     {
@@ -197492,6 +199484,26 @@
       ]
     },
     {
+      "path": "ac_cloud-drive/app/src/test/java/com/diegonmarcos/clouddrive/files/SearchTableTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "SearchTableTest"
+      ],
+      "imports": [
+        "java.nio.file.Files",
+        "java.util.TimeZone",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "entry(path: String, size: Long, modified: Long, dir: Boolean = false)",
+        "names(s: SearchSort)",
+        "class SearchTableTest"
+      ]
+    },
+    {
       "path": "ac_cloud-drive/app/src/test/java/com/diegonmarcos/clouddrive/LegacyImportTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -197586,11 +199598,50 @@
       "symbols": [
         "everyListedExtensionLandsInItsSubtype()",
         "groupsHoldTheOwnersSubtypes()",
+        "theRemainderIsOthersAndATrashPrefixIsBin()",
         "mimeClassifiesWhatTheExtensionDoesNot()",
-        "defaultFilterIsMediaOnly()",
+        "defaultFilterIsAllAndAcceptsEveryKind()",
+        "pickingNarrowsFromAllAndEmptyingReturnsToAll()",
         "subtypesToggleIndependentlyAndTheGroupShowsPartial()",
         "filterPersistsThroughEncodeDecode()",
         "class FileClassifierTest"
+      ]
+    },
+    {
+      "path": "ac_cloud-drive/app/src/test/java/com/diegonmarcos/clouddrive/manage/VolumeOverviewTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "VolumeOverviewTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.clouddrive.Declarations",
+        "com.diegonmarcos.superapp.usbdrive.UsbVolumeModel",
+        "java.io.File",
+        "java.nio.file.Files",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNotNull",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "vol(uuid: String?, desc: String, path: String?, removable: Boolean = true, primary: Boolean = false, state: String = UsbVolumeModel.STATE_MOUNTED, total: Long = 32_000, free: Long = 8_000)",
+        "emulated()",
+        "terminalHome()",
+        "appHome(fleet: String, relative: String)",
+        "externalDrives()",
+        "stat(dir: File)",
+        "externalDrivesComeFromStorageManagerVolumes()",
+        "localRowsFollowTheDeclaredOrderWithUsage()",
+        "anUnavailableVolumeIsNaWithItsReasonNeverMissing()",
+        "rootsOfResolvesTheDeclaredKinds()",
+        "provider(id: String, remote: String, others: Boolean = false)",
+        "cloudTargetsAreTheDeclaredRemotesThenTheOtherMounts()",
+        "cloudUsageUsesRcloneAboutAndExplainsWhatItCannot()",
+        "class VolumeOverviewTest",
+        "class Fake"
       ]
     },
     {
@@ -379953,11 +382004,20 @@
         "default()",
         "stack(ctx: Context, sectionId: String, pageId: String)",
         "load()",
+        "parse(arr: JSONArray)",
+        "entryFor(all: List<Entry>, target: String)",
         "packageFor(target: String)",
+        "labelFor(target: String)",
+        "resolve(all: List<Entry>, target: String, installed: (String)",
         "launch(ctx: Context, target: String)",
         "class Section",
         "class Sections",
-        "class ExternalApps"
+        "class ExternalApps",
+        "class Entry",
+        "class Resolution",
+        "class Open",
+        "class Missing",
+        "class Unknown"
       ]
     },
     {
@@ -380155,6 +382215,7 @@
         "androidx.compose.ui.platform.LocalContext",
         "androidx.compose.ui.platform.testTag",
         "androidx.compose.ui.res.colorResource",
+        "androidx.compose.ui.res.stringResource",
         "androidx.compose.ui.text.font.FontWeight",
         "androidx.compose.ui.text.style.TextAlign",
         "androidx.compose.ui.unit.dp",
@@ -380162,8 +382223,7 @@
         "kotlinx.coroutines.Dispatchers",
         "kotlinx.coroutines.withContext",
         "org.json.JSONArray",
-        "java.text.SimpleDateFormat",
-        "java.util.Date"
+        "java.text.SimpleDateFormat"
       ],
       "symbols": [
         "view(v: TasksView)",
@@ -380393,6 +382453,27 @@
         "block(p: String)",
         "defs(p: String)",
         "class ExperiencesTest"
+      ]
+    },
+    {
+      "path": "ac_cloud-me/app/src/test/java/com/diegonmarcos/cloudme/ExternalAppsTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ExternalAppsTest"
+      ],
+      "imports": [
+        "android.app.Application",
+        "org.json.JSONObject",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "org.junit.runner.RunWith",
+        "org.robolectric.RobolectricTestRunner",
+        "org.robolectric.annotation.Config"
+      ],
+      "symbols": [
+        "class ExternalAppsTest"
       ]
     },
     {
@@ -385572,7 +387653,10 @@
         "androidx.compose.runtime.mutableStateOf",
         "androidx.compose.runtime.setValue",
         "androidx.lifecycle.lifecycleScope",
+        "com.diegonmarcos.cloudnav.NavConfig",
+        "com.diegonmarcos.cloudnav.maps.TimelineBuilder",
         "com.diegonmarcos.cloudnav.maps.TimelineSync",
+        "com.diegonmarcos.cloudnav.maps.TimelineViews",
         "com.diegonmarcos.superapp.uikit.KitComposeFragment",
         "com.diegonmarcos.superapp.uikit.KitPalette",
         "kotlinx.coroutines.Dispatchers",
@@ -385588,6 +387672,7 @@
         "correct(c: Correction)",
         "load(date: LocalDate)",
         "compute(app: android.content.Context, date: LocalDate, today: LocalDate)",
+        "stepsTotal(app: android.content.Context, store: List<com.diegonmarcos.cloudnav.maps.TlSegment>, a: Long, b: Long)",
         "class DayFragment"
       ]
     },
@@ -385647,6 +387732,8 @@
         "androidx.compose.runtime.DisposableEffect",
         "androidx.compose.runtime.LaunchedEffect",
         "androidx.compose.runtime.remember",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.rememberUpdatedState",
         "androidx.compose.ui.Modifier",
         "androidx.compose.ui.platform.LocalContext",
         "androidx.compose.ui.viewinterop.AndroidView",
@@ -385671,7 +387758,7 @@
         "org.maplibre.android.style.sources.GeoJsonSource"
       ],
       "symbols": [
-        "DayRouteMap(model: RouteModel, modifier: Modifier = Modifier, styleKey: String = \"light\")",
+        "DayRouteMap(model: RouteModel, modifier: Modifier = Modifier, styleKey: String = \"light\", onPin: ((Int)",
         "lifecycleOwner()",
         "draw(ctx: Context, map: MapLibreMap, style: Style, m: RouteModel)",
         "icon(ctx: Context, name: String)",
@@ -385708,6 +387795,7 @@
         "androidx.compose.foundation.layout.size",
         "androidx.compose.foundation.lazy.LazyColumn",
         "androidx.compose.foundation.lazy.items",
+        "androidx.compose.foundation.lazy.rememberLazyListState",
         "androidx.compose.foundation.rememberScrollState",
         "androidx.compose.foundation.horizontalScroll",
         "androidx.compose.foundation.shape.CircleShape",
@@ -385722,18 +387810,19 @@
         "androidx.compose.material3.Text",
         "androidx.compose.material3.TextButton",
         "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.LaunchedEffect",
+        "androidx.compose.runtime.rememberCoroutineScope",
         "androidx.compose.runtime.getValue",
         "androidx.compose.runtime.mutableStateOf",
         "androidx.compose.runtime.remember",
         "androidx.compose.runtime.setValue",
         "androidx.compose.ui.Alignment",
         "androidx.compose.ui.Modifier",
-        "androidx.compose.ui.draw.clip",
-        "androidx.compose.ui.geometry.Offset",
-        "androidx.compose.ui.graphics.Color",
-        "androidx.compose.ui.graphics.drawscope.Stroke"
+        "androidx.compose.ui.draw.clip"
       ],
       "symbols": [
+        "detail(i: Int)",
+        "act(i: Int, a: String)",
         "tab(t: DayTab)",
         "seg(i: Int)",
         "confirm(i: Int)",
@@ -385748,10 +387837,14 @@
         "DayScreen(ui: DayUi, tab: DayTab, onTab: (DayTab)",
         "DayTabView(ui: DayUi, a: DayActions, zone: ZoneId)",
         "DatePicker(ui: DayUi, a: DayActions)",
+        "SummaryBar(b: DayBar, onMap: ()",
         "SummaryRow(ui: DayUi)",
-        "RouteMap(ui: DayUi)",
+        "RouteMap(model: RouteModel, onPin: (Int)",
         "Glyph(res: Int, bg: Color, desc: String, modifier: Modifier = Modifier)",
-        "StayRow(i: Int, s: DaySeg.Stay, a: DayActions, zone: ZoneId, onAddMissing: ()",
+        "StayRow(i: Int, s: DaySeg.Stay, a: DayActions, zone: ZoneId, ui: DayUi, rules: DayRules, expanded: Boolean, onToggle: ()",
+        "StayDetail(i: Int, s: DaySeg.Stay, place: Place?, a: DayActions, zone: ZoneId, ui: DayUi, rules: DayRules)",
+        "DetailLine(label: String, value: String, mono: Boolean = false)",
+        "copyText(ctx: android.content.Context, label: String, text: String)",
         "MoveRow(i: Int, m: DaySeg.Move, a: DayActions, zone: ZoneId)",
         "splitAt(a: DayActions, s: DaySeg, zone: ZoneId, ctx: android.content.Context)",
         "NameDialog(title: String, initial: String, onDismiss: ()",
@@ -385798,6 +387891,7 @@
       ],
       "symbols": [
         "parse(s: String?)",
+        "infer(avgMps: Double, stepsPerMin: Double, hint: Hint?)",
         "infer(avgMps: Double, stepsPerMin: Double)",
         "dayStart(d: LocalDate, zone: ZoneId)",
         "placeOf(s: TlSegment)",
@@ -385833,10 +387927,55 @@
         "class Stay",
         "class Move",
         "class ModeInference",
-        "class Correction",
-        "class Type",
-        "class Remembered",
-        "class DayTimeline"
+        "class a",
+        "class Hint",
+        "class Correction"
+      ]
+    },
+    {
+      "path": "ac_cloud-nav/app/src/main/java/com/diegonmarcos/cloudnav/tracker/DayView.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "DayRules",
+        "FixSegmenter",
+        "StepsTotal",
+        "DayBar",
+        "PlaceDetail",
+        "DayDetails"
+      ],
+      "imports": [
+        "com.diegonmarcos.cloudnav.maps.TimelineBuilder",
+        "org.json.JSONObject",
+        "java.time.ZoneId",
+        "java.util.Locale"
+      ],
+      "symbols": [
+        "fromJson(s: String)",
+        "list(k: String, def: List<String>)",
+        "add(f: PlaceFix)",
+        "d(aLat: Double, aLon: Double, bLat: Double, bLon: Double)",
+        "runs(fixes: List<PlaceFix>, r: DayRules)",
+        "segment(fixes: List<PlaceFix>, fromMs: Long, toMs: Long, rules: DayRules = DayRules()",
+        "path(prev: Run?, a: Long, b: Long, next: Run?)",
+        "move(prev: Run?, a: Long, b: Long, next: Run?)",
+        "bar(day: List<DaySeg>, steps: StepsTotal)",
+        "geoCode(lat: Double, lon: Double)",
+        "field(p: Place, name: String)",
+        "address(p: Place, fields: List<String>)",
+        "fullAddress(p: Place, r: DayRules = DayRules()",
+        "copyAddress(p: Place, r: DayRules = DayRules()",
+        "sourceLabel(kind: String)",
+        "source(fixes: List<PlaceFix>)",
+        "accuracy(fixes: List<PlaceFix>)",
+        "detail(day: List<DaySeg>, i: Int, fixes: List<PlaceFix>, r: DayRules = DayRules()",
+        "class DayRules",
+        "class FixSegmenter",
+        "class Run",
+        "class StepsTotal",
+        "class DayBar",
+        "class PlaceDetail",
+        "class DayDetails"
       ]
     },
     {
@@ -387203,6 +389342,33 @@
       ]
     },
     {
+      "path": "ac_cloud-nav/app/src/test/java/com/diegonmarcos/cloudnav/tracker/DayViewTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "DayViewTest"
+      ],
+      "imports": [
+        "org.json.JSONObject",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertNotNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.io.File",
+        "java.time.LocalDate",
+        "java.time.ZoneOffset"
+      ],
+      "symbols": [
+        "at(h: Int, m: Int = 0)",
+        "fix(ts: Long, lat: Double, lon: Double = 8.0, acc: Double = 10.0, src: String = \"gps\")",
+        "segment(f: List<PlaceFix> = track, rules: DayRules = DayRules()",
+        "assertGapless(day: List<DaySeg>)",
+        "two(dLat: Double)",
+        "kmh(v: Double)",
+        "class DayViewTest"
+      ]
+    },
+    {
       "path": "ac_cloud-nav/app/src/test/java/com/diegonmarcos/cloudnav/tracker/DeadReckoningTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -387852,6 +390018,95 @@
       ]
     },
     {
+      "path": "ac_cloud-news/app/src/main/assets/media-core.js",
+      "lang": "js",
+      "role": "module",
+      "exports": [],
+      "imports": [],
+      "symbols": [
+        "parseDeclared(json)",
+        "feedUrl(ch)",
+        "handleUrl(h)",
+        "embedUrl(id, startSec)",
+        "apiUrl(ids)",
+        "decode(s)",
+        "cdata(s)",
+        "tagText(block, name)",
+        "tagAttr(block, name, attr)",
+        "authorName(block)",
+        "parseFeed(xml, ch)",
+        "thumbHq(id)",
+        "thumbMax(id)",
+        "channelIdFromHtml(html)",
+        "resolveChannel(ch, io)",
+        "merge(list)",
+        "loadFeed(channels, io)",
+        "one(ch)",
+        "next()",
+        "checkFeed(channels, res)",
+        "parseDuration(iso)",
+        "parseApi(json)",
+        "enrich(videos, map)",
+        "buildChips(order, channels, videos)",
+        "filterVideos(videos, chip, channels)",
+        "formatDuration(sec)",
+        "p(n)",
+        "formatViews(n)",
+        "c(x, u)",
+        "relTime(ms, now)",
+        "u(n, w)",
+        "toCard(v, channels, now)"
+      ]
+    },
+    {
+      "path": "ac_cloud-news/app/src/main/assets/media-ui.js",
+      "lang": "js",
+      "role": "module",
+      "exports": [],
+      "imports": [],
+      "symbols": [
+        "bridge()",
+        "bcall(m, args)",
+        "store()",
+        "available()",
+        "fetchVia(url, mode)",
+        "poll()",
+        "makeIo(mode)",
+        "channels()",
+        "offered()",
+        "load(mode)",
+        "enrichViaApi(token, mode)",
+        "open()",
+        "refresh()",
+        "activeChip()",
+        "visible()",
+        "renderAll()",
+        "renderChips()",
+        "renderStatus()",
+        "avatarHtml(c)",
+        "cardHtml(v)",
+        "renderList()",
+        "bindCards(root)",
+        "watchSentinel()",
+        "more()",
+        "thumbLoad(img)",
+        "thumbFail(img)",
+        "setPtr(h, label)",
+        "initPtr()",
+        "slot()",
+        "fitSlot()",
+        "play(id)",
+        "sendMode()",
+        "setMode(mode)",
+        "expand()",
+        "onPlayerClosed()",
+        "onTab(tab)",
+        "initOnce()",
+        "renderKey(mountId)",
+        "save(v)"
+      ]
+    },
+    {
       "path": "ac_cloud-news/app/src/main/assets/sources-decl.js",
       "lang": "js",
       "role": "module",
@@ -388048,9 +390303,129 @@
       "symbols": [
         "onCreate(savedInstanceState: Bundle?)",
         "onConsoleMessage(m: ConsoleMessage)",
+        "handleOnBackPressed()",
+        "onPause()",
+        "onResume()",
+        "onDestroy()",
         "NewsShell()",
         "class MainActivity",
         "class added"
+      ]
+    },
+    {
+      "path": "ac_cloud-news/app/src/main/java/com/diegonmarcos/cloudnews/MediaBridge.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "MediaBridge"
+      ],
+      "imports": [
+        "android.app.Activity",
+        "android.net.ConnectivityManager",
+        "android.net.NetworkCapabilities",
+        "android.os.BatteryManager",
+        "android.util.Base64",
+        "android.webkit.JavascriptInterface",
+        "android.webkit.WebSettings",
+        "org.json.JSONObject",
+        "java.io.File",
+        "java.util.UUID",
+        "java.util.concurrent.ConcurrentHashMap",
+        "java.util.concurrent.Executors"
+      ],
+      "symbols": [
+        "config()",
+        "fetchStart(url: String, mode: String)",
+        "fetchResult(job: String)",
+        "hasKey()",
+        "setKey(value: String)",
+        "resume(id: String)",
+        "play(url: String, l: String, t: String, w: String, h: String)",
+        "setMode(mode: String, l: String, t: String, w: String, h: String)",
+        "stop()",
+        "rectOf(l: String, t: String, w: String, h: String)",
+        "autoAllowed()",
+        "class MediaBridge"
+      ]
+    },
+    {
+      "path": "ac_cloud-news/app/src/main/java/com/diegonmarcos/cloudnews/MediaFetcher.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "MediaFetcher"
+      ],
+      "imports": [
+        "org.json.JSONObject",
+        "java.io.ByteArrayOutputStream",
+        "java.io.File",
+        "java.io.IOException",
+        "java.net.HttpURLConnection",
+        "java.net.URL",
+        "java.net.URLEncoder"
+      ],
+      "symbols": [
+        "fetch(url: String, mode: String)",
+        "network(urlT: String, kind: Kind, needsKey: Boolean)",
+        "readCapped(s: java.io.InputStream)",
+        "ok(c: JSONObject, age: Long)",
+        "fail(code: String, msg: String)",
+        "kindOf(url: String)",
+        "class is",
+        "class MediaFetcher",
+        "class HttpFail",
+        "class Kind"
+      ]
+    },
+    {
+      "path": "ac_cloud-news/app/src/main/java/com/diegonmarcos/cloudnews/MediaPlayerOverlay.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "MediaPlayerOverlay",
+        "f"
+      ],
+      "imports": [
+        "android.annotation.SuppressLint",
+        "android.app.Activity",
+        "android.content.Context",
+        "android.content.pm.ActivityInfo",
+        "android.graphics.Color",
+        "android.view.Gravity",
+        "android.view.View",
+        "android.view.ViewGroup",
+        "android.webkit.JavascriptInterface",
+        "android.webkit.WebChromeClient",
+        "android.webkit.WebResourceRequest",
+        "android.webkit.WebView",
+        "android.webkit.WebViewClient",
+        "android.widget.FrameLayout",
+        "android.widget.TextView",
+        "androidx.core.view.WindowInsetsCompat",
+        "androidx.core.view.WindowInsetsControllerCompat"
+      ],
+      "symbols": [
+        "pos(t: Double, s: Int)",
+        "shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest)",
+        "onShowCustomView(view: View, callback: CustomViewCallback)",
+        "onHideCustomView()",
+        "play(url: String, l: Int, t: Int, w: Int, h: Int)",
+        "setMode(m: String, l: Int, t: Int, w: Int, h: Int)",
+        "stop()",
+        "resumeAt(id: String)",
+        "onPause()",
+        "onResume()",
+        "destroy()",
+        "inFullscreen()",
+        "leaveFullscreen()",
+        "layout()",
+        "persist()",
+        "enterFullscreen(view: View, cb: WebChromeClient.CustomViewCallback)",
+        "exitFullscreen()",
+        "idOf(url: String)",
+        "wrapper(src: String)",
+        "class MediaPlayerOverlay",
+        "class PosSink"
       ]
     },
     {
@@ -388122,6 +390497,31 @@
         "saved()",
         "toggleSaved(json: String)",
         "config()"
+      ]
+    },
+    {
+      "path": "ac_cloud-news/app/src/test/java/com/diegonmarcos/cloudnews/ApifyKvLinkTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ApifyKvLinkTest"
+      ],
+      "imports": [
+        "android.app.Application",
+        "androidx.test.core.app.ApplicationProvider",
+        "com.diegonmarcos.superapp.apify.EncryptedApifyKv",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertNotNull",
+        "org.junit.Test",
+        "org.junit.runner.RunWith",
+        "org.robolectric.RobolectricTestRunner",
+        "org.robolectric.annotation.Config"
+      ],
+      "symbols": [
+        "securityCryptoIsOnNewsClasspath()",
+        "encryptedApifyKvInstantiatesAndRoundTrips()",
+        "class on",
+        "class ApifyKvLinkTest"
       ]
     },
     {
@@ -388247,6 +390647,20 @@
       ]
     },
     {
+      "path": "ac_cloud-news/test/test-media-feed.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "ok()",
+        "bad()"
+      ],
+      "imports": [],
+      "symbols": [
+        "ok()",
+        "bad()"
+      ]
+    },
+    {
       "path": "ac_cloud-news/test/test-news-web.sh",
       "lang": "sh",
       "role": "shell",
@@ -388299,6 +390713,21 @@
         "ta(name, fn)",
         "mem()",
         "deps(over)"
+      ]
+    },
+    {
+      "path": "ac_cloud-news/tests/media-core.test.js",
+      "lang": "js",
+      "role": "module",
+      "exports": [],
+      "imports": [
+        "assert",
+        "fs",
+        "path",
+        "../app/src/main/assets/media-core.js"
+      ],
+      "symbols": [
+        "t(name, fn)"
       ]
     },
     {
@@ -516807,6 +519236,89 @@
       ]
     },
     {
+      "path": "ac_cloud-tasks/app/src/main/java/com/diegonmarcos/cloudagenda/data/Notes.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "CheckItem",
+        "NoteCard",
+        "Notebook",
+        "NoteSection",
+        "NotePage",
+        "NotesSelection",
+        "NotesData",
+        "NoteFilters",
+        "NoteSorts",
+        "NotesQuery",
+        "NotesQueries",
+        "ColumnStep",
+        "Masonry",
+        "NoteTime",
+        "NoteColor",
+        "NoteChoice",
+        "NotesDecl",
+        "NotesJson",
+        "NotesStore",
+        "MemoryNotesStore",
+        "PrefsNotesStore",
+        "NotesModel"
+      ],
+      "imports": [
+        "android.content.Context",
+        "android.content.SharedPreferences",
+        "org.json.JSONArray",
+        "org.json.JSONObject",
+        "java.time.Instant",
+        "java.time.LocalDate",
+        "java.time.ZoneId",
+        "java.time.format.DateTimeFormatter",
+        "java.util.Locale",
+        "java.util.UUID"
+      ],
+      "symbols": [
+        "sectionsOf(notebookId: String)",
+        "pagesOf(notebookId: String, sectionId: String)",
+        "pageIds(sel: NotesSelection)",
+        "target(sel: NotesSelection)",
+        "withCard(card: NoteCard)",
+        "withoutCard(id: String)",
+        "haystack(c: NoteCard)",
+        "matches(c: NoteCard, search: String)",
+        "passes(c: NoteCard, filter: String)",
+        "sorted(cards: List<NoteCard>, sort: String)",
+        "visible(data: NotesData, q: NotesQuery)",
+        "columnsFor(widthDp: Float, steps: List<ColumnStep>)",
+        "estimate(c: NoteCard, previewBlocks: Int, previewChecks: Int)",
+        "distribute(heights: List<Int>, columns: Int)",
+        "label(ms: Long, now: Long, zone: ZoneId = ZoneId.systemDefault()",
+        "t(key: String)",
+        "color(id: String)",
+        "seed()",
+        "argb(hex: String)",
+        "parse(text: String)",
+        "load(context: Context)",
+        "encode(d: NotesData)",
+        "decode(text: String)",
+        "read()",
+        "write(text: String)",
+        "commit(next: NotesData)",
+        "addCard(pageId: String, text: String)",
+        "saveCard(card: NoteCard)",
+        "deleteCard(id: String)",
+        "togglePin(id: String)",
+        "toggleCheck(id: String, index: Int)",
+        "addNotebook(name: String)",
+        "addSection(notebookId: String, name: String)",
+        "addPage(sectionId: String, name: String)",
+        "class CheckItem",
+        "class NoteCard",
+        "class Notebook",
+        "class NoteSection",
+        "class NotePage",
+        "class NotesSelection"
+      ]
+    },
+    {
       "path": "ac_cloud-tasks/app/src/main/java/com/diegonmarcos/cloudagenda/data/ProjectSummary.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -517138,6 +519650,9 @@
         "com.diegonmarcos.cloudagenda.data.AttachmentKind",
         "com.diegonmarcos.cloudagenda.data.MockTask",
         "com.diegonmarcos.cloudagenda.data.MockTasks",
+        "com.diegonmarcos.cloudagenda.data.NotesDecl",
+        "com.diegonmarcos.cloudagenda.data.NotesModel",
+        "com.diegonmarcos.cloudagenda.data.PrefsNotesStore",
         "com.diegonmarcos.cloudagenda.data.Structure",
         "com.diegonmarcos.cloudagenda.data.ThemeMode",
         "com.diegonmarcos.cloudagenda.data.TasksDb",
@@ -517308,6 +519823,83 @@
         "class against",
         "class Ids",
         "class Declarations"
+      ]
+    },
+    {
+      "path": "ac_cloud-tasks/app/src/main/java/com/diegonmarcos/cloudagenda/ui/NotesPage.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "NotesTags",
+        "NotesPage"
+      ],
+      "imports": [
+        "androidx.compose.foundation.background",
+        "androidx.compose.foundation.border",
+        "androidx.compose.foundation.clickable",
+        "androidx.compose.foundation.horizontalScroll",
+        "androidx.compose.foundation.layout.Arrangement",
+        "androidx.compose.foundation.layout.Box",
+        "androidx.compose.foundation.layout.BoxWithConstraints",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.Row",
+        "androidx.compose.foundation.layout.fillMaxHeight",
+        "androidx.compose.foundation.layout.fillMaxSize",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.foundation.layout.height",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.foundation.layout.size",
+        "androidx.compose.foundation.layout.statusBarsPadding",
+        "androidx.compose.foundation.layout.width",
+        "androidx.compose.foundation.rememberScrollState",
+        "androidx.compose.foundation.shape.CircleShape",
+        "androidx.compose.foundation.shape.RoundedCornerShape",
+        "androidx.compose.foundation.text.BasicTextField",
+        "androidx.compose.foundation.text.KeyboardActions",
+        "androidx.compose.foundation.text.KeyboardOptions",
+        "androidx.compose.foundation.verticalScroll",
+        "androidx.compose.material3.AlertDialog",
+        "androidx.compose.material3.Checkbox",
+        "androidx.compose.material3.Surface",
+        "androidx.compose.material3.Text",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.remember",
+        "androidx.compose.runtime.saveable.rememberSaveable",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.ui.Alignment",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.draw.clip",
+        "androidx.compose.ui.graphics.Color",
+        "androidx.compose.ui.graphics.SolidColor",
+        "androidx.compose.ui.graphics.compositeOver"
+      ],
+      "symbols": [
+        "notebook(id: String)",
+        "section(id: String)",
+        "page(id: String)",
+        "card(id: String)",
+        "column(i: Int)",
+        "sort(id: String)",
+        "filter(id: String)",
+        "NotesPage(model: NotesModel, modifier: Modifier = Modifier, now: Long = System.currentTimeMillis()",
+        "refresh()",
+        "NotesChip(label: String, selected: Boolean, modifier: Modifier = Modifier, onClick: ()",
+        "PlusChip(label: String, onClick: ()",
+        "RailItem(label: String, selected: Boolean, modifier: Modifier = Modifier, onClick: ()",
+        "SectionTab(label: String, color: Color?, selected: Boolean, modifier: Modifier = Modifier, onClick: ()",
+        "Toolbar( decl: NotesDecl, search: String, onSearch: (String)",
+        "QuickAdd(decl: NotesDecl, onAdd: (String)",
+        "submit()",
+        "NoteCardView(card: NoteCard, decl: NotesDecl, now: Long, onOpen: ()",
+        "NoteEditor(card: NoteCard, decl: NotesDecl, now: Long, onSave: (NoteCard)",
+        "addTag()",
+        "addCheck()",
+        "NamePrompt(decl: NotesDecl, title: String, onCancel: ()",
+        "PlainField( value: String, onChange: (String)",
+        "class NotesTags",
+        "class PromptKind"
       ]
     },
     {
@@ -517647,9 +520239,9 @@
         "com.diegonmarcos.cloudagenda.data.Attachment",
         "com.diegonmarcos.cloudagenda.data.MockTask",
         "com.diegonmarcos.cloudagenda.data.MockTasks",
+        "com.diegonmarcos.cloudagenda.data.NotesModel",
         "com.diegonmarcos.cloudagenda.data.Structure",
-        "com.diegonmarcos.cloudagenda.data.ThemeMode",
-        "com.diegonmarcos.superapp.ai.AiAgent"
+        "com.diegonmarcos.cloudagenda.data.ThemeMode"
       ],
       "symbols": [
         "saveThemeMode(mode: ThemeMode)",
@@ -518094,6 +520686,45 @@
       ]
     },
     {
+      "path": "ac_cloud-tasks/app/src/test/java/com/diegonmarcos/cloudagenda/NotesTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "NotesTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.cloudagenda.data.CheckItem",
+        "com.diegonmarcos.cloudagenda.data.Masonry",
+        "com.diegonmarcos.cloudagenda.data.MemoryNotesStore",
+        "com.diegonmarcos.cloudagenda.data.NoteCard",
+        "com.diegonmarcos.cloudagenda.data.NoteFilters",
+        "com.diegonmarcos.cloudagenda.data.NoteSorts",
+        "com.diegonmarcos.cloudagenda.data.NotesDecl",
+        "com.diegonmarcos.cloudagenda.data.NotesJson",
+        "com.diegonmarcos.cloudagenda.data.NotesModel",
+        "com.diegonmarcos.cloudagenda.data.NotesQueries",
+        "com.diegonmarcos.cloudagenda.data.NotesQuery",
+        "com.diegonmarcos.cloudagenda.data.NotesSelection",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertNotNull",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "org.junit.runner.RunWith",
+        "org.robolectric.RobolectricTestRunner",
+        "java.io.File"
+      ],
+      "symbols": [
+        "model(store: MemoryNotesStore = MemoryNotesStore()",
+        "filled()",
+        "titles(m: NotesModel, sel: NotesSelection)",
+        "hits(s: String)",
+        "by(f: String)",
+        "order(s: String)",
+        "class NotesTest"
+      ]
+    },
+    {
       "path": "ac_cloud-tasks/app/src/test/java/com/diegonmarcos/cloudagenda/ProjectSummariesTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -518281,7 +520912,10 @@
         "com.diegonmarcos.cloudagenda.data.AgentConfig",
         "com.diegonmarcos.cloudagenda.data.Attachment",
         "com.diegonmarcos.cloudagenda.data.AttachmentKind",
+        "com.diegonmarcos.cloudagenda.data.MemoryNotesStore",
         "com.diegonmarcos.cloudagenda.data.MockTasks",
+        "com.diegonmarcos.cloudagenda.data.NotesDecl",
+        "com.diegonmarcos.cloudagenda.data.NotesModel",
         "com.diegonmarcos.cloudagenda.data.Structure",
         "com.diegonmarcos.cloudagenda.data.TasksDb",
         "com.diegonmarcos.cloudagenda.data.TasksPrefs",
@@ -518303,8 +520937,7 @@
         "org.junit.rules.RuleChain",
         "org.junit.rules.TestRule",
         "org.junit.runners.model.Statement",
-        "org.robolectric.RuntimeEnvironment",
-        "org.robolectric.Shadows.shadowOf"
+        "org.robolectric.RuntimeEnvironment"
       ],
       "symbols": [
         "tagStartsWith(prefix: String)",
@@ -526164,6 +528797,76 @@
       ]
     },
     {
+      "path": "ac_cloud-tools-small-llms/app/src/main/java/com/diegonmarcos/cloudtoolssmallllms/data/ConnectedIo.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "BleFound",
+        "UsbFound",
+        "ConnectedGrants",
+        "UsbList",
+        "BleScan",
+        "GattStatus",
+        "GattLine",
+        "GattSession"
+      ],
+      "imports": [
+        "android.annotation.SuppressLint",
+        "android.bluetooth.BluetoothDevice",
+        "android.bluetooth.BluetoothGatt",
+        "android.bluetooth.BluetoothGattCallback",
+        "android.bluetooth.BluetoothGattCharacteristic",
+        "android.bluetooth.BluetoothGattDescriptor",
+        "android.bluetooth.BluetoothManager",
+        "android.bluetooth.BluetoothProfile",
+        "android.bluetooth.le.BluetoothLeScanner",
+        "android.bluetooth.le.ScanCallback",
+        "android.bluetooth.le.ScanFilter",
+        "android.bluetooth.le.ScanResult",
+        "android.bluetooth.le.ScanSettings",
+        "android.content.Context",
+        "android.hardware.usb.UsbManager",
+        "android.os.Build",
+        "android.os.Handler",
+        "android.os.Looper",
+        "android.os.ParcelUuid",
+        "com.diegonmarcos.cloudtoolssmallllms.core.ConnectedProfile",
+        "com.diegonmarcos.cloudtoolssmallllms.core.GattKey",
+        "com.diegonmarcos.cloudtoolssmallllms.core.GattParse",
+        "com.diegonmarcos.cloudtoolssmallllms.core.Num",
+        "com.diegonmarcos.cloudtoolssmallllms.core.Uuid",
+        "java.util.UUID"
+      ],
+      "symbols": [
+        "ble(ctx: Context)",
+        "location(ctx: Context)",
+        "read(ctx: Context)",
+        "onScanResult(callbackType: Int, r: ScanResult)",
+        "onScanFailed(errorCode: Int)",
+        "start(profile: ConnectedProfile)",
+        "stop(notify: Boolean = true)",
+        "post(s: GattStatus)",
+        "emit(char: BluetoothGattCharacteristic)",
+        "onConnectionStateChange(g: BluetoothGatt, status: Int, newState: Int)",
+        "onServicesDiscovered(g: BluetoothGatt, status: Int)",
+        "onCharacteristicRead(g: BluetoothGatt, c: BluetoothGattCharacteristic, status: Int)",
+        "onCharacteristicChanged(g: BluetoothGatt, c: BluetoothGattCharacteristic)",
+        "onDescriptorWrite(g: BluetoothGatt, d: BluetoothGattDescriptor, status: Int)",
+        "next(g: BluetoothGatt)",
+        "close()",
+        "class BleFound",
+        "class and",
+        "class class",
+        "class UsbFound",
+        "class ConnectedGrants",
+        "class UsbList",
+        "class BleScan",
+        "class GattStatus",
+        "class GattLine",
+        "class GattSession"
+      ]
+    },
+    {
       "path": "ac_cloud-tools-small-llms/app/src/main/java/com/diegonmarcos/cloudtoolssmallllms/data/FleetRetrieval.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -526333,6 +529036,66 @@
         "write(value: String)",
         "clear()",
         "class SecretPrefs"
+      ]
+    },
+    {
+      "path": "ac_cloud-tools-small-llms/app/src/main/java/com/diegonmarcos/cloudtoolssmallllms/data/SensorHw.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "AndroidSensorSource",
+        "AndroidRegistrar",
+        "HwReading",
+        "HardwareProbe"
+      ],
+      "imports": [
+        "android.content.Context",
+        "android.content.Intent",
+        "android.content.IntentFilter",
+        "android.content.pm.PackageManager",
+        "android.hardware.ConsumerIrManager",
+        "android.hardware.Sensor",
+        "android.hardware.SensorEvent",
+        "android.hardware.SensorEventListener",
+        "android.hardware.SensorManager",
+        "android.hardware.TriggerEvent",
+        "android.hardware.TriggerEventListener",
+        "android.hardware.camera2.CameraCharacteristics",
+        "android.hardware.camera2.CameraManager",
+        "android.media.AudioManager",
+        "android.os.BatteryManager",
+        "android.os.Build",
+        "android.os.PowerManager",
+        "com.diegonmarcos.cloudtoolssmallllms.R",
+        "com.diegonmarcos.cloudtoolssmallllms.core.HardwareItem",
+        "com.diegonmarcos.cloudtoolssmallllms.core.Num",
+        "com.diegonmarcos.cloudtoolssmallllms.core.SensorRaw",
+        "com.diegonmarcos.cloudtoolssmallllms.core.SensorRegistrar",
+        "com.diegonmarcos.cloudtoolssmallllms.core.SensorRow",
+        "com.diegonmarcos.cloudtoolssmallllms.core.SensorSource"
+      ],
+      "symbols": [
+        "all()",
+        "sensors()",
+        "register(sensorId: Int, onValues: (FloatArray)",
+        "onTrigger(event: TriggerEvent)",
+        "onSensorChanged(event: SensorEvent)",
+        "onAccuracyChanged(sensor: Sensor?, accuracy: Int)",
+        "unregister()",
+        "str(id: Int, vararg a: Any)",
+        "yesNo(b: Boolean)",
+        "read(item: HardwareItem)",
+        "cameras()",
+        "microphones(has: Boolean)",
+        "biometric(hasFeature: Boolean)",
+        "status(authenticators: Int)",
+        "battery()",
+        "thermal(forecast: List<Int>)",
+        "has(ctx: Context, permission: String)",
+        "class AndroidSensorSource",
+        "class AndroidRegistrar",
+        "class HwReading",
+        "class HardwareProbe"
       ]
     },
     {
@@ -526602,6 +529365,77 @@
       ]
     },
     {
+      "path": "ac_cloud-tools-small-llms/app/src/main/java/com/diegonmarcos/cloudtoolssmallllms/ui/SensorsPage.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "SensorsPage",
+        "WhileStarted"
+      ],
+      "imports": [
+        "android.annotation.SuppressLint",
+        "android.content.Context",
+        "android.content.ContextWrapper",
+        "android.hardware.SensorManager",
+        "android.location.GnssStatus",
+        "android.location.LocationManager",
+        "android.os.Handler",
+        "android.os.Looper",
+        "androidx.compose.foundation.Canvas",
+        "androidx.compose.foundation.background",
+        "androidx.compose.foundation.layout.Box",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.fillMaxSize",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.foundation.layout.height",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.foundation.lazy.LazyColumn",
+        "androidx.compose.foundation.lazy.items",
+        "androidx.compose.material3.MaterialTheme",
+        "androidx.compose.material3.Text",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.DisposableEffect",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableIntStateOf",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.remember",
+        "androidx.compose.runtime.rememberUpdatedState",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.geometry.Offset",
+        "androidx.compose.ui.graphics.Path",
+        "androidx.compose.ui.graphics.drawscope.Stroke",
+        "androidx.compose.ui.platform.LocalContext",
+        "androidx.compose.ui.platform.testTag",
+        "androidx.compose.ui.res.stringResource",
+        "androidx.lifecycle.Lifecycle",
+        "androidx.lifecycle.LifecycleEventObserver",
+        "androidx.lifecycle.LifecycleOwner",
+        "com.diegonmarcos.cloudtoolssmallllms.Decl",
+        "com.diegonmarcos.cloudtoolssmallllms.R"
+      ],
+      "symbols": [
+        "SensorsPage(page: String)",
+        "WhileStarted(key: Any?, start: ()",
+        "onStateChanged(source: LifecycleOwner, event: Lifecycle.Event)",
+        "lifecycleOwner()",
+        "Rule()",
+        "Heading(text: String, tag: String? = null)",
+        "InbuiltPage(cat: SensorCatalogue)",
+        "SensorRowItem(r: SensorRow, cat: SensorCatalogue, sm: SensorManager?, expanded: Boolean, onClick: ()",
+        "LivePanel(sensorId: Int, cat: SensorCatalogue, sm: SensorManager)",
+        "HardwareRowItem(h: HardwareItem, probe: HardwareProbe, refresh: Int, expanded: Boolean, onClick: ()",
+        "GnssLive()",
+        "onSatelliteStatusChanged(status: GnssStatus)",
+        "ConnectedPage(cat: SensorCatalogue)",
+        "ProfileRow(p: ConnectedProfile, cat: SensorCatalogue, expanded: Boolean, onScan: ()",
+        "ScanPanel(p: ConnectedProfile, cat: SensorCatalogue)",
+        "startScan()",
+        "stopAll()",
+        "gattText(s: GattStatus)"
+      ]
+    },
+    {
       "path": "ac_cloud-tools-small-llms/app/src/main/java/com/diegonmarcos/cloudtoolssmallllms/ui/SettingsPage.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -526850,6 +529684,10 @@
         "toolsAiTheme()",
         "Chip(text: String, selected: Boolean = false, icon: String? = null, tag: String? = null, onClick: (()",
         "appFilter(id: String)",
+        "sensorRow(id: Int)",
+        "hardwareRow(id: String)",
+        "profileRow(id: String)",
+        "profileScan(id: String)",
         "mlRow(id: String)",
         "mlHeader(application: String)",
         "appInput(i: Int)",
@@ -526982,6 +529820,33 @@
       ]
     },
     {
+      "path": "ac_cloud-tools-small-llms/core/src/main/kotlin/com/diegonmarcos/cloudtoolssmallllms/core/ConnectedCatalogue.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "GattRead",
+        "ConnectedProfile",
+        "ConnectedCatalogue",
+        "Uuid"
+      ],
+      "imports": [
+        "org.json.JSONObject"
+      ],
+      "symbols": [
+        "bleMatches(serviceUuids: Collection<String>, manufacturerData: Map<Int, ByteArray>)",
+        "usbMatches(classes: Collection<Int>)",
+        "parse(o: JSONObject)",
+        "normalize(s: String)",
+        "short(full: String)",
+        "class GattRead",
+        "class ConnectedProfile",
+        "class is",
+        "class ConnectedCatalogue",
+        "class classes",
+        "class Uuid"
+      ]
+    },
+    {
       "path": "ac_cloud-tools-small-llms/core/src/main/kotlin/com/diegonmarcos/cloudtoolssmallllms/core/Costs.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -527005,6 +529870,50 @@
         "class PriceBook",
         "class Usage",
         "class Costs"
+      ]
+    },
+    {
+      "path": "ac_cloud-tools-small-llms/core/src/main/kotlin/com/diegonmarcos/cloudtoolssmallllms/core/GattParse.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "GattParse"
+      ],
+      "imports": [],
+      "symbols": [
+        "parse(parser: String, bytes: ByteArray)",
+        "heartRate(b: ByteArray)",
+        "healthTemperature(b: ByteArray)",
+        "weight(b: ByteArray)",
+        "bloodPressure(b: ByteArray)",
+        "u8(b: ByteArray, i: Int)",
+        "u16(b: ByteArray, i: Int)",
+        "s16(b: ByteArray, i: Int)",
+        "u32(b: ByteArray, i: Int)",
+        "sfloat(b: ByteArray, i: Int)",
+        "float32(b: ByteArray, i: Int)",
+        "class GattParse",
+        "class Value"
+      ]
+    },
+    {
+      "path": "ac_cloud-tools-small-llms/core/src/main/kotlin/com/diegonmarcos/cloudtoolssmallllms/core/LiveReading.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "SensorRegistrar",
+        "LiveReading"
+      ],
+      "imports": [],
+      "symbols": [
+        "register(sensorId: Int, onValues: (FloatArray)",
+        "unregister()",
+        "show(id: Int)",
+        "hide()",
+        "push(v: FloatArray)",
+        "range(series: Int)",
+        "class SensorRegistrar",
+        "class LiveReading"
       ]
     },
     {
@@ -527085,6 +529994,44 @@
         "class Router",
         "class and",
         "class in"
+      ]
+    },
+    {
+      "path": "ac_cloud-tools-small-llms/core/src/main/kotlin/com/diegonmarcos/cloudtoolssmallllms/core/SensorCatalogue.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "SensorRaw",
+        "SensorSource",
+        "SensorRow",
+        "HardwareItem",
+        "GattKey",
+        "SensorCatalogue",
+        "Num"
+      ],
+      "imports": [
+        "org.json.JSONArray",
+        "org.json.JSONObject",
+        "java.math.BigDecimal"
+      ],
+      "symbols": [
+        "sensors()",
+        "typeOf(type: Int, stringType: String = \"\")",
+        "fill(s: String)",
+        "modeOf(mode: Int)",
+        "rows(source: SensorSource)",
+        "parse(json: String)",
+        "pair(k: String)",
+        "objs(a: JSONArray)",
+        "strs(a: JSONArray?)",
+        "short(f: Float)",
+        "class SensorRaw",
+        "class SensorSource",
+        "class SensorRow",
+        "class HardwareItem",
+        "class GattKey",
+        "class SensorCatalogue",
+        "class Num"
       ]
     },
     {
@@ -527199,6 +530146,38 @@
         "sections()",
         "pagesOf(section: String)",
         "class NavAndMlsTest",
+        "class is"
+      ]
+    },
+    {
+      "path": "ac_cloud-tools-small-llms/core/src/test/kotlin/com/diegonmarcos/cloudtoolssmallllms/core/SensorsTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "SensorsTest"
+      ],
+      "imports": [
+        "org.json.JSONObject",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNotNull",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.io.File"
+      ],
+      "symbols": [
+        "sensor(id: Int, type: Int, name: String = \"s$id\", stringType: String = \"\", wake: Boolean = false, dynamic: Boolean = false, mode: Int = 0)",
+        "sensors()",
+        "register(sensorId: Int, onValues: (FloatArray)",
+        "unregister()",
+        "one(extra: String)",
+        "hr(vararg b: Int)",
+        "v(l: List<GattParse.Value>, k: String)",
+        "p(parser: String, vararg b: Int)",
+        "class SensorsTest",
+        "class FakeSensorManager",
+        "class FakeRegistrar",
         "class is"
       ]
     },
@@ -601206,26 +604185,26 @@
         "androidx.activity.compose.setContent",
         "androidx.activity.result.contract.ActivityResultContracts",
         "androidx.annotation.StringRes",
-        "androidx.appcompat.app.AppCompatActivity",
-        "androidx.compose.foundation.clickable",
-        "androidx.compose.foundation.horizontalScroll",
-        "androidx.compose.foundation.layout.Arrangement",
-        "androidx.compose.foundation.layout.Box",
-        "androidx.compose.foundation.layout.Column",
-        "androidx.compose.foundation.layout.PaddingValues",
-        "androidx.compose.foundation.layout.Row",
-        "androidx.compose.foundation.layout.Spacer",
-        "androidx.compose.foundation.layout.fillMaxSize",
-        "androidx.compose.foundation.layout.fillMaxWidth",
-        "androidx.compose.foundation.layout.height",
-        "androidx.compose.foundation.layout.imePadding",
-        "androidx.compose.foundation.layout.navigationBarsPadding",
-        "androidx.compose.foundation.layout.statusBarsPadding",
-        "androidx.compose.foundation.layout.padding",
-        "androidx.compose.foundation.layout.size",
-        "androidx.compose.foundation.layout.width",
-        "androidx.compose.foundation.lazy.LazyColumn",
-        "androidx.compose.foundation.lazy.items"
+        "androidx.compose.animation.AnimatedContent",
+        "androidx.compose.animation.AnimatedVisibility",
+        "androidx.compose.animation.ContentTransform",
+        "androidx.compose.animation.core.tween",
+        "androidx.compose.animation.fadeIn",
+        "androidx.compose.animation.fadeOut",
+        "androidx.compose.animation.scaleIn",
+        "androidx.compose.animation.slideInHorizontally",
+        "androidx.compose.animation.slideInVertically",
+        "androidx.compose.animation.slideOutVertically",
+        "androidx.compose.animation.togetherWith",
+        "androidx.compose.foundation.layout.widthIn",
+        "androidx.compose.foundation.lazy.rememberLazyListState",
+        "androidx.compose.material.icons.automirrored.rounded.FormatListBulleted",
+        "androidx.compose.material.icons.rounded.AddPhotoAlternate",
+        "androidx.compose.material.icons.rounded.CenterFocusStrong",
+        "androidx.compose.material.icons.rounded.Checklist",
+        "androidx.compose.material.icons.rounded.FileOpen",
+        "androidx.compose.material.icons.rounded.FullscreenExit",
+        "androidx.compose.material.icons.rounded.Link"
       ],
       "symbols": [
         "onCreate(savedInstanceState: Bundle?)",
@@ -601246,9 +604225,10 @@
         "attachSink()",
         "App()",
         "WriterShell()",
+        "writerTransition(from: Screen, to: Screen)",
         "sectionLabel(id: String, declared: String)",
         "DocsScreen()",
-        "DocCard(d: DocMeta)",
+        "DocCard(d: DocMeta, modifier: Modifier = Modifier)",
         "importFile(uri: Uri)",
         "importImage(uri: Uri)",
         "ThemeMenu()",
@@ -601256,7 +604236,8 @@
         "EditorScreen()",
         "format(action: (String, Int, Int)",
         "FormatBar()",
-        "act(id: String, icon: ImageVector, @StringRes label: Int, f: (String, Int, Int)",
+        "iconFor(a: FormatAction)",
+        "labelFor(a: FormatAction)",
         "ToolBar()",
         "iconFor(tool: WriterTool)",
         "FindBar(matches: List<IntRange>)",
@@ -601265,9 +604246,7 @@
         "OptionsSheet()",
         "requestListen(ask: ManagedActivityResultLauncher<Array<String>, Map<String, Boolean>>)",
         "startListen()",
-        "ListenPanel(ask: ManagedActivityResultLauncher<Array<String>, Map<String, Boolean>>)",
-        "listenRouteLine(s: ListenEngine.Status)",
-        "ToolTab( input: BoxState, inputLabel: String, output: BoxState, outputLabel: String, runLabel: String, onRun: ()"
+        "ListenPanel(ask: ManagedActivityResultLauncher<Array<String>, Map<String, Boolean>>)"
       ]
     },
     {
@@ -601424,6 +604403,7 @@
         "com.diegonmarcos.cloudwriter.core.Edit",
         "com.diegonmarcos.cloudwriter.core.Span",
         "com.diegonmarcos.cloudwriter.core.SpanKind",
+        "com.diegonmarcos.cloudwriter.core.WriterGrid",
         "com.diegonmarcos.superapp.uikit.CloudKitTheme",
         "com.diegonmarcos.superapp.uikit.KitPalette"
       ],
@@ -601463,9 +604443,12 @@
         "androidx.compose.ui.platform.LocalContext",
         "androidx.compose.ui.platform.LocalView",
         "androidx.core.view.WindowCompat",
-        "com.diegonmarcos.cloudwriter.WriterPrefs"
+        "com.diegonmarcos.cloudwriter.WriterPrefs",
+        "com.diegonmarcos.cloudwriter.core.Contrast",
+        "com.diegonmarcos.cloudwriter.core.TokenSet"
       ],
       "symbols": [
+        "toScheme(dark: Boolean)",
         "applyPureBlack(scheme: ColorScheme, darkTheme: Boolean, pureBlack: Boolean)",
         "pulledToBlack()",
         "current(context: Context)",
@@ -601474,6 +604457,84 @@
         "CloudWriterTheme( darkTheme: Boolean = WriterTheme.isDark()",
         "class becomes",
         "class WriterTheme"
+      ]
+    },
+    {
+      "path": "ac_cloud-writer/app/src/main/java/com/diegonmarcos/cloudwriter/ui/WriterComponents.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "WriterDims",
+        "WriterButton",
+        "WriterIconButton",
+        "WriterChip",
+        "WriterBar",
+        "BarDivider",
+        "WriterFilterChip",
+        "WriterTagPill",
+        "WriterSearchField",
+        "WriterDocCard",
+        "WriterLabel",
+        "EmptyDocsIllustration",
+        "WriterEmptyState"
+      ],
+      "imports": [
+        "androidx.compose.foundation.BorderStroke",
+        "androidx.compose.foundation.Canvas",
+        "androidx.compose.foundation.background",
+        "androidx.compose.foundation.border",
+        "androidx.compose.foundation.clickable",
+        "androidx.compose.foundation.horizontalScroll",
+        "androidx.compose.foundation.interaction.MutableInteractionSource",
+        "androidx.compose.foundation.interaction.collectIsPressedAsState",
+        "androidx.compose.foundation.layout.Arrangement",
+        "androidx.compose.foundation.layout.Box",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.Row",
+        "androidx.compose.foundation.layout.RowScope",
+        "androidx.compose.foundation.layout.Spacer",
+        "androidx.compose.foundation.layout.defaultMinSize",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.foundation.layout.height",
+        "androidx.compose.foundation.layout.heightIn",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.foundation.layout.size",
+        "androidx.compose.foundation.layout.width",
+        "androidx.compose.foundation.rememberScrollState",
+        "androidx.compose.foundation.selection.selectable",
+        "androidx.compose.foundation.shape.RoundedCornerShape",
+        "androidx.compose.material.icons.Icons",
+        "androidx.compose.material.icons.rounded.Check",
+        "androidx.compose.material.icons.rounded.Close",
+        "androidx.compose.material.icons.rounded.Search",
+        "androidx.compose.material3.Button",
+        "androidx.compose.material3.ButtonDefaults",
+        "androidx.compose.material3.Card",
+        "androidx.compose.material3.CardDefaults",
+        "androidx.compose.material3.FilledTonalButton",
+        "androidx.compose.material3.Icon",
+        "androidx.compose.material3.IconButton",
+        "androidx.compose.material3.MaterialTheme",
+        "androidx.compose.material3.Surface",
+        "androidx.compose.material3.Text",
+        "androidx.compose.material3.TextButton",
+        "androidx.compose.material3.TextField"
+      ],
+      "symbols": [
+        "tokens()",
+        "WriterButton( label: String, onClick: ()",
+        "WriterIconButton(icon: ImageVector, description: String, onClick: ()",
+        "WriterChip( id: String, icon: ImageVector, label: String, onClick: ()",
+        "WriterBar(modifier: Modifier = Modifier, content: @Composable RowScope.()",
+        "BarDivider()",
+        "WriterFilterChip(id: String, group: String, label: String, selected: Boolean, onClick: ()",
+        "WriterTagPill(text: String)",
+        "WriterSearchField(query: String, onQueryChange: (String)",
+        "WriterDocCard( tag: String, title: String, preview: String, meta: String, tags: List<String>, onClick: ()",
+        "WriterLabel(text: String, modifier: Modifier = Modifier)",
+        "EmptyDocsIllustration(modifier: Modifier = Modifier)",
+        "WriterEmptyState(title: String, caption: String, modifier: Modifier = Modifier, actions: @Composable ()",
+        "class WriterDims"
       ]
     },
     {
@@ -601507,7 +604568,7 @@
         "androidx.compose.foundation.selection.selectable",
         "androidx.compose.foundation.verticalScroll",
         "androidx.compose.material.icons.Icons",
-        "androidx.compose.material.icons.filled.ChevronRight",
+        "androidx.compose.material.icons.rounded.ChevronRight",
         "androidx.compose.material3.AlertDialog",
         "androidx.compose.material3.Card",
         "androidx.compose.material3.CardDefaults",
@@ -601575,19 +604636,19 @@
         "androidx.compose.foundation.layout.padding",
         "androidx.compose.foundation.rememberScrollState",
         "androidx.compose.material.icons.Icons",
-        "androidx.compose.material.icons.automirrored.filled.FormatListBulleted",
-        "androidx.compose.material.icons.filled.AddPhotoAlternate",
-        "androidx.compose.material.icons.filled.Code",
-        "androidx.compose.material.icons.filled.ContentCopy",
-        "androidx.compose.material.icons.filled.FileOpen",
-        "androidx.compose.material.icons.filled.FileUpload",
-        "androidx.compose.material.icons.filled.FormatBold",
-        "androidx.compose.material.icons.filled.FormatItalic",
-        "androidx.compose.material.icons.filled.FormatListNumbered",
-        "androidx.compose.material.icons.filled.FormatQuote",
-        "androidx.compose.material.icons.filled.Link",
-        "androidx.compose.material.icons.filled.PhotoCamera",
-        "androidx.compose.material.icons.filled.Title",
+        "androidx.compose.material.icons.automirrored.rounded.FormatListBulleted",
+        "androidx.compose.material.icons.rounded.AddPhotoAlternate",
+        "androidx.compose.material.icons.rounded.Code",
+        "androidx.compose.material.icons.rounded.ContentCopy",
+        "androidx.compose.material.icons.rounded.FileOpen",
+        "androidx.compose.material.icons.rounded.FileUpload",
+        "androidx.compose.material.icons.rounded.FormatBold",
+        "androidx.compose.material.icons.rounded.FormatItalic",
+        "androidx.compose.material.icons.rounded.FormatListNumbered",
+        "androidx.compose.material.icons.rounded.FormatQuote",
+        "androidx.compose.material.icons.rounded.Link",
+        "androidx.compose.material.icons.rounded.PhotoCamera",
+        "androidx.compose.material.icons.rounded.Title",
         "androidx.compose.material3.AlertDialog",
         "androidx.compose.material3.Card",
         "androidx.compose.material3.DropdownMenu",
@@ -601871,7 +604932,7 @@
         "androidx.compose.foundation.rememberScrollState",
         "androidx.compose.foundation.verticalScroll",
         "androidx.compose.material.icons.Icons",
-        "androidx.compose.material.icons.automirrored.filled.ArrowBack",
+        "androidx.compose.material.icons.automirrored.rounded.ArrowBack",
         "androidx.compose.material3.AlertDialog",
         "androidx.compose.material3.Card",
         "androidx.compose.material3.CardDefaults",
@@ -602091,6 +605152,41 @@
       ]
     },
     {
+      "path": "ac_cloud-writer/core/src/main/kotlin/com/diegonmarcos/cloudwriter/core/Design.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "TokenSet",
+        "Contrast",
+        "ControlKind",
+        "ControlState",
+        "ControlColors",
+        "Controls",
+        "WriterGrid"
+      ],
+      "imports": [
+        "kotlin.math.pow",
+        "kotlin.math.roundToInt"
+      ],
+      "symbols": [
+        "textPairs()",
+        "graphicPairs()",
+        "c(v: Long)",
+        "linear(channel: Int)",
+        "luminance(argb: Int)",
+        "ratio(a: Int, b: Int)",
+        "blend(base: Int, over: Int, t: Float)",
+        "colors(t: TokenSet, kind: ControlKind, state: ControlState)",
+        "class TokenSet",
+        "class Contrast",
+        "class ControlKind",
+        "class ControlState",
+        "class ControlColors",
+        "class Controls",
+        "class WriterGrid"
+      ]
+    },
+    {
       "path": "ac_cloud-writer/core/src/main/kotlin/com/diegonmarcos/cloudwriter/core/Dictation.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -602124,6 +605220,8 @@
         "readingMinutes(words: Int)",
         "initial(title: String)",
         "chars(text: String)",
+        "allTags(docs: List<DocMeta>)",
+        "withTag(docs: List<DocMeta>, tag: String?)",
         "class DocSort",
         "class SaveState",
         "class DocList"
@@ -602152,6 +605250,29 @@
         "file(id: String)",
         "class DocMeta",
         "class DocStore"
+      ]
+    },
+    {
+      "path": "ac_cloud-writer/core/src/main/kotlin/com/diegonmarcos/cloudwriter/core/Format.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "FormatAction",
+        "Focus",
+        "Tags"
+      ],
+      "imports": [],
+      "symbols": [
+        "apply(text: String, start: Int, end: Int)",
+        "lineStart(text: String, at: Int)",
+        "lineEnd(text: String, at: Int)",
+        "blank(text: String, from: Int, to: Int)",
+        "paragraph(text: String, caret: Int)",
+        "dimmed(text: String, caret: Int)",
+        "of(text: String, max: Int = 4)",
+        "class FormatAction",
+        "class Focus",
+        "class Tags"
       ]
     },
     {
@@ -602201,6 +605322,7 @@
         "find(text: String, query: String)",
         "wrap(text: String, start: Int, end: Int, marker: String)",
         "prefixLines(text: String, start: Int, end: Int, prefix: String)",
+        "link(text: String, start: Int, end: Int)",
         "heading(text: String, start: Int, end: Int, level: Int)",
         "spans(text: String)",
         "title(text: String)",
@@ -602213,6 +605335,24 @@
         "class SpanKind",
         "class Span",
         "class Markdown"
+      ]
+    },
+    {
+      "path": "ac_cloud-writer/core/src/main/kotlin/com/diegonmarcos/cloudwriter/core/Nav.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "Dest",
+        "Transition",
+        "WriterScreens"
+      ],
+      "imports": [],
+      "symbols": [
+        "back(current: Dest, configsReturn: Dest, hasDoc: Boolean)",
+        "transition(from: Dest, to: Dest)",
+        "class Dest",
+        "class Transition",
+        "class WriterScreens"
       ]
     },
     {
@@ -602328,6 +605468,35 @@
       ]
     },
     {
+      "path": "ac_cloud-writer/core/src/test/kotlin/com/diegonmarcos/cloudwriter/core/DesignTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "DesignTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertNotEquals",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "everyTextPairReachesAA()",
+        "everyGraphicPairReaches3to1()",
+        "theTestReadsEveryPair()",
+        "theTestCanFail()",
+        "contrastMath()",
+        "blendIsPerChannelAndOpaque()",
+        "surfaceLevelsStepApart()",
+        "enabledAndPressedControlsReachAA()",
+        "controlRolesAreFilledTonalText()",
+        "pressedMovesTheContainerTowardsTheInk()",
+        "disabledKeepsTheColoursAndDropsTheAlpha()",
+        "gridHoldsTheDesignRules()",
+        "class DesignTest"
+      ]
+    },
+    {
       "path": "ac_cloud-writer/core/src/test/kotlin/com/diegonmarcos/cloudwriter/core/DictationTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -602388,6 +605557,49 @@
       "symbols": [
         "store(dir: File = tmp.root)",
         "class DocStoreTest"
+      ]
+    },
+    {
+      "path": "ac_cloud-writer/core/src/test/kotlin/com/diegonmarcos/cloudwriter/core/FormatTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "FormatTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "run(a: FormatAction, text: String, s: Int, e: Int)",
+        "everyChipIsInAGroupOnce()",
+        "boldItalicCodeWrapTheSelection()",
+        "boldAgainUnwraps()",
+        "headingsMarkTheCaretLine()",
+        "listsQuotesAndChecklistsPrefixEveryTouchedLine()",
+        "checklistTogglesOff()",
+        "linkWrapsTheSelectionAndSelectsTheUrl()",
+        "linkWithNoSelectionInsertsASkeletonAndSelectsItsText()",
+        "linkAcceptsAReversedSelectionAndClamps()",
+        "paragraphIsTheRunOfNonBlankLines()",
+        "aCaretOnABlankLineOwnsNoParagraph()",
+        "aWhitespaceOnlyLineSeparatesParagraphs()",
+        "dimmedIsEverythingOutsideTheParagraph()",
+        "tagsAreHashWordsLowercasedOnceInOrder()",
+        "headingsNumbersAndFragmentsAreNotTags()",
+        "fencedCodeHasNoTags()",
+        "tagsAreCapped()",
+        "docStoreCarriesTags()",
+        "d(id: String, vararg tags: String)",
+        "allTagsMostUsedFirstThenAlphabetical()",
+        "withTagFilters()",
+        "backFromTheListLeavesTheApp()",
+        "listToEditorAndBack()",
+        "configsReturnsToTheOpenDocumentOnlyFromIt()",
+        "toolPagesGoBackToTheList()",
+        "otherMovesFadeThrough()",
+        "class FormatTest"
       ]
     },
     {
@@ -602807,6 +606019,189 @@
         "class KeyIn",
         "class Source",
         "class Catalog"
+      ]
+    },
+    {
+      "path": "ad_Capital-Stack-FinTerminal/app/src/main/java/com/diegonmarcos/capitalfinterm/CbData.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "CbCountry",
+        "CbRule",
+        "CbIndicator",
+        "CbGroup",
+        "CbSimpleItem",
+        "CbSimpleGroup",
+        "CbWeight",
+        "CbSource",
+        "CbModelDecl",
+        "CbDecl",
+        "CbProjection",
+        "CbYtd",
+        "CbSeries",
+        "CbSnapshot"
+      ],
+      "imports": [
+        "org.json.JSONArray",
+        "org.json.JSONObject"
+      ],
+      "symbols": [
+        "covers(country: String)",
+        "word(key: String)",
+        "strs(a: JSONArray?)",
+        "parse(countriesJson: String, indicatorsJson: String)",
+        "at(year: Int)",
+        "isForecast(year: Int)",
+        "latest()",
+        "of(country: String, indicator: String)",
+        "weight(option: String, country: String, year: Int)",
+        "years(o: JSONObject?)",
+        "parse(json: String)",
+        "class CbCountry",
+        "class CbRule",
+        "class CbIndicator",
+        "class CbGroup",
+        "class CbSimpleItem",
+        "class CbSimpleGroup",
+        "class CbWeight",
+        "class CbSource",
+        "class CbModelDecl",
+        "class CbDecl",
+        "class CbProjection",
+        "class CbYtd",
+        "class CbSeries",
+        "class CbSnapshot"
+      ]
+    },
+    {
+      "path": "ad_Capital-Stack-FinTerminal/app/src/main/java/com/diegonmarcos/capitalfinterm/CbRefresh.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "CbRefresh"
+      ],
+      "imports": [
+        "java.util.concurrent.ConcurrentHashMap",
+        "java.util.concurrent.Executors",
+        "java.util.concurrent.TimeUnit",
+        "org.json.JSONArray",
+        "org.json.JSONObject"
+      ],
+      "symbols": [
+        "text(url: String, ua: String = \"\")",
+        "src(id: String)",
+        "imfUrl(series: String)",
+        "from()",
+        "fredUrl(series: String)",
+        "wbUrl(series: String)",
+        "bisUrl(series: String, key: String)",
+        "oecdUrl()",
+        "ecbVintages()",
+        "ecbUrl(series: String, vintage: String)",
+        "urls(rule: CbRule, c: CbCountry)",
+        "scaled(a: Map<Int, Double>, s: Double)",
+        "fetch(rule: CbRule, c: CbCountry)",
+        "years(m: Map<Int, Double>)",
+        "run()",
+        "class CbRefresh",
+        "class Got"
+      ]
+    },
+    {
+      "path": "ad_Capital-Stack-FinTerminal/app/src/main/java/com/diegonmarcos/capitalfinterm/CbSources.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "YM",
+        "CbSources"
+      ],
+      "imports": [
+        "org.json.JSONArray",
+        "org.json.JSONObject"
+      ],
+      "symbols": [
+        "records(text: String)",
+        "split(line: String)",
+        "period(p: String)",
+        "imf(json: String, series: String)",
+        "oecd(text: String)",
+        "worldBank(text: String)",
+        "bis(text: String)",
+        "fred(text: String)",
+        "ecb(text: String)",
+        "yoy(a: Map<Int, Double>)",
+        "annualise(months: Map<YM, List<Double>>, agg: String, transform: String)",
+        "level(y: Int, ms: Set<Int>)",
+        "class CbSources"
+      ]
+    },
+    {
+      "path": "ad_Capital-Stack-FinTerminal/app/src/main/java/com/diegonmarcos/capitalfinterm/CbStore.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "CbStore"
+      ],
+      "imports": [
+        "android.content.Context",
+        "java.io.File",
+        "java.text.SimpleDateFormat",
+        "java.util.Calendar",
+        "java.util.Date",
+        "java.util.Locale"
+      ],
+      "symbols": [
+        "decl(ctx: Context)",
+        "snapshot(ctx: Context)",
+        "refresh(ctx: Context, decl: CbDecl)",
+        "class CbStore"
+      ]
+    },
+    {
+      "path": "ad_Capital-Stack-FinTerminal/app/src/main/java/com/diegonmarcos/capitalfinterm/CbTables.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "CbAggregate",
+        "CbHeat",
+        "CbModel",
+        "CbTable",
+        "CbTables"
+      ],
+      "imports": [
+        "java.util.Locale",
+        "kotlin.math.abs",
+        "kotlin.math.sqrt"
+      ],
+      "symbols": [
+        "weightedMean(pairs: List<Pair<Double?, Double?>>)",
+        "members(decl: CbDecl, group: String)",
+        "of(decl: CbDecl, snap: CbSnapshot, group: String, indicator: String, year: Int, weight: String)",
+        "share(decl: CbDecl, snap: CbSnapshot, group: String, year: Int, weight: String)",
+        "of(history: Collection<Double>, v: Double)",
+        "taylor(m: CbModelDecl, neutral: Double?, inflation: Double?, target: Double?, gap: Double?)",
+        "bias(m: CbModelDecl, implied: Double?, policy: Double?)",
+        "implied(decl: CbDecl, snap: CbSnapshot, country: CbCountry, year: Int)",
+        "columns(decl: CbDecl, full: Boolean, groupId: String)",
+        "groups(decl: CbDecl, full: Boolean)",
+        "years(snap: CbSnapshot, decl: CbDecl)",
+        "fmt(v: Double)",
+        "missing(decl: CbDecl, modelOnly: Boolean)",
+        "cell(decl: CbDecl, snap: CbSnapshot, c: Col, country: String, year: Int)",
+        "aggCell(decl: CbDecl, snap: CbSnapshot, c: Col, group: String, year: Int, weight: String)",
+        "wrap(name: String, width: Int = 11)",
+        "aggName(decl: CbDecl, group: String)",
+        "countries(decl: CbDecl, snap: CbSnapshot, full: Boolean, groupId: String, year: Int, weight: String)",
+        "groups(decl: CbDecl, snap: CbSnapshot, full: Boolean, groupId: String, year: Int, weight: String, shareLabel: String)",
+        "predictions(decl: CbDecl, snap: CbSnapshot)",
+        "transpose(t: CbTable)",
+        "class CbAggregate",
+        "class Agg",
+        "class CbHeat",
+        "class CbModel",
+        "class CbTable",
+        "class CbTables",
+        "class Col"
       ]
     },
     {
@@ -603739,6 +607134,66 @@
       ],
       "symbols": [
         "AppTheme(content: @Composable ()"
+      ]
+    },
+    {
+      "path": "ad_Capital-Stack-FinTerminal/app/src/main/java/com/diegonmarcos/capitalfinterm/ui/CbPage.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "CB_PAGE",
+        "CB_ROW",
+        "CB_DETAIL",
+        "CbPage"
+      ],
+      "imports": [
+        "androidx.compose.foundation.Canvas",
+        "androidx.compose.foundation.clickable",
+        "androidx.compose.foundation.horizontalScroll",
+        "androidx.compose.foundation.layout.Arrangement",
+        "androidx.compose.foundation.layout.BoxWithConstraints",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.PaddingValues",
+        "androidx.compose.foundation.layout.Row",
+        "androidx.compose.foundation.layout.fillMaxSize",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.foundation.layout.height",
+        "androidx.compose.foundation.layout.width",
+        "androidx.compose.foundation.lazy.LazyColumn",
+        "androidx.compose.foundation.lazy.items",
+        "androidx.compose.foundation.rememberScrollState",
+        "androidx.compose.foundation.verticalScroll",
+        "androidx.compose.material3.Text",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.remember",
+        "androidx.compose.runtime.rememberCoroutineScope",
+        "androidx.compose.runtime.saveable.rememberSaveable",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.geometry.Offset",
+        "androidx.compose.ui.platform.LocalContext",
+        "androidx.compose.ui.platform.testTag",
+        "androidx.compose.ui.unit.dp",
+        "com.diegonmarcos.capitalfinterm.CbAggregate",
+        "com.diegonmarcos.capitalfinterm.CbDecl",
+        "com.diegonmarcos.capitalfinterm.CbSnapshot",
+        "com.diegonmarcos.capitalfinterm.CbStore",
+        "com.diegonmarcos.capitalfinterm.CbTable",
+        "com.diegonmarcos.capitalfinterm.CbTables",
+        "com.diegonmarcos.capitalfinterm.Pages",
+        "com.diegonmarcos.capitalfinterm.ui.fin.FinChip",
+        "com.diegonmarcos.capitalfinterm.ui.fin.FinDim",
+        "com.diegonmarcos.capitalfinterm.ui.fin.FinMatrix",
+        "com.diegonmarcos.capitalfinterm.ui.fin.FinType"
+      ],
+      "symbols": [
+        "CbPage(view: String)",
+        "Chips(content: @Composable ()",
+        "CbDetail(decl: CbDecl, snap: CbSnapshot, countryId: String, full: Boolean, year: Int, onBack: ()",
+        "Spark(hist: List<Double>, fc: List<Double>)",
+        "at(i: Int)"
       ]
     },
     {
@@ -604925,6 +608380,88 @@
       ]
     },
     {
+      "path": "ad_Capital-Stack-FinTerminal/app/src/test/java/com/diegonmarcos/capitalfinterm/CbRefreshTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "CbRefreshTest"
+      ],
+      "imports": [
+        "java.io.IOException",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "get(url: String)",
+        "post(url: String)",
+        "send(url: String, headers: Map<String, String>, body: String?)",
+        "anImfAnswerBecomesSeriesWithSourceReleaseAndVintageAndNothingElseIsInvented()",
+        "theImfIsAskedWithItsDeclaredUserAgentOthersWithTheDefault()",
+        "nothingAnsweredMeansAnEmptySnapshotNotAFabricatedOne()",
+        "class CbRefreshTest",
+        "class Fake"
+      ]
+    },
+    {
+      "path": "ad_Capital-Stack-FinTerminal/app/src/test/java/com/diegonmarcos/capitalfinterm/CbSourcesTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "CbSourcesTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "imfDataMapperAnswerIsIso3ByYear()",
+        "oecdEconomicOutlookCsvKeepsAreaMeasureYearAndTheRelease()",
+        "worldBankAnswerKeepsIso3YearAndLastUpdated()",
+        "bisCsvKeepsAreaAndMonth()",
+        "fredCsvGroupsDaysByMonthAndSkipsMissingDays()",
+        "ecbProjectionCsvIsYearByValue()",
+        "quotedCsvFieldsKeepTheirCommas()",
+        "annualiseAveragesCompleteYearsAndKeepsTheYearInProgressApart()",
+        "annualiseYoyAndLast()",
+        "class CbSourcesTest"
+      ]
+    },
+    {
+      "path": "ad_Capital-Stack-FinTerminal/app/src/test/java/com/diegonmarcos/capitalfinterm/CbTablesTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "CbTablesTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNotNull",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "s(vararg fc: Pair<Int, Double>, hist: Map<Int, Double> = emptyMap()",
+        "snap(series: Map<String, Map<String, CbSeries>>, ppp: Map<String, Map<Int, Double>>, fx: Map<String, Map<Int, Double>> = ppp)",
+        "weightedMeanIsTheGdpWeightedMeanOfTheCountriesThatHaveAValue()",
+        "aCountryWithNoValueOrNoWeightDropsOutOfBothSums()",
+        "theAggregateOfADeclaredGroupUsesThatYearsWeightsAndNeverCountsEuroAreaMembersTwice()",
+        "theWeightOptionChangesTheAggregate()",
+        "heatComparesAValueWithTheCountrysOwnHistory()",
+        "taylorRuleIsNeutralPlusTargetPlusWeightedGaps()",
+        "aMissingValueIsAnNaCellAndALatentVariableIsModelOnly()",
+        "pinnedRowsAreTheWorldDmAndEmAggregatesAndAllCountriesFollow()",
+        "theSimpleAndFullListsKeepTheOwnersGroupCounts()",
+        "everyValueOfTheBakedSnapshotCarriesItsSourceAndVintage()",
+        "class CbTablesTest"
+      ]
+    },
+    {
       "path": "ad_Capital-Stack-FinTerminal/app/src/test/java/com/diegonmarcos/capitalfinterm/ControlTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -605012,6 +608549,7 @@
       ],
       "symbols": [
         "find(vararg candidates: String)",
+        "cbFixture(name: String)",
         "class DataFiles"
       ]
     },
@@ -605726,6 +609264,43 @@
       ]
     },
     {
+      "path": "ad_Capital-Stack-FinTerminal/scripts/gen-cb-snapshot.py",
+      "lang": "py",
+      "role": "script",
+      "exports": [
+        "parse_imf(text, series)",
+        "parse_oecd(text)",
+        "parse_wb(text)",
+        "parse_bis(text)",
+        "parse_fred(text)",
+        "parse_ecb(text)",
+        "get(url, tries=3, ua=None)",
+        "annualise(months, agg, transform, cur)",
+        "apply(vals, rule)",
+        "tf_yoy(a)",
+        "main(out_path)",
+        "selftest()"
+      ],
+      "imports": [
+        "csv"
+      ],
+      "symbols": [
+        "parse_imf(text, series)",
+        "parse_oecd(text)",
+        "parse_wb(text)",
+        "_period(p)",
+        "parse_bis(text)",
+        "parse_fred(text)",
+        "parse_ecb(text)",
+        "get(url, tries=3, ua=None)",
+        "annualise(months, agg, transform, cur)",
+        "apply(vals, rule)",
+        "tf_yoy(a)",
+        "main(out_path)",
+        "selftest()"
+      ]
+    },
+    {
       "path": "ad_Capital-Stack-FinTerminal/test/emulator-assert.sh",
       "lang": "sh",
       "role": "shell",
@@ -605749,6 +609324,24 @@
       "imports": [],
       "symbols": [
         "node_xy()"
+      ]
+    },
+    {
+      "path": "ad_Capital-Stack-FinTerminal/test/test-finterm-cb.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "check()",
+        "ok()",
+        "bad()",
+        "mutant()"
+      ],
+      "imports": [],
+      "symbols": [
+        "check()",
+        "ok()",
+        "bad()",
+        "mutant()"
       ]
     },
     {
@@ -606180,8 +609773,10 @@
         "android.graphics.Bitmap",
         "android.net.Uri",
         "android.os.Build",
+        "com.diegonmarcos.cloudlib.web.GpuPageModel",
+        "com.diegonmarcos.cloudlib.web.PageConsole",
+        "com.diegonmarcos.cloudlib.web.PageDiag",
         "com.diegonmarcos.cloudlib.web.SiteGpuChoice",
-        "com.diegonmarcos.cloudlib.web.WebGpuPlan",
         "com.diegonmarcos.cloudlib.web.WorldRoute",
         "com.diegonmarcos.cloudlib.web.WorldRouting",
         "android.webkit.PermissionRequest",
@@ -606207,16 +609802,14 @@
         "androidx.compose.foundation.layout.size",
         "androidx.compose.foundation.horizontalScroll",
         "androidx.compose.foundation.rememberScrollState",
+        "androidx.compose.foundation.verticalScroll",
         "androidx.compose.foundation.shape.RoundedCornerShape",
         "androidx.compose.material.icons.Icons",
         "androidx.compose.material.icons.filled.Add",
+        "androidx.compose.material.icons.filled.BugReport",
         "androidx.compose.material.icons.filled.Close",
         "androidx.compose.material.icons.filled.History",
-        "androidx.compose.material.icons.filled.DesktopWindows",
-        "androidx.compose.material.icons.filled.OpenInBrowser",
-        "androidx.compose.material.icons.filled.Refresh",
-        "androidx.compose.material.icons.filled.ViewInAr",
-        "androidx.compose.material3.Icon"
+        "androidx.compose.material.icons.filled.DesktopWindows"
       ],
       "symbols": [
         "GalaxyPage(tabs: Tabs.State, onSelect: (String)",
@@ -606245,11 +609838,9 @@
         "android.webkit.WebResourceRequest",
         "android.webkit.WebResourceResponse",
         "com.diegonmarcos.cgomniverse.BuildConfig",
+        "com.diegonmarcos.cloudlib.web.PinnedSites",
         "com.diegonmarcos.cloudlib.web.SiteCache",
-        "java.io.ByteArrayInputStream",
-        "java.io.File",
-        "java.net.HttpURLConnection",
-        "java.net.URL"
+        "com.diegonmarcos.cloudlib.web.SiteMirrorStore"
       ],
       "symbols": [
         "cache(ctx: Context)",
@@ -606257,7 +609848,6 @@
         "isPinned(ctx: Context, worldId: String)",
         "setPinned(ctx: Context, worldId: String, on: Boolean)",
         "intercept(ctx: Context, host: String, req: WebResourceRequest, refresh: Boolean)",
-        "response(s: SiteCache.Served)",
         "class Pinned"
       ]
     },
@@ -606583,6 +610173,48 @@
         "tabsPersist()",
         "aRestoreDropsUnknownWorldsAndALostSelection()",
         "class TabsTest"
+      ]
+    },
+    {
+      "path": "ad_CG-Omniverse/app/src/test/java/com/diegonmarcos/cgomniverse/WebEngineTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "WebEngineTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.cloudlib.web.GpuCaps",
+        "com.diegonmarcos.cloudlib.web.GpuPageModel",
+        "com.diegonmarcos.cloudlib.web.PageConsole",
+        "com.diegonmarcos.cloudlib.web.PageDiag",
+        "com.diegonmarcos.cloudlib.web.SiteCache",
+        "org.junit.After",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNotNull",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Before",
+        "org.junit.Rule",
+        "org.junit.Test",
+        "org.junit.rules.TemporaryFolder"
+      ],
+      "symbols": [
+        "cache()",
+        "quiet()",
+        "reset()",
+        "keepHeadersKeepsWhatABrowserActsOnAndDropsTheRest()",
+        "serveKeepsContentTypeCharsetCoopCoepAndContentLength()",
+        "corsEchoesTheRequestOriginElseWildcard()",
+        "anUpstreamCorsHeaderSurvivesWhenNoOriginIsAsked()",
+        "wasmIsAlwaysApplicationWasmAndKeepsItsLength()",
+        "aRangeSliceCarriesItsOwnLength()",
+        "caps(webgpu: Boolean, adapter: Boolean)",
+        "bannerNamesTheReasonCloudBrowserAndTheFlagAndNeverAnotherBrowser()",
+        "capabilityDetectionFromThePageProbe()",
+        "consoleRingIsBoundedKeepsErrorsAndFormats()",
+        "theSinkReceivesEveryEntry()",
+        "class WebEngineTest"
       ]
     },
     {
@@ -607011,9 +610643,6 @@
         "LibraryPage"
       ],
       "imports": [
-        "android.annotation.SuppressLint",
-        "android.webkit.JavascriptInterface",
-        "android.webkit.WebView",
         "androidx.compose.foundation.background",
         "androidx.compose.foundation.clickable",
         "androidx.compose.foundation.layout.Arrangement",
@@ -607029,7 +610658,6 @@
         "androidx.compose.foundation.verticalScroll",
         "androidx.compose.material3.Text",
         "androidx.compose.runtime.Composable",
-        "androidx.compose.runtime.DisposableEffect",
         "androidx.compose.runtime.LaunchedEffect",
         "androidx.compose.runtime.getValue",
         "androidx.compose.runtime.mutableStateOf",
@@ -607044,22 +610672,179 @@
         "androidx.compose.ui.res.stringResource",
         "androidx.compose.ui.text.font.FontWeight",
         "androidx.compose.ui.unit.dp",
-        "androidx.compose.ui.unit.sp",
-        "androidx.compose.ui.viewinterop.AndroidView",
-        "androidx.webkit.WebViewAssetLoader",
-        "com.diegonmarcos.cloudlib.web.CloudWeb",
-        "com.diegonmarcos.cloudlib.web.CloudWebClient",
-        "com.diegonmarcos.cloudlib.web.WebProfile",
-        "com.diegonmarcos.hardtechcad.BuildConfig"
+        "com.diegonmarcos.hardtechcad.Decl",
+        "com.diegonmarcos.hardtechcad.R",
+        "com.diegonmarcos.superapp.cad.CadFormats",
+        "com.diegonmarcos.superapp.cad.CadLibraries",
+        "com.diegonmarcos.superapp.cad.CadLibrary",
+        "com.diegonmarcos.superapp.cad.Model",
+        "com.diegonmarcos.superapp.uikit.GroupTitle",
+        "com.diegonmarcos.superapp.uikit.KitCard",
+        "com.diegonmarcos.superapp.uikit.KitSectionHeader",
+        "com.diegonmarcos.superapp.uikit.KitSettingsRow",
+        "com.diegonmarcos.superapp.uikit.KitStoreRow"
       ],
       "symbols": [
         "LibraryPage(id: String, onBack: ()",
         "CoreTable(libs: List<CadLibrary>, current: CadLibrary)",
         "Cell(t: String, c: Color, bold: Boolean = false, w: Float = 1f)",
-        "mb(bytes: Long)",
+        "mb(bytes: Long)"
+      ]
+    },
+    {
+      "path": "ad_Hardtech-CAD/app/src/main/java/com/diegonmarcos/hardtechcad/ui/ModelPage.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ModelPage"
+      ],
+      "imports": [
+        "androidx.compose.foundation.clickable",
+        "androidx.compose.foundation.layout.Arrangement",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.Row",
+        "androidx.compose.foundation.layout.fillMaxSize",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.foundation.layout.width",
+        "androidx.compose.foundation.rememberScrollState",
+        "androidx.compose.foundation.verticalScroll",
+        "androidx.compose.material3.Text",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.remember",
+        "androidx.compose.ui.Alignment",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.platform.LocalContext",
+        "androidx.compose.ui.platform.testTag",
+        "androidx.compose.ui.res.stringResource",
+        "androidx.compose.ui.text.font.FontFamily",
+        "androidx.compose.ui.unit.dp",
+        "com.diegonmarcos.hardtechcad.R",
+        "com.diegonmarcos.superapp.cad.Model",
+        "com.diegonmarcos.superapp.cad.ModelCategory",
+        "com.diegonmarcos.superapp.cad.ModelDetail",
+        "com.diegonmarcos.superapp.uikit.GroupTitle",
+        "com.diegonmarcos.superapp.uikit.KitStoreRow",
+        "com.diegonmarcos.superapp.uikit.LocalKitPalette",
+        "java.io.File"
+      ],
+      "symbols": [
+        "detailLabel(key: String)",
+        "ModelPage(m: Model, categories: List<ModelCategory>, onBack: ()"
+      ]
+    },
+    {
+      "path": "ad_Hardtech-CAD/app/src/main/java/com/diegonmarcos/hardtechcad/ui/ModelsPage.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ModelCatalog",
+        "rememberModelCatalog",
+        "ModelsPage"
+      ],
+      "imports": [
+        "androidx.compose.foundation.background",
+        "androidx.compose.foundation.clickable",
+        "androidx.compose.foundation.horizontalScroll",
+        "androidx.compose.foundation.layout.Arrangement",
+        "androidx.compose.foundation.layout.Box",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.Row",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.foundation.layout.width",
+        "androidx.compose.foundation.rememberScrollState",
+        "androidx.compose.material3.Text",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.LaunchedEffect",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.remember",
+        "androidx.compose.runtime.saveable.rememberSaveable",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.ui.Alignment",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.platform.LocalContext",
+        "androidx.compose.ui.platform.testTag",
+        "androidx.compose.ui.res.stringResource",
+        "androidx.compose.ui.text.style.TextAlign",
+        "androidx.compose.ui.unit.Dp",
+        "androidx.compose.ui.unit.dp",
+        "com.diegonmarcos.hardtechcad.R",
+        "com.diegonmarcos.superapp.cad.Model",
+        "com.diegonmarcos.superapp.cad.ModelCategory",
+        "com.diegonmarcos.superapp.cad.ModelManifest",
+        "com.diegonmarcos.superapp.cad.ModelTable",
+        "com.diegonmarcos.superapp.uikit.KitFilterChips",
+        "com.diegonmarcos.superapp.uikit.KitStoreCaption",
+        "com.diegonmarcos.superapp.uikit.KitStoreName",
+        "com.diegonmarcos.superapp.uikit.KitStoreRow",
+        "com.diegonmarcos.superapp.uikit.KitStoreRowLine",
+        "com.diegonmarcos.superapp.uikit.LocalKitPalette",
+        "kotlinx.coroutines.Dispatchers",
+        "kotlinx.coroutines.withContext"
+      ],
+      "symbols": [
+        "rememberModelCatalog()",
+        "widthOf(c: ModelTable.Column)",
+        "label(c: ModelTable.Column)",
+        "ModelsPage(catalog: ModelCatalog?, onOpen: (Model)",
+        "FilterRow(title: String, options: List<Pair<String, String>>, selected: String, group: String, onSelect: (String)",
+        "class ModelCatalog"
+      ]
+    },
+    {
+      "path": "ad_Hardtech-CAD/app/src/main/java/com/diegonmarcos/hardtechcad/ui/ModelViewer.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [],
+      "imports": [
+        "android.annotation.SuppressLint",
+        "android.webkit.JavascriptInterface",
+        "android.webkit.WebView",
+        "androidx.compose.foundation.background",
+        "androidx.compose.foundation.border",
+        "androidx.compose.foundation.clickable",
+        "androidx.compose.foundation.layout.Arrangement",
+        "androidx.compose.foundation.layout.Box",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.Row",
+        "androidx.compose.foundation.layout.fillMaxSize",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.foundation.layout.height",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.foundation.shape.RoundedCornerShape",
+        "androidx.compose.material3.Text",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.DisposableEffect",
+        "androidx.compose.runtime.LaunchedEffect",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.remember",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.ui.Alignment",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.draw.clip",
+        "androidx.compose.ui.graphics.Color",
+        "androidx.compose.ui.platform.testTag",
+        "androidx.compose.ui.res.stringResource",
+        "androidx.compose.ui.unit.dp",
+        "androidx.compose.ui.viewinterop.AndroidView",
+        "androidx.webkit.WebViewAssetLoader",
+        "com.diegonmarcos.cloudlib.web.CloudWeb",
+        "com.diegonmarcos.cloudlib.web.CloudWebClient",
+        "com.diegonmarcos.cloudlib.web.WebProfile",
+        "com.diegonmarcos.hardtechcad.BuildConfig",
+        "com.diegonmarcos.hardtechcad.R",
+        "com.diegonmarcos.superapp.cad.CadFormats",
+        "com.diegonmarcos.superapp.cad.Model",
+        "com.diegonmarcos.superapp.cad.ModelCache"
+      ],
+      "symbols": [
         "ModelViewer(m: Model, dir: File)",
         "post(json: String)",
         "onRecovered(dead: WebView, fresh: WebView?)",
+        "ViewerControls(onFit: ()",
+        "ControlChip(label: String, on: Boolean, modifier: Modifier, onClick: ()",
         "class ViewState",
         "class Fetching",
         "class Loading",
@@ -607302,6 +611087,84 @@
         "mutant()",
         "jedit()"
       ]
+    },
+    {
+      "path": "ad_Hardtech-CAD/test/test-models-renderable.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "ok()",
+        "bad()",
+        "mutant()",
+        "jedit()"
+      ],
+      "imports": [],
+      "symbols": [
+        "ok()",
+        "bad()",
+        "mutant()",
+        "jedit()"
+      ]
+    },
+    {
+      "path": "ad_Hardtech-CAD/tools/check_models.py",
+      "lang": "py",
+      "role": "python",
+      "exports": [
+        "sha256(path)",
+        "parse_glb(path)",
+        "check(app)"
+      ],
+      "imports": [
+        "hashlib"
+      ],
+      "symbols": [
+        "sha256(path)",
+        "parse_glb(path)",
+        "check(app)"
+      ]
+    },
+    {
+      "path": "ad_Hardtech-CAD/tools/derive_models.py",
+      "lang": "py",
+      "role": "python",
+      "exports": [
+        "sha256(path)",
+        "glb_json(path)",
+        "to_metres(path)",
+        "measure(path)",
+        "asset_ref(m, ext)",
+        "up_to_date_skp(m, version)",
+        "derive_skp(m, src, version)",
+        "mirror(m, src)",
+        "main()"
+      ],
+      "imports": [
+        "datetime"
+      ],
+      "symbols": [
+        "sha256(path)",
+        "glb_json(path)",
+        "to_metres(path)",
+        "measure(path)",
+        "asset_ref(m, ext)",
+        "up_to_date_skp(m, version)",
+        "derive_skp(m, src, version)",
+        "mirror(m, src)",
+        "main()"
+      ]
+    },
+    {
+      "path": "ad_Hardtech-CAD/tools/verify-models.mjs",
+      "lang": "js",
+      "role": "file",
+      "exports": [],
+      "imports": [
+        "node:fs",
+        "node:crypto",
+        "@gltf-transform/core"
+      ],
+      "symbols": []
     },
     {
       "path": "ad_Hardtech-Sim2Real/app/src/main/java/com/diegonmarcos/hardtechsim2real/Decl.kt",
