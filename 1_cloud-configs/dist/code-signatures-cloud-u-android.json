@@ -6,25 +6,25 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 23663,
+    "files": 23669,
     "by_lang": {
-      "sh": 686,
+      "sh": 688,
       "js": 547,
       "py": 211,
-      "kotlin": 12948,
+      "kotlin": 12952,
       "ts": 8470,
       "java": 649,
       "nix": 36,
       "rust": 116
     },
     "by_role": {
-      "hook": 158,
+      "hook": 160,
       "file": 2304,
       "shell": 549,
       "script": 300,
       "module": 6480,
       "java": 648,
-      "kotlin": 12945,
+      "kotlin": 12949,
       "python": 71,
       "flake": 32,
       "rust-module": 116,
@@ -44,6 +44,34 @@
       "imports": [],
       "symbols": [
         "block()"
+      ]
+    },
+    {
+      "path": "_dotfiles/apps/src/claude/hooks/c3/ai-usage-beacon.sh",
+      "lang": "sh",
+      "role": "hook",
+      "exports": [
+        "TM()",
+        "alive()",
+        "cli_up()",
+        "poster()",
+        "statusline()",
+        "start_cli()",
+        "tick()",
+        "loop()",
+        "start()"
+      ],
+      "imports": [],
+      "symbols": [
+        "TM()",
+        "alive()",
+        "cli_up()",
+        "poster()",
+        "statusline()",
+        "start_cli()",
+        "tick()",
+        "loop()",
+        "start()"
       ]
     },
     {
@@ -147,6 +175,34 @@
       "imports": [],
       "symbols": [
         "block()"
+      ]
+    },
+    {
+      "path": ".claude/hooks/c3/ai-usage-beacon.sh",
+      "lang": "sh",
+      "role": "hook",
+      "exports": [
+        "TM()",
+        "alive()",
+        "cli_up()",
+        "poster()",
+        "statusline()",
+        "start_cli()",
+        "tick()",
+        "loop()",
+        "start()"
+      ],
+      "imports": [],
+      "symbols": [
+        "TM()",
+        "alive()",
+        "cli_up()",
+        "poster()",
+        "statusline()",
+        "start_cli()",
+        "tick()",
+        "loop()",
+        "start()"
       ]
     },
     {
@@ -9942,6 +9998,7 @@
         "androidx.lifecycle.LifecycleEventObserver",
         "androidx.lifecycle.compose.LocalLifecycleOwner",
         "com.diegonmarcos.superapp.adbdebug.AdbShellLink",
+        "com.diegonmarcos.superapp.adbdebug.AdbShellPage",
         "com.diegonmarcos.superapp.adbdebug.ChannelOps",
         "com.diegonmarcos.superapp.adbdebug.ChannelReader",
         "com.diegonmarcos.superapp.adbdebug.ControlStatus",
@@ -9952,8 +10009,7 @@
         "com.diegonmarcos.superapp.shellbroker.AuditLog",
         "com.diegonmarcos.superapp.shellbroker.ShellBroker",
         "com.diegonmarcos.superapp.shellclient.ShellStatus",
-        "com.diegonmarcos.superapp.system.WirelessDebugKeeper",
-        "com.diegonmarcos.superapp.uikit.KitStoreCaption"
+        "com.diegonmarcos.superapp.system.WirelessDebugKeeper"
       ],
       "symbols": [
         "stamp(ms: Long)",
@@ -9965,7 +10021,7 @@
         "Fact(label: String, value: String, glyph: String = \"·\", ink: Color = Color.Unspecified, action: (@Composable ()",
         "ink(ok: Boolean?)",
         "tick(ok: Boolean?)",
-        "AdbShellContent(s: AdbPageState, a: AdbPageActions, openIds: Set<String> = AdbShellModel.initiallyOpen()",
+        "AdbShellContent( s: AdbPageState, a: AdbPageActions, openIds: Set<String> = AdbShellModel.initiallyOpen()",
         "toggle(id: String)",
         "class AdbPageState",
         "class AdbPageActions"
@@ -10005,6 +10061,8 @@
         "initiallyOpen()",
         "primary(paired: Boolean)",
         "verdict(st: ShellStatus?)",
+        "brokerVerdict(st: ShellStatus?)",
+        "title(st: ShellStatus?)",
         "detail(st: ShellStatus?)",
         "port(endpoint: String?)",
         "callers(summaries: List<Pair<String, String>>, audit: List<AuditLog.Entry>)",
@@ -21747,6 +21805,7 @@
       ],
       "imports": [
         "com.diegonmarcos.superapp.shellbroker.AuditLog",
+        "com.diegonmarcos.superapp.shellclient.AdbLink",
         "com.diegonmarcos.superapp.shellclient.ShellStatus",
         "org.junit.Assert.assertEquals",
         "org.junit.Assert.assertNull",
@@ -21756,6 +21815,25 @@
       "symbols": [
         "e(ts: Long, caller: String)",
         "class AdbShellModelTest"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/test/java/com/diegonmarcos/superapp/configs/AdbShellRestoreTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "AdbShellRestoreTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.adbdebug.ChannelAction",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.io.File"
+      ],
+      "symbols": [
+        "code(f: File)",
+        "class AdbShellRestoreTest"
       ]
     },
     {
@@ -22236,6 +22314,7 @@
         "androidx.compose.ui.Modifier",
         "androidx.compose.ui.test.onNodeWithTag",
         "androidx.test.core.app.ApplicationProvider",
+        "com.diegonmarcos.superapp.shellclient.AdbLink",
         "com.diegonmarcos.superapp.shellclient.ShellStatus",
         "com.diegonmarcos.superapp.settings.LauncherSettingsPrefs",
         "com.diegonmarcos.superapp.ui.KitPageHarness",
@@ -36355,18 +36434,22 @@
       "role": "kotlin",
       "exports": [],
       "imports": [
+        "com.diegonmarcos.superapp.shellclient.AdbLink",
         "com.diegonmarcos.superapp.shellclient.ShellStatus"
       ],
       "symbols": [
         "parseSetting(out: String?)",
         "playProtect(r: Reading)",
         "fromBroker(s: ShellStatus)",
+        "ink(s: ChannelStatus?)",
+        "adbPart(s: ChannelStatus)",
         "label(s: ChannelStatus)",
         "class ControlStatus",
         "class Tri",
         "class Reading",
         "class Channel",
-        "class ChannelStatus"
+        "class ChannelStatus",
+        "class Ink"
       ]
     },
     {
@@ -38036,6 +38119,7 @@
         "StoreChannelTest"
       ],
       "imports": [
+        "com.diegonmarcos.superapp.shellclient.AdbLink",
         "com.diegonmarcos.superapp.shellclient.ShellStatus",
         "org.junit.Assert.assertEquals",
         "org.junit.Assert.assertFalse",
@@ -38048,6 +38132,7 @@
         "noSuperAppIsNotPaired()",
         "playProtectReadsLiveFactsOnly()",
         "thePlayProtectCommandsAreThreeSettingsWritesTheAllowlistKnows()",
+        "ink(armed: Boolean, adb: AdbLink, installed: Boolean = true)",
         "class StoreChannelTest"
       ]
     },
@@ -87423,6 +87508,7 @@
       "role": "kotlin",
       "exports": [
         "BrokerChannel",
+        "AdbFacts",
         "IdlePolicy",
         "BrokerCore"
       ],
@@ -87444,6 +87530,8 @@
         "ready()",
         "run(cmd: String, stdin: File?)",
         "whyDown()",
+        "adbFacts()",
+        "adbRun(cmd: String)",
         "shouldStop(inflight: Int, lastActiveMs: Long, nowMs: Long, idleMs: Long = IDLE_MS)",
         "poolAlive()",
         "pool()",
@@ -87452,6 +87540,8 @@
         "auditEntries()",
         "callerSummaries()",
         "status()",
+        "invalidate()",
+        "adb(s: com.diegonmarcos.superapp.shellclient.ShellStatus, now: Long)",
         "live(now: Long)",
         "down(why: String)",
         "exec(caller: String, cmd: String, timeoutMs: Long, maxBytes: Int = ShellWire.EXEC_MAX_BYTES, stdin: File? = null)",
@@ -87464,6 +87554,7 @@
         "sweep(spool: File, now: Long)",
         "parse(raw: String, source: String, maxBytes: Int)",
         "class BrokerChannel",
+        "class AdbFacts",
         "class IdlePolicy",
         "class BrokerCore"
       ]
@@ -87528,12 +87619,16 @@
         "name()",
         "ready()",
         "whyDown()",
+        "adbFacts()",
+        "global(k: String)",
+        "adbRun(cmd: String)",
         "run(cmd: String, stdin: File?)",
         "exec(ctx: Context, caller: String, cmd: String, timeoutMs: Long = ShellWire.DEFAULT_TIMEOUT_MS, maxBytes: Int = ShellWire.EXEC_MAX_BYTES, stdin: File? = null)",
         "execStdin(ctx: Context, caller: String, cmd: String, input: java.io.InputStream, size: Long, timeoutMs: Long = ShellWire.STDIN_DEFAULT_TIMEOUT_MS)",
         "execText(ctx: Context, cmd: String)",
         "recordLegacy(ctx: Context, cmd: String, ok: Boolean, ms: Long, source: String)",
         "status(ctx: Context)",
+        "invalidate(ctx: Context)",
         "auditEntries(ctx: Context)",
         "callerSummaries(ctx: Context)",
         "reapIfIdle()",
@@ -87595,6 +87690,33 @@
         "handleMessage(msg: Message)",
         "onUnbind(intent: Intent?)",
         "class ShellBrokerService"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/shell-broker/src/test/java/com/diegonmarcos/superapp/shellbroker/AdbTransportStatusTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "AdbTransportStatusTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.shellclient.AdbLink",
+        "com.diegonmarcos.superapp.shellclient.ShellWire",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.io.File"
+      ],
+      "symbols": [
+        "name()",
+        "ready()",
+        "run(cmd: String, stdin: File?)",
+        "adbFacts()",
+        "adbRun(cmd: String)",
+        "status(f: AdbFacts?, adb: (String)",
+        "class AdbTransportStatusTest",
+        "class Ch"
       ]
     },
     {
@@ -87725,6 +87847,40 @@
       ]
     },
     {
+      "path": "ab_cloud-libs-shared/libs/shell-client/src/main/java/com/diegonmarcos/superapp/shellclient/AdbLink.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "AdbLink"
+      ],
+      "imports": [],
+      "symbols": [
+        "of(id: String?)",
+        "classify(adbEnabled: Boolean?, wireless: Boolean?, paired: Boolean, roundTrip: Boolean?)",
+        "class AdbLink"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/shell-client/src/main/java/com/diegonmarcos/superapp/shellclient/AdbWatch.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "AdbWatch"
+      ],
+      "imports": [
+        "android.content.Context",
+        "android.database.ContentObserver",
+        "android.os.Handler",
+        "android.os.Looper",
+        "android.provider.Settings"
+      ],
+      "symbols": [
+        "observe(ctx: Context, onChange: ()",
+        "onChange(selfChange: Boolean)",
+        "class AdbWatch"
+      ]
+    },
+    {
       "path": "ab_cloud-libs-shared/libs/shell-client/src/main/java/com/diegonmarcos/superapp/shellclient/ShellClient.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -87777,6 +87933,8 @@
         "toString()",
         "stdoutOrNull()",
         "line()",
+        "at()",
+        "adbLine()",
         "class ShellResult",
         "class Ok",
         "class NeedsArm",
@@ -88324,6 +88482,7 @@
         "color()",
         "dot()",
         "title()",
+        "adbLink(f: ChannelFacts)",
         "stamp(ms: Long)",
         "glyph(s: StepState)",
         "glyphColor(s: StepState)",
@@ -88331,6 +88490,13 @@
         "Section(title: String, content: @Composable ()",
         "Dim(text: String, modifier: Modifier = Modifier, size: Int = 10)",
         "AdbShellPage(modifier: Modifier = Modifier)",
+        "onActivityResumed(a: android.app.Activity)",
+        "onActivityCreated(a: android.app.Activity, b: android.os.Bundle?)",
+        "onActivityStarted(a: android.app.Activity)",
+        "onActivityPaused(a: android.app.Activity)",
+        "onActivityStopped(a: android.app.Activity)",
+        "onActivitySaveInstanceState(a: android.app.Activity, b: android.os.Bundle)",
+        "onActivityDestroyed(a: android.app.Activity)",
         "connect()",
         "runChannelAction(action: ChannelAction, work: (Context)",
         "AdbShellHostedPage(pad: androidx.compose.ui.unit.Dp = HOSTED_PAD)",
@@ -88338,14 +88504,7 @@
         "denseTypography()",
         "d()",
         "AdbShellChip(modifier: Modifier = Modifier)",
-        "KeeperSection()",
-        "onActivityResumed(a: android.app.Activity)",
-        "onActivityCreated(a: android.app.Activity, b: android.os.Bundle?)",
-        "onActivityStarted(a: android.app.Activity)",
-        "onActivityPaused(a: android.app.Activity)",
-        "onActivityStopped(a: android.app.Activity)",
-        "onActivitySaveInstanceState(a: android.app.Activity, b: android.os.Bundle)",
-        "onActivityDestroyed(a: android.app.Activity)"
+        "KeeperSection()"
       ]
     },
     {
@@ -96628,6 +96787,7 @@
         "fleetTasks()",
         "fleetC3()",
         "fleet(dir: String, app: String, sectionId: String, pageId: String)",
+        "holdsPage(id: String)",
         "class PhoneShots",
         "class TabletLandShots",
         "class TabletPortShots",
