@@ -13522,7 +13522,7 @@
         "parseStack(arrName: String)",
         "parseFilters(arrName: String)",
         "swipeWalk()",
-        "hubTiles(section: Section, hub: Page)",
+        "hubSections(section: Section, hub: Page)",
         "hubTarget(sectionId: String, page: Page)",
         "byId(id: String)",
         "canonicalId(id: String)",
@@ -13802,7 +13802,7 @@
       "symbols": [
         "palette()",
         "Content()",
-        "tilesFor(sectionId: String, pageId: String)",
+        "sectionsFor(sectionId: String, pageId: String)",
         "newInstance(sectionId: String, pageId: String)",
         "class SubgroupHubFragment"
       ]
@@ -23386,7 +23386,8 @@
         "declared()",
         "routed()",
         "hasData(d: Decl)",
-        "hubSubgroupHasPages(d: Decl)",
+        "hubSectionsOf(d: Decl)",
+        "hubSectionsHavePages(d: Decl)",
         "packagesOf(section: String)",
         "fileFor(simple: String)",
         "packageOfFile(f: File)",
@@ -23774,6 +23775,8 @@
         "org.robolectric.annotation.Config"
       ],
       "symbols": [
+        "sub(name: String)",
+        "hub(id: String)",
         "class SubgroupHubTest"
       ]
     },
@@ -85036,6 +85039,7 @@
       ],
       "imports": [
         "java.io.File",
+        "org.junit.Assert.assertEquals",
         "org.junit.Assert.assertTrue",
         "org.junit.Test"
       ],

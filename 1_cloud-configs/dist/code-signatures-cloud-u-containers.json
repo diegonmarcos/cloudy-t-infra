@@ -6,13 +6,13 @@
   },
   "repo": "cloud-u-containers",
   "counts": {
-    "files": 2617,
+    "files": 2623,
     "by_lang": {
       "sh": 177,
       "js": 106,
       "nix": 189,
       "py": 510,
-      "ts": 1265,
+      "ts": 1271,
       "rust": 370
     },
     "by_role": {
@@ -20,12 +20,12 @@
       "file": 345,
       "nix-module": 19,
       "python": 496,
-      "module": 771,
+      "module": 776,
       "script": 8,
       "flake": 86,
       "entrypoint": 71,
       "compose": 84,
-      "mcp-tool": 145,
+      "mcp-tool": 146,
       "workflow-dag": 5,
       "rust-module": 366,
       "hook": 53
@@ -4475,6 +4475,33 @@
         "getVmStatus(vmId: string)",
         "getReport(reportType: string)",
         "getSecretsStatus(service?: string)"
+      ]
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/shared/libs/fleet-data-core.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "isDatasetPath",
+        "isTier",
+        "etagOf",
+        "validBody",
+        "readFleetData",
+        "clearFleetDataCache",
+        "PVT_RAW",
+        "TTL_MS",
+        "Answer"
+      ],
+      "imports": [
+        "node:crypto"
+      ],
+      "symbols": [
+        "isDatasetPath(path: string)",
+        "isTier(t: string)",
+        "etagOf(body: string)",
+        "validBody(body: string)",
+        "readFleetData(file: string, ifNoneMatch: string | undefined, f: Fetcher = fetch as unknown as Fetcher, env: NodeJS.ProcessEnv = process.env, now = Date.now()",
+        "clearFleetDataCache()"
       ]
     },
     {
@@ -9554,6 +9581,7 @@
         "./routes/workflows.js",
         "./routes/configsSync.js",
         "./routes/aiUsage.js",
+        "./routes/fleetData.js",
         "./routes/tree.js",
         "./hierarchy.js",
         "../shared/libs/poller.js"
@@ -9747,6 +9775,22 @@
       ],
       "symbols": [
         "registerFinOpsRoutes(app: FastifyInstance)"
+      ]
+    },
+    {
+      "path": "infra-api_cloudy-c3-api/src/code/api/routes/fleetData.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "registerFleetDataRoutes"
+      ],
+      "imports": [
+        "fastify",
+        "../../shared/libs/fleet-data-core.js",
+        "../../shared/libs/auth-decision.js"
+      ],
+      "symbols": [
+        "registerFleetDataRoutes(app: FastifyInstance)"
       ]
     },
     {
@@ -10762,6 +10806,33 @@
       ]
     },
     {
+      "path": "infra-api_cloudy-c3-api/src/code/shared/libs/fleet-data-core.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "isDatasetPath",
+        "isTier",
+        "etagOf",
+        "validBody",
+        "readFleetData",
+        "clearFleetDataCache",
+        "PVT_RAW",
+        "TTL_MS",
+        "Answer"
+      ],
+      "imports": [
+        "node:crypto"
+      ],
+      "symbols": [
+        "isDatasetPath(path: string)",
+        "isTier(t: string)",
+        "etagOf(body: string)",
+        "validBody(body: string)",
+        "readFleetData(file: string, ifNoneMatch: string | undefined, f: Fetcher = fetch as unknown as Fetcher, env: NodeJS.ProcessEnv = process.env, now = Date.now()",
+        "clearFleetDataCache()"
+      ]
+    },
+    {
       "path": "infra-api_cloudy-c3-api/src/code/shared/libs/gha-policy.ts",
       "lang": "ts",
       "role": "module",
@@ -11606,6 +11677,18 @@
       "symbols": [
         "findPhotoprismBuildJson()"
       ]
+    },
+    {
+      "path": "infra-api_cloudy-c3-api/src/test-fleet-data.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [],
+      "imports": [
+        "node:assert/strict",
+        "node:fs",
+        "./code/shared/libs/fleet-data-core.ts"
+      ],
+      "symbols": []
     },
     {
       "path": "infra-api_cloudy-c3-api/src/test-hierarchy.ts",
@@ -23524,6 +23607,33 @@
       ]
     },
     {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/shared/libs/fleet-data-core.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "isDatasetPath",
+        "isTier",
+        "etagOf",
+        "validBody",
+        "readFleetData",
+        "clearFleetDataCache",
+        "PVT_RAW",
+        "TTL_MS",
+        "Answer"
+      ],
+      "imports": [
+        "node:crypto"
+      ],
+      "symbols": [
+        "isDatasetPath(path: string)",
+        "isTier(t: string)",
+        "etagOf(body: string)",
+        "validBody(body: string)",
+        "readFleetData(file: string, ifNoneMatch: string | undefined, f: Fetcher = fetch as unknown as Fetcher, env: NodeJS.ProcessEnv = process.env, now = Date.now()",
+        "clearFleetDataCache()"
+      ]
+    },
+    {
       "path": "user-ai_cloud-cgc-pub-mcp/src/code/shared/libs/gha-policy.ts",
       "lang": "ts",
       "role": "module",
@@ -25176,6 +25286,33 @@
         "getVmStatus(vmId: string)",
         "getReport(reportType: string)",
         "getSecretsStatus(service?: string)"
+      ]
+    },
+    {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/tools/shared/libs/fleet-data-core.ts",
+      "lang": "ts",
+      "role": "mcp-tool",
+      "exports": [
+        "isDatasetPath",
+        "isTier",
+        "etagOf",
+        "validBody",
+        "readFleetData",
+        "clearFleetDataCache",
+        "PVT_RAW",
+        "TTL_MS",
+        "Answer"
+      ],
+      "imports": [
+        "node:crypto"
+      ],
+      "symbols": [
+        "isDatasetPath(path: string)",
+        "isTier(t: string)",
+        "etagOf(body: string)",
+        "validBody(body: string)",
+        "readFleetData(file: string, ifNoneMatch: string | undefined, f: Fetcher = fetch as unknown as Fetcher, env: NodeJS.ProcessEnv = process.env, now = Date.now()",
+        "clearFleetDataCache()"
       ]
     },
     {
