@@ -59,12 +59,12 @@ jobs:
           VAL="$(openssl rand -hex 32)"
           [ "${#VAL}" -eq 64 ] || { echo "::error::generation failed"; exit 1; }
           echo "::add-mask::$VAL"
-          mkdir -p out
+          mkdir -p out pl
           umask 077
           printf '%s: %s\n_credentials:\n  %s:\n    type: token\n    token: %s\n    note: "generated in CI for %s; app-consumed key %s"\n' \
-            "$T_KEY" "$VAL" "$T_KEY" "$VAL" "$T_SERVICE" "$T_KEY" > plain.yaml
-          sops -e --age "$RECIP" --input-type yaml --output-type yaml plain.yaml > out/secrets.yaml
-          shred -u plain.yaml 2>/dev/null || rm -f plain.yaml
+            "$T_KEY" "$VAL" "$T_KEY" "$VAL" "$T_SERVICE" "$T_KEY" > pl/secrets.yaml
+          sops --config 2_sops/sops.yaml -e --input-type yaml --output-type yaml pl/secrets.yaml > out/secrets.yaml
+          shred -u pl/secrets.yaml 2>/dev/null || rm -f pl/secrets.yaml
           grep -q '^sops:' out/secrets.yaml
           if grep -q "$VAL" out/secrets.yaml; then echo "::error::plaintext leaked into the encrypted file"; exit 1; fi
           echo "encrypted file ready: $(grep -c 'ENC\[' out/secrets.yaml) encrypted values"
