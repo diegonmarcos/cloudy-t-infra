@@ -6,18 +6,18 @@
   },
   "repo": "cloud-u-containers",
   "counts": {
-    "files": 2607,
+    "files": 2610,
     "by_lang": {
       "sh": 177,
-      "js": 103,
+      "js": 104,
       "nix": 189,
       "py": 510,
-      "ts": 1258,
+      "ts": 1260,
       "rust": 370
     },
     "by_role": {
       "shell": 168,
-      "file": 344,
+      "file": 345,
       "nix-module": 19,
       "python": 496,
       "module": 765,
@@ -25,7 +25,7 @@
       "flake": 86,
       "entrypoint": 71,
       "compose": 84,
-      "mcp-tool": 142,
+      "mcp-tool": 144,
       "workflow-dag": 5,
       "rust-module": 366,
       "hook": 53
@@ -2534,6 +2534,7 @@
         "./tools/mail-ops.js",
         "./tools/frontend.js",
         "./tools/telegram.js",
+        "./tools/browser.js",
         "./tools/security.js",
         "./tools/plugin.js",
         "./tools/peers-control.js",
@@ -2988,6 +2989,43 @@
       ],
       "symbols": [
         "registerResources(server: McpServer)"
+      ]
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/mcp/tools/browser-core.ts",
+      "lang": "ts",
+      "role": "mcp-tool",
+      "exports": [
+        "target",
+        "call",
+        "readUrl",
+        "Backend",
+        "Target"
+      ],
+      "imports": [],
+      "symbols": [
+        "target(backend: Backend, kind: \"command\" | \"run\", env: Record<string, string | undefined> = process.env)",
+        "call(backend: Backend, kind: \"command\" | \"run\", body: unknown, f: typeof fetch = fetch, env = process.env)",
+        "readUrl(args: any, f: typeof fetch = fetch, env = process.env)"
+      ]
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/mcp/tools/browser.ts",
+      "lang": "ts",
+      "role": "mcp-tool",
+      "exports": [
+        "registerBrowserTools",
+        "target",
+        "call",
+        "readUrl"
+      ],
+      "imports": [
+        "@modelcontextprotocol/sdk/server/mcp.js",
+        "zod",
+        "./browser-core.js"
+      ],
+      "symbols": [
+        "registerBrowserTools(server: McpServer, f: typeof fetch = fetch)"
       ]
     },
     {
@@ -5046,6 +5084,17 @@
       ]
     },
     {
+      "path": "infra-api_cloud-infra-mcp/src/code/test-browser-tools.mjs",
+      "lang": "js",
+      "role": "file",
+      "exports": [],
+      "imports": [
+        "node:assert/strict",
+        "./mcp/tools/browser-core.ts"
+      ],
+      "symbols": []
+    },
+    {
       "path": "infra-api_cloud-infra-mcp/src/code/test-c3-tree.mts",
       "lang": "ts",
       "role": "file",
@@ -5232,7 +5281,12 @@
       "role": "compose",
       "exports": [
         "buildJson",
-        "container"
+        "container",
+        "services",
+        "which",
+        "never",
+        "phone1\";",
+        "host"
       ],
       "imports": [],
       "symbols": [
@@ -5261,6 +5315,7 @@
         "PATH",
         "CLOUDSDK_CONFIG",
         "SUPERAPP_PHONES",
+        "C3_BROWSER_URL",
         "volumes",
         "healthcheck",
         "test",

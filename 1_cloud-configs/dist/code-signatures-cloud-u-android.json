@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 23486,
+    "files": 23487,
     "by_lang": {
       "sh": 679,
       "js": 543,
       "py": 203,
-      "kotlin": 12790,
+      "kotlin": 12791,
       "ts": 8470,
       "java": 649,
       "nix": 36,
@@ -24,7 +24,7 @@
       "script": 294,
       "module": 6477,
       "java": 648,
-      "kotlin": 12787,
+      "kotlin": 12788,
       "python": 68,
       "flake": 32,
       "rust-module": 116,
@@ -56257,6 +56257,36 @@
       ]
     },
     {
+      "path": "ab_cloud-libs-shared/libs/headless-browser/src/main/java/com/diegonmarcos/superapp/headless/HeadlessReadable.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "HeadlessReadable",
+        "STRIP",
+        "NOISE",
+        "TRK",
+        "src",
+        "links",
+        "md",
+        "title",
+        "start",
+        "size",
+        "lk",
+        "e2",
+        "page",
+        "content",
+        "res2"
+      ],
+      "imports": [
+        "org.json.JSONObject"
+      ],
+      "symbols": [
+        "validate(c: JSONObject)",
+        "script(c: JSONObject)",
+        "class HeadlessReadable"
+      ]
+    },
+    {
       "path": "ab_cloud-libs-shared/libs/headless-browser/src/main/java/com/diegonmarcos/superapp/headless/HeadlessRemote.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -56351,9 +56381,7 @@
       "lang": "kotlin",
       "role": "kotlin",
       "exports": [
-        "WebViewEngine",
-        "root",
-        "m"
+        "WebViewEngine"
       ],
       "imports": [
         "android.annotation.SuppressLint",
@@ -56441,6 +56469,8 @@
         "auditRingIsCappedAndTagged()",
         "dispatcherEnforcesLimitsIdleTimeoutScreenAndAudits()",
         "runStepsStopOnError()",
+        "readableOptionsAreValidatedAndMatchTheSharedSchema()",
+        "readableScriptCarriesTheOptionsAsOneJsonLiteralAndStripsBoilerplate()",
         "class HeadlessContractTest",
         "class Fake"
       ]
