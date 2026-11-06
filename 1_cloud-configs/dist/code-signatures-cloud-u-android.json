@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 23487,
+    "files": 23502,
     "by_lang": {
-      "sh": 679,
+      "sh": 680,
       "js": 543,
-      "py": 203,
-      "kotlin": 12791,
+      "py": 204,
+      "kotlin": 12804,
       "ts": 8470,
       "java": 649,
       "nix": 36,
@@ -20,12 +20,12 @@
     "by_role": {
       "hook": 158,
       "file": 2303,
-      "shell": 543,
+      "shell": 544,
       "script": 294,
       "module": 6477,
       "java": 648,
-      "kotlin": 12788,
-      "python": 68,
+      "kotlin": 12801,
+      "python": 69,
       "flake": 32,
       "rust-module": 116,
       "nix-module": 4,
@@ -32908,6 +32908,128 @@
       ]
     },
     {
+      "path": "ab_cloud-libs-shared/libs/ai/src/main/kotlin/com/diegonmarcos/superapp/ai/AiAttachments.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "AiAttachment",
+        "AiAttachWire",
+        "AiImages",
+        "AiImageStore",
+        "AiAttachments",
+        "AiFileProvider"
+      ],
+      "imports": [
+        "android.content.ContentValues",
+        "android.content.Context",
+        "android.content.Intent",
+        "android.net.Uri",
+        "android.os.Build",
+        "android.os.Environment",
+        "android.provider.MediaStore",
+        "android.provider.OpenableColumns",
+        "androidx.core.content.FileProvider",
+        "org.json.JSONArray",
+        "org.json.JSONObject",
+        "java.io.File",
+        "java.net.URL",
+        "java.util.Base64",
+        "java.util.Locale",
+        "java.util.UUID"
+      ],
+      "symbols": [
+        "toJson()",
+        "fromJson(o: JSONObject)",
+        "list(a: JSONArray?)",
+        "dataUrl(mime: String, bytes: ByteArray)",
+        "content(text: String, atts: List<AiAttachment>, read: (AiAttachment)",
+        "decodeDataUrl(url: String)",
+        "sniff(b: ByteArray)",
+        "extension(mime: String)",
+        "urls(message: JSONObject?)",
+        "download(url: String)",
+        "save(url: String)",
+        "mimeOf(name: String, declared: String?)",
+        "safeName(n: String)",
+        "import(ctx: Context, uri: Uri, maxBytes: Long)",
+        "capture(ctx: Context)",
+        "fromCapture(c: Capture)",
+        "uri(ctx: Context, f: File)",
+        "imageStore(ctx: Context)",
+        "saveToGallery(ctx: Context, a: AiAttachment)",
+        "share(ctx: Context, a: AiAttachment)",
+        "class AiAttachment",
+        "class AiAttachWire",
+        "class AiImages",
+        "class AiImageStore",
+        "class AiAttachments",
+        "class Capture",
+        "class AiFileProvider"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/ai/src/main/kotlin/com/diegonmarcos/superapp/ai/AiAttachUi.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "AiAttachHost"
+      ],
+      "imports": [
+        "android.graphics.BitmapFactory",
+        "android.net.Uri",
+        "android.widget.Toast",
+        "androidx.activity.compose.rememberLauncherForActivityResult",
+        "androidx.activity.result.PickVisualMediaRequest",
+        "androidx.activity.result.contract.ActivityResultContracts",
+        "androidx.compose.foundation.Image",
+        "androidx.compose.foundation.background",
+        "androidx.compose.foundation.border",
+        "androidx.compose.foundation.clickable",
+        "androidx.compose.foundation.horizontalScroll",
+        "androidx.compose.foundation.layout.Arrangement",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.Row",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.foundation.layout.heightIn",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.foundation.layout.widthIn",
+        "androidx.compose.foundation.rememberScrollState",
+        "androidx.compose.foundation.shape.RoundedCornerShape",
+        "androidx.compose.material3.Text",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.produceState",
+        "androidx.compose.runtime.remember",
+        "androidx.compose.runtime.rememberCoroutineScope",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.ui.Alignment",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.draw.clip",
+        "androidx.compose.ui.graphics.ImageBitmap",
+        "androidx.compose.ui.graphics.asImageBitmap",
+        "androidx.compose.ui.layout.ContentScale",
+        "androidx.compose.ui.platform.LocalContext",
+        "androidx.compose.ui.platform.testTag",
+        "androidx.compose.ui.semantics.contentDescription",
+        "androidx.compose.ui.semantics.semantics",
+        "androidx.compose.ui.text.font.FontWeight",
+        "androidx.compose.ui.text.style.TextOverflow"
+      ],
+      "symbols": [
+        "run(kind: String)",
+        "rememberAttachActions(chat: AiChatState, theme: AiTheme, attach: AiAttachHost)",
+        "take(uri: Uri?)",
+        "AttachChips(chat: AiChatState, theme: AiTheme, design: AiDesign)",
+        "AttachmentList(chat: AiChatState, theme: AiTheme, atts: List<AiAttachment>, actions: Boolean)",
+        "InlineImage(chat: AiChatState, theme: AiTheme, a: AiAttachment, actions: Boolean)",
+        "action(label: String, tag: String, run: ()",
+        "decode(path: String, target: Int)",
+        "class AiAttachHost",
+        "class AiAttachActions"
+      ]
+    },
+    {
       "path": "ab_cloud-libs-shared/libs/ai/src/main/kotlin/com/diegonmarcos/superapp/ai/AiBackend.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -33000,22 +33122,25 @@
       ],
       "imports": [
         "androidx.activity.compose.BackHandler",
+        "androidx.compose.foundation.background",
+        "androidx.compose.foundation.border",
         "androidx.compose.foundation.clickable",
-        "androidx.compose.foundation.horizontalScroll",
         "androidx.compose.foundation.layout.Arrangement",
+        "androidx.compose.foundation.layout.Box",
         "androidx.compose.foundation.layout.Column",
-        "androidx.compose.foundation.layout.ColumnScope",
         "androidx.compose.foundation.layout.Row",
         "androidx.compose.foundation.layout.fillMaxSize",
         "androidx.compose.foundation.layout.fillMaxWidth",
         "androidx.compose.foundation.layout.padding",
         "androidx.compose.foundation.rememberScrollState",
+        "androidx.compose.foundation.shape.RoundedCornerShape",
+        "androidx.compose.foundation.text.BasicTextField",
         "androidx.compose.foundation.verticalScroll",
         "androidx.compose.material3.Switch",
         "androidx.compose.material3.SwitchDefaults",
         "androidx.compose.material3.Text",
         "androidx.compose.runtime.Composable",
-        "androidx.compose.runtime.produceState",
+        "androidx.compose.runtime.LaunchedEffect",
         "androidx.compose.runtime.getValue",
         "androidx.compose.runtime.mutableStateOf",
         "androidx.compose.runtime.remember",
@@ -33023,31 +33148,30 @@
         "androidx.compose.ui.Alignment",
         "androidx.compose.ui.Modifier",
         "androidx.compose.ui.draw.alpha",
+        "androidx.compose.ui.draw.clip",
+        "androidx.compose.ui.graphics.Color",
+        "androidx.compose.ui.graphics.SolidColor",
         "androidx.compose.ui.platform.LocalContext",
         "androidx.compose.ui.platform.testTag",
         "androidx.compose.ui.text.font.FontWeight",
+        "androidx.compose.ui.text.style.TextAlign",
+        "androidx.compose.ui.text.style.TextOverflow",
         "com.diegonmarcos.superapp.modelcatalogue.CatalogueFetch",
         "com.diegonmarcos.superapp.modelcatalogue.FileCatalogueStore",
-        "com.diegonmarcos.superapp.modelcatalogue.ModelCatalogue",
-        "com.diegonmarcos.superapp.modelcatalogue.ModelCatalogueRepository",
-        "com.diegonmarcos.superapp.modelcatalogue.ModelCatalogueRepository.Origin",
-        "com.diegonmarcos.superapp.modelcataloguepage.CatalogueTheme",
-        "com.diegonmarcos.superapp.modelcataloguepage.CatalogueWords",
-        "com.diegonmarcos.superapp.modelcataloguepage.ModelCataloguePage",
         "kotlinx.coroutines.Dispatchers",
-        "kotlinx.coroutines.withContext",
-        "java.io.File",
-        "java.net.HttpURLConnection",
-        "java.net.URL"
+        "kotlinx.coroutines.delay",
+        "kotlinx.coroutines.withContext"
       ],
       "symbols": [
         "AiModelCatalogue(chat: AiChatState, theme: AiTheme, fetch: CatalogueFetch = AiPublicFetch, modifier: Modifier = Modifier, onClose: (()",
-        "CorePage(chat: AiChatState, theme: AiTheme, core: CoreSource?, done: ()",
-        "ModelGroup(chat: AiChatState, theme: AiTheme, g: AiCatalogueGroup, cat: AiCatalogue, done: ()",
+        "pick(e: AiModelEntry)",
+        "SearchResults(chat: AiChatState, theme: AiTheme, data: AiModelTabs, query: String, fetch: CatalogueFetch, onPick: (AiModelEntry)",
+        "liveList(ctx: android.content.Context, data: AiModelTabs, fetch: CatalogueFetch)",
+        "ModelRow(chat: AiChatState, theme: AiTheme, e: AiModelEntry, tag: String, onPick: ()",
         "AiTaskCatalogue(chat: AiChatState, theme: AiTheme, decl: AiComposerDecl, modifier: Modifier = Modifier)",
         "TaskRow(chat: AiChatState, theme: AiTheme, id: String, label: String, task: AiTask?, offered: Boolean, note: String?)",
         "Header(theme: AiTheme, title: String, closeTag: String, onClose: ()",
-        "class CoreSource"
+        "class LiveList"
       ]
     },
     {
@@ -33068,6 +33192,8 @@
         "java.util.concurrent.CompletableFuture"
       ],
       "symbols": [
+        "attach(a: AiAttachment)",
+        "detach(id: String)",
         "chooseTask(id: String)",
         "chooseEffort(level: AiEffort)",
         "setPlugin(item: AiMoreItem, on: Boolean)",
@@ -33088,6 +33214,12 @@
         "send(ask: String)",
         "host()",
         "attach(id: String)",
+        "chip(id: String)",
+        "chipRemove(id: String)",
+        "image(id: String)",
+        "imageAction(id: String, action: String)",
+        "catResult(id: String)",
+        "catHeader(i: Int)",
         "effort(id: String)",
         "more(id: String)",
         "morePlugin(id: String)",
@@ -33099,14 +33231,7 @@
         "taskGroup(id: String)",
         "mode(id: String)",
         "mcp(name: String)",
-        "rename(id: String)",
-        "delete(id: String)",
-        "agent(id: String)",
-        "engine(id: String)",
-        "session(id: String)",
-        "suggestion(text: String)",
-        "class AiChatState",
-        "class AiTags"
+        "rename(id: String)"
       ]
     },
     {
@@ -33295,6 +33420,7 @@
       "role": "kotlin",
       "exports": [
         "AiHost",
+        "AiMedia",
         "AiPrefs",
         "AiMemoryPrefs",
         "AiAgents",
@@ -33323,15 +33449,17 @@
         "pickPlugins(headers: Map<String, String>)",
         "plugins()",
         "usage(sessionId: String)",
+        "sendWith(session: AiSession, text: String, attachments: List<AiAttachment>, model: String, web: Boolean, now: Long, sink: AiSink)",
         "systemPrompt()",
         "mcpServers()",
         "from(cat: AgentCatalogue.Catalogue)",
         "load(ctx: android.content.Context)",
         "line(label: String, us: List<AiUsage>)",
         "standing()",
-        "converse(backend: AiBackend, req: AiRequest, sink: AiSink)",
+        "converse(backend: AiBackend, req: AiRequest, sink: AiSink, withTools: Boolean = true)",
         "runTool(c: AiToolCall, sink: AiSink)",
         "class AiHost",
+        "class AiMedia",
         "class AiPrefs",
         "class AiMemoryPrefs",
         "class AiAgents",
@@ -33429,6 +33557,73 @@
       ]
     },
     {
+      "path": "ab_cloud-libs-shared/libs/ai/src/main/kotlin/com/diegonmarcos/superapp/ai/AiModelTabs.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "AiModelPrice",
+        "AiModelEntry",
+        "AiTabBlock",
+        "AiSearchConfig",
+        "AiImageFlowConfig",
+        "AiModelTabs",
+        "AiModelSearch",
+        "AiModelListCache",
+        "AiKnownModels",
+        "AiImageFlow",
+        "AiModelText"
+      ],
+      "imports": [
+        "android.content.Context",
+        "com.diegonmarcos.superapp.modelcatalogue.CatalogueFetch",
+        "com.diegonmarcos.superapp.modelcatalogue.CatalogueStore",
+        "org.json.JSONArray",
+        "org.json.JSONObject",
+        "java.util.concurrent.ConcurrentHashMap"
+      ],
+      "symbols": [
+        "takes(modality: String)",
+        "model()",
+        "entries(tab: String)",
+        "can(e: AiModelEntry, capability: String)",
+        "parse(tabs: String, snapshot: String)",
+        "load(ctx: Context)",
+        "text(p: String)",
+        "entry(o: JSONObject)",
+        "num(k: String)",
+        "objs()",
+        "strings()",
+        "parseLive(json: String, labels: Map<String, String> = emptyMap()",
+        "perMillion(k: String)",
+        "filter(entries: List<AiModelEntry>, query: String, max: Int)",
+        "hit(e: AiModelEntry, w: String)",
+        "rank(e: AiModelEntry)",
+        "get()",
+        "remember(e: AiModelEntry)",
+        "lookup(id: String)",
+        "clear()",
+        "wantsImage(text: String, hasImage: Boolean)",
+        "plan(text: String, hasImage: Boolean, picked: String)",
+        "context(n: Long)",
+        "trim(v: Double)",
+        "price(p: AiModelPrice)",
+        "spec(e: AiModelEntry)",
+        "class AiModelPrice",
+        "class AiModelEntry",
+        "class AiTabBlock",
+        "class AiSearchConfig",
+        "class AiImageFlowConfig",
+        "class AiModelTabs",
+        "class AiModelSearch",
+        "class AiModelListCache",
+        "class AiKnownModels",
+        "class AiImageFlow",
+        "class Kind",
+        "class Plan",
+        "class AiModelText"
+      ]
+    },
+    {
       "path": "ab_cloud-libs-shared/libs/ai/src/main/kotlin/com/diegonmarcos/superapp/ai/AiPage.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -33496,7 +33691,7 @@
         "AiConsentCard( sentence: String, onAllow: ()",
         "Welcome(engines: List<AiEngine>, query: (AiEngine, String)",
         "Conversation(chat: AiChatState, theme: AiTheme, design: AiDesign)",
-        "Bubble(msg: AiMsg, max: Dp, theme: AiTheme, design: AiDesign)",
+        "Bubble(chat: AiChatState, msg: AiMsg, max: Dp, theme: AiTheme, design: AiDesign)",
         "Thinking(label: String, theme: AiTheme, design: AiDesign)",
         "SessionsSelect(chat: AiChatState, theme: AiTheme)",
         "Composer(chat: AiChatState, theme: AiTheme, design: AiDesign, decl: AiComposerDecl, onCatalogue: (()",
@@ -33573,7 +33768,7 @@
       ],
       "symbols": [
         "title(first: String, chars: Int)",
-        "messages(history: List<AiMsg>, turns: Int)",
+        "messages(history: List<AiMsg>, turns: Int, read: ((AiAttachment)",
         "body(cfg: AiConfig, req: AiRequest, model: String?, stream: Boolean, openRouter: Boolean)",
         "str(k: String)",
         "urlCitations(notes: JSONArray?)",
@@ -33746,7 +33941,7 @@
         "effortHasAnAutoDefaultThatSendsNothingAndFourLevelsThatDo()",
         "theMoreSheetIsGroupedUnderHeadersAndCoversUsagePluginsSkillsAndTheRest()",
         "theBarCollapsesToOneChipAndRemembersItPerApp()",
-        "thePlusMenuOffersTheFourAttachKindsAndNewChat()",
+        "thePlusMenuOffersFilesImageCameraAndNewChat()",
         "exportRendersTheSessionAsMarkdown()",
         "undoDropsTheLastExchangeAndReturnsTheAsk()",
         "usageAndPluginsParseFromTheBackendsOwnWords()",
@@ -33862,6 +34057,54 @@
         "class RecordingHttp",
         "class Scripted",
         "class Echo"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/ai/tools/gen-model-snapshot.py",
+      "lang": "py",
+      "role": "python",
+      "exports": [
+        "load(p)",
+        "fetch(path)",
+        "per_million(v)",
+        "provider_of(m, labels)",
+        "short_name(m)",
+        "link(mid)",
+        "chat_entry(m, labels, api=\"chat\")",
+        "image_price(src, mid)",
+        "video_price(m)",
+        "b_params(m)",
+        "has(have, need)",
+        "chat_ok(m, r)",
+        "pick(items, key_provider, r, order)",
+        "apply(tab, spec, src, cfg, tasks, tools)",
+        "build(src, date)",
+        "check(snap, cfg)",
+        "main(argv)",
+        "class Source"
+      ],
+      "imports": [
+        "json"
+      ],
+      "symbols": [
+        "load(p)",
+        "fetch(path)",
+        "per_million(v)",
+        "provider_of(m, labels)",
+        "short_name(m)",
+        "link(mid)",
+        "chat_entry(m, labels, api=\"chat\")",
+        "image_price(src, mid)",
+        "video_price(m)",
+        "b_params(m)",
+        "has(have, need)",
+        "chat_ok(m, r)",
+        "pick(items, key_provider, r, order)",
+        "apply(tab, spec, src, cfg, tasks, tools)",
+        "build(src, date)",
+        "check(snap, cfg)",
+        "main(argv)",
+        "class Source"
       ]
     },
     {
@@ -235596,6 +235839,9 @@
         "commsApplicationId",
         "mailAiRouting",
         "mailFleetB64",
+        "mailBuildJson",
+        "mailListDefaults",
+        "mailInboxSplitB64",
         "mailUi",
         "mailUiBottomNav",
         "mailUiDefaultSection",
@@ -239901,6 +240147,7 @@
         "app.sterna.core.data.account.StoredAccount",
         "app.sterna.core.data.db.OutboxLogic",
         "app.sterna.core.data.getOrElseUnlessCancelled",
+        "app.sterna.core.data.mail.AlertCounts",
         "app.sterna.core.data.mail.CrossAccountMove",
         "app.sterna.core.data.mail.EmailKey",
         "app.sterna.core.data.mail.FrozenNumbering",
@@ -239908,8 +240155,7 @@
         "app.sterna.core.data.mail.InboxRow",
         "app.sterna.core.data.mail.MailRepository",
         "app.sterna.core.data.mail.MailSearchResult",
-        "app.sterna.core.data.mail.UidValidity",
-        "app.sterna.core.data.mail.emailKey"
+        "app.sterna.core.data.mail.UidValidity"
       ],
       "symbols": [
         "undoSend()",
@@ -239950,8 +240196,8 @@
         "setGroupMode(mode: GroupMode)",
         "setRankMode(mode: RankMode)",
         "toggleListFilter(filter: ListFilter)",
-        "chooseMoveAccount(id: String?)",
-        "sentScopes(key: PageKey, accountIds: List<String>)"
+        "resetListView()",
+        "chooseMoveAccount(id: String?)"
       ]
     },
     {
@@ -239980,6 +240226,7 @@
         "androidx.compose.ui.graphics.vector.ImageVector",
         "androidx.compose.ui.res.stringResource",
         "app.sterna.R",
+        "app.sterna.core.data.mail.AlertCounts",
         "app.sterna.core.data.settings.SortOrder",
         "app.sterna.ui.components.Icon",
         "app.sterna.ui.components.IconButton",
@@ -239987,7 +240234,9 @@
       ],
       "symbols": [
         "groupActive(g: ListViewGroup)",
-        "of(view: ListView, globalConversation: Boolean, globalSort: SortOrder)",
+        "of(view: ListView, globalConversation: Boolean, globalSort: SortOrder, alertCounts: AlertCounts? = null)",
+        "visible(ui: ListViewUi)",
+        "text(ui: ListViewUi)",
         "isActive(ui: ListViewUi)",
         "run(actions: ListViewActions)",
         "of(group: ListViewGroup)",
@@ -240006,9 +240255,14 @@
       "exports": [],
       "imports": [
         "android.content.Context",
+        "app.sterna.BuildConfig",
+        "app.sterna.core.data.mail.AlertScope",
         "app.sterna.core.data.mail.AuthFilter",
+        "app.sterna.core.data.mail.InboxSplit",
+        "app.sterna.core.data.mail.InboxSplitRules",
         "app.sterna.core.data.mail.ListShape",
-        "app.sterna.core.data.settings.SortOrder"
+        "app.sterna.core.data.settings.SortOrder",
+        "java.util.Base64"
       ],
       "symbols": [
         "effectiveGroup(globalConversation: Boolean)",
@@ -240023,10 +240277,12 @@
         "pick(i: Int, parse: (String)",
         "keyFor(accountId: String?, folderId: String?)",
         "load(context: Context, key: String)",
+        "reset(context: Context, key: String)",
         "save(context: Context, key: String, view: ListView)",
         "prefs(context: Context)",
         "class GroupMode",
         "class RankMode",
+        "class ListViewDefaults",
         "class ListFilter",
         "class ListView",
         "class lifts",
@@ -249568,6 +249824,34 @@
       ]
     },
     {
+      "path": "ac_cloud-mail/app/src/test/kotlin/app/sterna/ui/inbox/ListViewDefaultsTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ListViewDefaultsTest"
+      ],
+      "imports": [
+        "android.app.Application",
+        "app.sterna.core.data.mail.AlertCounts",
+        "app.sterna.core.data.mail.AlertScope",
+        "app.sterna.core.data.settings.SortOrder",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNotNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "org.junit.runner.RunWith",
+        "org.robolectric.RobolectricTestRunner",
+        "org.robolectric.RuntimeEnvironment",
+        "org.robolectric.annotation.Config",
+        "java.io.File"
+      ],
+      "symbols": [
+        "declared(key: String)",
+        "class ListViewDefaultsTest"
+      ]
+    },
+    {
       "path": "ac_cloud-mail/app/src/test/kotlin/app/sterna/ui/inbox/LocalDraftListWiringLintTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -255819,6 +256103,7 @@
         "idsBefore(accountId: String, cutoff: Long)",
         "pagingSource(query: SupportSQLiteQuery)",
         "conversationPagingSource(query: SupportSQLiteQuery)",
+        "observeCount(query: SupportSQLiteQuery)",
         "recentUnified(query: SupportSQLiteQuery)",
         "observeRecentUnified(query: SupportSQLiteQuery)",
         "suggestSenders(q: String, limit: Int)",
@@ -255853,8 +256138,7 @@
         "unindexByIds(accountId: String, ids: List<String>)",
         "countForMailbox(accountId: String, mailboxId: String)",
         "oldestRepresentativeEmailId(accountId: String, mailboxId: String)",
-        "representativeCountForMailbox(accountId: String, mailboxId: String)",
-        "idsForMailbox(accountId: String, mailboxId: String)"
+        "representativeCountForMailbox(accountId: String, mailboxId: String)"
       ]
     },
     {
@@ -256856,6 +257140,17 @@
       ]
     },
     {
+      "path": "ac_cloud-mail/core/data/src/main/kotlin/app/sterna/core/data/mail/ImapBacklogPlan.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [],
+      "imports": [],
+      "symbols": [
+        "next( serverUids: Collection<Long>, cachedUids: Set<Long>, newCap: Int = IMAP_NEW_CAP, backfill: Int = IMAP_BACKFILL_BATCH, )",
+        "class ImapBacklogPlan"
+      ]
+    },
+    {
       "path": "ac_cloud-mail/core/data/src/main/kotlin/app/sterna/core/data/mail/ImapMailService.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -256961,6 +257256,38 @@
       "symbols": [
         "imapThreadKey(references: String?, inReplyTo: String?, messageId: String?)",
         "firstHeaderId(value: String?)"
+      ]
+    },
+    {
+      "path": "ac_cloud-mail/core/data/src/main/kotlin/app/sterna/core/data/mail/InboxSplit.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "AlertScope",
+        "InboxSplitRules",
+        "InboxSplit",
+        "AlertCounts"
+      ],
+      "imports": [
+        "kotlinx.serialization.json.Json",
+        "kotlinx.serialization.json.JsonArray",
+        "kotlinx.serialization.json.JsonObject",
+        "kotlinx.serialization.json.jsonObject",
+        "kotlinx.serialization.json.jsonPrimitive"
+      ],
+      "symbols": [
+        "parse(json: String)",
+        "list(key: String)",
+        "text(key: String)",
+        "normal(address: String?)",
+        "isAlert(rules: InboxSplitRules, fromEmail: String?)",
+        "alertSql(rules: InboxSplitRules, table: String)",
+        "whereSql(scope: AlertScope, rules: InboxSplitRules?, table: String)",
+        "partition(rules: InboxSplitRules, items: List<T>, keyOf: (T)",
+        "class AlertScope",
+        "class InboxSplitRules",
+        "class InboxSplit",
+        "class AlertCounts"
       ]
     },
     {
@@ -262571,6 +262898,22 @@
       ]
     },
     {
+      "path": "ac_cloud-mail/core/data/src/test/kotlin/app/sterna/core/data/mail/ImapBacklogPlanTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ImapBacklogPlanTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "class ImapBacklogPlanTest"
+      ]
+    },
+    {
       "path": "ac_cloud-mail/core/data/src/test/kotlin/app/sterna/core/data/mail/ImapBudgetTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -262835,6 +263178,35 @@
         "lines(file: String, function: String)",
         "assertLine(file: String, function: String, line: String)",
         "class ImapWindowWiringTest"
+      ]
+    },
+    {
+      "path": "ac_cloud-mail/core/data/src/test/kotlin/app/sterna/core/data/mail/InboxSplitTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "InboxSplitTest"
+      ],
+      "imports": [
+        "app.sterna.core.data.settings.SortOrder",
+        "org.junit.After",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Before",
+        "org.junit.Test",
+        "java.io.File",
+        "java.sql.Connection",
+        "java.sql.DriverManager"
+      ],
+      "symbols": [
+        "setUp()",
+        "tearDown()",
+        "insert(id: String, mailbox: String, from: String?, key: Long)",
+        "ids(alerts: AlertScope)",
+        "count(alerts: AlertScope)",
+        "class InboxSplitTest",
+        "class Msg"
       ]
     },
     {
@@ -511059,6 +511431,7 @@
         "com.diegonmarcos.cloudsearch.data.Account",
         "com.diegonmarcos.cloudsearch.data.Prefs",
         "com.diegonmarcos.cloudsearch.data.Services",
+        "com.diegonmarcos.superapp.ai.AiModelTabs",
         "com.diegonmarcos.superapp.ai.AiTags",
         "com.diegonmarcos.superapp.modelcataloguepage.ModelTags",
         "com.diegonmarcos.cloudsearch.ui.SearchShell",
@@ -511091,7 +511464,7 @@
         "theChipOpensTheCatalogueAndARowPicksTheModelForTheChat()",
         "aModelThatIsNotAChatModelCannotBePicked()",
         "closingTheCatalogueInResearchReturnsToResearchReports()",
-        "theCatalogueHasTheFiveSubpagesAndEachListsItsModels()",
+        "theCatalogueHasTheDeclaredTabsAndEachListsItsModels()",
         "theTaskButtonOpensTheTaskCatalogueAndATaskGreysAgentAndModel()",
         "class ModelCatalogueShellTest",
         "class Offline"
@@ -515103,6 +515476,26 @@
       ]
     },
     {
+      "path": "ac_cloud-superintel/app/src/main/java/com/diegonmarcos/cloudsuperintel/OpenRouterKey.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "OpenRouterKey"
+      ],
+      "imports": [
+        "android.content.Context",
+        "com.diegonmarcos.superapp.ai.AiToken",
+        "org.json.JSONArray",
+        "org.json.JSONObject"
+      ],
+      "symbols": [
+        "provider(apisJson: String)",
+        "token(cfg: ApiConfig, provider: String, src: PrivateSource)",
+        "source(ctx: Context)",
+        "class OpenRouterKey"
+      ]
+    },
+    {
       "path": "ac_cloud-superintel/app/src/main/java/com/diegonmarcos/cloudsuperintel/Personas.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -515132,6 +515525,12 @@
       "imports": [
         "android.content.Context",
         "com.diegonmarcos.superapp.ai.AiAgents",
+        "com.diegonmarcos.superapp.ai.AiAttachments",
+        "com.diegonmarcos.superapp.ai.AiImageFlow",
+        "com.diegonmarcos.superapp.ai.AiMedia",
+        "com.diegonmarcos.superapp.ai.AiModelTabs",
+        "com.diegonmarcos.superapp.ai.AiOpenRouterBackend",
+        "com.diegonmarcos.superapp.ai.AiTokenSource",
         "com.diegonmarcos.superapp.ai.AiChatState",
         "com.diegonmarcos.superapp.ai.AiConfig",
         "com.diegonmarcos.superapp.ai.AiDesign",
@@ -515148,6 +515547,7 @@
         "personas(ctx: Context)",
         "defaultId(ctx: Context)",
         "chat(ctx: Context, persona: String? = null)",
+        "media(app: Context, cfg: AiConfig)",
         "store(app: Context)",
         "tune(ctx: Context, p: Persona, chat: AiChatState)",
         "complete(ctx: Context, system: String, user: String)",
@@ -515330,12 +515730,12 @@
         "com.diegonmarcos.cloudsuperintel.SiAi",
         "kotlinx.coroutines.Dispatchers",
         "kotlinx.coroutines.withContext",
+        "com.diegonmarcos.superapp.ai.AiAttachHost",
         "com.diegonmarcos.superapp.ai.AiChatPage",
         "com.diegonmarcos.superapp.ai.AiSessionsPanel",
         "com.diegonmarcos.superapp.ai.AiSettingsPickers",
         "com.diegonmarcos.superapp.ai.AiStrings",
-        "com.diegonmarcos.superapp.ai.AiTheme",
-        "com.diegonmarcos.superapp.ai.materialAiTheme"
+        "com.diegonmarcos.superapp.ai.AiTheme"
       ],
       "symbols": [
         "siAiTheme()",
@@ -515448,11 +515848,59 @@
       ]
     },
     {
+      "path": "ac_cloud-superintel/app/src/test/java/com/diegonmarcos/cloudsuperintel/AttachTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "AttachTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.ai.AiAttachWire",
+        "com.diegonmarcos.superapp.ai.AiAttachment",
+        "com.diegonmarcos.superapp.ai.AiAttachments",
+        "com.diegonmarcos.superapp.ai.AiChatState",
+        "com.diegonmarcos.superapp.ai.AiDesign",
+        "com.diegonmarcos.superapp.ai.AiHost",
+        "com.diegonmarcos.superapp.ai.AiModel",
+        "com.diegonmarcos.superapp.ai.AiOutcome",
+        "com.diegonmarcos.superapp.ai.AiProtocol",
+        "com.diegonmarcos.superapp.ai.AiFileSessions",
+        "com.diegonmarcos.superapp.ai.AiMsg",
+        "com.diegonmarcos.superapp.ai.AiSession",
+        "com.diegonmarcos.superapp.ai.AiSink",
+        "kotlinx.coroutines.runBlocking",
+        "org.json.JSONArray",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "newSession(model: String, now: Long)",
+        "models()",
+        "send(session: AiSession, text: String, model: String, web: Boolean, now: Long, sink: AiSink)",
+        "sendWith(session: AiSession, text: String, attachments: List<AiAttachment>, model: String, web: Boolean, now: Long, sink: AiSink)",
+        "att(id: String, name: String, mime: String)",
+        "thePlusMenuAttachesFilesImageAndCameraAndCameraNeedsItsPermsRow()",
+        "theAppDeclaresTheCameraAndMediaPermsRowsItsMenuNeeds()",
+        "chipsAreAddedRemovedAndSentWithTheMessageThenCleared()",
+        "anAttachmentAloneIsAMessageAndNothingAtAllIsNot()",
+        "aNewChatDropsPendingChips()",
+        "theWireCarriesAnImageAsAPartATextFileInlineAndAnUnreadableOneByName()",
+        "onlyTheLastUserMessageCarriesItsFilesInTheHistory()",
+        "attachmentsSurviveTheSessionFile()",
+        "mimeTypesComeFromTheProviderThenTheExtension()",
+        "class AttachTest",
+        "class Host"
+      ]
+    },
+    {
       "path": "ac_cloud-superintel/app/src/test/java/com/diegonmarcos/cloudsuperintel/Data.kt",
       "lang": "kotlin",
       "role": "kotlin",
       "exports": [
-        "Data"
+        "Data",
+        "LibAi"
       ],
       "imports": [
         "org.json.JSONObject",
@@ -515467,7 +515915,123 @@
         "section(id: String)",
         "navMode(section: String)",
         "groups(section: String)",
-        "class Data"
+        "tabs()",
+        "config()",
+        "class Data",
+        "class LibAi"
+      ]
+    },
+    {
+      "path": "ac_cloud-superintel/app/src/test/java/com/diegonmarcos/cloudsuperintel/ImageFlowTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ImageFlowTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.ai.AiAttachment",
+        "com.diegonmarcos.superapp.ai.AiBackend",
+        "com.diegonmarcos.superapp.ai.AiImageFlow",
+        "com.diegonmarcos.superapp.ai.AiImageStore",
+        "com.diegonmarcos.superapp.ai.AiImages",
+        "com.diegonmarcos.superapp.ai.AiMedia",
+        "com.diegonmarcos.superapp.ai.AiMemoryPrefs",
+        "com.diegonmarcos.superapp.ai.AiMemorySessions",
+        "com.diegonmarcos.superapp.ai.AiModel",
+        "com.diegonmarcos.superapp.ai.AiProtocol",
+        "com.diegonmarcos.superapp.ai.AiReply",
+        "com.diegonmarcos.superapp.ai.AiRequest",
+        "com.diegonmarcos.superapp.ai.AiSink",
+        "com.diegonmarcos.superapp.ai.AiStandardHost",
+        "org.json.JSONObject",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertNotNull",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Rule",
+        "org.junit.Test",
+        "org.junit.rules.TemporaryFolder",
+        "java.io.File",
+        "java.util.Base64"
+      ],
+      "symbols": [
+        "aPickedModelThatDrawsIsUsedAsPicked()",
+        "whenNoImageModelIsPickedTheImageTabChoosesOneThatTakesTheAttachedImage()",
+        "textToImageNeedsNoAttachmentAndPicksFromTheImageTab()",
+        "anImageWithAQuestionIsVisionAndKeepsAModelThatReadsImages()",
+        "theReturnedImageIsParsedFromTheCompletionsMessage()",
+        "anImageIsKeptAsAFileTheChatCanShowSaveShareAndReattach()",
+        "theBodyAsksForAnImageAndCarriesTheAttachedPicture()",
+        "models()",
+        "chat(req: AiRequest, onDelta: (String)",
+        "theWholeRoundTripGoesToTheImageModelAndTheAnswerHoldsTheImage()",
+        "aPlainMessageStaysOnTheGateway()",
+        "class ImageFlowTest",
+        "class Recorder"
+      ]
+    },
+    {
+      "path": "ac_cloud-superintel/app/src/test/java/com/diegonmarcos/cloudsuperintel/McpSotTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "McpSotTest"
+      ],
+      "imports": [
+        "org.json.JSONObject",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.io.File"
+      ],
+      "symbols": [
+        "strings(k: String)",
+        "group(prefix: String)",
+        "everyCurrentServerOfTheSotIsListedOnceUnderItsTier()",
+        "theRebrandNamesAreThereAsNewNames()",
+        "everyOldNameIsListedAsAnAliasOfItsNewName()",
+        "cloudyC3McpShowsItsMergedPeersControlAndTheBrowserToolGroup()",
+        "theMeshOnlyServersAreCurrentNames()",
+        "class McpSotTest"
+      ]
+    },
+    {
+      "path": "ac_cloud-superintel/app/src/test/java/com/diegonmarcos/cloudsuperintel/ModelTabsTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ModelTabsTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.ai.AiModelListCache",
+        "com.diegonmarcos.superapp.ai.AiModelSearch",
+        "com.diegonmarcos.superapp.ai.AiModelText",
+        "com.diegonmarcos.superapp.modelcatalogue.CatalogueFetch",
+        "com.diegonmarcos.superapp.modelcatalogue.CatalogueStore",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNotNull",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "theTabsAreInThreeRowsUnderCoreInTheOwnersOrder()",
+        "noTabIsEmptyAndEveryEntryIsComplete()",
+        "noTabCarriesPlaceholderTbdOrSampleText()",
+        "imageAndAudioTabsAreFilledFromTheModalitiesOpenRouterDeclares()",
+        "everyTabHasItsDeclaredRules()",
+        "theLiveListIsParsedAndRoutersAreSkipped()",
+        "theSearchFiltersByNameIdProviderAndModality()",
+        "theSearchRunsOverTheBakedTabsToo()",
+        "get(key: String)",
+        "put(key: String, body: String, at: Long)",
+        "theListIsFetchedOnDemandOncePerTtlAndStaleOnFailure()",
+        "noCopyAndNoListMeansNull()",
+        "theSearchIsDeclaredDebouncedAndCachedWithNoPolling()",
+        "aRowSaysItsContextPriceAndModalities()",
+        "class ModelTabsTest",
+        "class Store"
       ]
     },
     {
@@ -515713,6 +516277,24 @@
     },
     {
       "path": "ac_cloud-superintel/test/test-superintel-app.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "check()",
+        "ok()",
+        "bad()",
+        "mutant()"
+      ],
+      "imports": [],
+      "symbols": [
+        "check()",
+        "ok()",
+        "bad()",
+        "mutant()"
+      ]
+    },
+    {
+      "path": "ac_cloud-superintel/test/test-superintel-models.sh",
       "lang": "sh",
       "role": "shell",
       "exports": [
