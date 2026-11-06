@@ -2131,7 +2131,7 @@
   "timezone": "Europe/Paris",
   "tests": {
     "api": {
-      "cmd": "node --test test/",
+      "cmd": "npm install --no-audit --no-fund --ignore-scripts --loglevel=error && node --test test/*.test.js",
       "cwd": "src/code"
     }
   }
