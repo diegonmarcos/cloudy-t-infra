@@ -3002,6 +3002,7 @@
         "detectBotWall",
         "configFromEnv",
         "cfConf",
+        "cfConfResolve",
         "cfRequest",
         "cfRequestFor",
         "cfNormalize",
@@ -3024,8 +3025,7 @@
         "DEFAULT_CONFIG",
         "UsageEntry",
         "BrowserState",
-        "GwBackend",
-        "GwOp"
+        "GwBackend"
       ],
       "imports": [
         "node:fs"
@@ -3037,6 +3037,7 @@
         "detectBotWall(s: WallSignals)",
         "configFromEnv(env: Record<string, string | undefined> = process.env)",
         "cfConf(env: Record<string, string | undefined> = process.env)",
+        "cfConfResolve(env: Record<string, string | undefined> = process.env, f: typeof fetch = fetch)",
         "cfRequest(endpoint: string, body: unknown, conf: CfConf, f: typeof fetch = fetch, binary = false, wait: (ms: number)",
         "cfRequestFor(op: GwOp, a: any)",
         "cfNormalize(op: GwOp, a: any, r: CfRaw)",

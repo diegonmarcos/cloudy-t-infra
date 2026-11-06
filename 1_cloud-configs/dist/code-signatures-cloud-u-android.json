@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 23623,
+    "files": 23663,
     "by_lang": {
-      "sh": 684,
+      "sh": 686,
       "js": 547,
-      "py": 208,
-      "kotlin": 12913,
+      "py": 211,
+      "kotlin": 12948,
       "ts": 8470,
       "java": 649,
       "nix": 36,
@@ -20,11 +20,11 @@
     "by_role": {
       "hook": 158,
       "file": 2304,
-      "shell": 548,
-      "script": 296,
+      "shell": 549,
+      "script": 300,
       "module": 6480,
       "java": 648,
-      "kotlin": 12910,
+      "kotlin": 12945,
       "python": 71,
       "flake": 32,
       "rust-module": 116,
@@ -1701,7 +1701,9 @@
         "code_files(app_dir, extra_skip)",
         "scan(app_dir, policy, extra_skip)",
         "one_place(policy, apps)",
-        "asset_body(perms)",
+        "entry_of(perms)",
+        "dataset_body(apps_by_pkg)",
+        "fleet_body(rows)",
         "main()"
       ],
       "imports": [
@@ -1727,7 +1729,9 @@
         "code_files(app_dir, extra_skip)",
         "scan(app_dir, policy, extra_skip)",
         "one_place(policy, apps)",
-        "asset_body(perms)",
+        "entry_of(perms)",
+        "dataset_body(apps_by_pkg)",
+        "fleet_body(rows)",
         "main()"
       ]
     },
@@ -1901,6 +1905,33 @@
         "load(path)",
         "main(argv)",
         "class RemoteFile"
+      ]
+    },
+    {
+      "path": ".github/workflows/scripts/cloud-android-runtime-data-guard.py",
+      "lang": "py",
+      "role": "script",
+      "exports": [
+        "walk(root)",
+        "read(p)",
+        "strip_comments(t)",
+        "scan()",
+        "main()",
+        "fleet(files)"
+      ],
+      "imports": [
+        "json",
+        "os",
+        "re",
+        "sys"
+      ],
+      "symbols": [
+        "walk(root)",
+        "read(p)",
+        "strip_comments(t)",
+        "scan()",
+        "main()",
+        "fleet(files)"
       ]
     },
     {
@@ -4532,7 +4563,9 @@
         "code_files(app_dir, extra_skip)",
         "scan(app_dir, policy, extra_skip)",
         "one_place(policy, apps)",
-        "asset_body(perms)",
+        "entry_of(perms)",
+        "dataset_body(apps_by_pkg)",
+        "fleet_body(rows)",
         "main()"
       ],
       "imports": [
@@ -4558,7 +4591,9 @@
         "code_files(app_dir, extra_skip)",
         "scan(app_dir, policy, extra_skip)",
         "one_place(policy, apps)",
-        "asset_body(perms)",
+        "entry_of(perms)",
+        "dataset_body(apps_by_pkg)",
+        "fleet_body(rows)",
         "main()"
       ]
     },
@@ -4732,6 +4767,33 @@
         "load(path)",
         "main(argv)",
         "class RemoteFile"
+      ]
+    },
+    {
+      "path": "1_cicd/src/scripts/cloud-android-runtime-data-guard.py",
+      "lang": "py",
+      "role": "script",
+      "exports": [
+        "walk(root)",
+        "read(p)",
+        "strip_comments(t)",
+        "scan()",
+        "main()",
+        "fleet(files)"
+      ],
+      "imports": [
+        "json",
+        "os",
+        "re",
+        "sys"
+      ],
+      "symbols": [
+        "walk(root)",
+        "read(p)",
+        "strip_comments(t)",
+        "scan()",
+        "main()",
+        "fleet(files)"
       ]
     },
     {
@@ -6902,6 +6964,22 @@
         "ok()",
         "bad()",
         "expect()"
+      ]
+    },
+    {
+      "path": "1_cicd/src/scripts/test/runtime-data-guard.test.sh",
+      "lang": "sh",
+      "role": "script",
+      "exports": [
+        "mk()",
+        "expect()",
+        "jset()"
+      ],
+      "imports": [],
+      "symbols": [
+        "mk()",
+        "expect()",
+        "jset()"
       ]
     },
     {
@@ -10376,6 +10454,8 @@
         "askBatch(batch: List<com.diegonmarcos.superapp.perms.PermEntry>)",
         "grantRow(e: com.diegonmarcos.superapp.perms.PermEntry)",
         "shellGrant(e: com.diegonmarcos.superapp.perms.PermEntry, then: ()",
+        "shellAll(entries: List<com.diegonmarcos.superapp.perms.PermEntry>)",
+        "next()",
         "startWalk()",
         "walkNext()",
         "startAuto(force: Boolean)",
@@ -10409,9 +10489,7 @@
         "ActionButton(label: String, bg: Int = 0xFF7C3AED.toInt()",
         "PermButton( label: String, granted: Boolean?, plain: Boolean = false, fill: Boolean = true, onClick: ()",
         "PermButtonRow(content: @Composable RowScope.()",
-        "copy(ctx: Context, v: String)",
-        "requestNotificationsPermission()",
-        "requestAllPermissions(perms: Array<String>)"
+        "copy(ctx: Context, v: String)"
       ]
     },
     {
@@ -10433,6 +10511,18 @@
         "android.content.Context",
         "android.widget.Toast",
         "androidx.compose.foundation.background",
+        "androidx.compose.foundation.border",
+        "androidx.compose.foundation.horizontalScroll",
+        "androidx.compose.foundation.rememberScrollState",
+        "androidx.compose.ui.unit.sp",
+        "com.diegonmarcos.superapp.perms.FleetPerms",
+        "com.diegonmarcos.superapp.perms.GroupBy",
+        "com.diegonmarcos.superapp.perms.PermCategory",
+        "com.diegonmarcos.superapp.perms.PermsPageQuery",
+        "com.diegonmarcos.superapp.perms.PermsQuery",
+        "com.diegonmarcos.superapp.perms.Protection",
+        "com.diegonmarcos.superapp.perms.SortBy",
+        "com.diegonmarcos.superapp.perms.StatusFilter",
         "androidx.compose.foundation.clickable",
         "androidx.compose.foundation.layout.Box",
         "androidx.compose.foundation.layout.Column",
@@ -10454,19 +10544,7 @@
         "androidx.compose.ui.graphics.Color",
         "androidx.compose.ui.platform.testTag",
         "androidx.compose.ui.text.font.FontFamily",
-        "androidx.compose.ui.text.font.FontWeight",
-        "androidx.compose.ui.text.style.TextAlign",
-        "androidx.compose.ui.unit.dp",
-        "com.diegonmarcos.superapp.perms.AdbLine",
-        "com.diegonmarcos.superapp.perms.AdbScript",
-        "com.diegonmarcos.superapp.perms.PermEntry",
-        "com.diegonmarcos.superapp.perms.PermKind",
-        "com.diegonmarcos.superapp.perms.PermSection",
-        "com.diegonmarcos.superapp.perms.PermState",
-        "com.diegonmarcos.superapp.perms.PermStatus",
-        "com.diegonmarcos.superapp.perms.PermStatusReader",
-        "com.diegonmarcos.superapp.perms.Perms",
-        "com.diegonmarcos.superapp.perms.PermsLink"
+        "androidx.compose.ui.text.font.FontWeight"
       ],
       "symbols": [
         "ok(output: String?)",
@@ -10477,7 +10555,10 @@
         "exec(command: String)",
         "PermsSummaryBar(rows: List<PermRowState>, ctx: Context, onAskAll: ()",
         "PermsCenterSection( rows: List<PermRowState>, highlight: PermsLink.Request?, channelName: String?, adbResults: List<AdbRunResult>, adbRunning: Boolean, shellNote: String?, onClearHighlight: ()",
-        "PermRowLine(r: PermsPage.Row, highlighted: Boolean, ctx: Context, onGrant: (PermEntry)",
+        "PermsChipRow(label: String, content: @Composable RowScope.()",
+        "PermsFilterPill(label: String, selected: Boolean, tag: String, onClick: ()",
+        "permsReport(rows: List<PermsPage.Row>, appsOf: (String)",
+        "PermRowLine(r: PermsPage.Row, highlighted: Boolean, ctx: Context, apps: List<String>, onGrant: (PermEntry)",
         "copy(ctx: Context, v: String)",
         "class PermRowState",
         "class AdbRunResult",
@@ -13441,6 +13522,8 @@
         "parseStack(arrName: String)",
         "parseFilters(arrName: String)",
         "swipeWalk()",
+        "hubTiles(section: Section, hub: Page)",
+        "hubTarget(sectionId: String, page: Page)",
         "byId(id: String)",
         "canonicalId(id: String)",
         "canonicalPage(sectionId: String, pageId: String)",
@@ -13466,9 +13549,7 @@
         "iconResFor(ctx: Context, name: String)",
         "pageSamples(key: String)",
         "homeGroups()",
-        "mesh()",
-        "publicServices()",
-        "privateServices()"
+        "mesh()"
       ]
     },
     {
@@ -13695,6 +13776,35 @@
         "follow(strip: View, island: View, gapPx: Int)",
         "seat(strip: View, island: View, gapPx: Int)",
         "class StripIslandGap"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/launcher/SubgroupHubFragment.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "SubgroupHubFragment"
+      ],
+      "imports": [
+        "android.os.Bundle",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.fillMaxSize",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.foundation.rememberScrollState",
+        "androidx.compose.foundation.verticalScroll",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.remember",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.platform.testTag",
+        "com.diegonmarcos.superapp.ui.LauncherPalette",
+        "com.diegonmarcos.superapp.uikit.KitComposeFragment"
+      ],
+      "symbols": [
+        "palette()",
+        "Content()",
+        "tilesFor(sectionId: String, pageId: String)",
+        "newInstance(sectionId: String, pageId: String)",
+        "class SubgroupHubFragment"
       ]
     },
     {
@@ -16437,6 +16547,8 @@
         "build(card: AiUsageModel.Card)",
         "prefs(ctx: Context)",
         "bearer(ctx: Context)",
+        "openIntent(ctx: Context)",
+        "styled(card: AiUsageModel.Card)",
         "ensureChannel(ctx: Context)",
         "class AiBadgeService"
       ]
@@ -16532,6 +16644,7 @@
       "symbols": [
         "read(ctx: Context, b: BadgeDeclaration.Badge)",
         "data(headline: String, sub: String, progress: Float?, lines: List<Line>)",
+        "styledLines(cs: CharSequence)",
         "maxLines(b: BadgeDeclaration.Badge)",
         "batteryLevel(ctx: Context)",
         "ago(ms: Long)",
@@ -23273,6 +23386,7 @@
         "declared()",
         "routed()",
         "hasData(d: Decl)",
+        "hubSubgroupHasPages(d: Decl)",
         "packagesOf(section: String)",
         "fileFor(simple: String)",
         "packageOfFile(f: File)",
@@ -23639,6 +23753,28 @@
         "showStrip(dispatch: Boolean = true)",
         "bounds(tag: String)",
         "class StatusStripCutoutTest"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/test/java/com/diegonmarcos/superapp/launcher/SubgroupHubTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "SubgroupHubTest"
+      ],
+      "imports": [
+        "android.app.Application",
+        "androidx.compose.ui.test.onNodeWithTag",
+        "com.diegonmarcos.superapp.ui.KitPageHarness",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "org.junit.runner.RunWith",
+        "org.robolectric.RobolectricTestRunner",
+        "org.robolectric.annotation.Config"
+      ],
+      "symbols": [
+        "class SubgroupHubTest"
       ]
     },
     {
@@ -24924,9 +25060,12 @@
       ],
       "imports": [
         "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertTrue",
         "org.junit.Test"
       ],
       "symbols": [
+        "at(used: Double, remainingDays: Double)",
         "class AiUsageWeekTest"
       ]
     },
@@ -25536,6 +25675,24 @@
       "symbols": [
         "e(id: String)",
         "class PermsPageCatalogueTest"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/test/java/com/diegonmarcos/superapp/perms/PermsRestoreTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "PermsRestoreTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.io.File"
+      ],
+      "symbols": [
+        "rows(state: (PermEntry)",
+        "class PermsRestoreTest"
       ]
     },
     {
@@ -28700,6 +28857,20 @@
         "bad()",
         "check()",
         "mut()"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/test/test-network-watchdog-hub.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "ok()",
+        "bad()"
+      ],
+      "imports": [],
+      "symbols": [
+        "ok()",
+        "bad()"
       ]
     },
     {
@@ -32921,9 +33092,16 @@
         "java.util.TimeZone"
       ],
       "symbols": [
+        "lines()",
+        "over(d: Double?)",
+        "week(w: Win, nowMs: Long)",
         "parse(body: String)",
         "win(o: JSONObject?)",
         "spend(o: JSONObject?)",
+        "tok(o: JSONObject)",
+        "periods(a: org.json.JSONArray?)",
+        "tokens(o: JSONObject)",
+        "count(n: Long)",
         "usd(v: Double)",
         "mTokens(t: Long)",
         "spend(s: Spend?)",
@@ -32932,7 +33110,6 @@
         "until(ms: Long)",
         "d1(v: Double)",
         "weekLines(w: Win, nowMs: Long)",
-        "over(rate: Double?)",
         "resets(w: Win, nowMs: Long, zone: TimeZone)",
         "card(snap: Snapshot?, fetchedAtMs: Long, nowMs: Long, note: String = \"\", zone: TimeZone = TimeZone.getDefault()",
         "class AiUsageModel",
@@ -32940,8 +33117,14 @@
         "class Claude",
         "class Spend",
         "class OpenRouter",
+        "class Tok",
+        "class FamilyRow",
+        "class Period",
+        "class Tokens",
         "class Snapshot",
-        "class Card"
+        "class Card",
+        "class Week",
+        "class SuperIntelLink"
       ]
     },
     {
@@ -52651,6 +52834,601 @@
         "wifiOnly_directOnWifi_blocksCell_noImplicitVpn()",
         "incomingOnly_blocksInboundAllowsOutbound()",
         "class FirewallFlowPolicyTest"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/fleet-data-client/src/main/java/com/diegonmarcos/superapp/fleetdata/Ed25519Check.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "Ed25519Check"
+      ],
+      "imports": [
+        "java.security.KeyFactory",
+        "java.security.Signature",
+        "java.security.spec.X509EncodedKeySpec",
+        "java.util.Base64"
+      ],
+      "symbols": [
+        "verify(publicKeyX509B64: String?, message: ByteArray, signatureB64: String?)",
+        "class Ed25519Check",
+        "class Verdict"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/fleet-data-client/src/main/java/com/diegonmarcos/superapp/fleetdata/FleetData.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "FleetData"
+      ],
+      "imports": [
+        "android.content.Context",
+        "android.database.ContentObserver",
+        "android.net.Uri",
+        "android.os.Handler",
+        "android.os.Looper",
+        "kotlinx.coroutines.Dispatchers",
+        "kotlinx.coroutines.channels.awaitClose",
+        "kotlinx.coroutines.flow.Flow",
+        "kotlinx.coroutines.flow.callbackFlow",
+        "kotlinx.coroutines.flow.flowOn",
+        "kotlinx.coroutines.launch",
+        "java.io.File",
+        "java.io.FileInputStream",
+        "java.io.InputStream"
+      ],
+      "symbols": [
+        "observe(ctx: Context, dataset: String, own: Boolean = false, parse: (String)",
+        "onChange(selfChange: Boolean)",
+        "get(ctx: Context, dataset: String, own: Boolean = false, parse: (String)",
+        "reader(app: Context)",
+        "open(authority: String, path: String)",
+        "read()",
+        "read(b: ByteArray, off: Int, len: Int)",
+        "close()",
+        "load(key: String)",
+        "store(key: String, bytes: ByteArray)",
+        "class FleetData",
+        "class ResolverSource",
+        "class ParcelStream",
+        "class FileLkg"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/fleet-data-client/src/main/java/com/diegonmarcos/superapp/fleetdata/FleetDataReader.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "DataSource",
+        "LastKnownGood",
+        "FleetDataReader"
+      ],
+      "imports": [
+        "java.io.InputStream"
+      ],
+      "symbols": [
+        "open(authority: String, path: String)",
+        "load(key: String)",
+        "store(key: String, bytes: ByteArray)",
+        "get(dataset: String, ownPackage: String? = null, parse: (String)",
+        "decode(bytes: ByteArray, parse: (String)",
+        "readAll(input: InputStream)",
+        "class DataSource",
+        "class LastKnownGood",
+        "class FleetDataReader"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/fleet-data-client/src/main/java/com/diegonmarcos/superapp/fleetdata/FleetDataRouting.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "FleetDataRouting"
+      ],
+      "imports": [],
+      "symbols": [
+        "authorityFor(dataset: String)",
+        "accountOwned(dataset: String)",
+        "validDataset(dataset: String)",
+        "validPackage(pkg: String)",
+        "path(dataset: String, ownPackage: String?)",
+        "uri(dataset: String, ownPackage: String?)",
+        "class FleetDataRouting"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/fleet-data-client/src/main/java/com/diegonmarcos/superapp/fleetdata/SchemaCheck.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "SchemaCheck"
+      ],
+      "imports": [
+        "kotlinx.serialization.json.Json",
+        "kotlinx.serialization.json.JsonObject",
+        "kotlinx.serialization.json.JsonPrimitive",
+        "kotlinx.serialization.json.intOrNull"
+      ],
+      "symbols": [
+        "check(text: String, supported: Int = Int.MAX_VALUE)",
+        "class SchemaCheck",
+        "class Result",
+        "class Ok",
+        "class Bad",
+        "class with"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/fleet-data-client/src/test/java/com/diegonmarcos/superapp/fleetdata/FleetDataClientTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "FleetDataClientTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.io.ByteArrayInputStream",
+        "java.io.InputStream"
+      ],
+      "symbols": [
+        "load(key: String)",
+        "store(key: String, bytes: ByteArray)",
+        "src(map: Map<String, String?>, seen: MutableList<String> = mutableListOf()",
+        "routingSendsTiersOneAndTwoToAccountAndTheRestToStore()",
+        "datasetNamesCannotEscape()",
+        "resolvesTheOwningAuthorityAndPath()",
+        "fallsBackToTheLastKnownGoodAndNeverThrows()",
+        "aParserErrorKeepsTheOldCopy()",
+        "rejectsAnUnknownOrMissingSchemaVersion()",
+        "streamsAFileOverOneMegabyte()",
+        "signatureVerifierReportsNoKeyWithoutOne()",
+        "class FleetDataClientTest",
+        "class MemLkg"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/fleet-data-provider/src/main/java/com/diegonmarcos/superapp/fleetdata/provider/AccessLog.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "AccessLog"
+      ],
+      "imports": [
+        "kotlinx.serialization.json.Json",
+        "kotlinx.serialization.json.JsonObject",
+        "kotlinx.serialization.json.JsonPrimitive",
+        "kotlinx.serialization.json.boolean",
+        "kotlinx.serialization.json.buildJsonObject",
+        "kotlinx.serialization.json.contentOrNull",
+        "kotlinx.serialization.json.longOrNull",
+        "kotlinx.serialization.json.put",
+        "java.io.File"
+      ],
+      "symbols": [
+        "add(caller: String?, path: String, granted: Boolean, now: Long)",
+        "rows()",
+        "class AccessLog",
+        "class Row"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/fleet-data-provider/src/main/java/com/diegonmarcos/superapp/fleetdata/provider/DatasetDiff.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "DatasetDiff"
+      ],
+      "imports": [
+        "kotlinx.serialization.json.Json",
+        "kotlinx.serialization.json.JsonArray",
+        "kotlinx.serialization.json.JsonElement",
+        "kotlinx.serialization.json.JsonObject",
+        "kotlinx.serialization.json.JsonPrimitive"
+      ],
+      "symbols": [
+        "diff(before: String?, after: String)",
+        "flatten(text: String)",
+        "walk(p: String, e: JsonElement)",
+        "class DatasetDiff",
+        "class Change",
+        "class Kind"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/fleet-data-provider/src/main/java/com/diegonmarcos/superapp/fleetdata/provider/FleetDataEndpoint.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "FleetDataEndpoint"
+      ],
+      "imports": [
+        "android.content.Context",
+        "android.net.Uri",
+        "android.os.Binder",
+        "android.os.ParcelFileDescriptor",
+        "android.os.Process",
+        "com.diegonmarcos.superapp.fleetdata.FleetDataRouting",
+        "kotlinx.serialization.json.Json",
+        "kotlinx.serialization.json.JsonArray",
+        "kotlinx.serialization.json.JsonObject",
+        "kotlinx.serialization.json.JsonPrimitive",
+        "kotlinx.serialization.json.buildJsonArray",
+        "kotlinx.serialization.json.buildJsonObject",
+        "kotlinx.serialization.json.add",
+        "kotlinx.serialization.json.contentOrNull",
+        "kotlinx.serialization.json.longOrNull",
+        "kotlinx.serialization.json.put",
+        "java.io.File",
+        "java.io.FileNotFoundException",
+        "java.util.concurrent.ConcurrentHashMap"
+      ],
+      "symbols": [
+        "announce(path: String)",
+        "runSync()",
+        "writeStatus(r: FleetDataSync.Report)",
+        "status()",
+        "strs(k: String)",
+        "openFile(uri: Uri, mode: String, callingPackage: String?)",
+        "pipe(bytes: ByteArray)",
+        "nudge()",
+        "of(ctx: Context, authority: String)",
+        "class FleetDataEndpoint",
+        "class Status"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/fleet-data-provider/src/main/java/com/diegonmarcos/superapp/fleetdata/provider/FleetDataHost.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "PublicRepoSource",
+        "FleetApiSource",
+        "FleetDataHost"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.fleetdata.FleetDataRouting"
+      ],
+      "symbols": [
+        "manifest()",
+        "dataset(dataset: String, pkg: String?, entry: ManifestEntry?)",
+        "req(path: String)",
+        "register(authority: String, source: RemoteSource)",
+        "source(authority: String)",
+        "class PublicRepoSource",
+        "class FleetApiSource",
+        "class FleetDataHost"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/fleet-data-provider/src/main/java/com/diegonmarcos/superapp/fleetdata/provider/FleetDataProvider.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "FleetDataProvider"
+      ],
+      "imports": [
+        "android.content.ContentProvider",
+        "android.content.ContentValues",
+        "android.database.Cursor",
+        "android.net.Uri",
+        "android.os.ParcelFileDescriptor"
+      ],
+      "symbols": [
+        "onCreate()",
+        "openFile(uri: Uri, mode: String)",
+        "query(uri: Uri, p: Array<out String>?, s: String?, a: Array<out String>?, o: String?)",
+        "getType(uri: Uri)",
+        "insert(uri: Uri, values: ContentValues?)",
+        "delete(uri: Uri, s: String?, a: Array<out String>?)",
+        "update(uri: Uri, v: ContentValues?, s: String?, a: Array<out String>?)",
+        "class FleetDataProvider"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/fleet-data-provider/src/main/java/com/diegonmarcos/superapp/fleetdata/provider/FleetDataSchedule.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "FleetDataSchedule",
+        "FleetDataWorker"
+      ],
+      "imports": [
+        "android.content.Context",
+        "androidx.work.BackoffPolicy",
+        "androidx.work.Constraints",
+        "androidx.work.CoroutineWorker",
+        "androidx.work.Data",
+        "androidx.work.ExistingPeriodicWorkPolicy",
+        "androidx.work.ExistingWorkPolicy",
+        "androidx.work.NetworkType",
+        "androidx.work.OneTimeWorkRequestBuilder",
+        "androidx.work.PeriodicWorkRequestBuilder",
+        "androidx.work.WorkManager",
+        "androidx.work.WorkerParameters",
+        "java.util.concurrent.TimeUnit"
+      ],
+      "symbols": [
+        "name(authority: String)",
+        "ensure(ctx: Context, authority: String)",
+        "syncNow(ctx: Context, authority: String)",
+        "doWork()",
+        "class FleetDataSchedule",
+        "class FleetDataWorker"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/fleet-data-provider/src/main/java/com/diegonmarcos/superapp/fleetdata/provider/FleetDataServer.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "FleetDataServer"
+      ],
+      "imports": [
+        "kotlinx.serialization.json.JsonArray",
+        "kotlinx.serialization.json.JsonObject",
+        "kotlinx.serialization.json.buildJsonArray",
+        "kotlinx.serialization.json.buildJsonObject",
+        "kotlinx.serialization.json.add",
+        "kotlinx.serialization.json.put",
+        "java.io.File"
+      ],
+      "symbols": [
+        "manifest()",
+        "open(caller: String?, segments: List<String>)",
+        "serve(r: Route)",
+        "index(caller: String)",
+        "class FleetDataServer",
+        "class Outcome",
+        "class Served",
+        "class Bytes",
+        "class Denied",
+        "class Missing"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/fleet-data-provider/src/main/java/com/diegonmarcos/superapp/fleetdata/provider/FleetDataStore.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "Route",
+        "FleetDataStore"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.fleetdata.FleetDataRouting",
+        "kotlinx.serialization.json.Json",
+        "kotlinx.serialization.json.JsonObject",
+        "kotlinx.serialization.json.JsonPrimitive",
+        "kotlinx.serialization.json.buildJsonObject",
+        "kotlinx.serialization.json.contentOrNull",
+        "kotlinx.serialization.json.longOrNull",
+        "kotlinx.serialization.json.put",
+        "java.io.File",
+        "java.io.FileOutputStream",
+        "java.io.IOException"
+      ],
+      "symbols": [
+        "parse(segments: List<String>)",
+        "path(r: Route)",
+        "encode(plain: ByteArray)",
+        "decode(stored: ByteArray)",
+        "encrypted(r: Route)",
+        "file(r: Route)",
+        "side(f: File, ext: String)",
+        "meta(r: Route)",
+        "l(k: String)",
+        "writeMeta(f: File, m: Meta)",
+        "dec(r: Route, b: ByteArray)",
+        "read(r: Route)",
+        "previous(r: Route)",
+        "replace(r: Route, bytes: ByteArray, etag: String?, schemaVersion: Int, now: Long)",
+        "touch(r: Route, etag: String?, now: Long)",
+        "list()",
+        "class Route",
+        "class Shared",
+        "class App",
+        "class Index",
+        "class FleetDataStore",
+        "class Codec",
+        "class Meta",
+        "class Entry"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/fleet-data-provider/src/main/java/com/diegonmarcos/superapp/fleetdata/provider/FleetDataSync.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "Reply",
+        "Fetcher",
+        "Req",
+        "RemoteSource",
+        "FleetDataSync"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.fleetdata.FleetDataRouting",
+        "com.diegonmarcos.superapp.fleetdata.SchemaCheck"
+      ],
+      "symbols": [
+        "get(url: String, etag: String?, headers: Map<String, String>)",
+        "manifest()",
+        "dataset(dataset: String, pkg: String?, entry: ManifestEntry?)",
+        "run()",
+        "pull(r: Route, req: Req?, label: String, validate: (String)",
+        "class Reply",
+        "class Fetcher",
+        "class Req",
+        "class RemoteSource",
+        "class FleetDataSync",
+        "class Report"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/fleet-data-provider/src/main/java/com/diegonmarcos/superapp/fleetdata/provider/FleetManifest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ManifestEntry",
+        "FleetManifest"
+      ],
+      "imports": [
+        "kotlinx.serialization.json.Json",
+        "kotlinx.serialization.json.JsonArray",
+        "kotlinx.serialization.json.JsonObject",
+        "kotlinx.serialization.json.JsonPrimitive",
+        "kotlinx.serialization.json.contentOrNull",
+        "kotlinx.serialization.json.intOrNull"
+      ],
+      "symbols": [
+        "grants(caller: String)",
+        "parse(text: String)",
+        "class ManifestEntry",
+        "class FleetManifest"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/fleet-data-provider/src/main/java/com/diegonmarcos/superapp/fleetdata/provider/HttpFetcher.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "HttpFetcher"
+      ],
+      "imports": [
+        "java.net.HttpURLConnection",
+        "java.net.URL"
+      ],
+      "symbols": [
+        "get(url: String, etag: String?, headers: Map<String, String>)",
+        "class HttpFetcher"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/fleet-data-provider/src/main/java/com/diegonmarcos/superapp/fleetdata/provider/KeystoreCodec.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "KeystoreCodec"
+      ],
+      "imports": [
+        "android.security.keystore.KeyGenParameterSpec",
+        "android.security.keystore.KeyProperties",
+        "java.security.KeyStore",
+        "javax.crypto.Cipher",
+        "javax.crypto.KeyGenerator",
+        "javax.crypto.SecretKey",
+        "javax.crypto.spec.GCMParameterSpec"
+      ],
+      "symbols": [
+        "key()",
+        "encode(plain: ByteArray)",
+        "decode(stored: ByteArray)",
+        "class KeystoreCodec"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/fleet-data-provider/src/test/java/com/diegonmarcos/superapp/fleetdata/provider/FleetDataProviderTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "FleetDataProviderTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.fleetdata.DataSource",
+        "com.diegonmarcos.superapp.fleetdata.FleetDataReader",
+        "com.diegonmarcos.superapp.fleetdata.LastKnownGood",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Rule",
+        "org.junit.Test",
+        "org.junit.rules.TemporaryFolder",
+        "java.io.FileInputStream"
+      ],
+      "symbols": [
+        "fixture()",
+        "seg(p: String)",
+        "ownAppDataIsServedToTheOwnerOnly()",
+        "sharedDataIsGrantedThroughTheManifest()",
+        "badRoutesAreMissingAndTraversalIsRefused()",
+        "indexListsOnlyWhatTheCallerMayRead()",
+        "everyRequestIsLogged()",
+        "streamsAFileOverOneMegabyteThroughTheClientReader()",
+        "load(key: String)",
+        "store(key: String, bytes: ByteArray)",
+        "get(url: String, etag: String?, headers: Map<String, String>)",
+        "sync(store: FleetDataStore, web: Web, clock: ()",
+        "web()",
+        "syncFetchesThenUsesETagAndNotifiesPerUri()",
+        "aNewVersionReplacesAndKeepsThePreviousForTheDiff()",
+        "invalidOrNewerDataNeverReplacesTheLastKnownGood()",
+        "aRunInsideTheRetryFloorIsRefused()",
+        "thePublicSourceNeverFetchesPersonalOrFleetTiers()",
+        "aFailingDatasetDoesNotStopTheOthers()",
+        "theApiSourceNeedsABearerAndUsesTheTierRoute()",
+        "personalDatasetsAreEncryptedAtRestAndServedFromMemory()",
+        "encode(plain: ByteArray)",
+        "decode(stored: ByteArray)",
+        "class FleetDataProviderTest",
+        "class Web"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/fleet-data-ui/src/main/java/com/diegonmarcos/superapp/fleetdata/ui/FleetDataPage.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "FleetDataActivity",
+        "FleetDataPage"
+      ],
+      "imports": [
+        "android.content.Context",
+        "android.content.Intent",
+        "androidx.activity.ComponentActivity",
+        "androidx.activity.compose.setContent",
+        "androidx.compose.foundation.clickable",
+        "androidx.compose.foundation.layout.Arrangement",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.Row",
+        "androidx.compose.foundation.layout.fillMaxSize",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.foundation.lazy.LazyColumn",
+        "androidx.compose.foundation.lazy.items",
+        "androidx.compose.material3.Button",
+        "androidx.compose.material3.MaterialTheme",
+        "androidx.compose.material3.Tab",
+        "androidx.compose.material3.TabRow",
+        "androidx.compose.material3.Text",
+        "androidx.compose.material3.TextButton",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableIntStateOf",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.remember",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.platform.LocalContext",
+        "androidx.compose.ui.unit.dp",
+        "com.diegonmarcos.cloudlib.jsonviewer.JsonViewer",
+        "com.diegonmarcos.superapp.fleetdata.provider.DatasetDiff",
+        "com.diegonmarcos.superapp.fleetdata.provider.FleetDataEndpoint",
+        "com.diegonmarcos.superapp.fleetdata.provider.FleetDataSchedule",
+        "com.diegonmarcos.superapp.fleetdata.provider.Route",
+        "java.text.DateFormat",
+        "java.util.Date"
+      ],
+      "symbols": [
+        "onCreate(savedInstanceState: android.os.Bundle?)",
+        "open(ctx: Context, authority: String)",
+        "stamp(t: Long)",
+        "kb(n: Long)",
+        "FleetDataPage(authority: String, modifier: Modifier = Modifier)",
+        "class FleetDataActivity"
       ]
     },
     {
@@ -83343,9 +84121,11 @@
         "android.content.Context",
         "android.content.pm.PackageManager",
         "android.net.Uri",
+        "com.diegonmarcos.superapp.fleetdata.FleetData",
         "org.json.JSONObject"
       ],
       "symbols": [
+        "forPackage(json: String, pkg: String)",
         "parse(json: String)",
         "strings(a: org.json.JSONArray?)",
         "decl(ctx: Context)",
@@ -83411,6 +84191,32 @@
         "installItems(ctx: Context)",
         "findActivity()",
         "class AppPermsState"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/perms/src/main/java/com/diegonmarcos/superapp/perms/FleetPerms.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "FleetApp",
+        "FleetPermsIndex",
+        "FleetPerms"
+      ],
+      "imports": [
+        "android.content.Context",
+        "org.json.JSONObject"
+      ],
+      "symbols": [
+        "appsUsing(id: String)",
+        "labels()",
+        "parse(json: String)",
+        "strings(x: org.json.JSONArray?)",
+        "index(ctx: Context)",
+        "liveProtection(ctx: Context, permission: String)",
+        "protectionWords(base: Int, flags: Int)",
+        "class FleetApp",
+        "class FleetPermsIndex",
+        "class FleetPerms"
       ]
     },
     {
@@ -83506,6 +84312,7 @@
         "status(ctx: Context, e: PermEntry, activity: Activity? = null, vars: Map<String, String>? = null, declared: Set<String>? = null)",
         "bool(g: Boolean, deniedWhy: String = \"\")",
         "read(ctx: Context, e: PermEntry, activity: Activity?, vars: Map<String, String>)",
+        "rationale(p: String)",
         "appop(ctx: Context, op: String)",
         "declaresVpn(ctx: Context)",
         "intents(ctx: Context, e: PermEntry, vars: Map<String, String> = Perms.vars(ctx)",
@@ -83530,8 +84337,7 @@
         "class PermAskLog",
         "class PermStatusReader",
         "class PermsSettings",
-        "class PermsNeeds",
-        "class PermsHost"
+        "class PermsNeeds"
       ]
     },
     {
@@ -83814,6 +84620,50 @@
       ]
     },
     {
+      "path": "ab_cloud-libs-shared/libs/perms/src/main/java/com/diegonmarcos/superapp/perms/PermsPageQuery.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "StatusFilter",
+        "Protection",
+        "GroupBy",
+        "SortBy",
+        "PermsQuery",
+        "QueryGroup",
+        "PermsPageQuery"
+      ],
+      "imports": [],
+      "symbols": [
+        "protection(e: PermEntry)",
+        "status(r: PermsPage.Row)",
+        "statusMatches(f: StatusFilter, r: PermsPage.Row)",
+        "counts(rows: List<PermsPage.Row>)",
+        "searchable(r: PermsPage.Row, apps: List<String>)",
+        "matches(r: PermsPage.Row, q: PermsQuery, appsOf: (String)",
+        "rank(r: PermsPage.Row)",
+        "sort(rows: List<PermsPage.Row>, by: SortBy)",
+        "keys(r: PermsPage.Row, by: GroupBy, appsOf: (String)",
+        "kindTitle(k: PermKind)",
+        "order(by: GroupBy, key: String)",
+        "query(rows: List<PermsPage.Row>, q: PermsQuery, appsOf: (String)",
+        "groupsPresent(rows: List<PermsPage.Row>)",
+        "featuresPresent(rows: List<PermsPage.Row>)",
+        "kindsPresent(rows: List<PermsPage.Row>)",
+        "sectionsPresent(rows: List<PermsPage.Row>)",
+        "categoriesPresent(rows: List<PermsPage.Row>)",
+        "dialogTargets(rows: List<PermsPage.Row>)",
+        "shellTargets(rows: List<PermsPage.Row>)",
+        "detail(r: PermsPage.Row, apps: List<String>, liveProtection: String? = null)",
+        "class StatusFilter",
+        "class Protection",
+        "class GroupBy",
+        "class SortBy",
+        "class PermsQuery",
+        "class QueryGroup",
+        "class PermsPageQuery"
+      ]
+    },
+    {
       "path": "ab_cloud-libs-shared/libs/perms/src/main/java/com/diegonmarcos/superapp/perms/PermsRequest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -83832,9 +84682,17 @@
         "route(e: PermEntry, state: PermState)",
         "dialogable(entries: List<PermEntry>, status: (PermEntry)",
         "requestVia(ctx: Context, entries: List<PermEntry>, activity: Activity? = findActivity(ctx)",
+        "runtimeState( perm: String, granted: Boolean, asked: Boolean, rationale: Boolean, autoRequest: Boolean, sdk: Int = Build.VERSION.SDK_INT, coarseGranted: Boolean = false, coarseRationale: Boolean = false, )",
+        "after(result: Map<String, Boolean>, rationale: (String)",
+        "markLaunch()",
+        "handleResult(ctx: Context, result: Map<String, Boolean>, activity: Activity? = findActivity(ctx)",
         "findActivity(ctx: Context)",
         "class PermsRequest",
-        "class Route"
+        "class Route",
+        "class Next",
+        "class Done",
+        "class AppSettings",
+        "class LocationSettings"
       ]
     },
     {
@@ -83875,6 +84733,26 @@
         "delete(uri: Uri, selection: String?, selectionArgs: Array<out String>?)",
         "update(uri: Uri, values: ContentValues?, selection: String?, selectionArgs: Array<out String>?)",
         "class PermsStateProvider"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/perms/src/main/java/com/diegonmarcos/superapp/perms/PermsTagNs.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "LocalPermsTagNs",
+        "permsTagIn",
+        "permsTag"
+      ],
+      "imports": [
+        "androidx.compose.runtime.staticCompositionLocalOf",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.composed",
+        "androidx.compose.ui.platform.testTag"
+      ],
+      "symbols": [
+        "permsTagIn(ns: String, tag: String)",
+        "permsTag(tag: String)"
       ]
     },
     {
@@ -84167,6 +85045,25 @@
       ]
     },
     {
+      "path": "ab_cloud-libs-shared/libs/perms/src/test/java/com/diegonmarcos/superapp/perms/PermsPageQueryTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "PermsPageQueryTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "e(id: String, kind: PermKind = PermKind.RUNTIME, group: String = \"LOCATION\", section: PermSection = PermSection.RUNTIME, perm: String = \"android.permission.$id\", check: String = \"\", oem: String = \"\", features: List<String> = emptyList()",
+        "ids(q: PermsQuery)",
+        "class PermsPageQueryTest"
+      ]
+    },
+    {
       "path": "ab_cloud-libs-shared/libs/perms/src/test/java/com/diegonmarcos/superapp/perms/PermsPageTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -84183,6 +85080,22 @@
         "e(id: String, kind: PermKind = PermKind.RUNTIME, group: String = \"LOCATION\", section: PermSection = PermSection.RUNTIME, perm: String = \"android.permission.$id\", check: String = \"\", oem: String = \"\", auto: Boolean = true)",
         "page(states: Map<String, PermState>, shellable: (PermEntry)",
         "class PermsPageTest"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/perms/src/test/java/com/diegonmarcos/superapp/perms/PermsRequestFlowTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "PermsRequestFlowTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "state(perm: String = fine, asked: Boolean = true, rationale: Boolean = false, auto: Boolean = true, sdk: Int = 36, coarseGranted: Boolean = false, coarseRationale: Boolean = false)",
+        "class PermsRequestFlowTest"
       ]
     },
     {
@@ -96694,6 +97607,31 @@
         "enforce(ctx: Context, perm: String)",
         "enforceOwner(ctx: Context)",
         "class AutofillSotProvider"
+      ]
+    },
+    {
+      "path": "ac_cloud-account/app/src/main/java/com/diegonmarcos/cloudaccount/data/AccountFleetDataProvider.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "AccountFleetDataProvider"
+      ],
+      "imports": [
+        "android.net.Uri",
+        "android.os.ParcelFileDescriptor",
+        "com.diegonmarcos.superapp.fleetdata.provider.FleetApiSource",
+        "com.diegonmarcos.superapp.fleetdata.provider.FleetDataEndpoint",
+        "com.diegonmarcos.superapp.fleetdata.provider.FleetDataHost",
+        "com.diegonmarcos.superapp.fleetdata.FleetDataRouting",
+        "com.diegonmarcos.superapp.fleetendpoints.FleetEndpointsContract",
+        "com.diegonmarcos.superapp.profile.AccountData",
+        "com.diegonmarcos.superapp.profile.AccountHost",
+        "com.diegonmarcos.superapp.settings.AccountVault"
+      ],
+      "symbols": [
+        "onCreate()",
+        "openFile(uri: Uri, mode: String)",
+        "class AccountFleetDataProvider"
       ]
     },
     {
@@ -516568,7 +517506,10 @@
         "com.diegonmarcos.superapp.appstore.StoreDensity",
         "com.diegonmarcos.superapp.appstore.StoreSourcePrefs",
         "com.diegonmarcos.superapp.core.StoreNotifyPrefs",
-        "com.diegonmarcos.superapp.shellclient.ShellClient"
+        "com.diegonmarcos.superapp.fleetdata.FleetDataRouting",
+        "com.diegonmarcos.superapp.fleetdata.provider.FleetDataEndpoint",
+        "com.diegonmarcos.superapp.fleetdata.provider.FleetDataSchedule",
+        "com.diegonmarcos.superapp.fleetdata.ui.FleetDataActivity"
       ],
       "symbols": [
         "body(page: String)",
@@ -516585,6 +517526,7 @@
         "AiPage()",
         "NotificationsPage()",
         "AboutPage()",
+        "DataPage()",
         "class ConfigsPages"
       ]
     },
@@ -517791,6 +518733,7 @@
       "exports": [
         "CostRowDecl",
         "CostConfig",
+        "TokLine",
         "CostRow",
         "CostTable",
         "Cost"
@@ -517807,11 +518750,16 @@
         "fetch(cfg: CostConfig, bearer: String)",
         "pct(w: AiUsageModel.Win?)",
         "spend(s: AiUsageModel.Spend?)",
-        "claude(metric: String, c: AiUsageModel.Claude?, nowMs: Long)",
+        "tokSpend(p: AiUsageModel.Period?)",
+        "week(snap: AiUsageModel.Snapshot?, nowMs: Long)",
+        "tokenLines(periods: List<AiUsageModel.Period>)",
+        "cells(t: AiUsageModel.Tok)",
+        "claude(metric: String, c: AiUsageModel.Claude?, nowMs: Long, t: AiUsageModel.Tokens? = null)",
         "openRouter(metric: String, o: AiUsageModel.OpenRouter)",
         "table(cfg: CostConfig, snap: AiUsageModel.Snapshot?, nowMs: Long)",
         "class CostRowDecl",
         "class CostConfig",
+        "class TokLine",
         "class CostRow",
         "class CostTable",
         "class Cost"
@@ -517876,6 +518824,7 @@
       "symbols": [
         "onCreate(savedInstanceState: Bundle?)",
         "onNewIntent(intent: Intent)",
+        "opened(i: Intent?)",
         "shared(i: Intent?)",
         "class MainActivity"
       ]
@@ -518017,6 +518966,25 @@
       ]
     },
     {
+      "path": "ac_cloud-superintel/app/src/main/java/com/diegonmarcos/cloudsuperintel/SiOpen.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "SiOpen"
+      ],
+      "imports": [
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.setValue",
+        "com.diegonmarcos.superapp.notificationcenter.AiUsageModel"
+      ],
+      "symbols": [
+        "target(action: String?, section: String?, page: String?)",
+        "class SiOpen",
+        "class Target"
+      ]
+    },
+    {
       "path": "ac_cloud-superintel/app/src/main/java/com/diegonmarcos/cloudsuperintel/ui/AiScreens.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -518037,6 +519005,8 @@
         "androidx.compose.foundation.layout.padding",
         "androidx.compose.foundation.lazy.LazyColumn",
         "androidx.compose.foundation.lazy.items",
+        "androidx.compose.foundation.rememberScrollState",
+        "androidx.compose.foundation.verticalScroll",
         "androidx.compose.material3.MaterialTheme",
         "androidx.compose.runtime.Composable",
         "androidx.compose.runtime.LaunchedEffect",
@@ -518062,9 +519032,7 @@
         "com.diegonmarcos.cloudsuperintel.R",
         "com.diegonmarcos.superapp.notificationcenter.AiUsageModel",
         "com.diegonmarcos.superapp.uikit.CloudKitTheme",
-        "com.diegonmarcos.superapp.uikit.KitPalette",
-        "com.diegonmarcos.superapp.uikit.KitStoreCaption",
-        "com.diegonmarcos.superapp.uikit.KitStoreDot"
+        "com.diegonmarcos.superapp.uikit.KitPalette"
       ],
       "symbols": [
         "AiPage(spec: AiPageSpec)",
@@ -518074,6 +519042,7 @@
         "RowsPage(groups: List<AiGroup>)",
         "ApisPage(text: String)",
         "CostPage(text: String)",
+        "TokenTable(title: String, columns: List<String>, periods: List<AiUsageModel.Period>, read: Boolean, tag: String)",
         "class AiTags"
       ]
     },
@@ -518158,6 +519127,7 @@
         "SiShell"
       ],
       "imports": [
+        "com.diegonmarcos.cloudsuperintel.SiOpen",
         "androidx.compose.foundation.layout.Column",
         "androidx.compose.foundation.layout.WindowInsets",
         "androidx.compose.foundation.layout.Box",
@@ -518196,8 +519166,7 @@
         "com.diegonmarcos.superapp.ai.AiChatPage",
         "com.diegonmarcos.superapp.ai.AiSessionsPanel",
         "com.diegonmarcos.superapp.ai.AiSettingsPickers",
-        "com.diegonmarcos.superapp.ai.AiStrings",
-        "com.diegonmarcos.superapp.ai.AiTheme"
+        "com.diegonmarcos.superapp.ai.AiStrings"
       ],
       "symbols": [
         "siAiTheme()",
@@ -518273,6 +519242,7 @@
         "org.json.JSONObject",
         "org.junit.Assert.assertEquals",
         "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNull",
         "org.junit.Assert.assertTrue",
         "org.junit.Test"
       ],
@@ -518281,6 +519251,9 @@
         "theBadgesDeclaredEndpointIsOneOfCostsBases()",
         "aSecondBaseIsTriedWhenTheFirstFails()",
         "theTableIsClaudeAndOpenRouterSideBySideFromTheSameSnapshot()",
+        "theWeeklyNowBlockIsTheBadgesOwnComputation()",
+        "theDailyAndMonthlyTablesListEachPeriodThenItsModels()",
+        "theBadgesDeepLinkOpensCostAndNothingElseIsAccepted()",
         "withoutAConfiguredOpenRouterTheSampleShowsLabelled()",
         "noSnapshotMeansNoClaudeFigures()",
         "costKotlinHasNoClientOrRouteOfItsOwn()",
@@ -529010,7 +529983,6 @@
         "ModelsData"
       ],
       "imports": [
-        "android.content.Context",
         "org.json.JSONArray",
         "org.json.JSONObject"
       ],
@@ -529032,7 +530004,6 @@
         "phoneCapable(a: AppDef)",
         "list(a: JSONArray, f: (JSONObject)",
         "strings(a: JSONArray)",
-        "load(ctx: Context)",
         "class ModelRow",
         "class RoleInfo",
         "class Macro",
@@ -529152,6 +530123,24 @@
       ]
     },
     {
+      "path": "ac_cloud-tools-small-llms/app/src/main/java/com/diegonmarcos/cloudtoolssmallllms/data/ToolsData.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ToolsData"
+      ],
+      "imports": [
+        "android.content.Context",
+        "com.diegonmarcos.superapp.fleetdata.FleetData",
+        "kotlinx.coroutines.flow.Flow",
+        "kotlinx.coroutines.flow.combine"
+      ],
+      "symbols": [
+        "observe(ctx: Context)",
+        "class ToolsData"
+      ]
+    },
+    {
       "path": "ac_cloud-tools-small-llms/app/src/main/java/com/diegonmarcos/cloudtoolssmallllms/Decl.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -529181,7 +530170,20 @@
         "android.os.Bundle",
         "androidx.activity.ComponentActivity",
         "androidx.activity.compose.setContent",
+        "androidx.compose.foundation.layout.Box",
+        "androidx.compose.foundation.layout.fillMaxSize",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.material3.Text",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.key",
+        "androidx.compose.runtime.collectAsState",
+        "androidx.compose.runtime.remember",
+        "androidx.compose.ui.Alignment",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.res.stringResource",
+        "androidx.compose.ui.unit.dp",
         "androidx.lifecycle.lifecycleScope",
+        "com.diegonmarcos.cloudtoolssmallllms.data.ToolsData",
         "com.diegonmarcos.cloudtoolssmallllms.ui.ToolsModel",
         "com.diegonmarcos.cloudtoolssmallllms.ui.ToolsShell",
         "com.diegonmarcos.cloudtoolssmallllms.ui.ToolsTheme",
@@ -529191,6 +530193,7 @@
         "onCreate(savedInstanceState: Bundle?)",
         "onNewIntent(intent: Intent)",
         "shared(i: Intent?)",
+        "applyShare(m: ToolsModel)",
         "class MainActivity"
       ]
     },
@@ -529448,7 +530451,7 @@
         "com.diegonmarcos.cloudtoolssmallllms.R"
       ],
       "symbols": [
-        "SensorsPage(page: String)",
+        "SensorsPage(page: String, json: String?)",
         "WhileStarted(key: Any?, start: ()",
         "onStateChanged(source: LifecycleOwner, event: Lifecycle.Event)",
         "lifecycleOwner()",
@@ -529598,6 +530601,7 @@
         "com.diegonmarcos.cloudtoolssmallllms.data.ModelRow",
         "com.diegonmarcos.cloudtoolssmallllms.data.ModelRuntime",
         "com.diegonmarcos.cloudtoolssmallllms.data.ModelsData",
+        "com.diegonmarcos.cloudtoolssmallllms.data.ToolsData",
         "com.diegonmarcos.cloudtoolssmallllms.data.OllamaRuntime",
         "com.diegonmarcos.cloudtoolssmallllms.data.PhoneRuntime",
         "com.diegonmarcos.cloudtoolssmallllms.data.Retrieval",
@@ -529616,8 +530620,7 @@
         "com.diegonmarcos.superapp.ai.AiMemoryPrefs",
         "com.diegonmarcos.superapp.ai.AiModel",
         "com.diegonmarcos.superapp.ai.AiMsg",
-        "com.diegonmarcos.superapp.ai.AiReply",
-        "com.diegonmarcos.superapp.ai.AiRequest"
+        "com.diegonmarcos.superapp.ai.AiReply"
       ],
       "symbols": [
         "registry()",
@@ -606912,6 +607915,79 @@
       ]
     },
     {
+      "path": "ad_Capital-Stack-FinTerminal/app/src/main/java/com/diegonmarcos/capitalfinterm/PmPerformance.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "PriceSeries",
+        "PmResult",
+        "PmPerformance",
+        "PmPerfStore"
+      ],
+      "imports": [
+        "java.time.Instant",
+        "java.time.LocalDate",
+        "java.time.ZoneOffset",
+        "java.util.Locale",
+        "java.util.concurrent.ConcurrentHashMap",
+        "java.util.concurrent.Executors",
+        "java.util.concurrent.TimeUnit",
+        "kotlin.math.sqrt",
+        "org.json.JSONObject"
+      ],
+      "symbols": [
+        "parseHistory(text: String)",
+        "path(legs: List<Pair<Double, PriceSeries?>>, rule: String)",
+        "windows(path: List<Pair<LocalDate, Double>>, ws: List<PmWindow>)",
+        "before(d: LocalDate)",
+        "onOrBefore(d: LocalDate)",
+        "vol1y(path: List<Pair<LocalDate, Double>>)",
+        "compute(p: PmPortfolio, hist: Map<String, PriceSeries?>, decl: PmPerfDecl)",
+        "format(v: Double?)",
+        "snapshot(json: String, decl: PmPerfDecl)",
+        "merged(baked: Map<String, PmResult>)",
+        "refresh(decl: PmPerfDecl, portfolios: List<PmPortfolio>, force: Boolean, http: Http = UrlHttp(maxBytes = 8_000_000)",
+        "class PriceSeries",
+        "class PmResult",
+        "class PmPerformance",
+        "class PmPerfStore"
+      ]
+    },
+    {
+      "path": "ad_Capital-Stack-FinTerminal/app/src/main/java/com/diegonmarcos/capitalfinterm/PmPortfolios.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "PmLeg",
+        "PmPortfolio",
+        "PmWindow",
+        "PmPerfDecl",
+        "PmTableDecl",
+        "PmPortfoliosDecl",
+        "PmPortfolios"
+      ],
+      "imports": [
+        "java.util.Locale",
+        "org.json.JSONObject"
+      ],
+      "symbols": [
+        "word(k: String)",
+        "strs(a: org.json.JSONArray?)",
+        "perf(json: String)",
+        "parse(json: String, nameOf: (String)",
+        "top(legs: List<PmLeg>, n: Int)",
+        "weight(w: Double)",
+        "topText(legs: List<PmLeg>, n: Int)",
+        "class PmLeg",
+        "class PmPortfolio",
+        "class PmWindow",
+        "class PmPerfDecl",
+        "class PmTableDecl",
+        "class PmPortfoliosDecl",
+        "class PmPortfolios"
+      ]
+    },
+    {
       "path": "ad_Capital-Stack-FinTerminal/app/src/main/java/com/diegonmarcos/capitalfinterm/PmTables.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -608264,6 +609340,64 @@
       ]
     },
     {
+      "path": "ad_Capital-Stack-FinTerminal/app/src/main/java/com/diegonmarcos/capitalfinterm/ui/PmPanels.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "PM_PORTFOLIOS",
+        "PM_PORTFOLIO",
+        "PM_PERFORMANCE",
+        "PortfoliosPanel",
+        "PerformancePanel"
+      ],
+      "imports": [
+        "androidx.compose.foundation.horizontalScroll",
+        "androidx.compose.foundation.layout.Arrangement",
+        "androidx.compose.foundation.layout.BoxWithConstraints",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.Row",
+        "androidx.compose.foundation.layout.fillMaxSize",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.foundation.rememberScrollState",
+        "androidx.compose.foundation.verticalScroll",
+        "androidx.compose.material3.Text",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.LaunchedEffect",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.remember",
+        "androidx.compose.runtime.rememberCoroutineScope",
+        "androidx.compose.runtime.saveable.rememberSaveable",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.platform.LocalContext",
+        "androidx.compose.ui.platform.testTag",
+        "com.diegonmarcos.capitalfinterm.AssetData",
+        "com.diegonmarcos.capitalfinterm.PmPerfDecl",
+        "com.diegonmarcos.capitalfinterm.PmPerfStore",
+        "com.diegonmarcos.capitalfinterm.PmPerformance",
+        "com.diegonmarcos.capitalfinterm.PmPortfolio",
+        "com.diegonmarcos.capitalfinterm.PmPortfolios",
+        "com.diegonmarcos.capitalfinterm.PmResult",
+        "com.diegonmarcos.capitalfinterm.ui.fin.FinChip",
+        "com.diegonmarcos.capitalfinterm.ui.fin.FinDim",
+        "com.diegonmarcos.capitalfinterm.ui.fin.FinMatrix",
+        "com.diegonmarcos.capitalfinterm.ui.fin.FinType",
+        "com.diegonmarcos.capitalfinterm.ui.fin.LocalFinPalette",
+        "java.util.Locale",
+        "kotlinx.coroutines.Dispatchers",
+        "kotlinx.coroutines.launch",
+        "kotlinx.coroutines.withContext"
+      ],
+      "symbols": [
+        "rememberPerf(decl: PmPerfDecl, portfolios: List<PmPortfolio>)",
+        "run(force: Boolean)",
+        "PortfoliosPanel()",
+        "PerformancePanel()",
+        "class PerfLive"
+      ]
+    },
+    {
       "path": "ad_Capital-Stack-FinTerminal/app/src/main/java/com/diegonmarcos/capitalfinterm/ui/QuotePage.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -608752,6 +609886,7 @@
         "find(vararg candidates: String)",
         "cbFixture(name: String)",
         "quotesFixture(name: String)",
+        "pmFixture(name: String)",
         "class DataFiles"
       ]
     },
@@ -609166,6 +610301,42 @@
       ]
     },
     {
+      "path": "ad_Capital-Stack-FinTerminal/app/src/test/java/com/diegonmarcos/capitalfinterm/PmPerformanceTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "PmPerformanceTest"
+      ],
+      "imports": [
+        "java.io.IOException",
+        "java.time.LocalDate",
+        "org.json.JSONObject",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertNotNull",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "d(s: String)",
+        "series(vararg p: Pair<String, Double>)",
+        "top3AreTheThreeLargestNonZeroAllocationsWithTheDeclaredOrderBreakingTies()",
+        "thePortfoliosPageHoldsBothTablesWithTheirLegsAndTop3()",
+        "simpleReturnsOverTheWindowsAndTheLastCloseAsBase()",
+        "threeYearIsTheAnnualisedCagrAndAWindowThePathDoesNotReachIsNull()",
+        "theRebalancingRuleChangesThePathAsDeclared()",
+        "missingHistoryOrWrongWeightsGiveNoPathAndNaNotANumber()",
+        "theKotlinMathGivesTheNumbersTheSnapshotGeneratorGivesOnTheSharedFixture()",
+        "theChartAnswerBecomesDatedCloses()",
+        "theBakedSnapshotHoldsEveryPortfolioWithAnAsOfDateOrAnNaReason()",
+        "aRefreshComputesFromTheSourcesClosesWithTheDeclaredUserAgentAndNeverFromWhatDidNotAnswer()",
+        "get(url: String)",
+        "post(url: String)",
+        "send(url: String, headers: Map<String, String>, body: String?)",
+        "class PmPerformanceTest"
+      ]
+    },
+    {
       "path": "ad_Capital-Stack-FinTerminal/app/src/test/java/com/diegonmarcos/capitalfinterm/PmTablesTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -609186,7 +610357,7 @@
         "swapIsYesNoForEmPortfoliosAndBlankForDmOnlyOnes()",
         "levelsFilterTheRowsAndLevelThreeIsOrderedByVol()",
         "of(t: String)",
-        "commoditiesAreRowsByCurrencyWithSampleWeightsThatSumToOneHundred()",
+        "commoditiesAreNoLongerAPmTableAndHeatStillScalesAgainstTheLargestWeight()",
         "profilesAreTheEightCycleProfiles()",
         "matrixLabelWidthsAreDeclaredPerTable()",
         "class PmTablesTest"
@@ -609537,6 +610708,39 @@
         "apply(vals, rule)",
         "tf_yoy(a)",
         "main(out_path)",
+        "selftest()"
+      ]
+    },
+    {
+      "path": "ad_Capital-Stack-FinTerminal/scripts/gen-pm-performance.py",
+      "lang": "py",
+      "role": "script",
+      "exports": [
+        "parse_history(text)",
+        "path(legs, rule)",
+        "windows(p, ws)",
+        "vol1y(p)",
+        "portfolios(pm)",
+        "compute(legs, hist, perf, why=None)",
+        "get(url, ua, tries=2)",
+        "main(out)",
+        "selftest()"
+      ],
+      "imports": [
+        "concurrent.futures",
+        "datetime"
+      ],
+      "symbols": [
+        "parse_history(text)",
+        "path(legs, rule)",
+        "_minus_years(d, n)",
+        "_minus_months(d, n)",
+        "windows(p, ws)",
+        "vol1y(p)",
+        "portfolios(pm)",
+        "compute(legs, hist, perf, why=None)",
+        "get(url, ua, tries=2)",
+        "main(out)",
         "selftest()"
       ]
     },
