@@ -2053,7 +2053,7 @@
       "dir": "user-data_cloudy-browser-headless",
       "group": "Project Apps",
       "category": "Data",
-      "description": "Headless browser for agents: official Playwright image (Apache-2.0, not browserless/SSPL) plus a small Node server implementing the shared headless-api JSON command API (open/wait/eval/click/type/scroll/html/text/readable/screenshot/cookies/storage/network, run(steps), sessions). Bearer-gated, mesh-only.",
+      "description": "Headless browser for agents: official Playwright image (Apache-2.0, not browserless/SSPL) plus a small Node server implementing the shared headless-api JSON command API (open/wait/eval/click/type/scroll/html/text/readable (markdown|json|xml)/screenshot/cookies/storage/network, run(steps), sessions). Bearer-gated, mesh-only.",
       "image": "ghcr.io/diegonmarcos/cloudy-browser-headless:latest",
       "host": "oci-apps",
       "dns": "cloudy-browser-headless.mesh.diegonmarcos.com",

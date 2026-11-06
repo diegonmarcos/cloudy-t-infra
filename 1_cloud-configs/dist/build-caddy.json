@@ -1735,7 +1735,8 @@
           "base_path": "/cloudy-browser-headless",
           "upstream": "10.0.0.6:3118",
           "wg_only": true,
-          "comment": "Headless browser for agents: official Playwright image (Apache-2.0, not browserless/SSPL) plus a small Node server implementing the shared headless-api JSON command API (open/wait/eval/click/type/scroll/html/text/readable/screenshot/cookies/storage/network, run(steps), sessions). Bearer-gated, mesh-only."
+          "auth": "none",
+          "comment": "Headless browser for agents: official Playwright image (Apache-2.0, not browserless/SSPL) plus a small Node server implementing the shared headless-api JSON command API (open/wait/eval/click/type/scroll/html/text/readable (markdown|json|xml)/screenshot/cookies/storage/network, run(steps), sessions). Bearer-gated, mesh-only."
         }
       ],
       "comment": "MCP -- Streamable HTTP endpoints for Claude Code MCP clients"
@@ -5441,7 +5442,7 @@
       "tls": "public",
       "zone": "com",
       "service": null,
-      "notes": "Headless browser for agents: official Playwright image (Apache-2.0, not browserless/SSPL) plus a small Node server implementing the shared headless-api JSON command API (open/wait/eval/click/type/scroll/html/text/readable/screenshot/cookies/storage/network, run(steps), sessions). Bearer-gated, mesh-only."
+      "notes": "Headless browser for agents: official Playwright image (Apache-2.0, not browserless/SSPL) plus a small Node server implementing the shared headless-api JSON command API (open/wait/eval/click/type/scroll/html/text/readable (markdown|json|xml)/screenshot/cookies/storage/network, run(steps), sessions). Bearer-gated, mesh-only."
     },
     {
       "host": "mcp.diegonmarcos.com",

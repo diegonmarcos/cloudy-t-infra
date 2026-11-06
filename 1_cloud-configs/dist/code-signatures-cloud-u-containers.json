@@ -6,10 +6,10 @@
   },
   "repo": "cloud-u-containers",
   "counts": {
-    "files": 2604,
+    "files": 2607,
     "by_lang": {
       "sh": 177,
-      "js": 100,
+      "js": 103,
       "nix": 189,
       "py": 510,
       "ts": 1258,
@@ -20,7 +20,7 @@
       "file": 344,
       "nix-module": 19,
       "python": 496,
-      "module": 762,
+      "module": 765,
       "script": 8,
       "flake": 86,
       "entrypoint": 71,
@@ -61324,14 +61324,49 @@
       "lang": "js",
       "role": "module",
       "exports": [
-        "createEngine"
+        "gotoWithRetry",
+        "createEngine",
+        "LAUNCH_ARGS"
       ],
       "imports": [
         "playwright-core",
-        "./api.js"
+        "./api.js",
+        "./readable.js"
       ],
       "symbols": [
+        "gotoWithRetry(page, url, opts, { tries = 4, delayMs = 400 } = {})",
         "createEngine({ executablePath } = {})"
+      ]
+    },
+    {
+      "path": "user-data_cloudy-browser-headless/src/code/readable.js",
+      "lang": "js",
+      "role": "module",
+      "exports": [
+        "cleanUrl",
+        "toReadable",
+        "FORMATS",
+        "DEFAULT_MAX_CHARS",
+        "MAX_MAX_CHARS"
+      ],
+      "imports": [
+        "jsdom",
+        "@mozilla/readability",
+        "turndown",
+        "turndown-plugin-gfm"
+      ],
+      "symbols": [
+        "cleanUrl(href, base)",
+        "strip(doc, base)",
+        "extract(html, url)",
+        "normaliseTables(root)",
+        "toMarkdown(root)",
+        "blocks(root)",
+        "linksOf(root)",
+        "jsonOf(meta, page, links, first)",
+        "xmlOf(meta, page, links, first)",
+        "pageBlocks(all, start, budget, size)",
+        "toReadable(html, url, opts = {})"
       ]
     },
     {
@@ -61362,6 +61397,34 @@
       "symbols": []
     },
     {
+      "path": "user-data_cloudy-browser-headless/src/code/test/benchmark.test.js",
+      "lang": "js",
+      "role": "module",
+      "exports": [
+        "approxTokens"
+      ],
+      "imports": [
+        "node:test",
+        "node:assert/strict",
+        "node:fs",
+        "../readable.js"
+      ],
+      "symbols": []
+    },
+    {
+      "path": "user-data_cloudy-browser-headless/src/code/test/readable.test.js",
+      "lang": "js",
+      "role": "module",
+      "exports": [],
+      "imports": [
+        "node:test",
+        "node:assert/strict",
+        "node:fs",
+        "../readable.js"
+      ],
+      "symbols": []
+    },
+    {
       "path": "user-data_cloudy-browser-headless/src/compose.nix",
       "lang": "nix",
       "role": "compose",
@@ -61381,7 +61444,6 @@
         "image",
         "container_name",
         "network_mode",
-        "env_file",
         "environment",
         "PORT",
         "HTTP_HOST",

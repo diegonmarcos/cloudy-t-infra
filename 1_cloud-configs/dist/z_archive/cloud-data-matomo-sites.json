@@ -184,7 +184,7 @@
       "service": "stalwart"
     },
     {
-      "name": "Headless browser for agents: official Playwright image (Apache-2.0, not browserless/SSPL) plus a small Node server implementing the shared headless-api JSON command API (open/wait/eval/click/type/scroll/html/text/readable/screenshot/cookies/storage/network, run(steps), sessions). Bearer-gated, mesh-only.",
+      "name": "Headless browser for agents: official Playwright image (Apache-2.0, not browserless/SSPL) plus a small Node server implementing the shared headless-api JSON command API (open/wait/eval/click/type/scroll/html/text/readable (markdown|json|xml)/screenshot/cookies/storage/network, run(steps), sessions). Bearer-gated, mesh-only.",
       "url": "https://mcp.diegonmarcos.com",
       "service": "cloudy-browser-headless"
     },
