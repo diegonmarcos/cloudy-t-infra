@@ -4560,19 +4560,30 @@
         "validBody",
         "readFleetData",
         "clearFleetDataCache",
-        "PVT_RAW",
+        "FLEET_SSH_URL",
+        "FLEET_BRANCH",
+        "FLEET_SUBDIR",
+        "PVT_SOURCE",
+        "KNOWN_HOSTS",
         "TTL_MS",
-        "Answer"
+        "Answer",
+        "FleetRepo"
       ],
       "imports": [
-        "node:crypto"
+        "node:crypto",
+        "node:child_process",
+        "node:fs",
+        "node:path",
+        "node:os"
       ],
       "symbols": [
         "isDatasetPath(path: string)",
         "isTier(t: string)",
         "etagOf(body: string)",
         "validBody(body: string)",
-        "readFleetData(file: string, ifNoneMatch: string | undefined, f: Fetcher = fetch as unknown as Fetcher, env: NodeJS.ProcessEnv = process.env, now = Date.now()",
+        "makeGitRepo(keyB64: string)",
+        "getDefaultRepo(env: NodeJS.ProcessEnv)",
+        "readFleetData(file: string, ifNoneMatch: string | undefined, repoArg?: FleetRepo | null, env: NodeJS.ProcessEnv = process.env, now = Date.now()",
         "clearFleetDataCache()"
       ]
     },
@@ -10888,19 +10899,30 @@
         "validBody",
         "readFleetData",
         "clearFleetDataCache",
-        "PVT_RAW",
+        "FLEET_SSH_URL",
+        "FLEET_BRANCH",
+        "FLEET_SUBDIR",
+        "PVT_SOURCE",
+        "KNOWN_HOSTS",
         "TTL_MS",
-        "Answer"
+        "Answer",
+        "FleetRepo"
       ],
       "imports": [
-        "node:crypto"
+        "node:crypto",
+        "node:child_process",
+        "node:fs",
+        "node:path",
+        "node:os"
       ],
       "symbols": [
         "isDatasetPath(path: string)",
         "isTier(t: string)",
         "etagOf(body: string)",
         "validBody(body: string)",
-        "readFleetData(file: string, ifNoneMatch: string | undefined, f: Fetcher = fetch as unknown as Fetcher, env: NodeJS.ProcessEnv = process.env, now = Date.now()",
+        "makeGitRepo(keyB64: string)",
+        "getDefaultRepo(env: NodeJS.ProcessEnv)",
+        "readFleetData(file: string, ifNoneMatch: string | undefined, repoArg?: FleetRepo | null, env: NodeJS.ProcessEnv = process.env, now = Date.now()",
         "clearFleetDataCache()"
       ]
     },
@@ -23903,19 +23925,30 @@
         "validBody",
         "readFleetData",
         "clearFleetDataCache",
-        "PVT_RAW",
+        "FLEET_SSH_URL",
+        "FLEET_BRANCH",
+        "FLEET_SUBDIR",
+        "PVT_SOURCE",
+        "KNOWN_HOSTS",
         "TTL_MS",
-        "Answer"
+        "Answer",
+        "FleetRepo"
       ],
       "imports": [
-        "node:crypto"
+        "node:crypto",
+        "node:child_process",
+        "node:fs",
+        "node:path",
+        "node:os"
       ],
       "symbols": [
         "isDatasetPath(path: string)",
         "isTier(t: string)",
         "etagOf(body: string)",
         "validBody(body: string)",
-        "readFleetData(file: string, ifNoneMatch: string | undefined, f: Fetcher = fetch as unknown as Fetcher, env: NodeJS.ProcessEnv = process.env, now = Date.now()",
+        "makeGitRepo(keyB64: string)",
+        "getDefaultRepo(env: NodeJS.ProcessEnv)",
+        "readFleetData(file: string, ifNoneMatch: string | undefined, repoArg?: FleetRepo | null, env: NodeJS.ProcessEnv = process.env, now = Date.now()",
         "clearFleetDataCache()"
       ]
     },
@@ -25585,19 +25618,30 @@
         "validBody",
         "readFleetData",
         "clearFleetDataCache",
-        "PVT_RAW",
+        "FLEET_SSH_URL",
+        "FLEET_BRANCH",
+        "FLEET_SUBDIR",
+        "PVT_SOURCE",
+        "KNOWN_HOSTS",
         "TTL_MS",
-        "Answer"
+        "Answer",
+        "FleetRepo"
       ],
       "imports": [
-        "node:crypto"
+        "node:crypto",
+        "node:child_process",
+        "node:fs",
+        "node:path",
+        "node:os"
       ],
       "symbols": [
         "isDatasetPath(path: string)",
         "isTier(t: string)",
         "etagOf(body: string)",
         "validBody(body: string)",
-        "readFleetData(file: string, ifNoneMatch: string | undefined, f: Fetcher = fetch as unknown as Fetcher, env: NodeJS.ProcessEnv = process.env, now = Date.now()",
+        "makeGitRepo(keyB64: string)",
+        "getDefaultRepo(env: NodeJS.ProcessEnv)",
+        "readFleetData(file: string, ifNoneMatch: string | undefined, repoArg?: FleetRepo | null, env: NodeJS.ProcessEnv = process.env, now = Date.now()",
         "clearFleetDataCache()"
       ]
     },
