@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-containers",
   "counts": {
-    "files": 2633,
+    "files": 2636,
     "by_lang": {
       "sh": 179,
-      "js": 109,
+      "js": 111,
       "nix": 193,
-      "py": 510,
+      "py": 511,
       "ts": 1272,
       "rust": 370
     },
@@ -19,8 +19,8 @@
       "shell": 170,
       "file": 348,
       "nix-module": 19,
-      "python": 496,
-      "module": 776,
+      "python": 497,
+      "module": 778,
       "script": 8,
       "flake": 88,
       "entrypoint": 71,
@@ -62039,12 +62039,14 @@
         "validateRun",
         "withTimeout",
         "CMDS",
+        "EXT_CMDS",
         "MAX_TIMEOUT_MS",
         "ApiError",
         "Sessions"
       ],
       "imports": [
-        "node:crypto"
+        "node:crypto",
+        "./ocr.js"
       ],
       "symbols": [
         "checkBearer(header, token)",
@@ -62068,7 +62070,8 @@
         "playwright-core",
         "./api.js",
         "./readable.js",
-        "./extract.js"
+        "./extract.js",
+        "./ocr.js"
       ],
       "symbols": [
         "gotoWithRetry(page, url, opts, { tries = 4, delayMs = 400 } = {})",
@@ -62081,10 +62084,55 @@
       "role": "module",
       "exports": [
         "linksFn",
-        "scrapeFn"
+        "scrapeFn",
+        "imagesFn"
       ],
       "imports": [],
       "symbols": []
+    },
+    {
+      "path": "user-data_cloudy-browser-headless/src/code/ocr.js",
+      "lang": "js",
+      "role": "module",
+      "exports": [
+        "normalize",
+        "ensureLangDir",
+        "tesseractFactory",
+        "paddleRecognize",
+        "sniffMime",
+        "fetchImage",
+        "renderForOcr",
+        "runOcr",
+        "OCR_ENGINES",
+        "OCR_LANGS",
+        "OCR_DEFAULTS",
+        "MAX_IMAGE_BYTES",
+        "MAX_IMAGE_PIXELS",
+        "SCREENSHOT_MAX_HEIGHT",
+        "LANG_RE",
+        "OcrError",
+        "exclusive",
+        "targetWidth"
+      ],
+      "imports": [
+        "node:module",
+        "node:fs",
+        "node:os",
+        "node:path",
+        "./extract.js"
+      ],
+      "symbols": [
+        "normalize(c)",
+        "ensureLangDir(require = createRequire(import.meta.url)",
+        "tesseractFactory(lang)",
+        "paddleRecognize(buf, lang, { env = process.env, f = fetch } = {})",
+        "sniffMime(buf, hinted)",
+        "parseDataUrl(u)",
+        "fetchImage({ page, ctx }, src, { timeout = 15000, maxBytes = MAX_IMAGE_BYTES } = {})",
+        "renderForOcr(scratch, { buf, mime })",
+        "runOcr(h, c, budget = 30000, deps = {})",
+        "class OcrError"
+      ]
     },
     {
       "path": "user-data_cloudy-browser-headless/src/code/readable.js",
@@ -62169,6 +62217,20 @@
         "node:test",
         "node:assert/strict",
         "jsdom",
+        "../extract.js"
+      ],
+      "symbols": []
+    },
+    {
+      "path": "user-data_cloudy-browser-headless/src/code/test/ocr.test.js",
+      "lang": "js",
+      "role": "module",
+      "exports": [],
+      "imports": [
+        "node:test",
+        "node:assert/strict",
+        "../api.js",
+        "../ocr.js",
         "../extract.js"
       ],
       "symbols": []
@@ -62263,6 +62325,28 @@
         "baseImage",
         "apt",
         "title"
+      ]
+    },
+    {
+      "path": "user-data_cloudy-browser-headless/src/sidecar-paddle/app.py",
+      "lang": "py",
+      "role": "python",
+      "exports": [
+        "engine(lang)",
+        "health()",
+        "ocr(req: Req, authorization: str = Header(default=\"\")",
+        "class Req"
+      ],
+      "imports": [
+        "fastapi",
+        "pydantic",
+        "base64"
+      ],
+      "symbols": [
+        "engine(lang)",
+        "health()",
+        "ocr(req: Req, authorization: str = Header(default=\"\")",
+        "class Req"
       ]
     },
     {
