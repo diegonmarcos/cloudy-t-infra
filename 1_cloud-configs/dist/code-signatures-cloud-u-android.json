@@ -6,28 +6,28 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 23714,
+    "files": 23747,
     "by_lang": {
-      "sh": 689,
+      "sh": 692,
       "js": 548,
       "py": 211,
-      "kotlin": 12995,
+      "kotlin": 13021,
       "ts": 8470,
-      "java": 649,
+      "java": 651,
       "nix": 36,
-      "rust": 116
+      "rust": 118
     },
     "by_role": {
       "hook": 160,
       "file": 2305,
-      "shell": 550,
+      "shell": 553,
       "script": 300,
       "module": 6480,
-      "java": 648,
-      "kotlin": 12992,
+      "java": 650,
+      "kotlin": 13018,
       "python": 71,
       "flake": 32,
-      "rust-module": 116,
+      "rust-module": 118,
       "nix-module": 4,
       "entrypoint": 3,
       "mcp-tool": 53
@@ -2502,6 +2502,7 @@
         "_resolve_signing()",
         "_enforce_signature()",
         "_assert_apk_identity()",
+        "_assert_apk_permissions()",
         "_assert_apk_payload()",
         "step_materialize_fork()",
         "step_build_fork()",
@@ -2520,6 +2521,7 @@
         "_resolve_signing()",
         "_enforce_signature()",
         "_assert_apk_identity()",
+        "_assert_apk_permissions()",
         "_assert_apk_payload()",
         "step_materialize_fork()",
         "step_build_fork()",
@@ -5369,6 +5371,7 @@
         "_resolve_signing()",
         "_enforce_signature()",
         "_assert_apk_identity()",
+        "_assert_apk_permissions()",
         "_assert_apk_payload()",
         "step_materialize_fork()",
         "step_build_fork()",
@@ -5387,6 +5390,7 @@
         "_resolve_signing()",
         "_enforce_signature()",
         "_assert_apk_identity()",
+        "_assert_apk_permissions()",
         "_assert_apk_payload()",
         "step_materialize_fork()",
         "step_build_fork()",
@@ -10448,13 +10452,10 @@
         "androidx.compose.foundation.clickable",
         "androidx.compose.foundation.layout.Arrangement",
         "androidx.compose.foundation.layout.Column",
-        "androidx.compose.foundation.layout.ExperimentalLayoutApi",
-        "androidx.compose.foundation.layout.FlowRow",
         "androidx.compose.foundation.layout.Row",
         "androidx.compose.foundation.layout.fillMaxSize",
         "androidx.compose.foundation.layout.fillMaxWidth",
         "androidx.compose.foundation.layout.padding",
-        "androidx.compose.foundation.lazy.LazyColumn",
         "androidx.compose.foundation.shape.RoundedCornerShape",
         "androidx.compose.material3.MaterialTheme",
         "androidx.compose.material3.Text",
@@ -10473,11 +10474,9 @@
         "androidx.compose.ui.semantics.semantics",
         "androidx.compose.ui.text.style.TextAlign",
         "androidx.compose.ui.unit.dp",
-        "com.diegonmarcos.superapp.launcher.GroupTitle",
         "com.diegonmarcos.superapp.launcher.TILE_PAGE_PADDING",
         "com.diegonmarcos.superapp.launcher.folders.FolderRepository",
         "com.diegonmarcos.superapp.launcher.folders.FolderScope",
-        "com.diegonmarcos.superapp.launcher.folders.ResolvedSection",
         "com.diegonmarcos.superapp.ui.LauncherPalette",
         "com.diegonmarcos.superapp.uikit.KitComposeFragment",
         "com.diegonmarcos.superapp.uikit.LocalKitPalette",
@@ -10489,12 +10488,100 @@
         "Content()",
         "ScopeToggle(scope: FolderScope, onPick: (FolderScope)",
         "RefreshBar(onRefresh: ()",
-        "FolderSections(sections: List<ResolvedSection>?)",
         "scopeTag(s: FolderScope)",
         "folderTag(id: String)",
         "appTag(pkg: String)",
         "newInstance()",
         "class FoldersFragment"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/configs/FolderTablesUi.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "FolderEditorState",
+        "FolderTablesTags",
+        "FolderTablesScreen"
+      ],
+      "imports": [
+        "androidx.compose.foundation.background",
+        "androidx.compose.foundation.border",
+        "androidx.compose.foundation.clickable",
+        "androidx.compose.foundation.horizontalScroll",
+        "androidx.compose.foundation.layout.Arrangement",
+        "androidx.compose.foundation.layout.Box",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.ExperimentalLayoutApi",
+        "androidx.compose.foundation.layout.FlowRow",
+        "androidx.compose.foundation.layout.Row",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.foundation.layout.size",
+        "androidx.compose.foundation.layout.width",
+        "androidx.compose.foundation.lazy.LazyColumn",
+        "androidx.compose.foundation.lazy.items",
+        "androidx.compose.foundation.rememberScrollState",
+        "androidx.compose.foundation.shape.RoundedCornerShape",
+        "androidx.compose.foundation.text.BasicTextField",
+        "androidx.compose.foundation.text.KeyboardActions",
+        "androidx.compose.foundation.text.KeyboardOptions",
+        "androidx.compose.ui.focus.onFocusChanged",
+        "androidx.compose.ui.text.input.ImeAction",
+        "androidx.compose.material3.DropdownMenu",
+        "androidx.compose.material3.DropdownMenuItem",
+        "androidx.compose.material3.Text",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.remember",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.ui.Alignment",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.draw.clip",
+        "androidx.compose.ui.graphics.Color",
+        "androidx.compose.ui.graphics.SolidColor",
+        "androidx.compose.ui.platform.testTag",
+        "androidx.compose.ui.semantics.semantics",
+        "androidx.compose.ui.text.TextStyle",
+        "androidx.compose.ui.text.font.FontFamily"
+      ],
+      "symbols": [
+        "edit(f: (FolderEditModel)",
+        "deleteFolder(id: String)",
+        "aRow(id: String)",
+        "aCell(col: String, id: String)",
+        "aSort(col: String)",
+        "aCount(id: String)",
+        "aDel(id: String)",
+        "bRow(pkg: String)",
+        "bFolder(pkg: String)",
+        "bOpt(pkg: String, fid: String)",
+        "bSection(pkg: String)",
+        "bOrder(pkg: String)",
+        "bDel(pkg: String)",
+        "bSort(col: String)",
+        "bChip(f: AppFilter)",
+        "bGroup(g: AppGroup)",
+        "bHeader(key: String)",
+        "tile(fid: String)",
+        "FolderTablesScreen(state: FolderEditorState, onSave: ()",
+        "TableBar(title: String, query: String, onQuery: (String)",
+        "FilterPill(label: String, tag: String, on: Boolean, onClick: ()",
+        "TableRow(scroll: androidx.compose.foundation.ScrollState, modifier: Modifier = Modifier, content: @Composable ()",
+        "Cell(units: Int, content: @Composable ()",
+        "HCell(text: String, units: Int)",
+        "HSort(text: String, col: String, units: Int, sort: SortSpec?, tag: String, onClick: ()",
+        "GroupHeader(h: THeader, tag: String?)",
+        "Num(text: String, tag: String? = null)",
+        "Mono(text: String, tag: String?)",
+        "Action(label: String, tag: String, onClick: ()",
+        "EditCell(value: String, tag: String, mono: Boolean = false, accent: Boolean = false, hint: String = \"\", onChange: (String)",
+        "EditId(value: String, tag: String, onCommit: (String)",
+        "EditInt(value: Int, tag: String, onChange: (Int)",
+        "FolderDropdown(m: FolderEditModel, pkg: String, label: String, needs: Boolean, onPick: (String)",
+        "class FolderEditorState",
+        "class FolderTablesTags"
       ]
     },
     {
@@ -11114,8 +11201,6 @@
         "openInAppUrl(url: String)",
         "editWebServerPort(ctx: Context, reload: ()",
         "editWebServerDocRoot(ctx: Context, reload: ()",
-        "isPackageInstalled(ctx: Context, pkg: String)",
-        "portOpen(host: String, port: Int)",
         "copy(ctx: Context, v: String)",
         "renderBatteryDeep()",
         "renderDirectInstall()",
@@ -11132,7 +11217,6 @@
         "newInstance(title: String = \"X-Ray\", macros: ArrayList<String>? = null)",
         "class DevControlFragment",
         "class limit",
-        "class SshTerminal",
         "class StorageFacts",
         "class state"
       ]
@@ -12825,6 +12909,69 @@
       ]
     },
     {
+      "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/launcher/folders/FolderEditModel.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "AppRow",
+        "NEEDS_TITLE",
+        "FolderEditModel",
+        "TItem",
+        "THeader",
+        "FolderItem",
+        "AppItem",
+        "SortSpec",
+        "ACol",
+        "BCol",
+        "AppGroup",
+        "AppFilter",
+        "folderItems",
+        "appItems",
+        "foldersToJson",
+        "assignmentsToJson"
+      ],
+      "imports": [
+        "org.json.JSONArray",
+        "org.json.JSONObject"
+      ],
+      "symbols": [
+        "def(id: String?)",
+        "isNoFolder(r: AppRow)",
+        "isOthers(r: AppRow)",
+        "needsClassification(r: AppRow)",
+        "appCount(folderId: String)",
+        "sectionOf(r: AppRow)",
+        "folderLabel(r: AppRow)",
+        "orderedFolders()",
+        "addFolder()",
+        "updateFolder(id: String, f: (FolderDef)",
+        "renameFolderId(old: String, new: String)",
+        "deleteFolder(id: String)",
+        "setFolder(pkg: String, folderId: String?)",
+        "setOrder(pkg: String, order: Int)",
+        "addApp(pkg: String, name: String, folderId: String?)",
+        "toAssignments()",
+        "preview()",
+        "build(folders: List<FolderDef>, assignments: List<FolderAssignment>, apps: List<FolderApp>)",
+        "toggled(c: String)",
+        "folderItems(query: String, sort: SortSpec?, groupBySection: Boolean)",
+        "appItems(query: String, filter: AppFilter, sort: SortSpec?, group: AppGroup)",
+        "foldersToJson(list: List<FolderDef>)",
+        "assignmentsToJson(list: List<FolderAssignment>)",
+        "class AppRow",
+        "class FolderEditModel",
+        "class TItem",
+        "class THeader",
+        "class FolderItem",
+        "class AppItem",
+        "class SortSpec",
+        "class ACol",
+        "class BCol",
+        "class AppGroup",
+        "class AppFilter"
+      ]
+    },
+    {
       "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/launcher/folders/FolderGridBridge.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -12890,6 +13037,12 @@
         "all(scope: FolderScope)",
         "set(scope: FolderScope, pkg: String, folderId: String)",
         "clear(scope: FolderScope, pkg: String)",
+        "tblKey(scope: FolderScope, which: String)",
+        "savedFolders(scope: FolderScope)",
+        "savedAssignments(scope: FolderScope)",
+        "saveTables(scope: FolderScope, folders: List<FolderDef>, assignments: List<FolderAssignment>)",
+        "resetScope(scope: FolderScope)",
+        "hasSaved(scope: FolderScope)",
         "class FolderOverrideStore"
       ]
     },
@@ -12910,8 +13063,14 @@
       ],
       "symbols": [
         "folders(scope: FolderScope)",
+        "servedFolders(scope: FolderScope)",
         "assignments(scope: FolderScope)",
+        "servedAssignments(scope: FolderScope)",
         "snapshot(scope: FolderScope, force: Boolean = false)",
+        "apps(scope: FolderScope, force: Boolean)",
+        "editorModel(scope: FolderScope, force: Boolean = false)",
+        "save(scope: FolderScope, model: FolderEditModel)",
+        "reset(scope: FolderScope)",
         "refresh(scope: FolderScope)",
         "assign(scope: FolderScope, pkg: String, folderId: String)",
         "enumerateApps(ctx: Context, scope: FolderScope)",
@@ -17125,6 +17284,7 @@
         "wanted(ctx: Context, fqcn: String)",
         "start(ctx: Context, fqcn: String)",
         "repostOnDismiss(svc: Service, requestCode: Int)",
+        "repostOnDismiss(ctx: Context, requestCode: Int, owner: Class<*>)",
         "pinned(ctx: Context, badgeId: String)",
         "launch(ctx: Context, b: Badge)",
         "launchAll(ctx: Context)",
@@ -17196,19 +17356,22 @@
         "androidx.core.app.NotificationCompat",
         "androidx.core.content.ContextCompat",
         "com.diegonmarcos.superapp.R",
+        "com.diegonmarcos.superapp.core.FleetNotify",
         "com.diegonmarcos.superapp.battery.BatteryRepository",
+        "java.util.concurrent.CopyOnWriteArrayList",
         "java.util.concurrent.Executors"
       ],
       "symbols": [
         "onBind(intent: Intent?)",
         "onCreate()",
-        "onReceive(context: Context, intent: Intent)",
         "onStartCommand(intent: Intent?, flags: Int, startId: Int)",
-        "onDestroy()",
-        "requestRefresh()",
-        "refreshNow()",
-        "placeholder()",
-        "build(card: BatteryBadgeModel.Card)",
+        "ensureReceiver(app: Context)",
+        "onReceive(context: Context, intent: Intent)",
+        "dropReceiver(app: Context)",
+        "requestRefresh(app: Context, done: (()",
+        "finish()",
+        "refreshNow(app: Context)",
+        "build(ctx: Context, card: BatteryBadgeModel.Card)",
         "canPost(ctx: Context)",
         "ensureChannel(ctx: Context)",
         "class BatteryBadgeService"
@@ -17258,6 +17421,49 @@
         "openDataManager(ctx: Context)",
         "ensureChannel(ctx: Context)",
         "class DataBadgeService"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/notificationcenter/DataWidgetRuntime.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "DataWidgetRuntime"
+      ],
+      "imports": [
+        "android.app.AlarmManager",
+        "android.app.NotificationManager",
+        "android.app.PendingIntent",
+        "android.content.Context",
+        "android.content.Intent",
+        "android.os.SystemClock"
+      ],
+      "symbols": [
+        "of(fqcn: String)",
+        "isWidgetService(fqcn: String)",
+        "start(ctx: Context, cls: Class<*>)",
+        "pi(ctx: Context, cls: Class<*>, requestCode: Int)",
+        "scheduleNext(ctx: Context, cls: Class<*>, requestCode: Int, delayMs: Long)",
+        "retire(ctx: Context, w: Widget)",
+        "class DataWidgetRuntime",
+        "class Widget"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/notificationcenter/DataWidgetWakeReceiver.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "DataWidgetWakeReceiver"
+      ],
+      "imports": [
+        "android.content.BroadcastReceiver",
+        "android.content.Context",
+        "android.content.Intent"
+      ],
+      "symbols": [
+        "onReceive(context: Context?, intent: Intent?)",
+        "class DataWidgetWakeReceiver"
       ]
     },
     {
@@ -17329,11 +17535,10 @@
         "android.content.Context",
         "android.content.Intent",
         "android.os.Build",
-        "android.os.Handler",
         "android.os.IBinder",
-        "android.os.Looper",
         "androidx.core.app.NotificationCompat",
         "com.diegonmarcos.superapp.R",
+        "com.diegonmarcos.superapp.core.FleetNotify",
         "kotlinx.coroutines.CoroutineScope",
         "kotlinx.coroutines.SupervisorJob",
         "kotlinx.coroutines.cancel",
@@ -17344,11 +17549,11 @@
         "onCreate()",
         "onStartCommand(intent: Intent?, flags: Int, startId: Int)",
         "onDestroy()",
+        "post()",
         "schedule()",
-        "run()",
         "badge()",
         "refreshMs()",
-        "refresh()",
+        "refresh(startId: Int)",
         "prefs()",
         "cached()",
         "save(f: HealthBadgeModel.Face, at: Long = System.currentTimeMillis()",
@@ -17876,6 +18081,7 @@
         "android.os.Looper",
         "androidx.core.app.NotificationCompat",
         "com.diegonmarcos.superapp.R",
+        "com.diegonmarcos.superapp.core.FleetNotify",
         "kotlinx.coroutines.CoroutineScope",
         "kotlinx.coroutines.SupervisorJob",
         "kotlinx.coroutines.cancel",
@@ -17892,10 +18098,9 @@
         "onStartCommand(intent: Intent?, flags: Int, startId: Int)",
         "onDestroy()",
         "schedule()",
-        "run()",
         "badge()",
         "refreshMs()",
-        "refresh()",
+        "refresh(startId: Int)",
         "initialState()",
         "cachedState(fix: WeatherLocation.Fix?)",
         "compute()",
@@ -22255,6 +22460,46 @@
       ]
     },
     {
+      "path": "aa_cloud-superapp/app/src/test/java/com/diegonmarcos/superapp/configs/FolderTablesComposeTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "FolderTablesComposeTest"
+      ],
+      "imports": [
+        "android.app.Application",
+        "androidx.compose.ui.test.assertTextContains",
+        "androidx.compose.ui.test.assertTextEquals",
+        "androidx.compose.ui.test.hasTestTag",
+        "androidx.compose.ui.test.onNodeWithTag",
+        "androidx.compose.ui.test.performClick",
+        "androidx.compose.ui.test.performScrollToNode",
+        "androidx.compose.ui.test.performTextReplacement",
+        "androidx.compose.ui.platform.testTag",
+        "androidx.compose.ui.Modifier",
+        "com.diegonmarcos.superapp.launcher.folders.AppFilter",
+        "com.diegonmarcos.superapp.launcher.folders.FolderApp",
+        "com.diegonmarcos.superapp.launcher.folders.FolderAssignment",
+        "com.diegonmarcos.superapp.launcher.folders.FolderDef",
+        "com.diegonmarcos.superapp.launcher.folders.FolderEditModel",
+        "com.diegonmarcos.superapp.launcher.folders.OTHERS_FOLDER_ID",
+        "com.diegonmarcos.superapp.ui.KitPageHarness",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertNotNull",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "org.junit.runner.RunWith",
+        "org.robolectric.RobolectricTestRunner",
+        "org.robolectric.annotation.Config"
+      ],
+      "symbols": [
+        "open()",
+        "scrollTo(tag: String)",
+        "class FolderTablesComposeTest"
+      ]
+    },
+    {
       "path": "aa_cloud-superapp/app/src/test/java/com/diegonmarcos/superapp/configs/OpsConsoleBehaviourTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -23268,6 +23513,33 @@
         "dataset(rel: String)",
         "cloudApps()",
         "class FolderCoverageTest"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/test/java/com/diegonmarcos/superapp/launcher/folders/FolderEditModelTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "FolderEditModelTest"
+      ],
+      "imports": [
+        "android.app.Application",
+        "androidx.test.core.app.ApplicationProvider",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Before",
+        "org.junit.Test",
+        "org.junit.runner.RunWith",
+        "org.robolectric.RobolectricTestRunner",
+        "org.robolectric.annotation.Config"
+      ],
+      "symbols": [
+        "model()",
+        "tiles(m: FolderEditModel)",
+        "clean()",
+        "class FolderEditModelTest"
       ]
     },
     {
@@ -25822,6 +26094,39 @@
         "report(r: BatteryReading, samples: List<BatterySample> = discharged()",
         "card(r: BatteryReading, samples: List<BatterySample> = discharged()",
         "class BatteryBadgeModelTest"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/test/java/com/diegonmarcos/superapp/notificationcenter/DataWidgetNotFgsTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "DataWidgetNotFgsTest"
+      ],
+      "imports": [
+        "android.app.Application",
+        "android.app.Notification",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "org.junit.runner.RunWith",
+        "org.robolectric.Robolectric",
+        "org.robolectric.RobolectricTestRunner",
+        "org.robolectric.Shadows.shadowOf",
+        "org.robolectric.annotation.Config",
+        "java.io.File"
+      ],
+      "symbols": [
+        "code(path: String)",
+        "noDataWidgetSourceTouchesTheForegroundServicePath()",
+        "theThreeCardsAreBuiltByTheSharedDataWidgetBuilder()",
+        "theManifestDeclaresNoForegroundTypeForThem()",
+        "everyDeclaredWidgetBadgeIsRoutedThroughTheRuntime()",
+        "theWidgetServicesNeverGoForeground()",
+        "theBatteryCardIsOngoingYetNotAForegroundNotification()",
+        "class DataWidgetNotFgsTest"
       ]
     },
     {
@@ -30305,6 +30610,18 @@
       ]
     },
     {
+      "path": "aa_cloud-superapp/test/test-superapp-hosts-no-sshd.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "check()"
+      ],
+      "imports": [],
+      "symbols": [
+        "check()"
+      ]
+    },
+    {
       "path": "aa_cloud-superapp/test/test-tab-strip-spacing.sh",
       "lang": "sh",
       "role": "shell",
@@ -34317,6 +34634,8 @@
       "role": "kotlin",
       "exports": [
         "ForumTopic",
+        "ForumSessions",
+        "ForumTools",
         "ForumStrings",
         "ForumMetrics",
         "ForumTags",
@@ -34350,7 +34669,13 @@
         "androidx.compose.foundation.shape.CircleShape",
         "androidx.compose.foundation.shape.RoundedCornerShape",
         "androidx.compose.foundation.text.BasicTextField",
+        "androidx.compose.foundation.horizontalScroll",
         "androidx.compose.foundation.verticalScroll",
+        "androidx.compose.foundation.Canvas",
+        "androidx.compose.ui.draw.shadow",
+        "androidx.compose.ui.graphics.Brush",
+        "androidx.compose.ui.graphics.drawscope.Stroke",
+        "kotlin.math.abs",
         "androidx.compose.runtime.Composable",
         "androidx.compose.runtime.Immutable",
         "androidx.compose.runtime.LaunchedEffect",
@@ -34358,15 +34683,11 @@
         "androidx.compose.runtime.mutableStateOf",
         "androidx.compose.runtime.remember",
         "androidx.compose.runtime.rememberCoroutineScope",
-        "androidx.compose.runtime.setValue",
-        "androidx.compose.ui.Alignment",
-        "androidx.compose.ui.Modifier",
-        "androidx.compose.ui.draw.clip",
-        "androidx.compose.ui.geometry.Offset",
-        "androidx.compose.ui.graphics.Color",
-        "androidx.compose.ui.graphics.SolidColor"
+        "androidx.compose.runtime.setValue"
       ],
       "symbols": [
+        "session(id: String)",
+        "modelBadge(index: Int)",
         "topic(id: String)",
         "separator(label: String)",
         "bubble(index: Int)",
@@ -34377,18 +34698,24 @@
         "RailEntry(badge: String, label: String, selected: Boolean, theme: AiTheme, metrics: ForumMetrics, onClick: ()",
         "Thread( topic: ForumTopic, theme: AiTheme, strings: ForumStrings, metrics: ForumMetrics, icon: ForumIcon, adminColor: Color, onCall: (()",
         "ThreadHeader( topic: ForumTopic, count: Int, theme: AiTheme, strings: ForumStrings, metrics: ForumMetrics, icon: ForumIcon, onCall: (()",
+        "TopicStrip(topics: List<ForumTopic>, selectedId: String, onSelect: (String)",
+        "SessionsRail(s: ForumSessions, theme: AiTheme, strings: ForumStrings, metrics: ForumMetrics, icon: ForumIcon, width: Dp)",
+        "sessionInitials(label: String)",
+        "ChatBackdrop(theme: AiTheme, metrics: ForumMetrics)",
         "HeaderIcon(icon: ForumIcon, name: String, desc: String, theme: AiTheme, metrics: ForumMetrics, onClick: ()",
         "EmptyThread(theme: AiTheme, strings: ForumStrings)",
-        "MessageList(topic: ForumTopic, theme: AiTheme, strings: ForumStrings, metrics: ForumMetrics, adminColor: Color, zone: ZoneId, now: Long)",
+        "MessageList(topic: ForumTopic, theme: AiTheme, strings: ForumStrings, metrics: ForumMetrics, adminColor: Color, zone: ZoneId, now: Long, rich: Boolean = false)",
         "DatePill(label: String, theme: AiTheme, metrics: ForumMetrics)",
-        "MessageBubble(topic: ForumTopic, row: AiForum.Row.Message, chat: AiChatState, theme: AiTheme, strings: ForumStrings, metrics: ForumMetrics, adminColor: Color, zone: ZoneId)",
-        "IncomingBubble( topic: ForumTopic, content: String, time: String, adminBadge: String?, firstInGroup: Boolean, lastInGroup: Boolean, theme: AiTheme, strings: ForumStrings, metrics: ForumMetrics, adminColor: Color, index: Int, )",
-        "OutgoingBubble(msg: AiMsg, time: String, receipt: AiForum.Receipt?, firstInGroup: Boolean, lastInGroup: Boolean, theme: AiTheme, metrics: ForumMetrics, index: Int)",
+        "MessageBubble(topic: ForumTopic, row: AiForum.Row.Message, chat: AiChatState, theme: AiTheme, strings: ForumStrings, metrics: ForumMetrics, adminColor: Color, zone: ZoneId, rich: Boolean = false)",
+        "IncomingBubble( topic: ForumTopic, content: String, time: String, adminBadge: String?, firstInGroup: Boolean, lastInGroup: Boolean, theme: AiTheme, strings: ForumStrings, metrics: ForumMetrics, adminColor: Color, index: Int, rich: Boolean = false, msg: AiMsg? = null, chat: AiChatState? = null, )",
+        "OutgoingBubble(msg: AiMsg, time: String, receipt: AiForum.Receipt?, firstInGroup: Boolean, lastInGroup: Boolean, theme: AiTheme, metrics: ForumMetrics, index: Int, chat: AiChatState? = null)",
         "ReceiptTicks(receipt: AiForum.Receipt, read: Color, grey: Color, onAccent: Color, metrics: ForumMetrics, index: Int)",
         "ThinkingBubble(topic: ForumTopic, theme: AiTheme, strings: ForumStrings, metrics: ForumMetrics, adminColor: Color)",
         "Composer(chat: AiChatState, theme: AiTheme, strings: ForumStrings, metrics: ForumMetrics, icon: ForumIcon, onAttach: (()",
         "send()",
         "class ForumTopic",
+        "class ForumSessions",
+        "class ForumTools",
         "class ForumStrings",
         "class ForumMetrics",
         "class ForumTags"
@@ -37216,6 +37543,7 @@
         "android.util.Base64",
         "android.widget.Toast",
         "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.fillMaxSize",
         "androidx.compose.foundation.layout.fillMaxWidth",
         "androidx.compose.foundation.layout.padding",
         "androidx.compose.foundation.rememberScrollState",
@@ -37246,8 +37574,7 @@
         "androidx.compose.ui.window.DialogProperties",
         "com.diegonmarcos.superapp.uikit.KitComposeFragment",
         "com.diegonmarcos.superapp.uikit.KitPalette",
-        "com.diegonmarcos.superapp.updater.Fleet",
-        "com.diegonmarcos.superapp.updater.FleetIdentity"
+        "com.diegonmarcos.superapp.updater.Fleet"
       ],
       "symbols": [
         "fleetObjects(key: String)",
@@ -37260,8 +37587,6 @@
         "Content()",
         "TabBar()",
         "hostsStoreProvider()",
-        "fleetDataBar(vb: Int)",
-        "openFleetData()",
         "openDetail(app: Fleet.App)",
         "FleetPage(ctx: Context, list: List<Fleet.App>, blurb: String, hasLibSections: Boolean, buildTimeLibs: String)",
         "inFilter(app: Fleet.App)",
@@ -37289,7 +37614,9 @@
         "human(b: Long)",
         "next(ctx: Context, app: Fleet.App)",
         "runStage(ctx: Context, app: Fleet.App, verb: String)",
-        "rowAction(ctx: Context, app: Fleet.App, a: FleetActions.Action, stg: StoreStages.Stage?)"
+        "rowAction(ctx: Context, app: Fleet.App, a: FleetActions.Action, stg: StoreStages.Stage?)",
+        "verb(onClick: ()",
+        "stageVerb(ctx: Context, app: Fleet.App, a: FleetActions.Action, verb: String, stg: StoreStages.Stage?, tag: String)"
       ]
     },
     {
@@ -37566,6 +37893,20 @@
         "onStage(key: String, stage: String)",
         "onJob(key: String, job: UpdateProgress.Job?)",
         "class StoreJobs"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/appstore/src/main/java/com/diegonmarcos/superapp/appstore/StoreKeepAliveText.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "StoreKeepAliveText"
+      ],
+      "imports": [],
+      "symbols": [
+        "lines(progress: String?, pending: Int?, lastPassAt: Long, now: Long)",
+        "ago(ms: Long)",
+        "class StoreKeepAliveText"
       ]
     },
     {
@@ -38153,6 +38494,20 @@
         "invalidate()",
         "refresh(ctx: Context, done: ()",
         "class StoreStatus"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/appstore/src/main/java/com/diegonmarcos/superapp/appstore/StoreStrip.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "StoreStrip"
+      ],
+      "imports": [],
+      "symbols": [
+        "slots(groups: List<String>, ventoyBar: Int, ventoyLabel: String, tinyMlBar: Int, fleetData: Boolean, fleetDataLabel: String)",
+        "class StoreStrip",
+        "class Slot"
       ]
     },
     {
@@ -38924,6 +39279,41 @@
         "thePlayProtectCommandsAreThreeSettingsWritesTheAllowlistKnows()",
         "ink(armed: Boolean, adb: AdbLink, installed: Boolean = true)",
         "class StoreChannelTest"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/appstore/src/test/java/com/diegonmarcos/superapp/appstore/StoreKeepAliveTextTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "StoreKeepAliveTextTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "class StoreKeepAliveTextTest"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/appstore/src/test/java/com/diegonmarcos/superapp/appstore/StoreStripTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "StoreStripTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "fleetDataThenSeparatorThenVentoy()",
+        "hostWithoutProviderKeepsVentoyBehindTheSeparator()",
+        "embeddedStoreWithNeitherIsJustTheGroups()",
+        "fleetDataWithoutVentoyFollowsTinyMl()",
+        "class StoreStripTest"
       ]
     },
     {
@@ -49002,6 +49392,62 @@
       ]
     },
     {
+      "path": "ab_cloud-libs-shared/libs/core/src/main/java/com/diegonmarcos/superapp/core/FleetNotify.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "FleetNotify"
+      ],
+      "imports": [
+        "android.app.Notification",
+        "android.app.NotificationManager",
+        "android.app.PendingIntent",
+        "android.app.Service",
+        "android.content.Context",
+        "android.content.pm.ServiceInfo",
+        "android.os.Build",
+        "androidx.core.app.NotificationCompat",
+        "androidx.core.app.ServiceCompat"
+      ],
+      "symbols": [
+        "keepAliveChannel(ctx: Context)",
+        "dataWidgetChannel(ctx: Context)",
+        "body(lines: List<String>)",
+        "first(lines: List<String>)",
+        "keepAliveNotification( ctx: Context, smallIcon: Int, title: String, lines: List<String>, stop: PendingIntent, contentIntent: PendingIntent? = null, extraActions: List<Action> = emptyList()",
+        "startKeepAlive(service: Service, id: Int, notification: Notification, type: Int = specialUseType()",
+        "specialUseType()",
+        "dataSyncType()",
+        "dataWidgetBuilder( ctx: Context, smallIcon: Int, title: String, lines: List<String>, contentIntent: PendingIntent? = null, channelId: String? = null, pinned: Boolean = true, color: Int = 0, subText: String? = null, )",
+        "dataWidgetNotification( ctx: Context, smallIcon: Int, title: String, lines: List<String>, contentIntent: PendingIntent? = null, channelId: String? = null, pinned: Boolean = true, color: Int = 0, subText: String? = null, )",
+        "post(ctx: Context, id: Int, notification: Notification)",
+        "class FleetNotify",
+        "class Action"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/core/src/main/java/com/diegonmarcos/superapp/core/KeepAliveStatus.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "KeepAliveStatus"
+      ],
+      "imports": [
+        "java.net.InetSocketAddress",
+        "java.net.NetworkInterface",
+        "java.net.Socket"
+      ],
+      "symbols": [
+        "portUp(port: Int, host: String = \"127.0.0.1\", timeoutMs: Int = 250)",
+        "portsLine(label: String, states: Map<Int, Boolean>)",
+        "meshUp(interfaces: List<Pair<String, Boolean>> = systemInterfaces()",
+        "systemInterfaces()",
+        "meshLine(up: Boolean)",
+        "class KeepAliveStatus",
+        "class is"
+      ]
+    },
+    {
       "path": "ab_cloud-libs-shared/libs/core/src/main/java/com/diegonmarcos/superapp/core/LogUpload.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -49225,6 +49671,56 @@
         "class name",
         "class instead",
         "class names"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/core/src/test/java/com/diegonmarcos/superapp/core/FleetNotifyTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "FleetNotifyTest"
+      ],
+      "imports": [
+        "android.app.Application",
+        "android.app.Notification",
+        "android.app.NotificationManager",
+        "android.app.PendingIntent",
+        "android.app.Service",
+        "android.content.Context",
+        "android.content.Intent",
+        "android.os.IBinder",
+        "org.robolectric.RuntimeEnvironment",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNotNull",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "org.junit.runner.RunWith",
+        "org.robolectric.Robolectric",
+        "org.robolectric.RobolectricTestRunner",
+        "org.robolectric.Shadows.shadowOf",
+        "org.robolectric.annotation.Config",
+        "java.net.ServerSocket"
+      ],
+      "symbols": [
+        "pi()",
+        "keepAlive(lines: List<String> = listOf(\"8002 up\", \"mesh up\")",
+        "onBind(intent: Intent?)",
+        "onCreate()",
+        "keepAliveIsOngoingAndNotDismissable()",
+        "keepAliveHasAStopActionAndLiveData()",
+        "keepAliveChannelIsLowAndSilent()",
+        "keepAliveIsUsedWithStartForeground()",
+        "extraActionsFollowStop()",
+        "dataWidgetIsOngoingButNotAForegroundServiceNotification()",
+        "dataWidgetOwnerNeverStartsForeground()",
+        "unpinnedDataWidgetIsSwipeable()",
+        "portsLineAndProbe()",
+        "meshIsUpOnlyForAnUpTunnel()",
+        "class FleetNotifyTest",
+        "class KeepAliveSvc",
+        "class WidgetSvc"
       ]
     },
     {
@@ -54265,49 +54761,65 @@
         "FleetDataPage"
       ],
       "imports": [
+        "android.content.ClipData",
+        "android.content.ClipboardManager",
         "android.content.Context",
         "android.content.Intent",
+        "android.widget.Toast",
         "androidx.activity.ComponentActivity",
         "androidx.activity.compose.setContent",
-        "androidx.compose.foundation.clickable",
+        "androidx.compose.foundation.ExperimentalFoundationApi",
+        "androidx.compose.foundation.background",
+        "androidx.compose.foundation.combinedClickable",
+        "androidx.compose.foundation.isSystemInDarkTheme",
         "androidx.compose.foundation.layout.Arrangement",
+        "androidx.compose.foundation.layout.Box",
         "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.ExperimentalLayoutApi",
+        "androidx.compose.foundation.layout.FlowRow",
+        "androidx.compose.foundation.layout.PaddingValues",
         "androidx.compose.foundation.layout.Row",
         "androidx.compose.foundation.layout.fillMaxSize",
         "androidx.compose.foundation.layout.fillMaxWidth",
         "androidx.compose.foundation.layout.padding",
         "androidx.compose.foundation.lazy.LazyColumn",
         "androidx.compose.foundation.lazy.items",
-        "androidx.compose.material3.Button",
-        "androidx.compose.material3.MaterialTheme",
+        "androidx.compose.foundation.lazy.grid.GridCells",
+        "androidx.compose.foundation.lazy.grid.GridItemSpan",
+        "androidx.compose.foundation.lazy.grid.LazyVerticalGrid",
+        "androidx.compose.foundation.lazy.grid.items",
+        "androidx.compose.foundation.shape.RoundedCornerShape",
         "androidx.compose.material3.Tab",
         "androidx.compose.material3.TabRow",
         "androidx.compose.material3.Text",
-        "androidx.compose.material3.TextButton",
+        "androidx.compose.material3.darkColorScheme",
+        "androidx.compose.material3.lightColorScheme",
         "androidx.compose.runtime.Composable",
         "androidx.compose.runtime.getValue",
         "androidx.compose.runtime.mutableIntStateOf",
         "androidx.compose.runtime.mutableStateOf",
         "androidx.compose.runtime.remember",
         "androidx.compose.runtime.setValue",
-        "androidx.compose.ui.Modifier",
-        "androidx.compose.ui.platform.LocalContext",
-        "androidx.compose.ui.unit.dp",
-        "com.diegonmarcos.cloudlib.jsonviewer.JsonViewer",
-        "com.diegonmarcos.superapp.fleetdata.provider.DatasetDiff",
-        "com.diegonmarcos.superapp.fleetdata.provider.FleetDataEndpoint",
-        "com.diegonmarcos.superapp.fleetdata.provider.FleetDataSchedule",
-        "com.diegonmarcos.superapp.fleetdata.provider.Route",
-        "java.text.DateFormat",
-        "java.util.Date"
+        "androidx.compose.ui.Alignment"
       ],
       "symbols": [
         "onCreate(savedInstanceState: android.os.Bundle?)",
         "open(ctx: Context, authority: String)",
         "stamp(t: Long)",
-        "kb(n: Long)",
+        "copy(ctx: Context, label: String, text: String)",
         "FleetDataPage(authority: String, modifier: Modifier = Modifier)",
-        "class FleetDataActivity"
+        "DatasetsTab( ctx: Context, ep: FleetDataEndpoint, authority: String, tick: Int, entries: List<com.diegonmarcos.superapp.fleetdata.provider.FleetDataStore.Entry>?, failure: Throwable?, open: String?, onOpen: (String?)",
+        "EndpointHeader(endpoint: String, uri: String, count: Int?, onCopy: ()",
+        "combinedClickableCopy(onCopy: ()",
+        "DatasetCard(ctx: Context, r: DatasetRow, now: Long, hasPrevious: Boolean, onJson: ()",
+        "Chip(text: String, modifier: Modifier = Modifier, mono: Boolean = false)",
+        "FilterChip(label: String, on: Boolean, onClick: ()",
+        "Notice(title: String, caption: String, action: String?, onAction: ()",
+        "SyncTab(ctx: Context, ep: FleetDataEndpoint, authority: String, onRefresh: ()",
+        "ConsumersTab(ep: FleetDataEndpoint, tick: Int)",
+        "DiffTab(ep: FleetDataEndpoint, entries: List<com.diegonmarcos.superapp.fleetdata.provider.FleetDataStore.Entry>, diffOf: String?, onPick: (String?)",
+        "class FleetDataActivity",
+        "class Loaded"
       ]
     },
     {
@@ -54322,7 +54834,8 @@
       ],
       "imports": [
         "com.diegonmarcos.superapp.fleetdata.provider.FleetDataStore",
-        "com.diegonmarcos.superapp.fleetdata.provider.FleetManifest"
+        "com.diegonmarcos.superapp.fleetdata.provider.FleetManifest",
+        "com.diegonmarcos.superapp.uikit.KitState"
       ],
       "symbols": [
         "uri(authority: String, path: String)",
@@ -54334,6 +54847,18 @@
         "stateOf(path: String, meta: FleetDataStore.Meta?, failed: Set<String>)",
         "rowOf(entry: FleetDataStore.Entry, manifest: FleetManifest, failed: Set<String>, authority: String)",
         "groups(entries: List<FleetDataStore.Entry>, manifest: FleetManifest, failed: Set<String>, authority: String)",
+        "kitState(s: SyncState)",
+        "pillWord(s: SyncState)",
+        "tierChip(tier: Int?)",
+        "schemaChip(v: Int?)",
+        "sizeLabel(n: Long?)",
+        "relativeTime(at: Long, now: Long)",
+        "etagLabel(etag: String?, expanded: Boolean)",
+        "consumersLabel(consumers: List<String>, expanded: Boolean)",
+        "filter(groups: List<EndpointGroup>, query: String, status: SyncState?)",
+        "hit(r: DatasetRow)",
+        "summary(rows: List<DatasetRow>, now: Long)",
+        "summaryState(rows: List<DatasetRow>)",
         "class SyncState",
         "class DatasetRow",
         "class EndpointGroup",
@@ -54352,6 +54877,7 @@
         "com.diegonmarcos.superapp.fleetdata.provider.FleetManifest",
         "com.diegonmarcos.superapp.fleetdata.provider.ManifestEntry",
         "org.junit.Assert.assertEquals",
+        "com.diegonmarcos.superapp.uikit.KitState",
         "org.junit.Assert.assertNull",
         "org.junit.Assert.assertTrue",
         "org.junit.Test"
@@ -54365,6 +54891,14 @@
         "sourcePathFromManifestOrConvention()",
         "syncStateRendering()",
         "groupingByEndpointSharedFirstThenAppsSortedRowsByDataset()",
+        "indexEndpointSortsFirst()",
+        "statusPillMapping()",
+        "chipsAndSize()",
+        "relativeTimeFormatting()",
+        "etagTruncatesAndExpands()",
+        "consumersLabels()",
+        "filterByQueryAndStatus()",
+        "summaryLine()",
         "class FleetDataViewTest"
       ]
     },
@@ -94060,12 +94594,11 @@
         "android.os.Build",
         "android.os.IBinder",
         "android.util.Log",
-        "androidx.core.app.NotificationCompat",
         "androidx.core.app.ServiceCompat",
         "androidx.core.content.ContextCompat",
         "androidx.work.ForegroundInfo",
         "com.diegonmarcos.superapp.core.DataSyncBudget",
-        "com.diegonmarcos.superapp.core.SilentChannels",
+        "com.diegonmarcos.superapp.core.FleetNotify",
         "com.diegonmarcos.superapp.core.StoreNotifyGate",
         "java.util.concurrent.atomic.AtomicInteger"
       ],
@@ -94374,6 +94907,35 @@
       ],
       "symbols": [
         "class InstallRetryHook"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/updater/src/main/java/com/diegonmarcos/superapp/updater/install/SilentUpdate.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "SilentUpdate"
+      ],
+      "imports": [
+        "android.content.Context",
+        "android.content.pm.PackageInstaller",
+        "android.content.pm.PackageManager",
+        "android.os.Build",
+        "java.io.File",
+        "java.security.MessageDigest"
+      ],
+      "symbols": [
+        "plan(sdk: Int, silentOn: Boolean, fleetSigned: Boolean)",
+        "sameSigner(own: Set<String>?, other: Set<String>?)",
+        "fleetSigned(own: Set<String>?, installed: Set<String>?, installedPresent: Boolean, candidate: Set<String>?)",
+        "installedSigners(pm: PackageManager, pkg: String)",
+        "archiveSigners(pm: PackageManager, apk: File)",
+        "sha256(b: ByteArray)",
+        "isFleetSigned(ctx: Context, targetPackage: String, apk: File?)",
+        "updateOwner(ctx: Context, pkg: String)",
+        "statusLines(sdk: Int, silentOn: Boolean, ownerOfSelf: String?, selfPkg: String)",
+        "class SilentUpdate",
+        "class Plan"
       ]
     },
     {
@@ -104581,6 +105143,7 @@
         "api_routes(_ctx: &Ctx, _req: &Req)",
         "api_serving(_ctx: &Ctx, _req: &Req)",
         "api_power(_ctx: &Ctx, req: &Req)",
+        "api_sshd(_ctx: &Ctx, req: &Req)",
         "api_engines(_ctx: &Ctx, _req: &Req)",
         "api_config(ctx: &Ctx, _req: &Req)",
         "api_about(ctx: &Ctx, _req: &Req)",
@@ -104701,6 +105264,97 @@
       ]
     },
     {
+      "path": "ac_cloud-c3-webserver/server/src/door.rs",
+      "lang": "rust",
+      "role": "rust-module",
+      "exports": [
+        "wanted",
+        "decide",
+        "owned_after",
+        "set_sender",
+        "sync_with",
+        "sync",
+        "cfg_from",
+        "cfg",
+        "supervised",
+        "mesh_only",
+        "door_mesh_only",
+        "hosted_wanted",
+        "probe",
+        "banner_of",
+        "engine_of",
+        "established",
+        "sessions",
+        "listening",
+        "in_cidr",
+        "bind_verdict",
+        "observed_binds",
+        "state_of",
+        "summary",
+        "doors_json",
+        "command",
+        "set",
+        "set_mesh_only",
+        "set_door_mesh_only",
+        "Cmd",
+        "Action"
+      ],
+      "imports": [
+        "crate::",
+        "serde_json::",
+        "std::collections::HashMap",
+        "std::io::Read",
+        "std::net::",
+        "std::sync::",
+        "std::time::",
+        "its",
+        "super::",
+        "power::Switches"
+      ],
+      "symbols": [
+        "wanted(sw: power::Switches, explicit: Option<bool>)",
+        "decide(wanted: bool, up: bool, owned: bool, force_stop: bool, recent_start: bool, reapply: bool)",
+        "owned_after(act: Action, up: bool, owned: bool)",
+        "set_sender(f: Box<Sender>)",
+        "sync_with(send: &dyn Fn(Cmd)",
+        "sync(force_stop: bool, reapply: bool)",
+        "txt(v: &Value, k: &str)",
+        "cfg_from(b: &Value)",
+        "cfg()",
+        "supervised()",
+        "mesh_only(st: &power::State)",
+        "door_mesh_only(st: &power::State, d: &Door)",
+        "hosted_wanted(st: &power::State, d: &Door)",
+        "probe(port: u16)",
+        "banner_of(bytes: &[u8])",
+        "engine_of(banner: &str)",
+        "established(proc_net: &str, port: u16)",
+        "hex_addr(h: &str)",
+        "sessions(port: u16)",
+        "listening(proc_net: &str, port: u16)",
+        "hex_ip(h: &str)",
+        "bits_of(ip: &IpAddr)",
+        "in_cidr(ip: &IpAddr, cidr: &str)",
+        "bind_verdict(ips: &[IpAddr], cidrs: &[String])",
+        "observed_binds(port: u16)",
+        "seen_up_s(id: &str, up: bool)",
+        "state_of(has_port: bool, up: bool, sessions: usize, wanted_and_asked: bool)",
+        "summary()",
+        "doors_json()",
+        "command(door: &str, op: &str)",
+        "set(op: &str)",
+        "set_mesh_only(on: Option<bool>)",
+        "set_door_mesh_only(door: &str, on: Option<bool>)",
+        "the_door_follows_keep_alive_until_the_owner_sets_it()",
+        "keep_alive_on_starts_a_down_door_and_only_that()",
+        "stop_only_what_this_app_started_or_what_the_owner_just_stopped()",
+        "ownership_follows_who_started_it()",
+        "the_declaration_is_valid_and_resolved()",
+        "a_declaration_with_two_supervised_doors_or_none_is_refused()",
+        "the_banner_names_the_engine()"
+      ]
+    },
+    {
       "path": "ac_cloud-c3-webserver/server/src/engines.rs",
       "lang": "rust",
       "role": "rust-module",
@@ -104726,6 +105380,28 @@
         "ids_are_unique_and_every_row_is_described()",
         "the_node_original_is_fully_accounted_for()",
         "json_lists_every_engine()"
+      ]
+    },
+    {
+      "path": "ac_cloud-c3-webserver/server/src/jump.rs",
+      "lang": "rust",
+      "role": "rust-module",
+      "exports": [
+        "render",
+        "install"
+      ],
+      "imports": [
+        "crate::door::",
+        "std::path::Path",
+        "std::os::unix::fs::PermissionsExt",
+        "super::"
+      ],
+      "symbols": [
+        "render(tpl: &str, doors: &[Door])",
+        "install(dir: &Path)",
+        "every_helper_renders_from_the_declaration()",
+        "the_jump_helpers_dial_the_declared_ports_and_never_switch_uid()",
+        "an_unfilled_token_is_an_error()"
       ]
     },
     {
@@ -104854,6 +105530,11 @@
         "save",
         "current",
         "set_site",
+        "set_ssh_door",
+        "set_mesh_only",
+        "set_door_on",
+        "set_door_mesh_only",
+        "set_ssh_owned",
         "set_sync_hook",
         "apply",
         "status_json",
@@ -104865,6 +105546,7 @@
       "imports": [
         "crate::apis",
         "serde_json::",
+        "std::collections::BTreeMap",
         "std::path::",
         "std::sync::",
         "super::"
@@ -104874,10 +105556,16 @@
         "may_start_from_outside(s: Switches)",
         "from_build(b: &Value)",
         "cfg()",
+        "bool_map(v: &Value)",
         "load(path: &Path, default: Switches)",
         "save(path: &Path, st: &State)",
         "current()",
         "set_site(id: &str, on: bool)",
+        "set_ssh_door(on: Option<bool>)",
+        "set_mesh_only(on: Option<bool>)",
+        "set_door_on(id: &str, on: Option<bool>)",
+        "set_door_mesh_only(id: &str, on: Option<bool>)",
+        "set_ssh_owned(owned: bool)",
         "set_sync_hook(f: Box<Hook>)",
         "apply(sw: Switches)",
         "status_json()",
@@ -105143,18 +105831,20 @@
       ],
       "imports": [
         "android.app.Notification",
-        "android.app.NotificationChannel",
-        "android.app.NotificationManager",
         "android.app.PendingIntent",
         "android.app.Service",
-        "android.content.Context",
         "android.content.Intent",
-        "android.os.IBinder"
+        "android.os.IBinder",
+        "com.diegonmarcos.superapp.core.FleetNotify",
+        "com.diegonmarcos.superapp.core.KeepAliveStatus"
       ],
       "symbols": [
         "nativeStart()",
         "nativeStop()",
         "onCreate()",
+        "notification(lines: List<String>)",
+        "refreshStatus()",
+        "onDestroy()",
         "onStartCommand(intent: Intent?, flags: Int, startId: Int)",
         "onBind(intent: Intent?)",
         "class KeepAliveService"
@@ -105253,6 +105943,7 @@
       "lang": "rust",
       "role": "rust-module",
       "exports": [
+        "note_service",
         "install"
       ],
       "imports": [
@@ -105261,6 +105952,7 @@
         "std::sync::OnceLock"
       ],
       "symbols": [
+        "note_service(env: &mut JNIEnv, service: Option<&JObject>)",
         "install(window: &tauri::WebviewWindow)",
         "take_exception(env: &mut JNIEnv)",
         "bundle_string(env: &mut JNIEnv, bundle: &JObject, key: &str)",
@@ -105269,7 +105961,8 @@
         "read_token()",
         "friendly(e: &str, authority: &str)",
         "open_in_browser(url: &str)",
-        "sync_keep_alive()"
+        "sync_keep_alive()",
+        "send_door(cmd: c3_webserver::door::Cmd)"
       ]
     },
     {
@@ -105286,9 +105979,9 @@
       ],
       "symbols": [
         "start_servers()",
-        "Java_com_diegonmarcos_cloudwebserver_KeepAliveService_nativeStart(\n    _env: jni::JNIEnv,\n    _service: jni::objects::JObject,\n)",
+        "Java_com_diegonmarcos_cloudwebserver_KeepAliveService_nativeStart(\n    mut env: jni::JNIEnv,\n    service: jni::objects::JObject,\n)",
         "power_set(server: Option<bool>, keep_alive: Option<bool>)",
-        "Java_com_diegonmarcos_cloudwebserver_KeepAliveService_nativeStop(\n    _env: jni::JNIEnv,\n    _service: jni::objects::JObject,\n)",
+        "Java_com_diegonmarcos_cloudwebserver_KeepAliveService_nativeStop(\n    mut env: jni::JNIEnv,\n    service: jni::objects::JObject,\n)",
         "run()",
         "request_storage(window: &tauri::WebviewWindow)"
       ]
@@ -105392,6 +106085,18 @@
         "fail()",
         "find_chrome()",
         "cleanup()"
+      ]
+    },
+    {
+      "path": "ac_cloud-c3-webserver/test/test-c3-webserver-perms-parity.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "check()"
+      ],
+      "imports": [],
+      "symbols": [
+        "check()"
       ]
     },
     {
@@ -173116,6 +173821,7 @@
         "_resolve_signing()",
         "_enforce_signature()",
         "_assert_apk_identity()",
+        "_assert_apk_permissions()",
         "_assert_apk_payload()",
         "step_materialize_fork()",
         "step_build_fork()",
@@ -173134,6 +173840,7 @@
         "_resolve_signing()",
         "_enforce_signature()",
         "_assert_apk_identity()",
+        "_assert_apk_permissions()",
         "_assert_apk_payload()",
         "step_materialize_fork()",
         "step_build_fork()",
@@ -195595,6 +196302,7 @@
         "reload(loc: Location)",
         "refreshShowing(loc: Location)",
         "refreshActive()",
+        "refreshPane(id: PaneId)",
         "usageOf(dir: File)",
         "visible(pane: PaneState, listing: Listing)",
         "selectedEntries(id: PaneId)",
@@ -195621,8 +196329,7 @@
         "clearSearch()",
         "runScoped(start: String, query: String, kind: Declarations.SearchScopeDecl, decl: Declarations.FilesSearchDecl = Declarations.files.search)",
         "cancelScoped()",
-        "clearScoped()",
-        "findDuplicates(root: Location.Local)"
+        "clearScoped()"
       ]
     },
     {
@@ -196538,7 +197245,7 @@
         "android.os.Build",
         "android.os.IBinder",
         "android.os.PowerManager",
-        "androidx.core.app.NotificationCompat",
+        "com.diegonmarcos.superapp.core.FleetNotify",
         "androidx.core.app.ServiceCompat",
         "androidx.core.content.ContextCompat",
         "com.diegonmarcos.clouddrive.Declarations",
@@ -197720,6 +198427,23 @@
       ]
     },
     {
+      "path": "ac_cloud-drive/app/src/main/java/com/diegonmarcos/clouddrive/sync/CloneTruth.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "CloneTruth"
+      ],
+      "imports": [
+        "com.diegonmarcos.cloudlib.gitsync.ManagedRepo",
+        "java.io.File"
+      ],
+      "symbols": [
+        "live(repos: List<ManagedRepo>, isClone: (File)",
+        "isCloneDir(dir: File)",
+        "class CloneTruth"
+      ]
+    },
+    {
       "path": "ac_cloud-drive/app/src/main/java/com/diegonmarcos/clouddrive/sync/CloudRepos.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -198656,6 +199380,7 @@
         "declaredToken()",
         "refresh(force: Boolean = false)",
         "loadRegistry()",
+        "isCloneOnDisk(dir: File)",
         "reread(repo: ManagedRepo)",
         "pullAll(force: Boolean, trigger: String = SyncHistory.TRIGGER_MANUAL, only: Set<String>? = null)",
         "bulkRunning()",
@@ -198690,8 +199415,7 @@
         "perform(repo: ManagedRepo, opId: String, message: String, token: ()",
         "record(repo: ManagedRepo, opId: String, result: GitOpResult, trigger: String)",
         "runCompound(repo: ManagedRepo, id: String)",
-        "runCompoundAll(id: String, only: List<ManagedRepo>? = null)",
-        "bulkOps(id: String, targets: List<ManagedRepo>, op: (ManagedRepo)"
+        "runCompoundAll(id: String, only: List<ManagedRepo>? = null)"
       ]
     },
     {
@@ -201500,6 +202224,35 @@
       ]
     },
     {
+      "path": "ac_cloud-drive/app/src/test/java/com/diegonmarcos/clouddrive/files/FilesRefreshTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "FilesRefreshTest"
+      ],
+      "imports": [
+        "android.os.Looper",
+        "com.diegonmarcos.clouddrive.DrivePrefs",
+        "java.io.File",
+        "java.nio.file.Files",
+        "kotlinx.coroutines.CoroutineScope",
+        "kotlinx.coroutines.Dispatchers",
+        "kotlinx.coroutines.SupervisorJob",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Test",
+        "org.junit.runner.RunWith",
+        "org.robolectric.RobolectricTestRunner",
+        "org.robolectric.RuntimeEnvironment",
+        "org.robolectric.Shadows.shadowOf",
+        "org.robolectric.annotation.Config"
+      ],
+      "symbols": [
+        "names(c: FilesController, loc: Location)",
+        "settle(c: FilesController, loc: Location, want: ()",
+        "class FilesRefreshTest"
+      ]
+    },
+    {
       "path": "ac_cloud-drive/app/src/test/java/com/diegonmarcos/clouddrive/files/FilesStateTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -201529,6 +202282,24 @@
         "saveableRoundTripKeepsEverything()",
         "historyIsCapped()",
         "class FilesStateTest"
+      ]
+    },
+    {
+      "path": "ac_cloud-drive/app/src/test/java/com/diegonmarcos/clouddrive/files/NoMainThreadDiskTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "NoMainThreadDiskTest"
+      ],
+      "imports": [
+        "java.io.File",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "list()",
+        "class NoMainThreadDiskTest",
+        "class ExplorerSearchRoots"
       ]
     },
     {
@@ -202368,6 +203139,40 @@
       "symbols": [
         "script(id: String)",
         "class CloneModeScriptTest"
+      ]
+    },
+    {
+      "path": "ac_cloud-drive/app/src/test/java/com/diegonmarcos/clouddrive/sync/CloneTruthTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "CloneTruthTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.clouddrive.Declarations",
+        "com.diegonmarcos.clouddrive.sync.inventory.InventoryScript.Entry",
+        "com.diegonmarcos.clouddrive.sync.inventory.InventoryScript.Kind",
+        "com.diegonmarcos.clouddrive.sync.inventory.RepoInventory",
+        "com.diegonmarcos.clouddrive.sync.inventory.RepoInventory.RepoClass",
+        "com.diegonmarcos.clouddrive.sync.jobs.GitJobs",
+        "com.diegonmarcos.cloudlib.gitsync.ManagedRepo",
+        "java.io.File",
+        "kotlinx.coroutines.CoroutineScope",
+        "kotlinx.coroutines.Dispatchers",
+        "kotlinx.coroutines.SupervisorJob",
+        "kotlinx.coroutines.runBlocking",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Rule",
+        "org.junit.Test",
+        "org.junit.rules.TemporaryFolder"
+      ],
+      "symbols": [
+        "repo(root: File, name: String)",
+        "clone(root: File, name: String)",
+        "summary(total: Int, cloned: Int)",
+        "classify(vararg e: Entry)",
+        "class CloneTruthTest"
       ]
     },
     {
@@ -240919,6 +241724,31 @@
       ]
     },
     {
+      "path": "ac_cloud-mail/app/src/main/kotlin/app/sterna/push/KeepAliveBadge.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "KeepAliveBadge"
+      ],
+      "imports": [
+        "android.app.Application",
+        "app.sterna.R",
+        "app.sterna.container",
+        "app.sterna.core.data.db.RecentEmailRow",
+        "app.sterna.core.data.settings.NotificationContent",
+        "kotlinx.coroutines.flow.first",
+        "kotlinx.coroutines.withTimeoutOrNull"
+      ],
+      "symbols": [
+        "content( unread: Int?, latest: RecentEmailRow?, setting: NotificationContent, appLockEnabled: Boolean, texts: Texts, )",
+        "read(app: Application)",
+        "texts(app: Application)",
+        "class KeepAliveBadge",
+        "class Content",
+        "class Texts"
+      ]
+    },
+    {
       "path": "ac_cloud-mail/app/src/main/kotlin/app/sterna/push/MailFetchWorker.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -241126,7 +241956,8 @@
         "app.sterna.R",
         "app.sterna.core.data.settings.NotificationContent",
         "app.sterna.core.jmap.model.Email",
-        "app.sterna.ui.message.verificationCodeFromMessage"
+        "app.sterna.ui.message.verificationCodeFromMessage",
+        "com.diegonmarcos.superapp.core.FleetNotify"
       ],
       "symbols": [
         "summaryShownFor(liveChildren: Int)",
@@ -241142,7 +241973,7 @@
         "ensureChannels(context: Context)",
         "notifySendFailed(context: Context, subject: String, content: NotificationContent, body: String = \"\")",
         "draftUri(subject: String, body: String)",
-        "serviceNotification(context: Context)",
+        "serviceNotification(context: Context, badge: KeepAliveBadge.Content? = null)",
         "notifyNewMail( context: Context, email: Email, accountId: String, silent: Boolean, folderName: String?, mailboxId: String?, content: NotificationContent, summarised: Boolean, )",
         "teardownRepairable(expectedChildIds: Set<Int>, shownChildIds: Set<Int>)",
         "updateGroupSummary( context: Context, accountId: String, accountLabel: String, silent: Boolean, expectedChildIds: Set<Int>, cancelledChildIds: Set<Int>, )",
@@ -241247,21 +242078,20 @@
         "android.app.Service",
         "android.content.Context",
         "android.content.Intent",
-        "android.content.pm.ServiceInfo",
-        "android.os.Build",
         "android.os.IBinder",
         "android.util.Log",
-        "androidx.core.app.ServiceCompat",
         "androidx.core.content.ContextCompat",
         "app.sterna.container",
         "app.sterna.core.data.account.AccountCredentials",
         "app.sterna.core.data.account.MailProtocol",
         "kotlinx.coroutines.CoroutineScope",
         "kotlinx.coroutines.Dispatchers",
+        "kotlinx.coroutines.Job",
         "kotlinx.coroutines.SupervisorJob",
         "kotlinx.coroutines.cancel",
         "kotlinx.coroutines.delay",
         "kotlinx.coroutines.launch",
+        "com.diegonmarcos.superapp.core.FleetNotify",
         "java.io.Closeable",
         "java.util.concurrent.ConcurrentHashMap",
         "java.util.concurrent.atomic.AtomicReference"
@@ -241270,6 +242100,7 @@
         "onCreate()",
         "onTimeout(startId: Int, fgsType: Int)",
         "onStartCommand(intent: Intent?, flags: Int, startId: Int)",
+        "refreshBadge()",
         "reconnectAll(gen: Int, userInitiated: Boolean)",
         "watch(loginId: String, group: List<AccountCredentials>, gen: Int, userInitiated: Boolean)",
         "scheduleReconnect(loginId: String, group: List<AccountCredentials>, gen: Int)",
@@ -249626,6 +250457,35 @@
         "src(path: String)",
         "notifyDiff(\")",
         "class InboxNotifyToggleTest"
+      ]
+    },
+    {
+      "path": "ac_cloud-mail/app/src/test/kotlin/app/sterna/push/KeepAliveBadgeTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "KeepAliveBadgeTest"
+      ],
+      "imports": [
+        "android.app.Application",
+        "android.app.Notification",
+        "app.sterna.R",
+        "app.sterna.core.data.db.RecentEmailRow",
+        "app.sterna.core.data.settings.NotificationContent",
+        "com.diegonmarcos.superapp.core.FleetNotify",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "org.junit.runner.RunWith",
+        "org.robolectric.RobolectricTestRunner",
+        "org.robolectric.RuntimeEnvironment",
+        "org.robolectric.annotation.Config",
+        "java.io.File"
+      ],
+      "symbols": [
+        "row(from: String? = \"Alice\", subject: String? = \"Lunch on Friday\")",
+        "class KeepAliveBadgeTest"
       ]
     },
     {
@@ -393300,6 +394160,7 @@
         "pinned",
         "goose",
         "hermes",
+        "agy",
         "arch",
         "fill",
         "pname",
@@ -393314,6 +394175,7 @@
         "doInstallCheck",
         "nativeInstallCheckInputs",
         "versionCheckKeepEnvironment",
+        "dontStrip",
         "format",
         "python",
         "dist",
@@ -393332,8 +394194,7 @@
         "installCheckPhase",
         "newer",
         "fleet-webserver",
-        "filter",
-        "doCheck"
+        "filter"
       ]
     },
     {
@@ -394051,13 +394912,43 @@
       "imports": [
         "android.content.Context",
         "com.termux.BuildConfig",
+        "com.termux.cloud.MeshAddrs",
         "com.termux.cloud.MeshSshd",
         "com.termux.shared.logger.Logger"
       ],
       "symbols": [
         "MeshSshdBoot()",
         "onBoot(Context context)",
+        "start(Context app, boolean meshOnly)",
+        "stop(Context app)",
         "class MeshSshdBoot"
+      ]
+    },
+    {
+      "path": "ac_cloud-nix-on-droid/app/src/main/java/com/termux/app/MeshSshdService.java",
+      "lang": "java",
+      "role": "java",
+      "exports": [
+        "MeshSshdService",
+        "onStartCommand",
+        "onBind"
+      ],
+      "imports": [
+        "android.app.Notification",
+        "android.app.NotificationChannel",
+        "android.app.NotificationManager",
+        "android.app.Service",
+        "android.content.Intent",
+        "android.os.Build",
+        "android.os.IBinder",
+        "com.termux.BuildConfig"
+      ],
+      "symbols": [
+        "onStartCommand(Intent intent, int flags, int startId)",
+        "notification()",
+        "onBind(Intent intent)",
+        "class runs",
+        "class MeshSshdService"
       ]
     },
     {
@@ -395035,13 +395926,13 @@
         "setTermuxTerminalSessionClient(TermuxTerminalSessionActivityClient termuxTerminalSessionActivityClient)",
         "unsetTermuxTerminalSessionClient()",
         "buildNotification()",
+        "probeSshd()",
         "setupNotificationChannel()",
         "updateNotification()",
         "setCurrentStoredTerminalSession(TerminalSession terminalSession)",
         "isTermuxSessionsEmpty()",
         "getTermuxSessionsSize()",
-        "getTermuxSessions()",
-        "getTermuxSession(int index)"
+        "getTermuxSessions()"
       ]
     },
     {
@@ -395193,16 +396084,52 @@
       ]
     },
     {
+      "path": "ac_cloud-nix-on-droid/app/src/main/java/com/termux/cloud/MeshAddrs.java",
+      "lang": "java",
+      "role": "java",
+      "exports": [
+        "MeshAddrs",
+        "binds",
+        "pick",
+        "resolve"
+      ],
+      "imports": [
+        "java.net.InetAddress",
+        "java.net.NetworkInterface",
+        "java.util.ArrayList",
+        "java.util.Collections",
+        "java.util.Enumeration",
+        "java.util.LinkedHashMap",
+        "java.util.List",
+        "java.util.Map",
+        "java.util.regex.Pattern"
+      ],
+      "symbols": [
+        "MeshAddrs()",
+        "binds(boolean meshOnly, List<String> meshAddrs, String[] loopback, String[] open)",
+        "pick(Map<String, List<String>> ifaceAddrs, String ifaceRegex, String[] cidrs)",
+        "resolve(String ifaceRegex, String[] cidrs)",
+        "inCidr(String literal, String cidr)",
+        "literalBytes(String s)",
+        "class whose",
+        "class MeshAddrs",
+        "class name",
+        "class list"
+      ]
+    },
+    {
       "path": "ac_cloud-nix-on-droid/app/src/main/java/com/termux/cloud/MeshSshd.java",
       "lang": "java",
       "role": "java",
       "exports": [
         "MeshSshd",
+        "stopScript",
         "script"
       ],
       "imports": [],
       "symbols": [
         "MeshSshd()",
+        "stopScript()",
         "script(int port, String[] binds)",
         "class MeshSshd"
       ]
@@ -402190,6 +403117,18 @@
         "gate()",
         "mutation()",
         "order_ok()"
+      ]
+    },
+    {
+      "path": "ac_cloud-nix-on-droid/test/test-mesh-only.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "run()"
+      ],
+      "imports": [],
+      "symbols": [
+        "run()"
       ]
     },
     {
@@ -519052,6 +519991,41 @@
       ]
     },
     {
+      "path": "ac_cloud-store/app/src/main/java/com/diegonmarcos/cloudstore/SilentUpdatesCard.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "SilentUpdatesCard"
+      ],
+      "imports": [
+        "android.os.Build",
+        "androidx.compose.foundation.layout.Arrangement",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.Row",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.material3.MaterialTheme",
+        "androidx.compose.material3.Switch",
+        "androidx.compose.material3.Text",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.remember",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.ui.Alignment",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.platform.LocalContext",
+        "androidx.compose.ui.platform.testTag",
+        "androidx.compose.ui.unit.sp",
+        "com.diegonmarcos.superapp.appstore.StoreDensity",
+        "com.diegonmarcos.superapp.updater.AutoUpdatePrefs",
+        "com.diegonmarcos.superapp.updater.install.SilentUpdate"
+      ],
+      "symbols": [
+        "SilentUpdatesCard()",
+        "class SilentUpdatesCard"
+      ]
+    },
+    {
       "path": "ac_cloud-store/app/src/main/java/com/diegonmarcos/cloudstore/StoreDrawer.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -519206,6 +520180,71 @@
         "aMissingSuperAppSaysToInstallIt()",
         "beforeTheFirstAnswerItSaysChecking()",
         "class ShellBrokerPageTest"
+      ]
+    },
+    {
+      "path": "ac_cloud-store/app/src/test/java/com/diegonmarcos/cloudstore/SilentUpdateTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "SilentUpdateTest"
+      ],
+      "imports": [
+        "android.content.pm.PackageInstaller",
+        "android.os.Build",
+        "com.diegonmarcos.superapp.updater.install.SilentUpdate",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNotNull",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "org.junit.runner.RunWith",
+        "org.robolectric.RobolectricTestRunner",
+        "org.robolectric.annotation.Config"
+      ],
+      "symbols": [
+        "anInstalledFleetAppIsEligible()",
+        "anInstalledForeignAppIsNotEvenWithAFleetSignedCandidate()",
+        "aFreshInstallIsJudgedOnTheCandidateApk()",
+        "anUnreadableSignerIsNeverEligible()",
+        "aFleetAppOnAndroid14GetsNotRequiredOwnershipAndStoreSource()",
+        "android12AsksNoOwnershipAndSetsNoSource()",
+        "aForeignAppGetsTheConfirmedSessionEvenWithTheToggleOn()",
+        "theToggleOffGetsTheConfirmedSession()",
+        "android11HasNoNativeSilentPathAndSetsNothingAboutIt()",
+        "theCardStatesTheLimitsPlainly()",
+        "class SilentUpdateTest"
+      ]
+    },
+    {
+      "path": "ac_cloud-store/app/src/test/java/com/diegonmarcos/cloudstore/StoreKeepAliveBadgeTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "StoreKeepAliveBadgeTest"
+      ],
+      "imports": [
+        "android.app.Application",
+        "android.app.Notification",
+        "com.diegonmarcos.superapp.updater.BatchForeground",
+        "com.diegonmarcos.superapp.updater.BatchForegroundService",
+        "org.junit.After",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertNotNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "org.junit.runner.RunWith",
+        "org.robolectric.Robolectric",
+        "org.robolectric.RobolectricTestRunner",
+        "org.robolectric.RuntimeEnvironment",
+        "org.robolectric.Shadows.shadowOf",
+        "org.robolectric.annotation.Config"
+      ],
+      "symbols": [
+        "restore()",
+        "state()",
+        "class StoreKeepAliveBadgeTest"
       ]
     },
     {
@@ -520571,13 +521610,13 @@
         "com.diegonmarcos.superapp.ai.AiAttachHost",
         "com.diegonmarcos.superapp.ai.AiChatPage",
         "com.diegonmarcos.superapp.ai.AiForumChat",
-        "com.diegonmarcos.superapp.ai.ForumIcon"
+        "com.diegonmarcos.superapp.ai.AiCatalogue"
       ],
       "symbols": [
         "siAiTheme()",
         "SiShell()",
         "open(sectionId: String, pageId: String?)",
-        "SiForum(ctx: android.content.Context, personas: List<Persona>, theme: AiTheme, modifier: Modifier)",
+        "SiForum( ctx: android.content.Context, personas: List<Persona>, theme: AiTheme, selected: String, onSelect: (String)",
         "forumStrings()",
         "TextPage(title: Int, body: String, extra: @Composable ()",
         "class SiTags"
@@ -520680,7 +521719,8 @@
         "org.junit.Test"
       ],
       "symbols": [
-        "bottomNavOrderIsNotebookCgcsSiAisCost()",
+        "bottomNavOrderIsNotebookCgcsSiToolsAisCost()",
+        "aiToolsAreOnTheBottomNavWithTheirPages()",
         "aisSubPagesAreApisMcpDotfilesPlugins()",
         "everyDeclaredPageHasDataAndEveryDataPageIsDeclared()",
         "mcpPageNamesTheRebrandAndTheC3Merge()",
@@ -520827,7 +521867,13 @@
       "imports": [
         "androidx.compose.ui.graphics.Color",
         "androidx.compose.ui.graphics.SolidColor",
+        "android.graphics.Bitmap",
+        "android.graphics.Canvas",
+        "android.graphics.Paint",
+        "com.diegonmarcos.superapp.ai.AiAgent",
+        "com.diegonmarcos.superapp.ai.AiAttachment",
         "com.diegonmarcos.superapp.ai.AiChatState",
+        "com.diegonmarcos.superapp.ai.AiComposerDecl",
         "com.diegonmarcos.superapp.ai.AiColors",
         "com.diegonmarcos.superapp.ai.AiHost",
         "com.diegonmarcos.superapp.ai.AiMsg",
@@ -520837,6 +521883,7 @@
         "com.diegonmarcos.superapp.ai.AiModel",
         "com.diegonmarcos.superapp.ai.AiTheme",
         "com.diegonmarcos.superapp.ai.ForumTopic",
+        "java.io.File",
         "java.time.LocalDate",
         "java.time.LocalTime",
         "java.time.ZoneId",
@@ -520845,10 +521892,14 @@
       "symbols": [
         "newSession(model: String, now: Long)",
         "models()",
+        "agents()",
         "send(session: AiSession, text: String, model: String, web: Boolean, now: Long, sink: AiSink)",
         "millis(date: String, time: String)",
-        "chatWith(messages: List<AiMsg>, sending: Boolean = false)",
+        "chatWith(messages: List<AiMsg>, sending: Boolean = false, title: String = \"\", id: String? = null)",
         "topics(sending: Boolean = false)",
+        "image(id: String)",
+        "richTopics()",
+        "sessionList()",
         "dark()",
         "light()",
         "theme(dark: Boolean)",
@@ -520898,6 +521949,124 @@
         "class ForumPhoneShots",
         "class ForumTabletShots",
         "class ForumShots"
+      ]
+    },
+    {
+      "path": "ac_cloud-superintel/app/src/test/java/com/diegonmarcos/cloudsuperintel/forum/SiChatShots.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "SiChatPhoneShots",
+        "SiChatTabletShots",
+        "SiChatShots"
+      ],
+      "imports": [
+        "androidx.compose.foundation.background",
+        "androidx.compose.foundation.layout.Box",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.fillMaxSize",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.test.junit4.createComposeRule",
+        "androidx.compose.ui.test.onNodeWithTag",
+        "androidx.compose.ui.test.onAllNodesWithTag",
+        "androidx.compose.ui.test.onRoot",
+        "androidx.compose.ui.test.performClick",
+        "com.diegonmarcos.cloudsuperintel.Data",
+        "com.diegonmarcos.superapp.ai.AiAttachHost",
+        "com.diegonmarcos.superapp.ai.AiForumChat",
+        "com.diegonmarcos.superapp.ai.AiTags",
+        "com.diegonmarcos.superapp.ai.ForumGlyphs",
+        "com.diegonmarcos.superapp.ai.ForumSessions",
+        "com.diegonmarcos.superapp.ai.ForumTools",
+        "com.diegonmarcos.superapp.bottomnav.BottomNavEntry",
+        "com.diegonmarcos.superapp.navbarbottom.NavBarBottom",
+        "com.diegonmarcos.superapp.uiicons.UiIcons",
+        "com.github.takahirom.roborazzi.captureRoboImage",
+        "org.json.JSONObject",
+        "org.junit.Rule",
+        "org.junit.Test",
+        "org.junit.runner.RunWith",
+        "org.robolectric.RobolectricTestRunner",
+        "org.robolectric.annotation.Config",
+        "org.robolectric.annotation.GraphicsMode",
+        "org.robolectric.shadows.ShadowLog"
+      ],
+      "symbols": [
+        "navEntries()",
+        "shot(name: String, dark: Boolean, onReady: ()",
+        "chatDark()",
+        "chatLight()",
+        "modelsDark()",
+        "class SiChatPhoneShots",
+        "class SiChatTabletShots",
+        "class SiChatShots"
+      ]
+    },
+    {
+      "path": "ac_cloud-superintel/app/src/test/java/com/diegonmarcos/cloudsuperintel/forum/SiChatToolsTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "SiChatToolsTest"
+      ],
+      "imports": [
+        "androidx.compose.foundation.layout.Box",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.fillMaxSize",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.remember",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.platform.testTag",
+        "androidx.compose.ui.test.assertCountEquals",
+        "androidx.compose.ui.test.assertIsDisplayed",
+        "androidx.compose.ui.test.junit4.createComposeRule",
+        "androidx.compose.ui.test.onAllNodesWithTag",
+        "androidx.compose.ui.test.onNodeWithTag",
+        "androidx.compose.ui.test.onNodeWithText",
+        "androidx.compose.ui.test.performClick",
+        "androidx.compose.ui.test.performTextInput",
+        "com.diegonmarcos.cloudsuperintel.Data",
+        "com.diegonmarcos.superapp.ai.AiAttachHost",
+        "com.diegonmarcos.superapp.ai.AiForumChat",
+        "com.diegonmarcos.superapp.ai.AiTags",
+        "com.diegonmarcos.superapp.ai.ForumGlyphs",
+        "com.diegonmarcos.superapp.ai.ForumSessions",
+        "com.diegonmarcos.superapp.ai.ForumTags",
+        "com.diegonmarcos.superapp.ai.ForumTools",
+        "com.diegonmarcos.superapp.ai.ForumTopic",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Rule",
+        "org.junit.Test",
+        "org.junit.runner.RunWith",
+        "org.robolectric.RobolectricTestRunner",
+        "org.robolectric.annotation.Config",
+        "org.robolectric.annotation.GraphicsMode"
+      ],
+      "symbols": [
+        "render(topics: List<ForumTopic> = ForumFixture.richTopics()",
+        "leftRailIsTheSessionsNotTheTopics()",
+        "tappingASessionOpensItAndNewStartsOne()",
+        "choosingAPersonaSwitchesTheThreadAndItsTitle()",
+        "headerIsStyledWithAvatarTitleAndWhoIsInTheThread()",
+        "backgroundIsDrawnBehindTheMessages()",
+        "composerCarriesTheWholeAiToolRow()",
+        "plusMenuOffersFilesImageAndCamera()",
+        "modelButtonOpensTheCatalogueWithOpenRouterSearch()",
+        "taskButtonOpensTheTaskCatalogue()",
+        "imageInAndImageOutRenderInlineWithTheModelBadge()",
+        "attachedFileShowsAChipAndTurnsTheMicIntoSend()",
+        "typingTurnsMicIntoSendLikeBefore()",
+        "streamingEmptyAndErrorStatesStayInTheRichThread()",
+        "composerToolsAreAbsentWhenTheHostDoesNotAskForThem()",
+        "bottomNavKeepsEveryItemAndTheAiTools()",
+        "layoutHoldsInAColumnAboveABottomBar()",
+        "class SiChatToolsTest"
       ]
     },
     {
@@ -525093,7 +526262,7 @@
         "com.termux.shared.shell.TermuxSession",
         "com.termux.shared.terminal.TermuxTerminalSessionClientBase",
         "com.termux.shared.logger.Logger",
-        "com.termux.shared.notification.NotificationUtils"
+        "com.diegonmarcos.superapp.core.FleetNotify"
       ],
       "symbols": [
         "onCreate()",
@@ -525129,13 +526298,13 @@
         "setTermuxTerminalSessionClient(TermuxTerminalSessionClient termuxTerminalSessionClient)",
         "unsetTermuxTerminalSessionClient()",
         "buildNotification()",
+        "probeSshd()",
         "setupNotificationChannel()",
         "updateNotification()",
         "setCurrentStoredTerminalSession(TerminalSession session)",
         "isTermuxSessionsEmpty()",
         "getTermuxSessionsSize()",
-        "getTermuxSessions()",
-        "getTermuxSession(int index)"
+        "getTermuxSessions()"
       ]
     },
     {

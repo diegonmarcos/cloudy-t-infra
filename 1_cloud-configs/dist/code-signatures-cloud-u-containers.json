@@ -6,14 +6,14 @@
   },
   "repo": "cloud-u-containers",
   "counts": {
-    "files": 2636,
+    "files": 2637,
     "by_lang": {
       "sh": 179,
       "js": 111,
       "nix": 193,
       "py": 511,
       "ts": 1272,
-      "rust": 370
+      "rust": 371
     },
     "by_role": {
       "shell": 170,
@@ -27,7 +27,7 @@
       "compose": 86,
       "mcp-tool": 147,
       "workflow-dag": 5,
-      "rust-module": 366,
+      "rust-module": 367,
       "hook": 53
     }
   },
@@ -61777,6 +61777,38 @@
       ]
     },
     {
+      "path": "user-comm_tools-stalwart/src/crate/src/inbox_guard.rs",
+      "lang": "rust",
+      "role": "rust-module",
+      "exports": [
+        "membership_patch",
+        "strips_inbox",
+        "sanitize",
+        "maintain_inbox_invariant"
+      ],
+      "imports": [
+        "anyhow::Result",
+        "serde_json::",
+        "std::collections::HashSet",
+        "crate::jmap::",
+        "crate::mailboxes::find_inbox_id",
+        "super::"
+      ],
+      "symbols": [
+        "membership_patch(add: &[&str], remove: &[&str])",
+        "strips_inbox(update: &Value, inbox_id: &str)",
+        "sanitize(updates: &mut Map<String, Value>, inbox_id: &str)",
+        "needs_inbox(mailbox_ids: &std::collections::HashMap<String, bool>, inbox_id: &str, exempt: &HashSet<&str>)",
+        "maintain_inbox_invariant(client: &Client, mailboxes: &[Mailbox])",
+        "patch_never_mentions_unrelated_mailboxes()",
+        "classification_is_additive()",
+        "replacing_whole_map_without_inbox_is_blocked()",
+        "removing_inbox_is_blocked()",
+        "sanitize_drops_only_offenders()",
+        "heal_skips_sent_and_trash_but_restores_labelled_mail()"
+      ]
+    },
+    {
       "path": "user-comm_tools-stalwart/src/crate/src/jmap.rs",
       "lang": "rust",
       "role": "rust-module",
@@ -61787,6 +61819,8 @@
         "mailbox_set",
         "email_get",
         "email_set_chunked",
+        "set_inbox_id",
+        "email_query_filter",
         "email_set",
         "email_query_in",
         "Mailbox",
@@ -61815,7 +61849,9 @@
         "mailbox_set(\n        &self,\n        create: Option<Map<String, Value>>,\n        update: Option<Map<String, Value>>,\n        destroy: Option<Vec<String>>,\n        on_destroy_remove_emails: bool,\n    )",
         "email_get(&self, ids: &[String], properties: &[&str])",
         "email_set_chunked(&self, updates: Map<String, Value>)",
-        "email_set(&self, updates: Map<String, Value>)",
+        "set_inbox_id(&self, id: &str)",
+        "email_query_filter(&self, filter: &Value)",
+        "email_set(&self, mut updates: Map<String, Value>)",
         "email_query_in(&self, mailbox_ids: &[String], limit: Option<usize>)"
       ]
     },
