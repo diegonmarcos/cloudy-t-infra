@@ -718,6 +718,24 @@
       },
       "health": null
     },
+    "google-apps-script-personal": {
+      "name": "google-apps-script-personal",
+      "vm": "local",
+      "domain": null,
+      "enabled": true,
+      "category": "app",
+      "ports": null,
+      "health": null
+    },
+    "google-apps-script-workspace": {
+      "name": "google-apps-script-workspace",
+      "vm": "local",
+      "domain": null,
+      "enabled": true,
+      "category": "app",
+      "ports": null,
+      "health": null
+    },
     "google-personal-mcp": {
       "name": "google-personal-mcp",
       "vm": "oci-A1-f_0",
@@ -2846,6 +2864,24 @@
         "ports": {
           "app": 8090
         },
+        "health": null
+      },
+      "google-apps-script-personal": {
+        "name": "google-apps-script-personal",
+        "vm": "local",
+        "domain": null,
+        "enabled": true,
+        "category": "app",
+        "ports": null,
+        "health": null
+      },
+      "google-apps-script-workspace": {
+        "name": "google-apps-script-workspace",
+        "vm": "local",
+        "domain": null,
+        "enabled": true,
+        "category": "app",
+        "ports": null,
         "health": null
       },
       "google-personal-mcp": {

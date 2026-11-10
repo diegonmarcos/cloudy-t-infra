@@ -6,21 +6,21 @@
   },
   "repo": "cloud-u-containers",
   "counts": {
-    "files": 2637,
+    "files": 2640,
     "by_lang": {
       "sh": 179,
       "js": 111,
       "nix": 193,
       "py": 511,
-      "ts": 1272,
+      "ts": 1275,
       "rust": 371
     },
     "by_role": {
       "shell": 170,
-      "file": 348,
+      "file": 349,
       "nix-module": 19,
       "python": 497,
-      "module": 778,
+      "module": 780,
       "script": 8,
       "flake": 88,
       "entrypoint": 71,
@@ -48352,6 +48352,8 @@
         "@/lib/email-date",
         "./tag-badge",
         "./tag-picker",
+        "./mail-tag-sections",
+        "@/lib/keyword-classification",
         "@/hooks/use-tag-display",
         "@/hooks/use-keyword-format",
         "@/lib/thread-utils",
@@ -48373,9 +48375,7 @@
         "@/stores/email-store",
         "@/stores/theme-store",
         "./email-identity-badge",
-        "./unsubscribe-banner",
-        "./calendar-invitation-banner",
-        "./read-receipt-banner"
+        "./unsubscribe-banner"
       ],
       "symbols": [
         "decodeBase64Bytes(input: string)",
@@ -48391,6 +48391,26 @@
         "processTnef()",
         "unwrapEmbedded()",
         "fetchCidBlobs()"
+      ]
+    },
+    {
+      "path": "user-comm_cloud-webmail/src/code/arm64/webapp/components/email/mail-tag-sections.tsx",
+      "lang": "ts",
+      "role": "file",
+      "exports": [
+        "MailTagSections"
+      ],
+      "imports": [
+        "react",
+        "next-intl",
+        "lucide-react",
+        "@/lib/utils",
+        "./tag-badge",
+        "@/hooks/use-keyword-format",
+        "@/lib/keyword-classification"
+      ],
+      "symbols": [
+        "MailTagSections({\n  tagIds,\n  variant = \"badge\",\n  onRemove,\n  className,\n}: {\n  tagIds: string[];\n  variant?: TagBadgeVariant;\n  /** Takes a tag off the message; omit to render read-only. */\n  onRemove?: (tagId: string)"
       ]
     },
     {
@@ -53577,6 +53597,17 @@
       ]
     },
     {
+      "path": "user-comm_cloud-webmail/src/code/arm64/webapp/lib/__tests__/keyword-classification.test.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [],
+      "imports": [
+        "vitest",
+        "../keyword-classification"
+      ],
+      "symbols": []
+    },
+    {
       "path": "user-comm_cloud-webmail/src/code/arm64/webapp/lib/__tests__/keyword-discovery.test.ts",
       "lang": "ts",
       "role": "module",
@@ -56596,6 +56627,27 @@
       "imports": [],
       "symbols": [
         "isEditableEventTarget(event: Event)"
+      ]
+    },
+    {
+      "path": "user-comm_cloud-webmail/src/code/arm64/webapp/lib/keyword-classification.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "classifyTagName",
+        "isMetaTagName",
+        "isProjectTagName",
+        "classifyTags",
+        "classifyTagIds",
+        "TagClass",
+        "ClassifiedTags"
+      ],
+      "imports": [],
+      "symbols": [
+        "classifyTagName(name: string)",
+        "isMetaTagName(name: string)",
+        "isProjectTagName(name: string)",
+        "classifyTagIds(\n  ids: string[],\n  nameOf: (id: string)"
       ]
     },
     {

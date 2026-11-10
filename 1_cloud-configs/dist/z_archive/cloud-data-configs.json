@@ -780,6 +780,30 @@
       ]
     },
     {
+      "name": "google-apps-script-personal",
+      "category": "app",
+      "vm": "local",
+      "description": "Google Apps Script – Google Personal — serverless Apps Script project backing the google-personal-mcp integration (Gmail for personal Google accounts, multi-account). Runs on Google's Apps Script runtime (V8/JavaScript) — no container is shipped.",
+      "domain": "—",
+      "ports": [],
+      "networks": [],
+      "containers": [
+        "google-apps-script-personal"
+      ]
+    },
+    {
+      "name": "google-apps-script-workspace",
+      "category": "app",
+      "vm": "local",
+      "description": "Google Apps Script – Google Workspace — serverless Apps Script project backing the google-workspace-mcp integration (Gmail, Calendar, Drive, Docs, Sheets, Forms, Slides, Chat, Tasks, Contacts, Search, Apps Script via OAuth 2.0/2.1). Runs on Google's Apps Script runtime (V8/JavaScript) — no container is shipped.",
+      "domain": "—",
+      "ports": [],
+      "networks": [],
+      "containers": [
+        "google-apps-script-workspace"
+      ]
+    },
+    {
       "name": "google-personal-mcp",
       "category": "app",
       "vm": "oci-A1-f_0",
@@ -2082,6 +2106,30 @@
       "networks": [],
       "containers": [
         "front-end"
+      ]
+    },
+    {
+      "name": "google-apps-script-personal",
+      "category": "app",
+      "vm": "local",
+      "description": "Google Apps Script – Google Personal — serverless Apps Script project backing the google-personal-mcp integration (Gmail for personal Google accounts, multi-account). Runs on Google's Apps Script runtime (V8/JavaScript) — no container is shipped.",
+      "domain": "—",
+      "ports": [],
+      "networks": [],
+      "containers": [
+        "google-apps-script-personal"
+      ]
+    },
+    {
+      "name": "google-apps-script-workspace",
+      "category": "app",
+      "vm": "local",
+      "description": "Google Apps Script – Google Workspace — serverless Apps Script project backing the google-workspace-mcp integration (Gmail, Calendar, Drive, Docs, Sheets, Forms, Slides, Chat, Tasks, Contacts, Search, Apps Script via OAuth 2.0/2.1). Runs on Google's Apps Script runtime (V8/JavaScript) — no container is shipped.",
+      "domain": "—",
+      "ports": [],
+      "networks": [],
+      "containers": [
+        "google-apps-script-workspace"
       ]
     },
     {

@@ -3992,6 +3992,88 @@
         "auth": "bearer"
       }
     },
+    "google-apps-script-personal": {
+      "category": "app",
+      "vm": "local",
+      "folder": "infra-api_google-apps-script-personal",
+      "description": "Google Apps Script – Google Personal — serverless Apps Script project backing the google-personal-mcp integration (Gmail for personal Google accounts, multi-account). Runs on Google's Apps Script runtime (V8/JavaScript) — no container is shipped.",
+      "enabled": true,
+      "flake": "infra-api_google-apps-script-personal",
+      "containers": {
+        "app": {
+          "container_name": "google-apps-script-personal",
+          "image": "",
+          "public": false
+        }
+      },
+      "container_names": [
+        "google-apps-script-personal"
+      ],
+      "all_ports": [],
+      "all_dns": [],
+      "compose": {
+        "containers": [],
+        "ports": [],
+        "networks": []
+      },
+      "taxonomy": {
+        "group": "Infra Apps",
+        "category": "Ops-API-MCP"
+      },
+      "runtime": {
+        "type": "apps-script",
+        "language": "javascript",
+        "host": "script.google.com"
+      },
+      "api": {
+        "has_api": false,
+        "has_web_ui": false,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": []
+      }
+    },
+    "google-apps-script-workspace": {
+      "category": "app",
+      "vm": "local",
+      "folder": "infra-api_google-apps-script-workspace",
+      "description": "Google Apps Script – Google Workspace — serverless Apps Script project backing the google-workspace-mcp integration (Gmail, Calendar, Drive, Docs, Sheets, Forms, Slides, Chat, Tasks, Contacts, Search, Apps Script via OAuth 2.0/2.1). Runs on Google's Apps Script runtime (V8/JavaScript) — no container is shipped.",
+      "enabled": true,
+      "flake": "infra-api_google-apps-script-workspace",
+      "containers": {
+        "app": {
+          "container_name": "google-apps-script-workspace",
+          "image": "",
+          "public": false
+        }
+      },
+      "container_names": [
+        "google-apps-script-workspace"
+      ],
+      "all_ports": [],
+      "all_dns": [],
+      "compose": {
+        "containers": [],
+        "ports": [],
+        "networks": []
+      },
+      "taxonomy": {
+        "group": "Infra Apps",
+        "category": "Ops-API-MCP"
+      },
+      "runtime": {
+        "type": "apps-script",
+        "language": "javascript",
+        "host": "script.google.com"
+      },
+      "api": {
+        "has_api": false,
+        "has_web_ui": false,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": []
+      }
+    },
     "google-personal-mcp": {
       "category": "app",
       "vm": "oci-A1-f_0",

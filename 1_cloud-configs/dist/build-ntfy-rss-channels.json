@@ -6,9 +6,9 @@
   "base": "https://rss.diegonmarcos.com/feed",
   "counts": {
     "declared": 22,
-    "logs": 111,
-    "apps": 40,
-    "total": 173
+    "logs": 113,
+    "apps": 42,
+    "total": 177
   },
   "channels": [
     {
@@ -427,6 +427,28 @@
       "source": "logs",
       "vm": "oci-analytics",
       "feed": "/feed/c/logs_cloudy-drive-git-proxy-api.atom",
+      "quiet": true
+    },
+    {
+      "id": "logs_google-apps-script-personal",
+      "topic": "logs_google-apps-script-personal",
+      "title": "google-apps-script-personal",
+      "path": "Cloud-Infra/Logs/local/google-apps-script-personal",
+      "category": "logs",
+      "source": "logs",
+      "vm": "local",
+      "feed": "/feed/c/logs_google-apps-script-personal.atom",
+      "quiet": true
+    },
+    {
+      "id": "logs_google-apps-script-workspace",
+      "topic": "logs_google-apps-script-workspace",
+      "title": "google-apps-script-workspace",
+      "path": "Cloud-Infra/Logs/local/google-apps-script-workspace",
+      "category": "logs",
+      "source": "logs",
+      "vm": "local",
+      "feed": "/feed/c/logs_google-apps-script-workspace.atom",
       "quiet": true
     },
     {
@@ -1518,6 +1540,26 @@
       "category": "apps",
       "source": "apps",
       "feed": "/feed/c/app_cloudy-drive-git-proxy-api.atom",
+      "quiet": true
+    },
+    {
+      "id": "app_google-apps-script-personal",
+      "topic": "app_google-apps-script-personal",
+      "title": "Google Apps Script – Google Personal — serverless Apps Script project backing the google-personal-mcp integration (Gmail for personal Google accounts, multi-account). Runs on Google's Apps Script runtime (V8/JavaScript) — no container is shipped.",
+      "path": "Cloud-Apps/app/google-apps-script-personal",
+      "category": "apps",
+      "source": "apps",
+      "feed": "/feed/c/app_google-apps-script-personal.atom",
+      "quiet": true
+    },
+    {
+      "id": "app_google-apps-script-workspace",
+      "topic": "app_google-apps-script-workspace",
+      "title": "Google Apps Script – Google Workspace — serverless Apps Script project backing the google-workspace-mcp integration (Gmail, Calendar, Drive, Docs, Sheets, Forms, Slides, Chat, Tasks, Contacts, Search, Apps Script via OAuth 2.0/2.1). Runs on Google's Apps Script runtime (V8/JavaScript) — no container is shipped.",
+      "path": "Cloud-Apps/app/google-apps-script-workspace",
+      "category": "apps",
+      "source": "apps",
+      "feed": "/feed/c/app_google-apps-script-workspace.atom",
       "quiet": true
     },
     {
