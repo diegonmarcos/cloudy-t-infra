@@ -2156,6 +2156,10 @@
       }
     }
   },
+  "runtime": {
+    "oom_score_adj": 600,
+    "_why_oom_score_adj": "#1641 sacrificial tier (killed before the c3 control plane): headless Chromium scrape/OCR backend (2G cap): sessions are re-creatable. Ordering: _shared/oom-priority.json."
+  },
   "taxonomy": {
     "group": "Project Apps",
     "category": "Data"

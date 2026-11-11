@@ -1123,6 +1123,10 @@
         "endpoint_check": false,
         "_doc": "endpoint_check disabled: /v2/check requires POST body; TLS+DNS checks confirm reachability."
       },
+      "runtime": {
+        "oom_score_adj": 600,
+        "_why_oom_score_adj": "#1641 sacrificial tier (killed before the c3 control plane): JVM grammar checker (4G cap, 899MiB measured): cosmetic, restartable. Ordering: _shared/oom-priority.json."
+      },
       "taxonomy": {
         "group": "Cloud Apps",
         "category": "Tools Primary"
@@ -1592,6 +1596,11 @@
           },
           "healthcheck": "/mcp",
           "monitoring": null,
+          "resources": {
+            "mem_limit": "3G",
+            "mem_reservation": "512M",
+            "_comment": "#1641: THE ONE DECLARATION of this container's memory budget (compose.nix reads it; entrypoint.sh caps the V8 heap at half of it). Was the sec-category default of 1G: this server fans out ssh/git/curl/oci-cli/wrangler children and holds a git workspace, so 1G was a cgroup OOM-kill waiting on any spike. 3G is a ceiling, not a target; the reservation is what the scheduler/kernel keeps for it under pressure."
+          },
           "volumes": [
             "/opt/ssh-keys/cloud-infra-mcp:/root/.ssh:ro",
             "/nix/store:/nix/store:ro",
@@ -1601,7 +1610,6 @@
           ],
           "env_file": true,
           "depends_on": [],
-          "resources": null,
           "read_only": false,
           "protocol": "http"
         }
@@ -1671,6 +1679,8 @@
       "runtime": {
         "init": true,
         "pids_limit": 1024,
+        "oom_score_adj": -900,
+        "_why_oom_score_adj": "#1641: the fleet control-plane MCP must be the LAST thing the kernel kills on oci-apps (restart is 'no' by owner policy, so a kill means it stays down). -900 matches the host's connectivity tier (sshd/wg, protection/system-packages.json). Not -1000: -1000 exempts the task from the OOM killer INCLUDING the cgroup one, so a runaway would wedge against memory.max instead of being reaped. Ordering across the fleet: _shared/oom-priority.json.",
         "_why_init": "cloud-infra-mcp spawns ssh/git/curl/dig children concurrently via execAsync. Without docker-init (tini) as PID 1, zombie reaping doesn't happen and pids_limit is exhausted within days -> 'sh: 0: Cannot fork' on healthcheck.",
         "_why_pids_limit": "ssh-exec + git-clone + curl all fan out concurrently across ~24 VM/service targets. Default 256 is too tight; 1024 leaves safe headroom with tini reaping orphans."
       },
@@ -1778,6 +1788,9 @@
         "peers-core": {
           "cmd": "node --experimental-strip-types test-peers-core.mts",
           "cwd": "src/code"
+        },
+        "oom-priority": {
+          "cmd": "node ../_shared/test-oom-priority.mjs"
         },
         "superapp-hosts-declared": {
           "cmd": "bash test/test-superapp-hosts.sh"
@@ -8481,6 +8494,10 @@
         "dns_check": false,
         "endpoint_check": false
       },
+      "runtime": {
+        "oom_score_adj": 700,
+        "_why_oom_score_adj": "#1641 sacrificial tier (killed before the c3 control plane): Chromium farm (2G cap): the most memory-hungry thing per MB of value, restartable on demand. Ordering: _shared/oom-priority.json."
+      },
       "taxonomy": {
         "group": "Infra Apps",
         "category": "Net-Routing & Security"
@@ -8550,6 +8567,10 @@
         "tls_check": false,
         "dns_check": false,
         "endpoint_check": false
+      },
+      "runtime": {
+        "oom_score_adj": 800,
+        "_why_oom_score_adj": "#1641 sacrificial tier (killed before the c3 control plane): JVM active scanner (2G cap): on-demand, re-runnable, zero control-plane value. Ordering: _shared/oom-priority.json."
       },
       "taxonomy": {
         "group": "Infra Apps",
@@ -11317,6 +11338,10 @@
         "tls_check": true,
         "dns_check": true,
         "endpoint_check": true
+      },
+      "runtime": {
+        "oom_score_adj": 600,
+        "_why_oom_score_adj": "#1641 sacrificial tier (killed before the c3 control plane): headless Chromium scrape/OCR backend (2G cap): sessions are re-creatable. Ordering: _shared/oom-priority.json."
       },
       "taxonomy": {
         "group": "Project Apps",

@@ -2153,6 +2153,10 @@
       }
     }
   },
+  "runtime": {
+    "oom_score_adj": 700,
+    "_why_oom_score_adj": "#1641 sacrificial tier (killed before the c3 control plane): Chromium farm (2G cap): the most memory-hungry thing per MB of value, restartable on demand. Ordering: _shared/oom-priority.json."
+  },
   "taxonomy": {
     "group": "Infra Apps",
     "category": "Net-Routing & Security"

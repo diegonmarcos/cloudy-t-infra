@@ -6,19 +6,19 @@
   },
   "repo": "cloud-u-containers",
   "counts": {
-    "files": 2641,
+    "files": 2643,
     "by_lang": {
       "sh": 179,
-      "js": 111,
-      "nix": 193,
+      "js": 112,
+      "nix": 194,
       "py": 511,
       "ts": 1276,
       "rust": 371
     },
     "by_role": {
       "shell": 170,
-      "file": 349,
-      "nix-module": 19,
+      "file": 350,
+      "nix-module": 20,
       "python": 497,
       "module": 781,
       "script": 8,
@@ -309,9 +309,11 @@
       "exports": [],
       "imports": [
         "./memory-ceiling.nix",
+        "./oom-priority.nix",
         "./agent-credential.nix",
         "./agent-memory.nix",
         "memory-ceiling.nix",
+        "oom-priority.nix",
         "agent-credential.nix",
         "agent-memory.nix"
       ],
@@ -326,6 +328,8 @@
         "policy",
         "category",
         "title",
+        "applyOomPriority",
+        "adj",
         "agentToolbelt",
         "toolbeltApt",
         "toolbeltVerify",
@@ -353,9 +357,7 @@
         "agentSpec",
         "agentCredential",
         "wantsGitTree",
-        "gitTreeKey",
-        "gitTreeName",
-        "gitTreeMountPath"
+        "gitTreeKey"
       ]
     },
     {
@@ -673,6 +675,21 @@
       ]
     },
     {
+      "path": "_shared/oom-priority.nix",
+      "lang": "nix",
+      "role": "nix-module",
+      "exports": [
+        "#",
+        "or",
+        "for"
+      ],
+      "imports": [],
+      "symbols": [
+        "valid",
+        "apply"
+      ]
+    },
+    {
       "path": "_shared/security-testing-allowlist.mjs",
       "lang": "js",
       "role": "file",
@@ -949,6 +966,19 @@
     },
     {
       "path": "_shared/test-mail-stack-limits.mjs",
+      "lang": "js",
+      "role": "file",
+      "exports": [],
+      "imports": [
+        "node:fs",
+        "node:child_process",
+        "node:path",
+        "node:url"
+      ],
+      "symbols": []
+    },
+    {
+      "path": "_shared/test-oom-priority.mjs",
       "lang": "js",
       "role": "file",
       "exports": [],

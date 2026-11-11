@@ -1558,6 +1558,11 @@
           },
           "healthcheck": "/mcp",
           "monitoring": null,
+          "resources": {
+            "mem_limit": "3G",
+            "mem_reservation": "512M",
+            "_comment": "#1641: THE ONE DECLARATION of this container's memory budget (compose.nix reads it; entrypoint.sh caps the V8 heap at half of it). Was the sec-category default of 1G: this server fans out ssh/git/curl/oci-cli/wrangler children and holds a git workspace, so 1G was a cgroup OOM-kill waiting on any spike. 3G is a ceiling, not a target; the reservation is what the scheduler/kernel keeps for it under pressure."
+          },
           "volumes": [
             "/opt/ssh-keys/cloud-infra-mcp:/root/.ssh:ro",
             "/nix/store:/nix/store:ro",
@@ -1567,7 +1572,6 @@
           ],
           "env_file": true,
           "depends_on": [],
-          "resources": null,
           "read_only": false,
           "protocol": "http"
         }

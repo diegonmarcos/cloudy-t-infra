@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 23889,
+    "files": 23918,
     "by_lang": {
-      "sh": 700,
+      "sh": 701,
       "js": 549,
-      "py": 211,
-      "kotlin": 13150,
+      "py": 212,
+      "kotlin": 13177,
       "ts": 8470,
       "java": 651,
       "nix": 36,
@@ -20,12 +20,12 @@
     "by_role": {
       "hook": 160,
       "file": 2306,
-      "shell": 561,
+      "shell": 562,
       "script": 300,
       "module": 6480,
       "java": 650,
-      "kotlin": 13147,
-      "python": 71,
+      "kotlin": 13174,
+      "python": 72,
       "flake": 32,
       "rust-module": 122,
       "nix-module": 4,
@@ -10398,6 +10398,7 @@
         "com.diegonmarcos.superapp.notificationcenter.BadgeCustomization",
         "com.diegonmarcos.superapp.notificationcenter.BadgeDeclaration",
         "com.diegonmarcos.superapp.notificationcenter.BadgeServices",
+        "com.diegonmarcos.superapp.notificationcenter.NotifyGroups",
         "com.diegonmarcos.superapp.uikit.LocalKitPalette"
       ],
       "symbols": [
@@ -13975,7 +13976,7 @@
         "count()",
         "clear()",
         "tileSepTag(id: String)",
-        "TileDivider(tag: String, iconCentreY: Dp, edgeShift: Dp, modifier: Modifier = Modifier)",
+        "TileDivider(tag: String, iconCentreY: Dp, edgeShift: Dp, modifier: Modifier = Modifier, double: Boolean = false)",
         "TileGroupHeader(text: String, modifier: Modifier = Modifier, compact: Boolean = false)",
         "TileSubgroupHeader(text: String, modifier: Modifier = Modifier, compact: Boolean = false)",
         "tileTag(id: String)",
@@ -17497,6 +17498,8 @@
         "onBind(intent: Intent?)",
         "onCreate()",
         "onStartCommand(intent: Intent?, flags: Int, startId: Int)",
+        "fetchAllowed(interactive: Boolean)",
+        "readDue(force: Boolean, nowMs: Long, lastReadMs: Long)",
         "run()",
         "ensureReceiver(app: Context)",
         "onReceive(context: Context, intent: Intent)",
@@ -17760,6 +17763,7 @@
       "symbols": [
         "ensureAll(ctx: Context)",
         "wanted(ctx: Context, fqcn: String)",
+        "switchedOff(ctx: Context, fqcn: String)",
         "start(ctx: Context, fqcn: String)",
         "repostOnDismiss(svc: Service, requestCode: Int)",
         "repostOnDismiss(ctx: Context, requestCode: Int, owner: Class<*>)",
@@ -17928,6 +17932,7 @@
         "start(ctx: Context, cls: Class<*>)",
         "pi(ctx: Context, cls: Class<*>, requestCode: Int)",
         "scheduleNext(ctx: Context, cls: Class<*>, requestCode: Int, delayMs: Long)",
+        "retiredIfOff(ctx: Context, cls: Class<*>)",
         "retire(ctx: Context, w: Widget)",
         "class DataWidgetRuntime",
         "class Widget"
@@ -18450,6 +18455,7 @@
       "symbols": [
         "post(nm: NotificationManager, tag: String?, id: Int, n: Notification, force: Boolean = false)",
         "postCtx(ctx: android.content.Context, id: Int, n: Notification)",
+        "inShade(nm: NotificationManager, tag: String?, id: Int)",
         "flush(nm: NotificationManager, tag: String?, id: Int, key: String)",
         "send(nm: NotificationManager, tag: String?, id: Int, n: Notification, s: Slot, sig: String?, now: Long)",
         "invalidate(tag: String?, id: Int)",
@@ -18559,13 +18565,22 @@
       ],
       "imports": [
         "android.app.Notification",
+        "android.os.Handler",
+        "android.os.Looper",
+        "android.os.SystemClock",
         "android.service.notification.NotificationListenerService",
         "android.service.notification.StatusBarNotification"
       ],
       "symbols": [
         "onListenerConnected()",
         "onNotificationPosted(sbn: StatusBarNotification?)",
+        "onListenerDisconnected()",
+        "onDestroy()",
+        "flushHeld()",
+        "recordHeld(sbn: StatusBarNotification)",
         "record(sbn: StatusBarNotification)",
+        "keepIntents(key: String, n: Notification)",
+        "store(sbn: StatusBarNotification, n: Notification, title: String, text: String)",
         "class PhoneNotificationListenerService"
       ]
     },
@@ -18578,16 +18593,41 @@
       ],
       "imports": [
         "android.content.Context",
+        "android.os.Handler",
+        "android.os.Looper",
+        "android.os.SystemClock",
         "org.json.JSONArray",
         "org.json.JSONObject"
       ],
       "symbols": [
         "all(ctx: Context)",
+        "load(ctx: Context)",
         "apps(ctx: Context)",
         "push(ctx: Context, e: Entry)",
+        "touch(ctx: Context, key: String, ts: Long)",
+        "scheduleWrite(ctx: Context, delayMs: Long)",
+        "flush(ctx: Context)",
         "clear(ctx: Context)",
+        "reset()",
         "class PhoneNotificationStore",
         "class Entry"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/notificationcenter/PhoneNotifIntake.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [],
+      "imports": [],
+      "symbols": [
+        "removeEldestEntry(eldest: MutableMap.MutableEntry<String, Slot>?)",
+        "signature(title: String, text: String)",
+        "decide(key: String, sig: String, nowMs: Long)",
+        "commit(key: String, sig: String, nowMs: Long)",
+        "reset()",
+        "class PhoneNotifIntake",
+        "class Verdict",
+        "class Slot"
       ]
     },
     {
@@ -25759,6 +25799,30 @@
       ]
     },
     {
+      "path": "aa_cloud-superapp/app/src/test/java/com/diegonmarcos/superapp/launcher/StripLifecycleTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "StripLifecycleTest"
+      ],
+      "imports": [
+        "android.app.Application",
+        "androidx.lifecycle.Lifecycle",
+        "com.diegonmarcos.superapp.ui.KitPageHarness",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "org.junit.runner.RunWith",
+        "org.robolectric.RobolectricTestRunner",
+        "org.robolectric.annotation.Config",
+        "java.io.File"
+      ],
+      "symbols": [
+        "class StripLifecycleTest"
+      ]
+    },
+    {
       "path": "aa_cloud-superapp/app/src/test/java/com/diegonmarcos/superapp/launcher/SubgroupHubTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -27510,6 +27574,48 @@
       ]
     },
     {
+      "path": "aa_cloud-superapp/app/src/test/java/com/diegonmarcos/superapp/notificationcenter/NotifyDrainTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "NotifyDrainTest"
+      ],
+      "imports": [
+        "android.Manifest",
+        "android.app.AlarmManager",
+        "android.app.Application",
+        "android.app.NotificationChannel",
+        "android.app.NotificationManager",
+        "android.os.Looper",
+        "android.os.PowerManager",
+        "androidx.core.app.NotificationCompat",
+        "androidx.test.core.app.ApplicationProvider",
+        "org.junit.After",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Before",
+        "org.junit.Test",
+        "org.junit.runner.RunWith",
+        "org.robolectric.Robolectric",
+        "org.robolectric.RobolectricTestRunner",
+        "org.robolectric.Shadows.shadowOf",
+        "org.robolectric.annotation.Config"
+      ],
+      "symbols": [
+        "alarmCount()",
+        "setUp()",
+        "tearDown()",
+        "badge(id: String)",
+        "switchOff(id: String)",
+        "idle()",
+        "shown(id: Int)",
+        "screen(on: Boolean)",
+        "leftBehind(cls: Class<*>, id: Int, badgeId: String)",
+        "class NotifyDrainTest"
+      ]
+    },
+    {
       "path": "aa_cloud-superapp/app/src/test/java/com/diegonmarcos/superapp/notificationcenter/NotifyGateTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -27523,6 +27629,7 @@
         "android.app.NotificationManager",
         "androidx.core.app.NotificationCompat",
         "androidx.test.core.app.ApplicationProvider",
+        "org.junit.After",
         "org.junit.Assert.assertEquals",
         "org.junit.Assert.assertFalse",
         "org.junit.Assert.assertTrue",
@@ -27534,14 +27641,20 @@
       ],
       "symbols": [
         "setUp()",
+        "tearDown()",
         "n(text: String)",
         "identicalUpdatesPostOnce()",
         "sixtyHzBurstOfChangesIsFirstPlusLast()",
         "forceStillDebounces()",
         "cancelRearmsTheDedupe()",
         "idsAreIndependent()",
+        "anUnchangedWidgetCardStillInTheShadeIsNotPostedAgain()",
+        "aWidgetCardThatLeftTheShadeIsPutBackEvenUnchanged()",
+        "aCardSwipedInsideTheGapComesBackWhenTheGapEnds()",
+        "aHeldOlderStateNeverOverwritesANewerOneAlreadySent()",
         "batteryGapIs90s()",
-        "class NotifyGateTest"
+        "class NotifyGateTest",
+        "class gets"
       ]
     },
     {
@@ -27612,6 +27725,62 @@
         "lookup(lat: Double, lon: Double)",
         "class NotifySectionsTest",
         "class Mem"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/test/java/com/diegonmarcos/superapp/notificationcenter/PhoneNotificationStoreTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "PhoneNotificationStoreTest"
+      ],
+      "imports": [
+        "android.app.Application",
+        "android.os.Looper",
+        "android.service.notification.StatusBarNotification",
+        "androidx.core.app.NotificationCompat",
+        "androidx.test.core.app.ApplicationProvider",
+        "com.diegonmarcos.superapp.notificationcenter.PhoneNotificationStore.Entry",
+        "org.junit.After",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Before",
+        "org.junit.Test",
+        "org.junit.runner.RunWith",
+        "org.robolectric.Robolectric",
+        "org.robolectric.RobolectricTestRunner",
+        "org.robolectric.Shadows.shadowOf",
+        "org.robolectric.annotation.Config",
+        "java.time.Duration"
+      ],
+      "symbols": [
+        "setUp()",
+        "tearDown()",
+        "runDue()",
+        "e(key: String, text: String, ts: Long)",
+        "sbn(text: String, postTime: Long)",
+        "class PhoneNotificationStoreTest"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/test/java/com/diegonmarcos/superapp/notificationcenter/PhoneNotifIntakeTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "PhoneNotifIntakeTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.notificationcenter.PhoneNotifIntake.Verdict",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Before",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "setUp()",
+        "offer(sig: String, now: Long)",
+        "class PhoneNotifIntakeTest"
       ]
     },
     {
@@ -31758,6 +31927,20 @@
         "py()",
         "check()",
         "block()"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/test/test-quickmarks-field-parity.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "ok()",
+        "bad()"
+      ],
+      "imports": [],
+      "symbols": [
+        "ok()",
+        "bad()"
       ]
     },
     {
@@ -39748,6 +39931,25 @@
       ]
     },
     {
+      "path": "ab_cloud-libs-shared/libs/appstore/src/main/java/com/diegonmarcos/superapp/appstore/StoreKit.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "StoreKit"
+      ],
+      "imports": [
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.remember",
+        "androidx.compose.ui.platform.LocalContext",
+        "com.diegonmarcos.superapp.uikit.CloudKitTheme"
+      ],
+      "symbols": [
+        "Themed(content: @Composable ()",
+        "Pill(label: String, on: Boolean, tag: String, onClick: ()",
+        "class StoreKit"
+      ]
+    },
+    {
       "path": "ab_cloud-libs-shared/libs/appstore/src/main/java/com/diegonmarcos/superapp/appstore/StoreMesh.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -40433,6 +40635,7 @@
       "imports": [],
       "symbols": [
         "sources()",
+        "revision()",
         "search(sourceId: String, query: String)",
         "download(hit: Hit)",
         "folderNote()",
@@ -58535,6 +58738,75 @@
         "onBind(intent: Intent?)",
         "class is",
         "class FleetConfigEngineService"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/fleetconfigs-agents/src/main/java/com/diegonmarcos/superapp/fleetagents/FleetAgentsTab.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "FleetAgentsTab",
+        "FleetAgentsPage",
+        "FleetAgentsInitProvider"
+      ],
+      "imports": [
+        "android.content.ContentProvider",
+        "android.content.ContentValues",
+        "android.database.Cursor",
+        "android.net.Uri",
+        "androidx.compose.foundation.border",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.fillMaxSize",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.foundation.rememberScrollState",
+        "androidx.compose.foundation.shape.RoundedCornerShape",
+        "androidx.compose.foundation.verticalScroll",
+        "androidx.compose.material3.Text",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.platform.testTag",
+        "androidx.compose.ui.text.font.FontWeight",
+        "androidx.compose.ui.unit.dp",
+        "androidx.compose.ui.unit.sp",
+        "com.diegonmarcos.superapp.fleetconfigs.FleetAgentRow",
+        "com.diegonmarcos.superapp.fleetconfigs.FleetConfigs",
+        "com.diegonmarcos.superapp.fleetconfigs.FleetConfigsExtensions",
+        "com.diegonmarcos.superapp.fleetconfigs.FleetConfigsTab",
+        "com.diegonmarcos.superapp.themebg.ThemeBackground"
+      ],
+      "symbols": [
+        "register()",
+        "FleetAgentsPage(agents: List<FleetAgentRow>, dark: Boolean)",
+        "onCreate()",
+        "query(uri: Uri, projection: Array<out String>?, selection: String?, selectionArgs: Array<out String>?, sortOrder: String?)",
+        "getType(uri: Uri)",
+        "insert(uri: Uri, values: ContentValues?)",
+        "delete(uri: Uri, selection: String?, selectionArgs: Array<out String>?)",
+        "update(uri: Uri, values: ContentValues?, selection: String?, selectionArgs: Array<out String>?)",
+        "class FleetAgentsTab",
+        "class FleetAgentsInitProvider"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/fleetconfigs-agents/src/test/java/com/diegonmarcos/superapp/fleetagents/FleetAgentsTabTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "FleetAgentsTabTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.fleetconfigs.FleetConfigsExtensions",
+        "org.junit.After",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Before",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "clean()",
+        "reset()",
+        "registers_the_agents_tab_first_after_the_separator()",
+        "class FleetAgentsTabTest"
       ]
     },
     {
@@ -94843,6 +95115,7 @@
       "symbols": [
         "get(ctx: Context)",
         "build(app: Context)",
+        "sources(ctx: Context)",
         "settings(ctx: Context)",
         "volumes(ctx: Context)",
         "class TorrentEngines"
@@ -94959,6 +95232,7 @@
         "enc(q: String)",
         "num(o: JSONObject, k: String)",
         "tpbCategory(code: String)",
+        "parseAs(indexerId: String, body: String)",
         "byId(id: String)",
         "fetch(url: String, maxBytes: Int = 8 * 1024 * 1024)",
         "search(indexer: TorrentIndexer, query: String, get: (String)",
@@ -94993,6 +95267,65 @@
         "class TorrentSettings",
         "class MemorySettings",
         "class PrefsSettings"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/torrent/src/main/java/com/diegonmarcos/superapp/torrent/TorrentSources.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ParseKind",
+        "UserSource",
+        "UserIndexer",
+        "SourceParsers",
+        "SourceResult",
+        "TorrentSourceStore",
+        "MemorySourceStore",
+        "PrefsSourceStore",
+        "TorrentSources"
+      ],
+      "imports": [
+        "android.content.Context",
+        "org.json.JSONArray",
+        "org.json.JSONObject",
+        "java.net.URI",
+        "java.net.URLEncoder",
+        "java.time.ZonedDateTime",
+        "java.time.format.DateTimeFormatter"
+      ],
+      "symbols": [
+        "parse(indexerId: String, body: String)",
+        "of(id: String?)",
+        "searchUrl(query: String)",
+        "parse(body: String)",
+        "decode(s: String)",
+        "tag(item: String, name: String)",
+        "rss(indexerId: String, body: String)",
+        "htmlMagnets(indexerId: String, body: String)",
+        "load()",
+        "save(list: List<UserSource>)",
+        "user()",
+        "searchSet()",
+        "byId(id: String)",
+        "commit(list: List<UserSource>)",
+        "add(s: UserSource)",
+        "update(id: String, s: UserSource)",
+        "remove(id: String)",
+        "setEnabled(id: String, on: Boolean)",
+        "normalise(s: UserSource)",
+        "idFor(label: String)",
+        "expand(template: String, query: String)",
+        "validate(s: UserSource, existing: Collection<String>, editing: String?)",
+        "hostOf(url: String)",
+        "class ParseKind",
+        "class UserSource",
+        "class UserIndexer",
+        "class SourceParsers",
+        "class SourceResult",
+        "class TorrentSourceStore",
+        "class MemorySourceStore",
+        "class PrefsSourceStore",
+        "class TorrentSources"
       ]
     },
     {
@@ -95038,8 +95371,10 @@
         "pause(id: String)",
         "resume(id: String)",
         "remove(id: String, deleteFiles: Boolean)",
+        "land(id: String, name: String, bytes: Int)",
         "progress(id: String, name: String, phase: Phase, progress: Float, total: Long, down: Long = 0, seeds: Int = 0, peers: Int = 0, up: Long = 0, uploaded: Long = 0, downloaded: Long = 0)",
-        "class FakeBackend"
+        "class FakeBackend",
+        "class AddSeen"
       ]
     },
     {
@@ -95109,6 +95444,36 @@
         "onlySeedingIsNotADownload()",
         "downloadStartedHookFiresOnActiveAddAndResumeNotOnPausedAdd()",
         "class TorrentActivityTest"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/torrent/src/test/java/com/diegonmarcos/superapp/torrent/TorrentDownloadPathTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "TorrentDownloadPathTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertArrayEquals",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Before",
+        "org.junit.Rule",
+        "org.junit.Test",
+        "org.junit.rules.TemporaryFolder",
+        "java.io.File"
+      ],
+      "symbols": [
+        "setUp()",
+        "engine(b: FakeBackend)",
+        "aMagnetHitReachesTheSessionWithTheDefaultFolderCreatedAndStartedRunning()",
+        "aTorrentUrlHitIsFetchedKeptAndHandedToTheSession()",
+        "aBadOrMissingTorrentBodyNeverReachesTheSession()",
+        "aTorrentKeepsTheFolderItWasAddedWithWhenTheSettingChangesLater()",
+        "aFinishedMagnetTorrentKeepsItsSizeAcrossARestartEvenThoughItIsReAddedWithoutMetadata()",
+        "anOldListWithoutASizeStillLoads()",
+        "class TorrentDownloadPathTest"
       ]
     },
     {
@@ -95236,6 +95601,38 @@
         "searchSortsBySeedersAndPassesTheUrlToTheFetch()",
         "failuresSurfaceAsReasonsNeverAsEmptyResults()",
         "class TorrentSearchTest"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/torrent/src/test/java/com/diegonmarcos/superapp/torrent/TorrentSourcesTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "TorrentSourcesTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNotNull",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Assert.fail",
+        "org.junit.Test",
+        "java.io.IOException"
+      ],
+      "symbols": [
+        "src(id: String = \"mine\", url: String = \"https://example.org/rss?q={q}\", kind: ParseKind = ParseKind.RSS, enabled: Boolean = true)",
+        "builtInsStayAndUserSourcesAddToThem()",
+        "sourcesSurviveARestartAndEveryFieldIsKept()",
+        "editAndRemove()",
+        "validationSaysWhatIsWrong()",
+        "theQueryIsEncodedAndPlaceholdersFilled()",
+        "rssTorznabItemsBecomeHits()",
+        "rssTorrentOnlyItemIsAFetchableUrlAndAnEmptyFeedIsAnEmptyList()",
+        "htmlMagnetsAreNamedByDnAndDeduplicated()",
+        "jsonKindsReuseTheBuiltInParsersUnderTheUsersId()",
+        "aUserSourceSearchesLikeABuiltInOne()",
+        "class TorrentSourcesTest"
       ]
     },
     {
@@ -96255,6 +96652,7 @@
         "UpdateDecl",
         "AboutDecl",
         "FleetConfigsDecl",
+        "FleetAgentRow",
         "FleetConfigs"
       ],
       "imports": [
@@ -96278,6 +96676,7 @@
         "class UpdateDecl",
         "class AboutDecl",
         "class FleetConfigsDecl",
+        "class FleetAgentRow",
         "class FleetConfigs"
       ]
     },
@@ -96336,6 +96735,10 @@
         "register(tab: FleetConfigsTab)",
         "all()",
         "byId(id: String)",
+        "registerXrayPage(body: @Composable (dark: Boolean)",
+        "Body(tab: FleetConfigsTab, dark: Boolean)",
+        "stripOrder(extras: List<FleetConfigsTab> = all()",
+        "page(id: String, label: String, icon: String)",
         "clearForTest()",
         "class FleetConfigsTab",
         "class FleetConfigsExtensions"
@@ -97298,6 +97701,11 @@
         "re_registering_the_same_id_replaces_not_duplicates()",
         "a_base_page_id_is_never_registered_as_an_extra()",
         "isFleetConfigsPage_covers_base_and_registered_extras()",
+        "reg(id: String, label: String = id)",
+        "strip_with_no_opt_in_keeps_general_perms_about_with_the_separator_before_perms()",
+        "strip_puts_the_five_defaults_in_exact_order_whatever_the_registration_order()",
+        "app_own_tabs_stay_before_the_separator_and_none_is_lost()",
+        "custom_xray_hook_registers_the_tab_when_the_lib_is_not_linked()",
         "class FleetConfigsExtensionsTest"
       ]
     },
@@ -105558,7 +105966,8 @@
         "AndroidSiteExec",
         "CloudyCache",
         "iconGet",
-        "onMain"
+        "onMain",
+        "WebyInstalledApps"
       ],
       "imports": [
         "android.content.Context",
@@ -105584,9 +105993,12 @@
         "refresh(url: String, timeoutMs: Int)",
         "iconGet(url: String, max: Int, userAgent: String)",
         "onMain(f: ()",
+        "read(ctx: android.content.Context)",
+        "launch(ctx: android.content.Context, pkg: String)",
         "class VisitLogStore",
         "class AndroidSiteExec",
-        "class CloudyCache"
+        "class CloudyCache",
+        "class WebyInstalledApps"
       ]
     },
     {
@@ -105677,8 +106089,9 @@
         "loaded(initial: T, key: Any?, work: ()",
         "rel(ts: Long)",
         "WebyIcon(tile: WebyTile, sz: androidx.compose.ui.unit.Dp, icons: WebyIconCache, rev: Int)",
-        "WebyCell( cell: WebyLayout.Cell, path: String, modifier: Modifier, icons: WebyIconCache, rev: Int, onTile: (WebyTile)",
+        "WebyCell( cell: WebyLayout.Cell, path: String, modifier: Modifier, icons: WebyIconCache, rev: Int, launchable: Set<String?>, onTile: (WebyTile)",
         "WebyPage(decl: SitesDecl, onOpen: (String)",
+        "launch(tile: WebyTile)",
         "commit(n: List<WebyFolder>)",
         "CloudyPage(page: String?, decl: SitesDecl, onOpen: (String)",
         "openWebserver(ctx: android.content.Context, ws: org.json.JSONObject, t: (String)",
@@ -105708,6 +106121,8 @@
         "WebyTile",
         "WebyFolder",
         "WebySeed",
+        "WebyInstalled",
+        "WebyCatalogue",
         "WebyLayout",
         "WebyOps",
         "WebyStore"
@@ -105720,6 +106135,15 @@
       "symbols": [
         "derive(decl: JSONObject)",
         "tiles(arr: JSONArray?)",
+        "strings(a: JSONArray?)",
+        "folders(cat: JSONObject)",
+        "matches(kw: String, pkg: String, lbl: String)",
+        "classify(pkg: String, label: String, fs: List<Folder>, sink: String?)",
+        "declaredPackages(decl: JSONObject)",
+        "derive(decl: JSONObject, installed: List<WebyInstalled>)",
+        "put(pkg: String)",
+        "prefix(section: String)",
+        "isCatalogue(path: String)",
         "cells(f: WebyFolder)",
         "previewTiles(f: WebyFolder)",
         "allTiles(f: WebyFolder)",
@@ -105740,10 +106164,12 @@
         "class WebyTile",
         "class WebyFolder",
         "class WebySeed",
+        "class WebyInstalled",
+        "class WebyCatalogue",
+        "class Folder",
         "class WebyLayout",
         "class Cell",
         "class App",
-        "class Folder",
         "class WebyOps",
         "class WebyStore"
       ]
@@ -105795,11 +106221,39 @@
         "keyOf(t: WebyTile)",
         "sha(s: String)",
         "load(t: WebyTile)",
+        "appIcon(t: WebyTile)",
         "scaled(b: ByteArray)",
         "fetch(url: String, max: Int)",
         "class IconCandidate",
         "class WebyIcons",
         "class WebyIconCache"
+      ]
+    },
+    {
+      "path": "ac_cloud-browser/app/src/main/java/com/diegonmarcos/cloudbrowser/textopen/TextIntents.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "TextIntents"
+      ],
+      "imports": [
+        "android.content.Context",
+        "android.content.Intent",
+        "android.net.Uri",
+        "android.os.Handler",
+        "android.os.Looper",
+        "android.provider.OpenableColumns",
+        "java.io.File"
+      ],
+      "symbols": [
+        "isText(mime: String?, name: String?)",
+        "isFileView(intent: Intent?)",
+        "escape(s: String)",
+        "page(title: String, text: String, truncated: Boolean)",
+        "readCapped(i: java.io.InputStream, cap: Int)",
+        "displayName(ctx: Context, uri: Uri)",
+        "open(ctx: Context, intent: Intent?, done: (String?)",
+        "class TextIntents"
       ]
     },
     {
@@ -107570,6 +108024,28 @@
       ]
     },
     {
+      "path": "ac_cloud-browser/app/src/test/java/com/diegonmarcos/cloudbrowser/sites/WebyCatalogueTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "WebyCatalogueTest"
+      ],
+      "imports": [
+        "org.json.JSONArray",
+        "org.json.JSONObject",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.io.File"
+      ],
+      "symbols": [
+        "objs(a: JSONArray)",
+        "catalogue()",
+        "allTiles(l: List<WebyFolder>)",
+        "class WebyCatalogueTest"
+      ]
+    },
+    {
       "path": "ac_cloud-browser/app/src/test/java/com/diegonmarcos/cloudbrowser/sites/WebyIconsTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -107645,6 +108121,27 @@
         "cache(cfg: TabThumbConfig = TabThumbConfig(memoryKb = 64, diskKb = 1024)",
         "files(dir: File = File(tmp.root, \"tabs\")",
         "class TabThumbnailsTest"
+      ]
+    },
+    {
+      "path": "ac_cloud-browser/app/src/test/java/com/diegonmarcos/cloudbrowser/TextIntentsTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "TextIntentsTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.cloudbrowser.textopen.TextIntents",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "textTypesAreText()",
+        "genericTypeFallsBackToTheExtension()",
+        "binaryIsNeverText()",
+        "pageEscapesMarkup()",
+        "class TextIntentsTest"
       ]
     },
     {
@@ -244373,6 +244870,26 @@
       ]
     },
     {
+      "path": "ac_cloud-kg-store/app/src/main/java/com/diegonmarcos/cloudkgstore/ScrappedDecl.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "HeadlessService",
+        "MeRepo"
+      ],
+      "imports": [
+        "android.util.Base64",
+        "org.json.JSONArray",
+        "org.json.JSONObject"
+      ],
+      "symbols": [
+        "parse(text: String)",
+        "class HeadlessService",
+        "class Link",
+        "class MeRepo"
+      ]
+    },
+    {
       "path": "ac_cloud-kg-store/app/src/main/java/com/diegonmarcos/cloudkgstore/ui/CloudPages.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -244568,6 +245085,68 @@
       ]
     },
     {
+      "path": "ac_cloud-kg-store/app/src/main/java/com/diegonmarcos/cloudkgstore/ui/NativePages.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "NativeTags",
+        "ScrappedPage",
+        "HomePage",
+        "meEntry",
+        "MePage"
+      ],
+      "imports": [
+        "androidx.compose.foundation.layout.Arrangement",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.Row",
+        "androidx.compose.foundation.layout.fillMaxSize",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.foundation.lazy.LazyColumn",
+        "androidx.compose.foundation.lazy.items",
+        "androidx.compose.material3.Button",
+        "androidx.compose.material3.MaterialTheme",
+        "androidx.compose.material3.OutlinedTextField",
+        "androidx.compose.material3.Text",
+        "androidx.compose.material3.TextButton",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.LaunchedEffect",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableIntStateOf",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.remember",
+        "androidx.compose.runtime.rememberCoroutineScope",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.platform.LocalContext",
+        "androidx.compose.ui.platform.testTag",
+        "androidx.compose.ui.res.stringResource",
+        "androidx.compose.ui.text.input.PasswordVisualTransformation",
+        "androidx.compose.ui.unit.dp",
+        "com.diegonmarcos.cloudkgstore.HeadlessService",
+        "com.diegonmarcos.cloudkgstore.KgServices",
+        "com.diegonmarcos.cloudkgstore.MeRepo",
+        "com.diegonmarcos.cloudkgstore.R",
+        "com.diegonmarcos.cloudlib.gitui.GitConnect",
+        "com.diegonmarcos.cloudlib.gitui.GitConnectSpec",
+        "com.diegonmarcos.cloudlib.localserve.ServedPage",
+        "kotlinx.coroutines.Dispatchers",
+        "kotlinx.coroutines.launch",
+        "kotlinx.coroutines.withContext",
+        "java.io.File"
+      ],
+      "symbols": [
+        "card(id: String)",
+        "home(id: String)",
+        "ScrappedPage(svc: KgServices)",
+        "HomePage(entries: List<Pair<String, String>>, onOpen: (String)",
+        "meEntry(dir: File, entry: String)",
+        "isHtml(f: File)",
+        "MePage()",
+        "class NativeTags"
+      ]
+    },
+    {
       "path": "ac_cloud-kg-store/app/src/main/java/com/diegonmarcos/cloudkgstore/ui/PhonePages.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -244688,11 +245267,14 @@
       "symbols": [
         "section(id: String)",
         "pageIds(id: String)",
-        "theBottomNavIsCloudPhoneWeb()",
+        "theBottomNavIsApiScrappedHomeMeCloud()",
+        "noFieldOfThePreviousNavIsLost()",
+        "scrappedListsTheSharedHeadlessDeclarationByReference()",
+        "meDeclaresTheRepoToCloneAtRuntime()",
         "everyDataPageIsDeclaredByTheNavAndEveryDeclaredPageHasItsData()",
         "cloudIsTwoRowsOfTwoGroups()",
         "labels(g: JSONObject)",
-        "webIsSixPagesAndPhoneIsTheAppsIndex()",
+        "apiIsSixPagesAndPhoneIsTheAppsIndex()",
         "everyIconIsNamedAndTheIdsAreUniqueAcrossTheApp()",
         "theWebPagesReadVerticalsCloudSearchDeclares()",
         "theRepoPagesReadTheCodeIndexesCloudSearchDeclares()",
@@ -244773,6 +245355,28 @@
         "theFleetAppsFilterAndTheirDebugPortsComeFromTheGeneratedManifests()",
         "class KgFleetTest",
         "class Net"
+      ]
+    },
+    {
+      "path": "ac_cloud-kg-store/app/src/test/java/com/diegonmarcos/cloudkgstore/MeEntryTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "MeEntryTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.cloudkgstore.ui.meEntry",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertNull",
+        "org.junit.Rule",
+        "org.junit.Test",
+        "org.junit.rules.TemporaryFolder"
+      ],
+      "symbols": [
+        "theDeclaredEntryWins()",
+        "withoutTheEntryTheFirstRootHtmlIsServed()",
+        "aTraversingEntryIsIgnoredAndAnEmptyCloneServesNothing()",
+        "class MeEntryTest"
       ]
     },
     {
@@ -458024,6 +458628,7 @@
         "com.diegonmarcos.cloudlib.web.CloudWeb",
         "com.diegonmarcos.cloudlib.web.WebProfile",
         "android.content.ComponentCallbacks2",
+        "android.content.Intent",
         "android.os.Bundle",
         "android.view.Gravity",
         "android.view.View",
@@ -458060,6 +458665,8 @@
       ],
       "symbols": [
         "onCreate(savedInstanceState: Bundle?)",
+        "onNewIntent(intent: Intent)",
+        "captureViewIntent(intent: Intent?)",
         "setupNativeNav()",
         "setupOpenFileFab()",
         "load()",
@@ -458231,7 +458838,11 @@
       ],
       "imports": [
         "android.Manifest",
+        "android.content.Context",
+        "android.content.Intent",
         "android.content.pm.PackageManager",
+        "android.net.Uri",
+        "android.provider.OpenableColumns",
         "android.os.Build",
         "android.os.Environment",
         "android.provider.Settings",
@@ -458248,14 +458859,18 @@
         "java.io.FileInputStream"
       ],
       "symbols": [
+        "isTextOpen(mime: String?, name: String?)",
+        "capture(ctx: Context, intent: Intent?)",
         "hasExternalStorageAccess()",
         "guardedFile(call: PluginCall, path: String)",
         "readFile(call: PluginCall)",
         "listDir(call: PluginCall)",
         "listFiles(call: PluginCall)",
         "readBinary(call: PluginCall)",
+        "takePendingOpen(call: PluginCall)",
         "openSettings(call: PluginCall)",
-        "class ExternalFilePlugin"
+        "class ExternalFilePlugin",
+        "class PendingOpen"
       ]
     },
     {
@@ -459015,6 +459630,7 @@
         "ExternalDirEntry",
         "ExternalDirListing",
         "ExternalBinaryReadResult",
+        "ExternalPendingOpen",
         "ExternalFilePluginType",
         "ExternalFile",
         "EXTERNAL_FILE_ROOT",
@@ -524388,45 +525004,63 @@
         "TorrentConfigTags"
       ],
       "imports": [
-        "android.content.Context",
         "android.net.Uri",
         "android.provider.DocumentsContract",
         "androidx.activity.compose.rememberLauncherForActivityResult",
         "androidx.activity.result.contract.ActivityResultContracts",
+        "androidx.compose.foundation.background",
+        "androidx.compose.foundation.border",
+        "androidx.compose.foundation.horizontalScroll",
         "androidx.compose.foundation.layout.Arrangement",
+        "androidx.compose.foundation.layout.Box",
         "androidx.compose.foundation.layout.Column",
         "androidx.compose.foundation.layout.Row",
         "androidx.compose.foundation.layout.fillMaxWidth",
-        "androidx.compose.material3.Button",
+        "androidx.compose.foundation.rememberScrollState",
+        "androidx.compose.foundation.shape.RoundedCornerShape",
+        "androidx.compose.foundation.text.BasicTextField",
+        "androidx.compose.material3.Switch",
         "androidx.compose.material3.Text",
         "androidx.compose.runtime.Composable",
         "androidx.compose.runtime.getValue",
         "androidx.compose.runtime.mutableStateOf",
         "androidx.compose.runtime.remember",
         "androidx.compose.runtime.setValue",
+        "androidx.compose.ui.Alignment",
         "androidx.compose.ui.Modifier",
-        "androidx.compose.ui.graphics.Color",
+        "androidx.compose.ui.draw.clip",
+        "androidx.compose.ui.graphics.SolidColor",
         "androidx.compose.ui.platform.LocalContext",
         "androidx.compose.ui.platform.testTag",
-        "androidx.compose.ui.unit.dp",
-        "androidx.compose.ui.unit.sp",
-        "com.diegonmarcos.superapp.appstore.StoreDensity",
+        "androidx.compose.ui.semantics.semantics",
+        "androidx.compose.ui.text.TextStyle",
+        "androidx.compose.ui.text.style.TextOverflow",
+        "com.diegonmarcos.superapp.appstore.StoreKit",
         "com.diegonmarcos.superapp.perms.PermsChip",
         "com.diegonmarcos.superapp.perms.PermsLink",
         "com.diegonmarcos.superapp.perms.rememberPermsResumes",
         "com.diegonmarcos.superapp.torrent.EngineState",
+        "com.diegonmarcos.superapp.torrent.ParseKind",
         "com.diegonmarcos.superapp.torrent.PrefsSettings",
         "com.diegonmarcos.superapp.torrent.TorrentEngines",
-        "com.diegonmarcos.superapp.torrent.TorrentFormat",
-        "com.diegonmarcos.superapp.torrent.TorrentPaths",
-        "java.io.File"
+        "com.diegonmarcos.superapp.torrent.TorrentFormat"
       ],
       "symbols": [
         "drive(path: String)",
         "ratio(r: Int)",
+        "builtinRow(id: String)",
+        "builtin(id: String)",
+        "userRow(id: String)",
+        "user(id: String)",
+        "userSwitch(id: String)",
+        "userEdit(id: String)",
+        "kind(k: ParseKind)",
         "TorrentConfigPage()",
+        "TorrentConfigBody()",
+        "SourceField(label: String, value: String, tag: String, enabled: Boolean = true, hint: String = \"\", onChange: (String)",
         "useFolder(settings: PrefsSettings, dir: File, custom: Boolean = true)",
-        "class TorrentConfigTags"
+        "class TorrentConfigTags",
+        "class Draft"
       ]
     },
     {
@@ -524446,10 +525080,12 @@
         "com.diegonmarcos.superapp.torrent.TorrentHit",
         "com.diegonmarcos.superapp.torrent.TorrentIndexers",
         "com.diegonmarcos.superapp.torrent.TorrentSearch",
+        "com.diegonmarcos.superapp.torrent.UserIndexer",
         "com.diegonmarcos.superapp.torrent.sentence"
       ],
       "symbols": [
         "sources()",
+        "revision()",
         "search(sourceId: String, query: String)",
         "download(hit: StoreTorrentHost.Hit)",
         "folderNote()",
@@ -524872,11 +525508,16 @@
         "androidx.compose.ui.Modifier",
         "androidx.compose.ui.test.assertTextContains",
         "androidx.compose.ui.test.performClick",
+        "androidx.compose.ui.test.performScrollTo",
+        "androidx.compose.ui.test.performTextInput",
         "androidx.compose.ui.test.junit4.createAndroidComposeRule",
         "androidx.compose.ui.test.onNodeWithTag",
         "androidx.compose.ui.test.onNodeWithText",
         "androidx.fragment.app.FragmentActivity",
         "com.diegonmarcos.superapp.appstore.StoreFeedPanels",
+        "com.diegonmarcos.superapp.torrent.ParseKind",
+        "com.diegonmarcos.superapp.torrent.TorrentEngines",
+        "com.diegonmarcos.superapp.torrent.TorrentIndexers",
         "com.diegonmarcos.superapp.uikit.KitDenseMaterial",
         "org.junit.Assert.assertEquals",
         "org.junit.Assert.assertFalse",
@@ -524894,6 +525535,8 @@
       ],
       "symbols": [
         "evaluate()",
+        "showConfigs()",
+        "tagged(tag: String)",
         "class TorrentPagesTest"
       ]
     },
@@ -618532,6 +619175,28 @@
       ]
     },
     {
+      "path": "ad_CG-Omniverse/app/src/main/java/com/diegonmarcos/cgomniverse/Glb.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "Glb"
+      ],
+      "imports": [
+        "org.json.JSONObject",
+        "java.nio.ByteBuffer",
+        "java.nio.ByteOrder"
+      ],
+      "symbols": [
+        "summary()",
+        "bad(msg: String, len: Long, v: Long = 0, declared: Long = 0)",
+        "inspect(bytes: ByteArray)",
+        "n(k: String)",
+        "l(k: String)",
+        "class Glb",
+        "class Report"
+      ]
+    },
+    {
       "path": "ad_CG-Omniverse/app/src/main/java/com/diegonmarcos/cgomniverse/GraphicsStats.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -618580,6 +619245,8 @@
       "imports": [
         "android.content.Intent",
         "android.os.Bundle",
+        "com.diegonmarcos.cgomniverse.ui.OmniXrayPage",
+        "com.diegonmarcos.superapp.fleetconfigs.FleetConfigsExtensions",
         "android.os.StrictMode",
         "android.util.Log",
         "androidx.activity.ComponentActivity",
@@ -618594,6 +619261,88 @@
         "onNewIntent(intent: Intent)",
         "worldOf(i: Intent?)",
         "class MainActivity"
+      ]
+    },
+    {
+      "path": "ad_CG-Omniverse/app/src/main/java/com/diegonmarcos/cgomniverse/OmniProbe.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "OmniProbe"
+      ],
+      "imports": [
+        "android.content.Context",
+        "android.opengl.EGL14",
+        "android.opengl.EGLConfig",
+        "android.opengl.GLES20",
+        "android.webkit.WebView",
+        "com.diegonmarcos.cgomniverse.ui.Web",
+        "com.diegonmarcos.cloudlib.web.GpuProbe",
+        "org.json.JSONObject"
+      ],
+      "symbols": [
+        "webView()",
+        "egl()",
+        "modelRef()",
+        "check(ctx: Context, path: String)",
+        "listing(ctx: Context, dir: String)",
+        "run(ctx: Context, webgl: OmniXray.WebGl?)",
+        "webgl(ctx: Context, done: (OmniXray.WebGl)",
+        "class OmniProbe"
+      ]
+    },
+    {
+      "path": "ad_CG-Omniverse/app/src/main/java/com/diegonmarcos/cgomniverse/OmniXray.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "OmniXray"
+      ],
+      "imports": [
+        "org.json.JSONArray",
+        "org.json.JSONObject"
+      ],
+      "symbols": [
+        "event(src: String, msg: String, now: Long = System.currentTimeMillis()",
+        "avatarStarted(url: String, now: Long = System.currentTimeMillis()",
+        "avatarFinished(url: String, now: Long = System.currentTimeMillis()",
+        "avatarError(url: String, mainFrame: Boolean, code: Int, desc: String, now: Long = System.currentTimeMillis()",
+        "avatarHttp(url: String, mainFrame: Boolean, status: Int, now: Long = System.currentTimeMillis()",
+        "avatarRenderGone(crashed: Boolean, now: Long = System.currentTimeMillis()",
+        "cgcEvent(o: JSONObject, now: Long = System.currentTimeMillis()",
+        "pageReport(json: String, now: Long = System.currentTimeMillis()",
+        "world(id: String, url: String? = null, f: (WorldRec)",
+        "worldStarted(id: String, url: String, now: Long = System.currentTimeMillis()",
+        "worldFinished(id: String, url: String, now: Long = System.currentTimeMillis()",
+        "worldProgress(id: String, p: Int)",
+        "worldError(id: String, url: String, mainFrame: Boolean, code: Int, desc: String, now: Long = System.currentTimeMillis()",
+        "worldHttp(id: String, url: String, mainFrame: Boolean, status: Int, now: Long = System.currentTimeMillis()",
+        "worldRenderGone(id: String, now: Long = System.currentTimeMillis()",
+        "worldDiag(id: String, text: String)",
+        "avatar()",
+        "worlds()",
+        "events()",
+        "clearForTest()",
+        "isSoftware(renderer: String?, vendor: String?)",
+        "arr(k: String)",
+        "isModel(url: String)",
+        "stages(p: Probe?, a: Avatar)",
+        "lastErrorSuffix(page: JSONObject)",
+        "firstError(page: JSONObject)",
+        "verdict(stages: List<Stage>)",
+        "ts(t: Long)",
+        "report( app: String, version: String, sha: String, capturedAt: String, p: Probe?, a: Avatar, w: List<WorldRec>, consoleErrors: List<String>, evs: List<Event>, device: List<Row>, )",
+        "ctxEvent(o: JSONObject)",
+        "markdown(r: Report)",
+        "json(r: Report)",
+        "class OmniXray",
+        "class State",
+        "class Row",
+        "class Section",
+        "class Stage",
+        "class Event",
+        "class WebViewInfo",
+        "class Egl"
       ]
     },
     {
@@ -618827,6 +619576,10 @@
         "css(px: Int)",
         "update(next: Map<String, String>)",
         "js(code: String)",
+        "onPageStarted(view: WebView, url: String, favicon: android.graphics.Bitmap?)",
+        "onReceivedError(view: WebView, request: android.webkit.WebResourceRequest, err: android.webkit.WebResourceError)",
+        "onReceivedHttpError(view: WebView, request: android.webkit.WebResourceRequest, response: android.webkit.WebResourceResponse)",
+        "onRenderProcessGone(view: WebView, detail: android.webkit.RenderProcessGoneDetail)",
         "onPageFinished(view: WebView, url: String?)",
         "onRecovered(dead: WebView, fresh: WebView?)",
         "StatsHud(s: GraphicsStats.Stats?, modifier: Modifier)",
@@ -618902,6 +619655,84 @@
         "onReceivedError(view: WebView, request: WebResourceRequest, err: WebResourceError)",
         "onReceivedHttpError(view: WebView, request: WebResourceRequest, response: WebResourceResponse)",
         "onRenderProcessGone(view: WebView, detail: RenderProcessGoneDetail)"
+      ]
+    },
+    {
+      "path": "ad_CG-Omniverse/app/src/main/java/com/diegonmarcos/cgomniverse/ui/OmniXrayBridge.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "OmniXrayBridge"
+      ],
+      "imports": [
+        "android.webkit.JavascriptInterface",
+        "com.diegonmarcos.cgomniverse.OmniXray"
+      ],
+      "symbols": [
+        "report(json: String)",
+        "class OmniXrayBridge"
+      ]
+    },
+    {
+      "path": "ad_CG-Omniverse/app/src/main/java/com/diegonmarcos/cgomniverse/ui/OmniXrayPage.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "OmniXrayTags",
+        "OmniXrayPage"
+      ],
+      "imports": [
+        "android.content.ClipData",
+        "android.content.ClipboardManager",
+        "android.content.Context",
+        "android.content.Intent",
+        "android.os.Build",
+        "android.widget.Toast",
+        "androidx.compose.foundation.background",
+        "androidx.compose.foundation.border",
+        "androidx.compose.foundation.clickable",
+        "androidx.compose.foundation.layout.Arrangement",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.ColumnScope",
+        "androidx.compose.foundation.layout.Row",
+        "androidx.compose.foundation.layout.Spacer",
+        "androidx.compose.foundation.layout.fillMaxSize",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.foundation.layout.height",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.foundation.rememberScrollState",
+        "androidx.compose.foundation.shape.RoundedCornerShape",
+        "androidx.compose.foundation.verticalScroll",
+        "androidx.compose.material3.Text",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.LaunchedEffect",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableIntStateOf",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.remember",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.draw.clip",
+        "androidx.compose.ui.graphics.Color",
+        "androidx.compose.ui.platform.LocalContext",
+        "androidx.compose.ui.platform.testTag",
+        "androidx.compose.ui.text.font.FontFamily",
+        "androidx.compose.ui.text.font.FontWeight",
+        "androidx.compose.ui.unit.dp",
+        "androidx.compose.ui.unit.sp",
+        "com.diegonmarcos.cgomniverse.BuildConfig",
+        "com.diegonmarcos.cgomniverse.OmniProbe"
+      ],
+      "symbols": [
+        "section(id: String)",
+        "OmniXrayPage(dark: Boolean = true)",
+        "valueColor(v: String, c: ThemeColors)",
+        "build(ctx: Context, p: OmniXray.Probe?)",
+        "copy(ctx: Context, label: String, text: String)",
+        "share(ctx: Context, text: String)",
+        "Card(title: String, c: ThemeColors, modifier: Modifier, body: @Composable ColumnScope.()",
+        "Btn(label: String, c: ThemeColors, tag: String, onClick: ()",
+        "class OmniXrayTags"
       ]
     },
     {
@@ -619093,6 +619924,28 @@
       ]
     },
     {
+      "path": "ad_CG-Omniverse/app/src/test/java/com/diegonmarcos/cgomniverse/ConfigTailTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ConfigTailTest"
+      ],
+      "imports": [
+        "org.json.JSONObject",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.io.File"
+      ],
+      "symbols": [
+        "module(path: String)",
+        "theThreeOptInLibsAreLinked()",
+        "generalAndAboutAreStillDeclared()",
+        "theXrayAppPageIsRegisteredThroughTheHook()",
+        "theAvatarPageStillCarriesTheRenderProbe()",
+        "class ConfigTailTest"
+      ]
+    },
+    {
       "path": "ad_CG-Omniverse/app/src/test/java/com/diegonmarcos/cgomniverse/GraphicsStatsTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -619159,6 +620012,56 @@
         "theWatchdogFiresOnlyForAnUnfinishedLoadPastItsTime()",
         "waybackIsTheArchiveCopyFromStoreJson()",
         "class OfflineTest"
+      ]
+    },
+    {
+      "path": "ad_CG-Omniverse/app/src/test/java/com/diegonmarcos/cgomniverse/OmniXrayTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "OmniXrayTest"
+      ],
+      "imports": [
+        "org.json.JSONObject",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Before",
+        "org.junit.Test",
+        "java.nio.ByteBuffer",
+        "java.nio.ByteOrder"
+      ],
+      "symbols": [
+        "fresh()",
+        "glb(json: String, declaredExtra: Int = 0)",
+        "glbHeaderIsReadLikeALoaderReadsIt()",
+        "brokenGlbsNameTheirDefect()",
+        "dracoAndKtx2AreFlaggedAsNeedingADecoder()",
+        "probe(glb: Glb.Report? = Glb.inspect(glb(goodGlb)",
+        "page( ctx: String = \"\"\"{\"type\":\"webgl2\",\"ok\":true,\"t\":300,\"renderer\":\"Adreno (TM)",
+        "avatar( pageJson: String? = page()",
+        "failed(p: OmniXray.Probe?, a: OmniXray.Avatar)",
+        "aHealthySceneIsAllOk()",
+        "noWebViewFailsTheFirstStage()",
+        "aClosedAvatarPageIsNotAFailureButIsSaid()",
+        "aMainFrameErrorFailsThePageStage()",
+        "aDeadRenderProcessFailsThePageStage()",
+        "aFailedContextNamesTheWebglStage()",
+        "aSoftwareContextIsAWarningNamingTheRenderer()",
+        "aLostContextFailsTheWebglStage()",
+        "aMissingModelInTheApkFailsTheAssetStage()",
+        "aModelFetchedWithA404FailsTheAssetStage()",
+        "aBadGlbFailsTheDecodeStage()",
+        "aLoaderRejectionFailsTheDecodeStage()",
+        "aZeroSizedOrHiddenCanvasFailsTheSurfaceStage()",
+        "noFramesOrNoDrawsFailTheDrawStage()",
+        "theVerdictNamesTheFirstFailedStage()",
+        "softwareRendererNamesAreRecognised()",
+        "worldsAreRecordedAndReported()",
+        "report(p: OmniXray.Probe?, a: OmniXray.Avatar)",
+        "everySectionAndRowReachesBothExports()",
+        "anUnprobedReportStillBuilds()",
+        "class OmniXrayTest"
       ]
     },
     {
@@ -619578,6 +620481,66 @@
       ]
     },
     {
+      "path": "ad_Hardtech-CAD/app/src/main/java/com/diegonmarcos/hardtechcad/Diag.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "GlbInspector",
+        "ModelAsset",
+        "LiveRec",
+        "CadDiag",
+        "Stage",
+        "GlProbe",
+        "XraySnapshot",
+        "XrayReport"
+      ],
+      "imports": [
+        "org.json.JSONArray",
+        "org.json.JSONObject",
+        "java.io.DataInputStream",
+        "java.io.InputStream",
+        "java.security.DigestInputStream",
+        "java.security.MessageDigest"
+      ],
+      "symbols": [
+        "inspect(input: InputStream)",
+        "hex()",
+        "readFully(i: InputStream, b: ByteArray)",
+        "le32(b: ByteArray, o: Int)",
+        "strs(a: JSONArray?)",
+        "begin(id: String, name: String, lib: String, format: String, url: String)",
+        "edit(id: String, f: (LiveRec)",
+        "log(text: String)",
+        "event(id: String, text: String)",
+        "state(id: String, s: String)",
+        "shown(id: String, triangles: Long)",
+        "painted(id: String, pct: Double, w: Int, h: Int, gl: String)",
+        "failed(id: String, why: String)",
+        "view(id: String, w: Int, h: Int, shown: Boolean, hw: Boolean)",
+        "js(id: String, json: String)",
+        "snapshot()",
+        "clear()",
+        "js(s: String)",
+        "stages(s: XraySnapshot)",
+        "attempts(pr: JSONObject?)",
+        "assetProblem(a: ModelAsset)",
+        "verdict(s: XraySnapshot)",
+        "markdown(s: XraySnapshot)",
+        "kv(title: String, l: List<Pair<String, String>>)",
+        "json(s: XraySnapshot)",
+        "kv(l: List<Pair<String, String>>)",
+        "class GlbInspector",
+        "class Result",
+        "class ModelAsset",
+        "class LiveRec",
+        "class CadDiag",
+        "class Stage",
+        "class GlProbe",
+        "class XraySnapshot",
+        "class XrayReport"
+      ]
+    },
+    {
       "path": "ad_Hardtech-CAD/app/src/main/java/com/diegonmarcos/hardtechcad/Holdings.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -619612,6 +620575,8 @@
         "androidx.activity.compose.setContent",
         "com.diegonmarcos.hardtechcad.ui.AppShell",
         "com.diegonmarcos.hardtechcad.ui.AppTheme",
+        "com.diegonmarcos.hardtechcad.ui.CadXrayPage",
+        "com.diegonmarcos.superapp.fleetconfigs.FleetConfigsExtensions",
         "com.diegonmarcos.superapp.bottomnav.FleetChrome"
       ],
       "symbols": [
@@ -619923,6 +620888,7 @@
         "androidx.compose.runtime.getValue",
         "androidx.compose.runtime.mutableStateOf",
         "androidx.compose.runtime.remember",
+        "androidx.compose.runtime.rememberUpdatedState",
         "androidx.compose.runtime.setValue",
         "androidx.compose.ui.Alignment",
         "androidx.compose.ui.Modifier",
@@ -619937,17 +620903,19 @@
         "com.diegonmarcos.cloudlib.web.CloudWebClient",
         "com.diegonmarcos.cloudlib.web.WebProfile",
         "com.diegonmarcos.hardtechcad.BuildConfig",
+        "com.diegonmarcos.hardtechcad.CadDiag",
         "com.diegonmarcos.hardtechcad.R",
-        "com.diegonmarcos.superapp.cad.CadFormats",
-        "com.diegonmarcos.superapp.cad.Model",
-        "com.diegonmarcos.superapp.cad.ModelCache"
+        "com.diegonmarcos.superapp.cad.CadFormats"
       ],
       "symbols": [
         "ModelViewer(m: Model, dir: File)",
         "post(json: String)",
+        "pollDiag(id: String)",
         "onRecovered(dead: WebView, fresh: WebView?)",
         "ViewerControls(onFit: ()",
         "ControlChip(label: String, on: Boolean, modifier: Modifier, onClick: ()",
+        "decodeJs(v: String?)",
+        "ViewerProbe(dir: File, modifier: Modifier = Modifier)",
         "class ViewState",
         "class Fetching",
         "class Loading",
@@ -620003,6 +620971,117 @@
         "LibraryRow(e: Entry, onOpen: ()",
         "AboutPanel()",
         "openUrl(ctx: Context, url: String)"
+      ]
+    },
+    {
+      "path": "ad_Hardtech-CAD/app/src/main/java/com/diegonmarcos/hardtechcad/ui/XrayPage.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "XrayTags",
+        "EglProbe",
+        "CadXrayPage"
+      ],
+      "imports": [
+        "android.app.ActivityManager",
+        "android.content.ClipData",
+        "android.content.ClipboardManager",
+        "android.content.Context",
+        "android.content.Intent",
+        "android.content.pm.PackageManager",
+        "android.opengl.EGL14",
+        "android.opengl.EGLConfig",
+        "android.opengl.EGLExt",
+        "android.opengl.GLES20",
+        "android.os.Build",
+        "android.webkit.WebView",
+        "androidx.compose.foundation.background",
+        "androidx.compose.foundation.border",
+        "androidx.compose.foundation.clickable",
+        "androidx.compose.foundation.layout.Arrangement",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.Row",
+        "androidx.compose.foundation.layout.fillMaxSize",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.foundation.layout.height",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.foundation.rememberScrollState",
+        "androidx.compose.foundation.shape.RoundedCornerShape",
+        "androidx.compose.foundation.verticalScroll",
+        "androidx.compose.material3.Text",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.LaunchedEffect",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableIntStateOf",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.remember",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.draw.clip",
+        "androidx.compose.ui.graphics.Color",
+        "androidx.compose.ui.platform.LocalContext",
+        "androidx.compose.ui.platform.testTag",
+        "androidx.compose.ui.text.font.FontFamily",
+        "androidx.compose.ui.text.font.FontWeight"
+      ],
+      "symbols": [
+        "model(id: String)",
+        "run()",
+        "fail(err: String)",
+        "app()",
+        "device(ctx: Context)",
+        "webview()",
+        "now()",
+        "run(ctx: Context)",
+        "probe(ctx: Context, m: Model)",
+        "models(ctx: Context)",
+        "copy(ctx: Context, label: String, text: String)",
+        "statusColor(s: String)",
+        "CadXrayPage(dark: Boolean = true)",
+        "Card(bg: Color, body: @Composable ()",
+        "Facts(l: List<Pair<String, String>>, ink: Color, dim: Color, mono: Boolean = true)",
+        "Chip(label: String, accent: Color, modifier: Modifier = Modifier, selected: Boolean = false, onClick: ()",
+        "class XrayTags",
+        "class EglProbe",
+        "class XrayFacts",
+        "class AssetProbe"
+      ]
+    },
+    {
+      "path": "ad_Hardtech-CAD/app/src/test/java/com/diegonmarcos/hardtechcad/DiagTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "DiagTest"
+      ],
+      "imports": [
+        "org.json.JSONObject",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNotNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.io.ByteArrayInputStream",
+        "java.io.File",
+        "java.nio.ByteBuffer",
+        "java.nio.ByteOrder"
+      ],
+      "symbols": [
+        "glb(json: String, bin: ByteArray, declaredExtra: Int = 0)",
+        "inspectorAcceptsAValidGlbAndCountsItsTriangles()",
+        "inspectorNamesEachFailedCheck()",
+        "everyDeclaredBundledModelParsesAndMatchesItsDeclaration()",
+        "theDroneIsAddedAndNoModelWasRemoved()",
+        "theViewerPageCarriesTheDiagnosticsHooks()",
+        "goodJs()",
+        "snap(egl: GlProbe = GlProbe(true, true, \"done\", \"\", listOf(\"GL_RENDERER\" to \"Adreno (TM)",
+        "asset(found: Boolean = true, ok: Boolean = true, err: String = \"\")",
+        "aHealthyPipelineHasNoFailingStage()",
+        "eachBrokenStageIsNamedAsTheFirstFailure()",
+        "aSoftwareRendererIsAWarningNotAFailure()",
+        "theReportCarriesEveryFieldAsMarkdownAndJson()",
+        "theRecorderKeepsEventsPerModel()",
+        "class DiagTest"
       ]
     },
     {
@@ -620255,6 +621334,28 @@
         "derive_skp(m, src, version)",
         "mirror(m, src)",
         "main()"
+      ]
+    },
+    {
+      "path": "ad_Hardtech-CAD/tools/make_drone.py",
+      "lang": "py",
+      "role": "python",
+      "exports": [
+        "build()",
+        "pad(b, c=b\"\\x00\")",
+        "glb(parts)",
+        "main()",
+        "class Mesh"
+      ],
+      "imports": [
+        "hashlib"
+      ],
+      "symbols": [
+        "build()",
+        "pad(b, c=b\"\\x00\")",
+        "glb(parts)",
+        "main()",
+        "class Mesh"
       ]
     },
     {
