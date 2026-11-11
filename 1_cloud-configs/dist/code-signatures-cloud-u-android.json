@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 23918,
+    "files": 23923,
     "by_lang": {
       "sh": 701,
       "js": 549,
       "py": 212,
-      "kotlin": 13177,
+      "kotlin": 13182,
       "ts": 8470,
       "java": 651,
       "nix": 36,
@@ -24,7 +24,7 @@
       "script": 300,
       "module": 6480,
       "java": 650,
-      "kotlin": 13174,
+      "kotlin": 13179,
       "python": 72,
       "flake": 32,
       "rust-module": 122,
@@ -9062,6 +9062,24 @@
         "class SsIndicator",
         "class SuperSavingOffReceiver",
         "class SsScreenOff"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/bgpolicy/SystemSaver.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "SystemSaver"
+      ],
+      "imports": [
+        "android.content.Context",
+        "android.os.PowerManager",
+        "android.provider.Settings"
+      ],
+      "symbols": [
+        "isExtreme(flags: Map<String, Int?>, powerSave: Boolean)",
+        "extreme(ctx: Context)",
+        "class SystemSaver"
       ]
     },
     {
@@ -22930,6 +22948,24 @@
         "class SuperSavingTest",
         "class FakeHost",
         "class Rig"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/test/java/com/diegonmarcos/superapp/bgpolicy/SystemSaverTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "SystemSaverTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "samsungMaximumModeIsExtreme()",
+        "plainOrNoSaverIsNotExtreme()",
+        "class SystemSaverTest"
       ]
     },
     {
@@ -113703,6 +113739,7 @@
         "d8()",
         "d9()",
         "d10()",
+        "d11()",
         "mutate()",
         "pyjson()",
         "append()",
@@ -113719,8 +113756,7 @@
         "m_email_kt()",
         "m_email_data()",
         "m_email_other()",
-        "m_kt_provider()",
-        "m_kt_group()"
+        "m_kt_provider()"
       ],
       "imports": [],
       "symbols": [
@@ -113736,6 +113772,7 @@
         "d8()",
         "d9()",
         "d10()",
+        "d11()",
         "mutate()",
         "pyjson()",
         "append()",
@@ -113762,8 +113799,7 @@
         "m_api_nosecret()",
         "m_api_page()",
         "m_secret_json()",
-        "m_secret_kt()",
-        "m_secret_bearer()"
+        "m_secret_kt()"
       ]
     },
     {
@@ -200521,16 +200557,20 @@
       "lang": "kotlin",
       "role": "kotlin",
       "exports": [
-        "EntryMenu"
+        "EntryMenu",
+        "SelectionMenu"
       ],
       "imports": [],
       "symbols": [
         "sectionsFor( isDirectory: Boolean, isLocal: Boolean, rowItems: List<RowMenu.Item>, canEdit: Boolean, canEditor: Boolean, isPdf: Boolean, underGit: Boolean, )",
+        "actionsFor(inArchive: Boolean)",
+        "gitActionsFor(inArchive: Boolean, allUnderGit: Boolean)",
         "class only",
         "class EntryMenu",
         "class Group",
         "class Action",
-        "class Section"
+        "class Section",
+        "class SelectionMenu"
       ]
     },
     {
@@ -200830,14 +200870,14 @@
         "createFolder(id: PaneId, name: String)",
         "createFile(id: PaneId, name: String)",
         "rename(entry: FileOps.Entry, name: String)",
+        "gitRename(entry: FileOps.Entry, newName: String)",
+        "gitMoveEntries(entries: List<FileOps.Entry>, destination: Location.Local)",
+        "gitMv(files: List<File>, refresh: Location.Local, plan: ()",
+        "gitMvMany(files: List<File>, refresh: Location.Local, plans: List<()",
         "compress(entry: FileOps.Entry, tarGz: Boolean, downloadsDir: File?)",
         "mutate(id: PaneId, block: (Location.Local)",
         "applyRenamePlan(plan: List<FileOps.RenameStep>, loc: Location)",
-        "startSearch(root: Location.Local, query: String, contentToo: Boolean)",
-        "cancelSearch()",
-        "clearSearch()",
-        "runScoped(start: String, query: String, kind: Declarations.SearchScopeDecl, decl: Declarations.FilesSearchDecl = Declarations.files.search)",
-        "cancelScoped()"
+        "startSearch(root: Location.Local, query: String, contentToo: Boolean)"
       ]
     },
     {
@@ -200980,8 +201020,8 @@
         "class Convert",
         "class Compress",
         "class Places",
-        "class EntryAction",
-        "class TreeRow"
+        "class GitRename",
+        "class EntryAction"
       ]
     },
     {
@@ -201040,6 +201080,30 @@
         "class PaneState",
         "class FilesUiState",
         "class FilesReducer"
+      ]
+    },
+    {
+      "path": "ac_cloud-drive/app/src/main/java/com/diegonmarcos/clouddrive/files/GitMv.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "GitMv"
+      ],
+      "imports": [
+        "android.content.Context",
+        "com.diegonmarcos.cloudlib.gitsync.GitEngine",
+        "java.io.File"
+      ],
+      "symbols": [
+        "rel(root: File, f: File)",
+        "planRename(source: File, newName: String)",
+        "planMove(source: File, destDir: File)",
+        "plan(source: File, target: File)",
+        "apply(ctx: Context, steps: List<Step>)",
+        "class only",
+        "class GitMv",
+        "class Step",
+        "class Refused"
       ]
     },
     {
@@ -202131,7 +202195,8 @@
       "exports": [
         "SeedOutcome",
         "SeedReport",
-        "SeedPolicy"
+        "SeedPolicy",
+        "CloneTrigger"
       ],
       "imports": [],
       "symbols": [
@@ -202144,10 +202209,12 @@
         "pending(declared: Int, unmetered: Boolean)",
         "decide(report: SeedReport, pass: Int)",
         "stopped(report: SeedReport, pass: Int)",
+        "mayClone(explicit: Boolean)",
         "class SeedOutcome",
         "class SeedReport",
         "class SeedPolicy",
-        "class Next"
+        "class Next",
+        "class CloneTrigger"
       ]
     },
     {
@@ -202735,7 +202802,8 @@
         "lastReport(context: Context)",
         "schedule(context: Context)",
         "kick(context: Context)",
-        "enqueue(context: Context, policy: ExistingWorkPolicy)",
+        "cloneMissing(context: Context)",
+        "enqueue(context: Context, policy: ExistingWorkPolicy, explicit: Boolean = false)",
         "class StoreSeedWorker"
       ]
     },
@@ -206864,6 +206932,33 @@
       ]
     },
     {
+      "path": "ac_cloud-drive/app/src/test/java/com/diegonmarcos/clouddrive/files/GitMvMenuTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "GitMvMenuTest"
+      ],
+      "imports": [
+        "java.io.File",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Rule",
+        "org.junit.Test",
+        "org.junit.rules.TemporaryFolder"
+      ],
+      "symbols": [
+        "repo()",
+        "singleFileGitSectionHasOpenRenameMoveOnlyUnderGit()",
+        "git(underGit: Boolean)",
+        "selectionMenuCarriesEveryRequestedEntry()",
+        "renameAndMovePlanGitMvPaths()",
+        "refusesWhatGitMvWouldRefuse()",
+        "routingGoesThroughTheGitEngineStageAndTheMenusAreWired()",
+        "class GitMvMenuTest"
+      ]
+    },
+    {
       "path": "ac_cloud-drive/app/src/test/java/com/diegonmarcos/clouddrive/files/GitWorkTreeTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -207152,6 +207247,30 @@
         "perms_battery_and_samsung_guide()",
         "keeper_is_sticky_foreground_and_survives_task_removal()",
         "class MountKeeperTest"
+      ]
+    },
+    {
+      "path": "ac_cloud-drive/app/src/test/java/com/diegonmarcos/clouddrive/NoAutoCloneTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "NoAutoCloneTest"
+      ],
+      "imports": [
+        "java.io.File",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "main(rel: String)",
+        "onlyAnExplicitActionMayClone()",
+        "anAutomaticPassReportsAMissingRepositoryInsteadOfCloningIt()",
+        "theClonePathIsGatedAndOnlyTheUserButtonIsExplicit()",
+        "kick(context: Context)",
+        "cloneMissing(context: Context)",
+        "class NoAutoCloneTest"
       ]
     },
     {
