@@ -6,10 +6,10 @@
   },
   "repo": "cloud-u-containers",
   "counts": {
-    "files": 2651,
+    "files": 2652,
     "by_lang": {
       "sh": 180,
-      "js": 117,
+      "js": 118,
       "nix": 196,
       "py": 511,
       "ts": 1276,
@@ -17,7 +17,7 @@
     },
     "by_role": {
       "shell": 171,
-      "file": 350,
+      "file": 351,
       "nix-module": 20,
       "python": 497,
       "module": 786,
@@ -879,6 +879,18 @@
       "imports": [
         "node:fs",
         "node:path"
+      ],
+      "symbols": []
+    },
+    {
+      "path": "_shared/test-host-hygiene.mjs",
+      "lang": "js",
+      "role": "file",
+      "exports": [],
+      "imports": [
+        "node:fs",
+        "node:path",
+        "node:url"
       ],
       "symbols": []
     },

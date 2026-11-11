@@ -1889,6 +1889,9 @@
         "oom-priority": {
           "cmd": "node ../_shared/test-oom-priority.mjs"
         },
+        "host-hygiene": {
+          "cmd": "node ../_shared/test-host-hygiene.mjs"
+        },
         "superapp-hosts-declared": {
           "cmd": "bash test/test-superapp-hosts.sh"
         },
