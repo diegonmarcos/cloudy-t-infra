@@ -18,6 +18,10 @@
       "url": "https://api.diegonmarcos.com/pub/health"
     },
     {
+      "service": "c3bot-relay",
+      "url": "https://mcp.diegonmarcos.com/health"
+    },
+    {
       "service": "cloudy-all-api",
       "url": "https://api.diegonmarcos.com/c3-services-api/health"
     },
@@ -154,6 +158,10 @@
     {
       "service": "c3-public-api",
       "domain": "api.diegonmarcos.com/pub"
+    },
+    {
+      "service": "c3bot-relay",
+      "domain": "mcp.diegonmarcos.com"
     },
     {
       "service": "cloudy-all-api",
@@ -300,6 +308,10 @@
     {
       "service": "c3-public-api",
       "domain": "api.diegonmarcos.com/pub"
+    },
+    {
+      "service": "c3bot-relay",
+      "domain": "mcp.diegonmarcos.com"
     },
     {
       "service": "cloudy-all-api",
@@ -537,6 +549,19 @@
       },
       "health": {
         "path": "/pub/health"
+      }
+    },
+    "c3bot-relay": {
+      "name": "c3bot-relay",
+      "vm": "oci-A1-f_0",
+      "domain": "mcp.diegonmarcos.com",
+      "enabled": true,
+      "category": "sec",
+      "ports": {
+        "app": 3119
+      },
+      "health": {
+        "path": "/health"
       }
     },
     "cloud-drive-mcp": {
@@ -1717,6 +1742,15 @@
       "dns": "c3-public-api.mesh.diegonmarcos.com"
     },
     {
+      "service": "c3bot-relay",
+      "dns": "c3bot-relay.mesh.diegonmarcos.com"
+    },
+    {
+      "service": "c3bot-relay",
+      "container": "app",
+      "dns": "c3bot-relay.mesh.diegonmarcos.com"
+    },
+    {
       "service": "cloud-drive-mcp",
       "dns": "drive-mcp.mesh.diegonmarcos.com"
     },
@@ -2509,6 +2543,7 @@
           "cloudy-ai-embeddings-api",
           "jev-sidecar",
           "languagetool",
+          "c3bot-relay",
           "cloud-drive-mcp",
           "cloud-infra-mcp",
           "cloud-mail-mcp",
@@ -2685,6 +2720,19 @@
         },
         "health": {
           "path": "/pub/health"
+        }
+      },
+      "c3bot-relay": {
+        "name": "c3bot-relay",
+        "vm": "oci-A1-f_0",
+        "domain": "mcp.diegonmarcos.com",
+        "enabled": true,
+        "category": "sec",
+        "ports": {
+          "app": 3119
+        },
+        "health": {
+          "path": "/health"
         }
       },
       "cloud-drive-mcp": {

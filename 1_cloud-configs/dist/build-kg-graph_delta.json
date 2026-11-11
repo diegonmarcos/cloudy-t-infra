@@ -33,15 +33,15 @@
   "_generated": "",
   "_source": "_cloud-data-consolidated.json via cloud-data-config-derive.ts/kg-delta",
   "counts": {
-    "nodes": 378,
-    "edges": 520,
+    "nodes": 381,
+    "edges": 526,
     "by_table": {
       "vm": 4,
-      "service": 93,
-      "container": 113,
+      "service": 94,
+      "container": 114,
       "domain": 44,
       "repo": 3,
-      "module": 93,
+      "module": 94,
       "package": 28
     }
   },
@@ -271,6 +271,32 @@
         "image": "ghcr.io/diegonmarcos/c3-public-api:latest",
         "role": "app",
         "port": 8087,
+        "public": true
+      }
+    },
+    {
+      "table": "service",
+      "id": "c3bot_relay",
+      "key": "service:c3bot_relay",
+      "properties": {
+        "name": "c3bot-relay",
+        "category": "sec",
+        "description": "c3bot-relay (#1579): Telegram <-> c3 relay on a dedicated bot (Bot B). One inbound Telegram long-poll fans out to c3 clients over three transports: WebSocket (/ws, full duplex), Server-Sent Events (/events, Last-Event-ID resume) and long-poll (/poll, cursor). Outbound via POST /send or a WS send frame. Zero npm dependencies. Bearer-gated, mesh-only.",
+        "domain": "mcp.diegonmarcos.com",
+        "port": 3119,
+        "vm": "oci-apps",
+        "folder": "infra-api_c3bot-relay"
+      }
+    },
+    {
+      "table": "container",
+      "id": "c3bot_relay",
+      "key": "container:c3bot_relay",
+      "properties": {
+        "name": "c3bot-relay",
+        "image": "ghcr.io/diegonmarcos/c3bot-relay:latest",
+        "role": "app",
+        "port": 3119,
         "public": true
       }
     },
@@ -3205,6 +3231,17 @@
     },
     {
       "table": "module",
+      "id": "infra_api_c3bot_relay",
+      "key": "module:infra_api_c3bot_relay",
+      "properties": {
+        "name": "infra-api_c3bot-relay",
+        "repo": "cloud",
+        "category": "sec",
+        "service": "c3bot-relay"
+      }
+    },
+    {
+      "table": "module",
       "id": "infra_api_cloud_drive_mcp",
       "key": "module:infra_api_cloud_drive_mcp",
       "properties": {
@@ -4606,6 +4643,22 @@
       "from": "service:c3_public_api",
       "to": "container:c3_public_api",
       "key": "service:c3_public_api->runs_container->container:c3_public_api",
+      "properties": {
+        "role": "app"
+      }
+    },
+    {
+      "table": "hosted_on",
+      "from": "service:c3bot_relay",
+      "to": "vm:oci_apps",
+      "key": "service:c3bot_relay->hosted_on->vm:oci_apps",
+      "properties": {}
+    },
+    {
+      "table": "runs_container",
+      "from": "service:c3bot_relay",
+      "to": "container:c3bot_relay",
+      "key": "service:c3bot_relay->runs_container->container:c3bot_relay",
       "properties": {
         "role": "app"
       }
@@ -6159,6 +6212,15 @@
     },
     {
       "table": "proxied_by",
+      "from": "service:c3bot_relay",
+      "to": "service:caddy",
+      "key": "service:c3bot_relay->proxied_by->service:caddy",
+      "properties": {
+        "domain": "mcp.diegonmarcos.com"
+      }
+    },
+    {
+      "table": "proxied_by",
       "from": "service:cloud_drive_mcp",
       "to": "service:caddy",
       "key": "service:cloud_drive_mcp->proxied_by->service:caddy",
@@ -6615,6 +6677,13 @@
     {
       "table": "routes_to",
       "from": "domain:mcp_diegonmarcos_com",
+      "to": "service:c3bot_relay",
+      "key": "domain:mcp_diegonmarcos_com->routes_to->service:c3bot_relay",
+      "properties": {}
+    },
+    {
+      "table": "routes_to",
+      "from": "domain:mcp_diegonmarcos_com",
       "to": "service:cloud_drive_mcp",
       "key": "domain:mcp_diegonmarcos_com->routes_to->service:cloud_drive_mcp",
       "properties": {}
@@ -7044,6 +7113,20 @@
       "from": "module:infra_api_c3_public_api",
       "to": "service:c3_public_api",
       "key": "module:infra_api_c3_public_api->implements->service:c3_public_api",
+      "properties": {}
+    },
+    {
+      "table": "belongs_to_repo",
+      "from": "module:infra_api_c3bot_relay",
+      "to": "repo:cloud",
+      "key": "module:infra_api_c3bot_relay->belongs_to_repo->repo:cloud",
+      "properties": {}
+    },
+    {
+      "table": "implements",
+      "from": "module:infra_api_c3bot_relay",
+      "to": "service:c3bot_relay",
+      "key": "module:infra_api_c3bot_relay->implements->service:c3bot_relay",
       "properties": {}
     },
     {

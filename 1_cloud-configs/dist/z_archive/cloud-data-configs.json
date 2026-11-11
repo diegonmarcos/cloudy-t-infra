@@ -116,6 +116,18 @@
       ]
     },
     {
+      "name": "c3bot-relay",
+      "category": "sec",
+      "vm": "oci-A1-f_0",
+      "description": "c3bot-relay (#1579): Telegram <-> c3 relay on a dedicated bot (Bot B). One inbound Telegram long-poll fans out to c3 clients over three transports: WebSocket (/ws, full duplex), Server-Sent Events (/events, Last-Event-ID resume) and long-poll (/poll, cursor). Outbound via POST /send or a WS send frame. Zero npm dependencies. Bearer-gated, mesh-only.",
+      "domain": "mcp.diegonmarcos.com",
+      "ports": [],
+      "networks": [],
+      "containers": [
+        "c3bot-relay"
+      ]
+    },
+    {
       "name": "caddy",
       "category": "sec",
       "vm": "gcp-E2-f_0",
@@ -1313,6 +1325,18 @@
       "networks": [],
       "containers": [
         "bup-server"
+      ]
+    },
+    {
+      "name": "c3bot-relay",
+      "category": "sec",
+      "vm": "oci-A1-f_0",
+      "description": "c3bot-relay (#1579): Telegram <-> c3 relay on a dedicated bot (Bot B). One inbound Telegram long-poll fans out to c3 clients over three transports: WebSocket (/ws, full duplex), Server-Sent Events (/events, Last-Event-ID resume) and long-poll (/poll, cursor). Outbound via POST /send or a WS send frame. Zero npm dependencies. Bearer-gated, mesh-only.",
+      "domain": "mcp.diegonmarcos.com",
+      "ports": [],
+      "networks": [],
+      "containers": [
+        "c3bot-relay"
       ]
     },
     {

@@ -61,6 +61,7 @@
           "label": "Ops-API-MCP",
           "containers": [
             "c3-public-api",
+            "c3bot-relay",
             "cloud-drive-mcp",
             "cloud-infra-mcp",
             "cloud-mail-mcp",
@@ -367,6 +368,27 @@
       "public_url": "api.diegonmarcos.com/pub",
       "auth": "two_factor",
       "auth_type": "woauth"
+    },
+    {
+      "name": "c3bot-relay",
+      "kind": "container",
+      "service": "c3bot-relay",
+      "role": "app",
+      "dir": "infra-api_c3bot-relay",
+      "group": "Infra Apps",
+      "category": "Ops-API-MCP",
+      "description": "c3bot-relay (#1579): Telegram <-> c3 relay on a dedicated bot (Bot B). One inbound Telegram long-poll fans out to c3 clients over three transports: WebSocket (/ws, full duplex), Server-Sent Events (/events, Last-Event-ID resume) and long-poll (/poll, cursor). Outbound via POST /send or a WS send frame. Zero npm dependencies. Bearer-gated, mesh-only.",
+      "image": "ghcr.io/diegonmarcos/c3bot-relay:latest",
+      "host": "oci-apps",
+      "dns": "c3bot-relay.mesh.diegonmarcos.com",
+      "port": 3119,
+      "public": true,
+      "protocol": "http",
+      "db_engine": "",
+      "legacy_category": "sec",
+      "public_url": "mcp.diegonmarcos.com/c3bot-relay",
+      "auth": "",
+      "auth_type": "open"
     },
     {
       "name": "cloud-drive-mcp",

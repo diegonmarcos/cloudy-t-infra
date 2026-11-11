@@ -29,6 +29,10 @@
       "ip": "10.0.0.1",
       "desc": "C3 Public API — single public-edge listener on oci-analytics. Consolidates http-to-smtp-proxy-api (Bearer-gated /mail/*) and c3-analytics-api passthrough (public /analytics/*). Replaces split listeners across gcp-proxy + oci-analytics so gcp-proxy becomes a pure wg0 spoke."
     },
+    "c3bot-relay": {
+      "ip": "10.0.0.1",
+      "desc": "c3bot-relay (#1579): Telegram <-> c3 relay on a dedicated bot (Bot B). One inbound Telegram long-poll fans out to c3 clients over three transports: WebSocket (/ws, full duplex), Server-Sent Events (/events, Last-Event-ID resume) and long-poll (/poll, cursor). Outbound via POST /send or a WS send frame. Zero npm dependencies. Bearer-gated, mesh-only."
+    },
     "drive-mcp": {
       "ip": "10.0.0.1",
       "desc": "Drive MCP server — one facade over every storage unit: repos, files, photos, sync, scrapes, S3 and conversion"

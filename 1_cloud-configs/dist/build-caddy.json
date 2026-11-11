@@ -676,6 +676,14 @@
       "comment": "c3 container c3-public-api (mesh-only; c3-public-api-http-8087.mesh.diegonmarcos.com)"
     },
     {
+      "domain": "c3-c3bot-relay.diegonmarcos.com",
+      "upstream": "10.0.0.6:3119",
+      "auth": "none",
+      "wg_only": true,
+      "container": "c3bot-relay",
+      "comment": "c3 container c3bot-relay (mesh-only; c3bot-relay-http-3119.mesh.diegonmarcos.com)"
+    },
+    {
       "domain": "c3-cloud-drive-mcp.diegonmarcos.com",
       "upstream": "10.0.0.6:3109",
       "auth": "none",
@@ -1855,6 +1863,11 @@
       "parent_domain": "mcp.diegonmarcos.com",
       "endpoints": [
         {
+          "base_path": "/c3bot-relay",
+          "upstream": "10.0.0.6:3119",
+          "wg_only": true
+        },
+        {
           "base_path": "/cloud-drive-mcp",
           "upstream": "10.0.0.6:3109",
           "wg_only": true,
@@ -1938,7 +1951,7 @@
         }
       ],
       "comment": "MCP -- Streamable HTTP endpoints for Claude Code MCP clients",
-      "fallback_message": "MCP Hub -- use /cloud-drive-mcp/mcp, /c3-infra-mcp/mcp, /mail-mcp/mcp, /mattermost-mcp/mcp, /c3-services-mcp/mcp, /cloud-superapp-mcp/mcp, /cloud-vault-mcp/mcp, /cloudy-all-mcp/mcp, /cloudy-apps-communication-mcp/mcp, /cloudy-apps-drive-mcp/mcp, /g-personal/mcp, /g-workspace/mcp, /cloud-cgc-pub-mcp/mcp, /cloud-cgc-pvt-mcp/mcp"
+      "fallback_message": "MCP Hub -- use /c3bot-relay/mcp, /cloud-drive-mcp/mcp, /c3-infra-mcp/mcp, /mail-mcp/mcp, /mattermost-mcp/mcp, /c3-services-mcp/mcp, /cloud-superapp-mcp/mcp, /cloud-vault-mcp/mcp, /cloudy-all-mcp/mcp, /cloudy-apps-communication-mcp/mcp, /cloudy-apps-drive-mcp/mcp, /g-personal/mcp, /g-workspace/mcp, /cloud-cgc-pub-mcp/mcp, /cloud-cgc-pvt-mcp/mcp"
     }
   ],
   "oidc_public": {
@@ -1996,6 +2009,11 @@
       "service": "c3-public-api.mesh.diegonmarcos.com",
       "upstream": "10.0.0.4:8087",
       "private_name": "cloud.c3-public-api.mesh.diegonmarcos.com"
+    },
+    {
+      "service": "c3bot-relay.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:3119",
+      "private_name": "cloud.c3bot-relay.mesh.diegonmarcos.com"
     },
     {
       "service": "drive-mcp.mesh.diegonmarcos.com",
@@ -2384,6 +2402,12 @@
       "service": "cloud.c3-public-api.mesh.diegonmarcos.com",
       "upstream": "10.0.0.4:8087",
       "alias_of": "c3-public-api.mesh.diegonmarcos.com",
+      "source": "internal_routes"
+    },
+    {
+      "service": "cloud.c3bot-relay.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:3119",
+      "alias_of": "c3bot-relay.mesh.diegonmarcos.com",
       "source": "internal_routes"
     },
     {
@@ -2891,6 +2915,12 @@
       "source": "url_scheme"
     },
     {
+      "service": "c3-c3bot-relay.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:3119",
+      "scheme": "c3",
+      "source": "url_scheme"
+    },
+    {
       "service": "c3-cloud-drive-mcp.mesh.diegonmarcos.com",
       "upstream": "10.0.0.6:3109",
       "scheme": "c3",
@@ -3294,6 +3324,11 @@
         "host": "c3-public-api.diegonmarcos.com",
         "container": "c3-public-api",
         "private": "c3-public-api.mesh.diegonmarcos.com"
+      },
+      {
+        "host": "c3-c3bot-relay.diegonmarcos.com",
+        "container": "c3bot-relay",
+        "private": "c3-c3bot-relay.mesh.diegonmarcos.com"
       },
       {
         "host": "c3-cloud-drive-mcp.diegonmarcos.com",
@@ -4031,6 +4066,27 @@
       "port": 8087,
       "protocol": "http",
       "upstream": "10.0.0.4:8087",
+      "source": "containers.app.port"
+    },
+    {
+      "kind": "redirect",
+      "service": "c3bot-relay.mesh.diegonmarcos.com",
+      "redirect_to": "https://c3bot-relay-http-3119.mesh.diegonmarcos.com",
+      "container": "c3bot-relay",
+      "container_key": "app",
+      "svc": "c3bot-relay",
+      "vm": "oci-A1-f_0"
+    },
+    {
+      "kind": "canonical",
+      "service": "c3bot-relay-http-3119.mesh.diegonmarcos.com",
+      "container": "c3bot-relay",
+      "container_key": "app",
+      "svc": "c3bot-relay",
+      "vm": "oci-A1-f_0",
+      "port": 3119,
+      "protocol": "http",
+      "upstream": "10.0.0.6:3119",
       "source": "containers.app.port"
     },
     {
@@ -5446,6 +5502,16 @@
     },
     {
       "host": "mcp.diegonmarcos.com",
+      "path": "/c3bot-relay",
+      "upstream": "10.0.0.6:3119",
+      "kind": "reverse_proxy",
+      "tls": "public",
+      "zone": "com",
+      "service": null,
+      "notes": null
+    },
+    {
+      "host": "mcp.diegonmarcos.com",
       "path": "/cloud-drive-mcp",
       "upstream": "10.0.0.6:3109",
       "kind": "reverse_proxy",
@@ -5939,6 +6005,16 @@
       "zone": "com",
       "service": null,
       "notes": "c3 container c3-public-api (mesh-only; c3-public-api-http-8087.mesh.diegonmarcos.com)"
+    },
+    {
+      "host": "c3-c3bot-relay.diegonmarcos.com",
+      "path": null,
+      "upstream": "10.0.0.6:3119",
+      "kind": "reverse_proxy",
+      "tls": "public",
+      "zone": "com",
+      "service": null,
+      "notes": "c3 container c3bot-relay (mesh-only; c3bot-relay-http-3119.mesh.diegonmarcos.com)"
     },
     {
       "host": "c3-cloud-drive-mcp.diegonmarcos.com",
@@ -6933,6 +7009,16 @@
       "notes": null
     },
     {
+      "host": "c3bot-relay.mesh.diegonmarcos.com",
+      "path": null,
+      "upstream": "10.0.0.6:3119",
+      "kind": "reverse_proxy",
+      "tls": "internal",
+      "zone": "com",
+      "service": null,
+      "notes": null
+    },
+    {
       "host": "drive-mcp.mesh.diegonmarcos.com",
       "path": null,
       "upstream": "10.0.0.6:3109",
@@ -7702,6 +7788,16 @@
       "tls": "on_demand",
       "zone": "com",
       "service": "c3-public-api",
+      "notes": null
+    },
+    {
+      "host": "c3bot-relay-http-3119.mesh.diegonmarcos.com",
+      "path": null,
+      "upstream": "10.0.0.6:3119",
+      "kind": "reverse_proxy",
+      "tls": "on_demand",
+      "zone": "com",
+      "service": "c3bot-relay",
       "notes": null
     },
     {

@@ -225,6 +225,28 @@
         "auth": "mixed"
       }
     },
+    "c3bot-relay": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 3119
+      },
+      "vm": "oci-apps",
+      "healthcheck": "node -e \"fetch('http://'+(process.env.HTTP_HOST||'127.0.0.1')+':3119/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))\"",
+      "domain": "mcp.diegonmarcos.com",
+      "description": "c3bot-relay (#1579): Telegram <-> c3 relay on a dedicated bot (Bot B). One inbound Telegram long-poll fans out to c3 clients over three transports: WebSocket (/ws, full duplex), Server-Sent Events (/events, Last-Event-ID resume) and long-poll (/poll, cursor). Outbound via POST /send or a WS send frame. Zero npm dependencies. Bearer-gated, mesh-only.",
+      "api": {
+        "has_api": true,
+        "has_web_ui": true,
+        "api_path": "/c3bot-relay",
+        "api_url": "https://mcp.diegonmarcos.com/c3bot-relay",
+        "healthcheck_paths": [],
+        "type": "rest",
+        "base_path": "/c3bot-relay",
+        "display_name": "c3bot Telegram relay",
+        "description": "Telegram <-> c3 relay: WS /ws, SSE /events, long-poll /poll, POST /send.",
+        "auth": "bearer"
+      }
+    },
     "cloud-drive-mcp": {
       "ip": "10.0.0.6",
       "ports": {

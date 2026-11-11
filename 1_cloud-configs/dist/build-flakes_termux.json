@@ -475,6 +475,7 @@
         "cloudy-ai-embeddings-api",
         "jev-sidecar",
         "languagetool",
+        "c3bot-relay",
         "cloud-drive-mcp",
         "cloud-infra-mcp",
         "cloud-mail-mcp",
@@ -543,7 +544,7 @@
         "send",
         "vaultwarden"
       ],
-      "container_count": 85
+      "container_count": 86
     },
     "gcp-E2-f_0": {
       "ip": "35.226.147.64",
@@ -1299,6 +1300,108 @@
         "display_name": "C3 Public API",
         "description": "Single public-edge API on oci-analytics. /mail/http-to-smtp (Bearer) bridges CF Worker -> Maddy over WG (Maddy dual-writes to Stalwart). /analytics/{matomo|umami|openobserve}/* (public) passes through to first-party analytics backends.",
         "auth": "mixed"
+      }
+    },
+    "c3bot-relay": {
+      "category": "sec",
+      "vm": "oci-A1-f_0",
+      "folder": "infra-api_c3bot-relay",
+      "description": "c3bot-relay (#1579): Telegram <-> c3 relay on a dedicated bot (Bot B). One inbound Telegram long-poll fans out to c3 clients over three transports: WebSocket (/ws, full duplex), Server-Sent Events (/events, Last-Event-ID resume) and long-poll (/poll, cursor). Outbound via POST /send or a WS send frame. Zero npm dependencies. Bearer-gated, mesh-only.",
+      "enabled": true,
+      "domain": "mcp.diegonmarcos.com",
+      "flake": "infra-api_c3bot-relay",
+      "port": 3119,
+      "dns": "c3bot-relay.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:3119",
+      "containers": {
+        "app": {
+          "container_name": "c3bot-relay",
+          "image": "ghcr.io/diegonmarcos/c3bot-relay:latest",
+          "port": 3119,
+          "port_env": "PORT",
+          "protocol": "http",
+          "dns": "c3bot-relay.mesh.diegonmarcos.com",
+          "public": true,
+          "proxy": {
+            "domain": "mcp.diegonmarcos.com",
+            "base_path": "/c3bot-relay"
+          },
+          "healthcheck": "node -e \"fetch('http://'+(process.env.HTTP_HOST||'127.0.0.1')+':3119/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))\"",
+          "env_file": true,
+          "resources": {
+            "mem_limit": "256M",
+            "mem_reservation": "64m",
+            "pids_limit": 128
+          },
+          "limits": {
+            "buffer_size": 500,
+            "max_clients": 32,
+            "poll_max_wait_s": 50,
+            "allowed_from": "6431508617"
+          }
+        }
+      },
+      "container_names": [
+        "c3bot-relay"
+      ],
+      "all_ports": [
+        "3119"
+      ],
+      "all_dns": [
+        "c3bot-relay.mesh.diegonmarcos.com"
+      ],
+      "compose": {
+        "containers": [],
+        "ports": [],
+        "networks": []
+      },
+      "proxy": {
+        "app_hub": false,
+        "primary": {
+          "streaming": true,
+          "type": "path",
+          "parent_domain": "mcp.diegonmarcos.com",
+          "base_path": "/c3bot-relay",
+          "wg_only": true,
+          "auth": "none",
+          "_auth_doc": "auth none: the app gates every call itself with its own bearer (C3BOT_RELAY_TOKEN, 401 without it; /health is open). The fleet forward_auth would reject this token and buffer SSE; the route stays WG-only. streaming:true keeps SSE and WebSocket unbuffered.",
+          "domain": "mcp.diegonmarcos.com"
+        }
+      },
+      "declared_ports": {
+        "app": 3119
+      },
+      "health": {
+        "path": "/health"
+      },
+      "monitoring": {
+        "tls_check": true,
+        "dns_check": true,
+        "endpoint_check": true
+      },
+      "taxonomy": {
+        "group": "Infra Apps",
+        "category": "Ops-API-MCP"
+      },
+      "dns_aliases": [],
+      "timezone": "Europe/Paris",
+      "tests": {
+        "relay": {
+          "cmd": "node --test test/*.test.js",
+          "cwd": "src/code"
+        }
+      },
+      "api": {
+        "has_api": true,
+        "has_web_ui": true,
+        "api_path": "/c3bot-relay",
+        "api_url": "https://mcp.diegonmarcos.com/c3bot-relay",
+        "healthcheck_paths": [],
+        "type": "rest",
+        "base_path": "/c3bot-relay",
+        "display_name": "c3bot Telegram relay",
+        "description": "Telegram <-> c3 relay: WS /ws, SSE /events, long-poll /poll, POST /send.",
+        "auth": "bearer"
       }
     },
     "cloud-drive-mcp": {

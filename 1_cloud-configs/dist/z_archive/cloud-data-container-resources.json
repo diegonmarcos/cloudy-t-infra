@@ -59,6 +59,19 @@
       ],
       "resources": null
     },
+    "c3bot-relay": {
+      "vm": "oci-apps",
+      "vm_ram_gb": 24,
+      "vm_cpu": 4,
+      "containers": [
+        "c3bot-relay"
+      ],
+      "resources": {
+        "mem_limit": "256M",
+        "mem_reservation": "64m",
+        "pids_limit": 128
+      }
+    },
     "cloud-drive-mcp": {
       "vm": "oci-apps",
       "vm_ram_gb": 24,

@@ -6,25 +6,25 @@
   },
   "repo": "cloud-u-containers",
   "counts": {
-    "files": 2643,
+    "files": 2651,
     "by_lang": {
-      "sh": 179,
-      "js": 112,
-      "nix": 194,
+      "sh": 180,
+      "js": 117,
+      "nix": 196,
       "py": 511,
       "ts": 1276,
       "rust": 371
     },
     "by_role": {
-      "shell": 170,
+      "shell": 171,
       "file": 350,
       "nix-module": 20,
       "python": 497,
-      "module": 781,
+      "module": 786,
       "script": 8,
-      "flake": 88,
+      "flake": 89,
       "entrypoint": 71,
-      "compose": 86,
+      "compose": 87,
       "mcp-tool": 147,
       "workflow-dag": 5,
       "rust-module": 367,
@@ -2304,6 +2304,201 @@
         "./code/shared/profile-connect.ts"
       ],
       "symbols": []
+    },
+    {
+      "path": "infra-api_c3bot-relay/build.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "get_config()",
+        "get_config_array()",
+        "get_lifecycle()",
+        "detect_layout()",
+        "rewrite_compose_image_refs()",
+        "log()",
+        "log_warn()",
+        "log_error()",
+        "declared_container_names()",
+        "ssh_with_retry()",
+        "ssh_run_detached()",
+        "rsync_with_retry()",
+        "_ship_build_phase()"
+      ],
+      "imports": [],
+      "symbols": [
+        "get_config()",
+        "get_config_array()",
+        "get_lifecycle()",
+        "detect_layout()",
+        "rewrite_compose_image_refs()",
+        "log()",
+        "log_warn()",
+        "log_error()",
+        "declared_container_names()",
+        "ssh_with_retry()",
+        "ssh_run_detached()",
+        "rsync_with_retry()",
+        "_ship_build_phase()"
+      ]
+    },
+    {
+      "path": "infra-api_c3bot-relay/src/code/relay.js",
+      "lang": "js",
+      "role": "module",
+      "exports": [
+        "chunkText",
+        "TELEGRAM_MAX",
+        "Relay",
+        "Telegram"
+      ],
+      "imports": [],
+      "symbols": [
+        "chunkText(text, max = TELEGRAM_MAX)",
+        "class Relay",
+        "class Telegram"
+      ]
+    },
+    {
+      "path": "infra-api_c3bot-relay/src/code/server.js",
+      "lang": "js",
+      "role": "module",
+      "exports": [
+        "relay",
+        "telegram",
+        "server"
+      ],
+      "imports": [
+        "node:http",
+        "node:crypto",
+        "./relay.js",
+        "./ws.js"
+      ],
+      "symbols": [
+        "doSend(msg)"
+      ]
+    },
+    {
+      "path": "infra-api_c3bot-relay/src/code/test/relay.test.js",
+      "lang": "js",
+      "role": "module",
+      "exports": [],
+      "imports": [
+        "node:test",
+        "node:assert/strict",
+        "../relay.js",
+        "../ws.js"
+      ],
+      "symbols": []
+    },
+    {
+      "path": "infra-api_c3bot-relay/src/code/test/transports.test.js",
+      "lang": "js",
+      "role": "module",
+      "exports": [],
+      "imports": [
+        "node:test",
+        "node:assert/strict",
+        "node:http"
+      ],
+      "symbols": []
+    },
+    {
+      "path": "infra-api_c3bot-relay/src/code/ws.js",
+      "lang": "js",
+      "role": "module",
+      "exports": [
+        "encodeFrame",
+        "accept",
+        "acceptKey",
+        "FrameDecoder"
+      ],
+      "imports": [
+        "node:crypto"
+      ],
+      "symbols": [
+        "encodeFrame(opcode, payload)",
+        "accept(req, socket, { onMessage, onClose, pingMs = 25000 } = {})",
+        "class FrameDecoder"
+      ]
+    },
+    {
+      "path": "infra-api_c3bot-relay/src/compose.nix",
+      "lang": "nix",
+      "role": "compose",
+      "exports": [
+        "buildJson",
+        "container",
+        "services"
+      ],
+      "imports": [],
+      "symbols": [
+        "app",
+        "svc",
+        "vmIp",
+        "port",
+        "services",
+        "c3bot-relay",
+        "image",
+        "container_name",
+        "network_mode",
+        "env_file",
+        "volumes",
+        "environment",
+        "PORT",
+        "HTTP_HOST",
+        "TZ",
+        "BASE_PATH",
+        "BUFFER_SIZE",
+        "MAX_CLIENTS",
+        "POLL_MAX_WAIT_S",
+        "C3BOT_ALLOWED_FROM",
+        "limits",
+        "memory",
+        "pids",
+        "healthcheck",
+        "test",
+        "interval",
+        "timeout",
+        "retries",
+        "start_period"
+      ]
+    },
+    {
+      "path": "infra-api_c3bot-relay/src/flake.nix",
+      "lang": "nix",
+      "role": "flake",
+      "exports": [
+        "description",
+        "own",
+        "nixpkgs"
+      ],
+      "imports": [
+        "../../_shared/engine.nix",
+        "./compose.nix",
+        "../_shared/engine.nix",
+        "compose.nix"
+      ],
+      "symbols": [
+        "description",
+        "outputs",
+        "forAllSystems",
+        "buildJson",
+        "container",
+        "engine",
+        "nb",
+        "packages",
+        "pkgs",
+        "default",
+        "srcDir",
+        "templates",
+        "composeSpec",
+        "nativeBuild",
+        "cmd",
+        "binary",
+        "baseImage",
+        "apt",
+        "title"
+      ]
     },
     {
       "path": "infra-api_cloud-drive-mcp/build.sh",
