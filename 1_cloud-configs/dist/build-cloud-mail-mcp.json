@@ -2219,5 +2219,9 @@
     "stalwart_imap": 2993,
     "stalwart_smtp": 2465,
     "stalwart_jmap_https": 2443
+  },
+  "runtime": {
+    "oom_score_adj": -900,
+    "_why_oom_score_adj": "#1659: every MCP server on oci-apps is in the last tier the kernel OOM killer picks (_shared/oom-priority.json, tier mcp). Restart policy is 'no' (owner rule), so a killed MCP stays down and its tools are gone until someone starts it by hand. -900 = the host's connectivity tier; not -1000, which would also exempt it from its own cgroup limit."
   }
 }

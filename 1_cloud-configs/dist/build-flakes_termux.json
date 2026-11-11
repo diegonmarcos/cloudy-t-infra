@@ -1645,6 +1645,10 @@
           }
         }
       },
+      "runtime": {
+        "oom_score_adj": -900,
+        "_why_oom_score_adj": "#1659: every MCP server on oci-apps is in the last tier the kernel OOM killer picks (_shared/oom-priority.json, tier mcp). Restart policy is 'no' (owner rule), so a killed MCP stays down and its tools are gone until someone starts it by hand. -900 = the host's connectivity tier; not -1000, which would also exempt it from its own cgroup limit."
+      },
       "api": {
         "has_api": false,
         "has_web_ui": false,
@@ -2070,6 +2074,10 @@
         "stalwart_smtp": 2465,
         "stalwart_jmap_https": 2443
       },
+      "runtime": {
+        "oom_score_adj": -900,
+        "_why_oom_score_adj": "#1659: every MCP server on oci-apps is in the last tier the kernel OOM killer picks (_shared/oom-priority.json, tier mcp). Restart policy is 'no' (owner rule), so a killed MCP stays down and its tools are gone until someone starts it by hand. -900 = the host's connectivity tier; not -1000, which would also exempt it from its own cgroup limit."
+      },
       "api": {
         "has_api": false,
         "has_web_ui": false,
@@ -2160,6 +2168,10 @@
         "cloud-mattermost-mcp.mesh.diegonmarcos.com"
       ],
       "upstream_image": "ghcr.io/diegonmarcos/cloud-mattermost-mcp:latest",
+      "runtime": {
+        "oom_score_adj": -900,
+        "_why_oom_score_adj": "#1659: every MCP server on oci-apps is in the last tier the kernel OOM killer picks (_shared/oom-priority.json, tier mcp). Restart policy is 'no' (owner rule), so a killed MCP stays down and its tools are gone until someone starts it by hand. -900 = the host's connectivity tier; not -1000, which would also exempt it from its own cgroup limit."
+      },
       "api": {
         "has_api": false,
         "has_web_ui": false,
@@ -2475,6 +2487,8 @@
         "cloud-services-mcp.mesh.diegonmarcos.com"
       ],
       "runtime": {
+        "oom_score_adj": -900,
+        "_why_oom_score_adj": "#1659: every MCP server on oci-apps is in the last tier the kernel OOM killer picks (_shared/oom-priority.json, tier mcp). Restart policy is 'no' (owner rule), so a killed MCP stays down and its tools are gone until someone starts it by hand. -900 = the host's connectivity tier; not -1000, which would also exempt it from its own cgroup limit.",
         "init": true,
         "pids_limit": 512,
         "_why_init": "proxy-mcp spawns no children, but tini is cheap insurance against future regressions and unblocks Node SIGTERM handling."
@@ -2718,6 +2732,10 @@
           "cwd": "../_shared"
         }
       },
+      "runtime": {
+        "oom_score_adj": -900,
+        "_why_oom_score_adj": "#1659: every MCP server on oci-apps is in the last tier the kernel OOM killer picks (_shared/oom-priority.json, tier mcp). Restart policy is 'no' (owner rule), so a killed MCP stays down and its tools are gone until someone starts it by hand. -900 = the host's connectivity tier; not -1000, which would also exempt it from its own cgroup limit."
+      },
       "api": {
         "has_api": false,
         "has_web_ui": false,
@@ -2813,6 +2831,10 @@
       "dns_aliases": [
         "cloud-vault-mcp.mesh.diegonmarcos.com"
       ],
+      "runtime": {
+        "oom_score_adj": -900,
+        "_why_oom_score_adj": "#1659: every MCP server on oci-apps is in the last tier the kernel OOM killer picks (_shared/oom-priority.json, tier mcp). Restart policy is 'no' (owner rule), so a killed MCP stays down and its tools are gone until someone starts it by hand. -900 = the host's connectivity tier; not -1000, which would also exempt it from its own cgroup limit."
+      },
       "api": {
         "has_api": false,
         "has_web_ui": false,
@@ -3021,6 +3043,8 @@
       },
       "dns_aliases": [],
       "runtime": {
+        "oom_score_adj": -900,
+        "_why_oom_score_adj": "#1659: every MCP server on oci-apps is in the last tier the kernel OOM killer picks (_shared/oom-priority.json, tier mcp). Restart policy is 'no' (owner rule), so a killed MCP stays down and its tools are gone until someone starts it by hand. -900 = the host's connectivity tier; not -1000, which would also exempt it from its own cgroup limit.",
         "init": true,
         "pids_limit": 512,
         "_why_init": "proxy-mcp spawns no children, but tini is cheap insurance against future regressions and unblocks Node SIGTERM handling."
@@ -3167,6 +3191,10 @@
         "mattermost-mcp.mesh.diegonmarcos.com"
       ],
       "_dns_doc": "The old container keeps these DNS names during the alias release; move them here (dns_aliases) at cutover when the old container is removed.",
+      "runtime": {
+        "oom_score_adj": -900,
+        "_why_oom_score_adj": "#1659: every MCP server on oci-apps is in the last tier the kernel OOM killer picks (_shared/oom-priority.json, tier mcp). Restart policy is 'no' (owner rule), so a killed MCP stays down and its tools are gone until someone starts it by hand. -900 = the host's connectivity tier; not -1000, which would also exempt it from its own cgroup limit."
+      },
       "api": {
         "has_api": false,
         "has_web_ui": false,
@@ -3435,6 +3463,10 @@
         "vault-mcp.mesh.diegonmarcos.com"
       ],
       "_dns_doc": "The old container keeps these DNS names during the alias release; move them here (dns_aliases) at cutover when the old container is removed.",
+      "runtime": {
+        "oom_score_adj": -900,
+        "_why_oom_score_adj": "#1659: every MCP server on oci-apps is in the last tier the kernel OOM killer picks (_shared/oom-priority.json, tier mcp). Restart policy is 'no' (owner rule), so a killed MCP stays down and its tools are gone until someone starts it by hand. -900 = the host's connectivity tier; not -1000, which would also exempt it from its own cgroup limit."
+      },
       "api": {
         "has_api": false,
         "has_web_ui": false,
@@ -4105,6 +4137,10 @@
           "default": true
         }
       ],
+      "runtime": {
+        "oom_score_adj": -900,
+        "_why_oom_score_adj": "#1659: every MCP server on oci-apps is in the last tier the kernel OOM killer picks (_shared/oom-priority.json, tier mcp). Restart policy is 'no' (owner rule), so a killed MCP stays down and its tools are gone until someone starts it by hand. -900 = the host's connectivity tier; not -1000, which would also exempt it from its own cgroup limit."
+      },
       "api": {
         "has_api": false,
         "has_web_ui": false,
@@ -8807,6 +8843,10 @@
         "tag": "latest"
       },
       "runtime": {
+        "oom_score_adj": -900,
+        "_why_oom_score_adj": "#1659: every MCP server on oci-apps is in the last tier the kernel OOM killer picks (_shared/oom-priority.json, tier mcp). Restart policy is 'no' (owner rule), so a killed MCP stays down and its tools are gone until someone starts it by hand. -900 = the host's connectivity tier; not -1000, which would also exempt it from its own cgroup limit.",
+        "job_oom_score_adj": 300,
+        "_why_job_oom_score_adj": "#1659: the index, reindex and restore containers of this service are batch jobs, not MCP servers: up to 16G each, started on demand, re-runnable. compose.nix gives them this value so runtime.oom_score_adj (-900) reaches only the two MCP servers (cloud-cgc-pub-mcp, cloud-cgc-pvt-mcp). 300 is the figure #1641 suggested for this service.",
         "git_root": "/repos",
         "data_path": "/data",
         "octocode": {
