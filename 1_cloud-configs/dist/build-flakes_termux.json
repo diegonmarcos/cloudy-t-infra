@@ -2517,6 +2517,12 @@
           "_why": "Bounded LRU so the retry-state Map can never grow beyond the declared child count (OOM H1 root cause). max_ms caps exponential backoff per child."
         }
       },
+      "tests": {
+        "startup-imports": {
+          "cmd": "node test-startup-imports.mjs",
+          "cwd": "src"
+        }
+      },
       "api": {
         "has_api": false,
         "has_web_ui": false,
@@ -2548,14 +2554,14 @@
       "enabled": true,
       "domain": "mcp.diegonmarcos.com",
       "flake": "infra-api_cloud-superapp-mcp",
-      "port": 3110,
+      "port": 3113,
       "dns": "superapp-mcp.mesh.diegonmarcos.com",
-      "upstream": "10.0.0.6:3110",
+      "upstream": "10.0.0.6:3113",
       "containers": {
         "app": {
           "container_name": "cloud-superapp-mcp",
           "image": "ghcr.io/diegonmarcos/cloud-superapp-mcp:latest",
-          "port": 3110,
+          "port": 3113,
           "port_env": "PORT",
           "dns": "superapp-mcp.mesh.diegonmarcos.com",
           "public": true,
@@ -2579,7 +2585,7 @@
         "cloud-superapp-mcp"
       ],
       "all_ports": [
-        "3110"
+        "3113"
       ],
       "all_dns": [
         "superapp-mcp.mesh.diegonmarcos.com"
@@ -2600,7 +2606,7 @@
         }
       },
       "declared_ports": {
-        "app": 3110
+        "app": 3113
       },
       "taxonomy": {
         "group": "Infra Apps",
@@ -2706,6 +2712,10 @@
       "tests": {
         "superapp-hosts-declared": {
           "cmd": "bash test/test-superapp-hosts.sh"
+        },
+        "host-port-unique": {
+          "cmd": "node test-host-port-unique.mjs",
+          "cwd": "../_shared"
         }
       },
       "api": {

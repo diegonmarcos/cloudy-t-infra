@@ -6,24 +6,24 @@
   },
   "repo": "cloud-u-containers",
   "counts": {
-    "files": 2652,
+    "files": 2665,
     "by_lang": {
       "sh": 180,
-      "js": 118,
+      "js": 120,
       "nix": 196,
       "py": 511,
-      "ts": 1276,
+      "ts": 1287,
       "rust": 371
     },
     "by_role": {
       "shell": 171,
-      "file": 351,
+      "file": 355,
       "nix-module": 20,
       "python": 497,
-      "module": 786,
+      "module": 794,
       "script": 8,
       "flake": 89,
-      "entrypoint": 71,
+      "entrypoint": 72,
       "compose": 87,
       "mcp-tool": 147,
       "workflow-dag": 5,
@@ -893,6 +893,24 @@
         "node:url"
       ],
       "symbols": []
+    },
+    {
+      "path": "_shared/test-host-port-unique.mjs",
+      "lang": "js",
+      "role": "file",
+      "exports": [
+        "load",
+        "duplicates"
+      ],
+      "imports": [
+        "node:fs",
+        "node:path",
+        "node:url"
+      ],
+      "symbols": [
+        "load()",
+        "duplicates(services)"
+      ]
     },
     {
       "path": "_shared/test-jev-gate.py",
@@ -7409,6 +7427,195 @@
       ]
     },
     {
+      "path": "infra-api_cloud-services-mcp/src/code/registry/definitions.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "SERVICE_DEFINITIONS"
+      ],
+      "imports": [
+        "fs",
+        "./types.js",
+        "./peer-map.js"
+      ],
+      "symbols": [
+        "pickPort(ports: Record<string, number> | undefined)",
+        "loadRegistry()"
+      ]
+    },
+    {
+      "path": "infra-api_cloud-services-mcp/src/code/registry/index.ts",
+      "lang": "ts",
+      "role": "entrypoint",
+      "exports": [
+        "ServiceRegistry",
+        "registry"
+      ],
+      "imports": [
+        "./definitions.js",
+        "./types.js",
+        "../shared/http.js"
+      ],
+      "symbols": [
+        "class ServiceRegistry"
+      ]
+    },
+    {
+      "path": "infra-api_cloud-services-mcp/src/code/registry/peer-map.selfcheck.mts",
+      "lang": "ts",
+      "role": "file",
+      "exports": [],
+      "imports": [
+        "node:fs",
+        "node:child_process",
+        "node:os",
+        "node:path",
+        "node:assert/strict",
+        "../registry/peer-map.js"
+      ],
+      "symbols": [
+        "check(description: string, body: ()",
+        "candidatesFromEntryPoint(entryPoint: string)"
+      ]
+    },
+    {
+      "path": "infra-api_cloud-services-mcp/src/code/registry/peer-map.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "findDeclarationRoot",
+        "declarationRoots",
+        "peerMapCandidates",
+        "describeCandidates"
+      ],
+      "imports": [
+        "node:fs",
+        "node:path"
+      ],
+      "symbols": [
+        "findDeclarationRoot(startDirectory: string)",
+        "developmentRoot()",
+        "declarationRoots()",
+        "peerMapCandidates()",
+        "describeCandidates(candidates: string[])"
+      ]
+    },
+    {
+      "path": "infra-api_cloud-services-mcp/src/code/registry/public-registry.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "searchPublicRegistry",
+        "getPublicServer",
+        "PublicMcpServer",
+        "PublicSearchResult"
+      ],
+      "imports": [
+        "../shared/http.js"
+      ],
+      "symbols": [
+        "searchPublicRegistry(query: string, limit = 10)",
+        "getPublicServer(serverName: string, version = \"latest\")"
+      ]
+    },
+    {
+      "path": "infra-api_cloud-services-mcp/src/code/registry/reach.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "getReachUrl",
+        "reachServiceNames"
+      ],
+      "imports": [
+        "node:fs",
+        "./peer-map.js"
+      ],
+      "symbols": [
+        "pickAppPort(ports: Record<string, number> | undefined)",
+        "loadReachMap()",
+        "getReachUrl(name: string)",
+        "reachServiceNames()"
+      ]
+    },
+    {
+      "path": "infra-api_cloud-services-mcp/src/code/registry/summary.selfcheck.mts",
+      "lang": "ts",
+      "role": "file",
+      "exports": [],
+      "imports": [
+        "node:assert/strict",
+        "./types.js",
+        "./summary.js"
+      ],
+      "symbols": [
+        "check(description: string, body: ()"
+      ]
+    },
+    {
+      "path": "infra-api_cloud-services-mcp/src/code/registry/summary.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "summarizeServices",
+        "ServiceSummary"
+      ],
+      "imports": [
+        "./types.js"
+      ],
+      "symbols": [
+        "summarizeServices(definitions: ServiceDefinition[])"
+      ]
+    },
+    {
+      "path": "infra-api_cloud-services-mcp/src/code/registry/types.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "ApiType",
+        "McpTransport",
+        "ApiCapability",
+        "McpCapability",
+        "ServiceDefinition"
+      ],
+      "imports": [],
+      "symbols": []
+    },
+    {
+      "path": "infra-api_cloud-services-mcp/src/code/shared/http.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "rawHttpRequest",
+        "getBearerToken",
+        "serviceRequest",
+        "HttpResult"
+      ],
+      "imports": [
+        "child_process"
+      ],
+      "symbols": [
+        "exec(cmd: string, args: string[], opts?: { timeout?: number })",
+        "rawHttpRequest(\n  method: string,\n  url: string,\n  body?: string,\n  timeout?: number,\n  extraHeaders?: Record<string, string>\n)",
+        "fetchOidcToken()",
+        "getBearerToken()",
+        "serviceRequest(\n  method: string,\n  url: string,\n  body?: string,\n  timeout?: number,\n  extraHeaders?: Record<string, string>\n)"
+      ]
+    },
+    {
+      "path": "infra-api_cloud-services-mcp/src/code/shared/libs/binds.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "bindHost"
+      ],
+      "imports": [
+        "../shared/libs/binds.js"
+      ],
+      "symbols": [
+        "bindHost(envName: string = \"MCP_HTTP_HOST\")"
+      ]
+    },
+    {
       "path": "infra-api_cloud-services-mcp/src/compose.nix",
       "lang": "nix",
       "role": "compose",
@@ -7494,6 +7701,18 @@
       ]
     },
     {
+      "path": "infra-api_cloud-services-mcp/src/test-startup-imports.mjs",
+      "lang": "js",
+      "role": "file",
+      "exports": [],
+      "imports": [
+        "node:fs",
+        "node:path",
+        "node:url"
+      ],
+      "symbols": []
+    },
+    {
       "path": "infra-api_cloud-superapp-mcp/build.sh",
       "lang": "sh",
       "role": "shell",
@@ -7564,7 +7783,7 @@
         "createMcpServer()",
         "handleMcpRequest(req: IncomingMessage, res: ServerResponse)",
         "initSession(port: number)",
-        "startMcpHttpServer(port: number = 3110)"
+        "startMcpHttpServer(port: number = 3113)"
       ]
     },
     {

@@ -30,7 +30,7 @@
   "container": {
     "container_name": "cloud-superapp-mcp",
     "image": "ghcr.io/diegonmarcos/cloud-superapp-mcp:latest",
-    "port": 3110,
+    "port": 3113,
     "port_env": "PORT",
     "dns": "superapp-mcp.mesh.diegonmarcos.com",
     "public": true,
@@ -373,7 +373,7 @@
     "cloud-superapp-mcp": {
       "ip": "10.0.0.6",
       "ports": {
-        "app": 3110
+        "app": 3113
       },
       "vm": "oci-apps",
       "domain": "mcp.diegonmarcos.com",
@@ -2279,6 +2279,10 @@
   "tests": {
     "superapp-hosts-declared": {
       "cmd": "bash test/test-superapp-hosts.sh"
+    },
+    "host-port-unique": {
+      "cmd": "node test-host-port-unique.mjs",
+      "cwd": "../_shared"
     }
   }
 }

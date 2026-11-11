@@ -377,7 +377,7 @@
     "cloud-superapp-mcp": {
       "ip": "10.0.0.6",
       "ports": {
-        "app": 3110
+        "app": 3113
       },
       "vm": "oci-apps",
       "domain": "mcp.diegonmarcos.com",
@@ -2227,6 +2227,12 @@
       "max_ms": 120000,
       "max_retry_state_entries": 32,
       "_why": "Bounded LRU so the retry-state Map can never grow beyond the declared child count (OOM H1 root cause). max_ms caps exponential backoff per child."
+    }
+  },
+  "tests": {
+    "startup-imports": {
+      "cmd": "node test-startup-imports.mjs",
+      "cwd": "src"
     }
   }
 }

@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 23923,
+    "files": 23942,
     "by_lang": {
-      "sh": 701,
+      "sh": 702,
       "js": 549,
       "py": 212,
-      "kotlin": 13182,
+      "kotlin": 13200,
       "ts": 8470,
       "java": 651,
       "nix": 36,
@@ -20,11 +20,11 @@
     "by_role": {
       "hook": 160,
       "file": 2306,
-      "shell": 562,
+      "shell": 563,
       "script": 300,
       "module": 6480,
       "java": 650,
-      "kotlin": 13179,
+      "kotlin": 13197,
       "python": 72,
       "flake": 32,
       "rust-module": 122,
@@ -9592,6 +9592,9 @@
       ],
       "symbols": [
         "stopwatchCurrentMs()",
+        "isStopwatchRunning()",
+        "stopwatchElapsedMs()",
+        "formatStopwatchBar(ms: Long)",
         "show(host: View, rect: androidx.compose.ui.unit.IntRect)",
         "TasksBubble( source: TasksSource = TasksFeed, today: LocalDate = LocalDate.now()",
         "openApp(ctx: Context, pkg: String)",
@@ -9604,6 +9607,7 @@
         "TodoTable(decl: TasksPopupDeclaration, todos: List<TaskTodo>, error: String?, heightDp: Int, onRow: ()",
         "Stopwatch()",
         "formatStopwatch(ms: Long)",
+        "toggleStopwatchForTest()",
         "resetStopwatchForTest()",
         "class TasksPopup"
       ]
@@ -10029,6 +10033,11 @@
         "androidx.compose.foundation.layout.Row",
         "androidx.compose.foundation.layout.fillMaxWidth",
         "androidx.compose.foundation.layout.height",
+        "androidx.compose.foundation.shape.RoundedCornerShape",
+        "androidx.compose.ui.draw.clip",
+        "androidx.compose.ui.text.style.TextAlign",
+        "androidx.compose.ui.unit.dp",
+        "com.diegonmarcos.superapp.adbdebug.StepId",
         "androidx.compose.foundation.layout.padding",
         "androidx.compose.foundation.layout.size",
         "androidx.compose.foundation.rememberScrollState",
@@ -10050,24 +10059,24 @@
         "androidx.compose.ui.draw.alpha",
         "androidx.compose.ui.graphics.Color",
         "androidx.compose.ui.graphics.SolidColor",
-        "androidx.compose.ui.platform.LocalContext",
-        "androidx.compose.ui.platform.testTag",
-        "androidx.compose.ui.semantics.Role",
-        "androidx.compose.ui.semantics.contentDescription",
-        "androidx.compose.ui.semantics.semantics",
-        "androidx.compose.ui.text.TextStyle"
+        "androidx.compose.ui.platform.LocalContext"
       ],
       "symbols": [
         "lightInk(l: AdbCockpitModel.Light)",
-        "Dot(l: AdbCockpitModel.Light, modifier: Modifier = Modifier, size: Int = 10)",
-        "Chip(label: String, tag: String, onClick: ()",
+        "Dot(l: AdbCockpitModel.Light, modifier: Modifier = Modifier)",
+        "Card(tag: String, content: @Composable ()",
+        "CockpitVerb(label: String, tag: String, onClick: ()",
+        "ActIcon(x: AdbCockpitModel.Act, tag: String, primary: Boolean, onClick: ()",
         "hms(ms: Long)",
-        "AdbCockpitContent( inputs: AdbCockpitModel.Inputs?, busy: String, note: String, log: List<ChannelLog.Entry>, a: CockpitActions, modeMenuOpen: Boolean = false, filterOpen: Boolean = false, query: String = \"\", keepAlive: AdbCockpitModel.KeepAlive? = null, )",
-        "KeepAliveRow(ka: AdbCockpitModel.KeepAlive, set: (Boolean)",
-        "StepRow(s: AdbCockpitModel.Step, a: CockpitActions)",
+        "AdbCockpitContent( inputs: AdbCockpitModel.Inputs?, busy: String, note: String, log: List<ChannelLog.Entry>, a: CockpitActions, filterOpen: Boolean = false, query: String = \"\", keepAlive: AdbCockpitModel.KeepAlive? = null, )",
+        "GroupCard(g: AdbCockpitModel.Group, a: CockpitActions)",
+        "StepRow(g: AdbCockpitModel.Group, r: AdbCockpitModel.Row, a: CockpitActions)",
+        "KeepAliveCard(ka: AdbCockpitModel.KeepAlive, set: (Boolean)",
         "AdbStatusTab()",
-        "go(label: String, work: ()",
-        "class CockpitActions"
+        "go(label: String, connect: Boolean = false, work: ()",
+        "connect()",
+        "class CockpitActions",
+        "class CockpitRoom"
       ]
     },
     {
@@ -10085,7 +10094,8 @@
         "com.diegonmarcos.superapp.adbdebug.ConnState",
         "com.diegonmarcos.superapp.adbdebug.ConnectPlan",
         "com.diegonmarcos.superapp.adbdebug.LaunchVia",
-        "com.diegonmarcos.superapp.adbdebug.ShizukuState"
+        "com.diegonmarcos.superapp.adbdebug.ShizukuState",
+        "com.diegonmarcos.superapp.adbdebug.StepId"
       ],
       "symbols": [
         "of(pageId: String?)",
@@ -10096,17 +10106,23 @@
         "setup(f: ChannelFacts)",
         "dimMsg(on: Boolean, msg: String)",
         "shizuku(f: ChannelFacts, on: Boolean)",
-        "local(f: ChannelFacts, on: Boolean, via: LaunchVia)",
+        "local(f: ChannelFacts, on: Boolean, via: LaunchVia = LaunchVia.ADB)",
         "e(a: ChannelAction)",
         "embedded(f: ChannelFacts, on: Boolean)",
-        "modeReady(id: String, f: ChannelFacts, via: LaunchVia)",
+        "modeReady(id: String, f: ChannelFacts, via: LaunchVia = LaunchVia.ADB)",
         "notReady(steps: List<Step>, f: ChannelFacts, via: LaunchVia)",
         "connection(i: Inputs, upstream: List<Step>)",
         "steps(i: Inputs)",
+        "groups(i: Inputs)",
+        "acts(id: String, vararg what: Do)",
+        "lit(on: Boolean, l: Light)",
+        "flip(v: Boolean?, on: String)",
         "master(i: Inputs?)",
         "toggle(f: ChannelFacts)",
         "keepAlive(on: Boolean, armed: Boolean, serviceRunning: Boolean, canWrite: Boolean, batteryExempt: Boolean, lastRearm: String?)",
         "autoFixOrder(mode: ChannelMode, via: LaunchVia, ownsServer: Boolean)",
+        "connectChain(mode: ChannelMode, via: LaunchVia, ownsServer: Boolean)",
+        "resumes(waiting: StepId?, f: ChannelFacts)",
         "severity(e: ChannelLog.Entry)",
         "filter(log: List<ChannelLog.Entry>, q: String)",
         "class AdbCockpitModel",
@@ -10117,10 +10133,11 @@
         "class Sub",
         "class Step",
         "class PermsDigest",
+        "class Row",
+        "class Group",
         "class Inputs",
         "class Master",
-        "class KeepAlive",
-        "class Sev"
+        "class KeepAlive"
       ]
     },
     {
@@ -10131,6 +10148,8 @@
       "imports": [
         "android.content.Context",
         "com.diegonmarcos.superapp.adbdebug.ChannelLog",
+        "com.diegonmarcos.superapp.adbdebug.ChannelMode",
+        "com.diegonmarcos.superapp.adbdebug.LaunchVia",
         "com.diegonmarcos.superapp.adbdebug.ChannelModePrefs",
         "com.diegonmarcos.superapp.adbdebug.ChannelOps",
         "com.diegonmarcos.superapp.adbdebug.ChannelFacts",
@@ -10155,7 +10174,7 @@
         "run(step: StepId)",
         "result(o: ConnectOutcome)",
         "connect(ctx: Context)",
-        "autoFix(ctx: Context)",
+        "connect(mode: ChannelMode, via: LaunchVia, ownsServer: Boolean, exec: ConnectExecutor, grant: ()",
         "run(ctx: Context, what: AdbCockpitModel.Do, paired: Boolean, devOn: Boolean)",
         "said(s: String)",
         "class CockpitResult",
@@ -11411,6 +11430,9 @@
       ],
       "imports": [
         "com.diegonmarcos.superapp.xray.PARTIAL_LABEL",
+        "com.diegonmarcos.superapp.xray.EngineProbes",
+        "com.diegonmarcos.superapp.xray.EngineProfiler",
+        "com.diegonmarcos.superapp.xray.EngineProfiles",
         "com.diegonmarcos.superapp.agents.AgentStatusReader",
         "com.diegonmarcos.superapp.agents.FleetAgents",
         "com.diegonmarcos.superapp.configs.Diagnostics",
@@ -11446,10 +11468,7 @@
         "androidx.compose.runtime.setValue",
         "androidx.compose.ui.Modifier",
         "androidx.compose.ui.graphics.Color",
-        "androidx.compose.ui.platform.testTag",
-        "androidx.compose.ui.unit.dp",
-        "android.widget.Toast",
-        "com.diegonmarcos.superapp.BuildConfig"
+        "androidx.compose.ui.platform.testTag"
       ],
       "symbols": [
         "ctxAny()",
@@ -11466,6 +11485,7 @@
         "fmtMillis(ms: Long)",
         "sizeStr(bytes: Long)",
         "declare(page: AboutPage)",
+        "verdictColor(v: EngineProfiles.Verdict)",
         "dec(b64: String)",
         "openInAppUrl(url: String)",
         "editWebServerPort(ctx: Context, reload: ()",
@@ -11484,6 +11504,7 @@
         "readSwapBytes()",
         "kb(field: String)",
         "newInstance(title: String = \"X-Ray\", macros: ArrayList<String>? = null)",
+        "engineHead(e: EngineProfiles.Engine)",
         "class DevControlFragment",
         "class limit",
         "class StorageFacts",
@@ -13890,12 +13911,12 @@
         "androidx.compose.material3.Text",
         "androidx.compose.runtime.Composable",
         "androidx.compose.runtime.DisposableEffect",
+        "androidx.compose.runtime.LaunchedEffect",
         "androidx.compose.runtime.getValue",
         "androidx.compose.runtime.mutableIntStateOf",
         "androidx.compose.runtime.mutableStateMapOf",
         "androidx.compose.runtime.mutableStateOf",
-        "androidx.compose.runtime.remember",
-        "androidx.compose.runtime.setValue"
+        "androidx.compose.runtime.remember"
       ],
       "symbols": [
         "petOf(toolId: String)",
@@ -15151,6 +15172,8 @@
         "java.io.File"
       ],
       "symbols": [
+        "isHeldSource(pkg: String?)",
+        "pickHeld(sessions: List<T>, pkg: (T)",
         "p(ctx: Context)",
         "positionAt(position: Long, updatedAt: Long, speed: Float, playing: Boolean, nowElapsed: Long)",
         "save(ctx: Context, c: MediaController)",
@@ -15309,7 +15332,6 @@
       ],
       "imports": [
         "com.diegonmarcos.superapp.MainActivity",
-        "com.diegonmarcos.superapp.battery.EnergyLedger",
         "com.diegonmarcos.superapp.notificationcenter.PhoneNotificationListenerService",
         "android.content.ComponentName",
         "android.content.Context",
@@ -15770,10 +15792,8 @@
         "android.content.pm.PackageManager",
         "android.location.GnssStatus",
         "android.location.Location",
-        "android.location.LocationListener",
         "android.location.LocationManager",
         "android.os.Build",
-        "android.os.Bundle",
         "android.os.Handler",
         "android.os.Looper",
         "android.os.SystemClock",
@@ -15792,10 +15812,6 @@
         "lastKnown(ctx: Context)",
         "capabilityLines(ctx: Context, seenDual: Boolean)",
         "broadcastFilter()",
-        "onLocationChanged(location: Location)",
-        "onProviderEnabled(provider: String)",
-        "onProviderDisabled(provider: String)",
-        "onStatusChanged(provider: String?, status: Int, extras: Bundle?)",
         "onReceive(c: Context, i: Intent)",
         "start()",
         "stop()",
@@ -15804,7 +15820,6 @@
         "usedSats()",
         "update()",
         "class GpsProbe",
-        "class Listener",
         "class StripWatch",
         "class LiveSession"
       ]
@@ -18623,6 +18638,7 @@
       ],
       "symbols": [
         "all(ctx: Context)",
+        "count(ctx: Context)",
         "load(ctx: Context)",
         "apps(ctx: Context)",
         "push(ctx: Context, e: Entry)",
@@ -18842,7 +18858,7 @@
         "load()",
         "save(fix: Fix)",
         "reasonFor(env: Env)",
-        "allowed(env: Env, provider: String)",
+        "allowed(env: Env, @Suppress(\"UNUSED_PARAMETER\")",
         "resolve(now: Long, env: Env, probe: Probe, store: FixStore)",
         "fresh(now: Long, f: Fix)",
         "keep(fix: Fix, store: FixStore, fresh: Boolean)",
@@ -19958,7 +19974,10 @@
         "android.view.LayoutInflater",
         "android.view.View",
         "android.view.ViewGroup",
+        "androidx.compose.foundation.clickable",
         "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.material3.Text",
         "androidx.compose.foundation.layout.Spacer",
         "androidx.compose.foundation.layout.fillMaxSize",
         "androidx.compose.foundation.layout.height",
@@ -19974,14 +19993,18 @@
         "androidx.compose.ui.platform.testTag",
         "androidx.compose.ui.unit.dp",
         "com.diegonmarcos.superapp.ShellActivity",
+        "com.diegonmarcos.superapp.shellclient.ShellStatus",
         "com.diegonmarcos.superapp.ui.Haptics",
         "com.diegonmarcos.superapp.ui.LauncherPalette",
         "com.diegonmarcos.superapp.uikit.KitComposeFragment",
         "com.diegonmarcos.superapp.uikit.KitSectionHeader",
         "com.diegonmarcos.superapp.uikit.KitSelectableTile",
-        "com.diegonmarcos.superapp.uikit.KitTags"
+        "com.diegonmarcos.superapp.uikit.KitTags",
+        "com.diegonmarcos.superapp.uikit.LocalKitPalette"
       ],
       "symbols": [
+        "checkShell()",
+        "onResume()",
         "palette()",
         "onCreateView(inf: LayoutInflater, c: ViewGroup?, s: Bundle?)",
         "Content()",
@@ -19992,9 +20015,14 @@
         "runPresetCmd(mode: LauncherModes.Mode)",
         "superSavingTile(mode: LauncherModes.Mode)",
         "newInstance()",
+        "of(hasCmd: Boolean, status: ShellStatus?)",
+        "PresetCmdLine(v: PresetCmdCheck.Verdict, modifier: Modifier = Modifier, openAdbShell: ()",
         "class names",
         "class LauncherPresetsFragment",
-        "class Tile"
+        "class Tile",
+        "class PresetCmdCheck",
+        "class State",
+        "class Verdict"
       ]
     },
     {
@@ -21009,6 +21037,7 @@
       ],
       "symbols": [
         "cached(pkg: String)",
+        "size()",
         "knownMissing(pkg: String)",
         "load(ctx: Context, pkg: String)",
         "into(view: ImageView, pkg: String)",
@@ -21392,6 +21421,117 @@
       ]
     },
     {
+      "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/xray/EngineProbes.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "EngineProbes"
+      ],
+      "imports": [
+        "android.app.ActivityManager",
+        "android.app.ApplicationExitInfo",
+        "android.content.Context",
+        "android.os.Build",
+        "com.diegonmarcos.superapp.battery.BatteryRepository",
+        "com.diegonmarcos.superapp.battery.EnergyLedger",
+        "com.diegonmarcos.superapp.crash.CrashReports",
+        "com.diegonmarcos.superapp.shellbroker.ShellBroker",
+        "kotlinx.coroutines.sync.Mutex",
+        "kotlinx.coroutines.sync.withLock",
+        "java.io.File"
+      ],
+      "symbols": [
+        "get()",
+        "invalidate()",
+        "collect(ctx: Context)",
+        "put(key: String, read: ()",
+        "flag(b: Boolean)",
+        "exits(reason: Int)",
+        "crashes(ctx: Context)",
+        "readNBytesCompat(max: Int)",
+        "class EngineProbes",
+        "class Shared"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/xray/EngineProfiler.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "EngineProfiler"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.battery.EnergyLedger",
+        "java.util.concurrent.ConcurrentHashMap"
+      ],
+      "symbols": [
+        "quantileMs(q: Double)",
+        "overPct(ms: Double)",
+        "paths(engine: String)",
+        "path(engine: String, path: String)",
+        "errors(engine: String)",
+        "lastError(engine: String)",
+        "time(engine: String, path: String, ledgerTag: String = \"$engine.$path\", block: ()",
+        "record(engine: String, path: String, wallNs: Long, cpuNs: Long = 0L, ledgerTag: String = \"$engine.$path\")",
+        "error(engine: String, where: String, t: Throwable?)",
+        "error(engine: String, where: String, what: String)",
+        "wake(engine: String, source: String)",
+        "bytes(engine: String, source: String, n: Long)",
+        "snapshot()",
+        "reset()",
+        "class EngineProfiler",
+        "class PathStat",
+        "class Path",
+        "class Err",
+        "class Snapshot"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/xray/EngineProfiles.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "EngineProfiles"
+      ],
+      "imports": [
+        "java.util.Locale"
+      ],
+      "symbols": [
+        "targets(kind: Kind)",
+        "engine( id: String, title: String, what: String, appDirs: List<String>, libs: List<String>, libPackages: List<String> = emptyList()",
+        "state(kind: Kind, key: String, label: String, unit: String = \"\", max: Double? = null, min: Double? = null, source: String)",
+        "byId(id: String)",
+        "framePackage(fqMethod: String)",
+        "engineOfPackage(pkg: String)",
+        "attribute(trace: String)",
+        "first(from: Int)",
+        "headline(trace: String)",
+        "rows(kind: Kind)",
+        "count(v: Verdict)",
+        "paths(e: Engine, i: Inputs)",
+        "ownsTag(e: Engine, tag: String)",
+        "cpuNs(e: Engine, i: Inputs)",
+        "measure(e: Engine, t: Target, i: Inputs)",
+        "path(id: String)",
+        "report(e: Engine, i: Inputs)",
+        "reports(i: Inputs)",
+        "text(r: Report)",
+        "num(d: Double)",
+        "dur(ms: Long)",
+        "class EngineProfiles",
+        "class Kind",
+        "class Verdict",
+        "class Target",
+        "class HotPath",
+        "class Engine",
+        "class Ledger",
+        "class Crash",
+        "class Inputs",
+        "class Row",
+        "class Report"
+      ]
+    },
+    {
       "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/xray/XrayAdbGate.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -21486,6 +21626,45 @@
         "class XrayShell",
         "class XrayInputs",
         "class XrayExporter"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/xray/XrayLifecycleProbe.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "XrayLifecycleProbe"
+      ],
+      "imports": [
+        "android.app.Activity",
+        "android.app.Application",
+        "android.content.Context",
+        "android.os.Bundle",
+        "android.os.Handler",
+        "android.os.HandlerThread",
+        "android.view.FrameMetrics",
+        "android.view.Window",
+        "androidx.fragment.app.Fragment",
+        "androidx.fragment.app.FragmentActivity",
+        "androidx.fragment.app.FragmentManager"
+      ],
+      "symbols": [
+        "install(app: Application)",
+        "onFrame(firstDraw: Boolean, totalNs: Long)",
+        "begin(who: Any)",
+        "end(who: Any, path: String)",
+        "onFragmentPreAttached(fm: FragmentManager, f: Fragment, context: Context)",
+        "onFragmentStarted(fm: FragmentManager, f: Fragment)",
+        "onActivityPreCreated(a: Activity, b: Bundle?)",
+        "onActivityPostCreated(a: Activity, b: Bundle?)",
+        "onActivityCreated(a: Activity, b: Bundle?)",
+        "onActivityStarted(a: Activity)",
+        "onActivityStopped(a: Activity)",
+        "onActivityResumed(a: Activity)",
+        "onActivityPaused(a: Activity)",
+        "onActivitySaveInstanceState(a: Activity, b: Bundle)",
+        "onActivityDestroyed(a: Activity)",
+        "class XrayLifecycleProbe"
       ]
     },
     {
@@ -23483,6 +23662,60 @@
       "symbols": [
         "code(f: File)",
         "class AdbShellRestoreTest"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/test/java/com/diegonmarcos/superapp/configs/AdbStatusPageTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "AdbStatusPageTest"
+      ],
+      "imports": [
+        "android.app.Application",
+        "android.content.Context",
+        "androidx.compose.ui.semantics.getOrNull",
+        "androidx.compose.ui.test.assertIsDisplayed",
+        "androidx.compose.ui.test.hasTestTag",
+        "androidx.compose.ui.test.onNodeWithTag",
+        "androidx.compose.ui.test.performClick",
+        "androidx.compose.ui.unit.dp",
+        "com.diegonmarcos.superapp.adbdebug.ChannelFacts",
+        "com.diegonmarcos.superapp.adbdebug.ChannelLog",
+        "com.diegonmarcos.superapp.adbdebug.ChannelMode",
+        "com.diegonmarcos.superapp.adbdebug.ChannelModePrefs",
+        "com.diegonmarcos.superapp.adbdebug.ConnectExecutor",
+        "com.diegonmarcos.superapp.adbdebug.LaunchVia",
+        "com.diegonmarcos.superapp.adbdebug.StepId",
+        "com.diegonmarcos.superapp.adbdebug.StepResult",
+        "com.diegonmarcos.superapp.configs.AdbCockpitModel.Do",
+        "com.diegonmarcos.superapp.configs.AdbCockpitModel.Light",
+        "com.diegonmarcos.superapp.ui.KitPageHarness",
+        "com.diegonmarcos.superapp.uikit.KitStoreRow",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "org.junit.runner.RunWith",
+        "org.robolectric.RobolectricTestRunner",
+        "org.robolectric.RuntimeEnvironment",
+        "org.robolectric.annotation.Config",
+        "org.robolectric.annotation.GraphicsMode"
+      ],
+      "symbols": [
+        "facts(mode: ChannelMode = ChannelMode.LOCAL_SERVER, dev: Boolean? = true, wd: Boolean? = true, paired: Boolean = false, connected: Boolean = false, server: Boolean = false, shz: Triple<Boolean, Boolean, Boolean> = Triple(false, false, false)",
+        "inputs(f: ChannelFacts)",
+        "group(f: ChannelFacts, id: String)",
+        "connected(f: ChannelFacts, id: String)",
+        "box(tag: String)",
+        "has(tag: String)",
+        "px(d: androidx.compose.ui.unit.Dp)",
+        "facts()",
+        "run(step: StepId)",
+        "text(tag: String)",
+        "class AdbStatusPageTest",
+        "class FakeDevice"
       ]
     },
     {
@@ -25781,6 +26014,7 @@
         "androidx.compose.ui.test.onRoot",
         "androidx.compose.ui.test.performClick",
         "androidx.test.core.app.ApplicationProvider",
+        "com.diegonmarcos.superapp.cal.TasksPopup",
         "com.diegonmarcos.superapp.network.NetworkSections",
         "com.diegonmarcos.superapp.settings.LauncherSettingsPrefs",
         "com.diegonmarcos.superapp.ui.KitPageHarness",
@@ -25798,6 +26032,9 @@
         "showStrip()",
         "left(tag: String)",
         "reserve()",
+        "swText()",
+        "advance(ms: Long)",
+        "secs(t: String)",
         "class StatusStripComposeTest"
       ]
     },
@@ -26315,6 +26552,25 @@
       "symbols": [
         "show(initial: MailAuthSectionState = MailAuthSectionState()",
         "class MailAuthSectionComposeTest"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/test/java/com/diegonmarcos/superapp/media/HeldMediaSourceTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "HeldMediaSourceTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "pick(vararg s: Pair<String, Boolean>)",
+        "class HeldMediaSourceTest"
       ]
     },
     {
@@ -27932,9 +28188,7 @@
       "imports": [
         "com.diegonmarcos.superapp.notificationcenter.WeatherLocation.Env",
         "com.diegonmarcos.superapp.notificationcenter.WeatherLocation.Fix",
-        "com.diegonmarcos.superapp.notificationcenter.WeatherLocation.GPS",
         "com.diegonmarcos.superapp.notificationcenter.WeatherLocation.NETWORK",
-        "com.diegonmarcos.superapp.notificationcenter.WeatherLocation.PASSIVE",
         "com.diegonmarcos.superapp.notificationcenter.WeatherLocation.Reason",
         "com.diegonmarcos.superapp.notificationcenter.WeatherLocation.Result",
         "org.junit.Assert.assertEquals",
@@ -27949,14 +28203,14 @@
         "enabled(provider: String)",
         "lastKnown(provider: String)",
         "request(provider: String, timeoutMs: Long)",
-        "orderIsCheapestFirstAndGpsIsLast()",
+        "onlyTheCoarseNetworkProviderIsEverUsed()",
+        "refreshIsGatedToFourHours()",
         "freshPersistedFixUsesNoProviderAtAll()",
-        "cachedNetworkFixWinsOverFresherPassiveAndGps()",
-        "networkIsRequestedBeforeGpsAndGpsIsSkippedWhenNetworkAnswers()",
-        "gpsOnlyAsLastResort()",
-        "gpsNeedsFinePermissionAndDisabledProvidersAreNotAsked()",
+        "cachedNetworkFixIsUsedAndPassiveGpsAreNeverPeeked()",
+        "gpsIsNeverRequestedEvenWhenNetworkFails()",
+        "coarsePermissionAloneIsEnoughAndDisabledProvidersAreNotAsked()",
         "failedRefreshNeverClearsTheStoredFix()",
-        "staleSystemFixIsUsedAndPersistedWhenNothingElseExists()",
+        "staleNetworkFixIsUsedAndPersistedWhenNothingElseExists()",
         "onlyANewerFixReplacesTheStoredOne()",
         "revokedPermissionStillAnswersFromTheStoredFix()",
         "noFixSaysTheActualReason()",
@@ -29000,6 +29254,9 @@
       "symbols": [
         "showPresets()",
         "profileGroup()",
+        "st(armed: Boolean)",
+        "settle()",
+        "line(id: String)",
         "class LauncherPresetsComposeTest"
       ]
     },
@@ -29639,6 +29896,42 @@
         "dis(d: Int, pct: Int, hours: Double, h0: Int = 8)",
         "chg(d: Int)",
         "class BatteryArchiveTest"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/test/java/com/diegonmarcos/superapp/xray/EngineProfilesTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "EngineProfilesTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.devcontrol.DevControlFragment",
+        "com.diegonmarcos.superapp.xray.EngineProfiles.Kind",
+        "com.diegonmarcos.superapp.xray.EngineProfiles.Verdict",
+        "org.json.JSONObject",
+        "org.junit.After",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNotNull",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Before",
+        "org.junit.Test",
+        "org.junit.runner.RunWith",
+        "org.robolectric.RobolectricTestRunner",
+        "org.robolectric.annotation.Config",
+        "java.io.File"
+      ],
+      "symbols": [
+        "clocks()",
+        "restore()",
+        "spend(engine: String, path: String, wallMs: Double, cpuMs: Double = 0.0)",
+        "inputs( processCpuMs: Long? = 10_000L, appMah: Double? = null, crashes: List<EngineProfiles.Crash> = emptyList()",
+        "row(r: EngineProfiles.Report, id: String)",
+        "has(file: String, what: String)",
+        "class EngineProfilesTest",
+        "class of"
       ]
     },
     {
@@ -30474,6 +30767,22 @@
       "symbols": [
         "ok()",
         "bad()"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/test/test-coarse-location-4h.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "ok()",
+        "bad()",
+        "code()"
+      ],
+      "imports": [],
+      "symbols": [
+        "ok()",
+        "bad()",
+        "code()"
       ]
     },
     {
@@ -49777,11 +50086,13 @@
         "../space/OrbitControls.js"
       ],
       "symbols": [
+        "blit()",
         "draw()",
         "render()",
         "resize()",
         "frame(obj)",
-        "applyWire()"
+        "applyWire()",
+        "waitSized()"
       ]
     },
     {
@@ -60741,6 +61052,7 @@
       "role": "kotlin",
       "exports": [
         "GitStatusFacts",
+        "gitStatusTableRows",
         "GitStatusBlockView"
       ],
       "imports": [
@@ -60760,6 +61072,8 @@
         "java.util.Date"
       ],
       "symbols": [
+        "gitStatusTableRows(b: GitStatusFacts, yes: String, no: String)",
+        "yn(v: Boolean?)",
         "StatusLine(text: String)",
         "GitStatusBlockView(b: GitStatusFacts, fmt: DateFormat)",
         "class GitStatusFacts"
@@ -60828,6 +61142,7 @@
         "visibility(isPrivate: Boolean?, pvt: String, pub: String)",
         "lfs(lfs: Boolean?, lfsWord: String, normalWord: String)",
         "dirty(files: Int?, yes: String, no: String)",
+        "dirtyStashed(files: Int?, stashed: Int?, yes: String, no: String)",
         "aheadBehind(ahead: Int?, behind: Int?)",
         "class GitTableRow",
         "class GitTable",
@@ -75482,11 +75797,21 @@
       "lang": "kotlin",
       "role": "kotlin",
       "exports": [
-        "ConfigsEntry"
+        "ConfigsEntry",
+        "AllSettingsPage",
+        "NavPageDecl",
+        "KbTab"
       ],
       "imports": [],
       "symbols": [
-        "class ConfigsEntry"
+        "of(section: HomeGroup)",
+        "flatten()",
+        "forRoute(route: String?)",
+        "byId(id: String)",
+        "class ConfigsEntry",
+        "class AllSettingsPage",
+        "class NavPageDecl",
+        "class KbTab"
       ]
     },
     {
@@ -76294,7 +76619,8 @@
         "KeyboardSettingsExtras"
       ],
       "imports": [
-        "android.content.Context"
+        "android.content.Context",
+        "androidx.compose.runtime.Composable"
       ],
       "symbols": [
         "class KeyboardSettingsExtras",
@@ -77973,7 +78299,8 @@
         "helium314.keyboard.latin.utils.SubtypeSettings",
         "helium314.keyboard.latin.utils.prefs",
         "helium314.keyboard.latin.utils.NextScreenIcon",
-        "helium314.keyboard.settings.ConfigsEntry",
+        "helium314.keyboard.settings.AllSettingsPage",
+        "helium314.keyboard.settings.HomeGroup",
         "helium314.keyboard.settings.SearchSettingsScreen",
         "helium314.keyboard.latin.utils.Theme",
         "helium314.keyboard.settings.initPreview",
@@ -78648,9 +78975,12 @@
       "imports": [
         "androidx.activity.compose.BackHandler",
         "androidx.compose.animation.AnimatedVisibility",
+        "androidx.compose.foundation.layout.Arrangement",
         "androidx.compose.foundation.layout.Box",
         "androidx.compose.foundation.layout.Column",
         "androidx.compose.foundation.layout.ColumnScope",
+        "androidx.compose.foundation.layout.Row",
+        "androidx.compose.foundation.layout.RowScope",
         "androidx.compose.foundation.layout.WindowInsets",
         "androidx.compose.foundation.layout.WindowInsetsSides",
         "androidx.compose.foundation.layout.fillMaxSize",
@@ -78682,10 +79012,7 @@
         "androidx.compose.runtime.LaunchedEffect",
         "androidx.compose.runtime.getValue",
         "androidx.compose.runtime.mutableStateOf",
-        "androidx.compose.runtime.remember",
-        "androidx.compose.runtime.setValue",
-        "androidx.compose.ui.Modifier",
-        "androidx.compose.ui.draw.rotate"
+        "androidx.compose.runtime.remember"
       ],
       "symbols": [
         "SearchSettingsScreen( onClickBack: ()",
@@ -78821,6 +79148,8 @@
         "androidx.compose.ui.unit.LayoutDirection",
         "androidx.navigation.compose.NavHost",
         "androidx.navigation.compose.composable",
+        "androidx.navigation.compose.currentBackStackEntryAsState",
+        "androidx.compose.runtime.getValue",
         "androidx.navigation.compose.rememberNavController",
         "helium314.keyboard.latin.common.LocaleUtils.constructLocale",
         "helium314.keyboard.latin.settings.SettingsSubtype.Companion.toSettingsSubtype",
@@ -78847,13 +79176,12 @@
         "helium314.keyboard.settings.screens.GrammarCheckScreen",
         "helium314.keyboard.settings.screens.TextEnhanceScreen",
         "helium314.keyboard.settings.screens.DraftAnswerScreen",
-        "helium314.keyboard.settings.screens.TextResumeScreen",
-        "helium314.keyboard.settings.screens.TextCorrectionScreen",
-        "helium314.keyboard.settings.screens.ToolbarScreen"
+        "helium314.keyboard.settings.screens.TextResumeScreen"
       ],
       "symbols": [
         "SettingsNavHost( onClickBack: ()",
         "goBack()",
+        "hostRoute(id: String)",
         "externalRoute(name: String?)",
         "navigateTo(target: String)",
         "class SettingsDestination"
@@ -79644,6 +79972,28 @@
       ]
     },
     {
+      "path": "ab_cloud-libs-shared/libs/keyboard/src/test/java/helium314/keyboard/settings/AllSettingsSectionsParityTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "AllSettingsSectionsParityTest"
+      ],
+      "imports": [
+        "java.io.File",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "everySubpageFromBeforeIsStillPresentAndNothingWasAdded()",
+        "everySubpageIsUnderExactlyOneSection()",
+        "keyboardTextConfigsAreTheOnlySections()",
+        "everyEntryOfTheOldConfigsListIsStillAPage()",
+        "theScreenDrawsEveryPageUnderItsSectionHeading()",
+        "class AllSettingsSectionsParityTest"
+      ]
+    },
+    {
       "path": "ab_cloud-libs-shared/libs/keyboard/src/test/java/helium314/keyboard/settings/ConfigsAndLabelsTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -79669,6 +80019,35 @@
         "theGrammarPageAndItsEngineSettingAreNamedApart()",
         "theFirstToolbarPageHasOneGrammarModeIconAndTheAutocompleteIconInTheFreedSlot()",
         "class ConfigsAndLabelsTest"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/keyboard/src/test/java/helium314/keyboard/settings/KeyboardNavChromeTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "KeyboardNavChromeTest"
+      ],
+      "imports": [
+        "java.io.File",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Assume.assumeTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "appFile(path: String)",
+        "tab(t: KbTab)",
+        "theFourBottomTabsAreInOrder()",
+        "keyboardHasThemesDefaultDevSettingsLanguagesAndToolbarInside()",
+        "writerHasVoiceTranscriptionAndDictionary()",
+        "writerTabExposesEveryCloudWriterPageAsATopNavSubpage()",
+        "mediaboardsAndTextboardsSubpages()",
+        "everyPageReachableBeforeIsReachableAfter()",
+        "topAndBottomUseTheSharedDefaultNavBars()",
+        "configsShowsTheDefaultTailPlusTheAppsOwnTab()",
+        "theChromeClearsTheStatusBarOnceAndPagesDrawNoSecondTitleBar()",
+        "class KeyboardNavChromeTest"
       ]
     },
     {
@@ -92965,7 +93344,7 @@
         "token(ctx: Context)",
         "serverCommand(ctx: Context)",
         "shellCommand(ctx: Context)",
-        "ensureServer(ctx: Context, ladder: List<ShellChannel>, force: Boolean = false)",
+        "ensureServer(ctx: Context, sources: List<ShellChannel>)",
         "bootstrapState(ctx: Context)",
         "class is",
         "class AdbShellBootstrap"
@@ -93197,9 +93576,9 @@
       "symbols": [
         "parse(id: String?, default: ChannelMode)",
         "execOrder(mode: ChannelMode, ladder: List<String>)",
-        "bootstrapSources(mode: ChannelMode, ladder: List<String>)",
-        "select( mode: ChannelMode, ladder: List<T>, name: (T)",
-        "byName(n: String)",
+        "launchSources(mode: ChannelMode, ladder: List<String>)",
+        "touches(mode: ChannelMode, ladder: List<String>)",
+        "select(mode: ChannelMode, ladder: List<T>, name: (T)",
         "shizukuLabel(state: ShizukuState)",
         "label(via: String?, down: Boolean)",
         "of(installed: Boolean, running: Boolean, granted: Boolean)",
@@ -93323,8 +93702,8 @@
         "parse(id: String?)",
         "facts()",
         "run(step: StepId)",
-        "methods(mode: ChannelMode, via: LaunchVia, ownsServer: Boolean = true)",
-        "steps(mode: ChannelMode, via: LaunchVia, ownsServer: Boolean = true)",
+        "methods(mode: ChannelMode, via: LaunchVia = LaunchVia.ADB, ownsServer: Boolean = true)",
+        "steps(mode: ChannelMode, via: LaunchVia = LaunchVia.ADB, ownsServer: Boolean = true)",
         "satisfied(step: StepId, f: ChannelFacts)",
         "explain(step: StepId, detail: String, waiting: Boolean)",
         "run( mode: ChannelMode, via: LaunchVia, exec: ConnectExecutor, log: ChannelLog? = null, ownsServer: Boolean = true, onUpdate: (List<StepRun>)",
@@ -93431,6 +93810,7 @@
         "connect(ctx: Context, host: String, port: Int)",
         "disconnect(ctx: Context)",
         "autoConnect(ctx: Context)",
+        "connectLive(ctx: Context)",
         "autoArm(ctx: Context)",
         "onWifi(ctx: Context, block: ()",
         "class EmbeddedAdbChannel"
@@ -93685,6 +94065,7 @@
       "lang": "kotlin",
       "role": "kotlin",
       "exports": [
+        "EnsureRung",
         "ShellAccess"
       ],
       "imports": [
@@ -93692,7 +94073,9 @@
         "android.content.Intent"
       ],
       "symbols": [
+        "rungs(mode: ChannelMode)",
         "ensure(ctx: Context, onReady: ()",
+        "class EnsureRung",
         "class ShellAccess"
       ]
     },
@@ -93714,6 +94097,7 @@
         "probe(ctx: Context)",
         "execWithStdin(ctx: Context, command: String, stdin: java.io.File)",
         "status(ctx: Context)",
+        "modeUses(ctx: Context, name: String)",
         "active(ctx: Context)",
         "class ShellChannel",
         "class ShellChannels"
@@ -94123,7 +94507,7 @@
         "upEverythingApplies()",
         "connectingDisablesEverything()",
         "degradedKeepsTestAndStopButCannotRestart()",
-        "downOnlyReconnectAndRestartWhenALauncherIsUp()",
+        "noServerIsStillUpOverAdbAndDownOnlyWhenNothingAnswers()",
         "modesThatDoNotUseTheServerNeverOfferItsButtons()",
         "anAppWithNoServerOfItsOwnNeverOffersServerButtons()",
         "everyDisabledButtonSaysWhy()",
@@ -94203,18 +94587,19 @@
       ],
       "symbols": [
         "modeToChannelOrder()",
+        "modesNeverCrossCall()",
         "parseAndDefaults()",
         "usable(n: String)",
-        "relaunch(sources: List<String>)",
         "select(mode: ChannelMode)",
-        "serverModeUsesTheServerAndNeverExecsOverAdb()",
-        "serverModeRelaunchesADeadServerThroughAdbOnlyThenSwitchesToIt()",
-        "serverModeIsDownWhenNeitherTheServerNorTheBootstrapWorks()",
-        "autoKeepsTheOldOrderAndRelaunchesFirst()",
+        "localServerModeRunsOverTheAdbSessionWhenNoServerWasStarted()",
+        "localServerModePrefersTheLoopbackServerWhenItAnswers()",
+        "localServerModeIsDownWithoutAdbOrServerEvenWithShizukuUp()",
+        "autoIsTheLadderFirstThatAnswers()",
         "embeddedOnlySkipsTheServer()",
         "shizukuModeUsesOnlyTheShizukuBinder()",
         "allFourModesPickDifferentRoutesFromTheSameWorld()",
         "route(m: ChannelMode)",
+        "reconnectRungsPerMode()",
         "shizukuStateAndLabels()",
         "shizukuModeProbeAndTap()",
         "paired()",
@@ -94264,6 +94649,7 @@
         "connectionStates()",
         "launchSourceRules()",
         "chipTextIsOneLine()",
+        "shizukuIsARouteOnlyWhileItsRoundTripAnswers()",
         "class ChannelStateTest"
       ]
     },
@@ -94290,6 +94676,9 @@
         "facts()",
         "run(step: StepId)",
         "stepsPerMode()",
+        "modesAreIndependentChains()",
+        "noStepStartsAServer()",
+        "localServerModeConnectsOnTheAdbSessionAlone()",
         "methodsShowOnlyWhatAppliesToTheMode()",
         "runsEveryStepInOrderAndSucceeds()",
         "skipsWhatIsAlreadyTrue()",
@@ -96779,6 +97168,8 @@
         "Body(tab: FleetConfigsTab, dark: Boolean)",
         "stripOrder(extras: List<FleetConfigsTab> = all()",
         "page(id: String, label: String, icon: String)",
+        "withTail( host: List<com.diegonmarcos.superapp.bottomnav.NavPage>, extras: List<FleetConfigsTab> = all()",
+        "isOptInTail(id: String?)",
         "clearForTest()",
         "class FleetConfigsTab",
         "class FleetConfigsExtensions"
@@ -97746,6 +98137,10 @@
         "strip_puts_the_five_defaults_in_exact_order_whatever_the_registration_order()",
         "app_own_tabs_stay_before_the_separator_and_none_is_lost()",
         "custom_xray_hook_registers_the_tab_when_the_lib_is_not_linked()",
+        "np(id: String)",
+        "host_strip_gets_the_tail_in_exact_order_and_keeps_every_own_tab()",
+        "host_strip_with_the_shared_pages_after_its_own_tabs_still_ends_with_the_tail()",
+        "host_strip_without_perms_or_about_gets_them_added()",
         "class FleetConfigsExtensionsTest"
       ]
     },
@@ -101818,6 +102213,1571 @@
       ]
     },
     {
+      "path": "ab_cloud-libs-shared/libs/writer-core/src/main/kotlin/com/diegonmarcos/cloudwriter/core/Audio.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "Segmenter",
+        "Wav"
+      ],
+      "imports": [
+        "java.io.ByteArrayOutputStream",
+        "kotlin.math.sqrt"
+      ],
+      "symbols": [
+        "feed(pcm: ByteArray, len: Int)",
+        "flush()",
+        "take()",
+        "reset()",
+        "ms(bytes: Int)",
+        "rms(pcm: ByteArray, len: Int)",
+        "level(pcm: ByteArray, len: Int)",
+        "encode(pcm: ByteArray, sampleRate: Int, channels: Int = 1, bits: Int = 16)",
+        "int(v: Int)",
+        "short(v: Int)",
+        "class Segmenter",
+        "class Wav"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/writer-core/src/main/kotlin/com/diegonmarcos/cloudwriter/core/Boxes.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "WriterTabs",
+        "ImportKind",
+        "Import",
+        "Docx",
+        "OcrEngine",
+        "Ocr"
+      ],
+      "imports": [
+        "java.io.ByteArrayInputStream",
+        "java.util.zip.ZipInputStream"
+      ],
+      "symbols": [
+        "check(declared: List<String>)",
+        "kind(name: String?, mime: String?)",
+        "toHtml(kind: ImportKind, bytes: ByteArray)",
+        "bodyOf(html: String)",
+        "text(bytes: ByteArray)",
+        "documentText(xml: String)",
+        "of(id: String?)",
+        "route(engine: OcrEngine)",
+        "run(engine: OcrEngine, blocker: String?, openRouter: ()",
+        "nonBlank(o: Outcome)",
+        "intoBox(boxHtml: String, recognised: String)",
+        "class WriterTabs",
+        "class ImportKind",
+        "class Import",
+        "class Docx",
+        "class OcrEngine",
+        "class Ocr"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/writer-core/src/main/kotlin/com/diegonmarcos/cloudwriter/core/Design.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "TokenSet",
+        "Contrast",
+        "ControlKind",
+        "ControlState",
+        "ControlColors",
+        "Controls",
+        "WriterGrid"
+      ],
+      "imports": [
+        "kotlin.math.pow",
+        "kotlin.math.roundToInt"
+      ],
+      "symbols": [
+        "textPairs()",
+        "graphicPairs()",
+        "c(v: Long)",
+        "linear(channel: Int)",
+        "luminance(argb: Int)",
+        "ratio(a: Int, b: Int)",
+        "blend(base: Int, over: Int, t: Float)",
+        "colors(t: TokenSet, kind: ControlKind, state: ControlState)",
+        "class TokenSet",
+        "class Contrast",
+        "class ControlKind",
+        "class ControlState",
+        "class ControlColors",
+        "class Controls",
+        "class WriterGrid"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/writer-core/src/main/kotlin/com/diegonmarcos/cloudwriter/core/Dictation.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "Dictation"
+      ],
+      "imports": [],
+      "symbols": [
+        "of(id: String?)",
+        "punctuate(raw: String)",
+        "separator(before: String, segment: String)",
+        "withTranslation(original: String, translation: String?, mode: TranslateMode)",
+        "class Dictation",
+        "class TranslateMode"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/writer-core/src/main/kotlin/com/diegonmarcos/cloudwriter/core/DocList.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "DocSort",
+        "SaveState",
+        "DocList"
+      ],
+      "imports": [],
+      "symbols": [
+        "of(id: String?)",
+        "sort(docs: List<DocMeta>, by: DocSort)",
+        "totalWords(docs: List<DocMeta>)",
+        "readingMinutes(words: Int)",
+        "initial(title: String)",
+        "chars(text: String)",
+        "allTags(docs: List<DocMeta>)",
+        "withTag(docs: List<DocMeta>, tag: String?)",
+        "class DocSort",
+        "class SaveState",
+        "class DocList"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/writer-core/src/main/kotlin/com/diegonmarcos/cloudwriter/core/DocStore.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "DocMeta",
+        "DocStore"
+      ],
+      "imports": [
+        "java.io.File"
+      ],
+      "symbols": [
+        "list()",
+        "read(id: String)",
+        "create(text: String = \"\")",
+        "write(id: String, text: String)",
+        "append(id: String, segment: String)",
+        "delete(id: String)",
+        "search(query: String)",
+        "meta(f: File)",
+        "file(id: String)",
+        "class DocMeta",
+        "class DocStore"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/writer-core/src/main/kotlin/com/diegonmarcos/cloudwriter/core/Format.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "FormatAction",
+        "Focus",
+        "Tags"
+      ],
+      "imports": [],
+      "symbols": [
+        "apply(text: String, start: Int, end: Int)",
+        "lineStart(text: String, at: Int)",
+        "lineEnd(text: String, at: Int)",
+        "blank(text: String, from: Int, to: Int)",
+        "paragraph(text: String, caret: Int)",
+        "dimmed(text: String, caret: Int)",
+        "of(text: String, max: Int = 4)",
+        "class FormatAction",
+        "class Focus",
+        "class Tags"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/writer-core/src/main/kotlin/com/diegonmarcos/cloudwriter/core/HtmlText.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "HtmlText",
+        "EditMode",
+        "ExportFormat",
+        "Export"
+      ],
+      "imports": [],
+      "symbols": [
+        "escape(text: String)",
+        "unescape(text: String)",
+        "textToHtml(text: String)",
+        "htmlToText(html: String)",
+        "htmlToMarkdown(html: String)",
+        "markdownToHtml(md: String)",
+        "flush()",
+        "inline(text: String)",
+        "of(id: String?)",
+        "render(format: ExportFormat, html: String, title: String)",
+        "fileName(html: String, format: ExportFormat)",
+        "class HtmlText",
+        "class EditMode",
+        "class ExportFormat",
+        "class Export"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/writer-core/src/main/kotlin/com/diegonmarcos/cloudwriter/core/Markdown.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "Heading",
+        "Edit",
+        "SpanKind",
+        "Span",
+        "Markdown"
+      ],
+      "imports": [],
+      "symbols": [
+        "lines(text: String)",
+        "outline(text: String)",
+        "find(text: String, query: String)",
+        "wrap(text: String, start: Int, end: Int, marker: String)",
+        "prefixLines(text: String, start: Int, end: Int, prefix: String)",
+        "link(text: String, start: Int, end: Int)",
+        "heading(text: String, start: Int, end: Int, level: Int)",
+        "spans(text: String)",
+        "title(text: String)",
+        "snippet(text: String, max: Int = 140)",
+        "words(text: String)",
+        "lineStart(text: String, at: Int)",
+        "lineEnd(text: String, at: Int)",
+        "class Heading",
+        "class Edit",
+        "class SpanKind",
+        "class Span",
+        "class Markdown"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/writer-core/src/main/kotlin/com/diegonmarcos/cloudwriter/core/Nav.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "Dest",
+        "Transition",
+        "WriterScreens"
+      ],
+      "imports": [],
+      "symbols": [
+        "back(current: Dest, configsReturn: Dest, hasDoc: Boolean)",
+        "transition(from: Dest, to: Dest)",
+        "class Dest",
+        "class Transition",
+        "class WriterScreens"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/writer-core/src/main/kotlin/com/diegonmarcos/cloudwriter/core/OpenRouter.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "OpenRouterConfig",
+        "CatalogueModel",
+        "OpenRouter"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.decisions.Decisions",
+        "com.diegonmarcos.superapp.decisions.Http",
+        "org.json.JSONArray",
+        "org.json.JSONObject",
+        "java.util.Base64"
+      ],
+      "symbols": [
+        "chatBody(model: String, system: String, user: String, maxTokens: Int)",
+        "transcribeBody(model: String, prompt: String, wav: ByteArray, maxTokens: Int)",
+        "call(http: Http, cfg: OpenRouterConfig, token: String?, body: JSONObject)",
+        "translate(http: Http, cfg: OpenRouterConfig, token: String?, model: String, system: String, text: String)",
+        "transcribe(http: Http, cfg: OpenRouterConfig, token: String?, model: String, prompt: String, wav: ByteArray)",
+        "content(body: String)",
+        "catalogue(body: String)",
+        "speechModels(all: List<CatalogueModel>)",
+        "visionModels(all: List<CatalogueModel>)",
+        "visionBody(model: String, prompt: String, image: ByteArray, mime: String, maxTokens: Int)",
+        "textModels(all: List<CatalogueModel>)",
+        "strings(a: JSONArray?)",
+        "class OpenRouterConfig",
+        "class CatalogueModel",
+        "class OpenRouter"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/writer-core/src/main/kotlin/com/diegonmarcos/cloudwriter/core/Routing.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "Route",
+        "Outcome",
+        "Answer",
+        "Routing"
+      ],
+      "imports": [
+        "org.json.JSONObject"
+      ],
+      "symbols": [
+        "of(id: String?, fallback: Route)",
+        "ok(text: String)",
+        "failed(why: String)",
+        "toJson()",
+        "modelBlocker(online: Boolean, hasToken: Boolean, model: String?)",
+        "chosen(saved: String?, advice: Route?, default: Route)",
+        "run(requested: Route, blocker: String?, model: ()",
+        "class Route",
+        "class Outcome",
+        "class Answer",
+        "class Routing"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/writer-core/src/test/kotlin/com/diegonmarcos/cloudwriter/core/AudioTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "AudioTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertArrayEquals",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertNotNull",
+        "org.junit.Assert.assertNull",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "frame(sample: Int, ms: Int = 100)",
+        "seg()",
+        "put(f: ByteArray)",
+        "ascii(at: Int)",
+        "int(at: Int)",
+        "short(at: Int)",
+        "class AudioTest"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/writer-core/src/test/kotlin/com/diegonmarcos/cloudwriter/core/BoxesTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "BoxesTest"
+      ],
+      "imports": [
+        "org.json.JSONObject",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.io.ByteArrayOutputStream",
+        "java.util.zip.ZipEntry",
+        "java.util.zip.ZipOutputStream"
+      ],
+      "symbols": [
+        "or(o: Outcome)",
+        "ml(o: Outcome)",
+        "model(id: String, price: String, vararg ins: String)",
+        "docx()",
+        "zip(vararg entries: Pair<String, String>)",
+        "class BoxesTest"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/writer-core/src/test/kotlin/com/diegonmarcos/cloudwriter/core/DesignTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "DesignTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertNotEquals",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "everyTextPairReachesAA()",
+        "everyGraphicPairReaches3to1()",
+        "theTestReadsEveryPair()",
+        "theTestCanFail()",
+        "contrastMath()",
+        "blendIsPerChannelAndOpaque()",
+        "surfaceLevelsStepApart()",
+        "enabledAndPressedControlsReachAA()",
+        "controlRolesAreFilledTonalText()",
+        "pressedMovesTheContainerTowardsTheInk()",
+        "disabledKeepsTheColoursAndDropsTheAlpha()",
+        "gridHoldsTheDesignRules()",
+        "class DesignTest"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/writer-core/src/test/kotlin/com/diegonmarcos/cloudwriter/core/DictationTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "DictationTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.cloudwriter.core.Dictation.TranslateMode",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "class DictationTest"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/writer-core/src/test/kotlin/com/diegonmarcos/cloudwriter/core/DocListTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "DocListTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "ids(l: List<DocMeta>)",
+        "recentIsNewestFirst()",
+        "longestIsMostWordsFirst()",
+        "titleIgnoresCase()",
+        "sortIdsRoundTripAndDefault()",
+        "totalWords()",
+        "readingMinutesRoundsUpAndNeverZeroForText()",
+        "initialIsFirstLetterUpper()",
+        "charsSkipLineBreaks()",
+        "class DocListTest"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/writer-core/src/test/kotlin/com/diegonmarcos/cloudwriter/core/DocStoreTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "DocStoreTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNotEquals",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Rule",
+        "org.junit.Test",
+        "org.junit.rules.TemporaryFolder",
+        "java.io.File"
+      ],
+      "symbols": [
+        "store(dir: File = tmp.root)",
+        "class DocStoreTest"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/writer-core/src/test/kotlin/com/diegonmarcos/cloudwriter/core/FormatTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "FormatTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "run(a: FormatAction, text: String, s: Int, e: Int)",
+        "everyChipIsInAGroupOnce()",
+        "boldItalicCodeWrapTheSelection()",
+        "boldAgainUnwraps()",
+        "headingsMarkTheCaretLine()",
+        "listsQuotesAndChecklistsPrefixEveryTouchedLine()",
+        "checklistTogglesOff()",
+        "linkWrapsTheSelectionAndSelectsTheUrl()",
+        "linkWithNoSelectionInsertsASkeletonAndSelectsItsText()",
+        "linkAcceptsAReversedSelectionAndClamps()",
+        "paragraphIsTheRunOfNonBlankLines()",
+        "aCaretOnABlankLineOwnsNoParagraph()",
+        "aWhitespaceOnlyLineSeparatesParagraphs()",
+        "dimmedIsEverythingOutsideTheParagraph()",
+        "tagsAreHashWordsLowercasedOnceInOrder()",
+        "headingsNumbersAndFragmentsAreNotTags()",
+        "fencedCodeHasNoTags()",
+        "tagsAreCapped()",
+        "docStoreCarriesTags()",
+        "d(id: String, vararg tags: String)",
+        "allTagsMostUsedFirstThenAlphabetical()",
+        "withTagFilters()",
+        "backFromTheListLeavesTheApp()",
+        "listToEditorAndBack()",
+        "configsReturnsToTheOpenDocumentOnlyFromIt()",
+        "toolPagesGoBackToTheList()",
+        "otherMovesFadeThrough()",
+        "class FormatTest"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/writer-core/src/test/kotlin/com/diegonmarcos/cloudwriter/core/MarkdownTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "MarkdownTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "class MarkdownTest"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/writer-core/src/test/kotlin/com/diegonmarcos/cloudwriter/core/OpenRouterTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "OpenRouterTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.decisions.Http",
+        "org.json.JSONArray",
+        "org.json.JSONObject",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.io.IOException",
+        "java.util.Base64"
+      ],
+      "symbols": [
+        "send(url: String, token: String?, body: String?, timeoutMs: Int)",
+        "reply(content: Any)",
+        "model(id: String, ins: List<String>, outs: List<String>, prompt: String?, name: String? = null)",
+        "class OpenRouterTest",
+        "class FakeHttp"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/writer-core/src/test/kotlin/com/diegonmarcos/cloudwriter/core/RoutingJevTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "RoutingJevTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "noAdviceIsTheOldRuleForEverySavedValue()",
+        "adviceOnlyFillsAnUnchosenRoute()",
+        "class RoutingJevTest"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/writer-core/src/test/kotlin/com/diegonmarcos/cloudwriter/core/RoutingTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "RoutingTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "model(o: Outcome)",
+        "ml(o: Outcome)",
+        "class RoutingTest"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/writer-ui/src/main/java/com/diegonmarcos/cloudwriter/AiRoutingActivity.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "AiRoutingPage"
+      ],
+      "imports": [
+        "com.diegonmarcos.cloudwriter.writerui.R",
+        "androidx.activity.ComponentActivity",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.remember",
+        "androidx.compose.runtime.setValue",
+        "com.diegonmarcos.cloudwriter.ui.ChoiceRow",
+        "java.util.Locale"
+      ],
+      "symbols": [
+        "pageTitle()",
+        "PageContent()",
+        "PriceTable(provider: WriterRegistry.Provider, models: List<WriterRegistry.Model>)",
+        "label(m: WriterRegistry.Model)",
+        "usdPerMillion(v: Double)",
+        "class AiRoutingPage"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/writer-ui/src/main/java/com/diegonmarcos/cloudwriter/GrammarCheckActivity.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "GrammarCheckPage"
+      ],
+      "imports": [
+        "com.diegonmarcos.cloudwriter.writerui.R",
+        "androidx.activity.ComponentActivity",
+        "androidx.compose.runtime.Composable",
+        "com.diegonmarcos.cloudwriter.ui.ChoiceRow",
+        "com.diegonmarcos.cloudwriter.ui.ToggleRow"
+      ],
+      "symbols": [
+        "pageTitle()",
+        "PageContent()",
+        "class GrammarCheckPage"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/writer-ui/src/main/java/com/diegonmarcos/cloudwriter/Listen.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "VoiceEngineBinder",
+        "ListenEngine",
+        "ListenService"
+      ],
+      "imports": [
+        "com.diegonmarcos.cloudwriter.writerui.R",
+        "android.Manifest",
+        "android.annotation.SuppressLint",
+        "android.app.NotificationChannel",
+        "android.app.NotificationManager",
+        "android.app.PendingIntent",
+        "android.app.Service",
+        "android.content.ComponentName",
+        "android.content.Context",
+        "android.content.Intent",
+        "android.content.ServiceConnection",
+        "android.content.pm.PackageManager",
+        "android.content.pm.ServiceInfo",
+        "android.media.AudioFormat",
+        "android.media.AudioRecord",
+        "android.media.MediaRecorder",
+        "android.os.Build",
+        "android.os.Handler",
+        "android.os.IBinder",
+        "android.os.Looper",
+        "android.os.SystemClock",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.core.app.NotificationCompat",
+        "androidx.core.app.ServiceCompat",
+        "androidx.core.content.ContextCompat",
+        "com.diegonmarcos.cloudkeyboardlibs.IVoiceCallback",
+        "com.diegonmarcos.cloudkeyboardlibs.IVoiceEngine",
+        "com.diegonmarcos.cloudwriter.core.Answer",
+        "com.diegonmarcos.cloudwriter.core.Dictation",
+        "com.diegonmarcos.cloudwriter.core.DocStore",
+        "com.diegonmarcos.cloudwriter.core.Outcome",
+        "com.diegonmarcos.cloudwriter.core.Route",
+        "com.diegonmarcos.cloudwriter.core.Segmenter",
+        "org.json.JSONObject",
+        "java.io.File",
+        "java.util.concurrent.Executors"
+      ],
+      "symbols": [
+        "onServiceConnected(name: ComponentName, binder: IBinder)",
+        "onServiceDisconnected(name: ComponentName)",
+        "onBindingDied(name: ComponentName)",
+        "installed()",
+        "bind()",
+        "unbind()",
+        "awaitBound(timeoutMs: Long)",
+        "start(languageTag: String?, onPartial: (String)",
+        "onPartial(text: String?)",
+        "onFinal(text: String?)",
+        "onError(message: String?)",
+        "feed(pcm: ByteArray, len: Int)",
+        "stop()",
+        "update(change: (Status)",
+        "hasMic(context: Context)",
+        "start(context: Context, docId: String)",
+        "reportRefusal(why: String)",
+        "pause(paused: Boolean)",
+        "loop(app: Context, v: VoiceEngineBinder)",
+        "heardFinal(app: Context, text: String, modelLive: Boolean)",
+        "drainHeard()",
+        "submit(app: Context, pcm: ByteArray, blocker: String?)",
+        "commit(app: Context, answer: Answer)",
+        "docsDir(context: Context)",
+        "engineLabel()",
+        "statusJson(context: Context)",
+        "onBind(intent: Intent?)",
+        "onStartCommand(intent: Intent?, flags: Int, startId: Int)",
+        "stop(context: Context)",
+        "class VoiceEngineBinder",
+        "class ListenEngine",
+        "class Status",
+        "class ListenService"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/writer-ui/src/main/java/com/diegonmarcos/cloudwriter/RoutesActivity.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "RoutesPage"
+      ],
+      "imports": [
+        "com.diegonmarcos.cloudwriter.writerui.R",
+        "androidx.activity.ComponentActivity",
+        "android.os.Handler",
+        "android.os.Looper",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.MutableState",
+        "androidx.compose.runtime.mutableStateOf",
+        "com.diegonmarcos.cloudwriter.core.Answer",
+        "com.diegonmarcos.cloudwriter.core.CatalogueModel",
+        "com.diegonmarcos.cloudwriter.core.OpenRouter",
+        "com.diegonmarcos.cloudwriter.core.Route",
+        "com.diegonmarcos.cloudwriter.ui.ChoiceRow",
+        "com.diegonmarcos.cloudwriter.ui.SettingRow",
+        "com.diegonmarcos.cloudwriter.ui.ToggleRow",
+        "java.util.Locale",
+        "java.util.concurrent.Executors"
+      ],
+      "symbols": [
+        "pageTitle()",
+        "PageContent()",
+        "onResume()",
+        "refreshCatalogue()",
+        "countLine(all: List<CatalogueModel>)",
+        "modelItems(models: List<CatalogueModel>, f: WriterRoutes.Function)",
+        "languages()",
+        "lastLine(a: Answer?)",
+        "routeName(r: Route?)",
+        "class RoutesPage"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/writer-ui/src/main/java/com/diegonmarcos/cloudwriter/ServingApp.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ServingApp"
+      ],
+      "imports": [
+        "com.diegonmarcos.cloudwriter.writerui.BuildConfig",
+        "android.content.ActivityNotFoundException",
+        "android.content.Context",
+        "android.content.Intent",
+        "android.net.Uri",
+        "android.util.Base64",
+        "com.diegonmarcos.superapp.texttools.TextTools",
+        "org.json.JSONObject"
+      ],
+      "symbols": [
+        "servingPackage(context: Context)",
+        "probe(context: Context, runner: WriterToolRunner)",
+        "openStore(context: Context)",
+        "class ServingApp",
+        "class State"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/writer-ui/src/main/java/com/diegonmarcos/cloudwriter/TextEnhanceActivity.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "TextEnhancePage"
+      ],
+      "imports": [
+        "com.diegonmarcos.cloudwriter.writerui.R",
+        "androidx.activity.ComponentActivity",
+        "androidx.compose.foundation.layout.Arrangement",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.material3.Button",
+        "androidx.compose.material3.MaterialTheme",
+        "androidx.compose.material3.Text",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.MutableState",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.unit.dp",
+        "com.diegonmarcos.cloudwriter.ui.ActionRow",
+        "com.diegonmarcos.cloudwriter.ui.ChoiceRow",
+        "com.diegonmarcos.cloudwriter.ui.PageGutter",
+        "com.diegonmarcos.cloudwriter.ui.SectionHeader",
+        "com.diegonmarcos.cloudwriter.ui.ToggleRow",
+        "com.diegonmarcos.cloudwriter.ui.WriterTextField"
+      ],
+      "symbols": [
+        "pageTitle()",
+        "PageContent()",
+        "refreshPrompt()",
+        "TestBox()",
+        "runTest()",
+        "class of",
+        "class and",
+        "class TextEnhancePage"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/writer-ui/src/main/java/com/diegonmarcos/cloudwriter/TranslationActivity.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "TranslationPage"
+      ],
+      "imports": [
+        "com.diegonmarcos.cloudwriter.writerui.R",
+        "androidx.activity.ComponentActivity",
+        "android.os.Handler",
+        "android.os.Looper",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.MutableState",
+        "androidx.compose.runtime.mutableStateOf",
+        "com.diegonmarcos.cloudwriter.ui.ChoiceRow",
+        "com.diegonmarcos.cloudwriter.ui.ToggleRow",
+        "java.util.Locale",
+        "java.util.concurrent.Executors"
+      ],
+      "symbols": [
+        "pageTitle()",
+        "PageContent()",
+        "onResume()",
+        "languageName(tag: String)",
+        "class TranslationPage"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/writer-ui/src/main/java/com/diegonmarcos/cloudwriter/ui/DocumentsUi.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "MarkdownLook",
+        "asValue",
+        "insertAtCaret",
+        "KitBridge"
+      ],
+      "imports": [
+        "androidx.compose.material3.ColorScheme",
+        "androidx.compose.material3.MaterialTheme",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.ui.graphics.Color",
+        "androidx.compose.ui.text.AnnotatedString",
+        "androidx.compose.ui.text.SpanStyle",
+        "androidx.compose.ui.text.TextRange",
+        "androidx.compose.ui.text.font.FontFamily",
+        "androidx.compose.ui.text.font.FontStyle",
+        "androidx.compose.ui.text.font.FontWeight",
+        "androidx.compose.ui.text.input.OffsetMapping",
+        "androidx.compose.ui.text.input.TextFieldValue",
+        "androidx.compose.ui.text.input.TransformedText",
+        "androidx.compose.ui.text.input.VisualTransformation",
+        "androidx.compose.ui.unit.em",
+        "com.diegonmarcos.cloudwriter.core.Dictation",
+        "com.diegonmarcos.cloudwriter.core.Edit",
+        "com.diegonmarcos.cloudwriter.core.Span",
+        "com.diegonmarcos.cloudwriter.core.SpanKind",
+        "com.diegonmarcos.cloudwriter.core.WriterGrid",
+        "com.diegonmarcos.superapp.uikit.CloudKitTheme",
+        "com.diegonmarcos.superapp.uikit.KitPalette"
+      ],
+      "symbols": [
+        "filter(text: AnnotatedString)",
+        "styleOf(kind: SpanKind)",
+        "asValue()",
+        "insertAtCaret(v: TextFieldValue, segment: String)",
+        "KitBridge(content: @Composable ()",
+        "class MarkdownLook"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/writer-ui/src/main/java/com/diegonmarcos/cloudwriter/ui/Theme.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "WriterTheme",
+        "CloudWriterTheme"
+      ],
+      "imports": [
+        "android.app.Activity",
+        "android.content.Context",
+        "android.os.Build",
+        "androidx.compose.foundation.isSystemInDarkTheme",
+        "androidx.compose.material3.ColorScheme",
+        "com.diegonmarcos.superapp.uikit.KitDenseMaterial",
+        "androidx.compose.material3.darkColorScheme",
+        "androidx.compose.material3.dynamicDarkColorScheme",
+        "androidx.compose.material3.dynamicLightColorScheme",
+        "androidx.compose.material3.lightColorScheme",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.SideEffect",
+        "androidx.compose.ui.graphics.Color",
+        "androidx.compose.ui.graphics.lerp",
+        "androidx.compose.ui.platform.LocalContext",
+        "androidx.compose.ui.platform.LocalView",
+        "androidx.core.view.WindowCompat",
+        "com.diegonmarcos.cloudwriter.WriterPrefs",
+        "com.diegonmarcos.cloudwriter.core.Contrast",
+        "com.diegonmarcos.cloudwriter.core.TokenSet"
+      ],
+      "symbols": [
+        "toScheme(dark: Boolean)",
+        "applyPureBlack(scheme: ColorScheme, darkTheme: Boolean, pureBlack: Boolean)",
+        "pulledToBlack()",
+        "current(context: Context)",
+        "set(context: Context, value: String)",
+        "isDark()",
+        "CloudWriterTheme( darkTheme: Boolean = WriterTheme.isDark()",
+        "class becomes",
+        "class WriterTheme"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/writer-ui/src/main/java/com/diegonmarcos/cloudwriter/ui/WriterComponents.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "WriterDims",
+        "WriterButton",
+        "WriterIconButton",
+        "WriterChip",
+        "WriterBar",
+        "BarDivider",
+        "WriterFilterChip",
+        "WriterTagPill",
+        "WriterSearchField",
+        "WriterDocCard",
+        "WriterLabel",
+        "EmptyDocsIllustration",
+        "WriterEmptyState"
+      ],
+      "imports": [
+        "androidx.compose.foundation.BorderStroke",
+        "androidx.compose.foundation.Canvas",
+        "androidx.compose.foundation.background",
+        "androidx.compose.foundation.border",
+        "androidx.compose.foundation.clickable",
+        "androidx.compose.foundation.horizontalScroll",
+        "androidx.compose.foundation.interaction.MutableInteractionSource",
+        "androidx.compose.foundation.interaction.collectIsPressedAsState",
+        "androidx.compose.foundation.layout.Arrangement",
+        "androidx.compose.foundation.layout.Box",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.Row",
+        "androidx.compose.foundation.layout.RowScope",
+        "androidx.compose.foundation.layout.Spacer",
+        "androidx.compose.foundation.layout.defaultMinSize",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.foundation.layout.height",
+        "androidx.compose.foundation.layout.heightIn",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.foundation.layout.size",
+        "androidx.compose.foundation.layout.width",
+        "androidx.compose.foundation.rememberScrollState",
+        "androidx.compose.foundation.selection.selectable",
+        "androidx.compose.foundation.shape.RoundedCornerShape",
+        "androidx.compose.material.icons.Icons",
+        "androidx.compose.material.icons.rounded.Check",
+        "androidx.compose.material.icons.rounded.Close",
+        "androidx.compose.material.icons.rounded.Search",
+        "androidx.compose.material3.Button",
+        "androidx.compose.material3.ButtonDefaults",
+        "androidx.compose.material3.Card",
+        "androidx.compose.material3.CardDefaults",
+        "androidx.compose.material3.FilledTonalButton",
+        "androidx.compose.material3.Icon",
+        "androidx.compose.material3.IconButton",
+        "androidx.compose.material3.MaterialTheme",
+        "androidx.compose.material3.Surface",
+        "androidx.compose.material3.Text",
+        "androidx.compose.material3.TextButton",
+        "androidx.compose.material3.TextField"
+      ],
+      "symbols": [
+        "tokens()",
+        "WriterButton( label: String, onClick: ()",
+        "WriterIconButton(icon: ImageVector, description: String, onClick: ()",
+        "WriterChip( id: String, icon: ImageVector, label: String, onClick: ()",
+        "WriterBar(modifier: Modifier = Modifier, content: @Composable RowScope.()",
+        "BarDivider()",
+        "WriterFilterChip(id: String, group: String, label: String, selected: Boolean, onClick: ()",
+        "WriterTagPill(text: String)",
+        "WriterSearchField(query: String, onQueryChange: (String)",
+        "WriterDocCard( tag: String, title: String, preview: String, meta: String, tags: List<String>, onClick: ()",
+        "WriterLabel(text: String, modifier: Modifier = Modifier)",
+        "EmptyDocsIllustration(modifier: Modifier = Modifier)",
+        "WriterEmptyState(title: String, caption: String, modifier: Modifier = Modifier, actions: @Composable ()",
+        "class WriterDims"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/writer-ui/src/main/java/com/diegonmarcos/cloudwriter/ui/WriterUi.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "PageGutter",
+        "BlockGap",
+        "SectionHeader",
+        "FeatureCard",
+        "ChoiceRow",
+        "ToggleRow",
+        "SettingRow",
+        "NoteText",
+        "WriterTextField",
+        "ActionRow"
+      ],
+      "imports": [
+        "androidx.compose.foundation.clickable",
+        "androidx.compose.foundation.layout.Arrangement",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.Row",
+        "androidx.compose.foundation.layout.Spacer",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.foundation.layout.heightIn",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.foundation.layout.size",
+        "androidx.compose.foundation.layout.width",
+        "androidx.compose.foundation.rememberScrollState",
+        "androidx.compose.foundation.selection.selectable",
+        "androidx.compose.foundation.verticalScroll",
+        "androidx.compose.material.icons.Icons",
+        "androidx.compose.material.icons.rounded.ChevronRight",
+        "androidx.compose.material3.AlertDialog",
+        "androidx.compose.material3.Card",
+        "androidx.compose.material3.CardDefaults",
+        "androidx.compose.material3.Icon",
+        "androidx.compose.material3.MaterialTheme",
+        "androidx.compose.material3.OutlinedTextField",
+        "androidx.compose.material3.RadioButton",
+        "androidx.compose.material3.Switch",
+        "androidx.compose.material3.Text",
+        "androidx.compose.material3.TextButton",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.remember",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.ui.Alignment",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.graphics.vector.ImageVector",
+        "androidx.compose.ui.res.stringResource",
+        "androidx.compose.ui.text.input.TextFieldValue",
+        "androidx.compose.ui.unit.dp"
+      ],
+      "symbols": [
+        "SectionHeader(text: String, modifier: Modifier = Modifier)",
+        "FeatureCard( icon: ImageVector, title: String, summary: String, onClick: ()",
+        "ChoiceRow( title: String, summary: String?, items: List<Pair<String, String>>, current: String, fallback: String, onPick: (String)",
+        "labelOf(id: String)",
+        "ToggleRow(title: String, summary: String?, checked: Boolean, onToggle: (Boolean)",
+        "SettingRow(title: String, summary: String?, value: String?, onClick: ()",
+        "NoteText(text: String, modifier: Modifier = Modifier)",
+        "WriterTextField( value: String, onValueChange: (String)",
+        "WriterTextField( value: TextFieldValue, onValueChange: (TextFieldValue)",
+        "ActionRow(content: @Composable ()",
+        "class of"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/writer-ui/src/main/java/com/diegonmarcos/cloudwriter/WriterBoxes.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "BoxState",
+        "BoxIo",
+        "rememberBoxIo",
+        "ocrInto",
+        "WriterBox"
+      ],
+      "imports": [
+        "com.diegonmarcos.cloudwriter.writerui.R",
+        "android.content.ClipData",
+        "android.content.ClipboardManager",
+        "android.content.Context",
+        "android.net.Uri",
+        "android.os.Handler",
+        "android.os.Looper",
+        "android.provider.OpenableColumns",
+        "androidx.activity.compose.rememberLauncherForActivityResult",
+        "androidx.activity.result.contract.ActivityResultContracts",
+        "androidx.compose.foundation.horizontalScroll",
+        "androidx.compose.foundation.layout.Arrangement",
+        "androidx.compose.foundation.layout.Box",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.Row",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.foundation.layout.heightIn",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.foundation.rememberScrollState",
+        "androidx.compose.material.icons.Icons",
+        "androidx.compose.material.icons.automirrored.rounded.FormatListBulleted",
+        "androidx.compose.material.icons.rounded.AddPhotoAlternate",
+        "androidx.compose.material.icons.rounded.Code",
+        "androidx.compose.material.icons.rounded.ContentCopy",
+        "androidx.compose.material.icons.rounded.FileOpen",
+        "androidx.compose.material.icons.rounded.FileUpload",
+        "androidx.compose.material.icons.rounded.FormatBold",
+        "androidx.compose.material.icons.rounded.FormatItalic",
+        "androidx.compose.material.icons.rounded.FormatListNumbered",
+        "androidx.compose.material.icons.rounded.FormatQuote",
+        "androidx.compose.material.icons.rounded.Link",
+        "androidx.compose.material.icons.rounded.PhotoCamera",
+        "androidx.compose.material.icons.rounded.Title",
+        "androidx.compose.material3.AlertDialog",
+        "androidx.compose.material3.Card",
+        "androidx.compose.material3.DropdownMenu",
+        "androidx.compose.material3.DropdownMenuItem",
+        "androidx.compose.material3.FilterChip",
+        "androidx.compose.material3.Icon",
+        "androidx.compose.material3.IconButton"
+      ],
+      "symbols": [
+        "html()",
+        "text()",
+        "setHtml(html: String)",
+        "setText(text: String)",
+        "switchTo(m: EditMode)",
+        "rememberBoxIo(context: Context, worker: Executor, note: (String)",
+        "ocr(uri: Uri)",
+        "ocrInto(context: Context, worker: Executor, box: BoxState, uri: Uri, note: (String)",
+        "displayName(context: Context, uri: Uri)",
+        "WriterBox(label: String, state: BoxState, io: BoxIo, input: Boolean, modifier: Modifier = Modifier)",
+        "Action(icon: ImageVector, label: Int, onClick: ()",
+        "ExportMenu(onPick: (ExportFormat)",
+        "FormatStrip(rich: RichTextState)",
+        "LinkDialog(rich: RichTextState, close: ()",
+        "class BoxState",
+        "class BoxIo"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/writer-ui/src/main/java/com/diegonmarcos/cloudwriter/WriterJev.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "WriterJev"
+      ],
+      "imports": [
+        "android.content.Context",
+        "com.diegonmarcos.cloudwriter.core.Answer",
+        "com.diegonmarcos.cloudwriter.core.Route",
+        "com.diegonmarcos.superapp.decisions.link.Advice",
+        "com.diegonmarcos.superapp.decisions.link.DecisionsLink",
+        "org.json.JSONObject",
+        "java.util.Calendar"
+      ],
+      "symbols": [
+        "slot(f: WriterRoutes.Function, online: Boolean)",
+        "advice(ctx: Context, f: WriterRoutes.Function)",
+        "routeOf(pick: String?)",
+        "questions()",
+        "observed(ctx: Context, f: WriterRoutes.Function, advised: Route?, answer: Answer)",
+        "class WriterJev"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/writer-ui/src/main/java/com/diegonmarcos/cloudwriter/WriterNav.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "WriterNav"
+      ],
+      "imports": [
+        "com.diegonmarcos.cloudwriter.writerui.BuildConfig",
+        "com.diegonmarcos.cloudwriter.core.WriterTabs",
+        "com.diegonmarcos.superapp.bottomnav.NavDecl"
+      ],
+      "symbols": [
+        "pageId(screen: Class<*>)",
+        "class WriterNav",
+        "class name"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/writer-ui/src/main/java/com/diegonmarcos/cloudwriter/WriterPrefs.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "WriterPrefs"
+      ],
+      "imports": [
+        "com.diegonmarcos.cloudwriter.writerui.BuildConfig",
+        "android.content.Context",
+        "android.content.SharedPreferences",
+        "android.util.Log",
+        "com.diegonmarcos.superapp.texttools.TextToolsClient",
+        "org.json.JSONObject"
+      ],
+      "symbols": [
+        "prefs(context: Context)",
+        "providerId(context: Context)",
+        "modelId(context: Context, providerId: String = providerId(context)",
+        "modelFor(context: Context, tool: WriterTool, providerId: String = providerId(context)",
+        "known(id: String?)",
+        "enhanceStyleId(context: Context)",
+        "enhanceToneId(context: Context)",
+        "enhanceLengthId(context: Context)",
+        "enhanceLanguageId(context: Context)",
+        "summaryStyleId(context: Context)",
+        "translateTarget(context: Context)",
+        "enhanceScope(context: Context)",
+        "grammarMode(context: Context)",
+        "grammarRemoteUrl(context: Context)",
+        "string(context: Context, key: String, fallback: String)",
+        "flag(context: Context, key: String, fallback: Boolean)",
+        "put(context: Context, key: String, value: String)",
+        "putFlag(context: Context, key: String, value: Boolean)",
+        "putModel(context: Context, providerId: String, modelId: String)",
+        "putToolModel(context: Context, tool: WriterTool, providerId: String, modelId: String)",
+        "enhancePrompt(context: Context)",
+        "draftPrompt(context: Context)",
+        "summaryPrompt(context: Context)",
+        "translatePrompt(context: Context)",
+        "summaryWantsBullets(context: Context)",
+        "isSeeded(context: Context)",
+        "seedFromServingApp(context: Context, client: TextToolsClient)",
+        "adopt(key: String, known: List<WriterRegistry.Style>)",
+        "class WriterPrefs",
+        "class of"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/writer-ui/src/main/java/com/diegonmarcos/cloudwriter/WriterRegistry.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "WriterRegistry"
+      ],
+      "imports": [
+        "com.diegonmarcos.cloudwriter.writerui.BuildConfig",
+        "android.util.Base64",
+        "org.json.JSONObject"
+      ],
+      "symbols": [
+        "strings(o: JSONObject, key: String)",
+        "byModelSize(models: List<Model>)",
+        "quantBits(m: Model)",
+        "hasPricing(p: Provider)",
+        "promptSet(key: String)",
+        "provider(id: String?)",
+        "styleOf(set: List<Style>, id: String?, fallback: String)",
+        "style(id: String?)",
+        "tone(id: String?)",
+        "length(id: String?)",
+        "language(id: String?)",
+        "summary(id: String?)",
+        "enhancePrompt(styleId: String?, toneId: String?, lengthId: String?, languageId: String?)",
+        "draftPrompt(toneId: String?, lengthId: String?, languageId: String?)",
+        "grammarPrompt()",
+        "translatePrompt(languageId: String?)",
+        "summaryPrompt(summaryId: String?)",
+        "class is",
+        "class WriterRegistry",
+        "class Style",
+        "class Model",
+        "class Provider",
+        "class of"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/writer-ui/src/main/java/com/diegonmarcos/cloudwriter/WriterRoutes.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "WriterRoutes"
+      ],
+      "imports": [
+        "com.diegonmarcos.cloudwriter.writerui.R",
+        "com.diegonmarcos.cloudwriter.writerui.BuildConfig",
+        "android.content.Context",
+        "android.net.ConnectivityManager",
+        "android.net.NetworkCapabilities",
+        "android.os.SystemClock",
+        "android.util.Base64",
+        "com.diegonmarcos.cloudwriter.core.Answer",
+        "com.diegonmarcos.cloudwriter.core.CatalogueModel",
+        "com.diegonmarcos.cloudwriter.core.OpenRouter",
+        "com.diegonmarcos.cloudwriter.core.OpenRouterConfig",
+        "com.diegonmarcos.cloudwriter.core.Outcome",
+        "com.diegonmarcos.cloudwriter.core.Route",
+        "com.diegonmarcos.cloudwriter.core.Routing",
+        "com.diegonmarcos.cloudwriter.core.Wav",
+        "com.diegonmarcos.cloudwriter.core.Ocr",
+        "com.diegonmarcos.cloudwriter.core.OcrEngine",
+        "com.diegonmarcos.superapp.mlocr.MlKitOcr",
+        "com.diegonmarcos.superapp.mlocr.OcrImage",
+        "com.diegonmarcos.superapp.mlocr.VisionOcr",
+        "android.graphics.Bitmap",
+        "com.diegonmarcos.superapp.decisions.UrlHttp",
+        "com.diegonmarcos.superapp.texttools.TextToolsClient",
+        "org.json.JSONObject"
+      ],
+      "symbols": [
+        "block(f: Function)",
+        "defaultRoute(f: Function)",
+        "route(context: Context, f: Function)",
+        "setRoute(context: Context, f: Function, route: Route)",
+        "advisedOrNull(context: Context, f: Function)",
+        "defaultModel(f: Function)",
+        "model(context: Context, f: Function)",
+        "setModel(context: Context, f: Function, id: String)",
+        "listenTranslate(context: Context)",
+        "listenTarget(context: Context)",
+        "listenMode(context: Context)",
+        "listenLanguage(context: Context)",
+        "tagOf(languageId: String?)",
+        "languageIdOf(idOrTag: String)",
+        "online(context: Context)",
+        "textTools(context: Context)",
+        "accountToken(context: Context)",
+        "accountHasKey(context: Context)",
+        "translate(context: Context, text: String, languageId: String)",
+        "ocrEngine(context: Context)",
+        "setOcrEngine(context: Context, engine: OcrEngine)",
+        "defaultOcrModel()",
+        "ocrModel(context: Context)",
+        "setOcrModel(context: Context, id: String)",
+        "ocr(context: Context, bitmap: Bitmap)",
+        "visionModels(context: Context)",
+        "transcribe(context: Context, pcm: ByteArray, blockerAtStart: String?, onDevice: ()",
+        "speechBlocker(context: Context)",
+        "speechPrompt(context: Context)",
+        "cachedCatalogue(context: Context)",
+        "fetchCatalogue(context: Context)",
+        "routeJson(context: Context, serving: ServingApp?)",
+        "fn(f: Function, last: Answer?)",
+        "class WriterRoutes",
+        "class Function"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/writer-ui/src/main/java/com/diegonmarcos/cloudwriter/WriterSettingsUi.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "WriterSettingsPage",
+        "WriterSettingsActivity"
+      ],
+      "imports": [
+        "com.diegonmarcos.cloudwriter.writerui.R",
+        "android.content.ClipData",
+        "android.content.ClipboardManager",
+        "android.content.Context",
+        "android.content.Intent",
+        "android.os.Bundle",
+        "androidx.activity.compose.setContent",
+        "androidx.appcompat.app.AppCompatActivity",
+        "androidx.activity.ComponentActivity",
+        "android.content.ContextWrapper",
+        "androidx.compose.runtime.DisposableEffect",
+        "androidx.lifecycle.Lifecycle",
+        "androidx.lifecycle.LifecycleEventObserver",
+        "androidx.compose.foundation.horizontalScroll",
+        "androidx.compose.foundation.layout.Arrangement",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.Row",
+        "androidx.compose.foundation.layout.Spacer",
+        "androidx.compose.foundation.layout.fillMaxSize",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.foundation.layout.height",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.foundation.layout.width",
+        "androidx.compose.foundation.rememberScrollState",
+        "androidx.compose.foundation.verticalScroll",
+        "androidx.compose.material.icons.Icons",
+        "androidx.compose.material.icons.automirrored.rounded.ArrowBack",
+        "androidx.compose.material3.AlertDialog",
+        "androidx.compose.material3.Card",
+        "androidx.compose.material3.CardDefaults",
+        "androidx.compose.material3.ExperimentalMaterial3Api",
+        "androidx.compose.material3.Icon",
+        "androidx.compose.material3.IconButton",
+        "androidx.compose.material3.MaterialTheme",
+        "androidx.compose.material3.OutlinedTextField",
+        "androidx.compose.material3.Text",
+        "androidx.compose.material3.TextButton",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableStateOf"
+      ],
+      "symbols": [
+        "pageTitle()",
+        "PageContent()",
+        "onResume()",
+        "Body(modifier: Modifier = Modifier, header: @Composable ()",
+        "Category(text: String)",
+        "Group(content: @Composable ()",
+        "TextRow(title: String, summary: String?, current: String, hint: String, onSet: (String)",
+        "ReadOnlyRow(title: String, summary: String?, text: String)",
+        "copyToClipboard(label: String, text: String)",
+        "Table(headers: List<String>, rows: List<List<String>>, widthsDp: List<Int>, dimFrom: Int)",
+        "TableRow(cells: List<String>, widthsDp: List<Int>, dimFrom: Int, header: Boolean)",
+        "Note(text: String)",
+        "createPage()",
+        "hostModifier()",
+        "onCreate(savedInstanceState: Bundle?)",
+        "openSection(id: String)",
+        "class WriterSettingsPage",
+        "class WriterSettingsActivity"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/writer-ui/src/main/java/com/diegonmarcos/cloudwriter/WriterSurface.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "WriterSurface"
+      ],
+      "imports": [
+        "com.diegonmarcos.cloudwriter.writerui.R",
+        "android.Manifest",
+        "android.app.Activity",
+        "android.content.ClipData",
+        "android.content.ClipboardManager",
+        "android.content.Context",
+        "android.content.Intent",
+        "android.content.pm.PackageManager",
+        "android.net.Uri",
+        "android.os.Build",
+        "android.os.Bundle",
+        "android.os.Handler",
+        "android.os.Looper",
+        "android.text.format.DateUtils",
+        "android.widget.Toast",
+        "androidx.activity.compose.BackHandler",
+        "androidx.activity.compose.rememberLauncherForActivityResult",
+        "androidx.activity.compose.setContent",
+        "androidx.activity.result.contract.ActivityResultContracts",
+        "androidx.annotation.StringRes",
+        "androidx.compose.animation.AnimatedContent",
+        "androidx.compose.animation.AnimatedVisibility",
+        "androidx.compose.animation.ContentTransform",
+        "androidx.compose.animation.core.tween",
+        "androidx.compose.animation.fadeIn",
+        "androidx.compose.animation.fadeOut",
+        "androidx.compose.animation.scaleIn",
+        "androidx.compose.animation.slideInHorizontally",
+        "androidx.compose.animation.slideInVertically",
+        "androidx.compose.animation.slideOutVertically",
+        "androidx.compose.animation.togetherWith",
+        "androidx.compose.foundation.layout.widthIn",
+        "androidx.compose.foundation.lazy.rememberLazyListState",
+        "androidx.compose.material.icons.automirrored.rounded.FormatListBulleted",
+        "androidx.compose.material.icons.rounded.AddPhotoAlternate",
+        "androidx.compose.material.icons.rounded.CenterFocusStrong",
+        "androidx.compose.material.icons.rounded.Checklist",
+        "androidx.compose.material.icons.rounded.FileOpen",
+        "androidx.compose.material.icons.rounded.FullscreenExit",
+        "androidx.compose.material.icons.rounded.Link"
+      ],
+      "symbols": [
+        "adoptIntent(intent: Intent?)",
+        "onNewIntent(intent: Intent?)",
+        "openRequestedSection(from: Intent?)",
+        "onStart()",
+        "onResume()",
+        "onStop()",
+        "adoptSharedText(from: Intent?)",
+        "open(id: String)",
+        "newDoc()",
+        "back()",
+        "goSection(id: String)",
+        "openConfigs()",
+        "saveNow()",
+        "reloadDocs()",
+        "delete(id: String)",
+        "attachSink()",
+        "Content(chromeModifier: Modifier = Modifier)",
+        "Page(id: String, themed: Boolean = true)",
+        "pageLabel(id: String)",
+        "toolPage(id: String)",
+        "PageBody(id: String)",
+        "DictationPage()",
+        "App()",
+        "WriterShell()",
+        "writerTransition(from: Screen, to: Screen)",
+        "sectionLabel(id: String, declared: String)",
+        "DocsScreen()",
+        "DocCard(d: DocMeta, modifier: Modifier = Modifier)",
+        "importFile(uri: Uri)",
+        "importImage(uri: Uri)",
+        "ThemeMenu()",
+        "themes()",
+        "EditorScreen()",
+        "format(action: (String, Int, Int)",
+        "FormatBar()",
+        "iconFor(a: FormatAction)",
+        "labelFor(a: FormatAction)",
+        "ToolBar()",
+        "iconFor(tool: WriterTool)",
+        "FindBar(matches: List<IntRange>)"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/writer-ui/src/main/java/com/diegonmarcos/cloudwriter/WriterTools.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "WriterTool",
+        "WriterOutcome",
+        "WriterToolRunner",
+        "WriterLocalGrammar"
+      ],
+      "imports": [
+        "com.diegonmarcos.cloudwriter.writerui.R",
+        "android.content.Context",
+        "android.os.Handler",
+        "android.os.Looper",
+        "android.os.SystemClock",
+        "androidx.annotation.StringRes",
+        "com.diegonmarcos.cloudwriter.core.Answer",
+        "com.diegonmarcos.superapp.texttools.TextTools",
+        "com.diegonmarcos.superapp.texttools.TextToolsClient",
+        "org.json.JSONObject",
+        "java.util.concurrent.Executors"
+      ],
+      "symbols": [
+        "isServingAppInstalled()",
+        "awaitBound(timeoutMs: Long)",
+        "aiRoutingApp()",
+        "translateLanguages()",
+        "providerLabel()",
+        "run(tool: WriterTool, text: String, onDone: (WriterOutcome)",
+        "draft(text: String, onDone: (WriterOutcome)",
+        "runTool(tool: WriterTool, text: String)",
+        "anyFixEnabled(context: Context)",
+        "fix(context: Context, text: String)",
+        "capitaliseLoneI(text: String)",
+        "removeRepeatedWords(text: String)",
+        "capitaliseSentenceStarts(text: String)",
+        "class WriterTool",
+        "class WriterOutcome",
+        "class WriterToolRunner",
+        "class does",
+        "class WriterLocalGrammar"
+      ]
+    },
+    {
       "path": "ab_cloud-libs-shared/libs/wysiwyg/src/main/java/com/diegonmarcos/cloudlib/wysiwyg/Doc.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -103780,7 +105740,7 @@
         "onCreate(savedInstanceState: Bundle?)",
         "onNewIntent(intent: Intent)",
         "AccountShell()",
-        "Strips(section: NavSection, path: List<NavPage>, select: (String)",
+        "Strips(section: NavSection, path: List<NavPage>, tailSelected: String?, select: (String)",
         "Page(section: String, page: String, go: (String, String)",
         "FleetSetupPage(model: AccountModel)",
         "deepLink(intent: Intent?)",
@@ -109301,6 +111261,7 @@
         "openable(url: &str)",
         "crashes_api(ctx: &Ctx, req: &Req)",
         "api_launch(_ctx: &Ctx, req: &Req)",
+        "api_configs_open(_ctx: &Ctx, req: &Req)",
         "api_open(_ctx: &Ctx, req: &Req)",
         "ctx()",
         "get(path: &str)",
@@ -109889,6 +111850,8 @@
         "is_paused",
         "adopted",
         "set_launcher",
+        "set_configs_opener",
+        "open_configs",
         "launch",
         "declared_ports",
         "listen_ports",
@@ -109923,6 +111886,8 @@
         "adopted()",
         "save_adopted(v: &[(u16, String)",
         "set_launcher(f: Box<Launcher>)",
+        "set_configs_opener(f: Box<ConfigsOpener>)",
+        "open_configs(page: &str)",
         "launch(package: &str)",
         "answers(port: u16)",
         "link(label: &str, href: &str)",
@@ -110340,6 +112305,7 @@
         "friendly(e: &str, authority: &str)",
         "open_in_browser(url: &str)",
         "launch_app(package: &str)",
+        "open_configs(page: &str)",
         "sync_keep_alive()",
         "send_door(cmd: c3_webserver::door::Cmd)"
       ]
@@ -115837,7 +117803,8 @@
       "role": "kotlin",
       "exports": [
         "CalcShell",
-        "CalcTags"
+        "CalcTags",
+        "ConfigsTail"
       ],
       "imports": [
         "androidx.compose.foundation.background",
@@ -115885,7 +117852,7 @@
         "CalcShell(api: CalcApi, state: CalcState)",
         "TopRow(state: CalcState)",
         "TabContent(tabId: String)",
-        "ModeIcons(modes: List<Declarations.Mode>, selectedId: String, pageIcon: String, onSelect: (String)",
+        "ModeIcons(modes: List<Declarations.Mode>, selectedId: String, pageIcon: String, separatorBefore: String?, onSelect: (String)",
         "searchHit(i: Int)",
         "matrixCell(row: String, col: String)",
         "pickerItem(name: String)",
@@ -115901,7 +117868,10 @@
         "jevModel(slug: String)",
         "jevPicker(use: String)",
         "jevTestColumn(model: String)",
-        "class CalcTags"
+        "order(tabId: String, modes: List<Declarations.Mode>)",
+        "separatorBefore(tabId: String, ordered: List<Declarations.Mode>)",
+        "class CalcTags",
+        "class ConfigsTail"
       ]
     },
     {
@@ -116140,7 +118110,8 @@
         "CONFIGS_PERMISSIONS_MODE",
         "FleetGeneralMode",
         "FleetPermsMode",
-        "FleetAboutMode"
+        "FleetAboutMode",
+        "FleetTailMode"
       ],
       "imports": [
         "androidx.compose.foundation.layout.fillMaxSize",
@@ -116167,7 +118138,8 @@
       "symbols": [
         "FleetGeneralMode()",
         "FleetPermsMode()",
-        "FleetAboutMode()"
+        "FleetAboutMode()",
+        "FleetTailMode(id: String)"
       ]
     },
     {
@@ -204583,6 +206555,8 @@
         "java.io.File"
       ],
       "symbols": [
+        "stashCount(gitDir: File)",
+        "isDetachedHead(headText: String?)",
         "head(dir: File)",
         "aheadBehind(localSha: String?, remoteSha: String?, localLog: List<String>)",
         "upstreamOf(config: String, branch: String)",
@@ -208654,6 +210628,38 @@
         "row(name: String, last: Long?)",
         "class RepoFiltersTest",
         "class R"
+      ]
+    },
+    {
+      "path": "ac_cloud-drive/app/src/test/java/com/diegonmarcos/clouddrive/sync/RepoLightStatsTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "RepoLightStatsTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.cloudlib.gitui.GitStatusFacts",
+        "com.diegonmarcos.cloudlib.gitui.GitTable",
+        "com.diegonmarcos.cloudlib.gitui.RepoColumn",
+        "com.diegonmarcos.cloudlib.gitui.gitStatusTableRows",
+        "java.io.File",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Rule",
+        "org.junit.Test",
+        "org.junit.rules.TemporaryFolder"
+      ],
+      "symbols": [
+        "glance(branch: String? = \"main\", upstream: String? = \"origin/main\", ahead: Int = 0, behind: Int = 0, changed: Int = 0, detached: Boolean = false, stashed: Int = 0)",
+        "row(name: String, g: GitSyncCoordinator.Glance?, cloned: Boolean = true)",
+        "theColumnsLeadWithTheSixLightStatsInOrder()",
+        "rowFactsComeFromTheRealGlance()",
+        "everyNewColumnSortsAndUnknownSinksLast()",
+        "order(c: RepoColumn, asc: Boolean)",
+        "statusTableRowsAreTheSixRequestedInOrder()",
+        "detachedAndStashAreReadFromRealGitFiles()",
+        "class RepoLightStatsTest"
       ]
     },
     {
@@ -244599,6 +246605,77 @@
       ]
     },
     {
+      "path": "ac_cloud-keyboard/app/src/main/java/com/diegonmarcos/cloudkeyboard/KeyboardChrome.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "KeyboardChrome",
+        "KeyboardConfigsTabBody"
+      ],
+      "imports": [
+        "android.content.Context",
+        "android.content.Intent",
+        "androidx.compose.foundation.layout.Box",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.WindowInsets",
+        "androidx.compose.foundation.layout.WindowInsetsSides",
+        "androidx.compose.foundation.layout.consumeWindowInsets",
+        "androidx.compose.foundation.layout.only",
+        "androidx.compose.foundation.layout.statusBarsPadding",
+        "androidx.compose.foundation.layout.systemBars",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.material3.Text",
+        "androidx.compose.foundation.clickable",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.remember",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.platform.LocalContext",
+        "androidx.compose.ui.unit.dp",
+        "com.diegonmarcos.superapp.navbartop1.HierarchyEntry",
+        "com.diegonmarcos.superapp.bottomnav.navEntry",
+        "com.diegonmarcos.superapp.fleetconfigs.FleetConfigsEntries",
+        "com.diegonmarcos.superapp.fleetconfigs.FleetConfigsPage",
+        "com.diegonmarcos.superapp.navbarbottom.NavBarBottom",
+        "com.diegonmarcos.superapp.navbartop1.NavBarTopFirstRowScaffold",
+        "helium314.keyboard.settings.KbTab",
+        "helium314.keyboard.settings.NavPageDecl",
+        "helium314.keyboard.settings.SettingsActivity"
+      ],
+      "symbols": [
+        "hierarchy(tab: KbTab, selectedId: String?)",
+        "walk(pages: List<NavPageDecl>, depth: Int)",
+        "Draw(route: String?, open: (String)",
+        "openConfigs(ctx: Context)",
+        "KeyboardConfigsTabBody(@Suppress(\"UNUSED_PARAMETER\")",
+        "class KeyboardChrome"
+      ]
+    },
+    {
+      "path": "ac_cloud-keyboard/app/src/main/java/com/diegonmarcos/cloudkeyboard/WriterHost.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "WriterHost"
+      ],
+      "imports": [
+        "android.content.Context",
+        "android.content.ContextWrapper",
+        "androidx.activity.ComponentActivity",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.ui.platform.LocalContext",
+        "com.diegonmarcos.cloudwriter.WriterSurface"
+      ],
+      "symbols": [
+        "componentActivity()",
+        "Page(id: String)",
+        "class WriterHost"
+      ]
+    },
+    {
       "path": "ac_cloud-keyboard/build.sh",
       "lang": "sh",
       "role": "shell",
@@ -245394,6 +247471,7 @@
         "noFieldOfThePreviousNavIsLost()",
         "scrappedListsTheSharedHeadlessDeclarationByReference()",
         "meDeclaresTheRepoToCloneAtRuntime()",
+        "meSourcesFromTheLibraryRepoNotBakedCollections()",
         "everyDataPageIsDeclaredByTheNavAndEveryDeclaredPageHasItsData()",
         "cloudIsTwoRowsOfTwoGroups()",
         "labels(g: JSONObject)",
@@ -392448,12 +394526,14 @@
       "exports": [
         "guard()",
         "check()",
+        "plant()",
         "mutate()"
       ],
       "imports": [],
       "symbols": [
         "guard()",
         "check()",
+        "plant()",
         "mutate()"
       ]
     },
@@ -392495,6 +394575,7 @@
         "./media-sync.js"
       ],
       "symbols": [
+        "nativeIntent(id)",
         "esc(s)",
         "tabSpec(id)",
         "store()",
@@ -392519,6 +394600,8 @@
         "openAccount(msg)",
         "wireMenu(doc, prefix)",
         "set(open)",
+        "chipsHtml(tab)",
+        "openNative(id)",
         "bootConfigs(doc)",
         "ctx()",
         "draw()",
@@ -525139,6 +527222,7 @@
         "androidx.compose.foundation.layout.Column",
         "androidx.compose.foundation.layout.Row",
         "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.foundation.layout.padding",
         "androidx.compose.foundation.rememberScrollState",
         "androidx.compose.foundation.shape.RoundedCornerShape",
         "androidx.compose.foundation.text.BasicTextField",
@@ -525165,8 +527249,7 @@
         "com.diegonmarcos.superapp.torrent.EngineState",
         "com.diegonmarcos.superapp.torrent.ParseKind",
         "com.diegonmarcos.superapp.torrent.PrefsSettings",
-        "com.diegonmarcos.superapp.torrent.TorrentEngines",
-        "com.diegonmarcos.superapp.torrent.TorrentFormat"
+        "com.diegonmarcos.superapp.torrent.TorrentEngines"
       ],
       "symbols": [
         "drive(path: String)",
@@ -613400,131 +615483,6 @@
       ]
     },
     {
-      "path": "ac_cloud-writer/app/src/main/java/com/diegonmarcos/cloudwriter/AiRoutingActivity.kt",
-      "lang": "kotlin",
-      "role": "kotlin",
-      "exports": [
-        "AiRoutingActivity"
-      ],
-      "imports": [
-        "androidx.compose.runtime.Composable",
-        "androidx.compose.runtime.getValue",
-        "androidx.compose.runtime.mutableStateOf",
-        "androidx.compose.runtime.remember",
-        "androidx.compose.runtime.setValue",
-        "com.diegonmarcos.cloudwriter.ui.ChoiceRow",
-        "java.util.Locale"
-      ],
-      "symbols": [
-        "pageTitle()",
-        "PageContent()",
-        "PriceTable(provider: WriterRegistry.Provider, models: List<WriterRegistry.Model>)",
-        "label(m: WriterRegistry.Model)",
-        "usdPerMillion(v: Double)",
-        "class AiRoutingActivity"
-      ]
-    },
-    {
-      "path": "ac_cloud-writer/app/src/main/java/com/diegonmarcos/cloudwriter/GrammarCheckActivity.kt",
-      "lang": "kotlin",
-      "role": "kotlin",
-      "exports": [
-        "GrammarCheckActivity"
-      ],
-      "imports": [
-        "androidx.compose.runtime.Composable",
-        "com.diegonmarcos.cloudwriter.ui.ChoiceRow",
-        "com.diegonmarcos.cloudwriter.ui.ToggleRow"
-      ],
-      "symbols": [
-        "pageTitle()",
-        "PageContent()",
-        "class GrammarCheckActivity"
-      ]
-    },
-    {
-      "path": "ac_cloud-writer/app/src/main/java/com/diegonmarcos/cloudwriter/Listen.kt",
-      "lang": "kotlin",
-      "role": "kotlin",
-      "exports": [
-        "VoiceEngineBinder",
-        "ListenEngine",
-        "ListenService"
-      ],
-      "imports": [
-        "android.Manifest",
-        "android.annotation.SuppressLint",
-        "android.app.NotificationChannel",
-        "android.app.NotificationManager",
-        "android.app.PendingIntent",
-        "android.app.Service",
-        "android.content.ComponentName",
-        "android.content.Context",
-        "android.content.Intent",
-        "android.content.ServiceConnection",
-        "android.content.pm.PackageManager",
-        "android.content.pm.ServiceInfo",
-        "android.media.AudioFormat",
-        "android.media.AudioRecord",
-        "android.media.MediaRecorder",
-        "android.os.Build",
-        "android.os.Handler",
-        "android.os.IBinder",
-        "android.os.Looper",
-        "android.os.SystemClock",
-        "androidx.compose.runtime.mutableStateOf",
-        "androidx.core.app.NotificationCompat",
-        "androidx.core.app.ServiceCompat",
-        "androidx.core.content.ContextCompat",
-        "com.diegonmarcos.cloudkeyboardlibs.IVoiceCallback",
-        "com.diegonmarcos.cloudkeyboardlibs.IVoiceEngine",
-        "com.diegonmarcos.cloudwriter.core.Answer",
-        "com.diegonmarcos.cloudwriter.core.Dictation",
-        "com.diegonmarcos.cloudwriter.core.DocStore",
-        "com.diegonmarcos.cloudwriter.core.Outcome",
-        "com.diegonmarcos.cloudwriter.core.Route",
-        "com.diegonmarcos.cloudwriter.core.Segmenter",
-        "org.json.JSONObject",
-        "java.io.File",
-        "java.util.concurrent.Executors"
-      ],
-      "symbols": [
-        "onServiceConnected(name: ComponentName, binder: IBinder)",
-        "onServiceDisconnected(name: ComponentName)",
-        "onBindingDied(name: ComponentName)",
-        "installed()",
-        "bind()",
-        "unbind()",
-        "awaitBound(timeoutMs: Long)",
-        "start(languageTag: String?, onPartial: (String)",
-        "onPartial(text: String?)",
-        "onFinal(text: String?)",
-        "onError(message: String?)",
-        "feed(pcm: ByteArray, len: Int)",
-        "stop()",
-        "update(change: (Status)",
-        "hasMic(context: Context)",
-        "start(context: Context, docId: String)",
-        "reportRefusal(why: String)",
-        "pause(paused: Boolean)",
-        "loop(app: Context, v: VoiceEngineBinder)",
-        "heardFinal(app: Context, text: String, modelLive: Boolean)",
-        "drainHeard()",
-        "submit(app: Context, pcm: ByteArray, blocker: String?)",
-        "commit(app: Context, answer: Answer)",
-        "docsDir(context: Context)",
-        "engineLabel()",
-        "statusJson(context: Context)",
-        "onBind(intent: Intent?)",
-        "onStartCommand(intent: Intent?, flags: Int, startId: Int)",
-        "stop(context: Context)",
-        "class VoiceEngineBinder",
-        "class ListenEngine",
-        "class Status",
-        "class ListenService"
-      ]
-    },
-    {
       "path": "ac_cloud-writer/app/src/main/java/com/diegonmarcos/cloudwriter/MainActivity.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -613532,516 +615490,44 @@
         "MainActivity"
       ],
       "imports": [
-        "android.Manifest",
-        "android.app.Activity",
-        "android.content.ClipData",
-        "android.content.ClipboardManager",
-        "android.content.Context",
         "android.content.Intent",
-        "android.content.pm.PackageManager",
-        "android.net.Uri",
-        "android.os.Build",
         "android.os.Bundle",
-        "android.os.Handler",
-        "android.os.Looper",
-        "android.text.format.DateUtils",
-        "android.widget.Toast",
-        "androidx.activity.compose.BackHandler",
-        "androidx.activity.compose.rememberLauncherForActivityResult",
         "androidx.activity.compose.setContent",
-        "androidx.activity.result.contract.ActivityResultContracts",
-        "androidx.annotation.StringRes",
-        "androidx.compose.animation.AnimatedContent",
-        "androidx.compose.animation.AnimatedVisibility",
-        "androidx.compose.animation.ContentTransform",
-        "androidx.compose.animation.core.tween",
-        "androidx.compose.animation.fadeIn",
-        "androidx.compose.animation.fadeOut",
-        "androidx.compose.animation.scaleIn",
-        "androidx.compose.animation.slideInHorizontally",
-        "androidx.compose.animation.slideInVertically",
-        "androidx.compose.animation.slideOutVertically",
-        "androidx.compose.animation.togetherWith",
-        "androidx.compose.foundation.layout.widthIn",
-        "androidx.compose.foundation.lazy.rememberLazyListState",
-        "androidx.compose.material.icons.automirrored.rounded.FormatListBulleted",
-        "androidx.compose.material.icons.rounded.AddPhotoAlternate",
-        "androidx.compose.material.icons.rounded.CenterFocusStrong",
-        "androidx.compose.material.icons.rounded.Checklist",
-        "androidx.compose.material.icons.rounded.FileOpen",
-        "androidx.compose.material.icons.rounded.FullscreenExit",
-        "androidx.compose.material.icons.rounded.Link",
-        "androidx.compose.material.icons.rounded.PhotoCamera"
+        "androidx.appcompat.app.AppCompatActivity",
+        "androidx.compose.foundation.layout.statusBarsPadding",
+        "androidx.compose.ui.Modifier",
+        "com.diegonmarcos.superapp.bottomnav.FleetChrome"
       ],
       "symbols": [
         "onCreate(savedInstanceState: Bundle?)",
         "onNewIntent(intent: Intent)",
-        "openRequestedSection(from: Intent?)",
-        "onStart()",
-        "onResume()",
-        "onStop()",
-        "adoptSharedText(from: Intent?)",
-        "open(id: String)",
-        "newDoc()",
-        "back()",
-        "goSection(id: String)",
-        "openConfigs()",
-        "saveNow()",
-        "reloadDocs()",
-        "delete(id: String)",
-        "attachSink()",
-        "App()",
-        "WriterShell()",
-        "writerTransition(from: Screen, to: Screen)",
-        "sectionLabel(id: String, declared: String)",
-        "DocsScreen()",
-        "DocCard(d: DocMeta, modifier: Modifier = Modifier)",
-        "importFile(uri: Uri)",
-        "importImage(uri: Uri)",
-        "ThemeMenu()",
-        "themes()",
-        "EditorScreen()",
-        "format(action: (String, Int, Int)",
-        "FormatBar()",
-        "iconFor(a: FormatAction)",
-        "labelFor(a: FormatAction)",
-        "ToolBar()",
-        "iconFor(tool: WriterTool)",
-        "FindBar(matches: List<IntRange>)",
-        "step(matches: List<IntRange>, by: Int)",
-        "OutlineSheet(text: String, focus: FocusRequester)",
-        "OptionsSheet()",
-        "requestListen()",
-        "startListen()",
-        "ListenPanel()"
+        "class MainActivity"
       ]
     },
     {
-      "path": "ac_cloud-writer/app/src/main/java/com/diegonmarcos/cloudwriter/RoutesActivity.kt",
+      "path": "ac_cloud-writer/app/src/main/java/com/diegonmarcos/cloudwriter/SettingsActivities.kt",
       "lang": "kotlin",
       "role": "kotlin",
       "exports": [
+        "TextEnhanceActivity",
+        "TranslationActivity",
+        "GrammarCheckActivity",
+        "AiRoutingActivity",
         "RoutesActivity"
       ],
       "imports": [
-        "android.os.Handler",
-        "android.os.Looper",
-        "androidx.compose.runtime.Composable",
-        "androidx.compose.runtime.MutableState",
-        "androidx.compose.runtime.mutableStateOf",
-        "com.diegonmarcos.cloudwriter.core.Answer",
-        "com.diegonmarcos.cloudwriter.core.CatalogueModel",
-        "com.diegonmarcos.cloudwriter.core.OpenRouter",
-        "com.diegonmarcos.cloudwriter.core.Route",
-        "com.diegonmarcos.cloudwriter.ui.ChoiceRow",
-        "com.diegonmarcos.cloudwriter.ui.SettingRow",
-        "com.diegonmarcos.cloudwriter.ui.ToggleRow",
-        "java.util.Locale",
-        "java.util.concurrent.Executors"
+        "androidx.compose.foundation.layout.statusBarsPadding",
+        "androidx.compose.ui.Modifier"
       ],
       "symbols": [
-        "pageTitle()",
-        "PageContent()",
-        "onResume()",
-        "refreshCatalogue()",
-        "countLine(all: List<CatalogueModel>)",
-        "modelItems(models: List<CatalogueModel>, f: WriterRoutes.Function)",
-        "languages()",
-        "lastLine(a: Answer?)",
-        "routeName(r: Route?)",
+        "appChrome()",
+        "createPage()",
+        "hostModifier()",
+        "class TextEnhanceActivity",
+        "class TranslationActivity",
+        "class GrammarCheckActivity",
+        "class AiRoutingActivity",
         "class RoutesActivity"
-      ]
-    },
-    {
-      "path": "ac_cloud-writer/app/src/main/java/com/diegonmarcos/cloudwriter/ServingApp.kt",
-      "lang": "kotlin",
-      "role": "kotlin",
-      "exports": [
-        "ServingApp"
-      ],
-      "imports": [
-        "android.content.ActivityNotFoundException",
-        "android.content.Context",
-        "android.content.Intent",
-        "android.net.Uri",
-        "android.util.Base64",
-        "com.diegonmarcos.superapp.texttools.TextTools",
-        "org.json.JSONObject"
-      ],
-      "symbols": [
-        "servingPackage(context: Context)",
-        "probe(context: Context, runner: WriterToolRunner)",
-        "openStore(context: Context)",
-        "class ServingApp",
-        "class State"
-      ]
-    },
-    {
-      "path": "ac_cloud-writer/app/src/main/java/com/diegonmarcos/cloudwriter/TextEnhanceActivity.kt",
-      "lang": "kotlin",
-      "role": "kotlin",
-      "exports": [
-        "TextEnhanceActivity"
-      ],
-      "imports": [
-        "androidx.compose.foundation.layout.Arrangement",
-        "androidx.compose.foundation.layout.Column",
-        "androidx.compose.foundation.layout.fillMaxWidth",
-        "androidx.compose.foundation.layout.padding",
-        "androidx.compose.material3.Button",
-        "androidx.compose.material3.MaterialTheme",
-        "androidx.compose.material3.Text",
-        "androidx.compose.runtime.Composable",
-        "androidx.compose.runtime.MutableState",
-        "androidx.compose.runtime.mutableStateOf",
-        "androidx.compose.ui.Modifier",
-        "androidx.compose.ui.unit.dp",
-        "com.diegonmarcos.cloudwriter.ui.ActionRow",
-        "com.diegonmarcos.cloudwriter.ui.ChoiceRow",
-        "com.diegonmarcos.cloudwriter.ui.PageGutter",
-        "com.diegonmarcos.cloudwriter.ui.SectionHeader",
-        "com.diegonmarcos.cloudwriter.ui.ToggleRow",
-        "com.diegonmarcos.cloudwriter.ui.WriterTextField"
-      ],
-      "symbols": [
-        "pageTitle()",
-        "PageContent()",
-        "refreshPrompt()",
-        "TestBox()",
-        "runTest()",
-        "class of",
-        "class and",
-        "class TextEnhanceActivity"
-      ]
-    },
-    {
-      "path": "ac_cloud-writer/app/src/main/java/com/diegonmarcos/cloudwriter/TranslationActivity.kt",
-      "lang": "kotlin",
-      "role": "kotlin",
-      "exports": [
-        "TranslationActivity"
-      ],
-      "imports": [
-        "android.os.Handler",
-        "android.os.Looper",
-        "androidx.compose.runtime.Composable",
-        "androidx.compose.runtime.MutableState",
-        "androidx.compose.runtime.mutableStateOf",
-        "com.diegonmarcos.cloudwriter.ui.ChoiceRow",
-        "com.diegonmarcos.cloudwriter.ui.ToggleRow",
-        "java.util.Locale",
-        "java.util.concurrent.Executors"
-      ],
-      "symbols": [
-        "pageTitle()",
-        "PageContent()",
-        "onResume()",
-        "languageName(tag: String)",
-        "class TranslationActivity"
-      ]
-    },
-    {
-      "path": "ac_cloud-writer/app/src/main/java/com/diegonmarcos/cloudwriter/ui/DocumentsUi.kt",
-      "lang": "kotlin",
-      "role": "kotlin",
-      "exports": [
-        "MarkdownLook",
-        "asValue",
-        "insertAtCaret",
-        "KitBridge"
-      ],
-      "imports": [
-        "androidx.compose.material3.ColorScheme",
-        "androidx.compose.material3.MaterialTheme",
-        "androidx.compose.runtime.Composable",
-        "androidx.compose.ui.graphics.Color",
-        "androidx.compose.ui.text.AnnotatedString",
-        "androidx.compose.ui.text.SpanStyle",
-        "androidx.compose.ui.text.TextRange",
-        "androidx.compose.ui.text.font.FontFamily",
-        "androidx.compose.ui.text.font.FontStyle",
-        "androidx.compose.ui.text.font.FontWeight",
-        "androidx.compose.ui.text.input.OffsetMapping",
-        "androidx.compose.ui.text.input.TextFieldValue",
-        "androidx.compose.ui.text.input.TransformedText",
-        "androidx.compose.ui.text.input.VisualTransformation",
-        "androidx.compose.ui.unit.em",
-        "com.diegonmarcos.cloudwriter.core.Dictation",
-        "com.diegonmarcos.cloudwriter.core.Edit",
-        "com.diegonmarcos.cloudwriter.core.Span",
-        "com.diegonmarcos.cloudwriter.core.SpanKind",
-        "com.diegonmarcos.cloudwriter.core.WriterGrid",
-        "com.diegonmarcos.superapp.uikit.CloudKitTheme",
-        "com.diegonmarcos.superapp.uikit.KitPalette"
-      ],
-      "symbols": [
-        "filter(text: AnnotatedString)",
-        "styleOf(kind: SpanKind)",
-        "asValue()",
-        "insertAtCaret(v: TextFieldValue, segment: String)",
-        "KitBridge(content: @Composable ()",
-        "class MarkdownLook"
-      ]
-    },
-    {
-      "path": "ac_cloud-writer/app/src/main/java/com/diegonmarcos/cloudwriter/ui/Theme.kt",
-      "lang": "kotlin",
-      "role": "kotlin",
-      "exports": [
-        "WriterTheme",
-        "CloudWriterTheme"
-      ],
-      "imports": [
-        "android.app.Activity",
-        "android.content.Context",
-        "android.os.Build",
-        "androidx.compose.foundation.isSystemInDarkTheme",
-        "androidx.compose.material3.ColorScheme",
-        "com.diegonmarcos.superapp.uikit.KitDenseMaterial",
-        "androidx.compose.material3.darkColorScheme",
-        "androidx.compose.material3.dynamicDarkColorScheme",
-        "androidx.compose.material3.dynamicLightColorScheme",
-        "androidx.compose.material3.lightColorScheme",
-        "androidx.compose.runtime.Composable",
-        "androidx.compose.runtime.mutableStateOf",
-        "androidx.compose.runtime.SideEffect",
-        "androidx.compose.ui.graphics.Color",
-        "androidx.compose.ui.graphics.lerp",
-        "androidx.compose.ui.platform.LocalContext",
-        "androidx.compose.ui.platform.LocalView",
-        "androidx.core.view.WindowCompat",
-        "com.diegonmarcos.cloudwriter.WriterPrefs",
-        "com.diegonmarcos.cloudwriter.core.Contrast",
-        "com.diegonmarcos.cloudwriter.core.TokenSet"
-      ],
-      "symbols": [
-        "toScheme(dark: Boolean)",
-        "applyPureBlack(scheme: ColorScheme, darkTheme: Boolean, pureBlack: Boolean)",
-        "pulledToBlack()",
-        "current(context: Context)",
-        "set(context: Context, value: String)",
-        "isDark()",
-        "CloudWriterTheme( darkTheme: Boolean = WriterTheme.isDark()",
-        "class becomes",
-        "class WriterTheme"
-      ]
-    },
-    {
-      "path": "ac_cloud-writer/app/src/main/java/com/diegonmarcos/cloudwriter/ui/WriterComponents.kt",
-      "lang": "kotlin",
-      "role": "kotlin",
-      "exports": [
-        "WriterDims",
-        "WriterButton",
-        "WriterIconButton",
-        "WriterChip",
-        "WriterBar",
-        "BarDivider",
-        "WriterFilterChip",
-        "WriterTagPill",
-        "WriterSearchField",
-        "WriterDocCard",
-        "WriterLabel",
-        "EmptyDocsIllustration",
-        "WriterEmptyState"
-      ],
-      "imports": [
-        "androidx.compose.foundation.BorderStroke",
-        "androidx.compose.foundation.Canvas",
-        "androidx.compose.foundation.background",
-        "androidx.compose.foundation.border",
-        "androidx.compose.foundation.clickable",
-        "androidx.compose.foundation.horizontalScroll",
-        "androidx.compose.foundation.interaction.MutableInteractionSource",
-        "androidx.compose.foundation.interaction.collectIsPressedAsState",
-        "androidx.compose.foundation.layout.Arrangement",
-        "androidx.compose.foundation.layout.Box",
-        "androidx.compose.foundation.layout.Column",
-        "androidx.compose.foundation.layout.Row",
-        "androidx.compose.foundation.layout.RowScope",
-        "androidx.compose.foundation.layout.Spacer",
-        "androidx.compose.foundation.layout.defaultMinSize",
-        "androidx.compose.foundation.layout.fillMaxWidth",
-        "androidx.compose.foundation.layout.height",
-        "androidx.compose.foundation.layout.heightIn",
-        "androidx.compose.foundation.layout.padding",
-        "androidx.compose.foundation.layout.size",
-        "androidx.compose.foundation.layout.width",
-        "androidx.compose.foundation.rememberScrollState",
-        "androidx.compose.foundation.selection.selectable",
-        "androidx.compose.foundation.shape.RoundedCornerShape",
-        "androidx.compose.material.icons.Icons",
-        "androidx.compose.material.icons.rounded.Check",
-        "androidx.compose.material.icons.rounded.Close",
-        "androidx.compose.material.icons.rounded.Search",
-        "androidx.compose.material3.Button",
-        "androidx.compose.material3.ButtonDefaults",
-        "androidx.compose.material3.Card",
-        "androidx.compose.material3.CardDefaults",
-        "androidx.compose.material3.FilledTonalButton",
-        "androidx.compose.material3.Icon",
-        "androidx.compose.material3.IconButton",
-        "androidx.compose.material3.MaterialTheme",
-        "androidx.compose.material3.Surface",
-        "androidx.compose.material3.Text",
-        "androidx.compose.material3.TextButton",
-        "androidx.compose.material3.TextField"
-      ],
-      "symbols": [
-        "tokens()",
-        "WriterButton( label: String, onClick: ()",
-        "WriterIconButton(icon: ImageVector, description: String, onClick: ()",
-        "WriterChip( id: String, icon: ImageVector, label: String, onClick: ()",
-        "WriterBar(modifier: Modifier = Modifier, content: @Composable RowScope.()",
-        "BarDivider()",
-        "WriterFilterChip(id: String, group: String, label: String, selected: Boolean, onClick: ()",
-        "WriterTagPill(text: String)",
-        "WriterSearchField(query: String, onQueryChange: (String)",
-        "WriterDocCard( tag: String, title: String, preview: String, meta: String, tags: List<String>, onClick: ()",
-        "WriterLabel(text: String, modifier: Modifier = Modifier)",
-        "EmptyDocsIllustration(modifier: Modifier = Modifier)",
-        "WriterEmptyState(title: String, caption: String, modifier: Modifier = Modifier, actions: @Composable ()",
-        "class WriterDims"
-      ]
-    },
-    {
-      "path": "ac_cloud-writer/app/src/main/java/com/diegonmarcos/cloudwriter/ui/WriterUi.kt",
-      "lang": "kotlin",
-      "role": "kotlin",
-      "exports": [
-        "PageGutter",
-        "BlockGap",
-        "SectionHeader",
-        "FeatureCard",
-        "ChoiceRow",
-        "ToggleRow",
-        "SettingRow",
-        "NoteText",
-        "WriterTextField",
-        "ActionRow"
-      ],
-      "imports": [
-        "androidx.compose.foundation.clickable",
-        "androidx.compose.foundation.layout.Arrangement",
-        "androidx.compose.foundation.layout.Column",
-        "androidx.compose.foundation.layout.Row",
-        "androidx.compose.foundation.layout.Spacer",
-        "androidx.compose.foundation.layout.fillMaxWidth",
-        "androidx.compose.foundation.layout.heightIn",
-        "androidx.compose.foundation.layout.padding",
-        "androidx.compose.foundation.layout.size",
-        "androidx.compose.foundation.layout.width",
-        "androidx.compose.foundation.rememberScrollState",
-        "androidx.compose.foundation.selection.selectable",
-        "androidx.compose.foundation.verticalScroll",
-        "androidx.compose.material.icons.Icons",
-        "androidx.compose.material.icons.rounded.ChevronRight",
-        "androidx.compose.material3.AlertDialog",
-        "androidx.compose.material3.Card",
-        "androidx.compose.material3.CardDefaults",
-        "androidx.compose.material3.Icon",
-        "androidx.compose.material3.MaterialTheme",
-        "androidx.compose.material3.OutlinedTextField",
-        "androidx.compose.material3.RadioButton",
-        "androidx.compose.material3.Switch",
-        "androidx.compose.material3.Text",
-        "androidx.compose.material3.TextButton",
-        "androidx.compose.runtime.Composable",
-        "androidx.compose.runtime.getValue",
-        "androidx.compose.runtime.mutableStateOf",
-        "androidx.compose.runtime.remember",
-        "androidx.compose.runtime.setValue",
-        "androidx.compose.ui.Alignment",
-        "androidx.compose.ui.Modifier",
-        "androidx.compose.ui.graphics.vector.ImageVector",
-        "androidx.compose.ui.res.stringResource",
-        "androidx.compose.ui.text.input.TextFieldValue",
-        "androidx.compose.ui.unit.dp"
-      ],
-      "symbols": [
-        "SectionHeader(text: String, modifier: Modifier = Modifier)",
-        "FeatureCard( icon: ImageVector, title: String, summary: String, onClick: ()",
-        "ChoiceRow( title: String, summary: String?, items: List<Pair<String, String>>, current: String, fallback: String, onPick: (String)",
-        "labelOf(id: String)",
-        "ToggleRow(title: String, summary: String?, checked: Boolean, onToggle: (Boolean)",
-        "SettingRow(title: String, summary: String?, value: String?, onClick: ()",
-        "NoteText(text: String, modifier: Modifier = Modifier)",
-        "WriterTextField( value: String, onValueChange: (String)",
-        "WriterTextField( value: TextFieldValue, onValueChange: (TextFieldValue)",
-        "ActionRow(content: @Composable ()",
-        "class of"
-      ]
-    },
-    {
-      "path": "ac_cloud-writer/app/src/main/java/com/diegonmarcos/cloudwriter/WriterBoxes.kt",
-      "lang": "kotlin",
-      "role": "kotlin",
-      "exports": [
-        "BoxState",
-        "BoxIo",
-        "rememberBoxIo",
-        "ocrInto",
-        "WriterBox"
-      ],
-      "imports": [
-        "android.content.ClipData",
-        "android.content.ClipboardManager",
-        "android.content.Context",
-        "android.net.Uri",
-        "android.os.Handler",
-        "android.os.Looper",
-        "android.provider.OpenableColumns",
-        "androidx.activity.compose.rememberLauncherForActivityResult",
-        "androidx.activity.result.contract.ActivityResultContracts",
-        "androidx.compose.foundation.horizontalScroll",
-        "androidx.compose.foundation.layout.Arrangement",
-        "androidx.compose.foundation.layout.Box",
-        "androidx.compose.foundation.layout.Column",
-        "androidx.compose.foundation.layout.Row",
-        "androidx.compose.foundation.layout.fillMaxWidth",
-        "androidx.compose.foundation.layout.heightIn",
-        "androidx.compose.foundation.layout.padding",
-        "androidx.compose.foundation.rememberScrollState",
-        "androidx.compose.material.icons.Icons",
-        "androidx.compose.material.icons.automirrored.rounded.FormatListBulleted",
-        "androidx.compose.material.icons.rounded.AddPhotoAlternate",
-        "androidx.compose.material.icons.rounded.Code",
-        "androidx.compose.material.icons.rounded.ContentCopy",
-        "androidx.compose.material.icons.rounded.FileOpen",
-        "androidx.compose.material.icons.rounded.FileUpload",
-        "androidx.compose.material.icons.rounded.FormatBold",
-        "androidx.compose.material.icons.rounded.FormatItalic",
-        "androidx.compose.material.icons.rounded.FormatListNumbered",
-        "androidx.compose.material.icons.rounded.FormatQuote",
-        "androidx.compose.material.icons.rounded.Link",
-        "androidx.compose.material.icons.rounded.PhotoCamera",
-        "androidx.compose.material.icons.rounded.Title",
-        "androidx.compose.material3.AlertDialog",
-        "androidx.compose.material3.Card",
-        "androidx.compose.material3.DropdownMenu",
-        "androidx.compose.material3.DropdownMenuItem",
-        "androidx.compose.material3.FilterChip",
-        "androidx.compose.material3.Icon",
-        "androidx.compose.material3.IconButton",
-        "androidx.compose.material3.MaterialTheme"
-      ],
-      "symbols": [
-        "html()",
-        "text()",
-        "setHtml(html: String)",
-        "setText(text: String)",
-        "switchTo(m: EditMode)",
-        "rememberBoxIo(context: Context, worker: Executor, note: (String)",
-        "ocr(uri: Uri)",
-        "ocrInto(context: Context, worker: Executor, box: BoxState, uri: Uri, note: (String)",
-        "displayName(context: Context, uri: Uri)",
-        "WriterBox(label: String, state: BoxState, io: BoxIo, input: Boolean, modifier: Modifier = Modifier)",
-        "Action(icon: ImageVector, label: Int, onClick: ()",
-        "ExportMenu(onPick: (ExportFormat)",
-        "FormatStrip(rich: RichTextState)",
-        "LinkDialog(rich: RichTextState, close: ()",
-        "class BoxState",
-        "class BoxIo"
       ]
     },
     {
@@ -614053,6 +615539,7 @@
         "WriterDebugApiProvider"
       ],
       "imports": [
+        "com.diegonmarcos.cloudwriter.writerui.BuildConfig",
         "android.content.ContentProvider",
         "android.content.ContentValues",
         "android.content.Context",
@@ -614073,309 +615560,6 @@
         "update(uri: Uri, values: ContentValues?, selection: String?, selectionArgs: Array<out String>?)",
         "class WriterDebugApi",
         "class WriterDebugApiProvider"
-      ]
-    },
-    {
-      "path": "ac_cloud-writer/app/src/main/java/com/diegonmarcos/cloudwriter/WriterJev.kt",
-      "lang": "kotlin",
-      "role": "kotlin",
-      "exports": [
-        "WriterJev"
-      ],
-      "imports": [
-        "android.content.Context",
-        "com.diegonmarcos.cloudwriter.core.Answer",
-        "com.diegonmarcos.cloudwriter.core.Route",
-        "com.diegonmarcos.superapp.decisions.link.Advice",
-        "com.diegonmarcos.superapp.decisions.link.DecisionsLink",
-        "org.json.JSONObject",
-        "java.util.Calendar"
-      ],
-      "symbols": [
-        "slot(f: WriterRoutes.Function, online: Boolean)",
-        "advice(ctx: Context, f: WriterRoutes.Function)",
-        "routeOf(pick: String?)",
-        "questions()",
-        "observed(ctx: Context, f: WriterRoutes.Function, advised: Route?, answer: Answer)",
-        "class WriterJev"
-      ]
-    },
-    {
-      "path": "ac_cloud-writer/app/src/main/java/com/diegonmarcos/cloudwriter/WriterNav.kt",
-      "lang": "kotlin",
-      "role": "kotlin",
-      "exports": [
-        "WriterNav"
-      ],
-      "imports": [
-        "com.diegonmarcos.cloudwriter.core.WriterTabs",
-        "com.diegonmarcos.superapp.bottomnav.NavDecl"
-      ],
-      "symbols": [
-        "pageId(screen: Class<*>)",
-        "class WriterNav",
-        "class name"
-      ]
-    },
-    {
-      "path": "ac_cloud-writer/app/src/main/java/com/diegonmarcos/cloudwriter/WriterPrefs.kt",
-      "lang": "kotlin",
-      "role": "kotlin",
-      "exports": [
-        "WriterPrefs"
-      ],
-      "imports": [
-        "android.content.Context",
-        "android.content.SharedPreferences",
-        "android.util.Log",
-        "com.diegonmarcos.superapp.texttools.TextToolsClient",
-        "org.json.JSONObject"
-      ],
-      "symbols": [
-        "prefs(context: Context)",
-        "providerId(context: Context)",
-        "modelId(context: Context, providerId: String = providerId(context)",
-        "modelFor(context: Context, tool: WriterTool, providerId: String = providerId(context)",
-        "known(id: String?)",
-        "enhanceStyleId(context: Context)",
-        "enhanceToneId(context: Context)",
-        "enhanceLengthId(context: Context)",
-        "enhanceLanguageId(context: Context)",
-        "summaryStyleId(context: Context)",
-        "translateTarget(context: Context)",
-        "enhanceScope(context: Context)",
-        "grammarMode(context: Context)",
-        "grammarRemoteUrl(context: Context)",
-        "string(context: Context, key: String, fallback: String)",
-        "flag(context: Context, key: String, fallback: Boolean)",
-        "put(context: Context, key: String, value: String)",
-        "putFlag(context: Context, key: String, value: Boolean)",
-        "putModel(context: Context, providerId: String, modelId: String)",
-        "putToolModel(context: Context, tool: WriterTool, providerId: String, modelId: String)",
-        "enhancePrompt(context: Context)",
-        "draftPrompt(context: Context)",
-        "summaryPrompt(context: Context)",
-        "translatePrompt(context: Context)",
-        "summaryWantsBullets(context: Context)",
-        "isSeeded(context: Context)",
-        "seedFromServingApp(context: Context, client: TextToolsClient)",
-        "adopt(key: String, known: List<WriterRegistry.Style>)",
-        "class WriterPrefs",
-        "class of"
-      ]
-    },
-    {
-      "path": "ac_cloud-writer/app/src/main/java/com/diegonmarcos/cloudwriter/WriterRegistry.kt",
-      "lang": "kotlin",
-      "role": "kotlin",
-      "exports": [
-        "WriterRegistry"
-      ],
-      "imports": [
-        "android.util.Base64",
-        "org.json.JSONObject"
-      ],
-      "symbols": [
-        "strings(o: JSONObject, key: String)",
-        "byModelSize(models: List<Model>)",
-        "quantBits(m: Model)",
-        "hasPricing(p: Provider)",
-        "promptSet(key: String)",
-        "provider(id: String?)",
-        "styleOf(set: List<Style>, id: String?, fallback: String)",
-        "style(id: String?)",
-        "tone(id: String?)",
-        "length(id: String?)",
-        "language(id: String?)",
-        "summary(id: String?)",
-        "enhancePrompt(styleId: String?, toneId: String?, lengthId: String?, languageId: String?)",
-        "draftPrompt(toneId: String?, lengthId: String?, languageId: String?)",
-        "grammarPrompt()",
-        "translatePrompt(languageId: String?)",
-        "summaryPrompt(summaryId: String?)",
-        "class is",
-        "class WriterRegistry",
-        "class Style",
-        "class Model",
-        "class Provider",
-        "class of"
-      ]
-    },
-    {
-      "path": "ac_cloud-writer/app/src/main/java/com/diegonmarcos/cloudwriter/WriterRoutes.kt",
-      "lang": "kotlin",
-      "role": "kotlin",
-      "exports": [
-        "WriterRoutes"
-      ],
-      "imports": [
-        "android.content.Context",
-        "android.net.ConnectivityManager",
-        "android.net.NetworkCapabilities",
-        "android.os.SystemClock",
-        "android.util.Base64",
-        "com.diegonmarcos.cloudwriter.core.Answer",
-        "com.diegonmarcos.cloudwriter.core.CatalogueModel",
-        "com.diegonmarcos.cloudwriter.core.OpenRouter",
-        "com.diegonmarcos.cloudwriter.core.OpenRouterConfig",
-        "com.diegonmarcos.cloudwriter.core.Outcome",
-        "com.diegonmarcos.cloudwriter.core.Route",
-        "com.diegonmarcos.cloudwriter.core.Routing",
-        "com.diegonmarcos.cloudwriter.core.Wav",
-        "com.diegonmarcos.cloudwriter.core.Ocr",
-        "com.diegonmarcos.cloudwriter.core.OcrEngine",
-        "com.diegonmarcos.superapp.mlocr.MlKitOcr",
-        "com.diegonmarcos.superapp.mlocr.OcrImage",
-        "com.diegonmarcos.superapp.mlocr.VisionOcr",
-        "android.graphics.Bitmap",
-        "com.diegonmarcos.superapp.decisions.UrlHttp",
-        "com.diegonmarcos.superapp.texttools.TextToolsClient",
-        "org.json.JSONObject"
-      ],
-      "symbols": [
-        "block(f: Function)",
-        "defaultRoute(f: Function)",
-        "route(context: Context, f: Function)",
-        "setRoute(context: Context, f: Function, route: Route)",
-        "advisedOrNull(context: Context, f: Function)",
-        "defaultModel(f: Function)",
-        "model(context: Context, f: Function)",
-        "setModel(context: Context, f: Function, id: String)",
-        "listenTranslate(context: Context)",
-        "listenTarget(context: Context)",
-        "listenMode(context: Context)",
-        "listenLanguage(context: Context)",
-        "tagOf(languageId: String?)",
-        "languageIdOf(idOrTag: String)",
-        "online(context: Context)",
-        "textTools(context: Context)",
-        "accountToken(context: Context)",
-        "accountHasKey(context: Context)",
-        "translate(context: Context, text: String, languageId: String)",
-        "ocrEngine(context: Context)",
-        "setOcrEngine(context: Context, engine: OcrEngine)",
-        "defaultOcrModel()",
-        "ocrModel(context: Context)",
-        "setOcrModel(context: Context, id: String)",
-        "ocr(context: Context, bitmap: Bitmap)",
-        "visionModels(context: Context)",
-        "transcribe(context: Context, pcm: ByteArray, blockerAtStart: String?, onDevice: ()",
-        "speechBlocker(context: Context)",
-        "speechPrompt(context: Context)",
-        "cachedCatalogue(context: Context)",
-        "fetchCatalogue(context: Context)",
-        "routeJson(context: Context, serving: ServingApp?)",
-        "fn(f: Function, last: Answer?)",
-        "class WriterRoutes",
-        "class Function"
-      ]
-    },
-    {
-      "path": "ac_cloud-writer/app/src/main/java/com/diegonmarcos/cloudwriter/WriterSettingsUi.kt",
-      "lang": "kotlin",
-      "role": "kotlin",
-      "exports": [
-        "WriterSettingsActivity"
-      ],
-      "imports": [
-        "android.content.ClipData",
-        "android.content.ClipboardManager",
-        "android.content.Context",
-        "android.content.Intent",
-        "android.os.Bundle",
-        "androidx.activity.compose.setContent",
-        "androidx.appcompat.app.AppCompatActivity",
-        "androidx.compose.foundation.horizontalScroll",
-        "androidx.compose.foundation.layout.Arrangement",
-        "androidx.compose.foundation.layout.Column",
-        "androidx.compose.foundation.layout.Row",
-        "androidx.compose.foundation.layout.Spacer",
-        "androidx.compose.foundation.layout.fillMaxSize",
-        "androidx.compose.foundation.layout.fillMaxWidth",
-        "androidx.compose.foundation.layout.height",
-        "androidx.compose.foundation.layout.padding",
-        "androidx.compose.foundation.layout.statusBarsPadding",
-        "androidx.compose.foundation.layout.width",
-        "androidx.compose.foundation.rememberScrollState",
-        "androidx.compose.foundation.verticalScroll",
-        "androidx.compose.material.icons.Icons",
-        "androidx.compose.material.icons.automirrored.rounded.ArrowBack",
-        "androidx.compose.material3.AlertDialog",
-        "androidx.compose.material3.Card",
-        "androidx.compose.material3.CardDefaults",
-        "androidx.compose.material3.ExperimentalMaterial3Api",
-        "androidx.compose.material3.Icon",
-        "androidx.compose.material3.IconButton",
-        "androidx.compose.material3.MaterialTheme",
-        "androidx.compose.material3.OutlinedTextField",
-        "androidx.compose.material3.Text",
-        "androidx.compose.material3.TextButton",
-        "androidx.compose.runtime.Composable",
-        "androidx.compose.runtime.getValue",
-        "androidx.compose.runtime.mutableStateOf",
-        "androidx.compose.runtime.remember",
-        "androidx.compose.runtime.setValue",
-        "androidx.compose.ui.Modifier",
-        "androidx.compose.ui.res.stringResource",
-        "androidx.compose.ui.text.style.TextOverflow"
-      ],
-      "symbols": [
-        "pageTitle()",
-        "PageContent()",
-        "onCreate(savedInstanceState: Bundle?)",
-        "openSection(id: String)",
-        "Category(text: String)",
-        "Group(content: @Composable ()",
-        "TextRow(title: String, summary: String?, current: String, hint: String, onSet: (String)",
-        "ReadOnlyRow(title: String, summary: String?, text: String)",
-        "copyToClipboard(label: String, text: String)",
-        "Table(headers: List<String>, rows: List<List<String>>, widthsDp: List<Int>, dimFrom: Int)",
-        "TableRow(cells: List<String>, widthsDp: List<Int>, dimFrom: Int, header: Boolean)",
-        "Note(text: String)",
-        "class WriterSettingsActivity"
-      ]
-    },
-    {
-      "path": "ac_cloud-writer/app/src/main/java/com/diegonmarcos/cloudwriter/WriterTools.kt",
-      "lang": "kotlin",
-      "role": "kotlin",
-      "exports": [
-        "WriterTool",
-        "WriterOutcome",
-        "WriterToolRunner",
-        "WriterLocalGrammar"
-      ],
-      "imports": [
-        "android.content.Context",
-        "android.os.Handler",
-        "android.os.Looper",
-        "android.os.SystemClock",
-        "androidx.annotation.StringRes",
-        "com.diegonmarcos.cloudwriter.core.Answer",
-        "com.diegonmarcos.superapp.texttools.TextTools",
-        "com.diegonmarcos.superapp.texttools.TextToolsClient",
-        "org.json.JSONObject",
-        "java.util.concurrent.Executors"
-      ],
-      "symbols": [
-        "isServingAppInstalled()",
-        "awaitBound(timeoutMs: Long)",
-        "aiRoutingApp()",
-        "translateLanguages()",
-        "providerLabel()",
-        "run(tool: WriterTool, text: String, onDone: (WriterOutcome)",
-        "draft(text: String, onDone: (WriterOutcome)",
-        "runTool(tool: WriterTool, text: String)",
-        "anyFixEnabled(context: Context)",
-        "fix(context: Context, text: String)",
-        "capitaliseLoneI(text: String)",
-        "removeRepeatedWords(text: String)",
-        "capitaliseSentenceStarts(text: String)",
-        "class WriterTool",
-        "class WriterOutcome",
-        "class WriterToolRunner",
-        "class does",
-        "class WriterLocalGrammar"
       ]
     },
     {
@@ -614453,599 +615637,6 @@
         "_verify_release_asset()",
         "_publish_release_asset()",
         "step_gh_release()"
-      ]
-    },
-    {
-      "path": "ac_cloud-writer/core/src/main/kotlin/com/diegonmarcos/cloudwriter/core/Audio.kt",
-      "lang": "kotlin",
-      "role": "kotlin",
-      "exports": [
-        "Segmenter",
-        "Wav"
-      ],
-      "imports": [
-        "java.io.ByteArrayOutputStream",
-        "kotlin.math.sqrt"
-      ],
-      "symbols": [
-        "feed(pcm: ByteArray, len: Int)",
-        "flush()",
-        "take()",
-        "reset()",
-        "ms(bytes: Int)",
-        "rms(pcm: ByteArray, len: Int)",
-        "level(pcm: ByteArray, len: Int)",
-        "encode(pcm: ByteArray, sampleRate: Int, channels: Int = 1, bits: Int = 16)",
-        "int(v: Int)",
-        "short(v: Int)",
-        "class Segmenter",
-        "class Wav"
-      ]
-    },
-    {
-      "path": "ac_cloud-writer/core/src/main/kotlin/com/diegonmarcos/cloudwriter/core/Boxes.kt",
-      "lang": "kotlin",
-      "role": "kotlin",
-      "exports": [
-        "WriterTabs",
-        "ImportKind",
-        "Import",
-        "Docx",
-        "OcrEngine",
-        "Ocr"
-      ],
-      "imports": [
-        "java.io.ByteArrayInputStream",
-        "java.util.zip.ZipInputStream"
-      ],
-      "symbols": [
-        "check(declared: List<String>)",
-        "kind(name: String?, mime: String?)",
-        "toHtml(kind: ImportKind, bytes: ByteArray)",
-        "bodyOf(html: String)",
-        "text(bytes: ByteArray)",
-        "documentText(xml: String)",
-        "of(id: String?)",
-        "route(engine: OcrEngine)",
-        "run(engine: OcrEngine, blocker: String?, openRouter: ()",
-        "nonBlank(o: Outcome)",
-        "intoBox(boxHtml: String, recognised: String)",
-        "class WriterTabs",
-        "class ImportKind",
-        "class Import",
-        "class Docx",
-        "class OcrEngine",
-        "class Ocr"
-      ]
-    },
-    {
-      "path": "ac_cloud-writer/core/src/main/kotlin/com/diegonmarcos/cloudwriter/core/Design.kt",
-      "lang": "kotlin",
-      "role": "kotlin",
-      "exports": [
-        "TokenSet",
-        "Contrast",
-        "ControlKind",
-        "ControlState",
-        "ControlColors",
-        "Controls",
-        "WriterGrid"
-      ],
-      "imports": [
-        "kotlin.math.pow",
-        "kotlin.math.roundToInt"
-      ],
-      "symbols": [
-        "textPairs()",
-        "graphicPairs()",
-        "c(v: Long)",
-        "linear(channel: Int)",
-        "luminance(argb: Int)",
-        "ratio(a: Int, b: Int)",
-        "blend(base: Int, over: Int, t: Float)",
-        "colors(t: TokenSet, kind: ControlKind, state: ControlState)",
-        "class TokenSet",
-        "class Contrast",
-        "class ControlKind",
-        "class ControlState",
-        "class ControlColors",
-        "class Controls",
-        "class WriterGrid"
-      ]
-    },
-    {
-      "path": "ac_cloud-writer/core/src/main/kotlin/com/diegonmarcos/cloudwriter/core/Dictation.kt",
-      "lang": "kotlin",
-      "role": "kotlin",
-      "exports": [
-        "Dictation"
-      ],
-      "imports": [],
-      "symbols": [
-        "of(id: String?)",
-        "punctuate(raw: String)",
-        "separator(before: String, segment: String)",
-        "withTranslation(original: String, translation: String?, mode: TranslateMode)",
-        "class Dictation",
-        "class TranslateMode"
-      ]
-    },
-    {
-      "path": "ac_cloud-writer/core/src/main/kotlin/com/diegonmarcos/cloudwriter/core/DocList.kt",
-      "lang": "kotlin",
-      "role": "kotlin",
-      "exports": [
-        "DocSort",
-        "SaveState",
-        "DocList"
-      ],
-      "imports": [],
-      "symbols": [
-        "of(id: String?)",
-        "sort(docs: List<DocMeta>, by: DocSort)",
-        "totalWords(docs: List<DocMeta>)",
-        "readingMinutes(words: Int)",
-        "initial(title: String)",
-        "chars(text: String)",
-        "allTags(docs: List<DocMeta>)",
-        "withTag(docs: List<DocMeta>, tag: String?)",
-        "class DocSort",
-        "class SaveState",
-        "class DocList"
-      ]
-    },
-    {
-      "path": "ac_cloud-writer/core/src/main/kotlin/com/diegonmarcos/cloudwriter/core/DocStore.kt",
-      "lang": "kotlin",
-      "role": "kotlin",
-      "exports": [
-        "DocMeta",
-        "DocStore"
-      ],
-      "imports": [
-        "java.io.File"
-      ],
-      "symbols": [
-        "list()",
-        "read(id: String)",
-        "create(text: String = \"\")",
-        "write(id: String, text: String)",
-        "append(id: String, segment: String)",
-        "delete(id: String)",
-        "search(query: String)",
-        "meta(f: File)",
-        "file(id: String)",
-        "class DocMeta",
-        "class DocStore"
-      ]
-    },
-    {
-      "path": "ac_cloud-writer/core/src/main/kotlin/com/diegonmarcos/cloudwriter/core/Format.kt",
-      "lang": "kotlin",
-      "role": "kotlin",
-      "exports": [
-        "FormatAction",
-        "Focus",
-        "Tags"
-      ],
-      "imports": [],
-      "symbols": [
-        "apply(text: String, start: Int, end: Int)",
-        "lineStart(text: String, at: Int)",
-        "lineEnd(text: String, at: Int)",
-        "blank(text: String, from: Int, to: Int)",
-        "paragraph(text: String, caret: Int)",
-        "dimmed(text: String, caret: Int)",
-        "of(text: String, max: Int = 4)",
-        "class FormatAction",
-        "class Focus",
-        "class Tags"
-      ]
-    },
-    {
-      "path": "ac_cloud-writer/core/src/main/kotlin/com/diegonmarcos/cloudwriter/core/HtmlText.kt",
-      "lang": "kotlin",
-      "role": "kotlin",
-      "exports": [
-        "HtmlText",
-        "EditMode",
-        "ExportFormat",
-        "Export"
-      ],
-      "imports": [],
-      "symbols": [
-        "escape(text: String)",
-        "unescape(text: String)",
-        "textToHtml(text: String)",
-        "htmlToText(html: String)",
-        "htmlToMarkdown(html: String)",
-        "markdownToHtml(md: String)",
-        "flush()",
-        "inline(text: String)",
-        "of(id: String?)",
-        "render(format: ExportFormat, html: String, title: String)",
-        "fileName(html: String, format: ExportFormat)",
-        "class HtmlText",
-        "class EditMode",
-        "class ExportFormat",
-        "class Export"
-      ]
-    },
-    {
-      "path": "ac_cloud-writer/core/src/main/kotlin/com/diegonmarcos/cloudwriter/core/Markdown.kt",
-      "lang": "kotlin",
-      "role": "kotlin",
-      "exports": [
-        "Heading",
-        "Edit",
-        "SpanKind",
-        "Span",
-        "Markdown"
-      ],
-      "imports": [],
-      "symbols": [
-        "lines(text: String)",
-        "outline(text: String)",
-        "find(text: String, query: String)",
-        "wrap(text: String, start: Int, end: Int, marker: String)",
-        "prefixLines(text: String, start: Int, end: Int, prefix: String)",
-        "link(text: String, start: Int, end: Int)",
-        "heading(text: String, start: Int, end: Int, level: Int)",
-        "spans(text: String)",
-        "title(text: String)",
-        "snippet(text: String, max: Int = 140)",
-        "words(text: String)",
-        "lineStart(text: String, at: Int)",
-        "lineEnd(text: String, at: Int)",
-        "class Heading",
-        "class Edit",
-        "class SpanKind",
-        "class Span",
-        "class Markdown"
-      ]
-    },
-    {
-      "path": "ac_cloud-writer/core/src/main/kotlin/com/diegonmarcos/cloudwriter/core/Nav.kt",
-      "lang": "kotlin",
-      "role": "kotlin",
-      "exports": [
-        "Dest",
-        "Transition",
-        "WriterScreens"
-      ],
-      "imports": [],
-      "symbols": [
-        "back(current: Dest, configsReturn: Dest, hasDoc: Boolean)",
-        "transition(from: Dest, to: Dest)",
-        "class Dest",
-        "class Transition",
-        "class WriterScreens"
-      ]
-    },
-    {
-      "path": "ac_cloud-writer/core/src/main/kotlin/com/diegonmarcos/cloudwriter/core/OpenRouter.kt",
-      "lang": "kotlin",
-      "role": "kotlin",
-      "exports": [
-        "OpenRouterConfig",
-        "CatalogueModel",
-        "OpenRouter"
-      ],
-      "imports": [
-        "com.diegonmarcos.superapp.decisions.Decisions",
-        "com.diegonmarcos.superapp.decisions.Http",
-        "org.json.JSONArray",
-        "org.json.JSONObject",
-        "java.util.Base64"
-      ],
-      "symbols": [
-        "chatBody(model: String, system: String, user: String, maxTokens: Int)",
-        "transcribeBody(model: String, prompt: String, wav: ByteArray, maxTokens: Int)",
-        "call(http: Http, cfg: OpenRouterConfig, token: String?, body: JSONObject)",
-        "translate(http: Http, cfg: OpenRouterConfig, token: String?, model: String, system: String, text: String)",
-        "transcribe(http: Http, cfg: OpenRouterConfig, token: String?, model: String, prompt: String, wav: ByteArray)",
-        "content(body: String)",
-        "catalogue(body: String)",
-        "speechModels(all: List<CatalogueModel>)",
-        "visionModels(all: List<CatalogueModel>)",
-        "visionBody(model: String, prompt: String, image: ByteArray, mime: String, maxTokens: Int)",
-        "textModels(all: List<CatalogueModel>)",
-        "strings(a: JSONArray?)",
-        "class OpenRouterConfig",
-        "class CatalogueModel",
-        "class OpenRouter"
-      ]
-    },
-    {
-      "path": "ac_cloud-writer/core/src/main/kotlin/com/diegonmarcos/cloudwriter/core/Routing.kt",
-      "lang": "kotlin",
-      "role": "kotlin",
-      "exports": [
-        "Route",
-        "Outcome",
-        "Answer",
-        "Routing"
-      ],
-      "imports": [
-        "org.json.JSONObject"
-      ],
-      "symbols": [
-        "of(id: String?, fallback: Route)",
-        "ok(text: String)",
-        "failed(why: String)",
-        "toJson()",
-        "modelBlocker(online: Boolean, hasToken: Boolean, model: String?)",
-        "chosen(saved: String?, advice: Route?, default: Route)",
-        "run(requested: Route, blocker: String?, model: ()",
-        "class Route",
-        "class Outcome",
-        "class Answer",
-        "class Routing"
-      ]
-    },
-    {
-      "path": "ac_cloud-writer/core/src/test/kotlin/com/diegonmarcos/cloudwriter/core/AudioTest.kt",
-      "lang": "kotlin",
-      "role": "kotlin",
-      "exports": [
-        "AudioTest"
-      ],
-      "imports": [
-        "org.junit.Assert.assertArrayEquals",
-        "org.junit.Assert.assertEquals",
-        "org.junit.Assert.assertNotNull",
-        "org.junit.Assert.assertNull",
-        "org.junit.Test"
-      ],
-      "symbols": [
-        "frame(sample: Int, ms: Int = 100)",
-        "seg()",
-        "put(f: ByteArray)",
-        "ascii(at: Int)",
-        "int(at: Int)",
-        "short(at: Int)",
-        "class AudioTest"
-      ]
-    },
-    {
-      "path": "ac_cloud-writer/core/src/test/kotlin/com/diegonmarcos/cloudwriter/core/BoxesTest.kt",
-      "lang": "kotlin",
-      "role": "kotlin",
-      "exports": [
-        "BoxesTest"
-      ],
-      "imports": [
-        "org.json.JSONObject",
-        "org.junit.Assert.assertEquals",
-        "org.junit.Assert.assertFalse",
-        "org.junit.Assert.assertNull",
-        "org.junit.Assert.assertTrue",
-        "org.junit.Test",
-        "java.io.ByteArrayOutputStream",
-        "java.util.zip.ZipEntry",
-        "java.util.zip.ZipOutputStream"
-      ],
-      "symbols": [
-        "or(o: Outcome)",
-        "ml(o: Outcome)",
-        "model(id: String, price: String, vararg ins: String)",
-        "docx()",
-        "zip(vararg entries: Pair<String, String>)",
-        "class BoxesTest"
-      ]
-    },
-    {
-      "path": "ac_cloud-writer/core/src/test/kotlin/com/diegonmarcos/cloudwriter/core/DesignTest.kt",
-      "lang": "kotlin",
-      "role": "kotlin",
-      "exports": [
-        "DesignTest"
-      ],
-      "imports": [
-        "org.junit.Assert.assertEquals",
-        "org.junit.Assert.assertNotEquals",
-        "org.junit.Assert.assertTrue",
-        "org.junit.Test"
-      ],
-      "symbols": [
-        "everyTextPairReachesAA()",
-        "everyGraphicPairReaches3to1()",
-        "theTestReadsEveryPair()",
-        "theTestCanFail()",
-        "contrastMath()",
-        "blendIsPerChannelAndOpaque()",
-        "surfaceLevelsStepApart()",
-        "enabledAndPressedControlsReachAA()",
-        "controlRolesAreFilledTonalText()",
-        "pressedMovesTheContainerTowardsTheInk()",
-        "disabledKeepsTheColoursAndDropsTheAlpha()",
-        "gridHoldsTheDesignRules()",
-        "class DesignTest"
-      ]
-    },
-    {
-      "path": "ac_cloud-writer/core/src/test/kotlin/com/diegonmarcos/cloudwriter/core/DictationTest.kt",
-      "lang": "kotlin",
-      "role": "kotlin",
-      "exports": [
-        "DictationTest"
-      ],
-      "imports": [
-        "com.diegonmarcos.cloudwriter.core.Dictation.TranslateMode",
-        "org.junit.Assert.assertEquals",
-        "org.junit.Test"
-      ],
-      "symbols": [
-        "class DictationTest"
-      ]
-    },
-    {
-      "path": "ac_cloud-writer/core/src/test/kotlin/com/diegonmarcos/cloudwriter/core/DocListTest.kt",
-      "lang": "kotlin",
-      "role": "kotlin",
-      "exports": [
-        "DocListTest"
-      ],
-      "imports": [
-        "org.junit.Assert.assertEquals",
-        "org.junit.Test"
-      ],
-      "symbols": [
-        "ids(l: List<DocMeta>)",
-        "recentIsNewestFirst()",
-        "longestIsMostWordsFirst()",
-        "titleIgnoresCase()",
-        "sortIdsRoundTripAndDefault()",
-        "totalWords()",
-        "readingMinutesRoundsUpAndNeverZeroForText()",
-        "initialIsFirstLetterUpper()",
-        "charsSkipLineBreaks()",
-        "class DocListTest"
-      ]
-    },
-    {
-      "path": "ac_cloud-writer/core/src/test/kotlin/com/diegonmarcos/cloudwriter/core/DocStoreTest.kt",
-      "lang": "kotlin",
-      "role": "kotlin",
-      "exports": [
-        "DocStoreTest"
-      ],
-      "imports": [
-        "org.junit.Assert.assertEquals",
-        "org.junit.Assert.assertFalse",
-        "org.junit.Assert.assertNotEquals",
-        "org.junit.Assert.assertNull",
-        "org.junit.Assert.assertTrue",
-        "org.junit.Rule",
-        "org.junit.Test",
-        "org.junit.rules.TemporaryFolder",
-        "java.io.File"
-      ],
-      "symbols": [
-        "store(dir: File = tmp.root)",
-        "class DocStoreTest"
-      ]
-    },
-    {
-      "path": "ac_cloud-writer/core/src/test/kotlin/com/diegonmarcos/cloudwriter/core/FormatTest.kt",
-      "lang": "kotlin",
-      "role": "kotlin",
-      "exports": [
-        "FormatTest"
-      ],
-      "imports": [
-        "org.junit.Assert.assertEquals",
-        "org.junit.Assert.assertTrue",
-        "org.junit.Test"
-      ],
-      "symbols": [
-        "run(a: FormatAction, text: String, s: Int, e: Int)",
-        "everyChipIsInAGroupOnce()",
-        "boldItalicCodeWrapTheSelection()",
-        "boldAgainUnwraps()",
-        "headingsMarkTheCaretLine()",
-        "listsQuotesAndChecklistsPrefixEveryTouchedLine()",
-        "checklistTogglesOff()",
-        "linkWrapsTheSelectionAndSelectsTheUrl()",
-        "linkWithNoSelectionInsertsASkeletonAndSelectsItsText()",
-        "linkAcceptsAReversedSelectionAndClamps()",
-        "paragraphIsTheRunOfNonBlankLines()",
-        "aCaretOnABlankLineOwnsNoParagraph()",
-        "aWhitespaceOnlyLineSeparatesParagraphs()",
-        "dimmedIsEverythingOutsideTheParagraph()",
-        "tagsAreHashWordsLowercasedOnceInOrder()",
-        "headingsNumbersAndFragmentsAreNotTags()",
-        "fencedCodeHasNoTags()",
-        "tagsAreCapped()",
-        "docStoreCarriesTags()",
-        "d(id: String, vararg tags: String)",
-        "allTagsMostUsedFirstThenAlphabetical()",
-        "withTagFilters()",
-        "backFromTheListLeavesTheApp()",
-        "listToEditorAndBack()",
-        "configsReturnsToTheOpenDocumentOnlyFromIt()",
-        "toolPagesGoBackToTheList()",
-        "otherMovesFadeThrough()",
-        "class FormatTest"
-      ]
-    },
-    {
-      "path": "ac_cloud-writer/core/src/test/kotlin/com/diegonmarcos/cloudwriter/core/MarkdownTest.kt",
-      "lang": "kotlin",
-      "role": "kotlin",
-      "exports": [
-        "MarkdownTest"
-      ],
-      "imports": [
-        "org.junit.Assert.assertEquals",
-        "org.junit.Assert.assertTrue",
-        "org.junit.Test"
-      ],
-      "symbols": [
-        "class MarkdownTest"
-      ]
-    },
-    {
-      "path": "ac_cloud-writer/core/src/test/kotlin/com/diegonmarcos/cloudwriter/core/OpenRouterTest.kt",
-      "lang": "kotlin",
-      "role": "kotlin",
-      "exports": [
-        "OpenRouterTest"
-      ],
-      "imports": [
-        "com.diegonmarcos.superapp.decisions.Http",
-        "org.json.JSONArray",
-        "org.json.JSONObject",
-        "org.junit.Assert.assertEquals",
-        "org.junit.Assert.assertNull",
-        "org.junit.Assert.assertTrue",
-        "org.junit.Test",
-        "java.io.IOException",
-        "java.util.Base64"
-      ],
-      "symbols": [
-        "send(url: String, token: String?, body: String?, timeoutMs: Int)",
-        "reply(content: Any)",
-        "model(id: String, ins: List<String>, outs: List<String>, prompt: String?, name: String? = null)",
-        "class OpenRouterTest",
-        "class FakeHttp"
-      ]
-    },
-    {
-      "path": "ac_cloud-writer/core/src/test/kotlin/com/diegonmarcos/cloudwriter/core/RoutingJevTest.kt",
-      "lang": "kotlin",
-      "role": "kotlin",
-      "exports": [
-        "RoutingJevTest"
-      ],
-      "imports": [
-        "org.junit.Assert.assertEquals",
-        "org.junit.Test"
-      ],
-      "symbols": [
-        "noAdviceIsTheOldRuleForEverySavedValue()",
-        "adviceOnlyFillsAnUnchosenRoute()",
-        "class RoutingJevTest"
-      ]
-    },
-    {
-      "path": "ac_cloud-writer/core/src/test/kotlin/com/diegonmarcos/cloudwriter/core/RoutingTest.kt",
-      "lang": "kotlin",
-      "role": "kotlin",
-      "exports": [
-        "RoutingTest"
-      ],
-      "imports": [
-        "org.junit.Assert.assertEquals",
-        "org.junit.Assert.assertFalse",
-        "org.junit.Assert.assertNull",
-        "org.junit.Assert.assertTrue",
-        "org.junit.Test"
-      ],
-      "symbols": [
-        "model(o: Outcome)",
-        "ml(o: Outcome)",
-        "class RoutingTest"
       ]
     },
     {
@@ -619442,6 +620033,7 @@
         "worldHttp(id: String, url: String, mainFrame: Boolean, status: Int, now: Long = System.currentTimeMillis()",
         "worldRenderGone(id: String, now: Long = System.currentTimeMillis()",
         "worldDiag(id: String, text: String)",
+        "worldRender(id: String, text: String)",
         "avatar()",
         "worlds()",
         "events()",
@@ -619464,8 +620056,7 @@
         "class Section",
         "class Stage",
         "class Event",
-        "class WebViewInfo",
-        "class Egl"
+        "class WebViewInfo"
       ]
     },
     {
@@ -619487,6 +620078,34 @@
       ]
     },
     {
+      "path": "ad_CG-Omniverse/app/src/main/java/com/diegonmarcos/cgomniverse/RenderProbe.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "RenderProbe"
+      ],
+      "imports": [
+        "org.json.JSONObject",
+        "org.json.JSONTokener"
+      ],
+      "symbols": [
+        "stepToCpu(v: Verdict, cpu: Boolean, viewW: Int, viewH: Int)",
+        "presentation(cpu: Boolean)",
+        "rows()",
+        "parse(raw: String?)",
+        "hex()",
+        "text()",
+        "screen(pixels: IntArray)",
+        "verdict(viewW: Int, viewH: Int, page: Page?, screen: Screen?, sinceFinishedMs: Long, errors: List<String> = emptyList()",
+        "no(reason: String)",
+        "class RenderProbe",
+        "class Page",
+        "class Screen",
+        "class State",
+        "class Verdict"
+      ]
+    },
+    {
       "path": "ad_CG-Omniverse/app/src/main/java/com/diegonmarcos/cgomniverse/Store.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -619505,7 +620124,7 @@
         "isOfflineError(errorCode: Int)",
         "isOfflineHttp(status: Int)",
         "timedOut(elapsedMs: Long, finished: Boolean)",
-        "launchUrl(w: World)",
+        "launchUrl(w: World, cpu: Boolean = false)",
         "parse(json: String)",
         "tags(w: World, group: FilterGroup)",
         "allSelected()",
@@ -619750,6 +620369,7 @@
         "androidx.compose.foundation.layout.Spacer",
         "androidx.compose.foundation.layout.fillMaxSize",
         "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.foundation.layout.heightIn",
         "androidx.compose.foundation.layout.padding",
         "androidx.compose.foundation.layout.width",
         "androidx.compose.foundation.layout.widthIn",
@@ -619762,8 +620382,7 @@
         "androidx.compose.material.icons.filled.Add",
         "androidx.compose.material.icons.filled.BugReport",
         "androidx.compose.material.icons.filled.Close",
-        "androidx.compose.material.icons.filled.History",
-        "androidx.compose.material.icons.filled.DesktopWindows"
+        "androidx.compose.material.icons.filled.History"
       ],
       "symbols": [
         "GalaxyPage(tabs: Tabs.State, onSelect: (String)",
@@ -619998,19 +620617,36 @@
         "Web"
       ],
       "imports": [
+        "android.app.Activity",
         "android.content.Context",
+        "android.graphics.Bitmap",
+        "android.graphics.Rect",
+        "android.os.Handler",
+        "android.os.Looper",
+        "android.view.PixelCopy",
+        "android.webkit.WebView",
+        "androidx.webkit.WebViewCompat",
+        "androidx.webkit.WebViewFeature",
+        "com.diegonmarcos.cgomniverse.RenderProbe",
         "com.diegonmarcos.cgomniverse.World",
         "com.diegonmarcos.cloudlib.web.CloudWeb",
-        "com.diegonmarcos.cloudlib.web.SiteGpuChoice"
+        "com.diegonmarcos.cloudlib.web.SiteGpuChoice",
+        "kotlin.coroutines.resume",
+        "kotlinx.coroutines.suspendCancellableCoroutine",
+        "kotlinx.coroutines.withTimeoutOrNull"
       ],
       "symbols": [
         "openInBrowser(ctx: Context, url: String)",
+        "screenSample(act: Activity?, wv: WebView)",
         "needsWebGpu(w: World)",
         "gpuChoice(ctx: Context, worldId: String)",
         "setGpuChoice(ctx: Context, worldId: String, c: SiteGpuChoice)",
         "prefs(ctx: Context)",
         "desktop(ctx: Context, worldId: String)",
         "setDesktop(ctx: Context, worldId: String, on: Boolean)",
+        "cpuPresent(ctx: Context, worldId: String)",
+        "setCpuPresent(ctx: Context, worldId: String, on: Boolean)",
+        "cpuCanvas(wv: WebView)",
         "tabs(ctx: Context)",
         "setTabs(ctx: Context, encoded: String)",
         "class Web"
@@ -620206,6 +620842,46 @@
         "eachSourceResolvesFromTheBakedTargets()",
         "plannedOrSourcelessOrUnresolvedIsNull()",
         "class PagesTest"
+      ]
+    },
+    {
+      "path": "ad_CG-Omniverse/app/src/test/java/com/diegonmarcos/cgomniverse/RenderProbeTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "RenderProbeTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.cloudlib.web.WebProfile",
+        "org.json.JSONObject",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNotNull",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.io.File"
+      ],
+      "symbols": [
+        "module(path: String)",
+        "source(path: String)",
+        "page( vw: Int = 412, vh: Int = 760, vis: String = \"visible\", raf: Int = 60, canvases: Int = 0, drawn: Int = 0, blank: Int = 0, videos: Int = 0, vready: Int = 0, vframes: Int = 0, verr: Int = 0, )",
+        "thePageAnswerIsParsedAsEvaluateJavascriptReturnsIt()",
+        "theScreenSampleTellsAFlatColourFromAPicture()",
+        "aContentAreaWithoutSizeIsTheFirstReason()",
+        "pixelsOnTheScreenAreARenderWhateverThePageSays()",
+        "aFlatScreenIsLoadingOnlyInsideTheGrace()",
+        "eachFailedStageIsNamed()",
+        "reason(p: RenderProbe.Page?, s: RenderProbe.Screen? = flat)",
+        "aPageWithPixelsAndNoScreenSampleCountsAsRendered()",
+        "aWorldNotOnTheScreenIsLoadedOnceInTheCpuPresentation()",
+        "theCpuPresentationLoadsItsDeclaredAddress()",
+        "theVerdictCarriesTheFactsAndTheConsoleErrors()",
+        "theScriptsMeasureFramesCanvasesAndVideosInThePage()",
+        "aWorldViewHasTheSettingsASceneNeeds()",
+        "galaxyGivesTheWorldARealAreaAndWiresTheRenderCheck()",
+        "everyControlOfTheWorldTabIsKept()",
+        "class RenderProbeTest"
       ]
     },
     {
@@ -620640,6 +621316,7 @@
         "painted(id: String, pct: Double, w: Int, h: Int, gl: String)",
         "failed(id: String, why: String)",
         "view(id: String, w: Int, h: Int, shown: Boolean, hw: Boolean)",
+        "screen(id: String, pct: Double, present: String)",
         "js(id: String, json: String)",
         "snapshot()",
         "clear()",
@@ -620990,8 +621667,18 @@
       "exports": [],
       "imports": [
         "android.annotation.SuppressLint",
+        "android.app.Activity",
+        "android.content.Context",
+        "android.content.ContextWrapper",
+        "android.graphics.Bitmap",
+        "android.graphics.BitmapFactory",
+        "android.graphics.Rect",
+        "android.os.Handler",
+        "android.os.Looper",
+        "android.view.PixelCopy",
         "android.webkit.JavascriptInterface",
         "android.webkit.WebView",
+        "androidx.compose.foundation.Image",
         "androidx.compose.foundation.background",
         "androidx.compose.foundation.border",
         "androidx.compose.foundation.clickable",
@@ -621017,20 +621704,12 @@
         "androidx.compose.ui.Modifier",
         "androidx.compose.ui.draw.clip",
         "androidx.compose.ui.graphics.Color",
-        "androidx.compose.ui.platform.testTag",
-        "androidx.compose.ui.res.stringResource",
-        "androidx.compose.ui.unit.dp",
-        "androidx.compose.ui.viewinterop.AndroidView",
-        "androidx.webkit.WebViewAssetLoader",
-        "com.diegonmarcos.cloudlib.web.CloudWeb",
-        "com.diegonmarcos.cloudlib.web.CloudWebClient",
-        "com.diegonmarcos.cloudlib.web.WebProfile",
-        "com.diegonmarcos.hardtechcad.BuildConfig",
-        "com.diegonmarcos.hardtechcad.CadDiag",
-        "com.diegonmarcos.hardtechcad.R",
-        "com.diegonmarcos.superapp.cad.CadFormats"
+        "androidx.compose.ui.graphics.ImageBitmap",
+        "androidx.compose.ui.graphics.asImageBitmap"
       ],
       "symbols": [
+        "activityOf(c: Context)",
+        "screenPct(wv: WebView)",
         "ModelViewer(m: Model, dir: File)",
         "post(json: String)",
         "pollDiag(id: String)",
@@ -621039,6 +621718,7 @@
         "ControlChip(label: String, on: Boolean, modifier: Modifier, onClick: ()",
         "decodeJs(v: String?)",
         "ViewerProbe(dir: File, modifier: Modifier = Modifier)",
+        "class Paint",
         "class ViewState",
         "class Fetching",
         "class Loading",
@@ -621171,6 +621851,27 @@
       ]
     },
     {
+      "path": "ad_Hardtech-CAD/app/src/main/java/com/diegonmarcos/hardtechcad/ViewerHealth.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ViewerHealth"
+      ],
+      "imports": [
+        "kotlin.math.abs"
+      ],
+      "symbols": [
+        "sized(w: Int, h: Int)",
+        "coverage(pixels: IntArray, background: Int = BACKGROUND)",
+        "lost(paintedPct: Double, screenPct: Double)",
+        "next(present: Present, paintedPct: Double, screenPct: Double)",
+        "pct(v: Double)",
+        "line(state: String, stage: String, present: Present, triangles: Long, w: Int, h: Int, paintedPct: Double, screenPct: Double, gl: String, error: String = \"\")",
+        "class ViewerHealth",
+        "class Present"
+      ]
+    },
+    {
       "path": "ad_Hardtech-CAD/app/src/test/java/com/diegonmarcos/hardtechcad/DiagTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -621245,6 +621946,38 @@
         "eachSourceResolvesFromTheBakedTargets()",
         "plannedOrSourcelessOrUnresolvedIsNull()",
         "class PagesTest"
+      ]
+    },
+    {
+      "path": "ad_Hardtech-CAD/app/src/test/java/com/diegonmarcos/hardtechcad/ViewerRenderTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ViewerRenderTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.hardtechcad.ViewerHealth.Present",
+        "com.diegonmarcos.superapp.cad.CadFormats",
+        "com.diegonmarcos.superapp.cad.ModelManifest",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.io.File"
+      ],
+      "symbols": [
+        "src(path: String)",
+        "pixels(total: Int, drawn: Int, colour: Int = 0xFFC8CCD4.toInt()",
+        "theScreenShareCountsOnlyWhatIsNotBackground()",
+        "aModelInTheFramebufferAndNotOnTheScreenStepsThroughEveryPresentation()",
+        "aCollapsedSurfaceIsNotASizedOne()",
+        "theLineUnderTheViewerSaysWhatHappened()",
+        "thePaintedButNotOnScreenModelIsTheFirstFailingStageOfTheReport()",
+        "everyDeclaredModelHasABundledViewTheViewerShows()",
+        "theWebViewIsAGpuOneAndItsSurfaceCannotCollapse()",
+        "aBlankRenderReportsWhy()",
+        "class ViewerRenderTest"
       ]
     },
     {

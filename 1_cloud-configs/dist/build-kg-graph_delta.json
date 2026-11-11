@@ -465,7 +465,7 @@
         "category": "app",
         "description": "MCP + HTTP faces over the Android constellation's on-device debug API (libs:devtools AppDebugServer, behind the SuperApp mesh gateway), reached over ssh. lib-api/lib-mcp shared, one module per app under mcps-apps/, one server process.",
         "domain": "mcp.diegonmarcos.com",
-        "port": 3110,
+        "port": 3113,
         "vm": "oci-apps",
         "folder": "infra-api_cloud-superapp-mcp"
       }
@@ -478,7 +478,7 @@
         "name": "cloud-superapp-mcp",
         "image": "ghcr.io/diegonmarcos/cloud-superapp-mcp:latest",
         "role": "app",
-        "port": 3110,
+        "port": 3113,
         "public": true
       }
     },
