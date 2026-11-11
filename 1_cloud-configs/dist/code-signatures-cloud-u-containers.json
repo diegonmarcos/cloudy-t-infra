@@ -6,13 +6,13 @@
   },
   "repo": "cloud-u-containers",
   "counts": {
-    "files": 2640,
+    "files": 2641,
     "by_lang": {
       "sh": 179,
       "js": 111,
       "nix": 193,
       "py": 511,
-      "ts": 1275,
+      "ts": 1276,
       "rust": 371
     },
     "by_role": {
@@ -20,7 +20,7 @@
       "file": 349,
       "nix-module": 19,
       "python": 497,
-      "module": 780,
+      "module": 781,
       "script": 8,
       "flake": 88,
       "entrypoint": 71,
@@ -47989,6 +47989,19 @@
         "vitest",
         "react",
         "../email-composer"
+      ],
+      "symbols": []
+    },
+    {
+      "path": "user-comm_cloud-webmail/src/code/arm64/webapp/components/email/__tests__/mail-reading-panel-parity.test.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [],
+      "imports": [
+        "fs",
+        "path",
+        "vitest",
+        "@/lib/keyword-classification"
       ],
       "symbols": []
     },
