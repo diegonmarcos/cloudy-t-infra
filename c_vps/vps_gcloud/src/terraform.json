@@ -263,6 +263,174 @@
         "the image push (cloud-run-images.yml dispatch push=true) and the Terraform apply are the owner-approved steps"
       ],
       "notes": "#1429 the Cloud Browser's Scrap Tools call POST /download/youtube (yt-dlp + ffmpeg, Dockerfile.cloudrun); timeout 900 s for long downloads. The phone tries the mesh name first and this edge path second."
+    },
+    {
+      "name": "languagetool",
+      "label": "LanguageTool",
+      "managed": false,
+      "state": "declared",
+      "region": "us-central1",
+      "from_host": "oci-apps",
+      "source": {
+        "repo": "cloudy-u-containers",
+        "path": "infra-ai_languagetool"
+      },
+      "image": "us-central1-docker.pkg.dev/diegonmarcos-infra-prod/ghcr/diegonmarcos/languagetool-cloudrun:latest",
+      "port": 8010,
+      "build": {
+        "workflow": "cloudy-u-containers/.github/workflows/cloud-run-images.yml",
+        "ghcr": "ghcr.io/diegonmarcos/languagetool-cloudrun",
+        "platform": "linux/amd64",
+        "dockerfile": "infra-ai_languagetool/src/Dockerfile.cloudrun"
+      },
+      "cpu": "1",
+      "memory": "2Gi",
+      "min_instances": 0,
+      "max_instances": 1,
+      "cpu_throttling": true,
+      "startup_cpu_boost": true,
+      "timeout_s": 300,
+      "invoker": "iam",
+      "env": {
+        "Java_Xms": "512m",
+        "Java_Xmx": "1536m"
+      },
+      "secret_env": {},
+      "volumes": [],
+      "persistence": "none: rules-only, the oci-apps languagetool_data volume holds no user data (n-grams deferred)",
+      "route": {
+        "edge_path": "languagetool.diegonmarcos.com (wg_only today)",
+        "auth": "IAM invoker; callers send a Google ID token or go through the edge proxy"
+      },
+      "blockers": [
+        "callers (mesh name languagetool.mesh.diegonmarcos.com) are repointed only after the edge-to-Cloud-Run identity-token step exists"
+      ]
+    },
+    {
+      "name": "cloudy-ai-embeddings-api",
+      "label": "Embeddings API (bge-m3 + reranker)",
+      "managed": false,
+      "state": "declared",
+      "region": "us-central1",
+      "from_host": "oci-apps",
+      "source": {
+        "repo": "cloudy-u-containers",
+        "path": "infra-ai_cloudy-ai-embeddings-api"
+      },
+      "image": "us-central1-docker.pkg.dev/diegonmarcos-infra-prod/ghcr/diegonmarcos/cloudy-ai-embeddings-api-cloudrun:latest",
+      "port": 7997,
+      "build": {
+        "workflow": "cloudy-u-containers/.github/workflows/cloud-run-images.yml",
+        "ghcr": "ghcr.io/diegonmarcos/cloudy-ai-embeddings-api-cloudrun",
+        "platform": "linux/amd64",
+        "dockerfile": "infra-ai_cloudy-ai-embeddings-api/src/Dockerfile.cloudrun"
+      },
+      "cpu": "2",
+      "memory": "8Gi",
+      "min_instances": 0,
+      "max_instances": 1,
+      "cpu_throttling": true,
+      "startup_cpu_boost": true,
+      "execution_environment": "EXECUTION_ENVIRONMENT_GEN2",
+      "timeout_s": 600,
+      "invoker": "iam",
+      "env": {
+        "EMBED_MODEL": "BAAI/bge-m3",
+        "RERANK_MODEL": "BAAI/bge-reranker-v2-m3",
+        "BATCH_SIZE": "8",
+        "OMP_NUM_THREADS": "2"
+      },
+      "secret_env": {},
+      "volumes": [],
+      "persistence": "HF model cache on the instance's own disk (re-downloaded on cold start, about 4.6 GB); a GCS cache volume is optional",
+      "route": {
+        "edge_path": "embeddings-api.mesh.diegonmarcos.com:7997 today",
+        "auth": "IAM invoker"
+      },
+      "blockers": [
+        "resident about 5 GB: needs 8Gi/2 vCPU; cold start downloads 4.6 GB of weights, so free-tier vCPU-seconds go fast under load",
+        "edge-to-Cloud-Run identity-token step for callers"
+      ]
+    },
+    {
+      "name": "cloudy-browser-headless",
+      "label": "Headless Browser API",
+      "managed": false,
+      "state": "declared",
+      "region": "us-central1",
+      "from_host": "oci-apps",
+      "source": {
+        "repo": "cloudy-u-containers",
+        "path": "user-data_cloudy-browser-headless"
+      },
+      "image": "us-central1-docker.pkg.dev/diegonmarcos-infra-prod/ghcr/diegonmarcos/cloudy-browser-headless-cloudrun:latest",
+      "port": 3118,
+      "build": {
+        "workflow": "cloudy-u-containers/.github/workflows/cloud-run-images.yml",
+        "ghcr": "ghcr.io/diegonmarcos/cloudy-browser-headless-cloudrun",
+        "platform": "linux/amd64",
+        "dockerfile": "user-data_cloudy-browser-headless/src/Dockerfile.cloudrun"
+      },
+      "cpu": "1",
+      "memory": "2Gi",
+      "min_instances": 0,
+      "max_instances": 1,
+      "cpu_throttling": true,
+      "startup_cpu_boost": true,
+      "execution_environment": "EXECUTION_ENVIRONMENT_GEN2",
+      "timeout_s": 300,
+      "invoker": "iam",
+      "env": {
+        "BASE_PATH": "/cloudy-browser-headless",
+        "MAX_SESSIONS": "4",
+        "IDLE_CLOSE_MS": "300000",
+        "CALL_TIMEOUT_MS": "30000",
+        "TZ": "Europe/Paris"
+      },
+      "secret_env": {
+        "BROWSER_TOKEN": "cloudy-browser-headless-token"
+      },
+      "volumes": [],
+      "persistence": "none (sessions are re-creatable)",
+      "route": {
+        "edge_path": "mcp.diegonmarcos.com/cloudy-browser-headless",
+        "auth": "bearer BROWSER_TOKEN in the app plus IAM invoker"
+      },
+      "notes": "Not the same engine as scrappers-api (Python yt-dlp/instaloader); kept as two entries.",
+      "blockers": [
+        "Secret Manager secret cloudy-browser-headless-token must hold the vault BROWSER_TOKEN, and the Cloud Run runtime service account needs secretAccessor on it, before managed flips"
+      ]
+    },
+    {
+      "name": "cloudy-cgc-pub-graph-api",
+      "label": "CGC public graph store (SurrealDB)",
+      "managed": false,
+      "state": "declared",
+      "region": "us-central1",
+      "from_host": "oci-apps",
+      "source": {
+        "repo": "cloudy-u-containers",
+        "path": "user-ai_cloudy-cgc-pub-graph-api"
+      },
+      "image": "us-central1-docker.pkg.dev/diegonmarcos-infra-prod/ghcr/diegonmarcos/cloudy-cgc-pub-graph-api-cloudrun:latest",
+      "port": 8000,
+      "cpu": "1",
+      "memory": "2Gi",
+      "min_instances": 0,
+      "max_instances": 1,
+      "cpu_throttling": true,
+      "invoker": "iam",
+      "env": {},
+      "secret_env": {},
+      "volumes": [],
+      "persistence": "SurrealDB on RocksDB: NOT stateless; RocksDB on a gcsfuse volume is unsupported (no POSIX locks, random writes)",
+      "route": {
+        "edge_path": "unchanged (oci-apps)",
+        "auth": "unchanged"
+      },
+      "blockers": [
+        "stateful database: a Cloud Run move needs a different storage engine or a managed DB; stays on oci-apps until then (Rule 16)"
+      ]
     }
   ]
 }
