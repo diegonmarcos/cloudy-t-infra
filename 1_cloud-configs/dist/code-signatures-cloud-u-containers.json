@@ -6,20 +6,20 @@
   },
   "repo": "cloud-u-containers",
   "counts": {
-    "files": 2665,
+    "files": 2675,
     "by_lang": {
-      "sh": 180,
+      "sh": 181,
       "js": 120,
       "nix": 196,
-      "py": 511,
+      "py": 520,
       "ts": 1287,
       "rust": 371
     },
     "by_role": {
-      "shell": 171,
+      "shell": 172,
       "file": 355,
       "nix-module": 20,
-      "python": 497,
+      "python": 506,
       "module": 794,
       "script": 8,
       "flake": 89,
@@ -13505,6 +13505,8 @@
         "base64",
         "logging",
         "os",
+        "shutil",
+        "time",
         "uuid"
       ],
       "symbols": [
@@ -13660,6 +13662,7 @@
         "auth.auth_info_middleware",
         "auth.scopes",
         "core.config",
+        "asyncio",
         "hashlib",
         "logging",
         "os"
@@ -13673,6 +13676,62 @@
         "get_auth_provider()",
         "class WellKnownCacheControlMiddleware",
         "class SecureFastMCP"
+      ]
+    },
+    {
+      "path": "infra-api_google-workspace-mcp/src/code/core/streaming.py",
+      "lang": "py",
+      "role": "python",
+      "exports": [
+        "tmp_dir()",
+        "new_tmp_path(prefix: str = \"dl\", suffix: str = \"\")",
+        "dir_usage_bytes(path: Path)",
+        "ensure_room(need_bytes: int, what: str = \"file\")",
+        "remove_quietly(path: Any)",
+        "protect_tmp(path: Any)",
+        "unprotect_tmp(path: Any)",
+        "sweep_tmp(max_age_seconds: Optional[int] = None, now: Optional[float] = None)",
+        "download_to_file(\n    request: Any,\n    dest: Any,\n    *,\n    chunk_bytes: int = DOWNLOAD_CHUNK_BYTES,\n    max_bytes: Optional[int] = None,\n    num_retries: int = 5,\n    on_progress: Optional[Callable[[int], None]] = None,\n    downloader_cls: Optional[Callable[..., Any]] = None,\n)",
+        "read_head(path: Any, n: int)",
+        "heavy_stats()",
+        "memory_headroom(root: str = \"/\")",
+        "health_snapshot()",
+        "class TooLargeError",
+        "class BusyError"
+      ],
+      "imports": [
+        "__future__",
+        "contextlib",
+        "pathlib",
+        "typing",
+        "asyncio",
+        "logging",
+        "os",
+        "shutil",
+        "threading",
+        "time",
+        "uuid"
+      ],
+      "symbols": [
+        "_env_int(name: str, default: int, lo: int, hi: int)",
+        "tmp_dir()",
+        "new_tmp_path(prefix: str = \"dl\", suffix: str = \"\")",
+        "dir_usage_bytes(path: Path)",
+        "ensure_room(need_bytes: int, what: str = \"file\")",
+        "remove_quietly(path: Any)",
+        "protect_tmp(path: Any)",
+        "unprotect_tmp(path: Any)",
+        "sweep_tmp(max_age_seconds: Optional[int] = None, now: Optional[float] = None)",
+        "download_to_file(\n    request: Any,\n    dest: Any,\n    *,\n    chunk_bytes: int = DOWNLOAD_CHUNK_BYTES,\n    max_bytes: Optional[int] = None,\n    num_retries: int = 5,\n    on_progress: Optional[Callable[[int], None]] = None,\n    downloader_cls: Optional[Callable[..., Any]] = None,\n)",
+        "read_head(path: Any, n: int)",
+        "_semaphore()",
+        "heavy_stats()",
+        "_read_int(path: str)",
+        "_meminfo(root: str)",
+        "memory_headroom(root: str = \"/\")",
+        "health_snapshot()",
+        "class TooLargeError",
+        "class BusyError"
       ]
     },
     {
@@ -14183,7 +14242,6 @@
       "imports": [
         "contextlib",
         "typing",
-        "tempfile",
         "urllib.parse",
         "urllib.request",
         "pathlib",
@@ -14193,6 +14251,7 @@
         "auth.oauth_config",
         "core.attachment_storage",
         "core.utils",
+        "core.streaming",
         "core.server",
         "core.config",
         "gdrive.drive_helpers",
@@ -14205,11 +14264,64 @@
         "socket"
       ],
       "symbols": [
+        "_declared_size(file_metadata: Dict[str, Any])",
+        "_upload_file_media(path, mime_type: str)",
+        "_execute_upload(request)",
         "_resolve_and_validate_host(hostname: str)",
         "_validate_url_not_internal(url: str)",
         "_format_host_header(hostname: str, scheme: str, port: Optional[int])",
         "_build_pinned_url(parsed_url, ip_address_str: str)",
         "_detect_source_format(file_name: str, content: Optional[str] = None)"
+      ]
+    },
+    {
+      "path": "infra-api_google-workspace-mcp/src/code/gdrive/unzip_engine.py",
+      "lang": "py",
+      "role": "python",
+      "exports": [
+        "safe_parts(member_name: str)",
+        "common_wrapper(paths: List[List[str]])",
+        "deploy_hold_until()",
+        "start_job(**kwargs: Any)",
+        "get_job(job_id: str)",
+        "job_status(job_id: str)",
+        "list_jobs()",
+        "jobs_summary()",
+        "class UnzipError",
+        "class UnzipJob",
+        "class _Cancelled"
+      ],
+      "imports": [
+        "__future__",
+        "concurrent.futures",
+        "typing",
+        "core",
+        "json",
+        "logging",
+        "mimetypes",
+        "os",
+        "re",
+        "shutil",
+        "threading",
+        "time",
+        "uuid",
+        "zipfile"
+      ],
+      "symbols": [
+        "safe_parts(member_name: str)",
+        "common_wrapper(paths: List[List[str]])",
+        "_http_status(exc: BaseException)",
+        "_process_start_time(pid: str = \"self\", proc: str = \"/proc\")",
+        "deploy_hold_until()",
+        "_default_media_factory(path: str, mimetype: str, resumable: bool, chunksize: int)",
+        "start_job(**kwargs: Any)",
+        "get_job(job_id: str)",
+        "job_status(job_id: str)",
+        "list_jobs()",
+        "jobs_summary()",
+        "class UnzipError",
+        "class UnzipJob",
+        "class _Cancelled"
       ]
     },
     {
@@ -14759,6 +14871,33 @@
       ]
     },
     {
+      "path": "infra-api_google-workspace-mcp/src/code/tests/gdrive/test_drive_streaming_tools.py",
+      "lang": "py",
+      "role": "python",
+      "exports": [
+        "test_real_media_downloader_issues_one_ranged_request_per_chunk(tmp_path)",
+        "class Downloader"
+      ],
+      "imports": [
+        "unittest.mock",
+        "googleapiclient.http",
+        "core",
+        "gdrive",
+        "io",
+        "os",
+        "sys",
+        "pytest"
+      ],
+      "symbols": [
+        "_unwrap(tool)",
+        "_service(meta, total)",
+        "_isolate(tmp_path, monkeypatch)",
+        "_async_return(value)",
+        "test_real_media_downloader_issues_one_ranged_request_per_chunk(tmp_path)",
+        "class Downloader"
+      ]
+    },
+    {
       "path": "infra-api_google-workspace-mcp/src/code/tests/gdrive/test_drive_tools.py",
       "lang": "py",
       "role": "python",
@@ -14901,6 +15040,155 @@
       ]
     },
     {
+      "path": "infra-api_google-workspace-mcp/src/code/tests/stability/_env.py",
+      "lang": "py",
+      "role": "python",
+      "exports": [],
+      "imports": [
+        "core",
+        "atexit",
+        "os",
+        "shutil",
+        "sys",
+        "tempfile"
+      ],
+      "symbols": []
+    },
+    {
+      "path": "infra-api_google-workspace-mcp/src/code/tests/stability/test_attachment_expiry.py",
+      "lang": "py",
+      "role": "python",
+      "exports": [
+        "class AttachmentExpiry"
+      ],
+      "imports": [
+        "core",
+        "os",
+        "time",
+        "unittest"
+      ],
+      "symbols": [
+        "class AttachmentExpiry"
+      ]
+    },
+    {
+      "path": "infra-api_google-workspace-mcp/src/code/tests/stability/test_drain_probe.py",
+      "lang": "py",
+      "role": "python",
+      "exports": [
+        "class Sandbox",
+        "class DrainProbe",
+        "class ServerSide",
+        "class Declaration"
+      ],
+      "imports": [
+        "core",
+        "gdrive",
+        "json",
+        "os",
+        "shutil",
+        "subprocess",
+        "tempfile",
+        "time",
+        "unittest"
+      ],
+      "symbols": [
+        "class Sandbox",
+        "class DrainProbe",
+        "class ServerSide",
+        "class Declaration"
+      ]
+    },
+    {
+      "path": "infra-api_google-workspace-mcp/src/code/tests/stability/test_no_whole_file_reads.py",
+      "lang": "py",
+      "role": "python",
+      "exports": [
+        "read(rel)",
+        "class DriveToolsContract"
+      ],
+      "imports": [
+        "ast",
+        "os",
+        "re",
+        "unittest"
+      ],
+      "symbols": [
+        "read(rel)",
+        "class DriveToolsContract"
+      ]
+    },
+    {
+      "path": "infra-api_google-workspace-mcp/src/code/tests/stability/test_streaming.py",
+      "lang": "py",
+      "role": "python",
+      "exports": [
+        "class FakeDownloader",
+        "class DownloadToFile",
+        "class TempDir",
+        "class HeavySlots",
+        "class MemoryHeadroom"
+      ],
+      "imports": [
+        "core",
+        "asyncio",
+        "io",
+        "os",
+        "tempfile",
+        "time",
+        "tracemalloc",
+        "unittest"
+      ],
+      "symbols": [
+        "class FakeDownloader",
+        "class DownloadToFile",
+        "class TempDir",
+        "class HeavySlots",
+        "class MemoryHeadroom"
+      ]
+    },
+    {
+      "path": "infra-api_google-workspace-mcp/src/code/tests/stability/test_unzip_engine.py",
+      "lang": "py",
+      "role": "python",
+      "exports": [
+        "make_job(drive, **kw)",
+        "class HttpError",
+        "class FakeDrive",
+        "class FakeService",
+        "class Req",
+        "class CreateReq",
+        "class FakeFiles",
+        "class FakeMedia",
+        "class FakeDownloader",
+        "class UnzipJobTest",
+        "class BackgroundJobTest"
+      ],
+      "imports": [
+        "core",
+        "gdrive",
+        "io",
+        "os",
+        "threading",
+        "time",
+        "unittest",
+        "zipfile"
+      ],
+      "symbols": [
+        "make_job(drive, **kw)",
+        "class HttpError",
+        "class FakeDrive",
+        "class FakeService",
+        "class Req",
+        "class CreateReq",
+        "class FakeFiles",
+        "class FakeMedia",
+        "class FakeDownloader",
+        "class UnzipJobTest",
+        "class BackgroundJobTest"
+      ]
+    },
+    {
       "path": "infra-api_google-workspace-mcp/src/code/tests/test_drive_write_scopes.py",
       "lang": "py",
       "role": "python",
@@ -15028,6 +15316,9 @@
         "PORT",
         "USER_GOOGLE_EMAIL",
         "GOOGLE_SERVICE_ACCOUNT_KEY_PATH",
+        "WORKSPACE_MCP_TMP_DIR",
+        "WORKSPACE_MCP_HEAVY_CONCURRENCY",
+        "MALLOC_ARENA_MAX",
         "volumes",
         "healthcheck",
         "test",
@@ -15035,6 +15326,20 @@
         "timeout",
         "retries",
         "start_period"
+      ]
+    },
+    {
+      "path": "infra-api_google-workspace-mcp/src/drain-probe.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "cmd()",
+        "started()"
+      ],
+      "imports": [],
+      "symbols": [
+        "cmd()",
+        "started()"
       ]
     },
     {

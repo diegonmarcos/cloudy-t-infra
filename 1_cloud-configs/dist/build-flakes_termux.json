@@ -4196,7 +4196,11 @@
           ],
           "env_file": false,
           "depends_on": [],
-          "resources": null,
+          "resources": {
+            "mem_limit": "2G",
+            "mem_reservation": "256M",
+            "_comment": "#1659: THE ONE DECLARATION of this container's memory budget (compose.nix reads it). Reviewed after the 2026-11-11 OOM kill (exit 137 on a 417 MB download): the ceiling was not the defect, the tool held ~4 copies of the file in memory. Every Drive transfer now streams through disk in chunks of at most 16 MiB (core/streaming.py), heavy calls are limited to 2 at a time and an unzip job to 4 upload threads, so the working set is the Python baseline plus tens of MiB. 2G stays as the ceiling (same as the app-category default, so no new resource is reserved or paid for) and 256M is declared as the reservation the kernel protects under host pressure, like the sibling MCPs. GET /health reports the live headroom."
+          },
           "read_only": false,
           "protocol": "http"
         }
@@ -4243,7 +4247,16 @@
         "startup-contract": {
           "cmd": "node test-startup-contract.mjs",
           "cwd": "src"
+        },
+        "stability": {
+          "_comment": "#1659: Drive transfers stream through disk in bounded chunks (never a whole file in memory), expired attachments are removed, the unzip-to-Drive job runs against a fake Drive backend, and the unzip methods are listed in the grouped workspace_drive tool. Standard library only: no Google packages needed on the runner. The tool-level tests with a mocked Drive service (code/tests/gdrive/test_drive_streaming_tools.py) need the project venv and run with pytest.",
+          "cmd": "python3 -m unittest discover -s code/tests/stability -p 'test_*.py'",
+          "cwd": "src"
         }
+      },
+      "runtime": {
+        "oom_score_adj": -900,
+        "_why_oom_score_adj": "#1659: every MCP server on oci-apps is in the last tier the kernel OOM killer picks (_shared/oom-priority.json, tier mcp). Restart policy is 'no' (owner rule), so a killed MCP stays down and its tools are gone until someone starts it by hand. -900 = the host's connectivity tier; not -1000, which would also exempt it from its own cgroup limit."
       },
       "api": {
         "has_api": false,

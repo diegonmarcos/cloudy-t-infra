@@ -6468,7 +6468,9 @@
         "fixture()",
         "expect()",
         "wf()",
-        "names()"
+        "names()",
+        "wf2()",
+        "names2()"
       ],
       "imports": [],
       "symbols": [
@@ -6477,7 +6479,9 @@
         "fixture()",
         "expect()",
         "wf()",
-        "names()"
+        "names()",
+        "wf2()",
+        "names2()"
       ]
     },
     {
@@ -6678,14 +6682,16 @@
         "ok()",
         "fail()",
         "stage()",
-        "mutate()"
+        "mutate()",
+        "cut()"
       ],
       "imports": [],
       "symbols": [
         "ok()",
         "fail()",
         "stage()",
-        "mutate()"
+        "mutate()",
+        "cut()"
       ]
     },
     {
@@ -11024,6 +11030,7 @@
         "next()",
         "resetComponents(ctx: Context)",
         "confirmResetAll()",
+        "ResetAllConfirm()",
         "resetAllToDefault()",
         "startWalk()",
         "walkNext()",
@@ -11054,8 +11061,7 @@
         "ok(s: String)",
         "onResume()",
         "KvRow(key: String, value: String)",
-        "Small(text: String)",
-        "ActionButton(label: String, bg: Int = 0xFF7C3AED.toInt()"
+        "Small(text: String)"
       ]
     },
     {
@@ -41453,6 +41459,25 @@
       ]
     },
     {
+      "path": "ab_cloud-libs-shared/libs/appstore/src/main/java/com/diegonmarcos/superapp/core/CrossProcess.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "CrossProcess"
+      ],
+      "imports": [
+        "android.content.Intent",
+        "android.os.Parcel",
+        "android.os.ResultReceiver"
+      ],
+      "symbols": [
+        "plainResultReceiver(local: ResultReceiver)",
+        "putPlainResultReceiver(intent: Intent, key: String, receiver: ResultReceiver)",
+        "class name",
+        "class CrossProcess"
+      ]
+    },
+    {
       "path": "ab_cloud-libs-shared/libs/appstore/src/test/java/com/diegonmarcos/superapp/appstore/dl/CheckGateTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -42052,6 +42077,43 @@
         "theTerminalScriptCarriesOnlyCheckedValues()",
         "onlyAnArmedTokenReachesTheInstall()",
         "class VentoyRawInstallTest"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/appstore/src/test/java/com/diegonmarcos/superapp/core/CrossProcessTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "CrossProcessTest"
+      ],
+      "imports": [
+        "android.app.Application",
+        "android.content.Intent",
+        "android.os.Bundle",
+        "android.os.Handler",
+        "android.os.Looper",
+        "android.os.ResultReceiver",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertSame",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "org.junit.runner.RunWith",
+        "org.robolectric.RobolectricTestRunner",
+        "org.robolectric.annotation.Config"
+      ],
+      "symbols": [
+        "onReceiveResult(resultCode: Int, resultData: Bundle?)",
+        "aSubclassBecomesThePlainFrameworkClass()",
+        "anAnonymousSubclassBecomesThePlainFrameworkClass()",
+        "aPlainReceiverIsReturnedAsIs()",
+        "wireClass(i: Intent, key: String)",
+        "theWireNamesNoAppClass()",
+        "class CrossProcessTest",
+        "class Mine",
+        "class name",
+        "class instead",
+        "class names"
       ]
     },
     {
@@ -51913,25 +51975,6 @@
       ]
     },
     {
-      "path": "ab_cloud-libs-shared/libs/core/src/main/java/com/diegonmarcos/superapp/core/CrossProcess.kt",
-      "lang": "kotlin",
-      "role": "kotlin",
-      "exports": [
-        "CrossProcess"
-      ],
-      "imports": [
-        "android.content.Intent",
-        "android.os.Parcel",
-        "android.os.ResultReceiver"
-      ],
-      "symbols": [
-        "plainResultReceiver(local: ResultReceiver)",
-        "putPlainResultReceiver(intent: Intent, key: String, receiver: ResultReceiver)",
-        "class name",
-        "class CrossProcess"
-      ]
-    },
-    {
       "path": "ab_cloud-libs-shared/libs/core/src/main/java/com/diegonmarcos/superapp/core/DataSyncBudget.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -52081,78 +52124,6 @@
         "delete(uri: Uri, selection: String?, selectionArgs: Array<out String>?)",
         "servingForeground(ctx: Context)",
         "class FleetConfigProvider"
-      ]
-    },
-    {
-      "path": "ab_cloud-libs-shared/libs/core/src/main/java/com/diegonmarcos/superapp/core/FleetNotify.kt",
-      "lang": "kotlin",
-      "role": "kotlin",
-      "exports": [
-        "FleetNotify"
-      ],
-      "imports": [
-        "android.app.Notification",
-        "android.app.NotificationManager",
-        "android.app.PendingIntent",
-        "android.app.Service",
-        "android.content.Context",
-        "android.content.pm.ServiceInfo",
-        "android.os.Build",
-        "androidx.core.app.NotificationCompat",
-        "androidx.core.app.ServiceCompat"
-      ],
-      "symbols": [
-        "keepAliveChannel(ctx: Context)",
-        "dataWidgetChannel(ctx: Context)",
-        "body(lines: List<String>)",
-        "first(lines: List<String>)",
-        "keepAliveNotification( ctx: Context, smallIcon: Int, title: String, lines: List<String>, stop: PendingIntent, contentIntent: PendingIntent? = null, extraActions: List<Action> = emptyList()",
-        "startKeepAlive(service: Service, id: Int, notification: Notification, type: Int = specialUseType()",
-        "specialUseType()",
-        "dataSyncType()",
-        "dataWidgetBuilder( ctx: Context, smallIcon: Int, title: String, lines: List<String>, contentIntent: PendingIntent? = null, channelId: String? = null, pinned: Boolean = true, color: Int = 0, subText: String? = null, )",
-        "dataWidgetNotification( ctx: Context, smallIcon: Int, title: String, lines: List<String>, contentIntent: PendingIntent? = null, channelId: String? = null, pinned: Boolean = true, color: Int = 0, subText: String? = null, )",
-        "post(ctx: Context, id: Int, notification: Notification)",
-        "class FleetNotify",
-        "class Action"
-      ]
-    },
-    {
-      "path": "ab_cloud-libs-shared/libs/core/src/main/java/com/diegonmarcos/superapp/core/KeepAliveStatus.kt",
-      "lang": "kotlin",
-      "role": "kotlin",
-      "exports": [
-        "KeepAliveStatus"
-      ],
-      "imports": [
-        "java.net.InetSocketAddress",
-        "java.net.NetworkInterface",
-        "java.net.Socket"
-      ],
-      "symbols": [
-        "portUp(port: Int, host: String = \"127.0.0.1\", timeoutMs: Int = 250)",
-        "portsLine(label: String, states: Map<Int, Boolean>)",
-        "meshUp(interfaces: List<Pair<String, Boolean>> = systemInterfaces()",
-        "systemInterfaces()",
-        "meshLine(up: Boolean)",
-        "class KeepAliveStatus",
-        "class is"
-      ]
-    },
-    {
-      "path": "ab_cloud-libs-shared/libs/core/src/main/java/com/diegonmarcos/superapp/core/LogGate.kt",
-      "lang": "kotlin",
-      "role": "kotlin",
-      "exports": [
-        "LogGate"
-      ],
-      "imports": [],
-      "symbols": [
-        "log(key: String, message: String)",
-        "log(message: String)",
-        "suffix(prev: Window?, now: Long)",
-        "class LogGate",
-        "class Window"
       ]
     },
     {
@@ -52342,110 +52313,6 @@
         "otherAppsAreUnchanged()",
         "nobodyWakesAccountOrStore()",
         "class BackgroundPolicyTest"
-      ]
-    },
-    {
-      "path": "ab_cloud-libs-shared/libs/core/src/test/java/com/diegonmarcos/superapp/core/CrossProcessTest.kt",
-      "lang": "kotlin",
-      "role": "kotlin",
-      "exports": [
-        "CrossProcessTest"
-      ],
-      "imports": [
-        "android.app.Application",
-        "android.content.Intent",
-        "android.os.Bundle",
-        "android.os.Handler",
-        "android.os.Looper",
-        "android.os.ResultReceiver",
-        "org.junit.Assert.assertEquals",
-        "org.junit.Assert.assertFalse",
-        "org.junit.Assert.assertSame",
-        "org.junit.Assert.assertTrue",
-        "org.junit.Test",
-        "org.junit.runner.RunWith",
-        "org.robolectric.RobolectricTestRunner",
-        "org.robolectric.annotation.Config"
-      ],
-      "symbols": [
-        "onReceiveResult(resultCode: Int, resultData: Bundle?)",
-        "aSubclassBecomesThePlainFrameworkClass()",
-        "anAnonymousSubclassBecomesThePlainFrameworkClass()",
-        "aPlainReceiverIsReturnedAsIs()",
-        "wireClass(i: Intent, key: String)",
-        "theWireNamesNoAppClass()",
-        "class CrossProcessTest",
-        "class Mine",
-        "class name",
-        "class instead",
-        "class names"
-      ]
-    },
-    {
-      "path": "ab_cloud-libs-shared/libs/core/src/test/java/com/diegonmarcos/superapp/core/FleetNotifyTest.kt",
-      "lang": "kotlin",
-      "role": "kotlin",
-      "exports": [
-        "FleetNotifyTest"
-      ],
-      "imports": [
-        "android.app.Application",
-        "android.app.Notification",
-        "android.app.NotificationManager",
-        "android.app.PendingIntent",
-        "android.app.Service",
-        "android.content.Context",
-        "android.content.Intent",
-        "android.os.IBinder",
-        "org.robolectric.RuntimeEnvironment",
-        "org.junit.Assert.assertEquals",
-        "org.junit.Assert.assertFalse",
-        "org.junit.Assert.assertNotNull",
-        "org.junit.Assert.assertNull",
-        "org.junit.Assert.assertTrue",
-        "org.junit.Test",
-        "org.junit.runner.RunWith",
-        "org.robolectric.Robolectric",
-        "org.robolectric.RobolectricTestRunner",
-        "org.robolectric.Shadows.shadowOf",
-        "org.robolectric.annotation.Config",
-        "java.net.ServerSocket"
-      ],
-      "symbols": [
-        "pi()",
-        "keepAlive(lines: List<String> = listOf(\"8002 up\", \"mesh up\")",
-        "onBind(intent: Intent?)",
-        "onCreate()",
-        "keepAliveIsOngoingAndNotDismissable()",
-        "keepAliveHasAStopActionAndLiveData()",
-        "keepAliveChannelIsLowAndSilent()",
-        "keepAliveIsUsedWithStartForeground()",
-        "extraActionsFollowStop()",
-        "dataWidgetIsOngoingButNotAForegroundServiceNotification()",
-        "dataWidgetOwnerNeverStartsForeground()",
-        "unpinnedDataWidgetIsSwipeable()",
-        "portsLineAndProbe()",
-        "meshIsUpOnlyForAnUpTunnel()",
-        "class FleetNotifyTest",
-        "class KeepAliveSvc",
-        "class WidgetSvc"
-      ]
-    },
-    {
-      "path": "ab_cloud-libs-shared/libs/core/src/test/java/com/diegonmarcos/superapp/core/LogGateTest.kt",
-      "lang": "kotlin",
-      "role": "kotlin",
-      "exports": [
-        "LogGateTest"
-      ],
-      "imports": [
-        "org.junit.Assert.assertEquals",
-        "org.junit.Assert.assertTrue",
-        "org.junit.Test"
-      ],
-      "symbols": [
-        "class LogGateTest",
-        "class Harness"
       ]
     },
     {
@@ -58300,6 +58167,112 @@
         "noSecretSurvivesToStringOrAMask()",
         "theHostIsTakenOutOfAnyServerSpelling()",
         "class MailEndpointsContractTest"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/fleet-notify/src/main/java/com/diegonmarcos/superapp/core/FleetNotify.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "FleetNotify"
+      ],
+      "imports": [
+        "android.app.Notification",
+        "android.app.NotificationManager",
+        "android.app.PendingIntent",
+        "android.app.Service",
+        "android.content.Context",
+        "android.content.pm.ServiceInfo",
+        "android.os.Build",
+        "androidx.core.app.NotificationCompat",
+        "androidx.core.app.ServiceCompat"
+      ],
+      "symbols": [
+        "keepAliveChannel(ctx: Context)",
+        "dataWidgetChannel(ctx: Context)",
+        "body(lines: List<String>)",
+        "first(lines: List<String>)",
+        "keepAliveNotification( ctx: Context, smallIcon: Int, title: String, lines: List<String>, stop: PendingIntent, contentIntent: PendingIntent? = null, extraActions: List<Action> = emptyList()",
+        "startKeepAlive(service: Service, id: Int, notification: Notification, type: Int = specialUseType()",
+        "specialUseType()",
+        "dataSyncType()",
+        "dataWidgetBuilder( ctx: Context, smallIcon: Int, title: String, lines: List<String>, contentIntent: PendingIntent? = null, channelId: String? = null, pinned: Boolean = true, color: Int = 0, subText: String? = null, )",
+        "dataWidgetNotification( ctx: Context, smallIcon: Int, title: String, lines: List<String>, contentIntent: PendingIntent? = null, channelId: String? = null, pinned: Boolean = true, color: Int = 0, subText: String? = null, )",
+        "post(ctx: Context, id: Int, notification: Notification)",
+        "class FleetNotify",
+        "class Action"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/fleet-notify/src/main/java/com/diegonmarcos/superapp/core/KeepAliveStatus.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "KeepAliveStatus"
+      ],
+      "imports": [
+        "java.net.InetSocketAddress",
+        "java.net.NetworkInterface",
+        "java.net.Socket"
+      ],
+      "symbols": [
+        "portUp(port: Int, host: String = \"127.0.0.1\", timeoutMs: Int = 250)",
+        "portsLine(label: String, states: Map<Int, Boolean>)",
+        "meshUp(interfaces: List<Pair<String, Boolean>> = systemInterfaces()",
+        "systemInterfaces()",
+        "meshLine(up: Boolean)",
+        "class KeepAliveStatus",
+        "class is"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/fleet-notify/src/test/java/com/diegonmarcos/superapp/core/FleetNotifyTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "FleetNotifyTest"
+      ],
+      "imports": [
+        "android.app.Application",
+        "android.app.Notification",
+        "android.app.NotificationManager",
+        "android.app.PendingIntent",
+        "android.app.Service",
+        "android.content.Context",
+        "android.content.Intent",
+        "android.os.IBinder",
+        "org.robolectric.RuntimeEnvironment",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNotNull",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "org.junit.runner.RunWith",
+        "org.robolectric.Robolectric",
+        "org.robolectric.RobolectricTestRunner",
+        "org.robolectric.Shadows.shadowOf",
+        "org.robolectric.annotation.Config",
+        "java.net.ServerSocket"
+      ],
+      "symbols": [
+        "pi()",
+        "keepAlive(lines: List<String> = listOf(\"8002 up\", \"mesh up\")",
+        "onBind(intent: Intent?)",
+        "onCreate()",
+        "keepAliveIsOngoingAndNotDismissable()",
+        "keepAliveHasAStopActionAndLiveData()",
+        "keepAliveChannelIsLowAndSilent()",
+        "keepAliveIsUsedWithStartForeground()",
+        "extraActionsFollowStop()",
+        "dataWidgetIsOngoingButNotAForegroundServiceNotification()",
+        "dataWidgetOwnerNeverStartsForeground()",
+        "unpinnedDataWidgetIsSwipeable()",
+        "portsLineAndProbe()",
+        "meshIsUpOnlyForAnUpTunnel()",
+        "class FleetNotifyTest",
+        "class KeepAliveSvc",
+        "class WidgetSvc"
       ]
     },
     {
@@ -64982,6 +64955,7 @@
         "kotlin.math.hypot"
       ],
       "symbols": [
+        "devFunctional(base: String)",
         "refreshed(context: Context)",
         "refresh(context: Context)",
         "toggle(context: Context)",
@@ -74708,6 +74682,7 @@
       ],
       "imports": [
         "android.content.Context",
+        "helium314.keyboard.keyboard.CornerSwipe",
         "helium314.keyboard.keyboard.internal.keyboard_parser.floris.SimplePopups",
         "helium314.keyboard.keyboard.internal.keyboard_parser.getOrCreate",
         "helium314.keyboard.latin.R",
@@ -79445,7 +79420,7 @@
         "org.junit.Test"
       ],
       "symbols": [
-        "labels(name: String)",
+        "labels(json: String)",
         "devFunctionalLayoutKeepsEveryKeyAndAddsFn()",
         "fnDoubleClickWindow()",
         "class FnKeyTest"
@@ -94415,6 +94390,22 @@
       ]
     },
     {
+      "path": "ab_cloud-libs-shared/libs/shizuku-adb-debug-tools/src/main/java/com/diegonmarcos/superapp/core/LogGate.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "LogGate"
+      ],
+      "imports": [],
+      "symbols": [
+        "log(key: String, message: String)",
+        "log(message: String)",
+        "suffix(prev: Window?, now: Long)",
+        "class LogGate",
+        "class Window"
+      ]
+    },
+    {
       "path": "ab_cloud-libs-shared/libs/shizuku-adb-debug-tools/src/main/java/com/diegonmarcos/superapp/system/ShizukuUserService.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -94889,6 +94880,23 @@
         "class WdAuditLogTest",
         "class Mem",
         "class WdKeeperStatusTest"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/shizuku-adb-debug-tools/src/test/java/com/diegonmarcos/superapp/core/LogGateTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "LogGateTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "class LogGateTest",
+        "class Harness"
       ]
     },
     {
@@ -247013,6 +247021,7 @@
         "token(ctx: Context)",
         "read(ctx: Context)",
         "refresh()",
+        "reload()",
         "open(url: String)",
         "get(ctx: Context)",
         "text(b64: String)",
@@ -247080,7 +247089,6 @@
         "MeRepo"
       ],
       "imports": [
-        "android.util.Base64",
         "org.json.JSONArray",
         "org.json.JSONObject"
       ],

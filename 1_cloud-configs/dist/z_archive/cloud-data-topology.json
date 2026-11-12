@@ -2698,7 +2698,11 @@
           ],
           "env_file": false,
           "depends_on": [],
-          "resources": null,
+          "resources": {
+            "mem_limit": "2G",
+            "mem_reservation": "256M",
+            "_comment": "#1659: THE ONE DECLARATION of this container's memory budget (compose.nix reads it). Reviewed after the 2026-11-11 OOM kill (exit 137 on a 417 MB download): the ceiling was not the defect, the tool held ~4 copies of the file in memory. Every Drive transfer now streams through disk in chunks of at most 16 MiB (core/streaming.py), heavy calls are limited to 2 at a time and an unzip job to 4 upload threads, so the working set is the Python baseline plus tens of MiB. 2G stays as the ceiling (same as the app-category default, so no new resource is reserved or paid for) and 256M is declared as the reservation the kernel protects under host pressure, like the sibling MCPs. GET /health reports the live headroom."
+          },
           "read_only": false,
           "protocol": "http"
         }
