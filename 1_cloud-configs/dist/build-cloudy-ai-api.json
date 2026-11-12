@@ -46,12 +46,7 @@
     "resources": null,
     "read_only": false,
     "protocol": "http",
-    "proxy": {
-      "type": "path",
-      "parent_domain": "api.diegonmarcos.com",
-      "base_path": "/ai",
-      "auth": "two_factor"
-    }
+    "proxy": null
   },
   "service": "cloudy-ai-api",
   "role": "app",

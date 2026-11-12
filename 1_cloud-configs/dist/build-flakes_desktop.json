@@ -783,12 +783,7 @@
           "resources": null,
           "read_only": false,
           "protocol": "http",
-          "proxy": {
-            "type": "path",
-            "parent_domain": "api.diegonmarcos.com",
-            "base_path": "/ai",
-            "auth": "two_factor"
-          }
+          "proxy": null
         }
       },
       "container_names": [
@@ -806,13 +801,7 @@
         "networks": []
       },
       "proxy": {
-        "app_hub": false,
-        "primary": {
-          "type": "path",
-          "parent_domain": "api.diegonmarcos.com",
-          "base_path": "/ai",
-          "auth": "two_factor"
-        }
+        "app_hub": false
       },
       "declared_ports": {
         "app": 4185

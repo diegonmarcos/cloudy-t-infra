@@ -1627,12 +1627,6 @@
       "parent_domain": "api.diegonmarcos.com",
       "paths": [
         {
-          "base_path": "/ai",
-          "upstream": "10.0.0.6:4185",
-          "wg_only": true,
-          "comment": "AI gateway: /ai/{tokens,embeddings,agents,claude,memory} -> separate backend containers (cloudy-ai-*-api); legacy /<old-name>/ paths kept for one release."
-        },
-        {
           "base_path": "/pub",
           "upstream": "10.0.0.4:8087",
           "public_paths": [
@@ -5652,16 +5646,6 @@
     }
   ],
   "public_B_apis": [
-    {
-      "host": "api.diegonmarcos.com",
-      "path": "/ai",
-      "upstream": "10.0.0.6:4185",
-      "kind": "reverse_proxy",
-      "tls": "public",
-      "zone": "com",
-      "service": null,
-      "notes": "AI gateway: /ai/{tokens,embeddings,agents,claude,memory} -> separate backend containers (cloudy-ai-*-api); legacy /<old-name>/ paths kept for one release."
-    },
     {
       "host": "api.diegonmarcos.com",
       "path": "/pub",
