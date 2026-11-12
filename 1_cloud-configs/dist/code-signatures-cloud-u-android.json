@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 24027,
+    "files": 24036,
     "by_lang": {
-      "sh": 709,
+      "sh": 711,
       "js": 550,
       "py": 220,
-      "kotlin": 13268,
+      "kotlin": 13275,
       "ts": 8470,
       "java": 651,
       "nix": 36,
@@ -20,12 +20,12 @@
     "by_role": {
       "hook": 160,
       "file": 2307,
-      "shell": 568,
+      "shell": 570,
       "script": 307,
       "module": 6480,
       "java": 650,
       "python": 75,
-      "kotlin": 13265,
+      "kotlin": 13272,
       "flake": 32,
       "rust-module": 123,
       "nix-module": 4,
@@ -8259,7 +8259,8 @@
       "symbols": [
         "onCreate()",
         "onReceive(c: android.content.Context, i: android.content.Intent)",
-        "class App"
+        "class App",
+        "class made"
       ]
     },
     {
@@ -10235,67 +10236,6 @@
       ]
     },
     {
-      "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/configs/AdbCockpitModel.kt",
-      "lang": "kotlin",
-      "role": "kotlin",
-      "exports": [],
-      "imports": [
-        "com.diegonmarcos.superapp.adbdebug.ChannelAction",
-        "com.diegonmarcos.superapp.adbdebug.ChannelActions",
-        "com.diegonmarcos.superapp.adbdebug.ChannelFacts",
-        "com.diegonmarcos.superapp.adbdebug.ChannelLog",
-        "com.diegonmarcos.superapp.adbdebug.ChannelMode",
-        "com.diegonmarcos.superapp.adbdebug.ChannelState",
-        "com.diegonmarcos.superapp.adbdebug.ConnState",
-        "com.diegonmarcos.superapp.adbdebug.ConnectPlan",
-        "com.diegonmarcos.superapp.adbdebug.LaunchVia",
-        "com.diegonmarcos.superapp.adbdebug.ShizukuState",
-        "com.diegonmarcos.superapp.adbdebug.StepId"
-      ],
-      "symbols": [
-        "of(pageId: String?)",
-        "modeName(m: ChannelMode)",
-        "active(mode: ChannelMode, via: LaunchVia = LaunchVia.ADB)",
-        "tri(v: Boolean?)",
-        "perms(d: PermsDigest?, f: ChannelFacts)",
-        "setup(f: ChannelFacts)",
-        "dimMsg(on: Boolean, msg: String)",
-        "shizuku(f: ChannelFacts, on: Boolean)",
-        "local(f: ChannelFacts, on: Boolean, via: LaunchVia = LaunchVia.ADB)",
-        "e(a: ChannelAction)",
-        "embedded(f: ChannelFacts, on: Boolean)",
-        "modeReady(id: String, f: ChannelFacts, via: LaunchVia = LaunchVia.ADB)",
-        "notReady(steps: List<Step>, f: ChannelFacts, via: LaunchVia)",
-        "connection(i: Inputs, upstream: List<Step>)",
-        "steps(i: Inputs)",
-        "groups(i: Inputs)",
-        "acts(id: String, vararg what: Do)",
-        "lit(on: Boolean, l: Light)",
-        "flip(v: Boolean?, on: String)",
-        "master(i: Inputs?)",
-        "toggle(f: ChannelFacts)",
-        "keepAlive(on: Boolean, armed: Boolean, serviceRunning: Boolean, canWrite: Boolean, batteryExempt: Boolean, lastRearm: String?)",
-        "autoFixOrder(mode: ChannelMode, via: LaunchVia, ownsServer: Boolean)",
-        "connectChain(mode: ChannelMode, via: LaunchVia, ownsServer: Boolean)",
-        "resumes(waiting: StepId?, f: ChannelFacts)",
-        "severity(e: ChannelLog.Entry)",
-        "filter(log: List<ChannelLog.Entry>, q: String)",
-        "class AdbCockpitModel",
-        "class Tab",
-        "class Light",
-        "class Do",
-        "class Act",
-        "class Sub",
-        "class Step",
-        "class PermsDigest",
-        "class Row",
-        "class Group",
-        "class Inputs",
-        "class Master",
-        "class KeepAlive"
-      ]
-    },
-    {
       "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/configs/AdbCockpitOps.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -10335,34 +10275,6 @@
         "class CockpitResult",
         "class AdbCockpitOps",
         "class AutoFixExecutor"
-      ]
-    },
-    {
-      "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/configs/AdbPrereqs.kt",
-      "lang": "kotlin",
-      "role": "kotlin",
-      "exports": [],
-      "imports": [
-        "com.diegonmarcos.superapp.adbdebug.ChannelFacts",
-        "com.diegonmarcos.superapp.adbdebug.ChannelMode",
-        "com.diegonmarcos.superapp.adbdebug.SetupAction",
-        "com.diegonmarcos.superapp.adbdebug.ShizukuState"
-      ],
-      "symbols": [
-        "st(v: Boolean?)",
-        "rows(f: ChannelFacts, live: Live, pkg: String)",
-        "firstFailing(rows: List<Row>)",
-        "canGrant(rows: List<Row>)",
-        "class AdbPrereqs",
-        "class Owner",
-        "class Status",
-        "class Action",
-        "class Open",
-        "class Grant",
-        "class Connect",
-        "class InPerms",
-        "class Row",
-        "class Live"
       ]
     },
     {
@@ -12662,7 +12574,7 @@
         "tint(armed: Boolean?)",
         "tints(status: ShellStatus?)",
         "describe(status: ShellStatus?)",
-        "PeerDots(tints: List<Int>, description: String, modifier: Modifier = Modifier)",
+        "PeerDots(tints: List<Int>, description: String, modifier: Modifier = Modifier, name: String = \"adb\")",
         "class AdbPeerDots",
         "class as"
       ]
@@ -14148,6 +14060,7 @@
         "androidx.compose.foundation.layout.height",
         "androidx.compose.foundation.layout.padding",
         "androidx.compose.foundation.layout.size",
+        "androidx.compose.foundation.layout.width",
         "androidx.compose.foundation.shape.CircleShape",
         "androidx.compose.material3.Text",
         "androidx.compose.runtime.Composable",
@@ -14156,8 +14069,7 @@
         "androidx.compose.runtime.getValue",
         "androidx.compose.runtime.mutableIntStateOf",
         "androidx.compose.runtime.mutableStateMapOf",
-        "androidx.compose.runtime.mutableStateOf",
-        "androidx.compose.runtime.remember"
+        "androidx.compose.runtime.mutableStateOf"
       ],
       "symbols": [
         "petOf(toolId: String)",
@@ -14186,6 +14098,9 @@
         "refreshTime()",
         "refreshBattery(intent: Intent)",
         "refreshUsb(intent: Intent?)",
+        "deriveCable()",
+        "refreshDoors()",
+        "noteDoors(webs: com.diegonmarcos.superapp.network.LocalDoors.Probe?, sshd: List<com.diegonmarcos.superapp.network.LocalDoors.Probe>)",
         "refreshTether(i: Intent)",
         "noteBroker(st: com.diegonmarcos.superapp.shellclient.ShellStatus, pin: Boolean = false)",
         "refreshBroker()",
@@ -14196,10 +14111,7 @@
         "refreshNetworkFromConnectivity()",
         "refreshBluetooth(apply: Boolean = true)",
         "applyIconTints()",
-        "refreshMetrics()",
-        "install(activity: Activity, host: ComposeView)",
-        "SignalDots(level: Int, tint: Int, modifier: Modifier = Modifier)",
-        "IconLabel(text: String, tint: Int, modifier: Modifier = Modifier)"
+        "refreshMetrics()"
       ]
     },
     {
@@ -15070,6 +14982,25 @@
       ]
     },
     {
+      "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/launcher/StripDoors.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [],
+      "imports": [
+        "com.diegonmarcos.superapp.network.LocalDoors",
+        "com.diegonmarcos.superapp.network.UsbDataModel"
+      ],
+      "symbols": [
+        "websState(p: LocalDoors.Probe?)",
+        "sshdState(ps: List<LocalDoors.Probe>)",
+        "tint(s: LocalDoors.State, on: Int, off: Int)",
+        "dot(s: LocalDoors.State)",
+        "describe(s: LocalDoors.State, ps: List<LocalDoors.Probe>)",
+        "cableTint(c: UsbDataModel.Cable, on: Int, off: Int)",
+        "class StripDoors"
+      ]
+    },
+    {
       "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/launcher/StripIslandGap.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -15134,11 +15065,15 @@
         "androidx.compose.foundation.layout.fillMaxSize",
         "androidx.compose.foundation.layout.size",
         "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.DisposableEffect",
         "androidx.compose.runtime.LaunchedEffect",
         "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableIntStateOf",
         "androidx.compose.runtime.mutableLongStateOf",
+        "androidx.compose.runtime.mutableStateOf",
         "androidx.compose.runtime.remember",
         "androidx.compose.runtime.rememberUpdatedState",
+        "androidx.compose.runtime.setValue",
         "androidx.compose.ui.Alignment",
         "androidx.compose.ui.Modifier",
         "androidx.compose.ui.geometry.Offset",
@@ -15158,9 +15093,26 @@
         "palette()",
         "Content()",
         "newInstance()",
-        "PolytopeBackground( animate: Boolean, interactive: Boolean, baseShape: String, cycleOn: Boolean, cycleMinutes: Int, cycleIds: List<String>, modifier: Modifier = Modifier, )",
+        "PolytopeBackground( animate: Boolean, interactive: Boolean, autoRotate: Boolean = true, baseShape: String, cycleOn: Boolean, cycleMinutes: Int, cycleIds: List<String>, modifier: Modifier = Modifier, )",
         "pt(i: Int)",
         "class Home3DFragment"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/launcher/themes/cloud/ModelSpin.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ModelSpin"
+      ],
+      "imports": [],
+      "symbols": [
+        "dragStart()",
+        "dragEnd()",
+        "dragBy(dx: Float, dy: Float)",
+        "step(dtMs: Double, autoRotate: Boolean)",
+        "wrap(a: Double)",
+        "class ModelSpin"
       ]
     },
     {
@@ -15180,7 +15132,7 @@
         "norm(v: FloatArray)",
         "deriveEdges(verts: Array<FloatArray>)",
         "dist2(a: FloatArray, b: FloatArray)",
-        "project( mesh: Mesh, elapsedMs: Double, width: Float, height: Float, rotXOverride: Float? = null, rotYOverride: Float? = null, )",
+        "project( mesh: Mesh, elapsedMs: Double, width: Float, height: Float, rotXOverride: Float? = null, rotYOverride: Float? = null, a4Override: Double? = null, b4Override: Double? = null, )",
         "project4to3(v: FloatArray, aXW: Double, bYZ: Double)",
         "angleY(elapsedMs: Double)",
         "angleX(elapsedMs: Double)",
@@ -16254,6 +16206,41 @@
         "class GpsProbe",
         "class StripWatch",
         "class LiveSession"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/network/LocalDoors.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "LocalDoors"
+      ],
+      "imports": [
+        "org.json.JSONArray",
+        "org.json.JSONObject",
+        "java.io.InputStream",
+        "java.net.InetSocketAddress",
+        "java.net.Socket"
+      ],
+      "symbols": [
+        "parse(json: String)",
+        "door(x: JSONObject, fallbackId: String)",
+        "statusCode(line: String?)",
+        "stateOfHttp(code: Int?)",
+        "stateOfBanner(line: String?)",
+        "combine(states: List<State>)",
+        "probeHttp(door: Door?, timeoutMs: Int = DEFAULT_TIMEOUT_MS, host: String = LOOPBACK, now: ()",
+        "probeSsh(door: Door, timeoutMs: Int = DEFAULT_TIMEOUT_MS, host: String = LOOPBACK, now: ()",
+        "reason(e: Throwable)",
+        "readLine(input: InputStream)",
+        "rows(p: Probe, clock: (Long)",
+        "uptime(body: String?)",
+        "healthBody(door: Door?, timeoutMs: Int = DEFAULT_TIMEOUT_MS, host: String = LOOPBACK)",
+        "class LocalDoors",
+        "class State",
+        "class Door",
+        "class Decl",
+        "class Probe"
       ]
     },
     {
@@ -17442,6 +17429,7 @@
         "androidx.compose.runtime.LaunchedEffect",
         "androidx.compose.runtime.derivedStateOf",
         "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableStateOf",
         "androidx.compose.runtime.DisposableEffect",
         "androidx.compose.runtime.mutableIntStateOf",
         "androidx.compose.runtime.produceState",
@@ -17452,8 +17440,7 @@
         "androidx.compose.ui.Modifier",
         "androidx.compose.ui.layout.onGloballyPositioned",
         "androidx.compose.ui.layout.positionInParent",
-        "androidx.compose.ui.platform.testTag",
-        "androidx.compose.ui.layout.onSizeChanged"
+        "androidx.compose.ui.platform.testTag"
       ],
       "symbols": [
         "wgLink(ctx: Context, vpnTransport: Boolean = hasTransport(ctx, NetworkCapabilities.TRANSPORT_VPN)",
@@ -17482,6 +17469,7 @@
         "decodeWifiFreq(freq: Int)",
         "readMesh(ctx: Context)",
         "readUsbState(ctx: Context)",
+        "typcRows(ctx: Context, st: UsbDataModel.State)",
         "readUsb(ctx: Context, st: UsbDataModel.State)",
         "usbSpeed(role: UsbDataModel.Role)",
         "readTether(ctx: Context, usb: UsbDataModel.State)",
@@ -17494,8 +17482,7 @@
         "sampleTraffic()",
         "fmtRate(rxNow: Long, txNow: Long, rxPrev: Long?, txPrev: Long?, tsNow: Long, tsPrev: Long?)",
         "fmtBytes(b: Long)",
-        "class up",
-        "class NetworkInfoPopup"
+        "class up"
       ]
     },
     {
@@ -17582,6 +17569,7 @@
         "PopLink(t: String, onTap: ()",
         "PopButtons(vararg actions: Pair<String, ()",
         "PopDivider()",
+        "PopGroupDivider()",
         "PopDot(color: Color, modifier: Modifier = Modifier)",
         "PopLightRow(title: String, on: Boolean, onTap: ()",
         "PopGroup(content: @Composable ()"
@@ -17596,15 +17584,19 @@
       ],
       "imports": [],
       "symbols": [
+        "groupOf(key: String)",
+        "separatorBetween(prev: String?, next: String)",
         "inOrder(byKey: Map<String, T>)",
         "layout(trailing: Boolean = true)",
         "class NetworkSections",
         "class Item",
         "class Section",
         "class Divider",
+        "class GroupDivider",
         "class Target",
         "class System",
-        "class InApp"
+        "class InApp",
+        "class FleetApp"
       ]
     },
     {
@@ -17783,6 +17775,7 @@
         "hostSpeed(raw: String?)",
         "class UsbDataModel",
         "class Role",
+        "class Cable",
         "class State"
       ]
     },
@@ -20525,6 +20518,7 @@
         "toggle(item: Item)",
         "setToggle(item: Item, v: Boolean)",
         "anim(id: String? = null)",
+        "observeAutoRotate(onChange: (Boolean)",
         "cycleShapeEnabled(shapeId: String)",
         "setCycleShapeEnabled(shapeId: String, v: Boolean)",
         "cycleShapeIds()",
@@ -20725,39 +20719,6 @@
         "statusBarHeightPx()",
         "isDefaultLauncher()",
         "goSection(id: String, label: String, initialPage: String = \"\")"
-      ]
-    },
-    {
-      "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/system/AdbReadiness.kt",
-      "lang": "kotlin",
-      "role": "kotlin",
-      "exports": [
-        "AdbReadiness"
-      ],
-      "imports": [
-        "android.content.Context",
-        "com.diegonmarcos.superapp.shellbroker.ShellBroker",
-        "com.diegonmarcos.superapp.shellclient.ShellStatus",
-        "kotlinx.coroutines.flow.MutableStateFlow",
-        "kotlinx.coroutines.flow.StateFlow",
-        "kotlinx.coroutines.flow.asStateFlow",
-        "java.util.concurrent.CopyOnWriteArrayList"
-      ],
-      "symbols": [
-        "linkText()",
-        "of(s: ShellStatus)",
-        "install()",
-        "publish(st: ShellStatus)",
-        "addListener(l: (ShellStatus)",
-        "listeners_forTest(l: (ShellStatus)",
-        "removeListener(l: (ShellStatus)",
-        "check(ctx: Context, fresh: Boolean = false)",
-        "usableNow(ctx: Context)",
-        "connect(ctx: Context, open: ()",
-        "openAdbShell(ctx: Context)",
-        "class or",
-        "class AdbReadiness",
-        "class State"
       ]
     },
     {
@@ -23994,34 +23955,6 @@
       ]
     },
     {
-      "path": "aa_cloud-superapp/app/src/test/java/com/diegonmarcos/superapp/configs/AdbCockpitModelTest.kt",
-      "lang": "kotlin",
-      "role": "kotlin",
-      "exports": [
-        "AdbCockpitModelTest"
-      ],
-      "imports": [
-        "com.diegonmarcos.superapp.adbdebug.ChannelFacts",
-        "com.diegonmarcos.superapp.adbdebug.ChannelLog",
-        "com.diegonmarcos.superapp.adbdebug.ChannelMode",
-        "com.diegonmarcos.superapp.adbdebug.LaunchVia",
-        "com.diegonmarcos.superapp.configs.AdbCockpitModel.Do",
-        "com.diegonmarcos.superapp.configs.AdbCockpitModel.Light",
-        "org.junit.Assert.assertEquals",
-        "org.junit.Assert.assertFalse",
-        "org.junit.Assert.assertNull",
-        "org.junit.Assert.assertTrue",
-        "org.junit.Test"
-      ],
-      "symbols": [
-        "facts(mode: ChannelMode = ChannelMode.LOCAL_SERVER, dev: Boolean? = true, wd: Boolean? = true, paired: Boolean = false, connected: Boolean = false, server: Boolean = false, shz: Triple<Boolean, Boolean, Boolean> = Triple(false, false, false)",
-        "inputs(f: ChannelFacts, perms: AdbCockpitModel.PermsDigest? = AdbCockpitModel.PermsDigest(2, emptyList()",
-        "step(i: AdbCockpitModel.Inputs, id: String)",
-        "e(tag: String, text: String)",
-        "class AdbCockpitModelTest"
-      ]
-    },
-    {
       "path": "aa_cloud-superapp/app/src/test/java/com/diegonmarcos/superapp/configs/AdbCockpitPageTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -26748,6 +26681,26 @@
       ]
     },
     {
+      "path": "aa_cloud-superapp/app/src/test/java/com/diegonmarcos/superapp/launcher/StripDoorsTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "StripDoorsTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.network.LocalDoors",
+        "com.diegonmarcos.superapp.network.UsbDataModel",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertNotEquals",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "probe(s: LocalDoors.State)",
+        "cable(extras: Map<String, Boolean>, plugged: Int, otg: List<String> = emptyList()",
+        "class StripDoorsTest"
+      ]
+    },
+    {
       "path": "aa_cloud-superapp/app/src/test/java/com/diegonmarcos/superapp/launcher/StripLifecycleTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -26793,6 +26746,31 @@
         "grp(name: String)",
         "hub(id: String)",
         "class SubgroupHubTest"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/test/java/com/diegonmarcos/superapp/launcher/themes/cloud/ModelSpinTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ModelSpinTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNotEquals",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "snap()",
+        "startsAtTheOldFirstFrame()",
+        "autoRotateTurnsBoth3dAnd4d()",
+        "offStopsBothAndStopsTheLoop()",
+        "dragWorksWithAutoRotateOn()",
+        "dragWorksWithAutoRotateOffAndThenStays()",
+        "badOrHugeFrameDeltasNeverJump()",
+        "class ModelSpinTest"
       ]
     },
     {
@@ -27530,6 +27508,27 @@
       "symbols": [
         "gps(acc: Float?, age: Long = 1_000, sats: Int? = null)",
         "class GpsFixTest"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/test/java/com/diegonmarcos/superapp/network/LocalDoorsTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "LocalDoorsTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.net.ServerSocket",
+        "kotlin.concurrent.thread"
+      ],
+      "symbols": [
+        "serve(reply: String)",
+        "freePort()",
+        "class LocalDoorsTest"
       ]
     },
     {
@@ -32104,6 +32103,20 @@
       ]
     },
     {
+      "path": "aa_cloud-superapp/test/test-home-model-auto-rotate.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "ok()",
+        "bad()"
+      ],
+      "imports": [],
+      "symbols": [
+        "ok()",
+        "bad()"
+      ]
+    },
+    {
       "path": "aa_cloud-superapp/test/test-inbox-archive.sh",
       "lang": "sh",
       "role": "shell",
@@ -33193,6 +33206,18 @@
       "symbols": [
         "ok()",
         "bad()"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/test/test-status-strip-groups.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "check()"
+      ],
+      "imports": [],
+      "symbols": [
+        "check()"
       ]
     },
     {
@@ -36759,6 +36784,186 @@
         "class and",
         "class StatusLight",
         "class State"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/adb-shell-core/src/main/java/com/diegonmarcos/superapp/configs/AdbCockpitModel.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "AdbCockpitModel"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.adbdebug.ChannelAction",
+        "com.diegonmarcos.superapp.adbdebug.ChannelActions",
+        "com.diegonmarcos.superapp.adbdebug.ChannelFacts",
+        "com.diegonmarcos.superapp.adbdebug.ChannelLog",
+        "com.diegonmarcos.superapp.adbdebug.ChannelMode",
+        "com.diegonmarcos.superapp.adbdebug.ChannelState",
+        "com.diegonmarcos.superapp.adbdebug.ConnState",
+        "com.diegonmarcos.superapp.adbdebug.ConnectPlan",
+        "com.diegonmarcos.superapp.adbdebug.LaunchVia",
+        "com.diegonmarcos.superapp.adbdebug.ShizukuState",
+        "com.diegonmarcos.superapp.adbdebug.StepId"
+      ],
+      "symbols": [
+        "of(pageId: String?)",
+        "modeName(m: ChannelMode)",
+        "active(mode: ChannelMode, via: LaunchVia = LaunchVia.ADB)",
+        "tri(v: Boolean?)",
+        "perms(d: PermsDigest?, f: ChannelFacts)",
+        "setup(f: ChannelFacts)",
+        "dimMsg(on: Boolean, msg: String)",
+        "shizuku(f: ChannelFacts, on: Boolean)",
+        "local(f: ChannelFacts, on: Boolean, via: LaunchVia = LaunchVia.ADB)",
+        "e(a: ChannelAction)",
+        "embedded(f: ChannelFacts, on: Boolean)",
+        "modeReady(id: String, f: ChannelFacts, via: LaunchVia = LaunchVia.ADB)",
+        "notReady(steps: List<Step>, f: ChannelFacts, via: LaunchVia)",
+        "connection(i: Inputs, upstream: List<Step>)",
+        "steps(i: Inputs)",
+        "groups(i: Inputs)",
+        "acts(id: String, vararg what: Do)",
+        "lit(on: Boolean, l: Light)",
+        "flip(v: Boolean?, on: String)",
+        "master(i: Inputs?)",
+        "toggle(f: ChannelFacts)",
+        "keepAlive(on: Boolean, armed: Boolean, serviceRunning: Boolean, canWrite: Boolean, batteryExempt: Boolean, lastRearm: String?)",
+        "autoFixOrder(mode: ChannelMode, via: LaunchVia, ownsServer: Boolean)",
+        "connectChain(mode: ChannelMode, via: LaunchVia, ownsServer: Boolean)",
+        "resumes(waiting: StepId?, f: ChannelFacts)",
+        "severity(e: ChannelLog.Entry)",
+        "filter(log: List<ChannelLog.Entry>, q: String)",
+        "class AdbCockpitModel",
+        "class Tab",
+        "class Light",
+        "class Do",
+        "class Act",
+        "class Sub",
+        "class Step",
+        "class PermsDigest",
+        "class Row",
+        "class Group",
+        "class Inputs",
+        "class Master",
+        "class KeepAlive"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/adb-shell-core/src/main/java/com/diegonmarcos/superapp/configs/AdbPrereqs.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "AdbPrereqs"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.adbdebug.ChannelFacts",
+        "com.diegonmarcos.superapp.adbdebug.ChannelMode",
+        "com.diegonmarcos.superapp.adbdebug.SetupAction",
+        "com.diegonmarcos.superapp.adbdebug.ShizukuState"
+      ],
+      "symbols": [
+        "st(v: Boolean?)",
+        "rows(f: ChannelFacts, live: Live, pkg: String)",
+        "firstFailing(rows: List<Row>)",
+        "canGrant(rows: List<Row>)",
+        "class AdbPrereqs",
+        "class Owner",
+        "class Status",
+        "class Action",
+        "class Open",
+        "class Grant",
+        "class Connect",
+        "class InPerms",
+        "class Row",
+        "class Live"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/adb-shell-core/src/main/java/com/diegonmarcos/superapp/system/AdbReadiness.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "AdbReadiness"
+      ],
+      "imports": [
+        "android.content.Context",
+        "com.diegonmarcos.superapp.shellbroker.ShellBroker",
+        "com.diegonmarcos.superapp.shellclient.ShellStatus",
+        "kotlinx.coroutines.flow.MutableStateFlow",
+        "kotlinx.coroutines.flow.StateFlow",
+        "kotlinx.coroutines.flow.asStateFlow",
+        "java.util.concurrent.CopyOnWriteArrayList"
+      ],
+      "symbols": [
+        "linkText()",
+        "of(s: ShellStatus)",
+        "install()",
+        "publish(st: ShellStatus)",
+        "addListener(l: (ShellStatus)",
+        "listeners_forTest(l: (ShellStatus)",
+        "removeListener(l: (ShellStatus)",
+        "check(ctx: Context, fresh: Boolean = false)",
+        "usableNow(ctx: Context)",
+        "connect(ctx: Context, open: ()",
+        "openAdbShell(ctx: Context)",
+        "class or",
+        "class AdbReadiness",
+        "class State"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/adb-shell-core/src/test/java/com/diegonmarcos/superapp/configs/AdbCockpitModelTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "AdbCockpitModelTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.adbdebug.ChannelFacts",
+        "com.diegonmarcos.superapp.adbdebug.ChannelLog",
+        "com.diegonmarcos.superapp.adbdebug.ChannelMode",
+        "com.diegonmarcos.superapp.adbdebug.LaunchVia",
+        "com.diegonmarcos.superapp.configs.AdbCockpitModel.Do",
+        "com.diegonmarcos.superapp.configs.AdbCockpitModel.Light",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "facts(mode: ChannelMode = ChannelMode.LOCAL_SERVER, dev: Boolean? = true, wd: Boolean? = true, paired: Boolean = false, connected: Boolean = false, server: Boolean = false, shz: Triple<Boolean, Boolean, Boolean> = Triple(false, false, false)",
+        "inputs(f: ChannelFacts, perms: AdbCockpitModel.PermsDigest? = AdbCockpitModel.PermsDigest(2, emptyList()",
+        "step(i: AdbCockpitModel.Inputs, id: String)",
+        "e(tag: String, text: String)",
+        "class AdbCockpitModelTest"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/adb-shell-core/src/test/java/com/diegonmarcos/superapp/system/AdbReadinessCoreTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "AdbReadinessCoreTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.shellclient.ShellStatus",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "up()",
+        "down(why: String, detail: String = \"not armed: $why\")",
+        "verdictIsTheBrokersLiveStatus()",
+        "missingReasonFallsBackToDetail()",
+        "unknownIsNotUsableAndSaysSo()",
+        "publishReachesFlowAndListenersAndAThrowingListenerIsContained()",
+        "hostHooksStartUnset()",
+        "class AdbReadinessCoreTest"
       ]
     },
     {
