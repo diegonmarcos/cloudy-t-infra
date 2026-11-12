@@ -6,11 +6,11 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 23988,
+    "files": 23989,
     "by_lang": {
       "sh": 706,
       "js": 550,
-      "py": 215,
+      "py": 216,
       "kotlin": 13238,
       "ts": 8470,
       "java": 651,
@@ -24,8 +24,8 @@
       "script": 301,
       "module": 6480,
       "java": 650,
+      "python": 75,
       "kotlin": 13235,
-      "python": 74,
       "flake": 32,
       "rust-module": 122,
       "nix-module": 4,
@@ -7577,6 +7577,16 @@
       ]
     },
     {
+      "path": "a0_docs/eng-specs/fleet-data-exposure-scan.py",
+      "lang": "py",
+      "role": "python",
+      "exports": [],
+      "imports": [
+        "re"
+      ],
+      "symbols": []
+    },
+    {
       "path": "aa_cloud-superapp/app/src/androidTest/java/com/diegonmarcos/superapp/AbiUpdateTagTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -10608,6 +10618,7 @@
         "systemInt(ctx: Context, key: String)",
         "globalInt(ctx: Context, key: String)",
         "mobileDataEnabled(ctx: Context)",
+        "perms(ctx: Context, feature: String, id: String)",
         "open(ctx: Context, action: String, data: android.net.Uri? = null)",
         "awaitTrue(timeoutMs: Long, check: ()",
         "fmt(state: Boolean?)",
@@ -13069,6 +13080,7 @@
         "androidx.compose.material3.Icon",
         "androidx.compose.material3.Text",
         "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.collectAsState",
         "androidx.compose.runtime.getValue",
         "androidx.compose.runtime.remember",
         "androidx.compose.runtime.setValue",
@@ -13091,8 +13103,7 @@
         "androidx.compose.ui.unit.sp",
         "com.diegonmarcos.superapp.notificationcenter.BadgeCardData",
         "com.diegonmarcos.superapp.notificationcenter.BadgeDeclaration",
-        "com.diegonmarcos.superapp.notificationcenter.AppSplit",
-        "com.diegonmarcos.superapp.notificationcenter.AppSwitches"
+        "com.diegonmarcos.superapp.notificationcenter.AppSplit"
       ],
       "symbols": [
         "sub(sectionId: String, subId: String)",
@@ -13107,6 +13118,7 @@
         "collapsed(id: String)",
         "expanded(id: String)",
         "summary(id: String)",
+        "mediaHub(id: String)",
         "p(ctx: android.content.Context)",
         "isCollapsed(ctx: android.content.Context, id: String)",
         "set(ctx: android.content.Context, id: String, collapsed: Boolean)",
@@ -13118,6 +13130,8 @@
         "accentOf(d: BadgeCardData.Data)",
         "BadgeCard(d: BadgeCardData.Data)",
         "SummaryBadgeLine(d: BadgeCardData.Data)",
+        "mediaActionOf(id: String)",
+        "MediaHubLine(id: String)",
         "CollapseChevron(id: String, expanded: Boolean, onClick: ()",
         "CollapsedBadgeCard(d: BadgeCardData.Data, accent: Color, icon: Int, flip: ()",
         "ActionRow(d: BadgeCardData.Data, accent: Color, hostView: android.view.View)",
@@ -20977,6 +20991,7 @@
         "isActive(ctx: Context)",
         "lock(ctx: Context)",
         "requestActivation(activity: Activity)",
+        "openPermsSettings(ctx: Context, id: String, extra: (Intent)",
         "openSystemDeviceAdminSettings(ctx: Context)",
         "openSystemAccessibilitySettings(ctx: Context)",
         "openAppInfo(ctx: Context)",
@@ -125077,7 +125092,6 @@
         "android.widget.LinearLayout",
         "android.widget.TextView",
         "android.widget.Toast",
-        "androidx.activity.result.contract.ActivityResultContracts",
         "androidx.appcompat.app.AlertDialog",
         "androidx.appcompat.app.AppCompatActivity",
         "androidx.camera.core.CameraSelector",
@@ -125104,6 +125118,7 @@
         "kotlin.concurrent.thread"
       ],
       "symbols": [
+        "openPerms(feature: String, id: String)",
         "onCreate(savedInstanceState: Bundle?)",
         "onResume()",
         "onPause()",
@@ -125588,6 +125603,9 @@
         "clearNoBarcodeHint()",
         "startFocusTimer()",
         "cancelFocusTimer()",
+        "openPerms(feature: String, ids: List<String>)",
+        "deniedOnce(vararg ids: String)",
+        "resumeAfterPerms()",
         "showAudioPermissionDeniedDialog(onDisableAudio: ()",
         "updateLastFrame()",
         "animateFocusRing(x: Float, y: Float)",
@@ -125620,10 +125638,7 @@
         "onScaleBegin(detector: ScaleGestureDetector)",
         "onScaleEnd(detector: ScaleGestureDetector)",
         "rotateView(view: View?, angle: Float)",
-        "onOrientationChange(orientation: Int)",
-        "onDown(e: MotionEvent)",
-        "onShowPress(e: MotionEvent)",
-        "onSingleTapUp(e: MotionEvent)"
+        "onOrientationChange(orientation: Int)"
       ]
     },
     {
@@ -398091,6 +398106,7 @@
         "java.util.TimeZone"
       ],
       "symbols": [
+        "perms(feature: String, ids: List<String>)",
         "rebuildFragment()",
         "ctxAny()",
         "requestNotificationsPermission()",
@@ -398129,8 +398145,7 @@
         "grantedFiles()",
         "grantedBatteryOptim(ctx: Context)",
         "buildAllPermsStatus(ctx: Context)",
-        "dirSize(dir: File)",
-        "sizeStr(bytes: Long)"
+        "dirSize(dir: File)"
       ]
     },
     {
@@ -400173,6 +400188,7 @@
         "kotlinx.coroutines.launch"
       ],
       "symbols": [
+        "askHealth()",
         "palette()",
         "onResume()",
         "Content()",
@@ -400241,7 +400257,6 @@
         "java.util.Locale"
       ],
       "symbols": [
-        "permissionContract()",
         "load(zone: ZoneId = ZoneId.systemDefault()",
         "hcToday(c: HealthConnectClient, zone: ZoneId, now: Long)",
         "device(st: SourceStatus, zone: ZoneId, now: Long, dayStart: Long, fixes: List<PlaceFix>, stepM: Double, label: (PlaceFix)",
@@ -400425,6 +400440,7 @@
         "java.util.Date"
       ],
       "symbols": [
+        "askPerms(feature: String, ids: List<String>)",
         "palette()",
         "onResume()",
         "Content()",
@@ -400464,6 +400480,7 @@
         "onResume()",
         "Content()",
         "load(d: LocalDate)",
+        "askHealth()",
         "load()",
         "class TrackerTimelineFragment",
         "class TrackerStepsFragment",

@@ -714,7 +714,7 @@
         "cloudy-cgc-pub-graph-api"
       ],
       "resources": {
-        "_comment": "THE ONE DECLARATION of this container's memory budget — see user-ai_kg-store/build.json for the full note. src/compose.nix takes the cgroup ceiling from mem_limit and SurrealDB's RocksDB budget from rocksdb_block_cache / rocksdb_write_buffer; no literal is written in compose.nix. Measured resident set on oci-apps 2026-09-24: 131.1MiB at rest; ~945MiB peak during a full graph refresh on 2026-10-10, hence 2G.",
+        "_comment": "THE ONE DECLARATION of this container's memory budget — see user-ai_cloud-me-cgc-pvt-graph-api/build.json for the full note. src/compose.nix takes the cgroup ceiling from mem_limit and SurrealDB's RocksDB budget from rocksdb_block_cache / rocksdb_write_buffer; no literal is written in compose.nix. Measured resident set on oci-apps 2026-09-24: 131.1MiB at rest; ~945MiB peak during a full graph refresh on 2026-10-10, hence 2G.",
         "mem_limit": "2G",
         "mem_reservation": "128M",
         "_rocksdb_comment": "SurrealDB RocksDB engine budget, declared on its own so the cgroup ceiling above can grow without the cache growing with it. Raised mem_limit 1G -> 2G on 2026-10-10: a full cgc graph refresh (690k-edge cloud-u-containers ingest) peaked at ~945MiB of the 1G cap and restarted both stores once mid-ingest. The cache and memtables are kept exactly where they were (512M cache, 2 x 128M memtables) so the extra GiB is pure headroom for the process, WAL and compaction. compose.nix refuses a block cache above half of mem_limit, and _shared/test-kg-store-memory-ceiling.mjs asserts mem_limit >= 2G.",
