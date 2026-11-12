@@ -6,9 +6,9 @@
   },
   "repo": "cloud",
   "counts": {
-    "files": 1576,
+    "files": 1577,
     "by_lang": {
-      "sh": 1063,
+      "sh": 1064,
       "js": 169,
       "nix": 304,
       "py": 10,
@@ -17,7 +17,7 @@
     "by_role": {
       "hook": 377,
       "file": 86,
-      "shell": 542,
+      "shell": 543,
       "flake": 6,
       "script": 146,
       "module": 113,
@@ -982,6 +982,8 @@
       "role": "script",
       "exports": [
         "scp_secret()",
+        "secrets_d_sync_script()",
+        "deploy_secrets_d()",
         "drop_protected()",
         "host_sync_entries()",
         "step_host_sync()",
@@ -990,6 +992,8 @@
       "imports": [],
       "symbols": [
         "scp_secret()",
+        "secrets_d_sync_script()",
+        "deploy_secrets_d()",
         "drop_protected()",
         "host_sync_entries()",
         "step_host_sync()",
@@ -16937,6 +16941,8 @@
       "role": "script",
       "exports": [
         "scp_secret()",
+        "secrets_d_sync_script()",
+        "deploy_secrets_d()",
         "drop_protected()",
         "host_sync_entries()",
         "step_host_sync()",
@@ -16945,6 +16951,8 @@
       "imports": [],
       "symbols": [
         "scp_secret()",
+        "secrets_d_sync_script()",
+        "deploy_secrets_d()",
         "drop_protected()",
         "host_sync_entries()",
         "step_host_sync()",
@@ -19703,6 +19711,32 @@
       "symbols": [
         "ok()",
         "bad()"
+      ]
+    },
+    {
+      "path": "9_others/test/secrets-d-inplace.test.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "ok()",
+        "bad()",
+        "log()",
+        "ssh_with_retry()",
+        "scp_secret()",
+        "render()",
+        "ino()",
+        "secrets_d_sync_script()"
+      ],
+      "imports": [],
+      "symbols": [
+        "ok()",
+        "bad()",
+        "log()",
+        "ssh_with_retry()",
+        "scp_secret()",
+        "render()",
+        "ino()",
+        "secrets_d_sync_script()"
       ]
     },
     {

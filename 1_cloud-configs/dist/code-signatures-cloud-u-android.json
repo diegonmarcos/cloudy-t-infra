@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 24011,
+    "files": 24027,
     "by_lang": {
       "sh": 709,
       "js": 550,
       "py": 220,
-      "kotlin": 13252,
+      "kotlin": 13268,
       "ts": 8470,
       "java": 651,
       "nix": 36,
@@ -25,7 +25,7 @@
       "module": 6480,
       "java": 650,
       "python": 75,
-      "kotlin": 13249,
+      "kotlin": 13265,
       "flake": 32,
       "rust-module": 123,
       "nix-module": 4,
@@ -3164,14 +3164,18 @@
         "dump()",
         "shot()",
         "tap_node()",
-        "dismiss()"
+        "dismiss()",
+        "strip_labels()",
+        "merge()"
       ],
       "imports": [],
       "symbols": [
         "dump()",
         "shot()",
         "tap_node()",
-        "dismiss()"
+        "dismiss()",
+        "strip_labels()",
+        "merge()"
       ]
     },
     {
@@ -6088,14 +6092,18 @@
         "dump()",
         "shot()",
         "tap_node()",
-        "dismiss()"
+        "dismiss()",
+        "strip_labels()",
+        "merge()"
       ],
       "imports": [],
       "symbols": [
         "dump()",
         "shot()",
         "tap_node()",
-        "dismiss()"
+        "dismiss()",
+        "strip_labels()",
+        "merge()"
       ]
     },
     {
@@ -26337,6 +26345,7 @@
         "androidx.compose.runtime.setValue",
         "androidx.compose.ui.test.onNodeWithTag",
         "androidx.compose.ui.test.performClick",
+        "androidx.compose.ui.test.performScrollTo",
         "androidx.lifecycle.Lifecycle",
         "androidx.test.core.app.ApplicationProvider",
         "com.diegonmarcos.superapp.launcher.PermAccess.Sensor",
@@ -41085,6 +41094,31 @@
       ]
     },
     {
+      "path": "ab_cloud-libs-shared/libs/appstore/src/main/java/com/diegonmarcos/superapp/appstore/StoreMembership.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "StoreMembership"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.updater.Fleet"
+      ],
+      "symbols": [
+        "fleetPackagesOf(rows: List<Pair<String, String?>>)",
+        "fleetPackages(fleet: List<Fleet.App>)",
+        "tabOf(pkg: String, fleet: Set<String>)",
+        "isCloud(pkg: String, fleet: Set<String>)",
+        "isPhone(pkg: String, fleet: Set<String>)",
+        "split(packages: Collection<String>, fleet: Set<String>)",
+        "cloudRows(rows: List<Fleet.App>, fleet: Set<String>)",
+        "phoneOnly(candidates: Map<String, V>, fleet: Set<String>)",
+        "class and",
+        "class StoreMembership",
+        "class Tab",
+        "class Split"
+      ]
+    },
+    {
       "path": "ab_cloud-libs-shared/libs/appstore/src/main/java/com/diegonmarcos/superapp/appstore/StoreMesh.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -42729,6 +42763,30 @@
       ],
       "symbols": [
         "class StoreKeepAliveTextTest"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/appstore/src/test/java/com/diegonmarcos/superapp/appstore/StoreMembershipTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "StoreMembershipTest"
+      ],
+      "imports": [
+        "org.json.JSONObject",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.io.File"
+      ],
+      "symbols": [
+        "fleetFile()",
+        "realFleet()",
+        "altIdsAreFleetAndBlanksAreIgnored()",
+        "theTwoTabsAreDisjointAndCompleteOverTheRealFleet()",
+        "phoneOnlyDropsEveryFleetPackageAndKeepsTheRest()",
+        "class StoreMembershipTest"
       ]
     },
     {
@@ -112674,7 +112732,7 @@
         "_resolve_ssh_key()",
         "_resolve_signing()",
         "_enforce_signature()",
-        "_tauri_build()",
+        "_native_build()",
         "step_build()",
         "step_release()",
         "step_dev()",
@@ -112707,7 +112765,7 @@
         "_resolve_ssh_key()",
         "_resolve_signing()",
         "_enforce_signature()",
-        "_tauri_build()",
+        "_native_build()",
         "step_build()",
         "step_release()",
         "step_dev()",
@@ -112732,6 +112790,74 @@
         "_verify_release_asset()",
         "_publish_release_asset()",
         "step_gh_release()"
+      ]
+    },
+    {
+      "path": "ac_cloud-c3-webserver/core/build.rs",
+      "lang": "rust",
+      "role": "rust-module",
+      "exports": [],
+      "imports": [],
+      "symbols": [
+        "main()"
+      ]
+    },
+    {
+      "path": "ac_cloud-c3-webserver/core/src/bridge.rs",
+      "lang": "rust",
+      "role": "rust-module",
+      "exports": [
+        "note_service",
+        "forget_activity",
+        "install"
+      ],
+      "imports": [
+        "jni::objects::",
+        "jni::",
+        "std::sync::"
+      ],
+      "symbols": [
+        "note_service(env: &mut JNIEnv, service: Option<&JObject>)",
+        "forget_activity()",
+        "install(env: &mut JNIEnv, activity: &JObject)",
+        "current(slot: &Mutex<Option<GlobalRef>>)",
+        "take_exception(env: &mut JNIEnv)",
+        "bundle_string(env: &mut JNIEnv, bundle: &JObject, key: &str)",
+        "call_provider(authority: &str, method: &str, arg: &str)",
+        "read_bridge(method: &str, arg: &str)",
+        "read_token()",
+        "friendly(e: &str, authority: &str)",
+        "open_in_browser(url: &str)",
+        "launch_app(package: &str)",
+        "launch_app_with(package: &str, key: &str, value: &str)",
+        "open_configs(page: &str)",
+        "sync_keep_alive()",
+        "send_door(cmd: c3_webserver::door::Cmd)"
+      ]
+    },
+    {
+      "path": "ac_cloud-c3-webserver/core/src/lib.rs",
+      "lang": "rust",
+      "role": "rust-module",
+      "exports": [
+        "start_servers",
+        "ui_sections",
+        "admin_port"
+      ],
+      "imports": [
+        "c3_webserver::power"
+      ],
+      "symbols": [
+        "start_servers()",
+        "ui_sections()",
+        "Java_com_diegonmarcos_cloudwebserver_Core_nativeUiSections(\n    env: jni::JNIEnv,\n    _this: jni::objects::JObject,\n)",
+        "admin_port()",
+        "Java_com_diegonmarcos_cloudwebserver_MainActivity_nativeAttach(\n    mut env: jni::JNIEnv,\n    _this: jni::objects::JObject,\n    activity: jni::objects::JObject,\n)",
+        "Java_com_diegonmarcos_cloudwebserver_MainActivity_nativeDetach(_env: jni::JNIEnv, _this: jni::objects::JObject)",
+        "Java_com_diegonmarcos_cloudwebserver_KeepAliveService_nativeStart(\n    mut env: jni::JNIEnv,\n    service: jni::objects::JObject,\n)",
+        "Java_com_diegonmarcos_cloudwebserver_KeepAliveService_nativeStop(\n    mut env: jni::JNIEnv,\n    service: jni::objects::JObject,\n)",
+        "admin_port_is_the_declared_runtime_port()",
+        "ui_sections_are_the_declared_ones()"
       ]
     },
     {
@@ -113885,22 +114011,17 @@
       ]
     },
     {
-      "path": "ac_cloud-c3-webserver/src-tauri/build.rs",
-      "lang": "rust",
-      "role": "rust-module",
-      "exports": [],
-      "imports": [],
-      "symbols": [
-        "main()"
-      ]
-    },
-    {
       "path": "ac_cloud-c3-webserver/src-tauri/gen/android/app/build.gradle.kts",
       "lang": "kotlin",
       "role": "kotlin",
       "exports": [
         "buildJson",
         "androidJson",
+        "uiJson",
+        "uiBottomNav",
+        "uiDefaultSection",
+        "adminPort",
+        "adbShellJson",
         "fleetVersionCode",
         "gitShortSha"
       ],
@@ -113912,6 +114033,39 @@
         "org.jetbrains.kotlin.gradle.dsl.JvmTarget"
       ],
       "symbols": []
+    },
+    {
+      "path": "ac_cloud-c3-webserver/src-tauri/gen/android/app/src/main/java/com/diegonmarcos/cloudwebserver/Api.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "Api",
+        "absolute"
+      ],
+      "imports": [
+        "kotlinx.coroutines.Dispatchers",
+        "kotlinx.coroutines.withContext",
+        "org.json.JSONArray",
+        "org.json.JSONObject",
+        "org.json.JSONTokener",
+        "java.net.HttpURLConnection",
+        "java.net.URL",
+        "java.net.URLEncoder"
+      ],
+      "symbols": [
+        "base()",
+        "url(path: String)",
+        "enc(s: String)",
+        "rootPath(id: String, path: String)",
+        "get(path: String)",
+        "post(path: String, body: JSONObject)",
+        "call(method: String, path: String, body: JSONObject?)",
+        "absolute(href: String)",
+        "class Api",
+        "class Reply",
+        "class Ok",
+        "class Err"
+      ]
     },
     {
       "path": "ac_cloud-c3-webserver/src-tauri/gen/android/app/src/main/java/com/diegonmarcos/cloudwebserver/BootReceiver.kt",
@@ -113929,6 +114083,44 @@
       "symbols": [
         "onReceive(context: Context, intent: Intent)",
         "class BootReceiver"
+      ]
+    },
+    {
+      "path": "ac_cloud-c3-webserver/src-tauri/gen/android/app/src/main/java/com/diegonmarcos/cloudwebserver/Core.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "Core"
+      ],
+      "imports": [
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.setValue"
+      ],
+      "symbols": [
+        "attach(activity: MainActivity)",
+        "detach(activity: MainActivity)",
+        "nativeUiSections()",
+        "uiSections()",
+        "class Core",
+        "class CoreState",
+        "class Starting",
+        "class Up",
+        "class Failed"
+      ]
+    },
+    {
+      "path": "ac_cloud-c3-webserver/src-tauri/gen/android/app/src/main/java/com/diegonmarcos/cloudwebserver/Decl.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "Decl"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.bottomnav.NavDecl"
+      ],
+      "symbols": [
+        "class Decl"
       ]
     },
     {
@@ -113971,10 +114163,17 @@
         "android.content.Intent",
         "android.content.pm.PackageManager",
         "android.os.Bundle",
-        "androidx.activity.enableEdgeToEdge"
+        "androidx.activity.ComponentActivity",
+        "androidx.activity.compose.setContent",
+        "com.diegonmarcos.cloudwebserver.ui.WebserverShell",
+        "com.diegonmarcos.cloudwebserver.ui.WebserverTheme",
+        "com.diegonmarcos.superapp.bottomnav.FleetChrome"
       ],
       "symbols": [
         "onCreate(savedInstanceState: Bundle?)",
+        "onDestroy()",
+        "nativeAttach(activity: MainActivity)",
+        "nativeDetach()",
         "syncKeepAlive()",
         "class MainActivity"
       ]
@@ -114001,101 +114200,489 @@
       ]
     },
     {
-      "path": "ac_cloud-c3-webserver/src-tauri/gen/android/buildSrc/src/main/java/com/diegonmarcos/cloudwebserver/kotlin/BuildTask.kt",
+      "path": "ac_cloud-c3-webserver/src-tauri/gen/android/app/src/main/java/com/diegonmarcos/cloudwebserver/ui/AdbShellPage.kt",
       "lang": "kotlin",
       "role": "kotlin",
       "exports": [
-        "BuildTask"
+        "AdbShellPage"
       ],
       "imports": [
-        "java.io.File",
-        "org.apache.tools.ant.taskdefs.condition.Os",
-        "org.gradle.api.DefaultTask",
-        "org.gradle.api.GradleException",
-        "org.gradle.api.logging.LogLevel",
-        "org.gradle.api.tasks.Input",
-        "org.gradle.api.tasks.TaskAction",
-        "javax.inject.Inject",
-        "org.gradle.process.ExecOperations"
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.LaunchedEffect",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.rememberCoroutineScope",
+        "androidx.compose.runtime.saveable.rememberSaveable",
+        "androidx.compose.runtime.setValue",
+        "com.diegonmarcos.cloudwebserver.Api",
+        "com.diegonmarcos.cloudwebserver.Decl",
+        "kotlinx.coroutines.launch",
+        "org.json.JSONObject"
       ],
       "symbols": [
-        "assemble()",
-        "runTauriCli(executable: String)",
-        "class BuildTask"
+        "AdbShellPage(open: (String, String?)",
+        "openShell()"
       ]
     },
     {
-      "path": "ac_cloud-c3-webserver/src-tauri/gen/android/buildSrc/src/main/java/com/diegonmarcos/cloudwebserver/kotlin/RustPlugin.kt",
+      "path": "ac_cloud-c3-webserver/src-tauri/gen/android/app/src/main/java/com/diegonmarcos/cloudwebserver/ui/ApiPage.kt",
       "lang": "kotlin",
       "role": "kotlin",
       "exports": [
-        "TASK_GROUP",
-        "Config",
-        "RustPlugin"
+        "ApiSection"
       ],
       "imports": [
-        "com.android.build.api.dsl.ApplicationExtension",
-        "org.gradle.api.DefaultTask",
-        "org.gradle.api.Plugin",
-        "org.gradle.api.Project",
-        "org.gradle.kotlin.dsl.configure",
-        "org.gradle.kotlin.dsl.get"
+        "androidx.compose.foundation.clickable",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.material3.MaterialTheme",
+        "androidx.compose.material3.OutlinedTextField",
+        "androidx.compose.material3.Text",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.rememberCoroutineScope",
+        "androidx.compose.runtime.saveable.rememberSaveable",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.platform.testTag",
+        "androidx.compose.ui.text.font.FontFamily",
+        "androidx.compose.ui.unit.dp",
+        "com.diegonmarcos.cloudwebserver.Api",
+        "com.diegonmarcos.cloudwebserver.Decl",
+        "kotlinx.coroutines.launch",
+        "org.json.JSONArray",
+        "org.json.JSONObject"
       ],
       "symbols": [
-        "apply(project: Project)",
-        "class Config",
-        "class RustPlugin"
+        "ApiSection(page: String)",
+        "RoutesCard(tick: Int)",
+        "byId(t: JSONObject)",
+        "reach(t: JSONObject, id: String, dir: String)",
+        "rows(t: JSONObject, n: JSONObject)",
+        "mcpOnly(t: JSONObject, n: JSONObject)",
+        "remote(t: JSONObject, n: JSONObject)",
+        "matches(n: JSONObject, q: String)",
+        "groupKey(group: String, n: JSONObject)",
+        "badges(t: JSONObject, n: JSONObject)",
+        "TopologyPage(tick: Int, bump: ()",
+        "TopoDetail(t: JSONObject, sel: String?, pick: (String)",
+        "label(x: String)",
+        "LinkRow(k: String, ids: List<String>, label: (String)",
+        "TryIt(path: String)"
       ]
     },
     {
-      "path": "ac_cloud-c3-webserver/src-tauri/src/bridge.rs",
-      "lang": "rust",
-      "role": "rust-module",
+      "path": "ac_cloud-c3-webserver/src-tauri/gen/android/app/src/main/java/com/diegonmarcos/cloudwebserver/ui/ConfigsPages.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
       "exports": [
-        "note_service",
-        "install"
+        "ServerConfigPage",
+        "DevicePage",
+        "EnginesPage",
+        "LinksPage"
       ],
       "imports": [
-        "jni::objects::",
-        "jni::",
-        "std::sync::OnceLock"
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.material3.MaterialTheme",
+        "androidx.compose.material3.Text",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableIntStateOf",
+        "androidx.compose.runtime.remember",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.platform.LocalContext",
+        "androidx.compose.ui.unit.dp",
+        "com.diegonmarcos.cloudwebserver.Api",
+        "org.json.JSONObject"
       ],
       "symbols": [
-        "note_service(env: &mut JNIEnv, service: Option<&JObject>)",
-        "install(window: &tauri::WebviewWindow)",
-        "take_exception(env: &mut JNIEnv)",
-        "bundle_string(env: &mut JNIEnv, bundle: &JObject, key: &str)",
-        "call_provider(authority: &str, method: &str, arg: &str)",
-        "read_bridge(method: &str, arg: &str)",
-        "read_token()",
-        "friendly(e: &str, authority: &str)",
-        "open_in_browser(url: &str)",
-        "launch_app(package: &str)",
-        "launch_app_with(package: &str, key: &str, value: &str)",
-        "open_configs(page: &str)",
-        "sync_keep_alive()",
-        "send_door(cmd: c3_webserver::door::Cmd)"
+        "ServerConfigPage()",
+        "ServingCards(sv: JSONObject, cfg: JSONObject)",
+        "ConfigCards(cfg: JSONObject)",
+        "DevicePage()",
+        "EnginesPage()",
+        "LinksPage()",
+        "class as"
       ]
     },
     {
-      "path": "ac_cloud-c3-webserver/src-tauri/src/lib.rs",
-      "lang": "rust",
-      "role": "rust-module",
+      "path": "ac_cloud-c3-webserver/src-tauri/gen/android/app/src/main/java/com/diegonmarcos/cloudwebserver/ui/HomePage.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
       "exports": [
-        "run"
+        "HomePage",
+        "HealthCard",
+        "PowerCard",
+        "SwitchRow",
+        "ServedStrip",
+        "SshdStrip",
+        "PortsStrip",
+        "deviceFacts",
+        "DeviceStrip",
+        "AboutGroups",
+        "aboutText"
       ],
       "imports": [
-        "Tauri",
-        "tauri::",
-        "c3_webserver::power"
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.material3.AlertDialog",
+        "androidx.compose.material3.Text",
+        "androidx.compose.material3.TextButton",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.remember",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.ui.platform.LocalContext",
+        "com.diegonmarcos.cloudwebserver.Api",
+        "com.diegonmarcos.cloudwebserver.Decl",
+        "org.json.JSONArray",
+        "org.json.JSONObject"
       ],
       "symbols": [
-        "start_servers()",
-        "Java_com_diegonmarcos_cloudwebserver_KeepAliveService_nativeStart(\n    mut env: jni::JNIEnv,\n    service: jni::objects::JObject,\n)",
-        "power_set(server: Option<bool>, keep_alive: Option<bool>)",
-        "Java_com_diegonmarcos_cloudwebserver_KeepAliveService_nativeStop(\n    mut env: jni::JNIEnv,\n    service: jni::objects::JObject,\n)",
-        "run()",
-        "request_storage(window: &tauri::WebviewWindow)"
+        "HomePage(open: (String, String?)",
+        "HealthCard(pw: JSONObject, health: JSONObject?, healthDown: Boolean, sv: JSONObject?)",
+        "PowerCard(st: JSONObject, bump: ()",
+        "set(key: String, value: Any?)",
+        "SwitchRow(label: String, on: Boolean, note: String, tag: String, onSet: (Boolean)",
+        "ServedStrip(pg: JSONObject, goto: ()",
+        "SshdStrip(d: JSONObject, goto: ()",
+        "PortsStrip(sv: JSONObject)",
+        "deviceFacts(groups: JSONArray)",
+        "sec(title: String)",
+        "v(s: JSONObject?, key: String)",
+        "first(s: JSONObject?)",
+        "DeviceStrip(groups: JSONArray, goto: ()",
+        "AboutGroups(groups: JSONArray)",
+        "aboutText(groups: JSONArray)"
+      ]
+    },
+    {
+      "path": "ac_cloud-c3-webserver/src-tauri/gen/android/app/src/main/java/com/diegonmarcos/cloudwebserver/ui/Kit.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "WebserverTheme",
+        "Tone",
+        "Load",
+        "rememberObj",
+        "rememberArr",
+        "Loaded",
+        "ErrorNote",
+        "Note",
+        "PageColumn",
+        "Card",
+        "Kv",
+        "Dot",
+        "Badge",
+        "Act",
+        "LinkText",
+        "Acts",
+        "Actions",
+        "rememberActions",
+        "ActButton",
+        "rememberTick",
+        "toast",
+        "copyText",
+        "JSONObject",
+        "JSONArray",
+        "fmtUp"
+      ],
+      "imports": [
+        "android.content.ClipData",
+        "android.content.ClipboardManager",
+        "android.content.Context",
+        "android.widget.Toast",
+        "androidx.compose.foundation.background",
+        "androidx.compose.foundation.border",
+        "androidx.compose.foundation.layout.Arrangement",
+        "androidx.compose.foundation.layout.Box",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.ColumnScope",
+        "androidx.compose.foundation.layout.ExperimentalLayoutApi",
+        "androidx.compose.foundation.layout.FlowRow",
+        "androidx.compose.foundation.layout.Row",
+        "androidx.compose.foundation.layout.Spacer",
+        "androidx.compose.foundation.layout.fillMaxSize",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.foundation.layout.size",
+        "androidx.compose.foundation.layout.width",
+        "androidx.compose.foundation.rememberScrollState",
+        "androidx.compose.foundation.shape.CircleShape",
+        "androidx.compose.foundation.shape.RoundedCornerShape",
+        "androidx.compose.foundation.verticalScroll",
+        "androidx.compose.material3.CircularProgressIndicator",
+        "androidx.compose.material3.MaterialTheme",
+        "androidx.compose.material3.OutlinedButton",
+        "androidx.compose.material3.Text",
+        "androidx.compose.material3.TextButton",
+        "androidx.compose.material3.darkColorScheme",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.LaunchedEffect",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableIntStateOf",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.remember",
+        "androidx.compose.runtime.rememberCoroutineScope",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.ui.Alignment",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.graphics.Color"
+      ],
+      "symbols": [
+        "WebserverTheme(content: @Composable ()",
+        "rememberObj(path: String, tick: Int)",
+        "rememberArr(path: String, tick: Int)",
+        "Loaded(load: Load<T>, what: String, body: @Composable (T)",
+        "ErrorNote(text: String)",
+        "Note(text: String)",
+        "PageColumn(tag: String, content: @Composable ColumnScope.()",
+        "Card(title: String, tag: String = \"\", badges: @Composable ()",
+        "Kv(k: String, v: String, up: Boolean? = null, mono: Boolean = false)",
+        "Dot(up: Boolean)",
+        "Badge(text: String, color: Color = MaterialTheme.colorScheme.onSurfaceVariant)",
+        "Act(label: String, tag: String = \"\", enabled: Boolean = true, onClick: ()",
+        "LinkText(label: String, tag: String = \"\", onClick: ()",
+        "Acts(content: @Composable ()",
+        "post(path: String, body: JSONObject, ok: (JSONObject?)",
+        "run(a: JSONObject)",
+        "rememberActions(onDone: ()",
+        "ActButton(a: JSONObject?, actions: Actions, tag: String = \"\")",
+        "rememberTick()",
+        "toast(ctx: Context, text: String)",
+        "copyText(ctx: Context, label: String, text: String)",
+        "fmtUp(sec: Long?)",
+        "class Tone",
+        "class Load",
+        "class Loading",
+        "class Ok",
+        "class Err",
+        "class Actions"
+      ]
+    },
+    {
+      "path": "ac_cloud-c3-webserver/src-tauri/gen/android/app/src/main/java/com/diegonmarcos/cloudwebserver/ui/Links.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "Links",
+        "openLink",
+        "LinkHost"
+      ],
+      "imports": [
+        "android.content.Context",
+        "androidx.compose.foundation.background",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.fillMaxSize",
+        "androidx.compose.material3.AlertDialog",
+        "androidx.compose.material3.Checkbox",
+        "androidx.compose.material3.MaterialTheme",
+        "androidx.compose.material3.Text",
+        "androidx.compose.material3.TextButton",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.LaunchedEffect",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.remember",
+        "androidx.compose.runtime.rememberCoroutineScope",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.platform.LocalContext",
+        "androidx.compose.ui.platform.testTag",
+        "androidx.compose.foundation.layout.Row",
+        "androidx.compose.ui.Alignment",
+        "com.diegonmarcos.cloudwebserver.Api",
+        "com.diegonmarcos.cloudwebserver.absolute",
+        "kotlinx.coroutines.launch",
+        "org.json.JSONObject"
+      ],
+      "symbols": [
+        "remembered(ctx: Context, type: String)",
+        "remember(ctx: Context, type: String, choice: String?)",
+        "names()",
+        "classify(url: String)",
+        "embedUrl(url: String)",
+        "choiceLabel(id: String)",
+        "openLink(ctx: Context, href: String, actions: Actions)",
+        "runChoice(choice: String, url: String, actions: Actions)",
+        "LinkHost()",
+        "class Links"
+      ]
+    },
+    {
+      "path": "ac_cloud-c3-webserver/src-tauri/gen/android/app/src/main/java/com/diegonmarcos/cloudwebserver/ui/PagesPage.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "PagesSection",
+        "ServedPages",
+        "FormCard",
+        "SubPage"
+      ],
+      "imports": [
+        "androidx.compose.foundation.background",
+        "androidx.compose.foundation.clickable",
+        "androidx.compose.foundation.horizontalScroll",
+        "androidx.compose.foundation.layout.Arrangement",
+        "androidx.compose.foundation.layout.Box",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.Row",
+        "androidx.compose.foundation.layout.fillMaxHeight",
+        "androidx.compose.foundation.layout.fillMaxSize",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.foundation.layout.width",
+        "androidx.compose.foundation.rememberScrollState",
+        "androidx.compose.foundation.verticalScroll",
+        "androidx.compose.material3.MaterialTheme",
+        "androidx.compose.material3.OutlinedTextField",
+        "androidx.compose.material3.Text",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.LaunchedEffect",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableStateMapOf",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.remember",
+        "androidx.compose.runtime.saveable.rememberSaveable",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.ui.Alignment",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.platform.LocalContext",
+        "androidx.compose.ui.platform.testTag",
+        "androidx.compose.ui.text.font.FontFamily",
+        "androidx.compose.ui.text.style.TextOverflow",
+        "androidx.compose.ui.unit.dp",
+        "com.diegonmarcos.cloudwebserver.Api",
+        "com.diegonmarcos.cloudwebserver.Decl",
+        "org.json.JSONArray",
+        "org.json.JSONObject"
+      ],
+      "symbols": [
+        "PagesSection(sub: String)",
+        "RootList(title: String, rows: List<JSONObject>, empty: String, bump: ()",
+        "RootBar(r: JSONObject, path: String, handle: FrameHandle, close: ()",
+        "BrowserRoot(r: JSONObject, close: ()",
+        "ExplorerRoot(r: JSONObject, close: ()",
+        "ls(path: String)",
+        "TreeLevel(tree: Map<String, JSONObject>, path: String, depth: Int, sel: String, onDir: (String)",
+        "ServedPages(tick: Int, bump: ()",
+        "FormCard(f: JSONObject, actions: Actions)",
+        "GitSites(tick: Int, bump: ()",
+        "SubPage(route: String, tick: Int, bump: ()"
+      ]
+    },
+    {
+      "path": "ac_cloud-c3-webserver/src-tauri/gen/android/app/src/main/java/com/diegonmarcos/cloudwebserver/ui/Shell.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "Tags",
+        "WebserverShell"
+      ],
+      "imports": [
+        "androidx.compose.foundation.layout.Box",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.WindowInsets",
+        "androidx.compose.foundation.layout.displayCutout",
+        "androidx.compose.foundation.layout.fillMaxSize",
+        "androidx.compose.foundation.layout.statusBars",
+        "androidx.compose.foundation.layout.union",
+        "androidx.compose.foundation.layout.windowInsetsPadding",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.saveable.rememberSaveable",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.platform.testTag",
+        "com.diegonmarcos.cloudwebserver.Core",
+        "com.diegonmarcos.cloudwebserver.Decl",
+        "com.diegonmarcos.superapp.bottomnav.islandEntries",
+        "com.diegonmarcos.superapp.bottomnav.rememberAccountLauncher",
+        "com.diegonmarcos.superapp.fleetconfigs.FleetConfigsExtensions",
+        "com.diegonmarcos.superapp.fleetconfigs.FleetConfigsPageBody",
+        "com.diegonmarcos.superapp.fleetconfigs.isFleetConfigsPage",
+        "com.diegonmarcos.superapp.navbarbottom.NavBarBottomHost",
+        "com.diegonmarcos.superapp.navbartop1.NavBarTopFirstRowScaffold",
+        "com.diegonmarcos.superapp.navbartop1.titleHierarchy",
+        "com.diegonmarcos.superapp.navbartop2.NavSectionLayout",
+        "com.diegonmarcos.superapp.themebg.themeBackground"
+      ],
+      "symbols": [
+        "WebserverShell()",
+        "open(sectionId: String, pageId: String? = null)",
+        "SectionBody(section: String?, page: String?, open: (String, String?)",
+        "class Tags"
+      ]
+    },
+    {
+      "path": "ac_cloud-c3-webserver/src-tauri/gen/android/app/src/main/java/com/diegonmarcos/cloudwebserver/ui/SshdPage.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "SshdPage",
+        "doorFacts",
+        "bindText",
+        "doorsText"
+      ],
+      "imports": [
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.ui.platform.LocalContext",
+        "com.diegonmarcos.cloudwebserver.Api",
+        "org.json.JSONObject"
+      ],
+      "symbols": [
+        "SshdPage()",
+        "doorFacts(d: JSONObject)",
+        "bindText(d: JSONObject)",
+        "doorsText(data: JSONObject)",
+        "Door(d: JSONObject, cidrs: List<String>, actions: Actions)",
+        "op(o: String)"
+      ]
+    },
+    {
+      "path": "ac_cloud-c3-webserver/src-tauri/gen/android/app/src/main/java/com/diegonmarcos/cloudwebserver/ui/WebFrame.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "FrameHandle",
+        "WebFrame"
+      ],
+      "imports": [
+        "android.graphics.Bitmap",
+        "android.view.ViewGroup",
+        "android.webkit.WebResourceError",
+        "android.webkit.WebResourceRequest",
+        "android.webkit.WebView",
+        "androidx.compose.foundation.background",
+        "androidx.compose.foundation.layout.Box",
+        "androidx.compose.foundation.layout.fillMaxSize",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.DisposableEffect",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.remember",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.graphics.toArgb",
+        "androidx.compose.ui.platform.testTag",
+        "androidx.compose.ui.viewinterop.AndroidView",
+        "androidx.compose.material3.MaterialTheme",
+        "com.diegonmarcos.cloudlib.web.CloudWeb",
+        "com.diegonmarcos.cloudlib.web.CloudWebClient",
+        "com.diegonmarcos.cloudlib.web.WebProfile"
+      ],
+      "symbols": [
+        "back()",
+        "reload()",
+        "WebFrame(url: String, handle: FrameHandle, modifier: Modifier = Modifier, onLocation: (String)",
+        "onPageStarted(view: WebView?, u: String?, favicon: Bitmap?)",
+        "onPageFinished(view: WebView?, u: String?)",
+        "onReceivedError(view: WebView?, request: WebResourceRequest?, error: WebResourceError?)",
+        "class FrameHandle"
       ]
     },
     {
@@ -114168,17 +114755,73 @@
       ]
     },
     {
-      "path": "ac_cloud-c3-webserver/test/test-c3-webserver-no-kotlin.sh",
+      "path": "ac_cloud-c3-webserver/test/test-c3-webserver-native.sh",
       "lang": "sh",
       "role": "shell",
       "exports": [
         "guard()",
-        "mutate()"
+        "pass()",
+        "fail()",
+        "mutate()",
+        "ed()",
+        "jed()",
+        "m_stray_kt()",
+        "m_tauri_conf()",
+        "m_tauri_dep()",
+        "m_build_src()",
+        "m_extra_kts()",
+        "m_extern_drop()",
+        "m_keep_drop()",
+        "m_socket()",
+        "m_core_bind()",
+        "m_route_drop()",
+        "m_fleet_inline()",
+        "m_bottom_drift()",
+        "m_subs_drift()",
+        "m_api_drop()",
+        "m_device_drop()",
+        "m_no_tail()",
+        "m_no_rescan()",
+        "m_no_mesh_only()",
+        "m_no_confirm()",
+        "m_no_embed()",
+        "m_status_drop()",
+        "m_decl_ghost()",
+        "m_dead_page()",
+        "m_root_typed()"
       ],
       "imports": [],
       "symbols": [
         "guard()",
-        "mutate()"
+        "pass()",
+        "fail()",
+        "mutate()",
+        "ed()",
+        "jed()",
+        "m_stray_kt()",
+        "m_tauri_conf()",
+        "m_tauri_dep()",
+        "m_build_src()",
+        "m_extra_kts()",
+        "m_extern_drop()",
+        "m_keep_drop()",
+        "m_socket()",
+        "m_core_bind()",
+        "m_route_drop()",
+        "m_fleet_inline()",
+        "m_bottom_drift()",
+        "m_subs_drift()",
+        "m_api_drop()",
+        "m_device_drop()",
+        "m_no_tail()",
+        "m_no_rescan()",
+        "m_no_mesh_only()",
+        "m_no_confirm()",
+        "m_no_embed()",
+        "m_status_drop()",
+        "m_decl_ghost()",
+        "m_dead_page()",
+        "m_root_typed()"
       ]
     },
     {
@@ -114438,8 +115081,10 @@
         "m_unguarded_service()",
         "m_old_asset()",
         "m_rust_port()",
-        "m_window_before_bind()",
-        "m_identifier_drift()"
+        "m_tauri_back()",
+        "m_bridge_before_bind()",
+        "m_identifier_drift()",
+        "m_no_storage_ask()"
       ],
       "imports": [],
       "symbols": [
@@ -114468,8 +115113,10 @@
         "m_unguarded_service()",
         "m_old_asset()",
         "m_rust_port()",
-        "m_window_before_bind()",
-        "m_identifier_drift()"
+        "m_tauri_back()",
+        "m_bridge_before_bind()",
+        "m_identifier_drift()",
+        "m_no_storage_ask()"
       ]
     },
     {
@@ -117407,6 +118054,7 @@
         "bad()",
         "shot()",
         "has()",
+        "has_scrolled()",
         "open_page()"
       ],
       "imports": [],
@@ -117414,6 +118062,7 @@
         "bad()",
         "shot()",
         "has()",
+        "has_scrolled()",
         "open_page()"
       ]
     },
@@ -206402,7 +207051,6 @@
       "imports": [
         "androidx.compose.foundation.layout.Arrangement",
         "androidx.compose.foundation.layout.Column",
-        "androidx.compose.foundation.layout.heightIn",
         "androidx.compose.foundation.rememberScrollState",
         "androidx.compose.foundation.verticalScroll",
         "androidx.compose.material3.AlertDialog",
@@ -206418,8 +207066,8 @@
         "androidx.compose.ui.Modifier",
         "androidx.compose.ui.platform.testTag",
         "androidx.compose.ui.text.font.FontFamily",
-        "androidx.compose.ui.unit.dp",
         "com.diegonmarcos.clouddrive.Declarations",
+        "com.diegonmarcos.clouddrive.ui.DriveMetrics",
         "com.diegonmarcos.clouddrive.ui.DriveTags",
         "com.diegonmarcos.cloudlib.gitsync.ManagedRepo",
         "java.io.File",
@@ -398168,7 +398816,7 @@
         "restore()",
         "the_handshake_says_the_manifest_comes_from_the_app_itself()",
         "a_configured_profile_survives_wipe_and_import_through_the_provider()",
-        "an_encrypted_store_in_an_app_without_the_cipher_is_refused_alone()",
+        "an_encrypted_store_lands_encrypted_beside_the_plain_ones()",
         "class FleetMigrationTest",
         "class of"
       ]
@@ -398246,6 +398894,8 @@
       ],
       "imports": [
         "androidx.test.core.app.ActivityScenario",
+        "androidx.test.platform.app.InstrumentationRegistry",
+        "java.io.File",
         "androidx.test.ext.junit.runners.AndroidJUnit4",
         "org.junit.Assert.assertFalse",
         "org.junit.Assert.assertTrue",
@@ -398253,6 +398903,7 @@
         "org.junit.runner.RunWith"
       ],
       "symbols": [
+        "seedCatalogFromRepo()",
         "constellations_loads_data_and_survives_interaction()",
         "class ConstellationsRenderTest"
       ]
@@ -529234,6 +529885,105 @@
       ]
     },
     {
+      "path": "ac_cloud-store/app/src/main/java/com/diegonmarcos/cloudstore/TorrentCatalogue.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "TorrentCatalogue"
+      ],
+      "imports": [
+        "android.content.Context",
+        "android.content.Intent",
+        "android.net.Uri",
+        "com.diegonmarcos.superapp.fleetdata.FleetData",
+        "com.diegonmarcos.superapp.torrent.Magnet",
+        "com.diegonmarcos.superapp.torrent.TorrentEngine",
+        "com.diegonmarcos.superapp.torrent.sentence",
+        "org.json.JSONArray",
+        "org.json.JSONObject",
+        "java.net.HttpURLConnection",
+        "java.net.URL"
+      ],
+      "symbols": [
+        "inCategory(categoryId: String?)",
+        "count(categoryId: String)",
+        "problem(name: String, magnet: String?, torrentUrl: String?)",
+        "parse(text: String)",
+        "readEntries(a: JSONArray?, user: Boolean, problems: MutableList<String>)",
+        "s(k: String)",
+        "normalise(c: Catalogue)",
+        "merge(declared: Catalogue, user: List<Entry>)",
+        "idFor(name: String)",
+        "userEntries(ctx: Context)",
+        "addUser(ctx: Context, name: String, category: String, magnet: String?, torrentUrl: String?)",
+        "removeUser(ctx: Context, id: String)",
+        "save(ctx: Context, list: List<Entry>)",
+        "served(ctx: Context)",
+        "load(ctx: Context)",
+        "download(engine: TorrentEngine, e: Entry, fetch: (String)",
+        "externalIntent(e: Entry)",
+        "fetchTorrent(url: String)",
+        "class TorrentCatalogue",
+        "class Category",
+        "class Entry",
+        "class Catalogue"
+      ]
+    },
+    {
+      "path": "ac_cloud-store/app/src/main/java/com/diegonmarcos/cloudstore/TorrentCataloguePage.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "TorrentCatalogueTags"
+      ],
+      "imports": [
+        "android.content.Context",
+        "androidx.compose.foundation.background",
+        "androidx.compose.foundation.clickable",
+        "androidx.compose.foundation.horizontalScroll",
+        "androidx.compose.foundation.layout.Arrangement",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.Row",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.foundation.lazy.LazyListScope",
+        "androidx.compose.foundation.lazy.items",
+        "androidx.compose.foundation.rememberScrollState",
+        "androidx.compose.material3.Button",
+        "androidx.compose.material3.FilterChip",
+        "androidx.compose.material3.MaterialTheme",
+        "androidx.compose.material3.OutlinedButton",
+        "androidx.compose.material3.Text",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.ui.Alignment",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.graphics.Color",
+        "androidx.compose.ui.platform.testTag",
+        "androidx.compose.ui.text.font.FontWeight",
+        "androidx.compose.ui.text.style.TextOverflow",
+        "androidx.compose.ui.unit.dp",
+        "androidx.compose.ui.unit.sp",
+        "com.diegonmarcos.superapp.appstore.StoreDensity",
+        "com.diegonmarcos.superapp.torrent.TorrentEngine",
+        "com.diegonmarcos.superapp.torrent.TorrentFormat",
+        "kotlinx.coroutines.CoroutineScope",
+        "kotlinx.coroutines.Dispatchers",
+        "kotlinx.coroutines.launch",
+        "kotlinx.coroutines.withContext"
+      ],
+      "symbols": [
+        "category(id: String)",
+        "entry(id: String)",
+        "download(id: String)",
+        "external(id: String)",
+        "catalogueItems( ctx: Context, engine: TorrentEngine, view: CatalogueView, onView: (CatalogueView)",
+        "CatalogueRow(ctx: Context, engine: TorrentEngine, e: TorrentCatalogue.Entry, c: TorrentCatalogue.Catalogue, onNote: (String)",
+        "catalogueLine(e: TorrentCatalogue.Entry, categoryLabel: String)",
+        "class TorrentCatalogueTags",
+        "class CatalogueView"
+      ]
+    },
+    {
       "path": "ac_cloud-store/app/src/main/java/com/diegonmarcos/cloudstore/TorrentConfigPage.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -529292,6 +530042,8 @@
         "userSwitch(id: String)",
         "userEdit(id: String)",
         "kind(k: ParseKind)",
+        "catEntry(id: String)",
+        "catRemove(id: String)",
         "TorrentConfigPage()",
         "TorrentConfigBody()",
         "SourceField(label: String, value: String, tag: String, enabled: Boolean = true, hint: String = \"\", onChange: (String)",
@@ -529725,6 +530477,34 @@
       ],
       "symbols": [
         "class StoreTallyTest"
+      ]
+    },
+    {
+      "path": "ac_cloud-store/app/src/test/java/com/diegonmarcos/cloudstore/TorrentCatalogueTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "TorrentCatalogueTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.torrent.Magnet",
+        "com.diegonmarcos.superapp.torrent.TorrentEngines",
+        "org.json.JSONObject",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNotNull",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "org.junit.runner.RunWith",
+        "org.robolectric.RobolectricTestRunner",
+        "org.robolectric.RuntimeEnvironment",
+        "org.robolectric.annotation.Config",
+        "java.io.File"
+      ],
+      "symbols": [
+        "repoFile(rel: String)",
+        "class TorrentCatalogueTest"
       ]
     },
     {

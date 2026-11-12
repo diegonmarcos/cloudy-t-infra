@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-containers",
   "counts": {
-    "files": 2678,
+    "files": 2680,
     "by_lang": {
       "sh": 181,
       "js": 121,
       "nix": 196,
-      "py": 520,
+      "py": 522,
       "ts": 1289,
       "rust": 371
     },
@@ -19,7 +19,7 @@
       "shell": 172,
       "file": 356,
       "nix-module": 20,
-      "python": 506,
+      "python": 508,
       "module": 794,
       "script": 8,
       "flake": 89,
@@ -13502,6 +13502,21 @@
       ]
     },
     {
+      "path": "infra-api_google-workspace-mcp/src/code/core/port_check.py",
+      "lang": "py",
+      "role": "python",
+      "exports": [
+        "port_is_free(host, port)"
+      ],
+      "imports": [
+        "socket"
+      ],
+      "symbols": [
+        "_family(host)",
+        "port_is_free(host, port)"
+      ]
+    },
+    {
       "path": "infra-api_google-workspace-mcp/src/code/core/server.py",
       "lang": "py",
       "role": "python",
@@ -14448,7 +14463,6 @@
         "argparse",
         "logging",
         "os",
-        "socket",
         "sys"
       ],
       "symbols": [
@@ -14985,6 +14999,25 @@
       "symbols": [
         "read(rel)",
         "class DriveToolsContract"
+      ]
+    },
+    {
+      "path": "infra-api_google-workspace-mcp/src/code/tests/stability/test_port_check_time_wait.py",
+      "lang": "py",
+      "role": "python",
+      "exports": [
+        "leave_time_wait()",
+        "class PortCheckTimeWait"
+      ],
+      "imports": [
+        "core.port_check",
+        "os",
+        "socket",
+        "unittest"
+      ],
+      "symbols": [
+        "leave_time_wait()",
+        "class PortCheckTimeWait"
       ]
     },
     {
