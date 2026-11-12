@@ -92,6 +92,17 @@ jobs:
           include: I_cloud
           cloud_data_deploy_key: ${{ secrets.CLOUD_DATA_DEPLOY_KEY }}
 
+      # #1686: the job checks out the triggering commit (workflow_run head_sha), which can predate a tfstate.enc that an
+      # earlier queued run (same `terraform` concurrency group) committed. Applying with that stale state re-plans
+      # resources the state no longer knows and the final state commit conflicts on rebase (run 43271008184). State is
+      # never taken from the trigger commit: always the newest committed tfstate.enc on origin/main.
+      - name: Use the newest committed tfstate (never the trigger commit's)
+        run: |
+          git fetch --no-tags origin main
+          files=$(git ls-tree -r --name-only origin/main | grep -E 'terraform\.tfstate\.enc$' || true)
+          for f in $files; do git checkout origin/main -- "$f"; done
+          echo "tfstate from origin/main $(git rev-parse --short origin/main): $(echo $files | wc -w) file(s)"
+
       - name: Path relevance gate
         id: paths
         if: ${{ github.event_name == 'workflow_run' }}

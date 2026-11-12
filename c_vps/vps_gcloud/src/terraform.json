@@ -329,6 +329,7 @@
       "memory": "8Gi",
       "min_instances": 0,
       "max_instances": 1,
+      "concurrency": 4,
       "cpu_throttling": true,
       "startup_cpu_boost": true,
       "execution_environment": "EXECUTION_ENVIRONMENT_GEN2",
@@ -348,7 +349,7 @@
         "auth": "IAM invoker"
       },
       "blockers": [
-        "resident about 5 GB: needs 8Gi/2 vCPU; cold start downloads 4.6 GB of weights, so free-tier vCPU-seconds go fast under load",
+        "COST RISK: resident about 5 GB needs 8Gi/2 vCPU and a cold start re-downloads 4.6 GB of weights; free-tier vCPU/GiB-seconds go fast under load. Capped at max_instances 1 and concurrency 4",
         "edge-to-Cloud-Run identity-token step for callers"
       ]
     },
@@ -428,9 +429,7 @@
         "edge_path": "unchanged (oci-apps)",
         "auth": "unchanged"
       },
-      "blockers": [
-        "stateful database: a Cloud Run move needs a different storage engine or a managed DB; stays on oci-apps until then (Rule 16)"
-      ]
+      "decision": "2026-11-12 architect: stays on oci-apps (RocksDB is unfit for a gcsfuse volume). Declared for the registry only; never managed."
     }
   ]
 }
