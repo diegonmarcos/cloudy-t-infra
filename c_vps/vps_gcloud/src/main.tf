@@ -291,6 +291,16 @@ resource "google_cloud_run_v2_service_iam_member" "public_invoker" {
   member   = "allUsers"
 }
 
+# IAM-only services: the gcp-proxy VM service account may invoke them. The token-minting bridge on gcp-proxy
+# fetches an ID token from the metadata server (no key) and sends it as X-Serverless-Authorization.
+resource "google_cloud_run_v2_service_iam_member" "vm_invoker" {
+  for_each = { for k, s in local.cloud_run : k => s if try(s.invoker, "iam") == "iam" }
+  name     = google_cloud_run_v2_service.svc[each.key].name
+  location = google_cloud_run_v2_service.svc[each.key].location
+  role     = "roles/run.invoker"
+  member   = "serviceAccount:${local.config.service_account.email}"
+}
+
 # =============================================================================
 # Budget Alerts
 # =============================================================================
