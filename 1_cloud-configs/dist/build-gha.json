@@ -86,11 +86,6 @@
       "vm": "oci-analytics",
       "has_docker": true
     },
-    "c3bot-relay": {
-      "dir": "infra-api_c3bot-relay",
-      "vm": "oci-apps",
-      "has_docker": true
-    },
     "cloud-drive-mcp": {
       "dir": "infra-api_cloud-drive-mcp",
       "vm": "oci-apps",
@@ -273,6 +268,11 @@
     },
     "agents-tmp-reaper": {
       "dir": "infra-ops_agents-tmp-reaper",
+      "vm": "oci-apps",
+      "has_docker": true
+    },
+    "c3bot-relay": {
+      "dir": "infra-ops_c3bot-relay",
       "vm": "oci-apps",
       "has_docker": true
     },

@@ -40,15 +40,6 @@
       "has_docker_build": false
     },
     {
-      "name": "c3bot-relay",
-      "dir": "infra-api_c3bot-relay",
-      "compose_path": "/opt/containers/c3bot-relay",
-      "images": [
-        "ghcr.io/diegonmarcos/c3bot-relay:latest"
-      ],
-      "has_docker_build": true
-    },
-    {
       "name": "cloud-drive-mcp",
       "dir": "infra-api_cloud-drive-mcp",
       "compose_path": "/opt/containers/cloud-drive-mcp",
@@ -300,6 +291,15 @@
       "dir": "infra-ops_agents-tmp-reaper",
       "compose_path": "/opt/containers/agents-tmp-reaper",
       "images": [],
+      "has_docker_build": true
+    },
+    {
+      "name": "c3bot-relay",
+      "dir": "infra-ops_c3bot-relay",
+      "compose_path": "/opt/containers/c3bot-relay",
+      "images": [
+        "ghcr.io/diegonmarcos/c3bot-relay:latest"
+      ],
       "has_docker_build": true
     },
     {

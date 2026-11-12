@@ -59,19 +59,6 @@
       ],
       "resources": null
     },
-    "c3bot-relay": {
-      "vm": "oci-apps",
-      "vm_ram_gb": 24,
-      "vm_cpu": 4,
-      "containers": [
-        "c3bot-relay"
-      ],
-      "resources": {
-        "mem_limit": "256M",
-        "mem_reservation": "64m",
-        "pids_limit": 128
-      }
-    },
     "cloud-drive-mcp": {
       "vm": "oci-apps",
       "vm_ram_gb": 24,
@@ -223,24 +210,6 @@
       ],
       "resources": null
     },
-    "google-apps-script-personal": {
-      "vm": "local",
-      "vm_ram_gb": null,
-      "vm_cpu": null,
-      "containers": [
-        "google-apps-script-personal"
-      ],
-      "resources": null
-    },
-    "google-apps-script-workspace": {
-      "vm": "local",
-      "vm_ram_gb": null,
-      "vm_cpu": null,
-      "containers": [
-        "google-apps-script-workspace"
-      ],
-      "resources": null
-    },
     "google-personal-mcp": {
       "vm": "oci-apps",
       "vm_ram_gb": 24,
@@ -300,6 +269,24 @@
       "vm_cpu": null,
       "containers": [
         "gcloud"
+      ],
+      "resources": null
+    },
+    "google-apps-script-personal": {
+      "vm": "local",
+      "vm_ram_gb": null,
+      "vm_cpu": null,
+      "containers": [
+        "google-apps-script-personal"
+      ],
+      "resources": null
+    },
+    "google-apps-script-workspace": {
+      "vm": "local",
+      "vm_ram_gb": null,
+      "vm_cpu": null,
+      "containers": [
+        "google-apps-script-workspace"
       ],
       "resources": null
     },
@@ -519,6 +506,19 @@
         "agents-tmp-reaper"
       ],
       "resources": null
+    },
+    "c3bot-relay": {
+      "vm": "oci-apps",
+      "vm_ram_gb": 24,
+      "vm_cpu": 4,
+      "containers": [
+        "c3bot-relay"
+      ],
+      "resources": {
+        "mem_limit": "256M",
+        "mem_reservation": "64m",
+        "pids_limit": 128
+      }
     },
     "disk-janitor": {
       "vm": "oci-apps",

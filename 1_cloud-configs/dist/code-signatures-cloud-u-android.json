@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 24005,
+    "files": 24011,
     "by_lang": {
       "sh": 709,
       "js": 550,
       "py": 220,
-      "kotlin": 13246,
+      "kotlin": 13252,
       "ts": 8470,
       "java": 651,
       "nix": 36,
@@ -25,7 +25,7 @@
       "module": 6480,
       "java": 650,
       "python": 75,
-      "kotlin": 13243,
+      "kotlin": 13249,
       "flake": 32,
       "rust-module": 123,
       "nix-module": 4,
@@ -20744,6 +20744,7 @@
         "listeners_forTest(l: (ShellStatus)",
         "removeListener(l: (ShellStatus)",
         "check(ctx: Context, fresh: Boolean = false)",
+        "usableNow(ctx: Context)",
         "connect(ctx: Context, open: ()",
         "openAdbShell(ctx: Context)",
         "class or",
@@ -203467,6 +203468,7 @@
         "unsectioned()",
         "matches(isDirectory: Boolean, mimeType: String, extension: String)",
         "rowAction(id: String)",
+        "menu(id: String)",
         "scope(id: String)",
         "cloneUrl(repo: GitRepoDecl)",
         "canonical(name: String)",
@@ -203481,8 +203483,7 @@
         "parseWebserver(text: String)",
         "element(text: String)",
         "str(key: String, default: String = \"\")",
-        "bool(key: String, default: Boolean = false)",
-        "boolOrNull(key: String)"
+        "bool(key: String, default: Boolean = false)"
       ]
     },
     {
@@ -204233,6 +204234,30 @@
       ]
     },
     {
+      "path": "ac_cloud-drive/app/src/main/java/com/diegonmarcos/clouddrive/files/FileMenu.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "FileMenu"
+      ],
+      "imports": [
+        "java.io.File"
+      ],
+      "symbols": [
+        "enabled(menu: String, id: String, c: Context)",
+        "resolve(menu: String, decl: List<MenuGroupDecl>, c: Context)",
+        "stats(roots: List<File>, cancelled: ()",
+        "walk(f: File, depth: Int)",
+        "class FileMenu",
+        "class MenuItemDecl",
+        "class MenuGroupDecl",
+        "class Item",
+        "class Group",
+        "class Context",
+        "class Stats"
+      ]
+    },
+    {
       "path": "ac_cloud-drive/app/src/main/java/com/diegonmarcos/clouddrive/files/FileOps.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -204360,6 +204385,7 @@
         "transferSelection(from: PaneId, destination: Location.Local, move: Boolean)",
         "deleteSelection(id: PaneId)",
         "zipSelection(id: PaneId, archiveName: String)",
+        "zipSelection(id: PaneId, archiveName: String, tarGz: Boolean)",
         "extractHere(entry: FileOps.Entry)",
         "unzip(entry: FileOps.Entry, destPath: String)",
         "convert(entry: FileOps.Entry, converter: com.diegonmarcos.clouddrive.files.convert.Converter)",
@@ -204373,8 +204399,7 @@
         "gitMvMany(files: List<File>, refresh: Location.Local, plans: List<()",
         "compress(entry: FileOps.Entry, tarGz: Boolean, downloadsDir: File?)",
         "mutate(id: PaneId, block: (Location.Local)",
-        "applyRenamePlan(plan: List<FileOps.RenameStep>, loc: Location)",
-        "startSearch(root: Location.Local, query: String, contentToo: Boolean)"
+        "applyRenamePlan(plan: List<FileOps.RenameStep>, loc: Location)"
       ]
     },
     {
@@ -204496,6 +204521,9 @@
         "StorageBar(usage: Pair<Long, Long>)",
         "EntryList( id: PaneId, pane: PaneState, rows: List<TreeRow>, controller: FilesController, thumbnails: Boolean, onOpenEntry: (FileOps.Entry)",
         "EntryRow( entry: FileOps.Entry, depth: Int, tree: Boolean, expanded: Boolean, selected: Boolean, selecting: Boolean, thumbnails: Boolean, controller: FilesController, onTap: ()",
+        "itemMenuAction(id: String)",
+        "GroupedFileMenu(groups: List<FileMenu.Group>, onPick: (String)",
+        "SelectionPropertiesDialog(entries: List<FileOps.Entry>, onDismiss: ()",
         "SelectionBar( ui: FilesUiState, controller: FilesController, onDelete: ()",
         "allKeys(s: FilesUiState, controller: FilesController)",
         "PlacesSheet(d: FilesDialog.Places, ui: FilesUiState, controller: FilesController, prefs: com.diegonmarcos.clouddrive.DrivePrefs.Snapshot, actions: DriveActions, onDismiss: ()",
@@ -204510,15 +204538,12 @@
         "class Rename",
         "class DeleteConfirm",
         "class ZipName",
+        "class SelectionProps",
         "class BulkRename",
         "class Duplicates",
         "class ConvertPdf",
         "class Unzip",
-        "class Convert",
-        "class Compress",
-        "class Places",
-        "class GitRename",
-        "class EntryAction"
+        "class Convert"
       ]
     },
     {
@@ -206368,6 +206393,57 @@
       ]
     },
     {
+      "path": "ac_cloud-drive/app/src/main/java/com/diegonmarcos/clouddrive/sync/AutoClonedCleanup.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "AutoClonedCleanup"
+      ],
+      "imports": [
+        "androidx.compose.foundation.layout.Arrangement",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.heightIn",
+        "androidx.compose.foundation.rememberScrollState",
+        "androidx.compose.foundation.verticalScroll",
+        "androidx.compose.material3.AlertDialog",
+        "androidx.compose.material3.MaterialTheme",
+        "androidx.compose.material3.Text",
+        "androidx.compose.material3.TextButton",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.LaunchedEffect",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.remember",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.platform.testTag",
+        "androidx.compose.ui.text.font.FontFamily",
+        "androidx.compose.ui.unit.dp",
+        "com.diegonmarcos.clouddrive.Declarations",
+        "com.diegonmarcos.clouddrive.ui.DriveTags",
+        "com.diegonmarcos.cloudlib.gitsync.ManagedRepo",
+        "java.io.File",
+        "kotlinx.coroutines.Dispatchers",
+        "kotlinx.coroutines.withContext",
+        "kotlinx.serialization.json.Json",
+        "kotlinx.serialization.json.JsonArray",
+        "kotlinx.serialization.json.JsonObject",
+        "kotlinx.serialization.json.JsonPrimitive",
+        "kotlinx.serialization.json.contentOrNull"
+      ],
+      "symbols": [
+        "label(key: String, default: String)",
+        "parse(syncJson: String)",
+        "s(k: String)",
+        "candidates(repos: List<ManagedRepo>, names: Collection<String>, gitRoot: String, canonical: (String)",
+        "plan(targets: List<FolderActions.Target>, guards: Map<String, FolderActions.Guard>)",
+        "AutoClonedCleanupDialog(repos: List<ManagedRepo>, coordinator: GitSyncCoordinator, onDone: ()",
+        "class AutoClonedCleanup",
+        "class Decl",
+        "class Plan"
+      ]
+    },
+    {
       "path": "ac_cloud-drive/app/src/main/java/com/diegonmarcos/clouddrive/sync/AutoCommitDrive.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -206624,6 +206700,22 @@
         "copyScript(from: String, to: String, replace: Boolean)",
         "removeScript(path: String)",
         "class ExecCopier"
+      ]
+    },
+    {
+      "path": "ac_cloud-drive/app/src/main/java/com/diegonmarcos/clouddrive/sync/FetchStatus.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "FetchStatus"
+      ],
+      "imports": [],
+      "symbols": [
+        "incoming(text: String)",
+        "headBranch(text: String)",
+        "tracking(text: String)",
+        "summary(text: String)",
+        "class FetchStatus"
       ]
     },
     {
@@ -207113,6 +207205,40 @@
       ]
     },
     {
+      "path": "ac_cloud-drive/app/src/main/java/com/diegonmarcos/clouddrive/sync/GitListingCache.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "GitListingCache"
+      ],
+      "imports": [
+        "java.io.File",
+        "kotlinx.serialization.json.Json",
+        "kotlinx.serialization.json.JsonArray",
+        "kotlinx.serialization.json.JsonObject",
+        "kotlinx.serialization.json.JsonPrimitive",
+        "kotlinx.serialization.json.booleanOrNull",
+        "kotlinx.serialization.json.contentOrNull",
+        "kotlinx.serialization.json.jsonArray",
+        "kotlinx.serialization.json.jsonObject",
+        "kotlinx.serialization.json.longOrNull"
+      ],
+      "symbols": [
+        "load()",
+        "get(slot: String)",
+        "put(slot: String, value: Slot)",
+        "newest(slots: Collection<Slot?>)",
+        "repoJson(r: GitHubRepos.Repo)",
+        "encode(slots: Map<String, Slot>)",
+        "decode(text: String)",
+        "s(key: String)",
+        "b(key: String, d: Boolean = false)",
+        "l(key: String)",
+        "class GitListingCache",
+        "class Slot"
+      ]
+    },
+    {
       "path": "ac_cloud-drive/app/src/main/java/com/diegonmarcos/clouddrive/sync/GitPageFrame.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -207228,6 +207354,8 @@
       ],
       "symbols": [
         "GitReposScreen(coordinator: GitSyncCoordinator, actions: DriveActions, nextRunMinutes: Long?, modifier: Modifier = Modifier, view: GitView = GitView.ME, prefs: DrivePrefs? = null, part: GitPart = GitPart.TABLE, /** #1356/#1376 the repositories of another storage's git folder (Emulated, External)",
+        "refreshCloudPublic()",
+        "cacheListing(slot: String, l: GitListing)",
         "onSignedIn(result: SignInResult)",
         "onWebSession(cookie: String)",
         "tableRow(name: String, owner: String, declaredPrivate: Boolean?, listedUrl: String = \"\", note: String = \"\")",
@@ -207247,12 +207375,13 @@
         "ghLog(msg: String)",
         "ghUnavailable()",
         "fetchGhListing()",
-        "ghCheck()",
+        "ghCheck(list: Boolean = true)",
         "openGhPage(url: String)",
         "copyGhCode(code: String)",
         "startGhLogin()",
         "cloneViaGh(repo: GitHubRepos.Repo)",
         "startWay(way: Declarations.GitWayDecl)",
+        "refreshListings(registry: Boolean = true)",
         "runDepthAll(a: Declarations.GitDepthActionDecl)",
         "countsOf(f: Declarations.GitFilterDecl)",
         "runTopItem(item: Declarations.GitTopItemDecl)",
@@ -207263,10 +207392,7 @@
         "lightOf(repo: ManagedRepo?, glance: GitSyncCoordinator.Glance?)",
         "statusErrorString(ctx: Context, kind: RepoStatus.ErrorKind?, detail: String?)",
         "statusErrorText(kind: RepoStatus.ErrorKind?, detail: String?)",
-        "repoMessageWords(ctx: Context)",
-        "statusFacts(b: RepoStatus.Block)",
-        "RepoStatusBlock(b: RepoStatus.Block, fmt: DateFormat)",
-        "GitRepoOpsBox( repo: ManagedRepo, page: Declarations.GitPageDecl, details: GitSyncCoordinator.Details?, result: com.diegonmarcos.cloudlib.gitsync.GitOpResult?, running: GitSyncCoordinator.Running?, glance: GitSyncCoordinator.Glance?, fmt: DateFormat, coordinator: GitSyncCoordinator, actions: DriveActions, repoName: String, owner: String, remote: RepoRemoteStats.Stats?, cloneSsh: Boolean, onSettings: ()"
+        "repoMessageWords(ctx: Context)"
       ]
     },
     {
@@ -207493,6 +207619,9 @@
         "lightCheckAll()",
         "fullCheckAll()",
         "cancelStatusReads()",
+        "fetchStatusOf(repo: ManagedRepo)",
+        "fetchStatusAll(only: List<ManagedRepo>? = null)",
+        "fetchStatus(repo: ManagedRepo)",
         "fetchAll(only: List<ManagedRepo>? = null)",
         "refreshSizes(force: Boolean = false)",
         "save(repo: ManagedRepo)",
@@ -207506,10 +207635,7 @@
         "unpushedCommits(repo: ManagedRepo, ahead: Int)",
         "loadDetails(repo: ManagedRepo, historyMax: Int)",
         "runOp(repo: ManagedRepo, opId: String, message: String = \"\")",
-        "perform(repo: ManagedRepo, opId: String, message: String, token: ()",
-        "record(repo: ManagedRepo, opId: String, result: GitOpResult, trigger: String)",
-        "runCompound(repo: ManagedRepo, id: String)",
-        "runCompoundAll(id: String, only: List<ManagedRepo>? = null)"
+        "perform(repo: ManagedRepo, opId: String, message: String, token: ()"
       ]
     },
     {
@@ -208660,12 +208786,15 @@
         "syncScript(guestDir: String, message: String, name: String, email: String, rebase: Boolean)",
         "clone(ctx: Context, url: String, dir: File, token: String, depth: Int? = null, mode: com.diegonmarcos.cloudlib.gitcore.CloneMode? = null)",
         "sync(ctx: Context, dir: File, message: String, name: String, email: String, rebase: Boolean, token: String)",
+        "fetchStatusScript(guestDir: String)",
+        "fetchStatus(ctx: Context, dir: File, token: String)",
         "bareClone(ctx: Context, url: String, guestDir: String, token: String, depth: Int)",
         "bareUpdate(ctx: Context, guestDir: String, token: String, depth: Int = 0)",
         "sweepStalePacks(ctx: Context, gitRoot: File, bareRoot: String, patterns: List<String>, minAgeHours: Int)",
         "listBare(ctx: Context, bareRoot: File)",
         "isRepository(ctx: Context, dir: File)",
-        "class StoreGit"
+        "class StoreGit",
+        "class kept"
       ]
     },
     {
@@ -210332,6 +210461,40 @@
       ]
     },
     {
+      "path": "ac_cloud-drive/app/src/test/java/com/diegonmarcos/clouddrive/files/FileMenuTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "FileMenuTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.clouddrive.Declarations",
+        "kotlinx.serialization.json.Json",
+        "kotlinx.serialization.json.jsonObject",
+        "java.io.File",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Rule",
+        "org.junit.Test",
+        "org.junit.rules.TemporaryFolder"
+      ],
+      "symbols": [
+        "ids(groups: List<FileMenu.Group>)",
+        "on(groups: List<FileMenu.Group>)",
+        "itemMenuGroupsInOrder()",
+        "selectionMenuGroupsInOrder()",
+        "bothMenusUseTheSameShapeAndResolver()",
+        "everyDeclaredIdIsKnown()",
+        "itemsAreDisabledNotMissing()",
+        "gitGroupOnlyInsideAGitWorkTree()",
+        "parityWithThePreviousMenus()",
+        "combinedPropertiesCountAndSize()",
+        "compressZipAndTarGzForASelection()",
+        "class FileMenuTest"
+      ]
+    },
+    {
       "path": "ac_cloud-drive/app/src/test/java/com/diegonmarcos/clouddrive/files/FileOpsTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -211678,6 +211841,37 @@
       "symbols": [
         "st(ahead: Int, behind: Int, changed: Int)",
         "class GitKeepTest"
+      ]
+    },
+    {
+      "path": "ac_cloud-drive/app/src/test/java/com/diegonmarcos/clouddrive/sync/GitListAndRefresh1679Test.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "GitListAndRefresh1679Test"
+      ],
+      "imports": [
+        "com.diegonmarcos.cloudlib.gitsync.ManagedRepo",
+        "java.io.File",
+        "kotlinx.serialization.json.Json",
+        "kotlinx.serialization.json.jsonArray",
+        "kotlinx.serialization.json.jsonObject",
+        "kotlinx.serialization.json.jsonPrimitive",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "org.junit.rules.TemporaryFolder"
+      ],
+      "symbols": [
+        "repo(name: String, owner: String = \"o\")",
+        "GitRepoNotClonedBox(\")",
+        "refreshCloudPublic()",
+        "fetchStatusAll(\")",
+        "fetchStatus(repo: ManagedRepo)",
+        "class GitListAndRefresh1679Test",
+        "class TableEntry"
       ]
     },
     {

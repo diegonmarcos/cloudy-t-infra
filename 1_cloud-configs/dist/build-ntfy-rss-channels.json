@@ -276,17 +276,6 @@
       "quiet": true
     },
     {
-      "id": "logs_c3bot-relay",
-      "topic": "logs_c3bot-relay",
-      "title": "c3bot-relay",
-      "path": "Cloud-Infra/Logs/oci-apps/c3bot-relay",
-      "category": "logs",
-      "source": "logs",
-      "vm": "oci-apps",
-      "feed": "/feed/c/logs_c3bot-relay.atom",
-      "quiet": true
-    },
-    {
       "id": "logs_cloud-drive-mcp",
       "topic": "logs_cloud-drive-mcp",
       "title": "cloud-drive-mcp",
@@ -441,28 +430,6 @@
       "quiet": true
     },
     {
-      "id": "logs_google-apps-script-personal",
-      "topic": "logs_google-apps-script-personal",
-      "title": "google-apps-script-personal",
-      "path": "Cloud-Infra/Logs/local/google-apps-script-personal",
-      "category": "logs",
-      "source": "logs",
-      "vm": "local",
-      "feed": "/feed/c/logs_google-apps-script-personal.atom",
-      "quiet": true
-    },
-    {
-      "id": "logs_google-apps-script-workspace",
-      "topic": "logs_google-apps-script-workspace",
-      "title": "google-apps-script-workspace",
-      "path": "Cloud-Infra/Logs/local/google-apps-script-workspace",
-      "category": "logs",
-      "source": "logs",
-      "vm": "local",
-      "feed": "/feed/c/logs_google-apps-script-workspace.atom",
-      "quiet": true
-    },
-    {
       "id": "logs_google-personal-mcp",
       "topic": "logs_google-personal-mcp",
       "title": "google-personal-mcp",
@@ -526,6 +493,28 @@
       "source": "logs",
       "vm": "local",
       "feed": "/feed/c/logs_gcloud.atom",
+      "quiet": true
+    },
+    {
+      "id": "logs_google-apps-script-personal",
+      "topic": "logs_google-apps-script-personal",
+      "title": "google-apps-script-personal",
+      "path": "Cloud-Infra/Logs/local/google-apps-script-personal",
+      "category": "logs",
+      "source": "logs",
+      "vm": "local",
+      "feed": "/feed/c/logs_google-apps-script-personal.atom",
+      "quiet": true
+    },
+    {
+      "id": "logs_google-apps-script-workspace",
+      "topic": "logs_google-apps-script-workspace",
+      "title": "google-apps-script-workspace",
+      "path": "Cloud-Infra/Logs/local/google-apps-script-workspace",
+      "category": "logs",
+      "source": "logs",
+      "vm": "local",
+      "feed": "/feed/c/logs_google-apps-script-workspace.atom",
       "quiet": true
     },
     {
@@ -768,6 +757,17 @@
       "source": "logs",
       "vm": "oci-apps",
       "feed": "/feed/c/logs_agents-tmp-reaper.atom",
+      "quiet": true
+    },
+    {
+      "id": "logs_c3bot-relay",
+      "topic": "logs_c3bot-relay",
+      "title": "c3bot-relay",
+      "path": "Cloud-Infra/Logs/oci-apps/c3bot-relay",
+      "category": "logs",
+      "source": "logs",
+      "vm": "oci-apps",
+      "feed": "/feed/c/logs_c3bot-relay.atom",
       "quiet": true
     },
     {
@@ -1554,26 +1554,6 @@
       "quiet": true
     },
     {
-      "id": "app_google-apps-script-personal",
-      "topic": "app_google-apps-script-personal",
-      "title": "Google Apps Script – Google Personal — serverless Apps Script project backing the google-personal-mcp integration (Gmail for personal Google accounts, multi-account). Runs on Google's Apps Script runtime (V8/JavaScript) — no container is shipped.",
-      "path": "Cloud-Apps/app/google-apps-script-personal",
-      "category": "apps",
-      "source": "apps",
-      "feed": "/feed/c/app_google-apps-script-personal.atom",
-      "quiet": true
-    },
-    {
-      "id": "app_google-apps-script-workspace",
-      "topic": "app_google-apps-script-workspace",
-      "title": "Google Apps Script – Google Workspace — serverless Apps Script project backing the google-workspace-mcp integration (Gmail, Calendar, Drive, Docs, Sheets, Forms, Slides, Chat, Tasks, Contacts, Search, Apps Script via OAuth 2.0/2.1). Runs on Google's Apps Script runtime (V8/JavaScript) — no container is shipped.",
-      "path": "Cloud-Apps/app/google-apps-script-workspace",
-      "category": "apps",
-      "source": "apps",
-      "feed": "/feed/c/app_google-apps-script-workspace.atom",
-      "quiet": true
-    },
-    {
       "id": "app_google-personal-mcp",
       "topic": "app_google-personal-mcp",
       "title": "Google Personal Account MCP server — Gmail (IMAP/SMTP via App Password) for personal Google accounts, multi-account",
@@ -1591,6 +1571,26 @@
       "category": "apps",
       "source": "apps",
       "feed": "/feed/c/app_google-workspace-mcp.atom",
+      "quiet": true
+    },
+    {
+      "id": "app_google-apps-script-personal",
+      "topic": "app_google-apps-script-personal",
+      "title": "Google Apps Script – Google Personal — serverless Apps Script project backing the google-personal-mcp integration (Gmail for personal Google accounts, multi-account). Runs on Google's Apps Script runtime (V8/JavaScript) — no container is shipped.",
+      "path": "Cloud-Apps/app/google-apps-script-personal",
+      "category": "apps",
+      "source": "apps",
+      "feed": "/feed/c/app_google-apps-script-personal.atom",
+      "quiet": true
+    },
+    {
+      "id": "app_google-apps-script-workspace",
+      "topic": "app_google-apps-script-workspace",
+      "title": "Google Apps Script – Google Workspace — serverless Apps Script project backing the google-workspace-mcp integration (Gmail, Calendar, Drive, Docs, Sheets, Forms, Slides, Chat, Tasks, Contacts, Search, Apps Script via OAuth 2.0/2.1). Runs on Google's Apps Script runtime (V8/JavaScript) — no container is shipped.",
+      "path": "Cloud-Apps/app/google-apps-script-workspace",
+      "category": "apps",
+      "source": "apps",
+      "feed": "/feed/c/app_google-apps-script-workspace.atom",
       "quiet": true
     },
     {
@@ -1736,7 +1736,7 @@
     {
       "id": "app_capital-stack-finterminal-web",
       "topic": "app_capital-stack-finterminal-web",
-      "title": "Capital-Stack-FinTerminal web (#1351, design 3.5): the FinTerm pages of the SvelteKit webapps site served as static files behind the shared c3-pvt gate (Authelia 2FA session or fleet bearer) at c3-pvt.diegonmarcos.com/capital-stack-finterminal-web/. Same origin as c3-pvt.diegonmarcos.com/capital-stack-finterminal-api, so the page reads the /v1 API with the gate's session: no CORS, no token in the page. Built by cloudy-h-webapps-mob (ghcr.io/diegonmarcos/capital-stack-finterminal-web).",
+      "title": "Capital-Stack-FinTerminal web (#1351, design 3.5): the FinTerm pages of the SvelteKit webapps site served as static files behind the shared c3-pvt gate (Authelia 2FA session or fleet bearer) at c3-pvt.diegonmarcos.com/capital-stack-finterminal-web/. Same origin as c3-pvt.diegonmarcos.com/capital-stack-finterm-api (renamed in #1450; the pinned bundle may still carry the pre-rename mesh name, which is rewritten to the same route), so the page reads the /v1 API with the gate's session: no CORS, no token in the page. Built by cloudy-h-webapps-mob (ghcr.io/diegonmarcos/capital-stack-finterminal-web).",
       "path": "Cloud-Apps/fin/capital-stack-finterminal-web",
       "category": "apps",
       "source": "apps",

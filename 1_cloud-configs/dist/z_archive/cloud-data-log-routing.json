@@ -57,11 +57,6 @@
         "log_level": "info"
       },
       {
-        "container": "c3bot-relay",
-        "service": "c3bot-relay",
-        "log_level": "info"
-      },
-      {
         "container": "cloud-drive-mcp",
         "service": "cloud-drive-mcp",
         "log_level": "info"
@@ -229,6 +224,11 @@
       {
         "container": "agents-tmp-reaper",
         "service": "agents-tmp-reaper",
+        "log_level": "info"
+      },
+      {
+        "container": "c3bot-relay",
+        "service": "c3bot-relay",
         "log_level": "info"
       },
       {
@@ -551,16 +551,6 @@
     ],
     "local": [
       {
-        "container": "google-apps-script-personal",
-        "service": "google-apps-script-personal",
-        "log_level": "info"
-      },
-      {
-        "container": "google-apps-script-workspace",
-        "service": "google-apps-script-workspace",
-        "log_level": "info"
-      },
-      {
         "container": "cloud-builder-x",
         "service": "cloud-builder-x",
         "log_level": "info"
@@ -573,6 +563,16 @@
       {
         "container": "gcloud",
         "service": "gcloud",
+        "log_level": "info"
+      },
+      {
+        "container": "google-apps-script-personal",
+        "service": "google-apps-script-personal",
+        "log_level": "info"
+      },
+      {
+        "container": "google-apps-script-workspace",
+        "service": "google-apps-script-workspace",
         "log_level": "info"
       },
       {

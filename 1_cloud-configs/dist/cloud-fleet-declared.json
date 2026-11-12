@@ -84,17 +84,6 @@
             "public_url": "https://api.diegonmarcos.com/pub"
           },
           {
-            "id": "c3bot-relay",
-            "name": "c3bot-relay",
-            "vm": "oci-A1-f_0",
-            "category": "sec",
-            "subgroup": "Security",
-            "port": 3119,
-            "private_ip": "10.0.0.6",
-            "private_url": "https://c3bot-relay.mesh.diegonmarcos.com",
-            "public_url": "https://mcp.diegonmarcos.com"
-          },
-          {
             "id": "cloud-infra-mcp",
             "name": "cloud-infra-mcp",
             "vm": "oci-A1-f_0",
@@ -372,6 +361,17 @@
             "private_ip": "10.0.0.6",
             "private_url": "https://umami.mesh.diegonmarcos.com",
             "public_url": "https://analytics.diegonmarcos.com"
+          },
+          {
+            "id": "c3bot-relay",
+            "name": "c3bot-relay",
+            "vm": "oci-A1-f_0",
+            "category": "sec",
+            "subgroup": "Security",
+            "port": 3119,
+            "private_ip": "10.0.0.6",
+            "private_url": "https://c3bot-relay.mesh.diegonmarcos.com",
+            "public_url": "https://mcp.diegonmarcos.com"
           },
           {
             "id": "auth-broker",
@@ -4203,17 +4203,6 @@
           "public_url": "https://api.diegonmarcos.com/pub"
         },
         {
-          "id": "c3bot-relay",
-          "name": "c3bot-relay",
-          "vm": "oci-A1-f_0",
-          "category": "sec",
-          "subgroup": "Security",
-          "port": 3119,
-          "private_ip": "10.0.0.6",
-          "private_url": "https://c3bot-relay.mesh.diegonmarcos.com",
-          "public_url": "https://mcp.diegonmarcos.com"
-        },
-        {
           "id": "cloudy-all-api",
           "name": "cloudy-all-api",
           "vm": "oci-A1-f_0",
@@ -4355,6 +4344,17 @@
           "private_ip": "10.0.0.6",
           "private_url": "https://umami.mesh.diegonmarcos.com",
           "public_url": "https://analytics.diegonmarcos.com"
+        },
+        {
+          "id": "c3bot-relay",
+          "name": "c3bot-relay",
+          "vm": "oci-A1-f_0",
+          "category": "sec",
+          "subgroup": "Security",
+          "port": 3119,
+          "private_ip": "10.0.0.6",
+          "private_url": "https://c3bot-relay.mesh.diegonmarcos.com",
+          "public_url": "https://mcp.diegonmarcos.com"
         },
         {
           "id": "authelia",

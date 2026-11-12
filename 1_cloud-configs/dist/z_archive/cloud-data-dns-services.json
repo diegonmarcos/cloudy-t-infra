@@ -29,10 +29,6 @@
       "ip": "10.0.0.1",
       "desc": "C3 Public API — single public-edge listener on oci-analytics. Consolidates http-to-smtp-proxy-api (Bearer-gated /mail/*) and c3-analytics-api passthrough (public /analytics/*). Replaces split listeners across gcp-proxy + oci-analytics so gcp-proxy becomes a pure wg0 spoke."
     },
-    "c3bot-relay": {
-      "ip": "10.0.0.1",
-      "desc": "c3bot-relay (#1579): Telegram <-> c3 relay on a dedicated bot (Bot B). One inbound Telegram long-poll fans out to c3 clients over three transports: WebSocket (/ws, full duplex), Server-Sent Events (/events, Last-Event-ID resume) and long-poll (/poll, cursor). Outbound via POST /send or a WS send frame. Zero npm dependencies. Bearer-gated, mesh-only."
-    },
     "drive-mcp": {
       "ip": "10.0.0.1",
       "desc": "Drive MCP server — one facade over every storage unit: repos, files, photos, sync, scrapes, S3 and conversion"
@@ -169,6 +165,10 @@
       "ip": "10.0.0.1",
       "desc": "Umami Analytics - lightweight privacy-focused web analytics"
     },
+    "c3bot-relay": {
+      "ip": "10.0.0.1",
+      "desc": "c3bot-relay (#1579): Telegram <-> c3 relay on a dedicated bot (Bot B). One inbound Telegram long-poll fans out to c3 clients over three transports: WebSocket (/ws, full duplex), Server-Sent Events (/events, Last-Event-ID resume) and long-poll (/poll, cursor). Outbound via POST /send or a WS send frame. Zero npm dependencies. Bearer-gated, mesh-only."
+    },
     "auth-broker": {
       "ip": "10.0.0.1",
       "desc": "Identity broker for the multi-SSO sign-in: GitHub (device flow + web), Google (web code flow + PKCE) and Cloudflare One (Access JWT) and Email code (one-time code), owner only (#1066, #1083, #1118)"
@@ -299,7 +299,7 @@
     },
     "capital-stack-finterminal-web": {
       "ip": "10.0.0.1",
-      "desc": "Capital-Stack-FinTerminal web (#1351, design 3.5): the FinTerm pages of the SvelteKit webapps site served as static files behind the shared c3-pvt gate (Authelia 2FA session or fleet bearer) at c3-pvt.diegonmarcos.com/capital-stack-finterminal-web/. Same origin as c3-pvt.diegonmarcos.com/capital-stack-finterminal-api, so the page reads the /v1 API with the gate's session: no CORS, no token in the page. Built by cloudy-h-webapps-mob (ghcr.io/diegonmarcos/capital-stack-finterminal-web)."
+      "desc": "Capital-Stack-FinTerminal web (#1351, design 3.5): the FinTerm pages of the SvelteKit webapps site served as static files behind the shared c3-pvt gate (Authelia 2FA session or fleet bearer) at c3-pvt.diegonmarcos.com/capital-stack-finterminal-web/. Same origin as c3-pvt.diegonmarcos.com/capital-stack-finterm-api (renamed in #1450; the pinned bundle may still carry the pre-rename mesh name, which is rewritten to the same route), so the page reads the /v1 API with the gate's session: no CORS, no token in the page. Built by cloudy-h-webapps-mob (ghcr.io/diegonmarcos/capital-stack-finterminal-web)."
     },
     "photoprism": {
       "ip": "10.0.0.1",

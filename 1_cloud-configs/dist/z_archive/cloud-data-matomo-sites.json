@@ -14,11 +14,6 @@
       "service": "c3-public-api"
     },
     {
-      "name": "c3bot-relay (#1579): Telegram <-> c3 relay on a dedicated bot (Bot B). One inbound Telegram long-poll fans out to c3 clients over three transports: WebSocket (/ws, full duplex), Server-Sent Events (/events, Last-Event-ID resume) and long-poll (/poll, cursor). Outbound via POST /send or a WS send frame. Zero npm dependencies. Bearer-gated, mesh-only.",
-      "url": "https://mcp.diegonmarcos.com",
-      "service": "c3bot-relay"
-    },
-    {
       "name": "Drive MCP server — one facade over every storage unit: repos, files, photos, sync, scrapes, S3 and conversion",
       "url": "https://mcp.diegonmarcos.com",
       "service": "cloud-drive-mcp"
@@ -137,6 +132,11 @@
       "name": "Umami Analytics - lightweight privacy-focused web analytics",
       "url": "https://analytics.diegonmarcos.com",
       "service": "umami"
+    },
+    {
+      "name": "c3bot-relay (#1579): Telegram <-> c3 relay on a dedicated bot (Bot B). One inbound Telegram long-poll fans out to c3 clients over three transports: WebSocket (/ws, full duplex), Server-Sent Events (/events, Last-Event-ID resume) and long-poll (/poll, cursor). Outbound via POST /send or a WS send frame. Zero npm dependencies. Bearer-gated, mesh-only.",
+      "url": "https://mcp.diegonmarcos.com",
+      "service": "c3bot-relay"
     },
     {
       "name": "SSO and 2FA authentication portal",

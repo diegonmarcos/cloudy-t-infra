@@ -166,7 +166,6 @@
         "cloudy-ai-embeddings-api",
         "jev-sidecar",
         "languagetool",
-        "c3bot-relay",
         "cloud-drive-mcp",
         "cloud-infra-mcp",
         "cloud-mail-mcp",
@@ -196,6 +195,7 @@
         "openobserve",
         "umami",
         "agents-tmp-reaper",
+        "c3bot-relay",
         "disk-janitor",
         "auth-broker",
         "cloudy-ai-tokens-api",
@@ -991,8 +991,7 @@
           "type": "path",
           "parent_domain": "api.diegonmarcos.com",
           "base_path": "/ai",
-          "auth": "two_factor",
-          "wg_only": true
+          "auth": "two_factor"
         }
       },
       "declared_ports": {
@@ -1021,7 +1020,7 @@
           "cwd": "src/code"
         }
       },
-      "_gateway": "Public route: api.diegonmarcos.com/ai and c3-pvt.diegonmarcos.com/ai, bearer-gated at the hub Caddy; backends are bound on the WireGuard IP (ROUTES env in compose.nix).",
+      "_gateway": "Public route: c3-pvt.diegonmarcos.com/ai (alias) and c3-pvt.diegonmarcos.com/cloudy-ai-api, cookie or bearer at the hub Caddy (#1104: no api.* host; #1483 moved the clients off api.diegonmarcos.com/ai, which is a pending stage-3 redirect in _shared/fleet-addressing.json); backends are bound on the WireGuard IP (ROUTES env in compose.nix).",
       "api": {
         "has_api": true,
         "has_web_ui": false,
@@ -1487,108 +1486,6 @@
         "display_name": "C3 Public API",
         "description": "Single public-edge API on oci-analytics. /mail/http-to-smtp (Bearer) bridges CF Worker -> Maddy over WG (Maddy dual-writes to Stalwart). /analytics/{matomo|umami|openobserve}/* (public) passes through to first-party analytics backends.",
         "auth": "mixed"
-      }
-    },
-    "c3bot-relay": {
-      "category": "sec",
-      "vm": "oci-A1-f_0",
-      "folder": "infra-api_c3bot-relay",
-      "description": "c3bot-relay (#1579): Telegram <-> c3 relay on a dedicated bot (Bot B). One inbound Telegram long-poll fans out to c3 clients over three transports: WebSocket (/ws, full duplex), Server-Sent Events (/events, Last-Event-ID resume) and long-poll (/poll, cursor). Outbound via POST /send or a WS send frame. Zero npm dependencies. Bearer-gated, mesh-only.",
-      "enabled": true,
-      "domain": "mcp.diegonmarcos.com",
-      "flake": "infra-api_c3bot-relay",
-      "port": 3119,
-      "dns": "c3bot-relay.mesh.diegonmarcos.com",
-      "upstream": "10.0.0.6:3119",
-      "containers": {
-        "app": {
-          "container_name": "c3bot-relay",
-          "image": "ghcr.io/diegonmarcos/c3bot-relay:latest",
-          "port": 3119,
-          "port_env": "PORT",
-          "protocol": "http",
-          "dns": "c3bot-relay.mesh.diegonmarcos.com",
-          "public": true,
-          "proxy": {
-            "domain": "mcp.diegonmarcos.com",
-            "base_path": "/c3bot-relay"
-          },
-          "healthcheck": "node -e \"fetch('http://'+(process.env.HTTP_HOST||'127.0.0.1')+':3119/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))\"",
-          "env_file": true,
-          "resources": {
-            "mem_limit": "256M",
-            "mem_reservation": "64m",
-            "pids_limit": 128
-          },
-          "limits": {
-            "buffer_size": 500,
-            "max_clients": 32,
-            "poll_max_wait_s": 50,
-            "allowed_from": "6431508617"
-          }
-        }
-      },
-      "container_names": [
-        "c3bot-relay"
-      ],
-      "all_ports": [
-        "3119"
-      ],
-      "all_dns": [
-        "c3bot-relay.mesh.diegonmarcos.com"
-      ],
-      "compose": {
-        "containers": [],
-        "ports": [],
-        "networks": []
-      },
-      "proxy": {
-        "app_hub": false,
-        "primary": {
-          "streaming": true,
-          "type": "path",
-          "parent_domain": "mcp.diegonmarcos.com",
-          "base_path": "/c3bot-relay",
-          "wg_only": true,
-          "auth": "none",
-          "_auth_doc": "auth none: the app gates every call itself with its own bearer (C3BOT_RELAY_TOKEN, 401 without it; /health is open). The fleet forward_auth would reject this token and buffer SSE; the route stays WG-only. streaming:true keeps SSE and WebSocket unbuffered.",
-          "domain": "mcp.diegonmarcos.com"
-        }
-      },
-      "declared_ports": {
-        "app": 3119
-      },
-      "health": {
-        "path": "/health"
-      },
-      "monitoring": {
-        "tls_check": true,
-        "dns_check": true,
-        "endpoint_check": true
-      },
-      "taxonomy": {
-        "group": "Infra Apps",
-        "category": "Ops-API-MCP"
-      },
-      "dns_aliases": [],
-      "timezone": "Europe/Paris",
-      "tests": {
-        "relay": {
-          "cmd": "node --test test/*.test.js",
-          "cwd": "src/code"
-        }
-      },
-      "api": {
-        "has_api": true,
-        "has_web_ui": true,
-        "api_path": "/c3bot-relay",
-        "api_url": "https://mcp.diegonmarcos.com/c3bot-relay",
-        "healthcheck_paths": [],
-        "type": "rest",
-        "base_path": "/c3bot-relay",
-        "display_name": "c3bot Telegram relay",
-        "description": "Telegram <-> c3 relay: WS /ws, SSE /events, long-poll /poll, POST /send.",
-        "auth": "bearer"
       }
     },
     "cloud-drive-mcp": {
@@ -4158,88 +4055,6 @@
         "auth": "bearer"
       }
     },
-    "google-apps-script-personal": {
-      "category": "app",
-      "vm": "local",
-      "folder": "infra-api_google-apps-script-personal",
-      "description": "Google Apps Script – Google Personal — serverless Apps Script project backing the google-personal-mcp integration (Gmail for personal Google accounts, multi-account). Runs on Google's Apps Script runtime (V8/JavaScript) — no container is shipped.",
-      "enabled": true,
-      "flake": "infra-api_google-apps-script-personal",
-      "containers": {
-        "app": {
-          "container_name": "google-apps-script-personal",
-          "image": "",
-          "public": false
-        }
-      },
-      "container_names": [
-        "google-apps-script-personal"
-      ],
-      "all_ports": [],
-      "all_dns": [],
-      "compose": {
-        "containers": [],
-        "ports": [],
-        "networks": []
-      },
-      "taxonomy": {
-        "group": "Infra Apps",
-        "category": "Ops-API-MCP"
-      },
-      "runtime": {
-        "type": "apps-script",
-        "language": "javascript",
-        "host": "script.google.com"
-      },
-      "api": {
-        "has_api": false,
-        "has_web_ui": false,
-        "api_path": null,
-        "api_url": null,
-        "healthcheck_paths": []
-      }
-    },
-    "google-apps-script-workspace": {
-      "category": "app",
-      "vm": "local",
-      "folder": "infra-api_google-apps-script-workspace",
-      "description": "Google Apps Script – Google Workspace — serverless Apps Script project backing the google-workspace-mcp integration (Gmail, Calendar, Drive, Docs, Sheets, Forms, Slides, Chat, Tasks, Contacts, Search, Apps Script via OAuth 2.0/2.1). Runs on Google's Apps Script runtime (V8/JavaScript) — no container is shipped.",
-      "enabled": true,
-      "flake": "infra-api_google-apps-script-workspace",
-      "containers": {
-        "app": {
-          "container_name": "google-apps-script-workspace",
-          "image": "",
-          "public": false
-        }
-      },
-      "container_names": [
-        "google-apps-script-workspace"
-      ],
-      "all_ports": [],
-      "all_dns": [],
-      "compose": {
-        "containers": [],
-        "ports": [],
-        "networks": []
-      },
-      "taxonomy": {
-        "group": "Infra Apps",
-        "category": "Ops-API-MCP"
-      },
-      "runtime": {
-        "type": "apps-script",
-        "language": "javascript",
-        "host": "script.google.com"
-      },
-      "api": {
-        "has_api": false,
-        "has_web_ui": false,
-        "api_path": null,
-        "api_url": null,
-        "healthcheck_paths": []
-      }
-    },
     "google-personal-mcp": {
       "category": "app",
       "vm": "oci-A1-f_0",
@@ -4669,6 +4484,88 @@
       "taxonomy": {
         "group": "Infra Apps",
         "category": "Ops-Infra"
+      },
+      "api": {
+        "has_api": false,
+        "has_web_ui": false,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": []
+      }
+    },
+    "google-apps-script-personal": {
+      "category": "app",
+      "vm": "local",
+      "folder": "infra-cloud_google-apps-script-personal",
+      "description": "Google Apps Script – Google Personal — serverless Apps Script project backing the google-personal-mcp integration (Gmail for personal Google accounts, multi-account). Runs on Google's Apps Script runtime (V8/JavaScript) — no container is shipped.",
+      "enabled": true,
+      "flake": "infra-cloud_google-apps-script-personal",
+      "containers": {
+        "app": {
+          "container_name": "google-apps-script-personal",
+          "image": "",
+          "public": false
+        }
+      },
+      "container_names": [
+        "google-apps-script-personal"
+      ],
+      "all_ports": [],
+      "all_dns": [],
+      "compose": {
+        "containers": [],
+        "ports": [],
+        "networks": []
+      },
+      "taxonomy": {
+        "group": "Infra Apps",
+        "category": "Ops-API-MCP"
+      },
+      "runtime": {
+        "type": "apps-script",
+        "language": "javascript",
+        "host": "script.google.com"
+      },
+      "api": {
+        "has_api": false,
+        "has_web_ui": false,
+        "api_path": null,
+        "api_url": null,
+        "healthcheck_paths": []
+      }
+    },
+    "google-apps-script-workspace": {
+      "category": "app",
+      "vm": "local",
+      "folder": "infra-cloud_google-apps-script-workspace",
+      "description": "Google Apps Script – Google Workspace — serverless Apps Script project backing the google-workspace-mcp integration (Gmail, Calendar, Drive, Docs, Sheets, Forms, Slides, Chat, Tasks, Contacts, Search, Apps Script via OAuth 2.0/2.1). Runs on Google's Apps Script runtime (V8/JavaScript) — no container is shipped.",
+      "enabled": true,
+      "flake": "infra-cloud_google-apps-script-workspace",
+      "containers": {
+        "app": {
+          "container_name": "google-apps-script-workspace",
+          "image": "",
+          "public": false
+        }
+      },
+      "container_names": [
+        "google-apps-script-workspace"
+      ],
+      "all_ports": [],
+      "all_dns": [],
+      "compose": {
+        "containers": [],
+        "ports": [],
+        "networks": []
+      },
+      "taxonomy": {
+        "group": "Infra Apps",
+        "category": "Ops-API-MCP"
+      },
+      "runtime": {
+        "type": "apps-script",
+        "language": "javascript",
+        "host": "script.google.com"
       },
       "api": {
         "has_api": false,
@@ -6946,6 +6843,108 @@
         "api_path": null,
         "api_url": null,
         "healthcheck_paths": []
+      }
+    },
+    "c3bot-relay": {
+      "category": "sec",
+      "vm": "oci-A1-f_0",
+      "folder": "infra-ops_c3bot-relay",
+      "description": "c3bot-relay (#1579): Telegram <-> c3 relay on a dedicated bot (Bot B). One inbound Telegram long-poll fans out to c3 clients over three transports: WebSocket (/ws, full duplex), Server-Sent Events (/events, Last-Event-ID resume) and long-poll (/poll, cursor). Outbound via POST /send or a WS send frame. Zero npm dependencies. Bearer-gated, mesh-only.",
+      "enabled": true,
+      "domain": "mcp.diegonmarcos.com",
+      "flake": "infra-ops_c3bot-relay",
+      "port": 3119,
+      "dns": "c3bot-relay.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:3119",
+      "containers": {
+        "app": {
+          "container_name": "c3bot-relay",
+          "image": "ghcr.io/diegonmarcos/c3bot-relay:latest",
+          "port": 3119,
+          "port_env": "PORT",
+          "protocol": "http",
+          "dns": "c3bot-relay.mesh.diegonmarcos.com",
+          "public": true,
+          "proxy": {
+            "domain": "mcp.diegonmarcos.com",
+            "base_path": "/c3bot-relay"
+          },
+          "healthcheck": "node -e \"fetch('http://'+(process.env.HTTP_HOST||'127.0.0.1')+':3119/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))\"",
+          "env_file": true,
+          "resources": {
+            "mem_limit": "256M",
+            "mem_reservation": "64m",
+            "pids_limit": 128
+          },
+          "limits": {
+            "buffer_size": 500,
+            "max_clients": 32,
+            "poll_max_wait_s": 50,
+            "allowed_from": "6431508617"
+          }
+        }
+      },
+      "container_names": [
+        "c3bot-relay"
+      ],
+      "all_ports": [
+        "3119"
+      ],
+      "all_dns": [
+        "c3bot-relay.mesh.diegonmarcos.com"
+      ],
+      "compose": {
+        "containers": [],
+        "ports": [],
+        "networks": []
+      },
+      "proxy": {
+        "app_hub": false,
+        "primary": {
+          "streaming": true,
+          "type": "path",
+          "parent_domain": "mcp.diegonmarcos.com",
+          "base_path": "/c3bot-relay",
+          "wg_only": true,
+          "auth": "none",
+          "_auth_doc": "auth none: the app gates every call itself with its own bearer (C3BOT_RELAY_TOKEN, 401 without it; /health is open). The fleet forward_auth would reject this token and buffer SSE; the route stays WG-only. streaming:true keeps SSE and WebSocket unbuffered.",
+          "domain": "mcp.diegonmarcos.com"
+        }
+      },
+      "declared_ports": {
+        "app": 3119
+      },
+      "health": {
+        "path": "/health"
+      },
+      "monitoring": {
+        "tls_check": true,
+        "dns_check": true,
+        "endpoint_check": true
+      },
+      "taxonomy": {
+        "group": "Infra Apps",
+        "category": "Ops-API-MCP"
+      },
+      "dns_aliases": [],
+      "timezone": "Europe/Paris",
+      "tests": {
+        "relay": {
+          "cmd": "node --test test/*.test.js",
+          "cwd": "src/code"
+        }
+      },
+      "api": {
+        "has_api": true,
+        "has_web_ui": true,
+        "api_path": "/c3bot-relay",
+        "api_url": "https://mcp.diegonmarcos.com/c3bot-relay",
+        "healthcheck_paths": [],
+        "type": "rest",
+        "base_path": "/c3bot-relay",
+        "display_name": "c3bot Telegram relay",
+        "description": "Telegram <-> c3 relay: WS /ws, SSE /events, long-poll /poll, POST /send.",
+        "auth": "bearer"
       }
     },
     "disk-janitor": {
@@ -11962,7 +11961,7 @@
       "category": "fin",
       "vm": "oci-A1-f_0",
       "folder": "user-fin_capital-stack-finterminal-web",
-      "description": "Capital-Stack-FinTerminal web (#1351, design 3.5): the FinTerm pages of the SvelteKit webapps site served as static files behind the shared c3-pvt gate (Authelia 2FA session or fleet bearer) at c3-pvt.diegonmarcos.com/capital-stack-finterminal-web/. Same origin as c3-pvt.diegonmarcos.com/capital-stack-finterminal-api, so the page reads the /v1 API with the gate's session: no CORS, no token in the page. Built by cloudy-h-webapps-mob (ghcr.io/diegonmarcos/capital-stack-finterminal-web).",
+      "description": "Capital-Stack-FinTerminal web (#1351, design 3.5): the FinTerm pages of the SvelteKit webapps site served as static files behind the shared c3-pvt gate (Authelia 2FA session or fleet bearer) at c3-pvt.diegonmarcos.com/capital-stack-finterminal-web/. Same origin as c3-pvt.diegonmarcos.com/capital-stack-finterm-api (renamed in #1450; the pinned bundle may still carry the pre-rename mesh name, which is rewritten to the same route), so the page reads the /v1 API with the gate's session: no CORS, no token in the page. Built by cloudy-h-webapps-mob (ghcr.io/diegonmarcos/capital-stack-finterminal-web).",
       "enabled": true,
       "flake": "user-fin_capital-stack-finterminal-web",
       "port": 8341,
@@ -12028,7 +12027,7 @@
       "finterm": {
         "_doc": "The page base path is the c3-pvt route of this container (/capital-stack-finterminal-web); the API it reads same-origin is the c3-pvt route of the api container. The image ships the FinTerm pages of cloudy-h-webapps-mob's committed SvelteKit output (sites/cloudy-webapps/dist: _app + capital-stack-finterminal/) at the pinned commit webapps_ref, rebased at image build from /cloud-webapps to base_path, with the mesh API base replaced by the same-origin route /<api_container> (the gate's session, no CORS, no token). A symlink base_path -> . serves the same tree on the mesh name. Bump webapps_ref to ship a newer FinTerm web build.",
         "base_path": "/capital-stack-finterminal-web",
-        "api_container": "capital-stack-finterminal-api",
+        "api_container": "capital-stack-finterm-api",
         "webapps_ref": "df55fd534ccb694f766874395686bd84de1a5d63"
       },
       "api": {
@@ -16231,12 +16230,6 @@
         "service": "c3-public-api"
       },
       {
-        "name": "c3bot-relay.mesh.diegonmarcos.com",
-        "type": "A",
-        "value": "10.0.0.6",
-        "service": "c3bot-relay"
-      },
-      {
         "name": "drive-mcp.mesh.diegonmarcos.com",
         "type": "A",
         "value": "10.0.0.6",
@@ -16415,6 +16408,12 @@
         "type": "A",
         "value": "10.0.0.6",
         "service": "umami"
+      },
+      {
+        "name": "c3bot-relay.mesh.diegonmarcos.com",
+        "type": "A",
+        "value": "10.0.0.6",
+        "service": "c3bot-relay"
       },
       {
         "name": "authelia.mesh.diegonmarcos.com",
@@ -17225,7 +17224,6 @@
           "cloudy-ai-embeddings-api",
           "jev-sidecar",
           "languagetool",
-          "c3bot-relay",
           "cloud-drive-mcp",
           "cloud-infra-mcp",
           "cloud-mail-mcp",
@@ -17255,6 +17253,7 @@
           "openobserve",
           "umami",
           "agents-tmp-reaper",
+          "c3bot-relay",
           "disk-janitor",
           "auth-broker",
           "cloudy-ai-tokens-api",
@@ -17788,11 +17787,6 @@
         "vm": "oci-analytics",
         "has_docker": true
       },
-      "c3bot-relay": {
-        "dir": "infra-api_c3bot-relay",
-        "vm": "oci-apps",
-        "has_docker": true
-      },
       "cloud-drive-mcp": {
         "dir": "infra-api_cloud-drive-mcp",
         "vm": "oci-apps",
@@ -17975,6 +17969,11 @@
       },
       "agents-tmp-reaper": {
         "dir": "infra-ops_agents-tmp-reaper",
+        "vm": "oci-apps",
+        "has_docker": true
+      },
+      "c3bot-relay": {
+        "dir": "infra-ops_c3bot-relay",
         "vm": "oci-apps",
         "has_docker": true
       },

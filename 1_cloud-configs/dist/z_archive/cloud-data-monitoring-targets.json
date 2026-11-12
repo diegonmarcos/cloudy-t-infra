@@ -8,10 +8,6 @@
       "url": "https://api.diegonmarcos.com/pub/health"
     },
     {
-      "service": "c3bot-relay",
-      "url": "https://mcp.diegonmarcos.com/health"
-    },
-    {
       "service": "cloudy-all-api",
       "url": "https://api.diegonmarcos.com/c3-services-api/health"
     },
@@ -50,6 +46,10 @@
     {
       "service": "openobserve",
       "url": "https://analytics.diegonmarcos.com/openobserve/healthz"
+    },
+    {
+      "service": "c3bot-relay",
+      "url": "https://mcp.diegonmarcos.com/health"
     },
     {
       "service": "authelia",
@@ -150,10 +150,6 @@
       "domain": "api.diegonmarcos.com/pub"
     },
     {
-      "service": "c3bot-relay",
-      "domain": "mcp.diegonmarcos.com"
-    },
-    {
       "service": "cloudy-all-api",
       "domain": "api.diegonmarcos.com/c3-services-api"
     },
@@ -196,6 +192,10 @@
     {
       "service": "openobserve",
       "domain": "analytics.diegonmarcos.com/openobserve"
+    },
+    {
+      "service": "c3bot-relay",
+      "domain": "mcp.diegonmarcos.com"
     },
     {
       "service": "authelia",
@@ -300,10 +300,6 @@
       "domain": "api.diegonmarcos.com/pub"
     },
     {
-      "service": "c3bot-relay",
-      "domain": "mcp.diegonmarcos.com"
-    },
-    {
       "service": "cloudy-all-api",
       "domain": "api.diegonmarcos.com/c3-services-api"
     },
@@ -350,6 +346,10 @@
     {
       "service": "umami",
       "domain": "analytics.diegonmarcos.com"
+    },
+    {
+      "service": "c3bot-relay",
+      "domain": "mcp.diegonmarcos.com"
     },
     {
       "service": "authelia",

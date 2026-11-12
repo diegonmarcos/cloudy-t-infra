@@ -18,10 +18,6 @@
       "url": "https://api.diegonmarcos.com/pub/health"
     },
     {
-      "service": "c3bot-relay",
-      "url": "https://mcp.diegonmarcos.com/health"
-    },
-    {
       "service": "cloudy-all-api",
       "url": "https://api.diegonmarcos.com/c3-services-api/health"
     },
@@ -60,6 +56,10 @@
     {
       "service": "openobserve",
       "url": "https://analytics.diegonmarcos.com/openobserve/healthz"
+    },
+    {
+      "service": "c3bot-relay",
+      "url": "https://mcp.diegonmarcos.com/health"
     },
     {
       "service": "authelia",
@@ -160,10 +160,6 @@
       "domain": "api.diegonmarcos.com/pub"
     },
     {
-      "service": "c3bot-relay",
-      "domain": "mcp.diegonmarcos.com"
-    },
-    {
       "service": "cloudy-all-api",
       "domain": "api.diegonmarcos.com/c3-services-api"
     },
@@ -206,6 +202,10 @@
     {
       "service": "openobserve",
       "domain": "analytics.diegonmarcos.com/openobserve"
+    },
+    {
+      "service": "c3bot-relay",
+      "domain": "mcp.diegonmarcos.com"
     },
     {
       "service": "authelia",
@@ -310,10 +310,6 @@
       "domain": "api.diegonmarcos.com/pub"
     },
     {
-      "service": "c3bot-relay",
-      "domain": "mcp.diegonmarcos.com"
-    },
-    {
       "service": "cloudy-all-api",
       "domain": "api.diegonmarcos.com/c3-services-api"
     },
@@ -360,6 +356,10 @@
     {
       "service": "umami",
       "domain": "analytics.diegonmarcos.com"
+    },
+    {
+      "service": "c3bot-relay",
+      "domain": "mcp.diegonmarcos.com"
     },
     {
       "service": "authelia",
@@ -551,19 +551,6 @@
         "path": "/pub/health"
       }
     },
-    "c3bot-relay": {
-      "name": "c3bot-relay",
-      "vm": "oci-A1-f_0",
-      "domain": "mcp.diegonmarcos.com",
-      "enabled": true,
-      "category": "sec",
-      "ports": {
-        "app": 3119
-      },
-      "health": {
-        "path": "/health"
-      }
-    },
     "cloud-drive-mcp": {
       "name": "cloud-drive-mcp",
       "vm": "oci-A1-f_0",
@@ -743,24 +730,6 @@
       },
       "health": null
     },
-    "google-apps-script-personal": {
-      "name": "google-apps-script-personal",
-      "vm": "local",
-      "domain": null,
-      "enabled": true,
-      "category": "app",
-      "ports": null,
-      "health": null
-    },
-    "google-apps-script-workspace": {
-      "name": "google-apps-script-workspace",
-      "vm": "local",
-      "domain": null,
-      "enabled": true,
-      "category": "app",
-      "ports": null,
-      "health": null
-    },
     "google-personal-mcp": {
       "name": "google-personal-mcp",
       "vm": "oci-A1-f_0",
@@ -820,6 +789,24 @@
       "domain": null,
       "enabled": true,
       "category": "cloud",
+      "ports": null,
+      "health": null
+    },
+    "google-apps-script-personal": {
+      "name": "google-apps-script-personal",
+      "vm": "local",
+      "domain": null,
+      "enabled": true,
+      "category": "app",
+      "ports": null,
+      "health": null
+    },
+    "google-apps-script-workspace": {
+      "name": "google-apps-script-workspace",
+      "vm": "local",
+      "domain": null,
+      "enabled": true,
+      "category": "app",
       "ports": null,
       "health": null
     },
@@ -1068,6 +1055,19 @@
       "category": "tools",
       "ports": null,
       "health": null
+    },
+    "c3bot-relay": {
+      "name": "c3bot-relay",
+      "vm": "oci-A1-f_0",
+      "domain": "mcp.diegonmarcos.com",
+      "enabled": true,
+      "category": "sec",
+      "ports": {
+        "app": 3119
+      },
+      "health": {
+        "path": "/health"
+      }
     },
     "disk-janitor": {
       "name": "disk-janitor",
@@ -1742,15 +1742,6 @@
       "dns": "c3-public-api.mesh.diegonmarcos.com"
     },
     {
-      "service": "c3bot-relay",
-      "dns": "c3bot-relay.mesh.diegonmarcos.com"
-    },
-    {
-      "service": "c3bot-relay",
-      "container": "app",
-      "dns": "c3bot-relay.mesh.diegonmarcos.com"
-    },
-    {
       "service": "cloud-drive-mcp",
       "dns": "drive-mcp.mesh.diegonmarcos.com"
     },
@@ -2027,6 +2018,15 @@
       "service": "umami",
       "container": "setup",
       "dns": "umami-setup.mesh.diegonmarcos.com"
+    },
+    {
+      "service": "c3bot-relay",
+      "dns": "c3bot-relay.mesh.diegonmarcos.com"
+    },
+    {
+      "service": "c3bot-relay",
+      "container": "app",
+      "dns": "c3bot-relay.mesh.diegonmarcos.com"
     },
     {
       "service": "auth-broker",
@@ -2543,7 +2543,6 @@
           "cloudy-ai-embeddings-api",
           "jev-sidecar",
           "languagetool",
-          "c3bot-relay",
           "cloud-drive-mcp",
           "cloud-infra-mcp",
           "cloud-mail-mcp",
@@ -2573,6 +2572,7 @@
           "openobserve",
           "umami",
           "agents-tmp-reaper",
+          "c3bot-relay",
           "disk-janitor",
           "auth-broker",
           "cloudy-ai-tokens-api",
@@ -2721,19 +2721,6 @@
         },
         "health": {
           "path": "/pub/health"
-        }
-      },
-      "c3bot-relay": {
-        "name": "c3bot-relay",
-        "vm": "oci-A1-f_0",
-        "domain": "mcp.diegonmarcos.com",
-        "enabled": true,
-        "category": "sec",
-        "ports": {
-          "app": 3119
-        },
-        "health": {
-          "path": "/health"
         }
       },
       "cloud-drive-mcp": {
@@ -2915,24 +2902,6 @@
         },
         "health": null
       },
-      "google-apps-script-personal": {
-        "name": "google-apps-script-personal",
-        "vm": "local",
-        "domain": null,
-        "enabled": true,
-        "category": "app",
-        "ports": null,
-        "health": null
-      },
-      "google-apps-script-workspace": {
-        "name": "google-apps-script-workspace",
-        "vm": "local",
-        "domain": null,
-        "enabled": true,
-        "category": "app",
-        "ports": null,
-        "health": null
-      },
       "google-personal-mcp": {
         "name": "google-personal-mcp",
         "vm": "oci-A1-f_0",
@@ -2992,6 +2961,24 @@
         "domain": null,
         "enabled": true,
         "category": "cloud",
+        "ports": null,
+        "health": null
+      },
+      "google-apps-script-personal": {
+        "name": "google-apps-script-personal",
+        "vm": "local",
+        "domain": null,
+        "enabled": true,
+        "category": "app",
+        "ports": null,
+        "health": null
+      },
+      "google-apps-script-workspace": {
+        "name": "google-apps-script-workspace",
+        "vm": "local",
+        "domain": null,
+        "enabled": true,
+        "category": "app",
         "ports": null,
         "health": null
       },
@@ -3240,6 +3227,19 @@
         "category": "tools",
         "ports": null,
         "health": null
+      },
+      "c3bot-relay": {
+        "name": "c3bot-relay",
+        "vm": "oci-A1-f_0",
+        "domain": "mcp.diegonmarcos.com",
+        "enabled": true,
+        "category": "sec",
+        "ports": {
+          "app": 3119
+        },
+        "health": {
+          "path": "/health"
+        }
       },
       "disk-janitor": {
         "name": "disk-janitor",

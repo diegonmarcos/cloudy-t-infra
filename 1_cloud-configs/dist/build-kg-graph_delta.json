@@ -276,32 +276,6 @@
     },
     {
       "table": "service",
-      "id": "c3bot_relay",
-      "key": "service:c3bot_relay",
-      "properties": {
-        "name": "c3bot-relay",
-        "category": "sec",
-        "description": "c3bot-relay (#1579): Telegram <-> c3 relay on a dedicated bot (Bot B). One inbound Telegram long-poll fans out to c3 clients over three transports: WebSocket (/ws, full duplex), Server-Sent Events (/events, Last-Event-ID resume) and long-poll (/poll, cursor). Outbound via POST /send or a WS send frame. Zero npm dependencies. Bearer-gated, mesh-only.",
-        "domain": "mcp.diegonmarcos.com",
-        "port": 3119,
-        "vm": "oci-apps",
-        "folder": "infra-api_c3bot-relay"
-      }
-    },
-    {
-      "table": "container",
-      "id": "c3bot_relay",
-      "key": "container:c3bot_relay",
-      "properties": {
-        "name": "c3bot-relay",
-        "image": "ghcr.io/diegonmarcos/c3bot-relay:latest",
-        "role": "app",
-        "port": 3119,
-        "public": true
-      }
-    },
-    {
-      "table": "service",
       "id": "cloud_drive_mcp",
       "key": "service:cloud_drive_mcp",
       "properties": {
@@ -666,58 +640,6 @@
     },
     {
       "table": "service",
-      "id": "google_apps_script_personal",
-      "key": "service:google_apps_script_personal",
-      "properties": {
-        "name": "google-apps-script-personal",
-        "category": "app",
-        "description": "Google Apps Script – Google Personal — serverless Apps Script project backing the google-personal-mcp integration (Gmail for personal Google accounts, multi-account). Runs on Google's Apps Script runtime (V8/JavaScript) — no container is shipped.",
-        "domain": null,
-        "port": null,
-        "vm": "local",
-        "folder": "infra-api_google-apps-script-personal"
-      }
-    },
-    {
-      "table": "container",
-      "id": "google_apps_script_personal",
-      "key": "container:google_apps_script_personal",
-      "properties": {
-        "name": "google-apps-script-personal",
-        "image": "",
-        "role": "app",
-        "port": null,
-        "public": false
-      }
-    },
-    {
-      "table": "service",
-      "id": "google_apps_script_workspace",
-      "key": "service:google_apps_script_workspace",
-      "properties": {
-        "name": "google-apps-script-workspace",
-        "category": "app",
-        "description": "Google Apps Script – Google Workspace — serverless Apps Script project backing the google-workspace-mcp integration (Gmail, Calendar, Drive, Docs, Sheets, Forms, Slides, Chat, Tasks, Contacts, Search, Apps Script via OAuth 2.0/2.1). Runs on Google's Apps Script runtime (V8/JavaScript) — no container is shipped.",
-        "domain": null,
-        "port": null,
-        "vm": "local",
-        "folder": "infra-api_google-apps-script-workspace"
-      }
-    },
-    {
-      "table": "container",
-      "id": "google_apps_script_workspace",
-      "key": "container:google_apps_script_workspace",
-      "properties": {
-        "name": "google-apps-script-workspace",
-        "image": "",
-        "role": "app",
-        "port": null,
-        "public": false
-      }
-    },
-    {
-      "table": "service",
       "id": "google_personal_mcp",
       "key": "service:google_personal_mcp",
       "properties": {
@@ -866,6 +788,58 @@
       "key": "container:gcloud",
       "properties": {
         "name": "gcloud",
+        "image": "",
+        "role": "app",
+        "port": null,
+        "public": false
+      }
+    },
+    {
+      "table": "service",
+      "id": "google_apps_script_personal",
+      "key": "service:google_apps_script_personal",
+      "properties": {
+        "name": "google-apps-script-personal",
+        "category": "app",
+        "description": "Google Apps Script – Google Personal — serverless Apps Script project backing the google-personal-mcp integration (Gmail for personal Google accounts, multi-account). Runs on Google's Apps Script runtime (V8/JavaScript) — no container is shipped.",
+        "domain": null,
+        "port": null,
+        "vm": "local",
+        "folder": "infra-cloud_google-apps-script-personal"
+      }
+    },
+    {
+      "table": "container",
+      "id": "google_apps_script_personal",
+      "key": "container:google_apps_script_personal",
+      "properties": {
+        "name": "google-apps-script-personal",
+        "image": "",
+        "role": "app",
+        "port": null,
+        "public": false
+      }
+    },
+    {
+      "table": "service",
+      "id": "google_apps_script_workspace",
+      "key": "service:google_apps_script_workspace",
+      "properties": {
+        "name": "google-apps-script-workspace",
+        "category": "app",
+        "description": "Google Apps Script – Google Workspace — serverless Apps Script project backing the google-workspace-mcp integration (Gmail, Calendar, Drive, Docs, Sheets, Forms, Slides, Chat, Tasks, Contacts, Search, Apps Script via OAuth 2.0/2.1). Runs on Google's Apps Script runtime (V8/JavaScript) — no container is shipped.",
+        "domain": null,
+        "port": null,
+        "vm": "local",
+        "folder": "infra-cloud_google-apps-script-workspace"
+      }
+    },
+    {
+      "table": "container",
+      "id": "google_apps_script_workspace",
+      "key": "container:google_apps_script_workspace",
+      "properties": {
+        "name": "google-apps-script-workspace",
         "image": "",
         "role": "app",
         "port": null,
@@ -1372,6 +1346,32 @@
         "role": "app",
         "port": null,
         "public": false
+      }
+    },
+    {
+      "table": "service",
+      "id": "c3bot_relay",
+      "key": "service:c3bot_relay",
+      "properties": {
+        "name": "c3bot-relay",
+        "category": "sec",
+        "description": "c3bot-relay (#1579): Telegram <-> c3 relay on a dedicated bot (Bot B). One inbound Telegram long-poll fans out to c3 clients over three transports: WebSocket (/ws, full duplex), Server-Sent Events (/events, Last-Event-ID resume) and long-poll (/poll, cursor). Outbound via POST /send or a WS send frame. Zero npm dependencies. Bearer-gated, mesh-only.",
+        "domain": "mcp.diegonmarcos.com",
+        "port": 3119,
+        "vm": "oci-apps",
+        "folder": "infra-ops_c3bot-relay"
+      }
+    },
+    {
+      "table": "container",
+      "id": "c3bot_relay",
+      "key": "container:c3bot_relay",
+      "properties": {
+        "name": "c3bot-relay",
+        "image": "ghcr.io/diegonmarcos/c3bot-relay:latest",
+        "role": "app",
+        "port": 3119,
+        "public": true
       }
     },
     {
@@ -2333,7 +2333,7 @@
       "properties": {
         "name": "capital-stack-finterminal-web",
         "category": "fin",
-        "description": "Capital-Stack-FinTerminal web (#1351, design 3.5): the FinTerm pages of the SvelteKit webapps site served as static files behind the shared c3-pvt gate (Authelia 2FA session or fleet bearer) at c3-pvt.diegonmarcos.com/capital-stack-finterminal-web/. Same origin as c3-pvt.diegonmarcos.com/capital-stack-finterminal-api, so the page reads the /v1 API with the gate's session: no CORS, no token in the page. Built by cloudy-h-webapps-mob (ghcr.io/diegonmarcos/capital-stack-finterminal-web).",
+        "description": "Capital-Stack-FinTerminal web (#1351, design 3.5): the FinTerm pages of the SvelteKit webapps site served as static files behind the shared c3-pvt gate (Authelia 2FA session or fleet bearer) at c3-pvt.diegonmarcos.com/capital-stack-finterminal-web/. Same origin as c3-pvt.diegonmarcos.com/capital-stack-finterm-api (renamed in #1450; the pinned bundle may still carry the pre-rename mesh name, which is rewritten to the same route), so the page reads the /v1 API with the gate's session: no CORS, no token in the page. Built by cloudy-h-webapps-mob (ghcr.io/diegonmarcos/capital-stack-finterminal-web).",
         "domain": null,
         "port": 8341,
         "vm": "oci-apps",
@@ -3231,17 +3231,6 @@
     },
     {
       "table": "module",
-      "id": "infra_api_c3bot_relay",
-      "key": "module:infra_api_c3bot_relay",
-      "properties": {
-        "name": "infra-api_c3bot-relay",
-        "repo": "cloud",
-        "category": "sec",
-        "service": "c3bot-relay"
-      }
-    },
-    {
-      "table": "module",
       "id": "infra_api_cloud_drive_mcp",
       "key": "module:infra_api_cloud_drive_mcp",
       "properties": {
@@ -3396,28 +3385,6 @@
     },
     {
       "table": "module",
-      "id": "infra_api_google_apps_script_personal",
-      "key": "module:infra_api_google_apps_script_personal",
-      "properties": {
-        "name": "infra-api_google-apps-script-personal",
-        "repo": "cloud",
-        "category": "app",
-        "service": "google-apps-script-personal"
-      }
-    },
-    {
-      "table": "module",
-      "id": "infra_api_google_apps_script_workspace",
-      "key": "module:infra_api_google_apps_script_workspace",
-      "properties": {
-        "name": "infra-api_google-apps-script-workspace",
-        "repo": "cloud",
-        "category": "app",
-        "service": "google-apps-script-workspace"
-      }
-    },
-    {
-      "table": "module",
       "id": "infra_api_google_personal_mcp",
       "key": "module:infra_api_google_personal_mcp",
       "properties": {
@@ -3480,6 +3447,28 @@
         "repo": "cloud",
         "category": "cloud",
         "service": "gcloud"
+      }
+    },
+    {
+      "table": "module",
+      "id": "infra_cloud_google_apps_script_personal",
+      "key": "module:infra_cloud_google_apps_script_personal",
+      "properties": {
+        "name": "infra-cloud_google-apps-script-personal",
+        "repo": "cloud",
+        "category": "app",
+        "service": "google-apps-script-personal"
+      }
+    },
+    {
+      "table": "module",
+      "id": "infra_cloud_google_apps_script_workspace",
+      "key": "module:infra_cloud_google_apps_script_workspace",
+      "properties": {
+        "name": "infra-cloud_google-apps-script-workspace",
+        "repo": "cloud",
+        "category": "app",
+        "service": "google-apps-script-workspace"
       }
     },
     {
@@ -3667,6 +3656,17 @@
         "repo": "cloud",
         "category": "tools",
         "service": "agents-tmp-reaper"
+      }
+    },
+    {
+      "table": "module",
+      "id": "infra_ops_c3bot_relay",
+      "key": "module:infra_ops_c3bot_relay",
+      "properties": {
+        "name": "infra-ops_c3bot-relay",
+        "repo": "cloud",
+        "category": "sec",
+        "service": "c3bot-relay"
       }
     },
     {
@@ -4649,22 +4649,6 @@
     },
     {
       "table": "hosted_on",
-      "from": "service:c3bot_relay",
-      "to": "vm:oci_apps",
-      "key": "service:c3bot_relay->hosted_on->vm:oci_apps",
-      "properties": {}
-    },
-    {
-      "table": "runs_container",
-      "from": "service:c3bot_relay",
-      "to": "container:c3bot_relay",
-      "key": "service:c3bot_relay->runs_container->container:c3bot_relay",
-      "properties": {
-        "role": "app"
-      }
-    },
-    {
-      "table": "hosted_on",
       "from": "service:cloud_drive_mcp",
       "to": "vm:oci_apps",
       "key": "service:cloud_drive_mcp->hosted_on->vm:oci_apps",
@@ -4888,24 +4872,6 @@
       }
     },
     {
-      "table": "runs_container",
-      "from": "service:google_apps_script_personal",
-      "to": "container:google_apps_script_personal",
-      "key": "service:google_apps_script_personal->runs_container->container:google_apps_script_personal",
-      "properties": {
-        "role": "app"
-      }
-    },
-    {
-      "table": "runs_container",
-      "from": "service:google_apps_script_workspace",
-      "to": "container:google_apps_script_workspace",
-      "key": "service:google_apps_script_workspace->runs_container->container:google_apps_script_workspace",
-      "properties": {
-        "role": "app"
-      }
-    },
-    {
       "table": "hosted_on",
       "from": "service:google_personal_mcp",
       "to": "vm:oci_apps",
@@ -4976,6 +4942,24 @@
       "from": "service:gcloud",
       "to": "container:gcloud",
       "key": "service:gcloud->runs_container->container:gcloud",
+      "properties": {
+        "role": "app"
+      }
+    },
+    {
+      "table": "runs_container",
+      "from": "service:google_apps_script_personal",
+      "to": "container:google_apps_script_personal",
+      "key": "service:google_apps_script_personal->runs_container->container:google_apps_script_personal",
+      "properties": {
+        "role": "app"
+      }
+    },
+    {
+      "table": "runs_container",
+      "from": "service:google_apps_script_workspace",
+      "to": "container:google_apps_script_workspace",
+      "key": "service:google_apps_script_workspace->runs_container->container:google_apps_script_workspace",
       "properties": {
         "role": "app"
       }
@@ -5286,6 +5270,22 @@
       "from": "service:agents_tmp_reaper",
       "to": "container:agents_tmp_reaper",
       "key": "service:agents_tmp_reaper->runs_container->container:agents_tmp_reaper",
+      "properties": {
+        "role": "app"
+      }
+    },
+    {
+      "table": "hosted_on",
+      "from": "service:c3bot_relay",
+      "to": "vm:oci_apps",
+      "key": "service:c3bot_relay->hosted_on->vm:oci_apps",
+      "properties": {}
+    },
+    {
+      "table": "runs_container",
+      "from": "service:c3bot_relay",
+      "to": "container:c3bot_relay",
+      "key": "service:c3bot_relay->runs_container->container:c3bot_relay",
       "properties": {
         "role": "app"
       }
@@ -6219,15 +6219,6 @@
     },
     {
       "table": "proxied_by",
-      "from": "service:c3bot_relay",
-      "to": "service:caddy",
-      "key": "service:c3bot_relay->proxied_by->service:caddy",
-      "properties": {
-        "domain": "mcp.diegonmarcos.com"
-      }
-    },
-    {
-      "table": "proxied_by",
       "from": "service:cloud_drive_mcp",
       "to": "service:caddy",
       "key": "service:cloud_drive_mcp->proxied_by->service:caddy",
@@ -6440,6 +6431,15 @@
       "key": "service:umami->proxied_by->service:caddy",
       "properties": {
         "domain": "analytics.diegonmarcos.com"
+      }
+    },
+    {
+      "table": "proxied_by",
+      "from": "service:c3bot_relay",
+      "to": "service:caddy",
+      "key": "service:c3bot_relay->proxied_by->service:caddy",
+      "properties": {
+        "domain": "mcp.diegonmarcos.com"
       }
     },
     {
@@ -6684,13 +6684,6 @@
     {
       "table": "routes_to",
       "from": "domain:mcp_diegonmarcos_com",
-      "to": "service:c3bot_relay",
-      "key": "domain:mcp_diegonmarcos_com->routes_to->service:c3bot_relay",
-      "properties": {}
-    },
-    {
-      "table": "routes_to",
-      "from": "domain:mcp_diegonmarcos_com",
       "to": "service:cloud_drive_mcp",
       "key": "domain:mcp_diegonmarcos_com->routes_to->service:cloud_drive_mcp",
       "properties": {}
@@ -6854,6 +6847,13 @@
       "from": "domain:analytics_diegonmarcos_com",
       "to": "service:umami",
       "key": "domain:analytics_diegonmarcos_com->routes_to->service:umami",
+      "properties": {}
+    },
+    {
+      "table": "routes_to",
+      "from": "domain:mcp_diegonmarcos_com",
+      "to": "service:c3bot_relay",
+      "key": "domain:mcp_diegonmarcos_com->routes_to->service:c3bot_relay",
       "properties": {}
     },
     {
@@ -7124,20 +7124,6 @@
     },
     {
       "table": "belongs_to_repo",
-      "from": "module:infra_api_c3bot_relay",
-      "to": "repo:cloud",
-      "key": "module:infra_api_c3bot_relay->belongs_to_repo->repo:cloud",
-      "properties": {}
-    },
-    {
-      "table": "implements",
-      "from": "module:infra_api_c3bot_relay",
-      "to": "service:c3bot_relay",
-      "key": "module:infra_api_c3bot_relay->implements->service:c3bot_relay",
-      "properties": {}
-    },
-    {
-      "table": "belongs_to_repo",
       "from": "module:infra_api_cloud_drive_mcp",
       "to": "repo:cloud",
       "key": "module:infra_api_cloud_drive_mcp->belongs_to_repo->repo:cloud",
@@ -7334,34 +7320,6 @@
     },
     {
       "table": "belongs_to_repo",
-      "from": "module:infra_api_google_apps_script_personal",
-      "to": "repo:cloud",
-      "key": "module:infra_api_google_apps_script_personal->belongs_to_repo->repo:cloud",
-      "properties": {}
-    },
-    {
-      "table": "implements",
-      "from": "module:infra_api_google_apps_script_personal",
-      "to": "service:google_apps_script_personal",
-      "key": "module:infra_api_google_apps_script_personal->implements->service:google_apps_script_personal",
-      "properties": {}
-    },
-    {
-      "table": "belongs_to_repo",
-      "from": "module:infra_api_google_apps_script_workspace",
-      "to": "repo:cloud",
-      "key": "module:infra_api_google_apps_script_workspace->belongs_to_repo->repo:cloud",
-      "properties": {}
-    },
-    {
-      "table": "implements",
-      "from": "module:infra_api_google_apps_script_workspace",
-      "to": "service:google_apps_script_workspace",
-      "key": "module:infra_api_google_apps_script_workspace->implements->service:google_apps_script_workspace",
-      "properties": {}
-    },
-    {
-      "table": "belongs_to_repo",
       "from": "module:infra_api_google_personal_mcp",
       "to": "repo:cloud",
       "key": "module:infra_api_google_personal_mcp->belongs_to_repo->repo:cloud",
@@ -7442,6 +7400,34 @@
       "from": "module:infra_cloud_gcloud",
       "to": "service:gcloud",
       "key": "module:infra_cloud_gcloud->implements->service:gcloud",
+      "properties": {}
+    },
+    {
+      "table": "belongs_to_repo",
+      "from": "module:infra_cloud_google_apps_script_personal",
+      "to": "repo:cloud",
+      "key": "module:infra_cloud_google_apps_script_personal->belongs_to_repo->repo:cloud",
+      "properties": {}
+    },
+    {
+      "table": "implements",
+      "from": "module:infra_cloud_google_apps_script_personal",
+      "to": "service:google_apps_script_personal",
+      "key": "module:infra_cloud_google_apps_script_personal->implements->service:google_apps_script_personal",
+      "properties": {}
+    },
+    {
+      "table": "belongs_to_repo",
+      "from": "module:infra_cloud_google_apps_script_workspace",
+      "to": "repo:cloud",
+      "key": "module:infra_cloud_google_apps_script_workspace->belongs_to_repo->repo:cloud",
+      "properties": {}
+    },
+    {
+      "table": "implements",
+      "from": "module:infra_cloud_google_apps_script_workspace",
+      "to": "service:google_apps_script_workspace",
+      "key": "module:infra_cloud_google_apps_script_workspace->implements->service:google_apps_script_workspace",
       "properties": {}
     },
     {
@@ -7680,6 +7666,20 @@
       "from": "module:infra_ops_agents_tmp_reaper",
       "to": "service:agents_tmp_reaper",
       "key": "module:infra_ops_agents_tmp_reaper->implements->service:agents_tmp_reaper",
+      "properties": {}
+    },
+    {
+      "table": "belongs_to_repo",
+      "from": "module:infra_ops_c3bot_relay",
+      "to": "repo:cloud",
+      "key": "module:infra_ops_c3bot_relay->belongs_to_repo->repo:cloud",
+      "properties": {}
+    },
+    {
+      "table": "implements",
+      "from": "module:infra_ops_c3bot_relay",
+      "to": "service:c3bot_relay",
+      "key": "module:infra_ops_c3bot_relay->implements->service:c3bot_relay",
       "properties": {}
     },
     {

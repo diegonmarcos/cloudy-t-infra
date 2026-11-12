@@ -1088,16 +1088,6 @@
         "category": "obs"
       },
       {
-        "name": "c3bot-relay",
-        "service": "c3bot-relay",
-        "vm": "oci-A1-f_0",
-        "public_url": "mcp.diegonmarcos.com",
-        "auth": "none",
-        "private_dns": "c3bot-relay.mesh.diegonmarcos.com:3119",
-        "port": 3119,
-        "category": "sec"
-      },
-      {
         "name": "cloud-drive-mcp",
         "service": "cloud-drive-mcp",
         "vm": "oci-A1-f_0",
@@ -1326,6 +1316,16 @@
         "private_dns": "umami.mesh.diegonmarcos.com:3006",
         "port": 3006,
         "category": "tools"
+      },
+      {
+        "name": "c3bot-relay",
+        "service": "c3bot-relay",
+        "vm": "oci-A1-f_0",
+        "public_url": "mcp.diegonmarcos.com",
+        "auth": "none",
+        "private_dns": "c3bot-relay.mesh.diegonmarcos.com:3119",
+        "port": 3119,
+        "category": "sec"
       },
       {
         "name": "authelia",
@@ -1620,26 +1620,6 @@
         "db_engine": null
       },
       {
-        "name": "google-apps-script-personal",
-        "service": "google-apps-script-personal",
-        "vm": "local",
-        "private_dns": "google-apps-script-personal",
-        "port": null,
-        "protocol": "tcp",
-        "category": "app",
-        "db_engine": null
-      },
-      {
-        "name": "google-apps-script-workspace",
-        "service": "google-apps-script-workspace",
-        "vm": "local",
-        "private_dns": "google-apps-script-workspace",
-        "port": null,
-        "protocol": "tcp",
-        "category": "app",
-        "db_engine": null
-      },
-      {
         "name": "cloud-builder-x",
         "service": "cloud-builder-x",
         "vm": "local",
@@ -1677,6 +1657,26 @@
         "port": null,
         "protocol": "tcp",
         "category": "cloud",
+        "db_engine": null
+      },
+      {
+        "name": "google-apps-script-personal",
+        "service": "google-apps-script-personal",
+        "vm": "local",
+        "private_dns": "google-apps-script-personal",
+        "port": null,
+        "protocol": "tcp",
+        "category": "app",
+        "db_engine": null
+      },
+      {
+        "name": "google-apps-script-workspace",
+        "service": "google-apps-script-workspace",
+        "vm": "local",
+        "private_dns": "google-apps-script-workspace",
+        "port": null,
+        "protocol": "tcp",
+        "category": "app",
         "db_engine": null
       },
       {
