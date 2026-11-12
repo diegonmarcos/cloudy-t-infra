@@ -1175,7 +1175,7 @@
     },
     "mcp-oauth": {
       "name": "mcp-oauth",
-      "vm": "local",
+      "vm": "gcp-E2-f_0",
       "domain": null,
       "enabled": true,
       "category": "sec",
@@ -2627,7 +2627,8 @@
           "wireguard-mesh-ws-tunnel",
           "authelia",
           "caddy",
-          "introspect-proxy"
+          "introspect-proxy",
+          "mcp-oauth"
         ]
       },
       "gcp-L4-e_0": {
@@ -3346,7 +3347,7 @@
       },
       "mcp-oauth": {
         "name": "mcp-oauth",
-        "vm": "local",
+        "vm": "gcp-E2-f_0",
         "domain": null,
         "enabled": true,
         "category": "sec",

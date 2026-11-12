@@ -205,7 +205,8 @@
         "authelia-redis",
         "postlite-authelia",
         "caddy",
-        "introspect-proxy"
+        "introspect-proxy",
+        "mcp-oauth"
       ],
       "ports": [],
       "networks": [],
@@ -882,6 +883,12 @@
         "type": "A",
         "value": "10.0.0.1",
         "service": "introspect-proxy"
+      },
+      {
+        "name": "mcp-oauth.mesh.diegonmarcos.com",
+        "type": "A",
+        "value": "10.0.0.1",
+        "service": "mcp-oauth"
       },
       {
         "name": "steel-browser.mesh.diegonmarcos.com",
@@ -4968,11 +4975,12 @@
     },
     "mcp-oauth": {
       "category": "sec",
-      "vm": "local",
+      "vm": "gcp-E2-f_0",
       "folder": "infra-sec_mcp-oauth",
       "description": "MCP OAuth 2.1 authorization server for mcp.diegonmarcos.com (option 31.1, approved 2026-10-28): RFC 8414/9728 discovery, RFC 7591 DCR, /authorize behind Authelia, PKCE S256 /token, opaque tokens introspected by introspect-proxy",
       "port": 4183,
       "dns": "mcp-oauth.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.1:4183",
       "containers": {
         "app": {
           "container_name": "mcp-oauth",

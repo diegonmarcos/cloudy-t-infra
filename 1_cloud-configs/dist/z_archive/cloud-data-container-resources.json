@@ -618,9 +618,9 @@
       "resources": null
     },
     "mcp-oauth": {
-      "vm": "local",
-      "vm_ram_gb": null,
-      "vm_cpu": null,
+      "vm": "gcp-proxy",
+      "vm_ram_gb": 1,
+      "vm_cpu": 2,
       "containers": [
         "mcp-oauth"
       ],

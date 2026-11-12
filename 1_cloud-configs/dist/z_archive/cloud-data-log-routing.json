@@ -542,6 +542,11 @@
         "container": "introspect-proxy",
         "service": "introspect-proxy",
         "log_level": "info"
+      },
+      {
+        "container": "mcp-oauth",
+        "service": "mcp-oauth",
+        "log_level": "info"
       }
     ],
     "local": [
@@ -583,11 +588,6 @@
       {
         "container": "caddy-l4-image",
         "service": "caddy-l4-image",
-        "log_level": "info"
-      },
-      {
-        "container": "mcp-oauth",
-        "service": "mcp-oauth",
         "log_level": "info"
       },
       {

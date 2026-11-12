@@ -72,6 +72,15 @@
         "ghcr.io/diegonmarcos/introspect-proxy:latest"
       ],
       "has_docker_build": true
+    },
+    {
+      "name": "mcp-oauth",
+      "dir": "infra-sec_mcp-oauth",
+      "compose_path": "/opt/containers/mcp-oauth",
+      "images": [
+        "ghcr.io/diegonmarcos/mcp-oauth:latest"
+      ],
+      "has_docker_build": true
     }
   ],
   "ssh_containers": [],

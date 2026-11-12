@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 23984,
+    "files": 23988,
     "by_lang": {
       "sh": 706,
       "js": 550,
       "py": 215,
-      "kotlin": 13234,
+      "kotlin": 13238,
       "ts": 8470,
       "java": 651,
       "nix": 36,
@@ -24,7 +24,7 @@
       "script": 301,
       "module": 6480,
       "java": 650,
-      "kotlin": 13231,
+      "kotlin": 13235,
       "python": 74,
       "flake": 32,
       "rust-module": 122,
@@ -270656,6 +270656,18 @@
       ]
     },
     {
+      "path": "ac_cloud-mail/core/data/src/main/kotlin/app/sterna/core/data/mail/JmapInboxBacklog.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [],
+      "imports": [],
+      "symbols": [
+        "next( serverIdsNewestFirst: List<String>, cachedIds: Set<String>, newCap: Int = JMAP_NEW_CAP, backfill: Int = JMAP_BACKFILL_BATCH, )",
+        "walkAllIds( pageSize: Int, cap: Int = JMAP_SNAPSHOT_CAP, page: suspend (position: Int, limit: Int)",
+        "class JmapBacklogPlan"
+      ]
+    },
+    {
       "path": "ac_cloud-mail/core/data/src/main/kotlin/app/sterna/core/data/mail/ListShape.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -276580,6 +276592,23 @@
       ]
     },
     {
+      "path": "ac_cloud-mail/core/data/src/test/kotlin/app/sterna/core/data/mail/JmapBacklogPlanTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "JmapBacklogPlanTest"
+      ],
+      "imports": [
+        "kotlinx.coroutines.runBlocking",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "class JmapBacklogPlanTest"
+      ]
+    },
+    {
       "path": "ac_cloud-mail/core/data/src/test/kotlin/app/sterna/core/data/mail/JmapSearchScopeTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -282479,6 +282508,23 @@
       ]
     },
     {
+      "path": "ac_cloud-mail/core/jmap/src/main/kotlin/app/sterna/core/jmap/InboxGuard.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "InboxGuard",
+        "inboxSafeRemove"
+      ],
+      "imports": [
+        "app.sterna.core.jmap.model.Mailbox"
+      ],
+      "symbols": [
+        "of(mailboxes: List<Mailbox>)",
+        "inboxSafeRemove(guard: InboxGuard?, add: String?, remove: String?)",
+        "class InboxGuard"
+      ]
+    },
+    {
       "path": "ac_cloud-mail/core/jmap/src/main/kotlin/app/sterna/core/jmap/Jmap.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -282564,6 +282610,8 @@
         "kotlinx.serialization.json.Json"
       ],
       "symbols": [
+        "inboxGuardOf(accountId: String)",
+        "rememberInboxGuard(accountId: String, mailboxes: List<Mailbox>)",
         "fetchSession(sessionUrl: String, auth: JmapAuth)",
         "getMailboxes(session: JmapSession, accountId: String, auth: JmapAuth)",
         "queryEmailsPage( session: JmapSession, accountId: String, mailboxId: String, limit: Int, auth: JmapAuth, position: Int = 0, calculateTotal: Boolean = false, // Stable paging: anchor on a known email id and start [anchorOffset] after // it, instead of an absolute [position] that shifts when new mail arrives. anchorId: String? = null, anchorOffset: Int = 0, // Only unread messages (notKeyword $seen)",
@@ -282601,9 +282649,7 @@
         "createMailbox( session: JmapSession, accountId: String, name: String, role: String?, auth: JmapAuth, parentId: String? = null, )",
         "createIdentity( session: JmapSession, accountId: String, name: String, email: String, auth: JmapAuth, )",
         "renameMailbox( session: JmapSession, accountId: String, mailboxId: String, name: String, auth: JmapAuth, )",
-        "deleteMailbox(session: JmapSession, accountId: String, mailboxId: String, auth: JmapAuth)",
-        "getIdentities(session: JmapSession, accountId: String, auth: JmapAuth)",
-        "getVacationResponse(session: JmapSession, accountId: String, auth: JmapAuth)"
+        "deleteMailbox(session: JmapSession, accountId: String, mailboxId: String, auth: JmapAuth)"
       ]
     },
     {
@@ -283300,6 +283346,40 @@
         "importArgs(request: JsonObject)",
         "class ImportEmailOnTheWireTest",
         "class Sent"
+      ]
+    },
+    {
+      "path": "ac_cloud-mail/core/jmap/src/test/kotlin/app/sterna/core/jmap/InboxGuardOnTheWireTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "InboxGuardOnTheWireTest"
+      ],
+      "imports": [
+        "app.sterna.core.jmap.model.JmapSession",
+        "app.sterna.core.jmap.model.Mailbox",
+        "kotlinx.coroutines.runBlocking",
+        "kotlinx.serialization.json.Json",
+        "kotlinx.serialization.json.JsonNull",
+        "kotlinx.serialization.json.JsonObject",
+        "kotlinx.serialization.json.jsonArray",
+        "kotlinx.serialization.json.jsonObject",
+        "kotlinx.serialization.json.jsonPrimitive",
+        "okhttp3.mockwebserver.MockResponse",
+        "okhttp3.mockwebserver.MockWebServer",
+        "org.junit.After",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNull",
+        "org.junit.Before",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "setUp()",
+        "tearDown()",
+        "sent(call: suspend ()",
+        "args()",
+        "class InboxGuardOnTheWireTest"
       ]
     },
     {

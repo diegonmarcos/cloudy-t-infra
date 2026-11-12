@@ -34,7 +34,7 @@
   "_source": "_cloud-data-consolidated.json via cloud-data-config-derive.ts/kg-delta",
   "counts": {
     "nodes": 381,
-    "edges": 526,
+    "edges": 527,
     "by_table": {
       "vm": 4,
       "service": 94,
@@ -1678,7 +1678,7 @@
         "description": "MCP OAuth 2.1 authorization server for mcp.diegonmarcos.com (option 31.1, approved 2026-10-28): RFC 8414/9728 discovery, RFC 7591 DCR, /authorize behind Authelia, PKCE S256 /token, opaque tokens introspected by introspect-proxy",
         "domain": null,
         "port": 4183,
-        "vm": "local",
+        "vm": "gcp-proxy",
         "folder": "infra-sec_mcp-oauth"
       }
     },
@@ -5489,6 +5489,13 @@
       "properties": {
         "role": "app"
       }
+    },
+    {
+      "table": "hosted_on",
+      "from": "service:mcp_oauth",
+      "to": "vm:gcp_proxy",
+      "key": "service:mcp_oauth->hosted_on->vm:gcp_proxy",
+      "properties": {}
     },
     {
       "table": "runs_container",

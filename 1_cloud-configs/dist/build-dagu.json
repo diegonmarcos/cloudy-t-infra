@@ -1264,6 +1264,30 @@
         "auth": "bearer"
       }
     },
+    "mcp-oauth": {
+      "ip": "10.0.0.1",
+      "ports": {
+        "app": 4183
+      },
+      "vm": "gcp-proxy",
+      "healthcheck": "/health",
+      "description": "MCP OAuth 2.1 authorization server for mcp.diegonmarcos.com (option 31.1, approved 2026-10-28): RFC 8414/9728 discovery, RFC 7591 DCR, /authorize behind Authelia, PKCE S256 /token, opaque tokens introspected by introspect-proxy",
+      "api": {
+        "has_api": true,
+        "has_web_ui": false,
+        "api_path": "/",
+        "api_url": null,
+        "healthcheck_paths": [
+          "/health"
+        ],
+        "type": "custom-rest",
+        "base_path": "/",
+        "endpoint_count": 9,
+        "display_name": "MCP OAuth Authorization Server",
+        "description": "OAuth 2.1 AS for MCP connectors (claude.ai, claude.com, localhost). Public paths are exactly the mcp.diegonmarcos.com entry of caddy_config.edge_auth.public_open; /introspect is mesh-only.",
+        "auth": "oauth2"
+      }
+    },
     "steel-browser": {
       "ip": "10.0.0.6",
       "ports": {

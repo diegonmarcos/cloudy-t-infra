@@ -631,9 +631,10 @@
         "wireguard-mesh-ws-tunnel",
         "authelia",
         "caddy",
-        "introspect-proxy"
+        "introspect-proxy",
+        "mcp-oauth"
       ],
-      "container_count": 8
+      "container_count": 9
     },
     "gcp-L4-e_0": {
       "ip": "34.66.107.117",
@@ -8484,13 +8485,14 @@
     },
     "mcp-oauth": {
       "category": "sec",
-      "vm": "local",
+      "vm": "gcp-E2-f_0",
       "folder": "infra-sec_mcp-oauth",
       "description": "MCP OAuth 2.1 authorization server for mcp.diegonmarcos.com (option 31.1, approved 2026-10-28): RFC 8414/9728 discovery, RFC 7591 DCR, /authorize behind Authelia, PKCE S256 /token, opaque tokens introspected by introspect-proxy",
       "enabled": true,
       "flake": "infra-sec_mcp-oauth",
       "port": 4183,
       "dns": "mcp-oauth.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.1:4183",
       "containers": {
         "app": {
           "container_name": "mcp-oauth",
@@ -8541,7 +8543,7 @@
       },
       "_status": "approved/live: owner approved option 31.1 on 2026-10-28; runtime needs dist/.secrets (INTROSPECT_SECRET, FORM_SECRET) provisioned on gcp-proxy via secrets.yaml. HOST RETARGET (#1252 vs #1104, 2026-10-30): the mcp.diegonmarcos.com host is deleted by #1104, so caddy_config.mcp_oauth (host mcp.diegonmarcos.com) must NOT be derived into build-caddy*.json as is. Decision: container, image and secrets work stay; the AS front door moves to the surviving tiers (open discovery/register/token on the c3-pub allowlist under /mcp-oauth/, /authorize and the MCP tool endpoints on c3-pvt behind the session-or-bearer gate, protected-resource metadata referenced from the 401 WWW-Authenticate). Do not derive or ship the Caddy block until that retarget lands and the owner confirms it against owner decision 31 (fleet MCP clients use bearer, never OAuth; the AS serves only claude.ai-style connectors).",
       "bind_host": "10.0.0.1",
-      "_ship_skip": "parked (#1252): deploy.host local keeps Ship from building/deploying this service (same marker as infra-cloud_gcloud and infra-bld_cloud-builder-x; build-gha.json then omits it). Restore host gcp-proxy and remote_path /opt/containers/mcp-oauth together with provisioning dist/.secrets (INTROSPECT_SECRET, FORM_SECRET) on gcp-proxy.",
+      "_ship_skip": "unparked (#1252, 2026-11-12): secrets provisioned in the vault through the sops-create workflow (Linux-Containers/infra-sec_mcp-oauth/src/secrets.yaml INTROSPECT_SECRET + secrets.form.yaml FORM_SECRET; introspect-proxy gets the same introspect value as fragment secrets.mcp-oauth.yaml MCP_OAUTH_INTROSPECT_SECRET). Ship builds and deploys it to gcp-proxy (mem_limit 128M fits the e2-micro, free tier).",
       "resources": {
         "mem_reservation": "16M",
         "mem_limit": "128M"
