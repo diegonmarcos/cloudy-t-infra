@@ -129,7 +129,7 @@
     {
       "name": "capital-stack-finterminal-api",
       "label": "FinTerminal API",
-      "managed": false,
+      "managed": true,
       "state": "declared",
       "region": "us-central1",
       "from_host": "oci-apps",
@@ -184,7 +184,7 @@
     {
       "name": "capital-stack-finterminal-web",
       "label": "FinTerminal Web",
-      "managed": false,
+      "managed": true,
       "state": "declared",
       "region": "us-central1",
       "from_host": "oci-apps",
@@ -267,7 +267,7 @@
     {
       "name": "languagetool",
       "label": "LanguageTool",
-      "managed": false,
+      "managed": true,
       "state": "declared",
       "region": "us-central1",
       "from_host": "oci-apps",
@@ -309,7 +309,7 @@
     {
       "name": "cloudy-ai-embeddings-api",
       "label": "Embeddings API (bge-m3 + reranker)",
-      "managed": false,
+      "managed": true,
       "state": "declared",
       "region": "us-central1",
       "from_host": "oci-apps",
