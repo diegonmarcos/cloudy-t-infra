@@ -41,6 +41,10 @@ in {
     text = ''
       #!/bin/bash
       set -euo pipefail
+      # BusyBox from the nix profile shadows util-linux/kmod/coreutils on some
+      # VMs (its modprobe cannot load .ko.zst, its dd rejects status=progress),
+      # which left oci-apps with no swap at all (#1641). Pin the GNU tools.
+      export PATH=/usr/sbin:/usr/bin:/sbin:/bin:$PATH
       SWAPFILE="/swapfile"
       SWAP_MB=${toString diskSwapMB}
 
@@ -52,6 +56,18 @@ in {
         fi
         swapoff "$SWAPFILE" 2>/dev/null || true
         rm -f "$SWAPFILE"
+      fi
+
+      # Never let swap fill the root disk: cap the file at free space minus a
+      # 4 GiB headroom, and skip below 1 GiB (#1641: oci-apps root was 95% full,
+      # a 24 GiB file would have filled it).
+      if [ ! -f "$SWAPFILE" ]; then
+        AVAIL_MB=$(( $(df -P / | awk 'NR==2 {print $4}') / 1024 ))
+        CAP_MB=$(( AVAIL_MB - 4096 ))
+        if [ "$CAP_MB" -lt 1024 ]; then
+          echo "[disk-swap] Only ''${AVAIL_MB}MB free on / - skipping disk swap"; exit 0
+        fi
+        if [ "$SWAP_MB" -gt "$CAP_MB" ]; then SWAP_MB=$CAP_MB; fi
       fi
 
       if [ ! -f "$SWAPFILE" ]; then
@@ -87,6 +103,10 @@ in {
     text = ''
       #!/bin/bash
       set -euo pipefail
+      # BusyBox from the nix profile shadows util-linux/kmod/coreutils on some
+      # VMs (its modprobe cannot load .ko.zst, its dd rejects status=progress),
+      # which left oci-apps with no swap at all (#1641). Pin the GNU tools.
+      export PATH=/usr/sbin:/usr/bin:/sbin:/bin:$PATH
       SWAPFILE="/swapfile"
       SWAP_MB=${toString diskSwapMB}
 

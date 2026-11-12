@@ -128,6 +128,10 @@ in {
     text = ''
       #!/bin/bash
       set -euo pipefail
+      # BusyBox from the nix profile shadows util-linux/kmod/coreutils on some
+      # VMs (its modprobe cannot load .ko.zst, its dd rejects status=progress),
+      # which left oci-apps with no swap at all (#1641). Pin the GNU tools.
+      export PATH=/usr/sbin:/usr/bin:/sbin:/bin:$PATH
       modprobe zram num_devices=1 2>/dev/null || true
       if swapon --show=NAME,TYPE 2>/dev/null | grep -q zram; then
         echo "[zram] Already active, skipping"; exit 0
