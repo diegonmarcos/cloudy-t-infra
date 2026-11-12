@@ -364,6 +364,13 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
+      # #1064: the containers' sops files live only in the private vault; the
+      # testers read <svc>/src/secrets.yaml (e.g. agent-credential-scope H).
+      - name: Overlay private secrets from cloud-me-pvt-vault
+        uses: ./.github/actions/overlay-vault-files
+        with:
+          vault_deploy_key: ${{ secrets.VAULT_DEPLOY_KEY }}
+
       # #413: the vm-pilot protection tester (test-protection-data-driven.sh)
       # evaluates the Nix modules with nix-instantiate. Without nix on this
       # runner it printed a SKIP and exited 0, so the registry reported "ok"

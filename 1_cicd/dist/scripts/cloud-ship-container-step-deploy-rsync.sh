@@ -55,6 +55,92 @@ scp_secret() {
     return 1
 }
 
+# ── .secrets.d: update IN PLACE, never replace the directory (#1683) ──────
+#
+# Containers bind-mount ./.secrets.d at /run/secrets. A bind mount pins the
+# directory INODE it saw at container start. The previous deploy did
+# `rm -rf $DEPLOY_PATH/.secrets.d` then `scp -r` a fresh one: a new inode on
+# the host, while every running container kept the old, now-empty one. On
+# 2026-11-12 14:13 google-workspace-mcp lost /run/secrets/GOOGLE_SERVICE_ACCOUNT_KEY
+# that way and every Drive call failed until the container was restarted.
+#
+# Now: scp the rendered tree to a sibling STAGING dir, then on the host copy
+# each changed key to a temp file in the target directory and rename(2) it
+# over the target key (atomic, same filesystem). Keys dropped from sops are
+# removed as files; the directory itself is never removed or replaced, so its
+# inode survives and a running container sees the new content at once. The
+# stage dir lands at exactly one depth (scp into a path that does not exist
+# yet), which also keeps the old `.secrets.d/.secrets.d` nesting bug fixed.
+#
+# Any changed, added or removed key sets SECRETS_CHANGED/CONFIG_CHANGED so
+# step_compose force-recreates the service: an app that read its secret once
+# at start-up must be restarted to use the new value.
+#
+# The sync is a POSIX sh script (secrets_d_sync_script) fed to the host on
+# stdin; its last line must be SECRETS_D_SYNC_OK, so an ssh retry that re-ran
+# with an already-drained stdin can never pass as a silent success.
+SECRETS_D_STAGE_SUFFIX=".incoming"
+
+secrets_d_sync_script() {
+    cat <<'EOF_SECRETS_D_SYNC'
+set -eu
+stage="$1"; target="$2"
+[ -d "$stage" ] || { echo "SECRETS_D_SYNC_ERR staging dir missing"; exit 1; }
+[ -L "$target" ] && { echo "SECRETS_D_SYNC_ERR target is a symlink"; exit 1; }
+[ -d "$target" ] || mkdir "$target"
+chmod "$(stat -c %a "$stage")" "$target"
+changed=0
+for f in "$stage"/* "$stage"/.[!.]*; do
+    [ -f "$f" ] || continue
+    k="${f##*/}"; t="$target/$k"
+    if [ -f "$t" ] && [ ! -L "$t" ] && cmp -s "$f" "$t"; then
+        [ "$(stat -c %a "$f")" = "$(stat -c %a "$t")" ] || chmod "$(stat -c %a "$f")" "$t"
+        continue
+    fi
+    tmp="$target/.$k.tmp.$$"
+    cp -p "$f" "$tmp"
+    mv -f "$tmp" "$t"
+    changed=$((changed + 1)); echo "SECRETS_D_SYNC_CHANGED $k"
+done
+for t in "$target"/* "$target"/.[!.]*; do
+    [ -e "$t" ] || [ -L "$t" ] || continue
+    k="${t##*/}"
+    [ -f "$stage/$k" ] && continue
+    rm -rf -- "$t"
+    changed=$((changed + 1)); echo "SECRETS_D_SYNC_REMOVED $k"
+done
+rm -rf -- "$stage"
+echo "SECRETS_D_SYNC_COUNT $changed"
+echo "SECRETS_D_SYNC_OK"
+EOF_SECRETS_D_SYNC
+}
+
+deploy_secrets_d() {
+    [ -z "$DEPLOY_PATH" ] && { log_error ".secrets.d: refusing to sync into an empty DEPLOY_PATH"; return 1; }
+    _sd_target="$DEPLOY_PATH/.secrets.d"
+    _sd_stage="$_sd_target$SECRETS_D_STAGE_SUFFIX"
+    # Only the STAGING dir is ever removed; the live directory never is.
+    ssh_with_retry "$DEPLOY_HOST" "rm -rf '$_sd_stage'" >/dev/null 2>&1 \
+        || { log_error "could not clear staging $DEPLOY_HOST:$_sd_stage"; return 1; }
+    scp_secret ".secrets.d (staging)" -r "$DIST_DIR/.secrets.d" "$DEPLOY_HOST:$_sd_stage" || return $?
+    _sd_out=$(secrets_d_sync_script | ssh_with_retry "$DEPLOY_HOST" "sh -s -- '$_sd_stage' '$_sd_target'" 2>&1) || true
+    case "$_sd_out" in
+        *SECRETS_D_SYNC_OK*) ;;
+        *)  printf '%s\n' "$_sd_out" | grep '^SECRETS_D_SYNC_' | sed 's|^|    |'
+            log_error ".secrets.d in-place sync did not complete on $DEPLOY_HOST — secrets NOT updated"
+            return 1 ;;
+    esac
+    _sd_n=$(printf '%s\n' "$_sd_out" | sed -n 's/^SECRETS_D_SYNC_COUNT //p')
+    if [ "${_sd_n:-0}" -gt 0 ]; then
+        printf '%s\n' "$_sd_out" | grep -E '^SECRETS_D_SYNC_(CHANGED|REMOVED) ' | sed 's|^SECRETS_D_SYNC_|    .secrets.d |'
+        SECRETS_CHANGED=true; CONFIG_CHANGED=true
+        log ".secrets.d updated in place ($_sd_n key(s) changed) — the service will be recreated"
+    else
+        log ".secrets.d unchanged (in place, directory kept)"
+    fi
+    return 0
+}
+
 # Filter protected paths out of a deploy-manifest stream (stdin -> stdout).
 #
 # The manifest reconciler in step_deploy deletes everything the previous deploy
@@ -158,24 +244,9 @@ step_deploy() {
         scp_secret ".secrets" "$DIST_DIR/.secrets" "$DEPLOY_HOST:$DEPLOY_PATH/.secrets" || return $?
     fi
     if [ -d "$DIST_DIR/.secrets.d" ]; then
-        # `scp -r src dest` names the destination DIRECTORY, and when that
-        # directory already exists scp copies the source INSIDE it. So the first
-        # deploy created $DEPLOY_PATH/.secrets.d correctly and every deploy after
-        # it wrote $DEPLOY_PATH/.secrets.d/.secrets.d/<KEY> — a second, older copy
-        # of every credential one level down, named after the material it holds,
-        # which no later deploy ever rewrote and the manifest reconciler is
-        # explicitly forbidden to touch (drop_protected above).
-        #
-        # Removing the remote directory first and naming its PARENT as the
-        # destination fixes both halves at once: the tree lands at exactly one
-        # depth, and a key dropped from sops stops surviving on the VM forever
-        # because scp merges but never deletes. Recreating the directory from the
-        # source also restores the mode the decrypt step chose for it, instead of
-        # inheriting whatever the remote umask had left in place.
-        [ -z "$DEPLOY_PATH" ] && { log_error ".secrets.d: refusing to clean an empty DEPLOY_PATH"; return 1; }
-        ssh_with_retry "$DEPLOY_HOST" "rm -rf '$DEPLOY_PATH/.secrets.d'" >/dev/null 2>&1 \
-            || log_warn "could not clear $DEPLOY_HOST:$DEPLOY_PATH/.secrets.d — stale keys may survive this deploy"
-        scp_secret ".secrets.d" -r "$DIST_DIR/.secrets.d" "$DEPLOY_HOST:$DEPLOY_PATH/" || return $?
+        # In place, never by replacing the directory (#1683). See
+        # deploy_secrets_d above for why and how.
+        deploy_secrets_d || return $?
     fi
 
     # Vault-sourced files for bind mounts outside DEPLOY_PATH (see step_host_sync).

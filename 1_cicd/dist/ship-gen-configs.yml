@@ -246,7 +246,7 @@ jobs:
           # the block above describes; the materialized a_solutions copies
           # were staged but the file they are copies OF was not.
           for p in _dotfiles/git/dist/ _dotfiles/apps/dist/ 1_cicd/dist/ 9_others/dist/ \
-                   1_cloud-configs/dist/ \
+                   1_cloud-configs/dist/ 1_cloud-configs/manifest.json \
                    b_infra/_shared/vm-pilot/dist/ \
                    b_infra/nixhm-sudo-*/dist/; do
             git add -- "$p" || echo "::warning::could not stage $p"
