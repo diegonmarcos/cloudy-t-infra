@@ -6,18 +6,18 @@
   },
   "repo": "cloud-u-containers",
   "counts": {
-    "files": 2675,
+    "files": 2677,
     "by_lang": {
       "sh": 181,
-      "js": 120,
+      "js": 121,
       "nix": 196,
       "py": 520,
-      "ts": 1287,
+      "ts": 1288,
       "rust": 371
     },
     "by_role": {
       "shell": 172,
-      "file": 355,
+      "file": 356,
       "nix-module": 20,
       "python": 506,
       "module": 794,
@@ -25,7 +25,7 @@
       "flake": 89,
       "entrypoint": 72,
       "compose": 87,
-      "mcp-tool": 147,
+      "mcp-tool": 148,
       "workflow-dag": 5,
       "rust-module": 367,
       "hook": 53
@@ -3289,6 +3289,38 @@
       ]
     },
     {
+      "path": "infra-api_cloud-infra-mcp/src/code/mcp/tools/backlog.ts",
+      "lang": "ts",
+      "role": "mcp-tool",
+      "exports": [
+        "validId",
+        "validSession",
+        "indexFromTree",
+        "nextId",
+        "newTicket",
+        "mergeUpdate",
+        "handleBacklog",
+        "BACKLOG_REPO",
+        "BACKLOG_BRANCH",
+        "TASKS_DIR",
+        "STATUSES"
+      ],
+      "imports": [],
+      "symbols": [
+        "validId(id: unknown)",
+        "validSession(s: unknown)",
+        "indexFromTree(paths: string[])",
+        "nextId(index: Map<string, unknown>)",
+        "newTicket(id: string, subject: string, description: string, scope?: unknown)",
+        "mergeUpdate(old: any, patch: any, today = new Date()",
+        "gh(method: string, path: string, body?: unknown)",
+        "loadIndex()",
+        "readTicket(path: string)",
+        "writeTicket(path: string, ticket: any, message: string, sha?: string)",
+        "handleBacklog(method: string, p: any)"
+      ]
+    },
+    {
       "path": "infra-api_cloud-infra-mcp/src/code/mcp/tools/browser-core.ts",
       "lang": "ts",
       "role": "mcp-tool",
@@ -3657,6 +3689,7 @@
         "../../shared/libs/notify.js",
         "../../shared/libs/security.js",
         "./security-testing.js",
+        "./backlog.js",
         "os"
       ],
       "symbols": [
@@ -5531,6 +5564,18 @@
         "envLine(e: string)",
         "shq(v: string)"
       ]
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/test-backlog.mjs",
+      "lang": "js",
+      "role": "file",
+      "exports": [],
+      "imports": [
+        "node:assert/strict",
+        "node:test",
+        "./mcp/tools/backlog.ts"
+      ],
+      "symbols": []
     },
     {
       "path": "infra-api_cloud-infra-mcp/src/code/test-browser-tools.mjs",

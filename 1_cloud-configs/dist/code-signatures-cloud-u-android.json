@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 23989,
+    "files": 23991,
     "by_lang": {
       "sh": 706,
       "js": 550,
       "py": 216,
-      "kotlin": 13238,
+      "kotlin": 13240,
       "ts": 8470,
       "java": 651,
       "nix": 36,
@@ -25,7 +25,7 @@
       "module": 6480,
       "java": 650,
       "python": 75,
-      "kotlin": 13235,
+      "kotlin": 13237,
       "flake": 32,
       "rust-module": 122,
       "nix-module": 4,
@@ -10197,6 +10197,34 @@
       ]
     },
     {
+      "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/configs/AdbPrereqs.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [],
+      "imports": [
+        "com.diegonmarcos.superapp.adbdebug.ChannelFacts",
+        "com.diegonmarcos.superapp.adbdebug.ChannelMode",
+        "com.diegonmarcos.superapp.adbdebug.SetupAction",
+        "com.diegonmarcos.superapp.adbdebug.ShizukuState"
+      ],
+      "symbols": [
+        "st(v: Boolean?)",
+        "rows(f: ChannelFacts, live: Live, pkg: String)",
+        "firstFailing(rows: List<Row>)",
+        "canGrant(rows: List<Row>)",
+        "class AdbPrereqs",
+        "class Owner",
+        "class Status",
+        "class Action",
+        "class Open",
+        "class Grant",
+        "class Connect",
+        "class InPerms",
+        "class Row",
+        "class Live"
+      ]
+    },
+    {
       "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/configs/AdbShellBrokerPage.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -10317,6 +10345,11 @@
       "role": "kotlin",
       "exports": [],
       "imports": [
+        "android.content.Context",
+        "android.content.pm.PackageManager",
+        "android.os.Build",
+        "android.os.PowerManager",
+        "androidx.compose.foundation.background",
         "androidx.compose.foundation.layout.Column",
         "androidx.compose.foundation.layout.fillMaxWidth",
         "androidx.compose.foundation.rememberScrollState",
@@ -10336,8 +10369,8 @@
         "androidx.lifecycle.LifecycleEventObserver",
         "androidx.lifecycle.compose.LocalLifecycleOwner",
         "com.diegonmarcos.superapp.adbdebug.ChannelOps",
+        "com.diegonmarcos.superapp.adbdebug.ChannelReader",
         "com.diegonmarcos.superapp.perms.PermsLink",
-        "com.diegonmarcos.superapp.perms.RowChip",
         "com.diegonmarcos.superapp.shellbroker.ShellBroker",
         "com.diegonmarcos.superapp.shellclient.ShellStatus",
         "com.diegonmarcos.superapp.uikit.KitStoreCaption",
@@ -10354,7 +10387,11 @@
       "symbols": [
         "resumeTick()",
         "AdbTermTab()",
-        "AdbPermsTab()"
+        "AdbPermsTab()",
+        "readAdbPrereqs(ctx: Context)",
+        "held(p: String)",
+        "runPrereqAction(ctx: Context, a: AdbPrereqs.Action)",
+        "AdbPermsChain(rows: List<AdbPrereqs.Row>?, note: String?, onAction: (AdbPrereqs.Action)"
       ]
     },
     {
@@ -23820,6 +23857,45 @@
         "top(tag: String)",
         "count(r: ComposeTestRule, tag: String)",
         "class AdbCockpitPageTest"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/test/java/com/diegonmarcos/superapp/configs/AdbPermsChainTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "AdbPermsChainTest"
+      ],
+      "imports": [
+        "android.app.Application",
+        "androidx.compose.ui.test.hasTestTag",
+        "androidx.compose.ui.test.onNodeWithTag",
+        "androidx.compose.ui.test.performClick",
+        "com.diegonmarcos.superapp.adbdebug.ChannelFacts",
+        "com.diegonmarcos.superapp.adbdebug.ChannelMode",
+        "com.diegonmarcos.superapp.configs.AdbPrereqs.Action",
+        "com.diegonmarcos.superapp.configs.AdbPrereqs.Owner",
+        "com.diegonmarcos.superapp.configs.AdbPrereqs.Status",
+        "com.diegonmarcos.superapp.shellbroker.Allowlist",
+        "com.diegonmarcos.superapp.shellbroker.ShellBroker",
+        "com.diegonmarcos.superapp.ui.KitPageHarness",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "org.junit.runner.RunWith",
+        "org.robolectric.RobolectricTestRunner",
+        "org.robolectric.RuntimeEnvironment",
+        "org.robolectric.annotation.Config",
+        "org.robolectric.annotation.GraphicsMode",
+        "java.io.File"
+      ],
+      "symbols": [
+        "facts(mode: ChannelMode = ChannelMode.LOCAL_SERVER, dev: Boolean? = true, wd: Boolean? = true, wifi: Boolean? = true, notif: Boolean? = true, paired: Boolean = true, connected: Boolean = true, server: Boolean = true)",
+        "ids(r: List<AdbPrereqs.Row>)",
+        "open(id: String)",
+        "class AdbPermsChainTest"
       ]
     },
     {

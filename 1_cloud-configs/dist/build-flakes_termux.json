@@ -1932,6 +1932,10 @@
           "cmd": "node --experimental-strip-types test-caddy-cert-repair.mjs",
           "cwd": "src/code"
         },
+        "backlog": {
+          "cmd": "node --experimental-strip-types --test test-backlog.mjs",
+          "cwd": "src/code"
+        },
         "plugin-gh": {
           "cmd": "node --experimental-strip-types test-plugin-gh.mjs",
           "cwd": "src/code"
