@@ -6,28 +6,28 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 23991,
+    "files": 24005,
     "by_lang": {
-      "sh": 706,
+      "sh": 709,
       "js": 550,
-      "py": 216,
-      "kotlin": 13240,
+      "py": 220,
+      "kotlin": 13246,
       "ts": 8470,
       "java": 651,
       "nix": 36,
-      "rust": 122
+      "rust": 123
     },
     "by_role": {
       "hook": 160,
       "file": 2307,
-      "shell": 567,
-      "script": 301,
+      "shell": 568,
+      "script": 307,
       "module": 6480,
       "java": 650,
       "python": 75,
-      "kotlin": 13237,
+      "kotlin": 13243,
       "flake": 32,
-      "rust-module": 122,
+      "rust-module": 123,
       "nix-module": 4,
       "entrypoint": 3,
       "mcp-tool": 53
@@ -499,6 +499,26 @@
         "get(url)",
         "fmt_price(usd_per_million)",
         "jlist(xs, like)",
+        "main(argv)"
+      ]
+    },
+    {
+      "path": ".github/workflows/scripts/cloud-android-apk-intent-guard.py",
+      "lang": "py",
+      "role": "script",
+      "exports": [
+        "strip(src)",
+        "check(rel, src)",
+        "main(argv)"
+      ],
+      "imports": [
+        "os",
+        "re",
+        "sys"
+      ],
+      "symbols": [
+        "strip(src)",
+        "check(rel, src)",
         "main(argv)"
       ]
     },
@@ -2180,6 +2200,38 @@
       ]
     },
     {
+      "path": ".github/workflows/scripts/cloud-android-target-sdk-guard.py",
+      "lang": "py",
+      "role": "script",
+      "exports": [
+        "rule_for(sdk)",
+        "read(p)",
+        "strip_comments(src)",
+        "walk(d)",
+        "is_member(bj)",
+        "fleet_dirs(root)",
+        "values(root, rel, bj)",
+        "main(argv)"
+      ],
+      "imports": [
+        "glob",
+        "json",
+        "os",
+        "re",
+        "sys"
+      ],
+      "symbols": [
+        "rule_for(sdk)",
+        "read(p)",
+        "strip_comments(src)",
+        "walk(d)",
+        "is_member(bj)",
+        "fleet_dirs(root)",
+        "values(root, rel, bj)",
+        "main(argv)"
+      ]
+    },
+    {
       "path": ".github/workflows/scripts/cloud-android-test-coverage-gen.py",
       "lang": "py",
       "role": "script",
@@ -3371,6 +3423,26 @@
         "get(url)",
         "fmt_price(usd_per_million)",
         "jlist(xs, like)",
+        "main(argv)"
+      ]
+    },
+    {
+      "path": "1_cicd/src/scripts/cloud-android-apk-intent-guard.py",
+      "lang": "py",
+      "role": "script",
+      "exports": [
+        "strip(src)",
+        "check(rel, src)",
+        "main(argv)"
+      ],
+      "imports": [
+        "os",
+        "re",
+        "sys"
+      ],
+      "symbols": [
+        "strip(src)",
+        "check(rel, src)",
         "main(argv)"
       ]
     },
@@ -5052,6 +5124,38 @@
       ]
     },
     {
+      "path": "1_cicd/src/scripts/cloud-android-target-sdk-guard.py",
+      "lang": "py",
+      "role": "script",
+      "exports": [
+        "rule_for(sdk)",
+        "read(p)",
+        "strip_comments(src)",
+        "walk(d)",
+        "is_member(bj)",
+        "fleet_dirs(root)",
+        "values(root, rel, bj)",
+        "main(argv)"
+      ],
+      "imports": [
+        "glob",
+        "json",
+        "os",
+        "re",
+        "sys"
+      ],
+      "symbols": [
+        "rule_for(sdk)",
+        "read(p)",
+        "strip_comments(src)",
+        "walk(d)",
+        "is_member(bj)",
+        "fleet_dirs(root)",
+        "values(root, rel, bj)",
+        "main(argv)"
+      ]
+    },
+    {
       "path": "1_cicd/src/scripts/cloud-android-test-coverage-gen.py",
       "lang": "py",
       "role": "script",
@@ -6056,6 +6160,20 @@
       "imports": [],
       "symbols": [
         "build_and_run()"
+      ]
+    },
+    {
+      "path": "1_cicd/src/scripts/test/apk-intent-guard.test.sh",
+      "lang": "sh",
+      "role": "script",
+      "exports": [
+        "mk()",
+        "expect()"
+      ],
+      "imports": [],
+      "symbols": [
+        "mk()",
+        "expect()"
       ]
     },
     {
@@ -7158,6 +7276,20 @@
       "symbols": [
         "build_and_run()",
         "mutate()"
+      ]
+    },
+    {
+      "path": "1_cicd/src/scripts/test/target-sdk-guard.test.sh",
+      "lang": "sh",
+      "role": "script",
+      "exports": [
+        "mk()",
+        "expect()"
+      ],
+      "imports": [],
+      "symbols": [
+        "mk()",
+        "expect()"
       ]
     },
     {
@@ -10082,13 +10214,14 @@
         "CockpitVerb(label: String, tag: String, onClick: ()",
         "ActIcon(x: AdbCockpitModel.Act, tag: String, primary: Boolean, onClick: ()",
         "hms(ms: Long)",
-        "AdbCockpitContent( inputs: AdbCockpitModel.Inputs?, busy: String, note: String, log: List<ChannelLog.Entry>, a: CockpitActions, filterOpen: Boolean = false, query: String = \"\", keepAlive: AdbCockpitModel.KeepAlive? = null, )",
+        "AdbCockpitContent( inputs: AdbCockpitModel.Inputs?, busy: String, note: String, log: List<ChannelLog.Entry>, a: CockpitActions, filterOpen: Boolean = false, query: String = \"\", keepAlive: AdbCockpitModel.KeepAlive? = null, tail: (@Composable ()",
         "GroupCard(g: AdbCockpitModel.Group, a: CockpitActions)",
         "StepRow(g: AdbCockpitModel.Group, r: AdbCockpitModel.Row, a: CockpitActions)",
         "KeepAliveCard(ka: AdbCockpitModel.KeepAlive, set: (Boolean)",
         "AdbStatusTab()",
         "go(label: String, connect: Boolean = false, work: ()",
         "connect()",
+        "AdbTesterCard(onConnect: ()",
         "class CockpitActions",
         "class CockpitRoom"
       ]
@@ -10457,6 +10590,24 @@
       ]
     },
     {
+      "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/configs/AdbTester.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [],
+      "imports": [
+        "android.content.Context",
+        "com.diegonmarcos.superapp.shellbroker.ShellBroker",
+        "com.diegonmarcos.superapp.shellclient.ShellResult",
+        "com.diegonmarcos.superapp.system.AdbReadiness"
+      ],
+      "symbols": [
+        "line(cmd: String, r: ShellResult?, ms: Long)",
+        "run(ctx: Context)",
+        "class AdbTester",
+        "class Line"
+      ]
+    },
+    {
       "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/configs/BadgePanes.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -10625,7 +10776,6 @@
         "android.util.Base64",
         "com.diegonmarcos.superapp.BuildConfig",
         "com.diegonmarcos.superapp.ShellActivity",
-        "com.diegonmarcos.superapp.adbdebug.ShellChannels",
         "com.diegonmarcos.superapp.adbdebug.WirelessDebugging",
         "com.diegonmarcos.superapp.system.WirelessDebugKeeper",
         "com.diegonmarcos.superapp.devcontrol.DevControlServer",
@@ -19993,7 +20143,6 @@
         "androidx.compose.ui.text.font.FontFamily",
         "androidx.compose.ui.text.style.TextAlign",
         "com.diegonmarcos.superapp.adbdebug.AdbShellLink",
-        "com.diegonmarcos.superapp.adbdebug.ShellChannels",
         "com.diegonmarcos.superapp.system.QuickDisplay",
         "com.diegonmarcos.superapp.system.SystemDisplay",
         "com.diegonmarcos.superapp.ui.Haptics",
@@ -20571,6 +20720,38 @@
       ]
     },
     {
+      "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/system/AdbReadiness.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "AdbReadiness"
+      ],
+      "imports": [
+        "android.content.Context",
+        "com.diegonmarcos.superapp.shellbroker.ShellBroker",
+        "com.diegonmarcos.superapp.shellclient.ShellStatus",
+        "kotlinx.coroutines.flow.MutableStateFlow",
+        "kotlinx.coroutines.flow.StateFlow",
+        "kotlinx.coroutines.flow.asStateFlow",
+        "java.util.concurrent.CopyOnWriteArrayList"
+      ],
+      "symbols": [
+        "linkText()",
+        "of(s: ShellStatus)",
+        "install()",
+        "publish(st: ShellStatus)",
+        "addListener(l: (ShellStatus)",
+        "listeners_forTest(l: (ShellStatus)",
+        "removeListener(l: (ShellStatus)",
+        "check(ctx: Context, fresh: Boolean = false)",
+        "connect(ctx: Context, open: ()",
+        "openAdbShell(ctx: Context)",
+        "class or",
+        "class AdbReadiness",
+        "class State"
+      ]
+    },
+    {
       "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/system/AppProcessUptime.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -21095,6 +21276,7 @@
       "imports": [
         "android.content.Context",
         "androidx.compose.foundation.background",
+        "androidx.compose.foundation.clickable",
         "androidx.compose.foundation.layout.Box",
         "androidx.compose.foundation.layout.Column",
         "androidx.compose.foundation.layout.ColumnScope",
@@ -21105,6 +21287,7 @@
         "androidx.compose.foundation.layout.width",
         "androidx.compose.material3.Text",
         "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.collectAsState",
         "androidx.compose.runtime.getValue",
         "androidx.compose.runtime.produceState",
         "androidx.compose.ui.Modifier",
@@ -21191,6 +21374,7 @@
         "safe(v: String, f: ()",
         "probeCmd(id: String)",
         "adb(ctx: Context, probeId: String)",
+        "probeFailure(probeId: String)",
         "memory(ctx: Context)",
         "kb(k: String)",
         "psi(resource: String)",
@@ -29821,6 +30005,33 @@
         "theSuperAppMayGrantItselfEveryCataloguePermissionAndSwitchLocationOn()",
         "theSuperAppEntryStillRefusesWhatNoFeatureNeeds()",
         "class SelfAllowlistTest"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/test/java/com/diegonmarcos/superapp/system/AdbReadinessTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "AdbReadinessTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.configs.AdbTester",
+        "com.diegonmarcos.superapp.shellclient.ShellResult",
+        "com.diegonmarcos.superapp.shellclient.ShellStatus",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "up()",
+        "down(why: String)",
+        "connectedStatusIsUsable()",
+        "downStatusSaysWhatIsMissingAndIsALink()",
+        "stateChangeIsPublishedToFlowAndListeners()",
+        "needsAdbMarkerStaysTheRowMarker()",
+        "testerLinesReportChannelExitAndError()",
+        "class AdbReadinessTest"
       ]
     },
     {
@@ -40343,6 +40554,7 @@
         "rowUi(ctx: Context, app: Fleet.App, s: Fleet.State?, stg: StoreStages.Stage?, isChecking: Boolean)",
         "identity(fields: Set<FleetIdentity.Field>)",
         "FleetRow(ctx: Context, app: Fleet.App)",
+        "SilentArea(ctx: Context, app: Fleet.App, stg: StoreStages.Stage?)",
         "MigrationArea(ctx: Context, app: Fleet.App, stg: StoreStages.Stage?)",
         "repaint()",
         "ErrorArea(ctx: Context, app: Fleet.App, look: StoreRowError.Look)",
@@ -40362,8 +40574,7 @@
         "next(ctx: Context, app: Fleet.App)",
         "runStage(ctx: Context, app: Fleet.App, verb: String)",
         "rowAction(ctx: Context, app: Fleet.App, a: FleetActions.Action, stg: StoreStages.Stage?)",
-        "verb(onClick: ()",
-        "promptedInstall(ctx: Context, app: Fleet.App)"
+        "verb(onClick: ()"
       ]
     },
     {
@@ -42270,6 +42481,55 @@
         "onlyAllowlistedFilesStartTheTerminal()",
         "terminalDoesNotAutostartOrKeepAlive()",
         "class NoForeignTerminalStartTest"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/appstore/src/test/java/com/diegonmarcos/superapp/appstore/SilentUpdatesTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "SilentUpdatesTest"
+      ],
+      "imports": [
+        "android.content.pm.PackageInstaller",
+        "com.diegonmarcos.superapp.updater.BootstrapInstall",
+        "com.diegonmarcos.superapp.updater.InstallDiagnostics",
+        "com.diegonmarcos.superapp.updater.install.SilentReadiness",
+        "com.diegonmarcos.superapp.updater.install.SilentReadiness.Facts",
+        "com.diegonmarcos.superapp.updater.install.SilentReadiness.Reason",
+        "com.diegonmarcos.superapp.updater.install.SilentUpdate",
+        "com.diegonmarcos.superapp.updater.install.StoreHandoff",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.io.File"
+      ],
+      "symbols": [
+        "facts( deviceSdk: Int = 37, self: String = store, silentOn: Boolean = true, fleetSigned: Boolean = true, installed: Boolean = true, installer: String? = store, owner: String? = store, target: Int? = 35, newPerms: List<String> = emptyList()",
+        "everySessionOnApi31PlusAsksForNoUserAction()",
+        "updateOwnershipOn34PlusOnlyForTheInstallerOfRecord()",
+        "packageSourceIsStoreOn33Plus()",
+        "repo(rel: String)",
+        "theStoreDeclaresBothInstallPermissionsAndTheHandoffReceiver()",
+        "oneInstallerOfRecordEveryOtherAppHandsOff()",
+        "everyInstallPathReachesTheOneChoke()",
+        "anAppInstalledElsewherePromptsOnceToTransferOwnership()",
+        "targetSdkFloorPerAndroidVersion()",
+        "aLowTargetSdkPromptsWithTheReason()",
+        "theGuardPolicyFloorMatchesTheRuntimeRule()",
+        "aNewDangerousPermissionIsDetectedAndNamed()",
+        "throttleWaitsOutTheThirtySecondWindow()",
+        "theQueueNeverCommitsTwoSessionsForOnePackageWithinTheWindow()",
+        "everyReasonMapsToOneLine()",
+        "publicApisGoFirstWhenTheNativePathHolds()",
+        "anUpdateNeverUsesTheViewIntent()",
+        "perAppUpdateWithACachedApkEnqueuesASession()",
+        "install(ctx: Context, app: Fleet.App\")",
+        "theSessionOutcomeIsLogged()",
+        "theStoreUpdatesItselfSilently()",
+        "class SilentUpdatesTest"
       ]
     },
     {
@@ -100361,9 +100621,9 @@
         "authority(ctx: Context)",
         "versionLine()",
         "stage(ctx: Context, app: Fleet.App)",
-        "installIntent(ctx: Context, file: File)",
-        "uriFor(ctx: Context, file: File)",
+        "stageVerified(ctx: Context, app: Fleet.App)",
         "launch(ctx: Context, app: Fleet.App)",
+        "usesSession(installed: Boolean)",
         "canRequestInstalls(ctx: Context)",
         "installedInfo(ctx: Context, app: Fleet.App)",
         "archiveVersionName(ctx: Context, file: File)",
@@ -100460,6 +100720,7 @@
         "Fleet"
       ],
       "imports": [
+        "com.diegonmarcos.superapp.updater.install.SilentReadiness",
         "com.diegonmarcos.superapp.updater.apk.ApkIntegrity",
         "com.diegonmarcos.superapp.updater.apk.VerifiedApk",
         "com.diegonmarcos.superapp.updater.cache.ApkCache",
@@ -100502,6 +100763,7 @@
         "commit(ctx: Context, app: App, apk: VerifiedApk)",
         "candidateIdentity(ctx: Context, file: File)",
         "channels(ctx: Context)",
+        "channels(ctx: Context, app: App, apk: VerifiedApk)",
         "silentCapable(ctx: Context)",
         "silentChannelName(ctx: Context)",
         "acquireLease(owner: String)",
@@ -100523,8 +100785,7 @@
         "installedId(ctx: Context, app: App)",
         "pkgInstalled(ctx: Context, pkg: String)",
         "installedInfo(ctx: Context, app: App)",
-        "class Fleet",
-        "class App"
+        "class Fleet"
       ]
     },
     {
@@ -100631,6 +100892,48 @@
       ]
     },
     {
+      "path": "ab_cloud-libs-shared/libs/updater/src/main/java/com/diegonmarcos/superapp/updater/install/SilentReadiness.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "SilentReadiness"
+      ],
+      "imports": [
+        "android.content.Context",
+        "android.content.pm.PackageInfo",
+        "android.content.pm.PackageManager",
+        "android.content.pm.PermissionInfo",
+        "android.os.Build",
+        "android.util.Log",
+        "com.diegonmarcos.superapp.core.StoreNotifyGate",
+        "java.io.File"
+      ],
+      "symbols": [
+        "route(selfPkg: String, storeInstalled: Boolean)",
+        "isInstallerOfRecord(selfPkg: String)",
+        "minTargetSdk(deviceSdk: Int)",
+        "newDangerousPermissions(installed: Set<String>, candidate: Set<String>, isDangerous: (String)",
+        "throttleWaitMs(lastCommitMs: Long?, nowMs: Long, windowMs: Long = THROTTLE_MS)",
+        "prefersSession(v: Verdict)",
+        "decide(f: Facts)",
+        "lastCommitMs(pkg: String)",
+        "markCommitted(pkg: String, nowMs: Long = System.currentTimeMillis()",
+        "assess(ctx: Context, pkg: String, apk: File?, nowMs: Long = System.currentTimeMillis()",
+        "lastVerdict(ctx: Context, pkg: String)",
+        "remember(ctx: Context, pkg: String, v: Verdict)",
+        "installedPackage(pm: PackageManager, pkg: String)",
+        "archivePackage(pm: PackageManager, apk: File)",
+        "isDangerous(pm: PackageManager, perm: String)",
+        "installerOf(ctx: Context, pkg: String)",
+        "storeInstalled(ctx: Context)",
+        "class SilentReadiness",
+        "class Route",
+        "class Reason",
+        "class Verdict",
+        "class Facts"
+      ]
+    },
+    {
       "path": "ab_cloud-libs-shared/libs/updater/src/main/java/com/diegonmarcos/superapp/updater/install/SilentUpdate.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -100646,7 +100949,7 @@
         "java.security.MessageDigest"
       ],
       "symbols": [
-        "plan(sdk: Int, silentOn: Boolean, fleetSigned: Boolean)",
+        "plan(sdk: Int, silentOn: Boolean, fleetSigned: Boolean, installerOfRecord: Boolean = true)",
         "sameSigner(own: Set<String>?, other: Set<String>?)",
         "fleetSigned(own: Set<String>?, installed: Set<String>?, installedPresent: Boolean, candidate: Set<String>?)",
         "installedSigners(pm: PackageManager, pkg: String)",
@@ -100657,6 +100960,48 @@
         "statusLines(sdk: Int, silentOn: Boolean, ownerOfSelf: String?, selfPkg: String)",
         "class SilentUpdate",
         "class Plan"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/updater/src/main/java/com/diegonmarcos/superapp/updater/install/StoreHandoff.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "HandedToStore",
+        "StoreHandoff",
+        "StoreHandoffWorker"
+      ],
+      "imports": [
+        "android.app.ActivityManager",
+        "android.content.Context",
+        "android.content.Intent",
+        "android.util.Log",
+        "androidx.work.Constraints",
+        "androidx.work.CoroutineWorker",
+        "androidx.work.Data",
+        "androidx.work.ExistingWorkPolicy",
+        "androidx.work.NetworkType",
+        "androidx.work.OneTimeWorkRequestBuilder",
+        "androidx.work.WorkManager",
+        "androidx.work.WorkerParameters",
+        "com.diegonmarcos.superapp.updater.BuildConfig",
+        "com.diegonmarcos.superapp.updater.Fleet",
+        "kotlinx.coroutines.Dispatchers",
+        "kotlinx.coroutines.withContext"
+      ],
+      "symbols": [
+        "intent(selfPkg: String, pkg: String)",
+        "action(route: SilentReadiness.Route, foreground: Boolean)",
+        "handOff(ctx: Context, pkg: String)",
+        "isFleetPackage(pkg: String)",
+        "appFor(apps: List<Fleet.App>, pkg: String)",
+        "accept(ctx: Context, received: Intent?)",
+        "isForeground(ctx: Context)",
+        "doWork()",
+        "class HandedToStore",
+        "class StoreHandoff",
+        "class Action",
+        "class StoreHandoffWorker"
       ]
     },
     {
@@ -100685,6 +101030,7 @@
       "exports": [],
       "imports": [
         "com.diegonmarcos.superapp.updater.BuildConfig",
+        "com.diegonmarcos.superapp.updater.InstallDiagnostics",
         "com.diegonmarcos.superapp.updater.ApkInstallWorker",
         "com.diegonmarcos.superapp.updater.AutoUpdatePrefs",
         "com.diegonmarcos.superapp.updater.PackageInstallerReceiver",
@@ -100740,7 +101086,13 @@
         "freeBytes(path: File)",
         "collect(ctx: Context, appId: String, pkg: String, error: String, apk: File? = null)",
         "line(k: String, v: Any?)",
-        "class InstallDiagnostics"
+        "sessionLine(whenText: String, pkg: String, outcome: String, detail: String)",
+        "sessionOutcome(status: Int, prompted: Boolean)",
+        "recordSession(ctx: Context, pkg: String, outcome: String, detail: String)",
+        "sessions(ctx: Context)",
+        "of(ctx: Context, pkg: String)",
+        "class InstallDiagnostics",
+        "class SilentReadinessLine"
       ]
     },
     {
@@ -113105,6 +113457,7 @@
         "save",
         "safe_rel",
         "resolve",
+        "pct_encode",
         "http_get",
         "proxy_handler",
         "dir_handler",
@@ -113119,13 +113472,12 @@
         "add",
         "scan",
         "discover",
+        "terminal_ls",
         "url",
         "Kind",
         "Source",
         "Cfg",
-        "Entry",
-        "Target",
-        "Host"
+        "Entry"
       ],
       "imports": [
         "crate::meshlogs::Mesh",
@@ -113170,6 +113522,7 @@
         "add(cfg: &Cfg, entries: &mut Vec<Entry>, label: &str, source: &str, repo: &str, start: &str, exposure: &str)",
         "scan(lister: &dyn Fn(&str)",
         "discover(cfg: &Cfg, source: &str)",
+        "terminal_ls(port: u16, full: &str, timeout: Duration)",
         "url(cfg: &Cfg, e: &Entry)",
         "tmp(tag: &str)",
         "cfg_for(root: &Path, store: &Path)",
@@ -113181,8 +113534,72 @@
         "a_symlink_out_of_the_repo_or_the_source_is_refused()",
         "several_sites_serve_at_once_each_on_its_own_port()",
         "a_mesh_entry_without_a_mesh_address_and_a_public_one_never_bind()",
-        "the_terminal_proxy_forwards_inside_its_base_and_refuses_traversal()",
-        "terminal_targets_split_an_entry_file_from_the_folder()"
+        "the_terminal_proxy_forwards_inside_its_base_and_refuses_traversal()"
+      ]
+    },
+    {
+      "path": "ac_cloud-c3-webserver/server/src/roots.rs",
+      "lang": "rust",
+      "role": "rust-module",
+      "exports": [
+        "id",
+        "from_build",
+        "decl",
+        "locate",
+        "list",
+        "api_roots",
+        "api_ls",
+        "serve",
+        "serve_in",
+        "adb_shell_link",
+        "api_adb_shell",
+        "Mode",
+        "Root",
+        "Decl",
+        "Where"
+      ],
+      "imports": [
+        "crate::repos::",
+        "crate::",
+        "fleet_webserver::http::",
+        "fleet_webserver::render::jstr",
+        "serde_json::",
+        "std::path::PathBuf",
+        "std::sync::OnceLock",
+        "std::time::Duration",
+        "its",
+        "super::"
+      ],
+      "symbols": [
+        "id(&self)",
+        "id_ok(s: &str)",
+        "from_build(b: &Value)",
+        "decl()",
+        "join(a: &str, b: &str)",
+        "endpoint_of(source: &str)",
+        "denied(e: &std::io::Error)",
+        "locate(cfg: &repos::Cfg, r: &Root, rel: &str)",
+        "list_terminal(port: u16, full: &str)",
+        "list(cfg: &repos::Cfg, r: &Root, rel: &str)",
+        "root_json(cfg: Option<&repos::Cfg>, r: &Root)",
+        "ok(v: Value)",
+        "api_roots(_c: &Ctx, _r: &Req)",
+        "api_ls(_c: &Ctx, req: &Req)",
+        "note_page(title: &str, body: &str)",
+        "serve(_c: &Ctx, req: &Req)",
+        "serve_in(d: &Decl, cfg: &repos::Cfg, req: &Req)",
+        "adb_shell_link()",
+        "api_adb_shell(_c: &Ctx, req: &Req)",
+        "the_real_declaration_has_both_modes_and_every_owner_root()",
+        "a_bad_declaration_is_refused()",
+        "tmp(tag: &str)",
+        "local_cfg(root: &std::path::Path)",
+        "root(id: &str, mode: Mode, repo: &str)",
+        "a_local_root_lists_guards_and_reports_a_missing_clone()",
+        "req(p: &str)",
+        "a_pages_root_serves_its_index_and_navigates_inside_it()",
+        "the_apis_always_answer_200()",
+        "the_adb_shell_link_is_the_declared_superapp_page()"
       ]
     },
     {
@@ -113196,6 +113613,8 @@
         "set_launcher",
         "set_configs_opener",
         "open_configs",
+        "set_extra_launcher",
+        "launch_with",
         "launch",
         "declared_ports",
         "listen_ports",
@@ -113232,6 +113651,8 @@
         "set_launcher(f: Box<Launcher>)",
         "set_configs_opener(f: Box<ConfigsOpener>)",
         "open_configs(page: &str)",
+        "set_extra_launcher(f: Box<ExtraLauncher>)",
+        "launch_with(package: &str, key: &str, value: &str)",
         "launch(package: &str)",
         "answers(port: u16)",
         "link(label: &str, href: &str)",
@@ -113649,6 +114070,7 @@
         "friendly(e: &str, authority: &str)",
         "open_in_browser(url: &str)",
         "launch_app(package: &str)",
+        "launch_app_with(package: &str, key: &str, value: &str)",
         "open_configs(page: &str)",
         "sync_keep_alive()",
         "send_door(cmd: c3_webserver::door::Cmd)"
@@ -113755,6 +114177,24 @@
       "imports": [],
       "symbols": [
         "guard()",
+        "mutate()"
+      ]
+    },
+    {
+      "path": "ac_cloud-c3-webserver/test/test-c3-webserver-pages-roots.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "pass()",
+        "fail()",
+        "run()",
+        "mutate()"
+      ],
+      "imports": [],
+      "symbols": [
+        "pass()",
+        "fail()",
+        "run()",
         "mutate()"
       ]
     },
@@ -113982,6 +114422,8 @@
         "mutate()",
         "m_placeholder()",
         "m_custom_page()",
+        "m_drop_adb_tab()",
+        "m_configs_bottom()",
         "m_drop_files_tab()",
         "m_open_on_file_view()",
         "m_route_outside_prefix()",
@@ -114010,6 +114452,8 @@
         "mutate()",
         "m_placeholder()",
         "m_custom_page()",
+        "m_drop_adb_tab()",
+        "m_configs_bottom()",
         "m_drop_files_tab()",
         "m_open_on_file_view()",
         "m_route_outside_prefix()",
@@ -201088,6 +201532,7 @@
         "start(context: Context)",
         "cancel(context: Context)",
         "checkNow(context: Context)",
+        "storeInstalled(context: Context)",
         "class Updater"
       ]
     },
@@ -397222,6 +397667,7 @@
         "start(context: Context)",
         "cancel(context: Context)",
         "checkNow(context: Context)",
+        "storeInstalled(context: Context)",
         "class Updater"
       ]
     },
