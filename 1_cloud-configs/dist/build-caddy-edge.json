@@ -948,26 +948,6 @@
         "serve_path": "/cloud-web/apps/cloud-wallet/"
       },
       "comment": "APK cloud-wallet: web target wasm bundle cloud-wallet (Authelia-gated)"
-    },
-    {
-      "domain": "cloud-writer.diegonmarcos.com",
-      "upstream": "https://diegonmarcos.github.io",
-      "landing": "https://diegonmarcos.github.io/c__Cloud/",
-      "apk": "cloud-writer",
-      "web": {
-        "_doc": "#876 Cloud Writer as a Kotlin/Wasm page (web/ is its own gradle root; the shared libs' pure-Compose sources arrive through the ab_cloud-libs-shared/web composite). Rendered into 1_cicd/src/cicd/ship-cloud-writer-wasm.yml by the workflow generator: `./gradlew wasmJsBrowserDistribution` in `dir`, tested by test/test-writer-web.sh, `build/dist/wasmJs/productionExecutable` zipped to `artifact` and attached to the rolling release as `gh_asset`. A mocked page: the island and tab strips are ui.bottom_nav / ui.sections as the Android shell reads them, the first section shows mock data and the rest say they live in the Android app. The APK's own ship ignores this directory.",
-        "dir": "web",
-        "host": "ubuntu-latest",
-        "artifact": "Cloud-Writer.wasm.zip",
-        "gh_asset": "Cloud-Writer.wasm.zip",
-        "portal_slug": "cloud-writer",
-        "entry": "index.html",
-        "tester": "test-writer-web.sh",
-        "size_budget_mb": 20,
-        "kind": "wasm",
-        "serve_path": "/cloud-web/apps/cloud-writer/"
-      },
-      "comment": "APK cloud-writer: web target wasm bundle cloud-writer (Authelia-gated)"
     }
   ],
   "public_path_routes": [
