@@ -6,12 +6,12 @@
   },
   "repo": "cloud",
   "counts": {
-    "files": 1577,
+    "files": 1579,
     "by_lang": {
       "sh": 1064,
       "js": 169,
       "nix": 304,
-      "py": 10,
+      "py": 12,
       "ts": 30
     },
     "by_role": {
@@ -21,7 +21,7 @@
       "flake": 6,
       "script": 146,
       "module": 113,
-      "python": 7,
+      "python": 9,
       "engine": 1,
       "nix-module": 298
     }
@@ -24020,6 +24020,52 @@
       ]
     },
     {
+      "path": "b_infra/nixhm-sudo-gcp-proxy/src/gcp-idtoken-bridge/bridge.py",
+      "lang": "py",
+      "role": "python",
+      "exports": [
+        "jwt_exp(tok)",
+        "fetch_token(aud, opener=urllib.request.urlopen)",
+        "token_for(aud, now=time.time, fetch=fetch_token)",
+        "resolve(routes, path)",
+        "make_handler(routes, fetch=fetch_token)",
+        "main()"
+      ],
+      "imports": [
+        "http.server",
+        "urllib.parse",
+        "base64"
+      ],
+      "symbols": [
+        "jwt_exp(tok)",
+        "fetch_token(aud, opener=urllib.request.urlopen)",
+        "token_for(aud, now=time.time, fetch=fetch_token)",
+        "resolve(routes, path)",
+        "make_handler(routes, fetch=fetch_token)",
+        "main()"
+      ]
+    },
+    {
+      "path": "b_infra/nixhm-sudo-gcp-proxy/src/gcp-idtoken-bridge/test_bridge.py",
+      "lang": "py",
+      "role": "python",
+      "exports": [
+        "jwt(exp)",
+        "class Up",
+        "class T"
+      ],
+      "imports": [
+        "http.server",
+        "base64",
+        "bridge"
+      ],
+      "symbols": [
+        "jwt(exp)",
+        "class Up",
+        "class T"
+      ]
+    },
+    {
       "path": "b_infra/nixhm-sudo-gcp-proxy/src/gcp-proxy.nix",
       "lang": "nix",
       "role": "nix-module",
@@ -24049,7 +24095,13 @@
         "RestartSec",
         "WantedBy",
         "SUDO",
-        "SRC"
+        "SRC",
+        "Environment",
+        "MemoryMax",
+        "CPUQuota",
+        "DynamicUser",
+        "NoNewPrivileges",
+        "ProtectSystem"
       ]
     },
     {
