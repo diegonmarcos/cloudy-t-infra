@@ -405,5 +405,9 @@ step_verify_committed_dist() {
     log_error "committed dist/ differs from the fresh render of src/ — commit the regenerated dist/ (./build.sh build) so the repo matches what ships:"
     printf '%s\n' "$_vcd_drift" | sed 's|^|    |'
     git -C "$SERVICE_DIR" --no-pager diff --stat -- dist 2>/dev/null | tail -1 | sed 's|^|    |'
+    # Show WHAT drifted (word-level, capped) so a one-line json drift is diagnosable from the log.
+    # Compose/dist files carry ${VAR} placeholders only, never resolved secret values.
+    git -C "$SERVICE_DIR" --no-pager diff --word-diff=porcelain --word-diff-regex='[^,{}]+|[,{}]' -U0 -- dist 2>/dev/null \
+        | grep -E '^[+-]' | grep -vE '^(\+\+\+|---)' | cut -c1-240 | head -40 | sed 's|^|    drift: |'
     return 1
 }
