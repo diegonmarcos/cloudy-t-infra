@@ -6,28 +6,28 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 24299,
+    "files": 24315,
     "by_lang": {
-      "sh": 751,
+      "sh": 752,
       "js": 562,
       "py": 234,
-      "kotlin": 13459,
+      "kotlin": 13468,
       "ts": 8481,
       "java": 654,
       "nix": 35,
-      "rust": 123
+      "rust": 129
     },
     "by_role": {
       "hook": 160,
       "file": 2320,
-      "shell": 603,
+      "shell": 604,
       "script": 321,
       "python": 82,
       "module": 6490,
       "java": 653,
-      "kotlin": 13456,
+      "kotlin": 13465,
       "flake": 31,
-      "rust-module": 123,
+      "rust-module": 129,
       "nix-module": 4,
       "entrypoint": 3,
       "mcp-tool": 53
@@ -23214,7 +23214,6 @@
         "com.diegonmarcos.superapp.system.PackageVerifier",
         "com.diegonmarcos.superapp.system.QuickDisplay",
         "com.diegonmarcos.superapp.xray.LocationUseView",
-        "com.diegonmarcos.superapp.system.DeviceTuning",
         "org.junit.Assert.assertEquals",
         "org.junit.Assert.assertTrue",
         "org.junit.Test",
@@ -59407,6 +59406,374 @@
         "stat(dir: File)",
         "class Volumes",
         "class Volume"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/drive-core-rs/src/diff.rs",
+      "lang": "rust",
+      "role": "rust-module",
+      "exports": [
+        "parse",
+        "changed",
+        "diff",
+        "encode",
+        "Item"
+      ],
+      "imports": [
+        "std::collections::HashMap",
+        "crate::wire",
+        "super::"
+      ],
+      "symbols": [
+        "parse(text: &str)",
+        "changed(l: &Item, r: &Item)",
+        "diff(left: &[Item], right: &[Item])",
+        "encode(d: &[(char, String)",
+        "it(p: &str, s: u64, m: i64, h: &str)",
+        "added_removed_modified()",
+        "parses_the_wire_and_skips_bad_lines()"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/drive-core-rs/src/hash.rs",
+      "lang": "rust",
+      "role": "rust-module",
+      "exports": [
+        "hash_file",
+        "hash_many",
+        "encode",
+        "Hashed"
+      ],
+      "imports": [
+        "std::fs::File",
+        "std::io::Read",
+        "std::path::Path",
+        "std::sync::atomic::",
+        "std::sync::Mutex",
+        "sha2::",
+        "crate::wire",
+        "super::",
+        "crate::testutil::"
+      ],
+      "symbols": [
+        "hex(b: &[u8])",
+        "hash_file(path: &Path, algos: u32, limit: Option<u64>)",
+        "hash_many(paths: &[String], algos: u32, threads: usize, limit: Option<u64>)",
+        "encode(rs: &[Hashed])",
+        "known_vectors()",
+        "only_the_asked_algorithm_and_the_limit()",
+        "a_file_longer_than_the_buffer_streams()",
+        "many_files_keep_input_order_and_report_errors()"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/drive-core-rs/src/jni_api.rs",
+      "lang": "rust",
+      "role": "rust-module",
+      "exports": [
+        "guard",
+        "do_hash",
+        "do_walk",
+        "do_diff",
+        "do_panic_probe"
+      ],
+      "imports": [
+        "std::panic::",
+        "std::path::Path",
+        "jni::objects::",
+        "jni::sys::",
+        "jni::JNIEnv",
+        "crate::",
+        "super::",
+        "crate::testutil::"
+      ],
+      "symbols": [
+        "panic_text(p: Box<dyn std::any::Any + Send>)",
+        "do_hash(paths: &str, algos: i32, threads: i32, limit: i64)",
+        "do_walk(root: &str, opts: &str)",
+        "do_diff(left: &str, right: &str)",
+        "do_panic_probe()",
+        "read(env: &mut JNIEnv, s: &JString)",
+        "answer(env: &mut JNIEnv, text: String)",
+        "Java_com_diegonmarcos_cloudlib_drivecore_NativeBridge_nativeVersion(mut env: JNIEnv, _c: JClass)",
+        "Java_com_diegonmarcos_cloudlib_drivecore_NativeBridge_nativeHash(\n    mut env: JNIEnv,\n    _c: JClass,\n    paths: JString,\n    algos: jint,\n    threads: jint,\n    limit: jlong,\n)",
+        "Java_com_diegonmarcos_cloudlib_drivecore_NativeBridge_nativeWalk(mut env: JNIEnv, _c: JClass, root: JString, opts: JString)",
+        "Java_com_diegonmarcos_cloudlib_drivecore_NativeBridge_nativeDiff(mut env: JNIEnv, _c: JClass, left: JString, right: JString)",
+        "Java_com_diegonmarcos_cloudlib_drivecore_NativeBridge_nativePanicProbe(mut env: JNIEnv, _c: JClass)",
+        "a_panic_becomes_an_err_answer()",
+        "the_three_engines_answer_through_the_wire()"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/drive-core-rs/src/main/java/com/diegonmarcos/cloudlib/drivecore/Blake3.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [],
+      "imports": [],
+      "symbols": [
+        "update(b: ByteArray, off: Int = 0, len: Int = b.size)",
+        "digest()",
+        "addChunkCv(first: IntArray, totalChunks: Long)",
+        "chainingValue()",
+        "rootBytes()",
+        "length()",
+        "startFlag()",
+        "update(b: ByteArray, off: Int, len: Int)",
+        "output()",
+        "words(b: ByteArray)",
+        "parentOutput(left: IntArray, right: IntArray, key: IntArray)",
+        "g(s: IntArray, a: Int, b: Int, c: Int, d: Int, mx: Int, my: Int)",
+        "round(s: IntArray, m: IntArray)",
+        "compress(cv: IntArray, block: IntArray, counter: Long, blockLen: Int, flags: Int)",
+        "class Blake3",
+        "class Output",
+        "class ChunkState"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/drive-core-rs/src/main/java/com/diegonmarcos/cloudlib/drivecore/DriveCore.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "DriveCore"
+      ],
+      "imports": [
+        "java.util.concurrent.ConcurrentHashMap"
+      ],
+      "symbols": [
+        "span(op: String, impl: String, block: ()",
+        "configure(declared: String)",
+        "setImpl(engine: Engine, impl: Impl)",
+        "impl(engine: Engine)",
+        "withImpl(engine: Engine, impl: Impl, block: ()",
+        "nativeUnavailableReason()",
+        "nativeVersion()",
+        "panicProbe()",
+        "isRealPath(p: String)",
+        "note(reason: String)",
+        "viaRust(engine: Engine, eligible: Boolean, why: String, call: ()",
+        "hashFiles(paths: List<String>, algos: Int = BLAKE3 or SHA256, threads: Int = 4, limit: Long = -1L)",
+        "sha256Hex(path: String)",
+        "walk(root: String, opts: WalkOpts = WalkOpts()",
+        "dirBytes(root: String, threads: Int = 4)",
+        "snapshot(root: String, threads: Int = 4)",
+        "diff(left: List<ListedFile>, right: List<ListedFile>)",
+        "diffText(l: List<ListedFile>)",
+        "walkOptsText(o: WalkOpts)",
+        "parseWalk(records: List<String>)",
+        "class DriveCore",
+        "class Spans"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/drive-core-rs/src/main/java/com/diegonmarcos/cloudlib/drivecore/KotlinEngines.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [],
+      "imports": [
+        "java.io.File",
+        "java.io.FileInputStream",
+        "java.nio.file.Files",
+        "java.nio.file.LinkOption",
+        "java.nio.file.attribute.BasicFileAttributes",
+        "java.security.MessageDigest"
+      ],
+      "symbols": [
+        "hex(b: ByteArray)",
+        "hashOne(path: String, algos: Int, limit: Long)",
+        "hash(paths: List<String>, algos: Int, limit: Long)",
+        "extOf(name: String)",
+        "walk(root: String, o: WalkOpts)",
+        "addFile(topKey: String, name: String, path: String, len: Long, mtime: Long)",
+        "diff(left: List<ListedFile>, right: List<ListedFile>)",
+        "changed(l: ListedFile, r: ListedFile)",
+        "class KotlinEngines",
+        "class Job"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/drive-core-rs/src/main/java/com/diegonmarcos/cloudlib/drivecore/Models.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "Engine",
+        "Impl",
+        "FileHash",
+        "WalkOpts",
+        "SizedPath",
+        "ExtTotal",
+        "ListedFile",
+        "WalkAgg",
+        "Delta"
+      ],
+      "imports": [],
+      "symbols": [
+        "class Engine",
+        "class Impl",
+        "class FileHash",
+        "class WalkOpts",
+        "class SizedPath",
+        "class ExtTotal",
+        "class ListedFile",
+        "class WalkAgg",
+        "class Delta"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/drive-core-rs/src/main/java/com/diegonmarcos/cloudlib/drivecore/NativeBridge.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [],
+      "imports": [],
+      "symbols": [
+        "unavailableReason()",
+        "nativeVersion()",
+        "nativeHash(paths: String, algos: Int, threads: Int, limit: Long)",
+        "nativeWalk(root: String, opts: String)",
+        "nativeDiff(left: String, right: String)",
+        "nativePanicProbe()",
+        "class NativeBridge"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/drive-core-rs/src/main/java/com/diegonmarcos/cloudlib/drivecore/Wire.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [],
+      "imports": [],
+      "symbols": [
+        "esc(s: String)",
+        "unesc(s: String)",
+        "fields(line: String)",
+        "body(answer: String?)",
+        "class Wire"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/drive-core-rs/src/test/java/com/diegonmarcos/cloudlib/drivecore/DriveCoreParityTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "DriveCoreParityTest"
+      ],
+      "imports": [
+        "java.io.File",
+        "java.nio.file.Files",
+        "org.junit.After",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNotNull",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Assume.assumeTrue",
+        "org.junit.Before",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "setUp()",
+        "tearDown()",
+        "needCore()",
+        "file(rel: String, bytes: ByteArray)",
+        "file(rel: String, size: Int)",
+        "fixture()",
+        "blake3KotlinMatchesTheOfficialVectors()",
+        "h(b: ByteArray)",
+        "hashesAgreeOnAssortedSizes()",
+        "limitAndSingleAlgorithmAgree()",
+        "anUnreadableFileIsAnErrorRowNotAnException()",
+        "contentUrisStayKotlinAndNeverReachTheCore()",
+        "walksAgreeAndAggregateRight()",
+        "walksAgreeOnTopNAndCaps()",
+        "neverFollowsLinksOutOfTheRoot()",
+        "dirBytesAgrees()",
+        "diffsAgree()",
+        "aSnapshotDiffFindsAnEditedTree()",
+        "theSwitchSelectsTheImplementationAndIsDeclared()",
+        "span(op: String, impl: String, block: ()",
+        "aRustPanicIsCaughtAtTheBoundary()",
+        "whenTheCoreIsUnavailableKotlinAnswersAndSaysWhy()",
+        "theWireEscapesRoundTrip()",
+        "class DriveCoreParityTest"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/drive-core-rs/src/testutil.rs",
+      "lang": "rust",
+      "role": "rust-module",
+      "exports": [
+        "tmpdir",
+        "write"
+      ],
+      "imports": [
+        "std::io::Write",
+        "std::path::",
+        "std::sync::atomic::"
+      ],
+      "symbols": [
+        "tmpdir(tag: &str)",
+        "write(p: &Path, b: &[u8])"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/drive-core-rs/src/walk.rs",
+      "lang": "rust",
+      "role": "rust-module",
+      "exports": [
+        "ext_of",
+        "walk",
+        "encode",
+        "parse_opts",
+        "Opts",
+        "Agg"
+      ],
+      "imports": [
+        "std::collections::",
+        "std::path::",
+        "std::sync::atomic::",
+        "std::sync::",
+        "std::time::",
+        "crate::wire",
+        "super::",
+        "crate::testutil::"
+      ],
+      "symbols": [
+        "default()",
+        "ext_of(name: &str)",
+        "keep_top(v: &mut Vec<(u64, String)",
+        "mtime_ms(md: &std::fs::Metadata)",
+        "walk(root: &Path, opts: &Opts)",
+        "add_file(l: &mut Local, top: &Arc<str>, name: &str, path: &Path, len: u64, mtime: i64, opts: &Opts)",
+        "encode(a: &Agg)",
+        "parse_opts(text: &str)",
+        "fixture(tag: &str)",
+        "opts()",
+        "extension_reading_matches_the_kotlin_classifier()",
+        "aggregates_and_ranks()",
+        "threads_do_not_change_the_answer()",
+        "never_follows_links_and_stops_at_the_cap()",
+        "an_unreadable_root_is_an_error_and_options_parse()"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/drive-core-rs/src/wire.rs",
+      "lang": "rust",
+      "role": "rust-module",
+      "exports": [
+        "esc",
+        "unesc",
+        "lines",
+        "fields"
+      ],
+      "imports": [
+        "super::"
+      ],
+      "symbols": [
+        "esc(s: &str)",
+        "unesc(s: &str)",
+        "lines(text: &str)",
+        "fields(line: &str)",
+        "escapes_round_trip()",
+        "lines_skip_empty_and_unescape()"
       ]
     },
     {
@@ -209673,6 +210040,31 @@
       ]
     },
     {
+      "path": "ac_cloud-drive/app/src/main/java/com/diegonmarcos/clouddrive/DriveEngines.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "DriveEngines"
+      ],
+      "imports": [
+        "android.util.Log",
+        "com.diegonmarcos.cloudlib.drivecore.DriveCore",
+        "com.diegonmarcos.cloudlib.drivecore.Engine",
+        "com.diegonmarcos.cloudlib.drivecore.Impl",
+        "com.diegonmarcos.cloudlib.drivecore.ListedFile",
+        "com.diegonmarcos.cloudlib.drivecore.WalkOpts",
+        "java.io.File",
+        "com.diegonmarcos.superapp.fleetxray.perf.XrayProfiler"
+      ],
+      "symbols": [
+        "ensure()",
+        "span(op: String, impl: String, block: ()",
+        "status()",
+        "selfTest(dir: File)",
+        "class DriveEngines"
+      ]
+    },
+    {
       "path": "ac_cloud-drive/app/src/main/java/com/diegonmarcos/clouddrive/DrivePrefs.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -209849,7 +210241,7 @@
         "androidx.compose.foundation.layout.padding",
         "androidx.compose.foundation.layout.size",
         "androidx.compose.material.icons.Icons",
-        "androidx.compose.material.icons.filled.Menu",
+        "androidx.compose.material.icons.filled.Folder",
         "androidx.compose.material3.Icon",
         "androidx.compose.material3.IconButton",
         "androidx.compose.material3.MaterialTheme",
@@ -210388,6 +210780,8 @@
         "java.util.Date",
         "java.util.Locale",
         "java.util.zip.GZIPOutputStream",
+        "com.diegonmarcos.clouddrive.DriveEngines",
+        "com.diegonmarcos.cloudlib.drivecore.DriveCore",
         "java.util.zip.ZipEntry",
         "java.util.zip.ZipInputStream",
         "java.util.zip.ZipOutputStream",
@@ -211242,6 +211636,12 @@
         "android.os.Environment",
         "com.diegonmarcos.clouddrive.BuildConfig",
         "com.diegonmarcos.clouddrive.Declarations",
+        "com.diegonmarcos.clouddrive.DriveEngines",
+        "com.diegonmarcos.cloudlib.drivecore.DriveCore",
+        "com.diegonmarcos.cloudlib.drivecore.Engine",
+        "com.diegonmarcos.cloudlib.drivecore.Impl",
+        "com.diegonmarcos.cloudlib.drivecore.ListedFile",
+        "com.diegonmarcos.cloudlib.drivecore.WalkOpts",
         "com.diegonmarcos.clouddrive.SharedStore",
         "com.diegonmarcos.clouddrive.files.Places",
         "com.diegonmarcos.clouddrive.sync.GitSyncCoordinator",
@@ -211265,6 +211665,9 @@
         "sampleFiles(ctx: Context)",
         "repoDirs(max: Int)",
         "all()",
+        "registerDriveCoreEngines()",
+        "perturbed(left: List<ListedFile>)",
+        "driveCoreAb(ctx: Context)",
         "register()",
         "class DriveBenchmarks"
       ]
@@ -211635,14 +212038,16 @@
         "android.os.Environment",
         "android.os.StatFs",
         "android.os.storage.StorageManager",
+        "com.diegonmarcos.clouddrive.DriveEngines",
         "com.diegonmarcos.clouddrive.files.Places",
+        "com.diegonmarcos.cloudlib.drivecore.DriveCore",
+        "com.diegonmarcos.cloudlib.drivecore.WalkOpts",
         "com.diegonmarcos.superapp.shellclient.ShellClient",
         "com.diegonmarcos.superapp.shellclient.ShellResult",
         "java.io.File",
         "java.text.SimpleDateFormat",
         "java.util.Date",
-        "java.util.Locale",
-        "java.util.PriorityQueue"
+        "java.util.Locale"
       ],
       "symbols": [
         "collect(ctx: Context, snap: AppSnapshot.Snapshot?, appVersion: String, now: Long = System.currentTimeMillis()",
@@ -211654,9 +212059,9 @@
         "volumes(ctx: Context)",
         "stat(f: File?)",
         "walkShared(ctx: Context, maxEntries: Int, budgetMs: Long)",
-        "visit(dir: File, topName: String)",
         "class XrayMemoryCollector",
-        "class Walk"
+        "class Walk",
+        "class only"
       ]
     },
     {
@@ -214705,6 +215110,11 @@
       "imports": [
         "android.content.SharedPreferences",
         "com.diegonmarcos.clouddrive.startup.StartupGuard",
+        "com.diegonmarcos.clouddrive.DriveEngines",
+        "com.diegonmarcos.cloudlib.drivecore.DriveCore",
+        "com.diegonmarcos.cloudlib.drivecore.Engine",
+        "com.diegonmarcos.cloudlib.drivecore.Impl",
+        "com.diegonmarcos.cloudlib.drivecore.WalkOpts",
         "java.io.File",
         "java.nio.file.FileVisitResult",
         "java.nio.file.Files",
@@ -214717,6 +215127,7 @@
         "m(f: File)",
         "compute(dir: File)",
         "compute(dir: File, maxEntries: Int)",
+        "computeKotlin(dir: File, maxEntries: Int)",
         "visitFile(file: Path, attrs: BasicFileAttributes)",
         "visitFileFailed(file: Path, exc: java.io.IOException)",
         "fresh(cached: Entry?, dir: File)",
@@ -216615,6 +217026,33 @@
       ]
     },
     {
+      "path": "ac_cloud-drive/app/src/test/java/com/diegonmarcos/clouddrive/DriveEnginesTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "DriveEnginesTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.cloudlib.drivecore.DriveCore",
+        "com.diegonmarcos.cloudlib.drivecore.Engine",
+        "com.diegonmarcos.cloudlib.drivecore.Impl",
+        "java.io.File",
+        "java.nio.file.Files",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "buildJson()",
+        "everyEngineIsDeclaredAndDefaultsToRust()",
+        "theBakedDeclarationIsWhatDriveCoreApplies()",
+        "theStartupLineNamesTheCoreAndTheSwitches()",
+        "walkAndHashAnswerWithoutTheCoreLoadedByFallingBackToKotlin()",
+        "theSelfTestComparesRustWithKotlinAndNeverThrows()",
+        "class DriveEnginesTest"
+      ]
+    },
+    {
       "path": "ac_cloud-drive/app/src/test/java/com/diegonmarcos/clouddrive/editor/EditorHookTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -217334,7 +217772,7 @@
         "org.junit.Test"
       ],
       "symbols": [
-        "theEightHotPathsAreDeclared()",
+        "theEightHotPathsAndTheRustABAreDeclared()",
         "everyBenchmarkIsBoundedAndSaysWhyItIsSafe()",
         "source(rel: String)",
         "everyBenchmarkedOperationIsRecordedByAnInstrumentedPathOfTheApp()",
@@ -220029,6 +220467,18 @@
         "name",
         "buildInputs",
         "shellHook"
+      ]
+    },
+    {
+      "path": "ac_cloud-drive/test/emulator-core-rs.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "fail()"
+      ],
+      "imports": [],
+      "symbols": [
+        "fail()"
       ]
     },
     {
