@@ -6,25 +6,25 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 24243,
+    "files": 24255,
     "by_lang": {
-      "sh": 738,
+      "sh": 744,
       "js": 562,
-      "py": 229,
+      "py": 232,
       "kotlin": 13424,
       "ts": 8481,
-      "java": 651,
+      "java": 654,
       "nix": 35,
       "rust": 123
     },
     "by_role": {
       "hook": 160,
       "file": 2320,
-      "shell": 594,
-      "script": 314,
-      "python": 80,
+      "shell": 597,
+      "script": 319,
+      "python": 81,
       "module": 6490,
-      "java": 650,
+      "java": 653,
       "kotlin": 13421,
       "flake": 31,
       "rust-module": 123,
@@ -3276,6 +3276,55 @@
       ]
     },
     {
+      "path": ".github/workflows/scripts/emulator-terminal-target-sdk.sh",
+      "lang": "sh",
+      "role": "script",
+      "exports": [
+        "row()",
+        "sh_()",
+        "evidence()",
+        "finish()",
+        "t()",
+        "s()",
+        "run_command()",
+        "wait_file()",
+        "type_line()"
+      ],
+      "imports": [
+        "/sdcard/cloudprove/lib.sh"
+      ],
+      "symbols": [
+        "row()",
+        "sh_()",
+        "evidence()",
+        "finish()",
+        "t()",
+        "s()",
+        "run_command()",
+        "wait_file()",
+        "type_line()"
+      ]
+    },
+    {
+      "path": ".github/workflows/scripts/terminal-target-sdk-parity.py",
+      "lang": "py",
+      "role": "script",
+      "exports": [
+        "read(path)",
+        "compared(name)",
+        "main(argv)"
+      ],
+      "imports": [
+        "json",
+        "sys"
+      ],
+      "symbols": [
+        "read(path)",
+        "compared(name)",
+        "main(argv)"
+      ]
+    },
+    {
       "path": "1_cicd/src/actions/gradle-cache-hygiene/gradle-shim.sh",
       "lang": "sh",
       "role": "shell",
@@ -6309,6 +6358,55 @@
       ]
     },
     {
+      "path": "1_cicd/src/scripts/emulator-terminal-target-sdk.sh",
+      "lang": "sh",
+      "role": "script",
+      "exports": [
+        "row()",
+        "sh_()",
+        "evidence()",
+        "finish()",
+        "t()",
+        "s()",
+        "run_command()",
+        "wait_file()",
+        "type_line()"
+      ],
+      "imports": [
+        "/sdcard/cloudprove/lib.sh"
+      ],
+      "symbols": [
+        "row()",
+        "sh_()",
+        "evidence()",
+        "finish()",
+        "t()",
+        "s()",
+        "run_command()",
+        "wait_file()",
+        "type_line()"
+      ]
+    },
+    {
+      "path": "1_cicd/src/scripts/terminal-target-sdk-parity.py",
+      "lang": "py",
+      "role": "script",
+      "exports": [
+        "read(path)",
+        "compared(name)",
+        "main(argv)"
+      ],
+      "imports": [
+        "json",
+        "sys"
+      ],
+      "symbols": [
+        "read(path)",
+        "compared(name)",
+        "main(argv)"
+      ]
+    },
+    {
       "path": "1_cicd/src/scripts/test/ai-chat-guard.test.sh",
       "lang": "sh",
       "role": "script",
@@ -7505,6 +7603,24 @@
       "imports": [],
       "symbols": [
         "mk()",
+        "expect()"
+      ]
+    },
+    {
+      "path": "1_cicd/src/scripts/test/terminal-target-sdk-parity.test.sh",
+      "lang": "sh",
+      "role": "script",
+      "exports": [
+        "ok()",
+        "bad()",
+        "rows()",
+        "expect()"
+      ],
+      "imports": [],
+      "symbols": [
+        "ok()",
+        "bad()",
+        "rows()",
         "expect()"
       ]
     },
@@ -31291,6 +31407,42 @@
         "has()",
         "tap()",
         "need()"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/test/emulator-presets-modes.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "wake()",
+        "dump()",
+        "cap()",
+        "centre()",
+        "texts()",
+        "up()",
+        "down()",
+        "tap()",
+        "without_adb()",
+        "page_text()",
+        "on_count()",
+        "is_on()",
+        "open_presets()"
+      ],
+      "imports": [],
+      "symbols": [
+        "wake()",
+        "dump()",
+        "cap()",
+        "centre()",
+        "texts()",
+        "up()",
+        "down()",
+        "tap()",
+        "without_adb()",
+        "page_text()",
+        "on_count()",
+        "is_on()",
+        "open_presets()"
       ]
     },
     {
@@ -108932,6 +109084,27 @@
       ]
     },
     {
+      "path": "ab_cloud-terminal-store/carve-proot-loader.py",
+      "lang": "py",
+      "role": "python",
+      "exports": [
+        "carve(elf: bytes)",
+        "main()"
+      ],
+      "imports": [
+        "pathlib",
+        "hashlib",
+        "json",
+        "os",
+        "struct",
+        "sys"
+      ],
+      "symbols": [
+        "carve(elf: bytes)",
+        "main()"
+      ]
+    },
+    {
       "path": "ab_cloud-terminal-store/fetch-linux-tools.py",
       "lang": "py",
       "role": "python",
@@ -118716,6 +118889,10 @@
         "shoot()",
         "dump()",
         "tap_re()",
+        "up()",
+        "top_()",
+        "tap_scroll()",
+        "seen_scroll()",
         "has()"
       ],
       "imports": [],
@@ -118723,6 +118900,10 @@
         "shoot()",
         "dump()",
         "tap_re()",
+        "up()",
+        "top_()",
+        "tap_scroll()",
+        "seen_scroll()",
         "has()"
       ]
     },
@@ -216377,6 +216558,7 @@
         "android.view.View",
         "androidx.activity.ComponentActivity",
         "androidx.compose.foundation.layout.Column",
+        "com.diegonmarcos.clouddrive.Declarations",
         "androidx.compose.ui.test.assertIsDisplayed",
         "androidx.compose.ui.test.assertIsEnabled",
         "androidx.compose.ui.test.junit4.createAndroidComposeRule",
@@ -216412,6 +216594,7 @@
         "shot(name: String)",
         "localAppsShowsTheCachedListThenRefreshReplacesIt()",
         "overviewHasTheXrayMemoryAction()",
+        "overviewTerminalsAppsAndDataSections()",
         "class ManageScreensTest"
       ]
     },
@@ -410972,6 +411155,14 @@
       "role": "java",
       "exports": [
         "TermuxApplication",
+        "onActivityPreCreated",
+        "onActivityCreated",
+        "onActivityStarted",
+        "onActivityResumed",
+        "onActivityPaused",
+        "onActivityStopped",
+        "onActivitySaveInstanceState",
+        "onActivityDestroyed",
         "onCreate",
         "setLogConfig"
       ],
@@ -410998,6 +411189,8 @@
         "java.io.IOException"
       ],
       "symbols": [
+        "keepWindowInsideSystemBars()",
+        "onActivityPreCreated(android.app.Activity activity, android.os.Bundle savedInstanceState)",
         "onCreate()",
         "startDnsBridge()",
         "bindDnsBridge()",
@@ -416396,6 +416589,51 @@
       ]
     },
     {
+      "path": "ac_cloud-nix-on-droid/termux-shared/src/main/java/com/termux/shared/shell/SystemLinkerExec.java",
+      "lang": "java",
+      "role": "java",
+      "exports": [
+        "SystemLinkerExec",
+        "linker",
+        "required",
+        "wrap",
+        "preloadLibrary",
+        "dataRoots"
+      ],
+      "imports": [
+        "java.io.File",
+        "java.io.FileInputStream",
+        "java.io.IOException",
+        "java.io.InputStream",
+        "java.nio.charset.StandardCharsets",
+        "java.util.ArrayList",
+        "java.util.Arrays",
+        "java.util.List"
+      ],
+      "symbols": [
+        "SystemLinkerExec()",
+        "linker()",
+        "required()",
+        "required(int sdkInt, String seContext)",
+        "wrap(String[] argv, String[] dataRoots, String binDir)",
+        "wrap(String[] argv, String[] dataRoots, String binDir, boolean required, String linker)",
+        "mapInterpreter(String interpreter, String binDir)",
+        "isUnder(String path, String[] roots)",
+        "preloadLibrary(String prefixDir)",
+        "dataRoots(String packageName, String dataDir, int userId)",
+        "sdkInt()",
+        "readProcessContext()",
+        "isElf(File file)",
+        "read(String path)",
+        "indexOfBlank(String s)",
+        "hasInterpSegment(byte[] b, int n)",
+        "num(byte[] b, int off, int len, boolean little)",
+        "class covers",
+        "class SystemLinkerExec",
+        "class Header"
+      ]
+    },
+    {
       "path": "ac_cloud-nix-on-droid/termux-shared/src/main/java/com/termux/shared/termux/crash/TermuxCrashUtils.java",
       "lang": "java",
       "role": "java",
@@ -417650,6 +417888,33 @@
       ]
     },
     {
+      "path": "ac_cloud-nix-on-droid/termux-shared/src/main/java/com/termux/shared/termux/shell/NativeProot.java",
+      "lang": "java",
+      "role": "java",
+      "exports": [
+        "NativeProot",
+        "apply"
+      ],
+      "imports": [
+        "android.content.Context",
+        "android.system.ErrnoException",
+        "android.system.Os",
+        "android.system.OsConstants",
+        "androidx.annotation.NonNull",
+        "com.termux.shared.logger.Logger",
+        "com.termux.shared.shell.SystemLinkerExec",
+        "com.termux.shared.termux.TermuxConstants",
+        "java.io.File",
+        "java.util.Map"
+      ],
+      "symbols": [
+        "NativeProot()",
+        "apply(@NonNull Context context, @NonNull Map<String, String> environment)",
+        "link(File target)",
+        "class NativeProot"
+      ]
+    },
+    {
       "path": "ac_cloud-nix-on-droid/termux-shared/src/main/java/com/termux/shared/termux/shell/TermuxShellManager.java",
       "lang": "java",
       "role": "java",
@@ -417694,9 +417959,11 @@
       "exports": [
         "TermuxShellUtils",
         "setupShellCommandArguments",
+        "setupShellCommandArgumentsDirect",
         "clearTermuxTMPDIR"
       ],
       "imports": [
+        "com.termux.shared.shell.SystemLinkerExec",
         "androidx.annotation.NonNull",
         "androidx.annotation.Nullable",
         "com.termux.shared.errors.Error",
@@ -417715,6 +417982,7 @@
       ],
       "symbols": [
         "setupShellCommandArguments(@NonNull String executable, @Nullable String[] arguments)",
+        "setupShellCommandArgumentsDirect(@NonNull String executable, @Nullable String[] arguments)",
         "clearTermuxTMPDIR(boolean onlyIfExists)",
         "class TermuxShellUtils"
       ]
@@ -418522,6 +418790,26 @@
         "bad()",
         "run()",
         "probe_clean()"
+      ]
+    },
+    {
+      "path": "ac_cloud-nix-on-droid/test/test-system-linker-exec.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "ok()",
+        "bad()",
+        "has()",
+        "probe()",
+        "expect()"
+      ],
+      "imports": [],
+      "symbols": [
+        "ok()",
+        "bad()",
+        "has()",
+        "probe()",
+        "expect()"
       ]
     },
     {
@@ -542399,7 +542687,15 @@
       "role": "java",
       "exports": [
         "TermuxApplication",
-        "onCreate"
+        "onCreate",
+        "onActivityPreCreated",
+        "onActivityCreated",
+        "onActivityStarted",
+        "onActivityResumed",
+        "onActivityPaused",
+        "onActivityStopped",
+        "onActivitySaveInstanceState",
+        "onActivityDestroyed"
       ],
       "imports": [
         "android.app.Application",
@@ -542413,6 +542709,8 @@
       ],
       "symbols": [
         "onCreate()",
+        "keepWindowInsideSystemBars()",
+        "onActivityPreCreated(android.app.Activity activity, android.os.Bundle savedInstanceState)",
         "setLogLevel()",
         "class TermuxApplication"
       ]
@@ -542936,7 +543234,8 @@
         "isUnpacked",
         "installed",
         "stage",
-        "refreshFiles"
+        "refreshFiles",
+        "linkNative"
       ],
       "imports": [
         "android.content.Context",
@@ -542976,6 +543275,8 @@
         "readOrNull(File file)",
         "stage(Context context)",
         "refreshFiles(Context context)",
+        "linkNative(Context context)",
+        "link(File target, File link)",
         "bytes(InputStream in)",
         "trustedLibSourceDir(Context context)",
         "readManifest(String libSourceDir)",
@@ -547646,6 +547947,51 @@
       ]
     },
     {
+      "path": "ac_cloud-termux/termux-shared/src/main/java/com/termux/shared/shell/SystemLinkerExec.java",
+      "lang": "java",
+      "role": "java",
+      "exports": [
+        "SystemLinkerExec",
+        "linker",
+        "required",
+        "wrap",
+        "preloadLibrary",
+        "dataRoots"
+      ],
+      "imports": [
+        "java.io.File",
+        "java.io.FileInputStream",
+        "java.io.IOException",
+        "java.io.InputStream",
+        "java.nio.charset.StandardCharsets",
+        "java.util.ArrayList",
+        "java.util.Arrays",
+        "java.util.List"
+      ],
+      "symbols": [
+        "SystemLinkerExec()",
+        "linker()",
+        "required()",
+        "required(int sdkInt, String seContext)",
+        "wrap(String[] argv, String[] dataRoots, String binDir)",
+        "wrap(String[] argv, String[] dataRoots, String binDir, boolean required, String linker)",
+        "mapInterpreter(String interpreter, String binDir)",
+        "isUnder(String path, String[] roots)",
+        "preloadLibrary(String prefixDir)",
+        "dataRoots(String packageName, String dataDir, int userId)",
+        "sdkInt()",
+        "readProcessContext()",
+        "isElf(File file)",
+        "read(String path)",
+        "indexOfBlank(String s)",
+        "hasInterpSegment(byte[] b, int n)",
+        "num(byte[] b, int off, int len, boolean little)",
+        "class covers",
+        "class SystemLinkerExec",
+        "class Header"
+      ]
+    },
+    {
       "path": "ac_cloud-termux/termux-shared/src/main/java/com/termux/shared/shell/TermuxSession.java",
       "lang": "java",
       "role": "java",
@@ -547717,8 +548063,10 @@
         "getDefaultWorkingDirectoryPath",
         "getDefaultBinPath",
         "buildEnvironment",
+        "appDataRoots",
         "addToEnvIfPresent",
         "setupProcessArgs",
+        "setupProcessArgsDirect",
         "clearTermuxTMPDIR",
         "loadTermuxEnvVariables"
       ],
@@ -547746,8 +548094,11 @@
         "getDefaultWorkingDirectoryPath()",
         "getDefaultBinPath()",
         "buildEnvironment(Context currentPackageContext, boolean isFailSafe, String workingDirectory)",
+        "addSystemLinkerExecEnvironment(Context context, List<String> environment)",
+        "appDataRoots()",
         "addToEnvIfPresent(List<String> environment, String name)",
         "setupProcessArgs(@NonNull String fileToExecute, String[] arguments)",
+        "setupProcessArgsDirect(@NonNull String fileToExecute, String[] arguments)",
         "clearTermuxTMPDIR(boolean onlyIfExists)",
         "loadTermuxEnvVariables(Context currentPackageContext)",
         "class TermuxShellUtils"
@@ -548763,6 +549114,26 @@
         "ok()",
         "bad()",
         "mig()"
+      ]
+    },
+    {
+      "path": "ac_cloud-termux/test/test-system-linker-exec.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "ok()",
+        "bad()",
+        "probe()",
+        "expect()",
+        "has()"
+      ],
+      "imports": [],
+      "symbols": [
+        "ok()",
+        "bad()",
+        "probe()",
+        "expect()",
+        "has()"
       ]
     },
     {
@@ -628724,7 +629095,9 @@
         "org.json.JSONTokener"
       ],
       "symbols": [
-        "stepToCpu(v: Verdict, cpu: Boolean, viewW: Int, viewH: Int)",
+        "own(script: String)",
+        "stepToCpu(v: Verdict, cpu: Boolean, viewW: Int, viewH: Int, seen: Boolean = false)",
+        "alarm(v: Verdict?, seen: Boolean)",
         "presentation(cpu: Boolean)",
         "rows()",
         "parse(raw: String?)",
@@ -629218,6 +629591,7 @@
         "handles(reqHost: String?, host: String, range: String?, acceptEncoding: String?)",
         "networkFirst(mainFrame: Boolean, accept: String?)",
         "hasDocument(ctx: Context, host: String, launchUrl: String)",
+        "ownDocument(current: String?, launchUrl: String)",
         "sceneOverdue(sinceDocumentMs: Long, rendered: Boolean, page: RenderProbe.Page?)",
         "status(pinned: Boolean, fromCopy: Boolean, why: String)",
         "log(host: String, last: Int = 40)",
@@ -629664,9 +630038,10 @@
         "theDiagnosticsLineSaysWhatPinOfflineDoes()",
         "whatTheInterceptDidIsLoggedPerSite()",
         "galaxyShowsThePinnedCopyWhenTheLiveDocumentDoesNotArrive()",
-        "onPageCommitVisible(\", \"val arrived = { if (!committed)",
+        "onPageCommitVisible(view: WebView, url: String)",
+        "onlyTheWorldsOwnDocumentIsTakenFromTheCopy()",
         "aLivePageThatStartsNoSceneIsShownFromThePinnedCopy()",
-        "page(canvases: Int = 0, videos: Int = 0, gl: Int = 0, gpu: Int = 0, d2: Int = 0)",
+        "page(canvases: Int = 0, videos: Int = 0, gl: Int = 0, gpu: Int = 0, d2: Int = 0, attached: Int = 0)",
         "class PinPolicyTest",
         "class PinRecorder",
         "class SiteMirrorRunner"
@@ -629702,6 +630077,8 @@
         "eachFailedStageIsNamed()",
         "reason(p: RenderProbe.Page?, s: RenderProbe.Screen? = flat)",
         "aSceneOutsideTheDocumentIsNotCalledNeverStarted()",
+        "raw(attached: Int, gl: Int = 2, d2: Int = 1)",
+        "aWorldAlreadySeenIsNeverLoadedAgainForAFlatMoment()",
         "aPageWithPixelsAndNoScreenSampleCountsAsRendered()",
         "aWorldNotOnTheScreenIsLoadedOnceInTheCpuPresentation()",
         "theCpuPresentationLoadsItsDeclaredAddress()",
