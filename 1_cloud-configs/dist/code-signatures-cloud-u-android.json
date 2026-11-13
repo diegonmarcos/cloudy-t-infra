@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 24280,
+    "files": 24299,
     "by_lang": {
-      "sh": 750,
+      "sh": 751,
       "js": 562,
       "py": 234,
-      "kotlin": 13441,
+      "kotlin": 13459,
       "ts": 8481,
       "java": 654,
       "nix": 35,
@@ -21,11 +21,11 @@
       "hook": 160,
       "file": 2320,
       "shell": 603,
-      "script": 320,
+      "script": 321,
       "python": 82,
       "module": 6490,
       "java": 653,
-      "kotlin": 13438,
+      "kotlin": 13456,
       "flake": 31,
       "rust-module": 123,
       "nix-module": 4,
@@ -6388,6 +6388,24 @@
       ]
     },
     {
+      "path": "1_cicd/src/scripts/emulator-xray-perf.sh",
+      "lang": "sh",
+      "role": "script",
+      "exports": [
+        "dump()",
+        "shot()",
+        "tap_node()",
+        "dismiss()"
+      ],
+      "imports": [],
+      "symbols": [
+        "dump()",
+        "shot()",
+        "tap_node()",
+        "dismiss()"
+      ]
+    },
+    {
       "path": "1_cicd/src/scripts/terminal-target-sdk-parity.py",
       "lang": "py",
       "role": "script",
@@ -8779,7 +8797,7 @@
         "intercept(ctx: Context, sectionId: String, pageId: String)",
         "ownsInstalls(ctx: Context)",
         "installed(ctx: Context)",
-        "open(ctx: Context, tab: String)",
+        "open(ctx: Context, tab: String, page: String? = null)",
         "page(pageId: String)",
         "pageIdOf(f: Fragment)",
         "onCreate(state: Bundle?)",
@@ -17808,6 +17826,7 @@
         "com.diegonmarcos.superapp.bottomnav.BottomNavIslandView",
         "com.diegonmarcos.superapp.bottomnav.BottomNavViewItem",
         "com.diegonmarcos.superapp.firewall.FirewallDialog",
+        "com.diegonmarcos.superapp.launcher.BackHandler",
         "com.diegonmarcos.superapp.system.ShellOverride",
         "com.diegonmarcos.superapp.ui.LauncherPalette",
         "com.diegonmarcos.superapp.uikit.KitComposeFragment",
@@ -17818,6 +17837,7 @@
         "palette()",
         "onCreate(savedInstanceState: Bundle?)",
         "onSaveInstanceState(outState: Bundle)",
+        "tryHandleBack()",
         "close()",
         "Content()",
         "onViewCreated(view: android.view.View, savedInstanceState: Bundle?)",
@@ -22408,6 +22428,26 @@
         "class LocationUseView",
         "class app",
         "class access"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/xray/SuperAppBenchmarks.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "SuperAppBenchmarks"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.fleetxray.perf.XrayBenchmark",
+        "com.diegonmarcos.superapp.fleetxray.perf.XrayBenchmarks",
+        "com.diegonmarcos.superapp.fleetxray.perf.XrayProfiler",
+        "com.diegonmarcos.superapp.search.SearchScope",
+        "com.diegonmarcos.superapp.search.SuperappSearchIndex"
+      ],
+      "symbols": [
+        "all()",
+        "register()",
+        "class SuperAppBenchmarks"
       ]
     },
     {
@@ -27195,6 +27235,7 @@
       "symbols": [
         "text(f: File)",
         "applyLauncherChrome()",
+        "tryHandleBack()",
         "ownsToolbar()",
         "class ShellTopInsetStaticGuardTest"
       ]
@@ -28750,6 +28791,7 @@
       "symbols": [
         "src(rel: String)",
         "pages()",
+        "tryHandleBack()",
         "ownsBottomNav()",
         "class NetworkNavTest"
       ]
@@ -31102,6 +31144,27 @@
         "has(file: String, what: String)",
         "class EngineProfilesTest",
         "class of"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/test/java/com/diegonmarcos/superapp/xray/SuperAppBenchmarksTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "SuperAppBenchmarksTest"
+      ],
+      "imports": [
+        "java.io.File",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "src(rel: String)",
+        "declaredBenchmarksAreReadOnlyAndBounded()",
+        "eachOperationIsRecordedByAnInstrumentedPath()",
+        "everyEnginePathReachesTheFleetProfiler()",
+        "class SuperAppBenchmarksTest"
       ]
     },
     {
@@ -63339,6 +63402,195 @@
       ]
     },
     {
+      "path": "ab_cloud-libs-shared/libs/fleetconfigs-xray/src/main/java/com/diegonmarcos/superapp/fleetxray/perf/XrayBenchmarks.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "XrayBenchmark",
+        "XrayBenchmarks"
+      ],
+      "imports": [
+        "android.content.Context",
+        "kotlinx.coroutines.Dispatchers",
+        "kotlinx.coroutines.withContext",
+        "kotlinx.coroutines.withTimeoutOrNull"
+      ],
+      "symbols": [
+        "register(vararg b: XrayBenchmark)",
+        "declared()",
+        "clearForTest()",
+        "runAll(ctx: Context, onProgress: (String)",
+        "class XrayBenchmark",
+        "class XrayBenchmarks"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/fleetconfigs-xray/src/main/java/com/diegonmarcos/superapp/fleetxray/perf/XrayFileExport.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "XrayFileExport"
+      ],
+      "imports": [
+        "android.content.Context",
+        "android.content.Intent",
+        "android.net.Uri"
+      ],
+      "symbols": [
+        "write(ctx: Context, uri: Uri, md: String)",
+        "shareText(md: String)",
+        "share(ctx: Context, md: String, name: String)",
+        "class XrayFileExport"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/fleetconfigs-xray/src/main/java/com/diegonmarcos/superapp/fleetxray/perf/XrayPerf.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "PerfRun",
+        "PerfVerdict",
+        "OpSummary",
+        "XrayPerfMath",
+        "BenchOutcome",
+        "PerfDevice",
+        "XrayPerfReport",
+        "XrayPerfCodec"
+      ],
+      "imports": [
+        "java.util.Locale",
+        "kotlin.math.ceil"
+      ],
+      "symbols": [
+        "percentile(sorted: List<Double>, p: Double)",
+        "verdict(cpuRatio: Double?)",
+        "summarize(op: String, runs: List<PerfRun>)",
+        "summarizeAll(runs: List<PerfRun>)",
+        "cell(s: String)",
+        "f1(d: Double)",
+        "f2(d: Double)",
+        "na(d: Double?, fmt: (Double)",
+        "table(headers: List<String>, rows: List<List<String>>)",
+        "fileName(d: PerfDevice)",
+        "verdictLine(s: OpSummary)",
+        "markdown(d: PerfDevice, runs: List<PerfRun>, outcomes: List<BenchOutcome> = emptyList()",
+        "lint(md: String)",
+        "esc(s: String)",
+        "unesc(s: String)",
+        "encode(runs: List<PerfRun>)",
+        "decode(text: String)",
+        "class PerfRun",
+        "class PerfVerdict",
+        "class OpSummary",
+        "class XrayPerfMath",
+        "class BenchOutcome",
+        "class PerfDevice",
+        "class XrayPerfReport",
+        "class XrayPerfCodec"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/fleetconfigs-xray/src/main/java/com/diegonmarcos/superapp/fleetxray/perf/XrayPerfSection.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "XrayPerfTags",
+        "XrayPerformancePanel"
+      ],
+      "imports": [
+        "android.content.Context",
+        "android.os.Build",
+        "androidx.activity.compose.rememberLauncherForActivityResult",
+        "androidx.activity.result.contract.ActivityResultContracts",
+        "androidx.compose.foundation.background",
+        "androidx.compose.foundation.border",
+        "androidx.compose.foundation.clickable",
+        "androidx.compose.foundation.horizontalScroll",
+        "androidx.compose.foundation.layout.Arrangement",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.Row",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.foundation.layout.width",
+        "androidx.compose.foundation.rememberScrollState",
+        "androidx.compose.foundation.shape.RoundedCornerShape",
+        "androidx.compose.material3.Text",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableIntStateOf",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.remember",
+        "androidx.compose.runtime.rememberCoroutineScope",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.draw.clip",
+        "androidx.compose.ui.platform.LocalContext",
+        "androidx.compose.ui.platform.testTag",
+        "androidx.compose.ui.text.font.FontFamily",
+        "androidx.compose.ui.text.font.FontWeight",
+        "androidx.compose.ui.unit.dp",
+        "androidx.compose.ui.unit.sp",
+        "com.diegonmarcos.superapp.fleetconfigs.FleetConfigs",
+        "com.diegonmarcos.superapp.themebg.ThemeColors",
+        "java.text.SimpleDateFormat",
+        "java.util.Date",
+        "java.util.Locale",
+        "kotlinx.coroutines.Dispatchers",
+        "kotlinx.coroutines.launch",
+        "kotlinx.coroutines.withContext"
+      ],
+      "symbols": [
+        "perfDevice(ctx: Context, now: Long = System.currentTimeMillis()",
+        "rowOf(s: OpSummary)",
+        "XrayPerfSection(c: ThemeColors)",
+        "PerfButton(label: String, c: ThemeColors, tag: String, onClick: ()",
+        "XrayPerformancePanel(dark: Boolean = true)",
+        "class XrayPerfTags"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/fleetconfigs-xray/src/main/java/com/diegonmarcos/superapp/fleetxray/perf/XrayProfiler.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "PerfClock",
+        "AndroidPerfClock",
+        "PerfSpan",
+        "XrayProfiler"
+      ],
+      "imports": [
+        "java.io.File"
+      ],
+      "symbols": [
+        "wallNs()",
+        "cpuNs()",
+        "gcCount()",
+        "gcTimeMs()",
+        "allocBytes()",
+        "nowMs()",
+        "stat(k: String)",
+        "add(items: Long = 0, bytes: Long = 0)",
+        "init(dir: File)",
+        "count(items: Long = 0, bytes: Long = 0)",
+        "span(op: String, benchmark: Boolean = false, block: (PerfSpan)",
+        "spanSuspend(op: String, benchmark: Boolean = false, block: suspend (PerfSpan)",
+        "record(r: PerfRun)",
+        "insert(r: PerfRun)",
+        "runs()",
+        "summaries()",
+        "setOutcomes(o: List<BenchOutcome>)",
+        "outcomes()",
+        "flush()",
+        "persist(f: File)",
+        "clear()",
+        "resetForTest(c: PerfClock)",
+        "class PerfClock",
+        "class AndroidPerfClock",
+        "class PerfSpan",
+        "class XrayProfiler"
+      ]
+    },
+    {
       "path": "ab_cloud-libs-shared/libs/fleetconfigs-xray/src/test/java/com/diegonmarcos/superapp/fleetxray/FleetXrayExportTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -63358,6 +63610,50 @@
         "markdown_names_app_and_each_tracker()",
         "html_is_self_contained_and_escaped()",
         "class FleetXrayExportTest"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/fleetconfigs-xray/src/test/java/com/diegonmarcos/superapp/fleetxray/perf/XrayPerfTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "XrayPerfTest"
+      ],
+      "imports": [
+        "kotlinx.coroutines.runBlocking",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "wallNs()",
+        "cpuNs()",
+        "gcCount()",
+        "gcTimeMs()",
+        "allocBytes()",
+        "nowMs()",
+        "run(op: String, wallMs: Long, cpuMs: Long, items: Long = 0, bytes: Long = 0)",
+        "percentilesAreNearestRank()",
+        "cpuSplitIsSumCpuOverSumWall()",
+        "runsWithoutCpuAreExcludedFromTheSplitAndMakeNoVerdictWhenAlone()",
+        "verdictThresholds()",
+        "throughputIsTotalOverTotalWall()",
+        "failedRunsAreCountedButNotTimed()",
+        "spanRecordsWallCpuGcAndAllocDeltas()",
+        "unavailableCountersStayNegativeNotZero()",
+        "aThrowingSpanIsRecordedAsFailedAndRethrown()",
+        "nestedSpansCountIntoTheInnermost()",
+        "suspendSpanRecordsAndMarksAThreadHopAsNoCpu()",
+        "ringIsBoundedPerOperationAndInTotalOps()",
+        "disabledProfilerRecordsNothing()",
+        "codecRoundTripsEveryField()",
+        "reportMarkdownHasHeaderTableVerdictsAndPerRunDetails()",
+        "emptyReportStillLintsAndSaysSo()",
+        "perRunDetailIsCappedAndSaysSo()",
+        "fileNameIsSafe()",
+        "class XrayPerfTest",
+        "class FakeClock"
       ]
     },
     {
@@ -118115,6 +118411,7 @@
         "enc(s: String)",
         "rootPath(id: String, path: String)",
         "get(path: String)",
+        "getBlocking(path: String)",
         "post(path: String, body: JSONObject)",
         "call(method: String, path: String, body: JSONObject?)",
         "absolute(href: String)",
@@ -118981,6 +119278,25 @@
       ]
     },
     {
+      "path": "ac_cloud-c3-webserver/src-tauri/gen/android/app/src/main/java/com/diegonmarcos/cloudwebserver/WebserverBenchmarks.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "WebserverBenchmarks"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.fleetxray.perf.XrayBenchmark",
+        "com.diegonmarcos.superapp.fleetxray.perf.XrayBenchmarks",
+        "com.diegonmarcos.superapp.fleetxray.perf.XrayProfiler"
+      ],
+      "symbols": [
+        "httpBenchmark(op: String, title: String, route: String)",
+        "all()",
+        "register()",
+        "class WebserverBenchmarks"
+      ]
+    },
+    {
       "path": "ac_cloud-c3-webserver/src-tauri/gen/android/app/src/owner/java/com/diegonmarcos/cloudwebserver/owner/AdbHomeStatus.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -119187,6 +119503,26 @@
         "row(p: Probe, id: String)",
         "class KeepAliveHealthTest",
         "class P"
+      ]
+    },
+    {
+      "path": "ac_cloud-c3-webserver/src-tauri/gen/android/app/src/test/java/com/diegonmarcos/cloudwebserver/WebserverBenchmarksTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "WebserverBenchmarksTest"
+      ],
+      "imports": [
+        "java.io.File",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "theHotPathsAreDeclaredReadOnlyAndBounded()",
+        "everyHttpBenchmarkIsAGetOfADeclaredAdminRoute()",
+        "theCoreStartIsRecordedAsASpanAtAttach()",
+        "class WebserverBenchmarksTest"
       ]
     },
     {
@@ -210801,6 +211137,7 @@
       "symbols": [
         "fleetByPackage()",
         "collect(ctx: Context, useShell: Boolean = true, now: Long = System.currentTimeMillis()",
+        "collectUnmeasured(ctx: Context, useShell: Boolean, now: Long)",
         "sh(cmd: String)",
         "pmVersions(pm: PackageManager)",
         "class AppSnapshot",
@@ -210880,6 +211217,7 @@
       ],
       "symbols": [
         "scan( roots: List<File>, cache: Map<String, DirEntry> = emptyMap()",
+        "scanUnmeasured( roots: List<File>, cache: Map<String, DirEntry> = emptyMap()",
         "folders(items: List<Item>)",
         "filtered(items: List<Item>, filter: DataFilter)",
         "encodeCache(cache: Map<String, DirEntry>)",
@@ -210890,6 +211228,45 @@
         "class DirEntry",
         "class Progress",
         "class Result"
+      ]
+    },
+    {
+      "path": "ac_cloud-drive/app/src/main/java/com/diegonmarcos/clouddrive/manage/DriveBenchmarks.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "DriveBenchmarks"
+      ],
+      "imports": [
+        "android.content.Context",
+        "android.os.Environment",
+        "com.diegonmarcos.clouddrive.BuildConfig",
+        "com.diegonmarcos.clouddrive.Declarations",
+        "com.diegonmarcos.clouddrive.SharedStore",
+        "com.diegonmarcos.clouddrive.files.Places",
+        "com.diegonmarcos.clouddrive.sync.GitSyncCoordinator",
+        "com.diegonmarcos.clouddrive.sync.RepoCheap",
+        "com.diegonmarcos.clouddrive.sync.RepoDiskSize",
+        "com.diegonmarcos.superapp.fleetxray.perf.XrayBenchmark",
+        "com.diegonmarcos.superapp.fleetxray.perf.XrayBenchmarks",
+        "com.diegonmarcos.superapp.fleetxray.perf.XrayProfiler",
+        "java.io.File",
+        "java.security.MessageDigest"
+      ],
+      "symbols": [
+        "registerHashEngine(name: String, f: (File)",
+        "registerSizeEngine(name: String, f: (File, Int)",
+        "hashEngineNames()",
+        "sizeEngineNames()",
+        "sha256Kotlin(f: File)",
+        "pickSample(candidates: Sequence<File>, maxFiles: Int = MAX_FILES, maxBytes: Long = MAX_BYTES, maxOne: Long = 16L * 1024 * 1024)",
+        "sharedFiles(limit: Int = 4_000)",
+        "apkFiles(ctx: Context)",
+        "sampleFiles(ctx: Context)",
+        "repoDirs(max: Int)",
+        "all()",
+        "register()",
+        "class DriveBenchmarks"
       ]
     },
     {
@@ -211099,7 +211476,8 @@
         "decodeThumb(ctx: Context, uri: Uri, px: Int)",
         "openFile(ctx: Context, f: RecentFile)",
         "hasGrant(ctx: Context)",
-        "loadStrip(ctx: Context, d: Declarations.DataStripDecl)"
+        "loadStrip(ctx: Context, d: Declarations.DataStripDecl)",
+        "loadStripUnmeasured(ctx: Context, d: Declarations.DataStripDecl)"
       ]
     },
     {
@@ -211268,13 +211646,14 @@
       ],
       "symbols": [
         "collect(ctx: Context, snap: AppSnapshot.Snapshot?, appVersion: String, now: Long = System.currentTimeMillis()",
+        "collectUnmeasured(ctx: Context, snap: AppSnapshot.Snapshot?, appVersion: String, now: Long, exec: (String)",
         "shell(r: ShellResult?, what: String, shape: (String)",
         "appsSource(snap: AppSnapshot.Snapshot?)",
         "procs(snap: AppSnapshot.Snapshot?)",
         "memory(ctx: Context)",
         "volumes(ctx: Context)",
         "stat(f: File?)",
-        "walkShared(ctx: Context)",
+        "walkShared(ctx: Context, maxEntries: Int, budgetMs: Long)",
         "visit(dir: File, topName: String)",
         "class XrayMemoryCollector",
         "class Walk"
@@ -214337,6 +214716,7 @@
         "fingerprint(dir: File)",
         "m(f: File)",
         "compute(dir: File)",
+        "compute(dir: File, maxEntries: Int)",
         "visitFile(file: Path, attrs: BasicFileAttributes)",
         "visitFileFailed(file: Path, exc: java.io.IOException)",
         "fresh(cached: Entry?, dir: File)",
@@ -216937,6 +217317,32 @@
         "reusesUnchangedDirectoriesAndRoundTripsTheCache()",
         "cancelStopsTheWalk()",
         "class DataScannerTest"
+      ]
+    },
+    {
+      "path": "ac_cloud-drive/app/src/test/java/com/diegonmarcos/clouddrive/manage/DriveBenchmarksTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "DriveBenchmarksTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.fleetxray.perf.XrayBenchmarks",
+        "java.io.File",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "theEightHotPathsAreDeclared()",
+        "everyBenchmarkIsBoundedAndSaysWhyItIsSafe()",
+        "source(rel: String)",
+        "everyBenchmarkedOperationIsRecordedByAnInstrumentedPathOfTheApp()",
+        "gitSyncOperationsAreProfiledToo()",
+        "hashEngineIsTheKotlinOneAndOtherEnginesJoinAsTheirOwnRows()",
+        "sha256IsCorrect()",
+        "sampleIsBoundedInFilesAndBytesAndSkipsTinyAndHugeFiles()",
+        "class DriveBenchmarksTest"
       ]
     },
     {
@@ -406051,6 +406457,42 @@
       ]
     },
     {
+      "path": "ac_cloud-nav/app/src/main/java/com/diegonmarcos/cloudnav/NavBenchmarks.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "NavBenchmarks"
+      ],
+      "imports": [
+        "com.diegonmarcos.cloudnav.maps.MapsRouting",
+        "com.diegonmarcos.cloudnav.maps.TimelineBuilder",
+        "com.diegonmarcos.cloudnav.maps.TlFix",
+        "com.diegonmarcos.cloudnav.maps.TlSegment",
+        "com.diegonmarcos.cloudnav.maps.TlStop",
+        "com.diegonmarcos.cloudnav.maps.TlSteps",
+        "com.diegonmarcos.cloudnav.sky.PlanetEphemeris",
+        "com.diegonmarcos.cloudnav.tracker.Aggregates",
+        "com.diegonmarcos.cloudnav.tracker.DayTimeline",
+        "com.diegonmarcos.cloudnav.tracker.Segmenter",
+        "com.diegonmarcos.cloudnav.tracker.StepSlice",
+        "com.diegonmarcos.superapp.fleetxray.perf.XrayBenchmark",
+        "com.diegonmarcos.superapp.fleetxray.perf.XrayBenchmarks",
+        "com.diegonmarcos.superapp.fleetxray.perf.XrayProfiler",
+        "java.time.LocalDate",
+        "java.time.ZoneOffset",
+        "java.util.Random"
+      ],
+      "symbols": [
+        "fixture(stops: Int = STOPS, fixes: Int = FIXES, slices: Int = STEP_SLICES, seed: Long = 42)",
+        "encodePolyline6(n: Int, seed: Long = 7)",
+        "put(v0: Int)",
+        "all()",
+        "register()",
+        "class NavBenchmarks",
+        "class Fixture"
+      ]
+    },
+    {
       "path": "ac_cloud-nav/app/src/main/java/com/diegonmarcos/cloudnav/NavConfig.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -408326,6 +408768,28 @@
         "drainLinesAreBaselineThenStatesByMarginalDraw()",
         "words()",
         "class EnergyUsageModelTest"
+      ]
+    },
+    {
+      "path": "ac_cloud-nav/app/src/test/java/com/diegonmarcos/cloudnav/NavBenchmarksTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "NavBenchmarksTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.cloudnav.maps.MapsRouting",
+        "java.io.File",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "theFiveHotPathsAreDeclaredAndSafe()",
+        "everyDeclaredOperationIsASpanInTheBenchmarkSource()",
+        "fixtureIsDeterministicAndBounded()",
+        "polylineEncoderRoundTripsThroughTheRealDecoder()",
+        "class NavBenchmarksTest"
       ]
     },
     {
@@ -536554,6 +537018,36 @@
       ]
     },
     {
+      "path": "ac_cloud-store/app/src/main/java/com/diegonmarcos/cloudstore/StoreBenchmarks.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "StoreBenchmarks"
+      ],
+      "imports": [
+        "android.content.Context",
+        "android.os.Process",
+        "com.diegonmarcos.superapp.apps.PhoneApp",
+        "com.diegonmarcos.superapp.apps.PhoneAppClassifier",
+        "com.diegonmarcos.superapp.apps.PhoneFolders",
+        "com.diegonmarcos.superapp.appstore.BuildConfig",
+        "com.diegonmarcos.superapp.appstore.SourceResolver",
+        "com.diegonmarcos.superapp.fleetxray.perf.XrayBenchmark",
+        "com.diegonmarcos.superapp.fleetxray.perf.XrayBenchmarks",
+        "com.diegonmarcos.superapp.fleetxray.perf.XrayProfiler",
+        "com.diegonmarcos.superapp.updater.Fleet",
+        "java.io.File",
+        "java.security.MessageDigest"
+      ],
+      "symbols": [
+        "sha256(f: File)",
+        "pickSample(files: Sequence<File>, maxFiles: Int = HASH_MAX_FILES, maxBytes: Long = HASH_MAX_BYTES)",
+        "all()",
+        "register()",
+        "class StoreBenchmarks"
+      ]
+    },
+    {
       "path": "ac_cloud-store/app/src/main/java/com/diegonmarcos/cloudstore/StoreDrawer.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -537091,6 +537585,26 @@
         "android11HasNoNativeSilentPathAndSetsNothingAboutIt()",
         "theCardStatesTheLimitsPlainly()",
         "class SilentUpdateTest"
+      ]
+    },
+    {
+      "path": "ac_cloud-store/app/src/test/java/com/diegonmarcos/cloudstore/StoreBenchmarksTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "StoreBenchmarksTest"
+      ],
+      "imports": [
+        "java.io.File",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "theFourHotPathsAreDeclaredReadOnlyAndBounded()",
+        "everyDeclaredOperationIsASpanInTheBenchmarkSource()",
+        "sha256IsCorrectAndTheSampleIsBounded()",
+        "class StoreBenchmarksTest"
       ]
     },
     {
@@ -626171,6 +626685,10 @@
         "PerfGroup",
         "PerfDecl",
         "PerfConstituent",
+        "PerfParts",
+        "FlowNode",
+        "FlowLink",
+        "Flow",
         "PerfSchemeSource",
         "PerfBasket",
         "PerfRow",
@@ -626194,8 +626712,13 @@
         "parse(json: String)",
         "schemeOf(group: PerfGroup, asked: String?)",
         "sourceOf(basket: PerfBasket, scheme: String)",
-        "perf(c: PerfConstituent, quotes: Map<String, Quote>, period: String)",
-        "rows(basket: PerfBasket, scheme: String, quotes: Map<String, Quote>, period: String, top: Int)",
+        "fxMove(symbol: String, quotes: Map<String, Quote>, period: String)",
+        "compound(a: Double, b: Double)",
+        "strip(total: Double, part: Double)",
+        "parts(c: PerfConstituent, quotes: Map<String, Quote>, period: String, sov: Map<String, Map<String, Double>> = emptyMap()",
+        "perf(c: PerfConstituent, quotes: Map<String, Quote>, period: String, sov: Map<String, Map<String, Double>> = emptyMap()",
+        "rows(basket: PerfBasket, scheme: String, quotes: Map<String, Quote>, period: String, top: Int, sov: Map<String, Map<String, Double>> = emptyMap()",
+        "isSovereign(basket: PerfBasket)",
         "symbols(rows: List<PerfRow>)",
         "weightSum(rows: List<PerfRow>)",
         "total(rows: List<PerfRow>)",
@@ -626207,25 +626730,20 @@
         "text(r: PerfRow)",
         "attribution(rows: List<PerfRow>, maxBars: Int, restLabel: String, totalLabel: String, otherBucket: String = \"Other\")",
         "span(steps: List<PerfStep>)",
-        "bubbles(basket: PerfBasket, scheme: String, quotes: Map<String, Quote>, xPeriod: String, yPeriod: String, top: Int)",
+        "bubbles(basket: PerfBasket, scheme: String, quotes: Map<String, Quote>, xPeriod: String, yPeriod: String, top: Int, sov: Map<String, Map<String, Double>> = emptyMap()",
         "median(values: List<Double>)",
         "f2(v: Double)",
         "f1(v: Double)",
         "s2(v: Double?)",
         "s1(v: Double?)",
-        "cells(rows: List<PerfRow>, quotes: Map<String, Quote>, periods: List<String>)",
-        "totals(basket: PerfBasket, scheme: String, quotes: Map<String, Quote>, periods: List<String>, period: String, top: Int, label: String)",
+        "cells(rows: List<PerfRow>, quotes: Map<String, Quote>, periods: List<String>, sov: Map<String, Map<String, Double>> = emptyMap()",
+        "totals(basket: PerfBasket, scheme: String, quotes: Map<String, Quote>, periods: List<String>, period: String, top: Int, label: String, sov: Map<String, Map<String, Double>> = emptyMap()",
         "barShare(contribution: Double?, rows: List<PerfRow>)",
+        "flow(rows: List<PerfRow>, maxBuckets: Int, maxHoldings: Int, portfolioLabel: String, otherLabel: String, restLabel: String, gap: Double = 0.012)",
+        "stack(values: List<Double>)",
         "class PerfScheme",
         "class PerfBenchmark",
-        "class PerfGroup",
-        "class PerfDecl",
-        "class PerfConstituent",
-        "class PerfSchemeSource",
-        "class PerfBasket",
-        "class PerfRow",
-        "class PerfStep",
-        "class PerfBubble"
+        "class PerfGroup"
       ]
     },
     {
@@ -626509,6 +627027,39 @@
         "read(id: String)",
         "class SecretBox",
         "class SourceKeys"
+      ]
+    },
+    {
+      "path": "ad_Capital-Stack-FinTerminal/app/src/main/java/com/diegonmarcos/capitalfinterm/SovereignReturns.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "SovDecl",
+        "SovRow",
+        "SovereignReturns"
+      ],
+      "imports": [
+        "java.net.URLEncoder",
+        "java.util.TreeMap",
+        "kotlin.math.pow",
+        "org.json.JSONObject"
+      ],
+      "symbols": [
+        "parseDecl(portfoliosJson: String)",
+        "map(o: JSONObject?)",
+        "parDuration(y: Double, years: Double)",
+        "nextMonth(m: String)",
+        "monthly(yields: Map<String, Double>, years: Double)",
+        "prevMonth(m: String)",
+        "window(monthly: TreeMap<String, Double>, months: Int)",
+        "windows(monthly: TreeMap<String, Double>)",
+        "fallbackUrl(decl: SovDecl, endpoint: String)",
+        "parseYields(json: String, decl: SovDecl, source: String)",
+        "parseApi(json: String, source: String)",
+        "byPeriod(rows: Map<String, SovRow>, decl: SovDecl)",
+        "class SovDecl",
+        "class SovRow",
+        "class SovereignReturns"
       ]
     },
     {
@@ -627542,11 +628093,11 @@
         "androidx.compose.ui.graphics.Color",
         "androidx.compose.ui.graphics.SolidColor",
         "androidx.compose.ui.platform.testTag",
+        "androidx.compose.ui.semantics.contentDescription",
+        "androidx.compose.ui.semantics.semantics",
         "androidx.compose.ui.text.input.ImeAction",
         "androidx.compose.ui.text.input.KeyboardCapitalization",
-        "androidx.compose.ui.text.style.TextOverflow",
-        "androidx.compose.ui.unit.Dp",
-        "androidx.compose.ui.unit.dp"
+        "androidx.compose.ui.text.style.TextOverflow"
       ],
       "symbols": [
         "menu(id: String)",
@@ -627808,7 +628359,9 @@
         "PERF_BUBBLE",
         "PERF_CARD",
         "PERF_SCHEME",
+        "PERF_FLOW",
         "PerfStore",
+        "SovStore",
         "PerfUi",
         "PerfHomeState",
         "rememberPerfHome",
@@ -627861,6 +628414,8 @@
         "decl(ctx: Context)",
         "open(authority: String, path: String)",
         "load(ctx: Context)",
+        "periods(ctx: Context)",
+        "note()",
         "rememberPerfHome(views: List<String>)",
         "PerfCardBody(view: String, state: PerfHomeState)",
         "perfDir(v: Double?)",
@@ -627868,7 +628423,7 @@
         "PerfPortfolioPage(view: String, fn: String)",
         "PerfStateLine(fn: String, title: String, text: String)",
         "NoPerf(decl: PerfDecl, fetching: Boolean)",
-        "TableMode( decl: PerfDecl, group: PerfGroup, basket: PerfBasket, scheme: String, rows: List<PerfRow>, quotes: Map<String, Quote>, period: String, top: Int, fetching: Boolean, width: Dp, onPeriod: (String)",
+        "TableMode( decl: PerfDecl, group: PerfGroup, basket: PerfBasket, scheme: String, rows: List<PerfRow>, quotes: Map<String, Quote>, period: String, top: Int, fetching: Boolean, width: Dp, sov: Map<String, Map<String, Double>>, onPeriod: (String)",
         "sortBy(key: String)",
         "rowFill(i: Int, selected: Boolean)",
         "HeadCell(text: String, w: Dp, left: Boolean, on: Boolean, desc: Boolean, tag: String = \"\", onClick: ()",
@@ -627876,7 +628431,7 @@
         "NumCell(text: String, w: Dp, color: Color, bold: Boolean = false)",
         "ContribCell(contribution: Double?, share: Float)",
         "PickedLine(r: PerfRow, period: String)",
-        "Graphics( decl: PerfDecl, group: PerfGroup, basket: PerfBasket, scheme: String, rows: List<PerfRow>, quotes: Map<String, Quote>, qdecl: QuotesDecl?, period: String, top: Int, fetching: Boolean, width: Dp, onPeriod: (String)",
+        "Graphics( decl: PerfDecl, group: PerfGroup, basket: PerfBasket, scheme: String, rows: List<PerfRow>, quotes: Map<String, Quote>, qdecl: QuotesDecl?, period: String, top: Int, fetching: Boolean, width: Dp, sov: Map<String, Map<String, Double>>, onPeriod: (String)",
         "perfTileColor(perf: Double?, scale: Double)",
         "PerfTreemap(rows: List<PerfRow>, scale: Double, width: Dp, picked: Int, onPick: (Int)",
         "PerfWaterfall(steps: List<PerfStep>)",
@@ -627884,8 +628439,13 @@
         "PerfBubbleChart(bubbles: List<PerfBubble>, xPeriod: String, yPeriod: String, width: Dp)",
         "px(v: Double)",
         "py(v: Double)",
+        "PerfFlowChart(flow: Flow, scale: Double, width: Dp)",
+        "xOf(col: Int)",
+        "yOf(v: Double)",
+        "colorOf(node: Int)",
         "class PerfStore",
         "class WebSource",
+        "class SovStore",
         "class PerfUi",
         "class PerfHomeState"
       ]
@@ -629272,6 +629832,33 @@
         "theKeyIsInNoStringTheClassPrints()",
         "class SourceKeysTest",
         "class MemBox"
+      ]
+    },
+    {
+      "path": "ad_Capital-Stack-FinTerminal/app/src/test/java/com/diegonmarcos/capitalfinterm/SovereignFlowTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "SovereignFlowTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "q(pct: Double? = null, ytd: Double? = null)",
+        "c(t: String, w: Double, bucket: String)",
+        "sov(t: String, symbol: String, fx: String, ccy: String)",
+        "basket(vararg cs: PerfConstituent)",
+        "aSovereignsDollarReturnIsItsBondReturnCompoundedWithItsCurrency()",
+        "govEmCountriesAreSovereignsWithAFundOrTheYieldSource()",
+        "theFlowKeepsEveryWeightFromThePortfolioToTheConstituents()",
+        "sovereignReturnsFollowTheDeclaredYieldArithmetic()",
+        "theDeclarationThePublicYieldAnswerAndTheContainersAnswerAreRead()",
+        "aFactorPortfolioNamesTheFundItIsMeantToFollow()",
+        "class SovereignFlowTest"
       ]
     },
     {
