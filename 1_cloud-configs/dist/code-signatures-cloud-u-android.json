@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 24255,
+    "files": 24275,
     "by_lang": {
-      "sh": 744,
+      "sh": 748,
       "js": 562,
-      "py": 232,
-      "kotlin": 13424,
+      "py": 233,
+      "kotlin": 13439,
       "ts": 8481,
       "java": 654,
       "nix": 35,
@@ -20,12 +20,12 @@
     "by_role": {
       "hook": 160,
       "file": 2320,
-      "shell": 597,
-      "script": 319,
+      "shell": 601,
+      "script": 320,
       "python": 81,
       "module": 6490,
       "java": 653,
-      "kotlin": 13421,
+      "kotlin": 13436,
       "flake": 31,
       "rust-module": 123,
       "nix-module": 4,
@@ -17814,7 +17814,6 @@
         "com.diegonmarcos.superapp.uikit.LocalKitPalette"
       ],
       "symbols": [
-        "ownsToolbar()",
         "ownsBottomNav()",
         "palette()",
         "onCreate(savedInstanceState: Bundle?)",
@@ -26920,6 +26919,7 @@
         "topRowBottomDp()",
         "container()",
         "host(page: Fragment)",
+        "ownsToolbar()",
         "assertBelowTopRow(name: String, page: Fragment)",
         "class PageTopInsetTest"
       ]
@@ -26946,6 +26946,7 @@
         "com.diegonmarcos.superapp.settings.LauncherSettingsPrefs",
         "com.diegonmarcos.superapp.ui.KitPageHarness",
         "com.diegonmarcos.superapp.ui.ShellFxState",
+        "com.diegonmarcos.superapp.shellclient.ShellResult",
         "org.junit.Assert.assertEquals",
         "org.junit.Assert.assertFalse",
         "org.junit.Assert.assertTrue",
@@ -27193,6 +27194,7 @@
       "symbols": [
         "text(f: File)",
         "applyLauncherChrome()",
+        "ownsToolbar()",
         "class ShellTopInsetStaticGuardTest"
       ]
     },
@@ -28747,7 +28749,6 @@
       "symbols": [
         "src(rel: String)",
         "pages()",
-        "ownsToolbar()",
         "ownsBottomNav()",
         "class NetworkNavTest"
       ]
@@ -116732,6 +116733,7 @@
         "_resolve_signing()",
         "_enforce_signature()",
         "_native_build()",
+        "step_unit()",
         "step_build()",
         "step_release()",
         "step_dev()",
@@ -116749,8 +116751,7 @@
         "_resolve_template()",
         "_ghcr_gate_public()",
         "step_oras_push()",
-        "step_oras_pull()",
-        "step_phone_install()"
+        "step_oras_pull()"
       ],
       "imports": [],
       "symbols": [
@@ -116765,6 +116766,7 @@
         "_resolve_signing()",
         "_enforce_signature()",
         "_native_build()",
+        "step_unit()",
         "step_build()",
         "step_release()",
         "step_dev()",
@@ -118050,11 +118052,15 @@
       ],
       "imports": [
         "android.content.Context",
-        "androidx.compose.runtime.Composable"
+        "androidx.compose.runtime.Composable",
+        "com.diegonmarcos.cloudwebserver.Decl",
+        "com.diegonmarcos.cloudwebserver.ui.DRow",
+        "com.diegonmarcos.cloudwebserver.ui.DenseCard"
       ],
       "symbols": [
         "install(ctx: Context)",
         "Page(page: String? = null)",
+        "HomeStatus(tick: Int, open: (String, String?)",
         "class AdbOwnerSide"
       ]
     },
@@ -118148,6 +118154,78 @@
       ]
     },
     {
+      "path": "ac_cloud-c3-webserver/src-tauri/gen/android/app/src/main/java/com/diegonmarcos/cloudwebserver/KeepAliveFlow.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "KeepAliveFlow",
+        "KeepAliveReason"
+      ],
+      "imports": [],
+      "symbols": [
+        "enterForeground()",
+        "serviceAllowed()",
+        "stopServers()",
+        "stopSelfNow()",
+        "startServers()",
+        "onStartCommand(host: Host, action: String?)",
+        "guarded(goForeground: ()",
+        "reasonOf(t: Throwable)",
+        "decideStart(allowed: Boolean, sdk: Int, appForeground: Boolean, origin: Origin)",
+        "file(ctx: android.content.Context)",
+        "set(ctx: android.content.Context, reason: String)",
+        "clear(ctx: android.content.Context)",
+        "get(ctx: android.content.Context)",
+        "class KeepAliveFlow",
+        "class Host",
+        "class name",
+        "class Origin",
+        "class Decision",
+        "class KeepAliveReason"
+      ]
+    },
+    {
+      "path": "ac_cloud-c3-webserver/src-tauri/gen/android/app/src/main/java/com/diegonmarcos/cloudwebserver/KeepAliveHealth.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "HealthState",
+        "HealthFix",
+        "HealthRow",
+        "Probe",
+        "KeepAliveHealth",
+        "ContextProbe"
+      ],
+      "imports": [
+        "android.Manifest",
+        "android.content.Context",
+        "android.content.pm.PackageManager",
+        "android.os.Build",
+        "android.os.PowerManager",
+        "androidx.core.content.ContextCompat"
+      ],
+      "symbols": [
+        "declared(permission: String)",
+        "notificationsAllowed()",
+        "ignoringBatteryOptimizations()",
+        "bootReceiverEnabled()",
+        "canScheduleExactAlarms()",
+        "runAnyInBackground()",
+        "keepAliveOn()",
+        "lastRefusal()",
+        "evaluate(p: Probe)",
+        "yn(b: Boolean?)",
+        "summary(rows: List<HealthRow>)",
+        "opMode(ops: android.app.AppOpsManager, op: String)",
+        "class HealthState",
+        "class HealthFix",
+        "class HealthRow",
+        "class Probe",
+        "class KeepAliveHealth",
+        "class ContextProbe"
+      ]
+    },
+    {
       "path": "ac_cloud-c3-webserver/src-tauri/gen/android/app/src/main/java/com/diegonmarcos/cloudwebserver/KeepAliveService.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -118160,6 +118238,7 @@
         "android.app.Service",
         "android.content.Intent",
         "android.os.IBinder",
+        "android.util.Log",
         "com.diegonmarcos.superapp.core.FleetNotify",
         "com.diegonmarcos.superapp.core.KeepAliveStatus"
       ],
@@ -118167,12 +118246,39 @@
         "nativeStart()",
         "nativeStop()",
         "onCreate()",
+        "enterForeground(lines: List<String>)",
+        "plainNotification()",
         "notification(lines: List<String>)",
         "refreshStatus()",
         "onDestroy()",
         "onStartCommand(intent: Intent?, flags: Int, startId: Int)",
+        "enterForeground()",
+        "serviceAllowed()",
+        "stopServers()",
+        "stopSelfNow()",
+        "startServers()",
         "onBind(intent: Intent?)",
         "class KeepAliveService"
+      ]
+    },
+    {
+      "path": "ac_cloud-c3-webserver/src-tauri/gen/android/app/src/main/java/com/diegonmarcos/cloudwebserver/KeepAliveStarter.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "KeepAliveStarter"
+      ],
+      "imports": [
+        "android.app.ActivityManager",
+        "android.content.Context",
+        "android.content.Intent",
+        "android.os.Build",
+        "android.util.Log"
+      ],
+      "symbols": [
+        "appForeground(ctx: Context)",
+        "sync(ctx: Context, origin: KeepAliveFlow.Origin)",
+        "class KeepAliveStarter"
       ]
     },
     {
@@ -118322,6 +118428,74 @@
       ]
     },
     {
+      "path": "ac_cloud-c3-webserver/src-tauri/gen/android/app/src/main/java/com/diegonmarcos/cloudwebserver/ui/Dense.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "Dense",
+        "DensePage",
+        "DenseCard",
+        "DRow",
+        "DCols",
+        "DDot",
+        "DAct",
+        "DLink",
+        "DNote",
+        "DErr",
+        "DLoaded",
+        "DActs"
+      ],
+      "imports": [
+        "androidx.compose.foundation.background",
+        "androidx.compose.foundation.border",
+        "androidx.compose.foundation.clickable",
+        "androidx.compose.foundation.layout.Arrangement",
+        "androidx.compose.foundation.layout.Box",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.ColumnScope",
+        "androidx.compose.foundation.layout.Row",
+        "androidx.compose.foundation.layout.RowScope",
+        "androidx.compose.foundation.layout.Spacer",
+        "androidx.compose.foundation.layout.fillMaxSize",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.foundation.layout.height",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.foundation.layout.size",
+        "androidx.compose.foundation.layout.width",
+        "androidx.compose.foundation.rememberScrollState",
+        "androidx.compose.foundation.shape.CircleShape",
+        "androidx.compose.foundation.shape.RoundedCornerShape",
+        "androidx.compose.foundation.verticalScroll",
+        "androidx.compose.material3.MaterialTheme",
+        "androidx.compose.material3.Text",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.ui.Alignment",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.platform.testTag",
+        "androidx.compose.ui.semantics.Role",
+        "androidx.compose.ui.text.TextStyle",
+        "androidx.compose.ui.text.font.FontFamily",
+        "androidx.compose.ui.text.font.FontWeight",
+        "androidx.compose.ui.text.style.TextOverflow",
+        "androidx.compose.ui.unit.dp",
+        "com.diegonmarcos.superapp.uikit.KitDensity"
+      ],
+      "symbols": [
+        "DensePage(tag: String, content: @Composable ColumnScope.()",
+        "DenseCard(title: String, tag: String = \"\", badges: @Composable RowScope.()",
+        "DRow(k: String, v: String, up: Boolean? = null, mono: Boolean = false, tag: String = \"\", onClick: (()",
+        "DCols(cells: List<String>, widths: List<Int?>, up: Boolean? = null, head: Boolean = false)",
+        "DDot(up: Boolean)",
+        "DAct(label: String, tag: String = \"\", onClick: ()",
+        "DLink(label: String, tag: String = \"\", onClick: ()",
+        "DNote(text: String)",
+        "DErr(text: String)",
+        "DLoaded(load: Load<T>, what: String, body: @Composable (T)",
+        "DActs(content: @Composable ()",
+        "class Dense"
+      ]
+    },
+    {
       "path": "ac_cloud-c3-webserver/src-tauri/gen/android/app/src/main/java/com/diegonmarcos/cloudwebserver/ui/HomePage.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -118339,8 +118513,18 @@
         "aboutText"
       ],
       "imports": [
+        "androidx.compose.foundation.layout.Box",
         "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.Row",
+        "androidx.compose.foundation.layout.Spacer",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.foundation.layout.width",
         "androidx.compose.material3.AlertDialog",
+        "androidx.compose.material3.MaterialTheme",
+        "androidx.compose.ui.Alignment",
+        "androidx.compose.ui.unit.dp",
+        "com.diegonmarcos.superapp.uikit.KitDensity",
         "androidx.compose.material3.Text",
         "androidx.compose.material3.TextButton",
         "androidx.compose.runtime.Composable",
@@ -118360,6 +118544,7 @@
         "PowerCard(st: JSONObject, bump: ()",
         "set(key: String, value: Any?)",
         "SwitchRow(label: String, on: Boolean, note: String, tag: String, onSet: (Boolean)",
+        "DRow2(k: String, v: String, up: Boolean)",
         "ServedStrip(pg: JSONObject, goto: ()",
         "SshdStrip(d: JSONObject, goto: ()",
         "PortsStrip(sv: JSONObject)",
@@ -118370,6 +118555,35 @@
         "DeviceStrip(groups: JSONArray, goto: ()",
         "AboutGroups(groups: JSONArray)",
         "aboutText(groups: JSONArray)"
+      ]
+    },
+    {
+      "path": "ac_cloud-c3-webserver/src-tauri/gen/android/app/src/main/java/com/diegonmarcos/cloudwebserver/ui/KeepAliveHealthCard.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "KeepAliveHealthCard"
+      ],
+      "imports": [
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.DisposableEffect",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.remember",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.ui.platform.LocalContext",
+        "androidx.lifecycle.Lifecycle",
+        "androidx.lifecycle.LifecycleEventObserver",
+        "androidx.lifecycle.LifecycleOwner",
+        "com.diegonmarcos.cloudwebserver.ContextProbe",
+        "com.diegonmarcos.cloudwebserver.Decl",
+        "com.diegonmarcos.cloudwebserver.HealthFix",
+        "com.diegonmarcos.cloudwebserver.HealthState",
+        "com.diegonmarcos.cloudwebserver.KeepAliveHealth"
+      ],
+      "symbols": [
+        "KeepAliveHealthCard(tick: Int, open: (String, String?)",
+        "stateWord(s: HealthState)"
       ]
     },
     {
@@ -118739,6 +118953,52 @@
       ]
     },
     {
+      "path": "ac_cloud-c3-webserver/src-tauri/gen/android/app/src/owner/java/com/diegonmarcos/cloudwebserver/owner/AdbHomeStatus.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "AdbHomeRow",
+        "AdbHomeModel",
+        "AdbHomeStatus"
+      ],
+      "imports": [
+        "android.content.Context",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.DisposableEffect",
+        "androidx.compose.runtime.LaunchedEffect",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.remember",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.ui.platform.LocalContext",
+        "com.diegonmarcos.cloudwebserver.Decl",
+        "com.diegonmarcos.cloudwebserver.ui.DNote",
+        "com.diegonmarcos.cloudwebserver.ui.DRow",
+        "com.diegonmarcos.cloudwebserver.ui.DenseCard",
+        "com.diegonmarcos.superapp.adbdebug.AdbShellBootstrap",
+        "com.diegonmarcos.superapp.adbdebug.AutoStartCore",
+        "com.diegonmarcos.superapp.adbdebug.ChannelFacts",
+        "com.diegonmarcos.superapp.adbdebug.ChannelModePrefs",
+        "com.diegonmarcos.superapp.adbdebug.ChannelLog",
+        "com.diegonmarcos.superapp.adbdebug.ChannelReader",
+        "com.diegonmarcos.superapp.adbdebug.LocalServerAutoStart",
+        "com.diegonmarcos.superapp.adbdebug.StepRun",
+        "com.diegonmarcos.superapp.adbdebug.StepState",
+        "com.diegonmarcos.superapp.adbdebug.title",
+        "com.diegonmarcos.superapp.shellbroker.ShellBroker",
+        "kotlinx.coroutines.Dispatchers",
+        "kotlinx.coroutines.withContext"
+      ],
+      "symbols": [
+        "stepsText(steps: List<StepRun>)",
+        "rows( facts: ChannelFacts?, failed: String, profile: String, launcher: String?, startResult: String, lastRun: String, steps: List<StepRun>, clients: List<String>?, )",
+        "yn(b: Boolean?, yes: String, no: String)",
+        "AdbHomeStatus(tick: Int, open: (String, String?)",
+        "class AdbHomeRow",
+        "class AdbHomeModel"
+      ]
+    },
+    {
       "path": "ac_cloud-c3-webserver/src-tauri/gen/android/app/src/owner/java/com/diegonmarcos/cloudwebserver/owner/AdbOwnerSide.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -118789,6 +119049,7 @@
       ],
       "symbols": [
         "install(ctx: Context)",
+        "HomeStatus(tick: Int, open: (String, String?)",
         "Page(page: String? = null)",
         "StatusTab(palette: KitPalette)",
         "AllTab(palette: KitPalette)",
@@ -118848,6 +119109,59 @@
       ]
     },
     {
+      "path": "ac_cloud-c3-webserver/src-tauri/gen/android/app/src/test/java/com/diegonmarcos/cloudwebserver/KeepAliveFlowTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "KeepAliveFlowTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNotNull",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "enterForeground()",
+        "serviceAllowed()",
+        "stopServers()",
+        "stopSelfNow()",
+        "startServers()",
+        "run(h: FakeHost, action: String?)",
+        "class KeepAliveFlowTest",
+        "class FakeHost",
+        "class ForegroundServiceStartNotAllowedException"
+      ]
+    },
+    {
+      "path": "ac_cloud-c3-webserver/src-tauri/gen/android/app/src/test/java/com/diegonmarcos/cloudwebserver/KeepAliveHealthTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "KeepAliveHealthTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "declared(permission: String)",
+        "notificationsAllowed()",
+        "ignoringBatteryOptimizations()",
+        "bootReceiverEnabled()",
+        "canScheduleExactAlarms()",
+        "runAnyInBackground()",
+        "keepAliveOn()",
+        "lastRefusal()",
+        "row(p: Probe, id: String)",
+        "class KeepAliveHealthTest",
+        "class P"
+      ]
+    },
+    {
       "path": "ac_cloud-c3-webserver/test/emulator-adb-subpages.sh",
       "lang": "sh",
       "role": "shell",
@@ -118879,6 +119193,40 @@
         "dump()",
         "tap_exact()",
         "has()"
+      ]
+    },
+    {
+      "path": "ac_cloud-c3-webserver/test/emulator-home.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "shoot()",
+        "dump()"
+      ],
+      "imports": [],
+      "symbols": [
+        "shoot()",
+        "dump()"
+      ]
+    },
+    {
+      "path": "ac_cloud-c3-webserver/test/emulator-keepalive.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "shoot()",
+        "power()",
+        "fg_state()",
+        "launch()",
+        "waitfor()"
+      ],
+      "imports": [],
+      "symbols": [
+        "shoot()",
+        "power()",
+        "fg_state()",
+        "launch()",
+        "waitfor()"
       ]
     },
     {
@@ -119000,6 +119348,20 @@
       "symbols": [
         "check()",
         "mutate()"
+      ]
+    },
+    {
+      "path": "ac_cloud-c3-webserver/test/test-c3-webserver-fgs-guard.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "check()",
+        "good()"
+      ],
+      "imports": [],
+      "symbols": [
+        "check()",
+        "good()"
       ]
     },
     {
@@ -537073,13 +537435,21 @@
       "exports": [
         "tap_text()",
         "shoot()",
-        "dump()"
+        "dump()",
+        "tap_page()",
+        "down()",
+        "top()",
+        "open_access()"
       ],
       "imports": [],
       "symbols": [
         "tap_text()",
         "shoot()",
-        "dump()"
+        "dump()",
+        "tap_page()",
+        "down()",
+        "top()",
+        "open_access()"
       ]
     },
     {
@@ -625614,6 +625984,7 @@
       "role": "kotlin",
       "exports": [
         "Entry",
+        "FinFunction",
         "HomeCard",
         "Pages"
       ],
@@ -625629,9 +626000,13 @@
         "pageIdOf(e: Entry)",
         "homeCards(pages: List<Triple<String, String, String>>, entries: List<Entry>)",
         "homeGroups(cards: List<HomeCard>, entries: List<Entry>)",
+        "functions(stacks: String, sections: List<Pair<String, String>>)",
+        "function(functions: List<FinFunction>, input: String)",
+        "commandWord(input: String)",
         "entryOf(entries: List<Entry>, pageId: String)",
         "redirect(redirects: String, dashboard: String)",
         "class Entry",
+        "class FinFunction",
         "class HomeCard",
         "class Pages"
       ]
@@ -625656,6 +626031,73 @@
         "cagr(start: Double?, end: Double, years: Double)",
         "format(v: Double?)",
         "class Performance"
+      ]
+    },
+    {
+      "path": "ad_Capital-Stack-FinTerminal/app/src/main/java/com/diegonmarcos/capitalfinterm/PerfPortfolios.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "PerfScheme",
+        "PerfBenchmark",
+        "PerfGroup",
+        "PerfDecl",
+        "PerfConstituent",
+        "PerfSchemeSource",
+        "PerfBasket",
+        "PerfRow",
+        "PerfStep",
+        "PerfBubble",
+        "PerfPortfolios"
+      ],
+      "imports": [
+        "java.util.Locale",
+        "kotlin.math.abs",
+        "kotlin.math.max",
+        "kotlin.math.min",
+        "org.json.JSONObject"
+      ],
+      "symbols": [
+        "scheme(id: String)",
+        "group(key: String)",
+        "word(k: String)",
+        "strings(o: JSONObject, key: String)",
+        "parseDecl(json: String)",
+        "parse(json: String)",
+        "schemeOf(group: PerfGroup, asked: String?)",
+        "sourceOf(basket: PerfBasket, scheme: String)",
+        "perf(c: PerfConstituent, quotes: Map<String, Quote>, period: String)",
+        "rows(basket: PerfBasket, scheme: String, quotes: Map<String, Quote>, period: String, top: Int)",
+        "symbols(rows: List<PerfRow>)",
+        "weightSum(rows: List<PerfRow>)",
+        "total(rows: List<PerfRow>)",
+        "portfolioReturn(rows: List<PerfRow>)",
+        "advDec(rows: List<PerfRow>)",
+        "active(portfolio: Double?, benchmark: Double?)",
+        "sort(rows: List<PerfRow>, key: String, descending: Boolean)",
+        "num(r: PerfRow)",
+        "text(r: PerfRow)",
+        "attribution(rows: List<PerfRow>, maxBars: Int, restLabel: String, totalLabel: String, otherBucket: String = \"Other\")",
+        "span(steps: List<PerfStep>)",
+        "bubbles(basket: PerfBasket, scheme: String, quotes: Map<String, Quote>, xPeriod: String, yPeriod: String, top: Int)",
+        "median(values: List<Double>)",
+        "f2(v: Double)",
+        "f1(v: Double)",
+        "s2(v: Double?)",
+        "s1(v: Double?)",
+        "cells(rows: List<PerfRow>, quotes: Map<String, Quote>, periods: List<String>)",
+        "totals(basket: PerfBasket, scheme: String, quotes: Map<String, Quote>, periods: List<String>, period: String, top: Int, label: String)",
+        "barShare(contribution: Double?, rows: List<PerfRow>)",
+        "class PerfScheme",
+        "class PerfBenchmark",
+        "class PerfGroup",
+        "class PerfDecl",
+        "class PerfConstituent",
+        "class PerfSchemeSource",
+        "class PerfBasket",
+        "class PerfRow",
+        "class PerfStep",
+        "class PerfBubble"
       ]
     },
     {
@@ -625999,6 +626441,33 @@
       ]
     },
     {
+      "path": "ad_Capital-Stack-FinTerminal/app/src/main/java/com/diegonmarcos/capitalfinterm/Terminal.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "MonitorDecl",
+        "MenuDecl",
+        "TerminalDecl",
+        "Terminal"
+      ],
+      "imports": [
+        "java.util.Locale",
+        "org.json.JSONObject"
+      ],
+      "symbols": [
+        "commandWord(k: String)",
+        "statusWord(k: String)",
+        "words(o: JSONObject?)",
+        "parse(json: String)",
+        "price(q: Quote?, decimals: Int)",
+        "unknown(decl: TerminalDecl?, word: String)",
+        "class MonitorDecl",
+        "class MenuDecl",
+        "class TerminalDecl",
+        "class Terminal"
+      ]
+    },
+    {
       "path": "ad_Capital-Stack-FinTerminal/app/src/main/java/com/diegonmarcos/capitalfinterm/ui/AppShell.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -626022,7 +626491,12 @@
         "androidx.compose.foundation.layout.Column",
         "androidx.compose.foundation.layout.WindowInsets",
         "androidx.compose.foundation.layout.displayCutout",
+        "androidx.compose.foundation.clickable",
         "androidx.compose.foundation.layout.fillMaxSize",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.foundation.layout.height",
+        "androidx.compose.foundation.layout.heightIn",
+        "androidx.compose.foundation.layout.width",
         "androidx.compose.foundation.layout.statusBars",
         "androidx.compose.foundation.layout.union",
         "androidx.compose.foundation.layout.windowInsetsPadding",
@@ -626041,12 +626515,7 @@
         "com.diegonmarcos.capitalfinterm.AssetData",
         "com.diegonmarcos.capitalfinterm.BuildConfig",
         "com.diegonmarcos.capitalfinterm.Decl",
-        "com.diegonmarcos.capitalfinterm.FinNavStack",
-        "com.diegonmarcos.capitalfinterm.FinSearchIndex",
-        "com.diegonmarcos.capitalfinterm.FreeStack",
-        "com.diegonmarcos.capitalfinterm.UrlHttp",
-        "com.diegonmarcos.capitalfinterm.Pages",
-        "com.diegonmarcos.capitalfinterm.R"
+        "com.diegonmarcos.capitalfinterm.FinNavStack"
       ],
       "symbols": [
         "action(id: String)",
@@ -626064,6 +626533,9 @@
         "openSources()",
         "search()",
         "openPage(sec: String, id: String)",
+        "go(f: FinFunction)",
+        "runCommand()",
+        "FunctionsDialog( functions: List<FinFunction>, title: String, meta: String, homeWord: String, sectionLabel: (String)",
         "class Tags"
       ]
     },
@@ -626273,7 +626745,7 @@
         "FinSearchField(onClick: ()",
         "AddRuleField(user: UserLists, onChange: (UserLists)",
         "submit()",
-        "PanelSlot( dash: Dashboard, panel: Panel, sources: List<Source>, keys: SourceKeys, user: UserLists, width: Dp, nav: FinNav, onUser: (UserLists)",
+        "PanelSlot( dash: Dashboard, panel: Panel, sources: List<Source>, keys: SourceKeys, user: UserLists, width: Dp, nav: FinNav, code: String = \"\", onUser: (UserLists)",
         "SegmentChips(segments: List<Panel>, sources: List<Source>, selected: Int, onSelect: (Int)",
         "PanelBody( dash: Dashboard, panel: Panel, display: String, state: FinState<PanelData>, user: UserLists, width: Dp, nav: FinNav, onUser: (UserLists)",
         "declaredTypes(panel: Panel)",
@@ -626681,7 +627153,7 @@
       "symbols": [
         "FinSkeleton(width: Dp?, height: Dp, modifier: Modifier = Modifier, radius: Dp = 4.dp)",
         "FinCard(modifier: Modifier = Modifier, pad: Boolean = true, content: @Composable ColumnScope.()",
-        "FinTitleRow(title: String, stale: Boolean = false, staleNote: String = \"\", trailing: @Composable (()",
+        "FinTitleRow(title: String, stale: Boolean = false, staleNote: String = \"\", code: String = \"\", trailing: @Composable (()",
         "FinDot(color: Color, modifier: Modifier = Modifier)",
         "FinFooter(panelId: String, fresh: Fresh, fetchedAt: String, asOf: String, source: String, servedBy: String, onTap: ()",
         "FinNote(text: String)",
@@ -626887,6 +627359,84 @@
       ],
       "symbols": [
         "FinTape(items: List<FinQuote>?, stale: Boolean, onOpen: (FinQuote)"
+      ]
+    },
+    {
+      "path": "ad_Capital-Stack-FinTerminal/app/src/main/java/com/diegonmarcos/capitalfinterm/ui/fin/FinTerminal.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "FinTags",
+        "FinPanelHead",
+        "FinPanel",
+        "FinStat",
+        "FinSubhead",
+        "FinTabs",
+        "FinMenuButton",
+        "FinCommandBar",
+        "FinMonitorTile",
+        "FinMonitor",
+        "FinStatusLine"
+      ],
+      "imports": [
+        "androidx.compose.foundation.background",
+        "androidx.compose.foundation.border",
+        "androidx.compose.foundation.clickable",
+        "androidx.compose.foundation.horizontalScroll",
+        "androidx.compose.foundation.layout.Arrangement",
+        "androidx.compose.foundation.layout.Box",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.ColumnScope",
+        "androidx.compose.foundation.layout.Row",
+        "androidx.compose.foundation.layout.RowScope",
+        "androidx.compose.foundation.layout.Spacer",
+        "androidx.compose.foundation.layout.fillMaxHeight",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.foundation.layout.height",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.foundation.layout.size",
+        "androidx.compose.foundation.layout.width",
+        "androidx.compose.foundation.layout.widthIn",
+        "androidx.compose.foundation.rememberScrollState",
+        "androidx.compose.foundation.text.BasicTextField",
+        "androidx.compose.foundation.text.KeyboardActions",
+        "androidx.compose.foundation.text.KeyboardOptions",
+        "androidx.compose.material3.Text",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.LaunchedEffect",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.remember",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.ui.Alignment",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.graphics.Brush",
+        "androidx.compose.ui.graphics.Color",
+        "androidx.compose.ui.graphics.SolidColor",
+        "androidx.compose.ui.platform.testTag",
+        "androidx.compose.ui.text.input.ImeAction",
+        "androidx.compose.ui.text.input.KeyboardCapitalization",
+        "androidx.compose.ui.text.style.TextOverflow",
+        "androidx.compose.ui.unit.Dp",
+        "androidx.compose.ui.unit.dp"
+      ],
+      "symbols": [
+        "menu(id: String)",
+        "tab(group: String, id: String)",
+        "panel(code: String)",
+        "function(fn: String)",
+        "FinPanelHead(code: String, title: String, modifier: Modifier = Modifier, meta: String = \"\", trailing: (@Composable RowScope.()",
+        "FinPanel( code: String, title: String, modifier: Modifier = Modifier, meta: String = \"\", subhead: List<FinStat> = emptyList()",
+        "FinSubhead(items: List<FinStat>, modifier: Modifier = Modifier)",
+        "FinTabs(group: String, options: List<Pair<String, String>>, selected: String, modifier: Modifier = Modifier, height: Dp = FinDim.panelHead, onSelect: (String)",
+        "FinMenuButton(id: String, number: String, label: String, onClick: ()",
+        "FinClock()",
+        "FinCommandBar(value: String, placeholder: String, message: String, menu: List<Triple<String, String, String>>, onValue: (String)",
+        "FinMonitor(tiles: List<FinMonitorTile>, onOpen: (FinMonitorTile)",
+        "FinStatusLine(live: Boolean, liveWord: String, items: List<Pair<String, String>>)",
+        "class FinTags",
+        "class FinStat",
+        "class FinMonitorTile"
       ]
     },
     {
@@ -627115,6 +627665,101 @@
         "Legend(scale: Double)",
         "class IndexHoldingsStore",
         "class WebSource"
+      ]
+    },
+    {
+      "path": "ad_Capital-Stack-FinTerminal/app/src/main/java/com/diegonmarcos/capitalfinterm/ui/PerfPage.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "PERF_PAGE",
+        "PERF_STATE",
+        "PERF_TABLE",
+        "PERF_MAP",
+        "PERF_WATERFALL",
+        "PERF_BUBBLE",
+        "PERF_CARD",
+        "PERF_SCHEME",
+        "PerfStore",
+        "PerfUi",
+        "PerfHomeState",
+        "rememberPerfHome",
+        "PerfCardBody",
+        "PerfPortfolioPage"
+      ],
+      "imports": [
+        "android.content.Context",
+        "androidx.compose.foundation.Canvas",
+        "androidx.compose.foundation.background",
+        "androidx.compose.foundation.clickable",
+        "androidx.compose.foundation.gestures.detectTapGestures",
+        "androidx.compose.foundation.horizontalScroll",
+        "androidx.compose.foundation.layout.Arrangement",
+        "androidx.compose.foundation.layout.Box",
+        "androidx.compose.foundation.layout.BoxWithConstraints",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.Row",
+        "androidx.compose.foundation.layout.Spacer",
+        "androidx.compose.foundation.layout.fillMaxHeight",
+        "androidx.compose.foundation.layout.fillMaxSize",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.foundation.layout.height",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.foundation.layout.width",
+        "androidx.compose.foundation.rememberScrollState",
+        "androidx.compose.foundation.verticalScroll",
+        "androidx.compose.material3.Text",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.LaunchedEffect",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableIntStateOf",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.remember",
+        "androidx.compose.runtime.saveable.rememberSaveable",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.ui.Alignment",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.geometry.Offset",
+        "androidx.compose.ui.geometry.Size",
+        "androidx.compose.ui.graphics.Color",
+        "androidx.compose.ui.graphics.drawscope.Stroke",
+        "androidx.compose.ui.graphics.lerp",
+        "androidx.compose.ui.input.pointer.pointerInput",
+        "androidx.compose.ui.platform.LocalContext",
+        "androidx.compose.ui.platform.LocalDensity",
+        "androidx.compose.ui.platform.testTag"
+      ],
+      "symbols": [
+        "decl(ctx: Context)",
+        "open(authority: String, path: String)",
+        "load(ctx: Context)",
+        "rememberPerfHome(views: List<String>)",
+        "PerfCardBody(view: String, state: PerfHomeState)",
+        "perfDir(v: Double?)",
+        "perfTopLabel(n: Int)",
+        "PerfPortfolioPage(view: String, fn: String)",
+        "PerfStateLine(fn: String, title: String, text: String)",
+        "NoPerf(decl: PerfDecl, fetching: Boolean)",
+        "TableMode( decl: PerfDecl, group: PerfGroup, basket: PerfBasket, scheme: String, rows: List<PerfRow>, quotes: Map<String, Quote>, period: String, top: Int, fetching: Boolean, width: Dp, onPeriod: (String)",
+        "sortBy(key: String)",
+        "rowFill(i: Int, selected: Boolean)",
+        "HeadCell(text: String, w: Dp, left: Boolean, on: Boolean, desc: Boolean, tag: String = \"\", onClick: ()",
+        "TextCell(text: String, w: Dp, color: Color)",
+        "NumCell(text: String, w: Dp, color: Color, bold: Boolean = false)",
+        "ContribCell(contribution: Double?, share: Float)",
+        "PickedLine(r: PerfRow, period: String)",
+        "Graphics( decl: PerfDecl, group: PerfGroup, basket: PerfBasket, scheme: String, rows: List<PerfRow>, quotes: Map<String, Quote>, qdecl: QuotesDecl?, period: String, top: Int, fetching: Boolean, width: Dp, onPeriod: (String)",
+        "perfTileColor(perf: Double?, scale: Double)",
+        "PerfTreemap(rows: List<PerfRow>, scale: Double, width: Dp, picked: Int, onPick: (Int)",
+        "PerfWaterfall(steps: List<PerfStep>)",
+        "xOf(v: Double)",
+        "PerfBubbleChart(bubbles: List<PerfBubble>, xPeriod: String, yPeriod: String, width: Dp)",
+        "px(v: Double)",
+        "py(v: Double)",
+        "class PerfStore",
+        "class WebSource",
+        "class PerfUi",
+        "class PerfHomeState"
       ]
     },
     {
@@ -627416,7 +628061,8 @@
         "status(e: Entry)",
         "EntryPage(e: Entry, nav: FinNav)",
         "HomeGrid(sectionId: String, cards: List<HomeCard>, entries: List<Entry>, nav: FinNav, onOpen: (String)",
-        "HomeCardTile(c: HomeCard, modifier: Modifier, onOpen: ()",
+        "HomeSectionTitle(title: String, count: Int)",
+        "HomeCardTile(c: HomeCard, modifier: Modifier, perf: PerfHomeState? = null, onOpen: ()",
         "StatusPill(status: DashStatus?)",
         "DashTile(e: Entry, status: DashStatus?, modifier: Modifier, onOpen: ()",
         "DashRow(e: Entry, status: DashStatus?, selected: Boolean, onOpen: ()",
@@ -627622,6 +628268,31 @@
       ]
     },
     {
+      "path": "ad_Capital-Stack-FinTerminal/app/src/test/java/com/diegonmarcos/capitalfinterm/CommandLineTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "CommandLineTest"
+      ],
+      "imports": [
+        "org.json.JSONObject",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertNotNull",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "everyMnemonicIsUniqueAndUpperCase()",
+        "everySectionAndEverySubPageHasAFunction()",
+        "aFunctionOpensAPageThatExistsInItsSection()",
+        "theCommandLineResolvesWhatIsTyped()",
+        "theFactorPortfoliosAndTheBondGroupsHaveTheirMnemonics()",
+        "theChromeDeclarationIsComplete()",
+        "class CommandLineTest"
+      ]
+    },
+    {
       "path": "ad_Capital-Stack-FinTerminal/app/src/test/java/com/diegonmarcos/capitalfinterm/ControlTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -627712,6 +628383,7 @@
         "cbFixture(name: String)",
         "quotesFixture(name: String)",
         "pmFixture(name: String)",
+        "resource(name: String)",
         "class DataFiles"
       ]
     },
@@ -628139,6 +628811,37 @@
       ]
     },
     {
+      "path": "ad_Capital-Stack-FinTerminal/app/src/test/java/com/diegonmarcos/capitalfinterm/MovedPagesTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "MovedPagesTest"
+      ],
+      "imports": [
+        "org.json.JSONArray",
+        "org.json.JSONObject",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNotNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "arr(a: JSONArray?)",
+        "sectionOf(page: String)",
+        "pageOf(page: String)",
+        "groupOf(section: String, page: String)",
+        "theBottomNavIsUnchanged()",
+        "everyOldPageIsReachableAtItsDeclaredPlace()",
+        "everyMovedPageIsInTheMapAndTheMapNamesOnlyRealPages()",
+        "everyOldEntryKeepsEveryField()",
+        "everyOldDashboardAndPanelIsStillDeclared()",
+        "everyOldRedirectStillOpensALivePage()",
+        "fiHoldsOnlyTheBondGroupsAndCbHoldsTheRatesAndMacroPages()",
+        "class MovedPagesTest"
+      ]
+    },
+    {
       "path": "ad_Capital-Stack-FinTerminal/app/src/test/java/com/diegonmarcos/capitalfinterm/PagesTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -628181,6 +628884,48 @@
         "shortHistoryLeavesLongColumnsMissing()",
         "emptyOrNonFiniteSeriesIsAllMissing()",
         "class PerformanceTest"
+      ]
+    },
+    {
+      "path": "ad_Capital-Stack-FinTerminal/app/src/test/java/com/diegonmarcos/capitalfinterm/PerfPortfoliosTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "PerfPortfoliosTest"
+      ],
+      "imports": [
+        "org.json.JSONObject",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNotNull",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "q(pct: Double? = null, w1: Double? = null, m1: Double? = null, ytd: Double? = null)",
+        "c(t: String, w: Double, bucket: String = \"\", symbol: String = t, basis: String = \"\")",
+        "basket(vararg cs: PerfConstituent)",
+        "everyPerformancePageOfTheNavIsADeclaredPortfolioAndBack()",
+        "eqPerformanceIsTheTenFactorPortfoliosAndFiIsTheBondGroups()",
+        "bothModesAreDeclaredAndThePageOpensOnTheTable()",
+        "everySchemeIsDeclaredWithALabelAndAMethodAndTheDefaultIsOneOfThem()",
+        "theDatasetCarriesEveryDeclaredPortfolioWithWeightsForEveryDeclaredScheme()",
+        "theDatasetStoresNoPriceAndNoPerformance()",
+        "govDmIsGdpWeightedByDefaultWithTheUsdIndexAndLiquiditySchemesAsOptions()",
+        "w(cc: String, s: String)",
+        "govEmUsesTheWeightsOfTheEmGovernmentBondFunds()",
+        "topIsTheTwentyLargestOfTheSp500RescaledAndAFactorPortfolioIsLargestFirst()",
+        "theRatingGroupsAreEqualWeightAndAllIsTheSixGroupsAtOneSixthEach()",
+        "performanceIsTheInstrumentsMoveAndACurrencysMoveIsTheInverseOfItsDollarRate()",
+        "rowsTotalsAndThePortfolioReturn()",
+        "theTableSortsByAnyColumnAndALineWithoutAFigureSortsLast()",
+        "order(key: String, desc: Boolean)",
+        "theWaterfallChainsTheBucketsToTheTotal()",
+        "aBubbleNeedsBothPeriodsAndTheMedianIsTheMiddle()",
+        "aBrokenBodyIsEmptyNeverACrash()",
+        "aHomepageCardListsTheLargestConstituentsOfTheDefaultScheme()",
+        "class PerfPortfoliosTest"
       ]
     },
     {
@@ -628624,6 +629369,61 @@
       ]
     },
     {
+      "path": "ad_Capital-Stack-FinTerminal/scripts/gen-perf-portfolios.py",
+      "lang": "py",
+      "role": "script",
+      "exports": [
+        "out_path(decl)",
+        "get(url)",
+        "title(s)",
+        "xlsx_rows(blob)",
+        "ssga(decl, etf, cache={})",
+        "fnum(s)",
+        "equity_rows(decl, etf)",
+        "sector_map(decl)",
+        "build_etf(decl, g, sectors)",
+        "country_of(decl, isin, ccy, universe=None)",
+        "bond_country_weights(decl, etf, universe=None)",
+        "imf_gdp(decl, ccs, year)",
+        "norm(ws)",
+        "fx_symbol(decl, ccy)",
+        "build_dm(decl, g)",
+        "ishares_geography(decl, s)",
+        "build_em(decl, g)",
+        "build_funds(decl, g, today)",
+        "build_union(decl, g, built, today)",
+        "check(decl, doc)",
+        "main()"
+      ],
+      "imports": [
+        "xml.etree",
+        "datetime"
+      ],
+      "symbols": [
+        "out_path(decl)",
+        "get(url)",
+        "title(s)",
+        "xlsx_rows(blob)",
+        "ssga(decl, etf, cache={})",
+        "fnum(s)",
+        "equity_rows(decl, etf)",
+        "sector_map(decl)",
+        "build_etf(decl, g, sectors)",
+        "country_of(decl, isin, ccy, universe=None)",
+        "bond_country_weights(decl, etf, universe=None)",
+        "imf_gdp(decl, ccs, year)",
+        "norm(ws)",
+        "fx_symbol(decl, ccy)",
+        "build_dm(decl, g)",
+        "ishares_geography(decl, s)",
+        "build_em(decl, g)",
+        "build_funds(decl, g, today)",
+        "build_union(decl, g, built, today)",
+        "check(decl, doc)",
+        "main()"
+      ]
+    },
+    {
       "path": "ad_Capital-Stack-FinTerminal/scripts/gen-pm-performance.py",
       "lang": "py",
       "role": "script",
@@ -628721,6 +629521,26 @@
       "imports": [],
       "symbols": [
         "node_xy()"
+      ]
+    },
+    {
+      "path": "ad_Capital-Stack-FinTerminal/test/emulator-terminal.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "dump()",
+        "shot()",
+        "down()",
+        "node_xy()",
+        "open()"
+      ],
+      "imports": [],
+      "symbols": [
+        "dump()",
+        "shot()",
+        "down()",
+        "node_xy()",
+        "open()"
       ]
     },
     {
