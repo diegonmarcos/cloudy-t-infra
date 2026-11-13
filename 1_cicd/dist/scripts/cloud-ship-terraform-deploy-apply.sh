@@ -160,6 +160,36 @@ for name in cloudflare gcloud oci hetzner; do
       }' terraform.tfvars)"
   fi
 
+  # #1686 sops/vault -> Secret Manager: secret NAMES come from terraform.json cloud_run_secret_sources (secret name ->
+  # vault key); values come from the decrypted vault env, in memory only, handed to terraform as a sensitive
+  # TF_VAR (stored only in the sops-encrypted state). Nothing is echoed. A missing key is skipped with a notice;
+  # main.tf then holds back any service that needs that secret.
+  if [ -f terraform.json ] && grep -q '"cloud_run_secret_sources"' terraform.json; then
+    for vf in "$HOME/git/cloud-vault/C_A0-env/dist/vault-keys-bash.env" /root/git/cloud-vault/C_A0-env/dist/vault-keys-bash.env; do
+      [ -f "$vf" ] && { set -a; . "$vf" 2>/dev/null || true; set +a; break; }
+    done
+    if command -v python3 >/dev/null 2>&1; then
+      TF_VAR_cloud_run_secret_values="$(python3 -I - <<'PYEOF'
+import json, os, sys
+src = json.load(open("terraform.json")).get("cloud_run_secret_sources", {})
+out, miss = {}, []
+for name, key in src.items():
+    if name.startswith("_"):
+        continue
+    v = os.environ.get(key, "")
+    (out.__setitem__(name, v) if v else miss.append(name))
+if miss:
+    print("  secret-sync: no vault value for: " + ", ".join(miss), file=sys.stderr)
+print(json.dumps(out))
+PYEOF
+)"
+      export TF_VAR_cloud_run_secret_values
+      echo "  secret-sync: $(printf '%s' "$TF_VAR_cloud_run_secret_values" | python3 -I -c 'import json,sys;print(len(json.load(sys.stdin)))') secret value(s) staged for terraform"
+    else
+      echo "  secret-sync: python3 missing in builder; no secret values staged"
+    fi
+  fi
+
   tf_cleanup() { rm -f terraform.tfstate terraform.tfstate.backup terraform.tfvars tfplan; rm -rf .terraform; }
   terraform init -input=false || { echo "FAIL $name (init)"; FAIL=$((FAIL + 1)); tf_cleanup; cd "$REPO_ROOT"; continue; }
   # Adopt pre-existing infra resources into state (idempotent — `terraform import`

@@ -9,7 +9,17 @@ locals {
   # Cloud Run (serverless containers): terraform.json cloud_run_services is the fleet registry. Only entries with
   # managed = true become resources; the rest are declarations (state declared / live-unmanaged) read by the UI and
   # the migration plan. A live-unmanaged service must be imported before managed flips to true.
-  cloud_run          = { for s in try(local.config.cloud_run_services, []) : s.name => s if try(s.managed, false) }
+  # A managed service whose secret_env names a Secret Manager secret with no synced value is held back (listed in the
+  # cloud_run_skipped_missing_secrets output) instead of failing the whole apply on a version-less secret.
+  cloud_run_secret_sources   = try(local.config.cloud_run_secret_sources, {})
+  cloud_run_secrets_with_val = nonsensitive(toset([for k, v in var.cloud_run_secret_values : k if v != ""]))
+  cloud_run_secrets_wanted   = toset(flatten([for s in try(local.config.cloud_run_services, []) : values(try(s.secret_env, {})) if try(s.managed, false)]))
+  cloud_run = { for s in try(local.config.cloud_run_services, []) : s.name => s
+    if try(s.managed, false) && alltrue([for sec in values(try(s.secret_env, {})) : contains(local.cloud_run_secrets_with_val, sec)])
+  }
+  cloud_run_skipped = [for s in try(local.config.cloud_run_services, []) : s.name
+    if try(s.managed, false) && !alltrue([for sec in values(try(s.secret_env, {})) : contains(local.cloud_run_secrets_with_val, sec)])
+  ]
   cloud_run_buckets  = { for v in flatten([for s in values(local.cloud_run) : try(s.volumes, [])]) : v.bucket => v if try(v.create_bucket, true) }
   cloud_run_registry = try(local.config.cloud_run_registry, null)
 }
@@ -48,6 +58,13 @@ variable "ssh_public_key" {
   type        = string
   # Set via: TF_VAR_ssh_public_key=$(cat ~/git/cloud-vault/A0_keys/ssh/google_compute_engine.pub)
   # Or via build.sh which reads from vault automatically
+}
+
+variable "cloud_run_secret_values" {
+  description = "Secret Manager secret name -> value, built in CI ONLY from the decrypted vault env by cloud-ship-terraform-deploy-apply.sh using terraform.json cloud_run_secret_sources (secret name -> vault key). Never printed; lives only in the sops-encrypted state."
+  type        = map(string)
+  sensitive   = true
+  default     = {}
 }
 
 variable "gpu_embed_bearer_token" {
@@ -279,7 +296,34 @@ resource "google_cloud_run_v2_service" "svc" {
     }
   }
 
-  depends_on = [google_storage_bucket.cloud_run_volumes]
+  depends_on = [google_storage_bucket.cloud_run_volumes, google_secret_manager_secret_version.cloud_run, google_secret_manager_secret_iam_member.cloud_run_accessor]
+}
+
+# Secret Manager: names from terraform.json secret_env, values from the vault via TF_VAR_cloud_run_secret_values.
+resource "google_secret_manager_secret" "cloud_run" {
+  for_each  = { for n in local.cloud_run_secrets_wanted : n => n if contains(local.cloud_run_secrets_with_val, n) }
+  secret_id = each.key
+  replication {
+    auto {}
+  }
+}
+
+resource "google_secret_manager_secret_version" "cloud_run" {
+  for_each    = google_secret_manager_secret.cloud_run
+  secret      = each.value.id
+  secret_data = var.cloud_run_secret_values[each.key]
+}
+
+# Runtime identity of every managed service (its own service_account, else the project's default compute SA).
+resource "google_secret_manager_secret_iam_member" "cloud_run_accessor" {
+  for_each = merge([
+    for sname, s in local.cloud_run : {
+      for sec in values(try(s.secret_env, {})) : "${sname}/${sec}" => { secret = sec, sa = try(s.service_account, local.config.service_account.email) }
+    }
+  ]...)
+  secret_id = google_secret_manager_secret.cloud_run[each.value.secret].secret_id
+  role      = "roles/secretmanager.secretAccessor"
+  member    = "serviceAccount:${each.value.sa}"
 }
 
 # Public invoker only where the entry says so (the app gates itself, e.g. oauth2-proxy); otherwise IAM-only.
@@ -346,4 +390,9 @@ output "instances" {
 output "cloud_run_urls" {
   value       = { for name, svc in google_cloud_run_v2_service.svc : name => svc.uri }
   description = "Cloud Run service URLs (managed entries only)"
+}
+
+output "cloud_run_skipped_missing_secrets" {
+  description = "Managed services held back because a secret_env secret has no synced value yet."
+  value       = local.cloud_run_skipped
 }

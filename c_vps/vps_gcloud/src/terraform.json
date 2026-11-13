@@ -75,6 +75,13 @@
     "description": "Remote repo proxying ghcr.io so Cloud Run can pull the fleet's GHCR images (amd64 manifests only)"
   },
 
+  "cloud_run_secret_sources": {
+    "_doc": "#1686 Secret Manager secret name -> key in the decrypted vault env (CI only). cloud-ship-terraform-deploy-apply.sh builds TF_VAR_cloud_run_secret_values from it; main.tf creates the secret, its version and the runtime-SA secretAccessor grant. A managed service whose secret has no value is held back (output cloud_run_skipped_missing_secrets), never failing the apply.",
+    "cloudy-browser-headless-token": "BROWSER_TOKEN",
+    "scrappers-ig-burner-user": "IG_BURNER_USER",
+    "scrappers-ig-burner-pass": "IG_BURNER_PASS"
+  },
+
   "cloud_run_services": [
     {
       "name": "agy",
@@ -221,7 +228,7 @@
     {
       "name": "scrappers-api",
       "label": "Scrappers API",
-      "managed": false,
+      "managed": true,
       "state": "declared",
       "region": "us-central1",
       "from_host": "oci-apps",
@@ -259,7 +266,6 @@
         "cutover": "Caddy proxies the same path to the run.app URL with an identity token"
       },
       "blockers": [
-        "Secret Manager holds no scrappers-ig-burner-user / scrappers-ig-burner-pass yet (only the Instagram private-account path reads them; YouTube download does not)",
         "the image push (cloud-run-images.yml dispatch push=true) and the Terraform apply are the owner-approved steps"
       ],
       "notes": "#1429 the Cloud Browser's Scrap Tools call POST /download/youtube (yt-dlp + ffmpeg, Dockerfile.cloudrun); timeout 900 s for long downloads. The phone tries the mesh name first and this edge path second."
@@ -356,7 +362,7 @@
     {
       "name": "cloudy-browser-headless",
       "label": "Headless Browser API",
-      "managed": false,
+      "managed": true,
       "state": "declared",
       "region": "us-central1",
       "from_host": "oci-apps",
@@ -399,7 +405,6 @@
       },
       "notes": "Not the same engine as scrappers-api (Python yt-dlp/instaloader); kept as two entries.",
       "blockers": [
-        "Secret Manager secret cloudy-browser-headless-token must hold the vault BROWSER_TOKEN, and the Cloud Run runtime service account needs secretAccessor on it, before managed flips"
       ]
     },
     {
