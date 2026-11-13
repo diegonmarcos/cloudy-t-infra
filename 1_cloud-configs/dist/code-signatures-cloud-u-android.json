@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 24275,
+    "files": 24280,
     "by_lang": {
-      "sh": 748,
+      "sh": 750,
       "js": 562,
-      "py": 233,
-      "kotlin": 13439,
+      "py": 234,
+      "kotlin": 13441,
       "ts": 8481,
       "java": 654,
       "nix": 35,
@@ -20,12 +20,12 @@
     "by_role": {
       "hook": 160,
       "file": 2320,
-      "shell": 601,
+      "shell": 603,
       "script": 320,
-      "python": 81,
+      "python": 82,
       "module": 6490,
       "java": 653,
-      "kotlin": 13436,
+      "kotlin": 13438,
       "flake": 31,
       "rust-module": 123,
       "nix-module": 4,
@@ -24072,6 +24072,7 @@
       "symbols": [
         "freshChannelProbe()",
         "resetHost()",
+        "withoutCheckedAt()",
         "idle()",
         "settleChannel(timeoutMs: Long = 15_000)",
         "label()",
@@ -31427,6 +31428,7 @@
         "page_text()",
         "on_count()",
         "is_on()",
+        "prompts()",
         "open_presets()"
       ],
       "imports": [],
@@ -31443,7 +31445,26 @@
         "page_text()",
         "on_count()",
         "is_on()",
+        "prompts()",
         "open_presets()"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/test/emulator-status-strip.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "wake()",
+        "dump()",
+        "cap()",
+        "bounds()"
+      ],
+      "imports": [],
+      "symbols": [
+        "wake()",
+        "dump()",
+        "cap()",
+        "bounds()"
       ]
     },
     {
@@ -72714,6 +72735,7 @@
       "symbols": [
         "special(id: String)",
         "layer(fn: Boolean)",
+        "textOf(label: String)",
         "corner(e: JsonElement?)",
         "key(o: JsonObject)",
         "parse(text: String)",
@@ -116999,6 +117021,8 @@
         "mesh_url",
         "mcp_page",
         "public_page",
+        "device_catalogue",
+        "device_mcp_page",
         "device_mesh_page",
         "mesh_page",
         "apps_page",
@@ -117028,6 +117052,8 @@
         "mesh_url(svc: &Value)",
         "mcp_page(d: &Value)",
         "public_page(d: &Value)",
+        "device_catalogue(d: &Value)",
+        "device_mcp_page(d: &Value)",
         "device_mesh_page(m: &Mesh, apps: &[App])",
         "mesh_page(d: &Value, m: &Mesh, apps: &[App])",
         "apps_page(d: &Value, apps: &[App], b: &Value)",
@@ -117037,6 +117063,7 @@
         "apps_are_the_manifest_apps_only()",
         "public_page_lists_only_public_urls()",
         "the_api_tab_shows_only_this_device()",
+        "the_mcp_page_and_the_topology_are_this_device_only()",
         "the_device_access_model_holds_what_the_pages_list()",
         "apps_page_lists_ports_from_the_table()",
         "ipc_page_derives_every_authority_from_the_package()",
@@ -119186,6 +119213,7 @@
         "shoot()",
         "dump()",
         "tap_exact()",
+        "tap_page()",
         "has()"
       ],
       "imports": [],
@@ -119193,6 +119221,7 @@
         "shoot()",
         "dump()",
         "tap_exact()",
+        "tap_page()",
         "has()"
       ]
     },
@@ -120922,6 +120951,37 @@
       ]
     },
     {
+      "path": "ac_cloud-c3/app/src/main/java/com/diegonmarcos/cloudc3/pages/C3Mcp.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "C3Mcp"
+      ],
+      "imports": [
+        "kotlinx.serialization.json.Json",
+        "kotlinx.serialization.json.JsonArray",
+        "kotlinx.serialization.json.JsonObject",
+        "kotlinx.serialization.json.JsonPrimitive",
+        "kotlinx.serialization.json.contentOrNull",
+        "kotlinx.serialization.json.intOrNull"
+      ],
+      "symbols": [
+        "apiNodes()",
+        "summary()",
+        "parse(text: String)",
+        "str(k: String)",
+        "int(k: String)",
+        "strs(k: String)",
+        "objs(k: String)",
+        "lines(s: Server)",
+        "lines(t: Tool)",
+        "class C3Mcp",
+        "class Tool",
+        "class Server",
+        "class Decl"
+      ]
+    },
+    {
       "path": "ac_cloud-c3/app/src/main/java/com/diegonmarcos/cloudc3/pages/ContainerProjects.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -121161,6 +121221,7 @@
         "InfraSectionScreen",
         "ApiProvidersScreen",
         "FleetEndpointsScreen",
+        "C3McpScreen",
         "ProvidersScreen",
         "MachinesScreen",
         "ServerlessScreen",
@@ -121213,6 +121274,7 @@
         "InfraSectionScreen( section: String, slice: FleetModel.Slice, live: FleetLiveState, today: LocalDate = LocalDate.now()",
         "ApiProvidersScreen(section: String, group: ApiProviders.Group, apis: ApiProviders.Decl)",
         "FleetEndpointsScreen(section: String, group: ApiProviders.Group, fleet: FleetEndpoints.Decl)",
+        "C3McpScreen(section: String, group: ApiProviders.Group, mcp: C3Mcp.Decl)",
         "ProvidersScreen(slice: FleetModel.Slice, live: FleetLiveState)",
         "MachinesScreen(slice: FleetModel.Slice)",
         "ServerlessScreen(slice: FleetModel.Slice)",
@@ -121957,6 +122019,33 @@
       ],
       "symbols": [
         "class ApiProvidersTest"
+      ]
+    },
+    {
+      "path": "ac_cloud-c3/app/src/test/java/com/diegonmarcos/cloudc3/C3McpTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "C3McpTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.cloudc3.pages.ApiProviders",
+        "com.diegonmarcos.cloudc3.pages.C3Mcp",
+        "kotlinx.serialization.json.Json",
+        "kotlinx.serialization.json.JsonObject",
+        "kotlinx.serialization.json.JsonPrimitive",
+        "kotlinx.serialization.json.contentOrNull",
+        "kotlinx.serialization.json.jsonArray",
+        "kotlinx.serialization.json.jsonObject",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertNotNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.io.File"
+      ],
+      "symbols": [
+        "s(k: String)",
+        "class C3McpTest"
       ]
     },
     {
@@ -122713,6 +122802,28 @@
       ]
     },
     {
+      "path": "ac_cloud-c3/data/gen_c3_mcp.py",
+      "lang": "py",
+      "role": "python",
+      "exports": [
+        "block(root)",
+        "line(root)",
+        "current(text)",
+        "main(argv)"
+      ],
+      "imports": [
+        "json",
+        "os",
+        "sys"
+      ],
+      "symbols": [
+        "block(root)",
+        "line(root)",
+        "current(text)",
+        "main(argv)"
+      ]
+    },
+    {
       "path": "ac_cloud-c3/data/gen_fleet_endpoints.py",
       "lang": "py",
       "role": "python",
@@ -123131,6 +123242,22 @@
         "m_no_dmarc()",
         "m_own_http()",
         "m_gen_ip()"
+      ]
+    },
+    {
+      "path": "ac_cloud-c3/test/test-c3-mcp-moved.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "pass()",
+        "fail()",
+        "mutate()"
+      ],
+      "imports": [],
+      "symbols": [
+        "pass()",
+        "fail()",
+        "mutate()"
       ]
     },
     {
@@ -629530,6 +629657,7 @@
       "role": "shell",
       "exports": [
         "dump()",
+        "undialog()",
         "shot()",
         "down()",
         "node_xy()",
@@ -629538,6 +629666,7 @@
       "imports": [],
       "symbols": [
         "dump()",
+        "undialog()",
         "shot()",
         "down()",
         "node_xy()",
