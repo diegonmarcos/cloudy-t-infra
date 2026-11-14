@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 24360,
+    "files": 24364,
     "by_lang": {
-      "sh": 758,
+      "sh": 759,
       "js": 562,
       "py": 234,
-      "kotlin": 13506,
+      "kotlin": 13509,
       "ts": 8481,
       "java": 654,
       "nix": 35,
@@ -20,12 +20,12 @@
     "by_role": {
       "hook": 160,
       "file": 2320,
-      "shell": 609,
+      "shell": 610,
       "script": 322,
       "python": 82,
       "module": 6490,
       "java": 653,
-      "kotlin": 13503,
+      "kotlin": 13506,
       "flake": 31,
       "rust-module": 130,
       "nix-module": 4,
@@ -258486,6 +258486,7 @@
         "calEnginePackage",
         "calEnginePlaceholder",
         "mailCalEngineAction",
+        "mailWebmailUrl",
         "mailAiRoutingB64",
         "commsVersionCode",
         "gitShortSha"
@@ -262477,6 +262478,7 @@
         "androidx.compose.material.icons.filled.AccountTree",
         "androidx.compose.material.icons.filled.Create",
         "androidx.compose.material.icons.filled.Hub",
+        "androidx.compose.material.icons.filled.Language",
         "androidx.compose.material.icons.filled.Person",
         "androidx.compose.material.icons.filled.RssFeed",
         "androidx.compose.material.icons.filled.Schedule",
@@ -262486,8 +262488,7 @@
         "androidx.compose.material.icons.filled.Snooze",
         "androidx.compose.material.icons.filled.Star",
         "androidx.compose.material3.AssistChip",
-        "androidx.compose.material3.HorizontalDivider",
-        "app.sterna.ui.components.Icon"
+        "androidx.compose.material3.HorizontalDivider"
       ],
       "symbols": [
         "HomeScreen( onBack: ()",
@@ -262547,6 +262548,44 @@
         "class HomeUi",
         "class HomeViewModel",
         "class CacheNumbers"
+      ]
+    },
+    {
+      "path": "ac_cloud-mail/app/src/main/kotlin/app/sterna/ui/home/WebmailScreen.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "WebmailScreen"
+      ],
+      "imports": [
+        "androidx.activity.compose.BackHandler",
+        "androidx.compose.foundation.layout.Box",
+        "androidx.compose.foundation.layout.fillMaxSize",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.material.icons.Icons",
+        "androidx.compose.material.icons.automirrored.filled.ArrowBack",
+        "androidx.compose.material3.ExperimentalMaterial3Api",
+        "androidx.compose.material3.Scaffold",
+        "androidx.compose.material3.Text",
+        "androidx.compose.material3.TopAppBar",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.remember",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.res.stringResource",
+        "androidx.compose.ui.viewinterop.AndroidView",
+        "android.webkit.WebView",
+        "app.sterna.BuildConfig",
+        "app.sterna.R",
+        "app.sterna.ui.components.Icon",
+        "app.sterna.ui.components.IconButton",
+        "com.diegonmarcos.cloudlib.web.CloudWeb",
+        "com.diegonmarcos.cloudlib.web.WebProfile"
+      ],
+      "symbols": [
+        "WebmailScreen(onBack: ()"
       ]
     },
     {
@@ -267720,6 +267759,7 @@
         "android.content.Intent",
         "android.util.Log",
         "app.sterna.container",
+        "app.sterna.core.data.db.EmailEntity",
         "app.sterna.core.data.db.MailboxEntity",
         "app.sterna.core.data.db.SternaDatabase",
         "kotlinx.coroutines.Dispatchers",
@@ -280049,6 +280089,25 @@
       ]
     },
     {
+      "path": "ac_cloud-mail/core/data/src/main/kotlin/app/sterna/core/data/mail/CacheFirstSync.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [],
+      "imports": [
+        "android.os.SystemClock",
+        "java.util.concurrent.ConcurrentHashMap"
+      ],
+      "symbols": [
+        "catchUpNewestFirst( cachedIds: Set<String>, idOf: (E)",
+        "key(accountId: String, mailboxId: String)",
+        "claim(accountId: String, mailboxId: String)",
+        "release(accountId: String, mailboxId: String)",
+        "class CatchUpPage",
+        "class CatchUp",
+        "class InboxSnapshotSchedule"
+      ]
+    },
+    {
       "path": "ac_cloud-mail/core/data/src/main/kotlin/app/sterna/core/data/mail/ConversationScope.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -284682,6 +284741,26 @@
         "insert(id: String, preview: String?, uidValidity: Long?, accountId: String = \"acc-1\")",
         "cachedPreviews( ids: List<String>, uidValidity: Long?, accountId: String = \"acc-1\", )",
         "class CachedPreviewNumberingSqlTest"
+      ]
+    },
+    {
+      "path": "ac_cloud-mail/core/data/src/test/kotlin/app/sterna/core/data/mail/CacheFirstSyncTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "CacheFirstSyncTest"
+      ],
+      "imports": [
+        "kotlinx.coroutines.runBlocking",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "page(anchor: String?, limit: Int)",
+        "class CacheFirstSyncTest",
+        "class Server"
       ]
     },
     {
@@ -540047,6 +540126,24 @@
         "tap_re()",
         "open_store()",
         "attempt()"
+      ]
+    },
+    {
+      "path": "ac_cloud-store/test/emulator-store-search.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "shoot()",
+        "dump()",
+        "tap_text()",
+        "down()"
+      ],
+      "imports": [],
+      "symbols": [
+        "shoot()",
+        "dump()",
+        "tap_text()",
+        "down()"
       ]
     },
     {
