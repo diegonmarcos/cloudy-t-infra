@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-containers",
   "counts": {
-    "files": 2680,
+    "files": 2681,
     "by_lang": {
       "sh": 181,
       "js": 121,
       "nix": 196,
-      "py": 522,
+      "py": 523,
       "ts": 1289,
       "rust": 371
     },
@@ -21,7 +21,7 @@
       "nix-module": 20,
       "python": 508,
       "module": 794,
-      "script": 8,
+      "script": 9,
       "flake": 89,
       "entrypoint": 72,
       "compose": 87,
@@ -62951,6 +62951,20 @@
         "usersAccounts",
         "adminUser",
         "adminEmail"
+      ]
+    },
+    {
+      "path": "user-comm_tools-stalwart/src/scripts/fix-inbox-membership.py",
+      "lang": "py",
+      "role": "script",
+      "exports": [
+        "main()"
+      ],
+      "imports": [
+        "argparse"
+      ],
+      "symbols": [
+        "main()"
       ]
     },
     {
