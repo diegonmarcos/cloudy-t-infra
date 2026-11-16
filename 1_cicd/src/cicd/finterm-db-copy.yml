@@ -1,0 +1,82 @@
+# ┌──────────────────────────────────────────────────────────────┐
+# │  finterm.db one-shot copy: oci-apps -> Cloud Run GCS volume  │
+# │  (#1686)                                                     │
+# │                                                              │
+# │  DISPATCH ONLY. Takes a consistent sqlite .backup snapshot   │
+# │  of the capital-stack-finterm-api volume on oci-apps, checks │
+# │  it (integrity_check + per-table row counts), and uploads it │
+# │  as gs://<finterm-data bucket>/finterm.db with the CI        │
+# │  service account. The Cloud Run finterm-api mounts that      │
+# │  bucket at /data and becomes the writer after cutover, so    │
+# │  this is a seed, never a schedule: re-running it overwrites  │
+# │  whatever Cloud Run wrote since. Needs the mesh (ssh over    │
+# │  WireGuard), hence the shared ship-wg-runner lock.           │
+# └──────────────────────────────────────────────────────────────┘
+
+name: "finterm.db copy (oci-apps → Cloud Run bucket)"
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm_overwrite:
+        description: "Set to true to overwrite the bucket's finterm.db (it may hold newer Cloud Run writes)."
+        required: true
+        default: false
+        type: boolean
+
+env:
+  WG_PRIVATE_KEY: ${{ secrets.WG_PRIVATE_KEY }}
+  WG_HUB_PUBKEY: ${{ vars.WG_HUB_PUBKEY }}
+  OCI_SSH_KEY: ${{ secrets.OCI_SSH_KEY }}
+  FINTERM_BUCKET: diegonmarcos-infra-prod-finterm-data
+  FINTERM_VOLUME: finterm_data
+
+jobs:
+  copy:
+    name: "finterm.db · snapshot oci-apps → gs bucket"
+    if: ${{ inputs.confirm_overwrite == true }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    concurrency:
+      group: ship-wg-runner
+      cancel-in-progress: false
+      queue: max
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: WireGuard up
+        run: bash 1_cicd/src/scripts/cloud-ship-ci-setup-wireguard.sh
+      - name: Authenticate GCP
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+      - name: Snapshot on oci-apps and stream to the runner
+        run: |
+          set -eu
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          printf '%s\n' "$OCI_SSH_KEY" > ~/.ssh/finterm_copy && chmod 600 ~/.ssh/finterm_copy
+          GHA="1_cloud-configs/dist/build-gha.json"
+          WGIP=$(jq -r '.vms["oci-apps"].wg_ip' "$GHA"); SUSER=$(jq -r '.vms["oci-apps"].user // "ubuntu"' "$GHA")
+          S="ssh -i $HOME/.ssh/finterm_copy -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=20 $SUSER@$WGIP"
+          # sqlite3 .backup is online-safe (consistent page snapshot under concurrent writers).
+          $S "set -eu; SQ=\$(command -v sqlite3 || echo /home/ubuntu/.nix-profile/bin/sqlite3); V=\$(docker volume inspect $FINTERM_VOLUME --format '{{.Mountpoint}}'); sudo rm -f /tmp/finterm-1686.db; sudo \$SQ \"\$V/finterm.db\" \".backup '/tmp/finterm-1686.db'\"; sudo chmod 644 /tmp/finterm-1686.db"
+          $S 'cat /tmp/finterm-1686.db' > "$RUNNER_TEMP/finterm.db"
+          $S 'sudo rm -f /tmp/finterm-1686.db'
+          ls -l "$RUNNER_TEMP/finterm.db"
+          sqlite3 "$RUNNER_TEMP/finterm.db" 'PRAGMA integrity_check;' | grep -qx ok
+          for t in $(sqlite3 "$RUNNER_TEMP/finterm.db" "select name from sqlite_master where type='table' and name not like 'sqlite_%' order by 1"); do
+            echo "snapshot-count $t $(sqlite3 "$RUNNER_TEMP/finterm.db" "select count(*) from \"$t\"")"
+          done
+      - name: Upload to the Cloud Run bucket and verify
+        run: |
+          set -eu
+          gcloud storage cp "$RUNNER_TEMP/finterm.db" "gs://$FINTERM_BUCKET/finterm.db"
+          gcloud storage cp "gs://$FINTERM_BUCKET/finterm.db" "$RUNNER_TEMP/finterm.check.db"
+          cmp "$RUNNER_TEMP/finterm.db" "$RUNNER_TEMP/finterm.check.db"
+          for t in $(sqlite3 "$RUNNER_TEMP/finterm.check.db" "select name from sqlite_master where type='table' and name not like 'sqlite_%' order by 1"); do
+            echo "bucket-count $t $(sqlite3 "$RUNNER_TEMP/finterm.check.db" "select count(*) from \"$t\"")"
+          done
+      - name: Cleanup
+        if: always()
+        run: rm -f ~/.ssh/finterm_copy "$RUNNER_TEMP"/finterm*.db
