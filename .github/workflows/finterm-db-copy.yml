@@ -70,7 +70,7 @@ jobs:
           printf '%s\n' "$OCI_SSH_KEY" > ~/.ssh/finterm_copy && chmod 600 ~/.ssh/finterm_copy
           GHA="1_cloud-configs/dist/build-gha.json"
           WGIP=$(jq -r '.vms["oci-apps"].wg_ip' "$GHA"); SUSER=$(jq -r '.vms["oci-apps"].user // "ubuntu"' "$GHA")
-          S="ssh -i $HOME/.ssh/finterm_copy -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=20 $SUSER@$WGIP"
+          S="ssh -i $HOME/.ssh/finterm_copy -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=20 -o ServerAliveInterval=10 -o ServerAliveCountMax=6 $SUSER@$WGIP"
           # sqlite3 .backup is online-safe (consistent page snapshot under concurrent writers).
           # the box login shell is fish: feed a POSIX script on stdin instead of a command string
           $S 'sh -s' <<REMOTE
@@ -80,9 +80,20 @@ jobs:
           sudo rm -f /tmp/finterm-1686.db
           sudo \$SQ "\$V/finterm.db" ".backup '/tmp/finterm-1686.db'"
           sudo chmod 644 /tmp/finterm-1686.db
+          gzip -9 -c /tmp/finterm-1686.db > /tmp/finterm-1686.db.gz
+          sha256sum /tmp/finterm-1686.db.gz | cut -d' ' -f1 > /tmp/finterm-1686.sha
           REMOTE
-          $S 'cat /tmp/finterm-1686.db' > "$RUNNER_TEMP/finterm.db"
-          $S 'sudo rm -f /tmp/finterm-1686.db'
+          # the mesh slot is flaky (connection resets mid-stream): retry the compressed copy until the sha256 matches
+          WANT=$($S 'cat /tmp/finterm-1686.sha')
+          n=0
+          until [ "$n" -ge 8 ]; do
+            n=$((n+1))
+            if $S 'cat /tmp/finterm-1686.db.gz' > "$RUNNER_TEMP/finterm.db.gz" && [ "$(sha256sum "$RUNNER_TEMP/finterm.db.gz" | cut -d' ' -f1)" = "$WANT" ]; then break; fi
+            echo "transfer attempt $n failed, retrying"; sleep 10
+          done
+          [ "$(sha256sum "$RUNNER_TEMP/finterm.db.gz" | cut -d' ' -f1)" = "$WANT" ]
+          gunzip -f "$RUNNER_TEMP/finterm.db.gz"
+          $S 'sudo rm -f /tmp/finterm-1686.db /tmp/finterm-1686.db.gz /tmp/finterm-1686.sha'
           ls -l "$RUNNER_TEMP/finterm.db"
           sqlite3 "$RUNNER_TEMP/finterm.db" 'PRAGMA integrity_check;' | grep -qx ok
           for t in $(sqlite3 "$RUNNER_TEMP/finterm.db" "select name from sqlite_master where type='table' and name not like 'sqlite_%' order by 1"); do
