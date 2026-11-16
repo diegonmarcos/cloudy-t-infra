@@ -60,7 +60,15 @@ jobs:
           WGIP=$(jq -r '.vms["oci-apps"].wg_ip' "$GHA"); SUSER=$(jq -r '.vms["oci-apps"].user // "ubuntu"' "$GHA")
           S="ssh -i $HOME/.ssh/finterm_copy -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=20 $SUSER@$WGIP"
           # sqlite3 .backup is online-safe (consistent page snapshot under concurrent writers).
-          $S "set -eu; SQ=\$(command -v sqlite3 || echo /home/ubuntu/.nix-profile/bin/sqlite3); V=\$(docker volume inspect $FINTERM_VOLUME --format '{{.Mountpoint}}'); sudo rm -f /tmp/finterm-1686.db; sudo \$SQ \"\$V/finterm.db\" \".backup '/tmp/finterm-1686.db'\"; sudo chmod 644 /tmp/finterm-1686.db"
+          # the box login shell is fish: feed a POSIX script on stdin instead of a command string
+          $S 'sh -s' <<REMOTE
+          set -eu
+          SQ=\$(command -v sqlite3 || echo /home/ubuntu/.nix-profile/bin/sqlite3)
+          V=\$(docker volume inspect $FINTERM_VOLUME --format '{{.Mountpoint}}')
+          sudo rm -f /tmp/finterm-1686.db
+          sudo \$SQ "\$V/finterm.db" ".backup '/tmp/finterm-1686.db'"
+          sudo chmod 644 /tmp/finterm-1686.db
+          REMOTE
           $S 'cat /tmp/finterm-1686.db' > "$RUNNER_TEMP/finterm.db"
           $S 'sudo rm -f /tmp/finterm-1686.db'
           ls -l "$RUNNER_TEMP/finterm.db"
