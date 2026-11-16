@@ -24028,7 +24028,7 @@
         "fetch_token(aud, opener=urllib.request.urlopen)",
         "token_for(aud, now=time.time, fetch=fetch_token)",
         "resolve(routes, path)",
-        "make_handler(routes, fetch=fetch_token)",
+        "make_handler(routes, fetch=fetch_token, fixed=None)",
         "main()"
       ],
       "imports": [
@@ -24041,7 +24041,7 @@
         "fetch_token(aud, opener=urllib.request.urlopen)",
         "token_for(aud, now=time.time, fetch=fetch_token)",
         "resolve(routes, path)",
-        "make_handler(routes, fetch=fetch_token)",
+        "make_handler(routes, fetch=fetch_token, fixed=None)",
         "main()"
       ]
     },
