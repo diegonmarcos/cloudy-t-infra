@@ -116,6 +116,7 @@ export interface ContainerSpec {
   db_engine?: EmbeddedDbEngine;     // declared when the container IS a DB (used by .db zone)
   dns?: string | null;
   bind_host?: string;            // interface this container is actually reachable on — overrides the VM wg0 IP when computing the Caddy/probe upstream
+  cloud_run_bridge?: { host: string };  // #1686: container moved to Cloud Run; the Caddy/probe upstream becomes <host>:<port> (gcp-idtoken-bridge listener on the same port)
   public: boolean;
   proxy?: ProxyPrimaryConfig | null;
   healthcheck?: string | null;

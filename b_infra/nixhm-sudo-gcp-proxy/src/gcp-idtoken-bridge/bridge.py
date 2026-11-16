@@ -49,14 +49,15 @@ def resolve(routes, path):
     return routes[parts[1]].rstrip("/"), rest
 
 
-def make_handler(routes, fetch=fetch_token):
+def make_handler(routes, fetch=fetch_token, fixed=None):
+    """fixed: serve ONE service at the listener root (port mode, Caddy upstream 10.0.0.1:<port>)."""
     class H(BaseHTTPRequestHandler):
         protocol_version = "HTTP/1.1"
 
         def _do(self):
             if self.path == "/_health":
                 return self._reply(200, b'{"ok":true}', {"Content-Type": "application/json"})
-            r = resolve(routes, self.path)
+            r = resolve(routes, ("/" + fixed + self.path) if fixed else self.path)
             if not r:
                 return self._reply(404, b'{"error":"unknown service"}', {"Content-Type": "application/json"})
             aud, rest = r
@@ -98,6 +99,15 @@ def main():
     routes = json.load(open(os.environ.get("BRIDGE_ROUTES", "/etc/gcp-idtoken-bridge/routes.json")))
     addr = os.environ.get("BRIDGE_LISTEN", "10.0.0.1")
     port = int(os.environ.get("BRIDGE_PORT", "9120"))
+    # ports.json (#1686): {"<port>": "<service>"} one extra listener per service on the SAME port the oci-apps
+    # container used, so a Caddy route only changes its upstream IP (container bind override), never its path.
+    pf = os.environ.get("BRIDGE_PORTS", "")
+    ports = json.load(open(pf)) if pf and os.path.exists(pf) else {}
+    for p, svc in ports.items():
+        if svc not in routes:
+            raise SystemExit("ports.json names unknown service " + svc)
+        srv = ThreadingHTTPServer((addr, int(p)), make_handler(routes, fixed=svc))
+        threading.Thread(target=srv.serve_forever, daemon=True).start()
     ThreadingHTTPServer((addr, port), make_handler(routes)).serve_forever()
 
 

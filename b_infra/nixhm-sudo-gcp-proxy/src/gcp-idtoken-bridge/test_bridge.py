@@ -55,6 +55,43 @@ class T(unittest.TestCase):
             urllib.request.urlopen("http://127.0.0.1:%d/nope/x" % br.server_port)
         self.assertEqual(e.exception.code, 404)
 
+    def test_port_mode_prefixes_service(self):
+        bridge._cache.clear()
+        up = HTTPServer(("127.0.0.1", 0), Up); threading.Thread(target=up.serve_forever, daemon=True).start()
+        base = "http://127.0.0.1:%d" % up.server_port
+        br = HTTPServer(("127.0.0.1", 0), bridge.make_handler({"svc": base}, fetch=lambda a: jwt(int(time.time()) + 3600), fixed="svc"))
+        threading.Thread(target=br.serve_forever, daemon=True).start()
+        self.assertEqual(urllib.request.urlopen("http://127.0.0.1:%d/v2/check?x=1" % br.server_port).read(), b"ok")
+        self.assertEqual(Up.seen[-1][0], "/v2/check?x=1")
+
+    def test_ports_match_registry_and_build_json(self):
+        import os
+        d = os.path.dirname(__file__)
+        ports = json.load(open(os.path.join(d, "ports.json")))
+        routes = json.load(open(os.path.join(d, "routes.json")))
+        for p, n in ports.items():
+            self.assertIn(n, routes); self.assertTrue(p.isdigit() and 1024 < int(p) < 65536)
+        self.assertEqual(len(set(ports)), len(ports))
+
+    def test_every_cloud_run_bridge_container_has_a_listener(self):
+        import os, glob
+        d = os.path.dirname(os.path.abspath(__file__))
+        ports = json.load(open(os.path.join(d, "ports.json")))
+        decl = {}
+        for root in (os.environ.get("CONTAINERS_DIR", ""), os.path.join(d, "../../../../../cloudy-u-containers"), os.path.join(d, "../../../../a_solutions")):
+            for f in glob.glob(os.path.join(root, "*/build.json")) if root else []:
+                try: bj = json.load(open(f))
+                except Exception: continue
+                for c in (bj.get("containers") or {}).values():
+                    if isinstance(c, dict) and c.get("cloud_run_bridge"):
+                        decl[str(c["port"])] = f
+            if decl: break
+        if not decl: self.skipTest("no container build.json in tree")
+        for p, f in decl.items():
+            self.assertIn(p, ports, "cloud_run_bridge container %s has no ports.json listener" % f)
+        for p in ports:
+            self.assertIn(p, decl, "ports.json listener %s has no cloud_run_bridge container" % p)
+
     def test_routes_match_registry(self):
         import os
         reg = os.path.join(os.path.dirname(__file__), "../../../../c_vps/vps_gcloud/src/terraform.json")

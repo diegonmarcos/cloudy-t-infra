@@ -401,7 +401,9 @@ function main() {
     // probes/Caddy at the wrong interface.
     const vmWgIp = vmId ? vms[vmId]?.wg_ip : undefined;
     const primaryContainer = Object.values(containers).find(c => c.port === entry.port) ?? Object.values(containers)[0];
-    const upstreamIp = primaryContainer?.bind_host ?? vmWgIp;
+    // #1686: a container served from Cloud Run declares cloud_run_bridge.host (the gcp-idtoken-bridge
+    // listener, same port as before): Caddy and probes then dial the bridge instead of the oci-apps box.
+    const upstreamIp = primaryContainer?.cloud_run_bridge?.host ?? primaryContainer?.bind_host ?? vmWgIp;
     const computedUpstream = upstreamIp && entry.port ? `${upstreamIp}:${entry.port}` : undefined;
 
     // Derive container names from containers spec

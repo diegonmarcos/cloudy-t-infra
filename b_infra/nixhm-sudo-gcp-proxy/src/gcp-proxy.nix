@@ -59,6 +59,7 @@ in {
   # http://10.0.0.1:9120/<service>/<path>. Routes: gcp-idtoken-bridge/routes.json (test-checked against terraform.json).
   home.file.".local/share/gcp-idtoken-bridge/bridge.py" = { executable = true; source = ./gcp-idtoken-bridge/bridge.py; };
   home.file.".local/share/gcp-idtoken-bridge/routes.json".source = ./gcp-idtoken-bridge/routes.json;
+  home.file.".local/share/gcp-idtoken-bridge/ports.json".source = ./gcp-idtoken-bridge/ports.json;
   home.file.".local/share/gcp-idtoken-bridge/gcp-idtoken-bridge.service".text = ''
     [Unit]
     Description=GCP ID-token bridge for Cloud Run (metadata server, WG-only)
@@ -68,6 +69,7 @@ in {
     [Service]
     Type=simple
     Environment=BRIDGE_ROUTES=/opt/gcp-idtoken-bridge/routes.json
+    Environment=BRIDGE_PORTS=/opt/gcp-idtoken-bridge/ports.json
     Environment=BRIDGE_LISTEN=10.0.0.1
     Environment=BRIDGE_PORT=9120
     ExecStart=/usr/bin/python3 /opt/gcp-idtoken-bridge/bridge.py
@@ -92,7 +94,7 @@ in {
     [ -z "$SUDO" ] && exit 0
     SRC="$HOME/.local/share/gcp-idtoken-bridge"
     $SUDO mkdir -p /opt/gcp-idtoken-bridge
-    $SUDO cp -f "$SRC/bridge.py" "$SRC/routes.json" /opt/gcp-idtoken-bridge/
+    $SUDO cp -f "$SRC/bridge.py" "$SRC/routes.json" "$SRC/ports.json" /opt/gcp-idtoken-bridge/
     $SUDO cp -f "$SRC/gcp-idtoken-bridge.service" /etc/systemd/system/gcp-idtoken-bridge.service
     $SUDO systemctl daemon-reload
     $SUDO systemctl enable gcp-idtoken-bridge.service 2>/dev/null || true
