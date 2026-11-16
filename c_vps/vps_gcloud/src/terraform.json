@@ -340,6 +340,7 @@
       "startup_cpu_boost": true,
       "execution_environment": "EXECUTION_ENVIRONMENT_GEN2",
       "timeout_s": 600,
+      "startup_probe": {"path": "/ready", "period_s": 20, "timeout_s": 5, "failure_threshold": 30, "_doc": "#1686: /ready answers 200 only after bge-m3 + reranker are loaded (gate.py); /health is liveness only. 30 x 20s = 10 min startup window (weights are ~4.6 GB downloaded per cold start). Same CPU/memory/min-instances as before."},
       "invoker": "iam",
       "env": {
         "EMBED_MODEL": "BAAI/bge-m3",

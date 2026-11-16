@@ -255,6 +255,20 @@ resource "google_cloud_run_v2_service" "svc" {
         cpu_idle          = try(each.value.cpu_throttling, true)
         startup_cpu_boost = try(each.value.startup_cpu_boost, false)
       }
+      # #1686: optional HTTP startup probe (CPU is fully allocated during startup even with cpu_throttling on, so a
+      # slow model load finishes before the first request instead of being starved between requests).
+      dynamic "startup_probe" {
+        for_each = try(each.value.startup_probe, null) == null ? [] : [each.value.startup_probe]
+        content {
+          initial_delay_seconds = try(startup_probe.value.initial_delay_s, 0)
+          period_seconds        = try(startup_probe.value.period_s, 10)
+          timeout_seconds       = try(startup_probe.value.timeout_s, 5)
+          failure_threshold     = try(startup_probe.value.failure_threshold, 3)
+          http_get {
+            path = startup_probe.value.path
+          }
+        }
+      }
       dynamic "env" {
         for_each = try(each.value.env, {})
         content {
