@@ -97,7 +97,7 @@ def make_handler(routes, fetch=fetch_token, fixed=None):
 
 def main():
     routes = json.load(open(os.environ.get("BRIDGE_ROUTES", "/etc/gcp-idtoken-bridge/routes.json")))
-    routes = {k: v for k, v in routes.items() if isinstance(v, str) and not k.startswith("_")}  # drop build-stamp meta keys
+    routes = {k: v for k, v in routes.items() if isinstance(v, str) and v.startswith(("http://", "https://")) and not k.startswith("_")}  # drop build-stamp meta keys
     addr = os.environ.get("BRIDGE_LISTEN", "10.0.0.1")
     port = int(os.environ.get("BRIDGE_PORT", "9120"))
     # ports.json (#1686): {"<port>": "<service>"} one extra listener per service on the SAME port the oci-apps
