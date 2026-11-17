@@ -973,7 +973,7 @@
     },
     {
       "domain": "c3-capital-stack-finterm-api.diegonmarcos.com",
-      "upstream": "10.0.0.6:8340",
+      "upstream": "10.0.0.1:8340",
       "auth": "none",
       "wg_only": true,
       "container": "capital-stack-finterm-api",
@@ -981,7 +981,7 @@
     },
     {
       "domain": "c3-capital-stack-finterminal-web.diegonmarcos.com",
-      "upstream": "10.0.0.6:8341",
+      "upstream": "10.0.0.1:8341",
       "auth": "none",
       "wg_only": true,
       "container": "capital-stack-finterminal-web",
@@ -3112,13 +3112,13 @@
     },
     {
       "service": "c3-capital-stack-finterm-api.mesh.diegonmarcos.com",
-      "upstream": "10.0.0.6:8340",
+      "upstream": "10.0.0.1:8340",
       "scheme": "c3",
       "source": "url_scheme"
     },
     {
       "service": "c3-capital-stack-finterminal-web.mesh.diegonmarcos.com",
-      "upstream": "10.0.0.6:8341",
+      "upstream": "10.0.0.1:8341",
       "scheme": "c3",
       "source": "url_scheme"
     },
@@ -4992,7 +4992,7 @@
       "vm": "oci-A1-f_0",
       "port": 8340,
       "protocol": "http",
-      "upstream": "10.0.0.6:8340",
+      "upstream": "10.0.0.1:8340",
       "source": "containers.app.port"
     },
     {
@@ -5013,7 +5013,7 @@
       "vm": "oci-A1-f_0",
       "port": 8341,
       "protocol": "http",
-      "upstream": "10.0.0.6:8341",
+      "upstream": "10.0.0.1:8341",
       "source": "containers.app.port"
     },
     {
@@ -6337,7 +6337,7 @@
     {
       "host": "c3-capital-stack-finterm-api.diegonmarcos.com",
       "path": null,
-      "upstream": "10.0.0.6:8340",
+      "upstream": "10.0.0.1:8340",
       "kind": "reverse_proxy",
       "tls": "public",
       "zone": "com",
@@ -6347,7 +6347,7 @@
     {
       "host": "c3-capital-stack-finterminal-web.diegonmarcos.com",
       "path": null,
-      "upstream": "10.0.0.6:8341",
+      "upstream": "10.0.0.1:8341",
       "kind": "reverse_proxy",
       "tls": "public",
       "zone": "com",
@@ -8201,7 +8201,7 @@
     {
       "host": "capital-stack-finterm-api-http-8340.mesh.diegonmarcos.com",
       "path": null,
-      "upstream": "10.0.0.6:8340",
+      "upstream": "10.0.0.1:8340",
       "kind": "reverse_proxy",
       "tls": "on_demand",
       "zone": "com",
@@ -8211,7 +8211,7 @@
     {
       "host": "capital-stack-finterminal-web-http-8341.mesh.diegonmarcos.com",
       "path": null,
-      "upstream": "10.0.0.6:8341",
+      "upstream": "10.0.0.1:8341",
       "kind": "reverse_proxy",
       "tls": "on_demand",
       "zone": "com",
