@@ -1035,12 +1035,16 @@
       "flake": "infra-ai_cloudy-ai-embeddings-api",
       "port": 7997,
       "dns": "cloudy-ai-embeddings-api.mesh.diegonmarcos.com",
-      "upstream": "10.0.0.6:7997",
+      "upstream": "10.0.0.1:7997",
       "containers": {
         "app": {
           "container_name": "cloudy-ai-embeddings-api",
           "image": "ghcr.io/diegonmarcos/embeddings-api-binaries:latest",
           "port": 7997,
+          "cloud_run_bridge": {
+            "host": "10.0.0.1",
+            "_doc": "#1686: served from Cloud Run through the gcp-idtoken-bridge (listener 10.0.0.1:7997 on gcp-proxy); Hickory rows embeddings-api and cloudy-ai-embeddings-api point at 10.0.0.1. The oci-apps container is kept declared (profile cloud-run) for rollback."
+          },
           "port_env": null,
           "dns": "cloudy-ai-embeddings-api.mesh.diegonmarcos.com",
           "public": false,
