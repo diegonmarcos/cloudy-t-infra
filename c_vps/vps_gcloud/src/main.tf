@@ -313,6 +313,13 @@ resource "google_cloud_run_v2_service" "svc" {
   depends_on = [google_storage_bucket.cloud_run_volumes, google_secret_manager_secret_version.cloud_run, google_secret_manager_secret_iam_member.cloud_run_accessor]
 }
 
+# Secret Manager API (#1686): enabled declaratively; free tier covers the handful of secrets used here.
+resource "google_project_service" "secretmanager" {
+  count              = length(local.cloud_run_secrets_wanted) > 0 ? 1 : 0
+  service            = "secretmanager.googleapis.com"
+  disable_on_destroy = false
+}
+
 # Secret Manager: names from terraform.json secret_env, values from the vault via TF_VAR_cloud_run_secret_values.
 resource "google_secret_manager_secret" "cloud_run" {
   for_each  = { for n in local.cloud_run_secrets_wanted : n => n if contains(local.cloud_run_secrets_with_val, n) }
@@ -320,6 +327,7 @@ resource "google_secret_manager_secret" "cloud_run" {
   replication {
     auto {}
   }
+  depends_on = [google_project_service.secretmanager]
 }
 
 resource "google_secret_manager_secret_version" "cloud_run" {

@@ -77,9 +77,7 @@
 
   "cloud_run_secret_sources": {
     "_doc": "#1686 Secret Manager secret name -> key in the decrypted vault env (CI only). cloud-ship-terraform-deploy-apply.sh builds TF_VAR_cloud_run_secret_values from it; main.tf creates the secret, its version and the runtime-SA secretAccessor grant. A managed service whose secret has no value is held back (output cloud_run_skipped_missing_secrets), never failing the apply.",
-    "cloudy-browser-headless-token": "BROWSER_TOKEN",
-    "scrappers-ig-burner-user": "IG_BURNER_USER",
-    "scrappers-ig-burner-pass": "IG_BURNER_PASS"
+    "cloudy-browser-headless-token": "BROWSER_TOKEN"
   },
 
   "cloud_run_services": [
@@ -254,10 +252,7 @@
       "env": {
         "PORT": "3020"
       },
-      "secret_env": {
-        "IG_BURNER_USER": "scrappers-ig-burner-user",
-        "IG_BURNER_PASS": "scrappers-ig-burner-pass"
-      },
+      "secret_env": {},
       "volumes": [],
       "persistence": "none",
       "route": {
