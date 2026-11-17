@@ -1128,7 +1128,10 @@ function deriveCaddy(c: any): DerivedFile[] {
         //      preferred when caddy is on a wg-public host, wg0 otherwise).
         // Mirrors the same precedence in cloud-data-config-consolidated.ts.
         const vmIpForCaddy = resolveVmIpForCaddy(vm);
-        const upstreamIp = (typeof c.bind_host === "string" && c.bind_host) ? c.bind_host : vmIpForCaddy;
+        // #1686: a container served from Cloud Run declares cloud_run_bridge.host (gcp-idtoken-bridge listener,
+        // same port); it wins over bind_host and the VM IP, same precedence as the consolidated derive.
+        const upstreamIp = (typeof c.cloud_run_bridge?.host === "string" && c.cloud_run_bridge.host) ? c.cloud_run_bridge.host
+          : (typeof c.bind_host === "string" && c.bind_host) ? c.bind_host : vmIpForCaddy;
         for (const { port, protocol, source } of ports) {
           allAppUrls.push({
             kind: "canonical",
