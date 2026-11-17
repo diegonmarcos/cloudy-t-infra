@@ -52,8 +52,9 @@ jobs:
           umask 077
           printf '%s\n' "$VAULT_DEPLOY_KEY" > ~/.ssh/vault_deploy
           ssh-keyscan github.com 2>/dev/null >> ~/.ssh/known_hosts
-          GIT_SSH_COMMAND="ssh -i ~/.ssh/vault_deploy -o IdentitiesOnly=yes -o StrictHostKeyChecking=accept-new" \
-            git clone --depth 1 --filter=blob:none --sparse git@github.com:diegonmarcos/cloud-me-pvt-vault.git "$RUNNER_TEMP/vault"
+          # exported for the whole step: the partial clone lazily fetches blobs with a second ssh call
+          export GIT_SSH_COMMAND="ssh -i $HOME/.ssh/vault_deploy -o IdentitiesOnly=yes -o StrictHostKeyChecking=accept-new"
+          git clone --depth 1 --filter=blob:none --sparse git@github.com:diegonmarcos/cloud-me-pvt-vault.git "$RUNNER_TEMP/vault"
           git -C "$RUNNER_TEMP/vault" sparse-checkout set Linux-Containers
       - name: Copy and encrypt
         env:
