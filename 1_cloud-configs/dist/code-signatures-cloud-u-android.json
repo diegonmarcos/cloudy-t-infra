@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 24512,
+    "files": 24521,
     "by_lang": {
       "sh": 789,
       "js": 564,
       "py": 248,
-      "kotlin": 13608,
+      "kotlin": 13617,
       "ts": 8482,
       "java": 654,
       "nix": 37,
@@ -25,7 +25,7 @@
       "python": 84,
       "module": 6492,
       "java": 653,
-      "kotlin": 13605,
+      "kotlin": 13614,
       "flake": 33,
       "rust-module": 130,
       "nix-module": 4,
@@ -136828,6 +136828,118 @@
       ]
     },
     {
+      "path": "ac_cloud-canvas/app/src/main/java/com/diegonmarcos/cloudcanvas/enhance/AiSettings.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "PrefsKv",
+        "AiSettings"
+      ],
+      "imports": [
+        "android.content.Context",
+        "android.content.SharedPreferences",
+        "android.os.SystemClock",
+        "com.diegonmarcos.superapp.ai.AiConfig",
+        "com.diegonmarcos.superapp.crash.SafeEncryptedPrefs",
+        "com.diegonmarcos.superapp.texttools.TextToolsClient"
+      ],
+      "symbols": [
+        "get(key: String)",
+        "put(key: String, value: String?)",
+        "hasOwnKey()",
+        "saveOwnKey(v: String)",
+        "clearOwnKey()",
+        "resolve()",
+        "class PrefsKv",
+        "class secret",
+        "class AiSettings",
+        "class Source",
+        "class Resolved"
+      ]
+    },
+    {
+      "path": "ac_cloud-canvas/app/src/main/java/com/diegonmarcos/cloudcanvas/enhance/Enhance.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "Task",
+        "Preset",
+        "Choice",
+        "PresetLibrary",
+        "PromptExpander",
+        "EnhanceRequest",
+        "KeyValue",
+        "AiChoices",
+        "Secret"
+      ],
+      "imports": [
+        "java.util.Base64",
+        "org.json.JSONArray",
+        "org.json.JSONObject"
+      ],
+      "symbols": [
+        "byId(id: String?)",
+        "preset(id: String?)",
+        "quality(id: String?)",
+        "size(id: String?)",
+        "parse(text: String)",
+        "list(a: JSONArray?)",
+        "expand(preset: Preset?, custom: String, quality: Choice?, size: Choice?)",
+        "dataUrl(bytes: ByteArray, mime: String = \"image/png\")",
+        "body(model: String, prompt: String, imageDataUrl: String)",
+        "parse(code: Int, body: String)",
+        "estimateUsd(unit: String?, outPrice: Double?, maxPx: Int)",
+        "overCap(estimate: Double?, capUsd: Double)",
+        "get(key: String)",
+        "put(key: String, value: String?)",
+        "model(task: Task)",
+        "setModel(task: Task, id: String?)",
+        "costCap(default: Double)",
+        "setCostCap(v: Double)",
+        "reveal()",
+        "toString()",
+        "mask(v: String)",
+        "class Task",
+        "class Preset",
+        "class Choice",
+        "class PresetLibrary",
+        "class PromptExpander",
+        "class EnhanceRequest",
+        "class Kind",
+        "class Result",
+        "class Image",
+        "class Failure",
+        "class KeyValue",
+        "class AiChoices",
+        "class Secret"
+      ]
+    },
+    {
+      "path": "ac_cloud-canvas/app/src/main/java/com/diegonmarcos/cloudcanvas/enhance/EnhanceClient.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "EnhanceClient"
+      ],
+      "imports": [
+        "android.content.Context",
+        "android.graphics.Bitmap",
+        "android.graphics.BitmapFactory",
+        "com.diegonmarcos.superapp.ai.AiConfig",
+        "com.diegonmarcos.superapp.ai.AiUrlHttp",
+        "java.io.ByteArrayOutputStream",
+        "java.io.IOException",
+        "java.net.UnknownHostException"
+      ],
+      "symbols": [
+        "prepare(src: Bitmap, maxPx: Int, maxBytes: Int)",
+        "mimeOf(bytes: ByteArray)",
+        "run(ctx: Context, key: Secret, model: String, prompt: String, image: ByteArray)",
+        "decode(bytes: ByteArray)",
+        "class EnhanceClient"
+      ]
+    },
+    {
       "path": "ac_cloud-canvas/app/src/main/java/com/diegonmarcos/cloudcanvas/MainActivity.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -136840,15 +136952,68 @@
         "android.os.Bundle",
         "androidx.activity.ComponentActivity",
         "androidx.activity.compose.setContent",
+        "com.diegonmarcos.cloudcanvas.ui.AiConfigsPage",
         "com.diegonmarcos.cloudcanvas.ui.AppTheme",
         "com.diegonmarcos.cloudcanvas.ui.CanvasShell",
-        "com.diegonmarcos.superapp.bottomnav.FleetChrome"
+        "com.diegonmarcos.superapp.bottomnav.FleetChrome",
+        "com.diegonmarcos.superapp.fleetconfigs.FleetConfigsActivity",
+        "com.diegonmarcos.superapp.fleetconfigs.FleetConfigsExtensions",
+        "com.diegonmarcos.superapp.fleetconfigs.FleetConfigsTab"
       ],
       "symbols": [
         "from(i: Intent?)",
         "onCreate(savedInstanceState: Bundle?)",
         "class CanvasStart",
         "class MainActivity"
+      ]
+    },
+    {
+      "path": "ac_cloud-canvas/app/src/main/java/com/diegonmarcos/cloudcanvas/ui/AiConfigsPage.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "AiConfigsPage"
+      ],
+      "imports": [
+        "androidx.compose.foundation.horizontalScroll",
+        "androidx.compose.foundation.layout.Arrangement",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.Row",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.foundation.rememberScrollState",
+        "androidx.compose.foundation.verticalScroll",
+        "androidx.compose.material3.Button",
+        "androidx.compose.material3.FilterChip",
+        "androidx.compose.material3.OutlinedTextField",
+        "androidx.compose.material3.Text",
+        "androidx.compose.material3.TextButton",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.LaunchedEffect",
+        "androidx.compose.runtime.collectAsState",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableIntStateOf",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.remember",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.platform.LocalContext",
+        "androidx.compose.ui.res.colorResource",
+        "androidx.compose.ui.text.input.PasswordVisualTransformation",
+        "androidx.compose.ui.unit.dp",
+        "androidx.compose.ui.unit.sp",
+        "com.diegonmarcos.cloudcanvas.R",
+        "com.diegonmarcos.cloudcanvas.enhance.AiSettings",
+        "com.diegonmarcos.cloudcanvas.enhance.PresetLibrary",
+        "com.diegonmarcos.cloudcanvas.enhance.Task",
+        "com.diegonmarcos.superapp.fleetdata.FleetData",
+        "com.diegonmarcos.superapp.modelcatalogue.ModelCatalogue",
+        "kotlinx.coroutines.Dispatchers",
+        "kotlinx.coroutines.withContext"
+      ],
+      "symbols": [
+        "imageModels(ctx: android.content.Context)",
+        "AiConfigsPage()"
       ]
     },
     {
@@ -136878,7 +137043,9 @@
         "CanvasShell"
       ],
       "imports": [
+        "androidx.compose.foundation.background",
         "androidx.compose.foundation.layout.Box",
+        "androidx.compose.foundation.layout.fillMaxHeight",
         "androidx.compose.foundation.layout.Column",
         "androidx.compose.foundation.layout.WindowInsets",
         "androidx.compose.foundation.layout.displayCutout",
@@ -136893,7 +137060,10 @@
         "androidx.compose.runtime.remember",
         "androidx.compose.runtime.saveable.rememberSaveable",
         "androidx.compose.runtime.setValue",
+        "androidx.compose.ui.Alignment",
         "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.res.colorResource",
+        "com.diegonmarcos.cloudcanvas.R",
         "androidx.compose.ui.platform.LocalContext",
         "androidx.compose.ui.platform.testTag",
         "com.diegonmarcos.cloudcanvas.CanvasStart",
@@ -136966,6 +137136,8 @@
         "move(id: Int, to: Int)",
         "openImage(uri: Uri)",
         "png()",
+        "flattenBitmap()",
+        "addImageLayer(name: String, bmp: android.graphics.Bitmap)",
         "exportTo(tree: Uri)",
         "shareIntent()",
         "class DrawController"
@@ -137025,6 +137197,101 @@
         "DrawCanvas(ctl: DrawController)",
         "LayersPanel(ctl: DrawController, modifier: Modifier, onClose: ()",
         "ColorDialog(ctl: DrawController, onDone: ()"
+      ]
+    },
+    {
+      "path": "ac_cloud-canvas/app/src/main/java/com/diegonmarcos/cloudcanvas/ui/EnhanceController.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "EnhanceController"
+      ],
+      "imports": [
+        "android.content.Context",
+        "android.graphics.Bitmap",
+        "android.graphics.BitmapFactory",
+        "android.net.Uri",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.setValue",
+        "com.diegonmarcos.cloudcanvas.draw.ExportNames",
+        "com.diegonmarcos.cloudcanvas.enhance.AiSettings",
+        "com.diegonmarcos.cloudcanvas.enhance.EnhanceClient",
+        "com.diegonmarcos.cloudcanvas.enhance.EnhanceRequest",
+        "com.diegonmarcos.cloudcanvas.enhance.PresetLibrary",
+        "com.diegonmarcos.cloudcanvas.enhance.PromptExpander",
+        "com.diegonmarcos.cloudcanvas.enhance.Task",
+        "com.diegonmarcos.superapp.modelcatalogue.ModelCatalogue",
+        "java.io.ByteArrayOutputStream"
+      ],
+      "symbols": [
+        "modelFor(task: Task)",
+        "useDrawing()",
+        "load(uri: Uri)",
+        "reset()",
+        "refreshPrompt(lib: PresetLibrary?)",
+        "pick(lib: PresetLibrary?, id: String?)",
+        "task(lib: PresetLibrary?)",
+        "estimate(lib: PresetLibrary?)",
+        "run(lib: PresetLibrary?)",
+        "saveTo(tree: Uri)",
+        "sendToDraw()",
+        "class EnhanceController"
+      ]
+    },
+    {
+      "path": "ac_cloud-canvas/app/src/main/java/com/diegonmarcos/cloudcanvas/ui/EnhanceScreen.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "EnhanceScreen",
+        "MusicScreen"
+      ],
+      "imports": [
+        "androidx.activity.compose.rememberLauncherForActivityResult",
+        "androidx.activity.result.contract.ActivityResultContracts",
+        "androidx.compose.foundation.Image",
+        "androidx.compose.foundation.horizontalScroll",
+        "androidx.compose.foundation.layout.Arrangement",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.Row",
+        "androidx.compose.foundation.layout.fillMaxSize",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.foundation.layout.height",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.foundation.layout.size",
+        "androidx.compose.foundation.rememberScrollState",
+        "androidx.compose.foundation.verticalScroll",
+        "androidx.compose.material3.AssistChip",
+        "androidx.compose.material3.Button",
+        "androidx.compose.material3.CircularProgressIndicator",
+        "androidx.compose.material3.FilterChip",
+        "androidx.compose.material3.OutlinedTextField",
+        "androidx.compose.material3.Text",
+        "androidx.compose.material3.TextButton",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.LaunchedEffect",
+        "androidx.compose.runtime.collectAsState",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.remember",
+        "androidx.compose.ui.Alignment",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.graphics.asImageBitmap",
+        "androidx.compose.ui.layout.ContentScale",
+        "androidx.compose.ui.platform.LocalContext",
+        "androidx.compose.ui.res.colorResource",
+        "androidx.compose.ui.unit.dp",
+        "androidx.compose.ui.unit.sp",
+        "com.diegonmarcos.cloudcanvas.CanvasStart",
+        "com.diegonmarcos.cloudcanvas.R",
+        "com.diegonmarcos.cloudcanvas.enhance.PresetLibrary",
+        "com.diegonmarcos.superapp.fleetdata.FleetData",
+        "com.diegonmarcos.superapp.fleetconfigs.FleetConfigsActivity",
+        "android.content.Intent"
+      ],
+      "symbols": [
+        "EnhanceScreen(ctl: EnhanceController, start: CanvasStart, modifier: Modifier = Modifier)",
+        "MusicScreen(modifier: Modifier = Modifier)"
       ]
     },
     {
@@ -137197,6 +137464,55 @@
       ]
     },
     {
+      "path": "ac_cloud-canvas/app/src/test/java/com/diegonmarcos/cloudcanvas/EnhanceTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "EnhanceTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.cloudcanvas.enhance.AiChoices",
+        "com.diegonmarcos.cloudcanvas.enhance.Choice",
+        "com.diegonmarcos.cloudcanvas.enhance.EnhanceRequest",
+        "com.diegonmarcos.cloudcanvas.enhance.KeyValue",
+        "com.diegonmarcos.cloudcanvas.enhance.Preset",
+        "com.diegonmarcos.cloudcanvas.enhance.PresetLibrary",
+        "com.diegonmarcos.cloudcanvas.enhance.PromptExpander",
+        "com.diegonmarcos.cloudcanvas.enhance.Secret",
+        "com.diegonmarcos.cloudcanvas.enhance.Task",
+        "java.io.File",
+        "java.util.Base64",
+        "org.json.JSONObject",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNotNull",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "root()",
+        "dataset()",
+        "theDatasetHoldsTheFivePresetsWithLongPrompts()",
+        "expansionFillsSizeAndQualityFromConfigs()",
+        "expansionKeepsTheUsersWordsAndWorksWithoutAPreset()",
+        "everyPresetExpandsToADistinctPrompt()",
+        "get(key: String)",
+        "put(key: String, value: String?)",
+        "modelSelectionIsPerTaskAndPersists()",
+        "qualitySizeAndCostCapPersist()",
+        "aSecretPrintsMasked()",
+        "noSourceLogsOrPrintsAndNoKeyIsEmbedded()",
+        "requestCarriesModelPromptAndImageAsAMultimodalMessage()",
+        "answerParsingReturnsTheImageOrAClassifiedError()",
+        "kind(code: Int, body: String)",
+        "costEstimateAndCap()",
+        "datasetIsReadFromJsonNotCode()",
+        "class EnhanceTest",
+        "class Mem"
+      ]
+    },
+    {
       "path": "ac_cloud-canvas/app/src/test/java/com/diegonmarcos/cloudcanvas/NavShapeTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -137212,7 +137528,8 @@
       ],
       "symbols": [
         "ui()",
-        "bottomNavIsDrawThenPlay()",
+        "bottomNavIsDrawPlayEnhancerMusic()",
+        "theBarHasFourItemsAndTheMusicSectionIsTheLast()",
         "everyBarIdIsASectionWithAnIcon()",
         "class NavShapeTest"
       ]
@@ -405128,6 +405445,23 @@
       ]
     },
     {
+      "path": "ac_cloud-me/app/src/main/java/com/diegonmarcos/cloudme/FontSheetGate.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "FontSheetGate"
+      ],
+      "imports": [
+        "android.webkit.WebResourceResponse",
+        "java.io.ByteArrayInputStream"
+      ],
+      "symbols": [
+        "blocks(host: String?, path: String?)",
+        "emptySheet()",
+        "class FontSheetGate"
+      ]
+    },
+    {
       "path": "ac_cloud-me/app/src/main/java/com/diegonmarcos/cloudme/GeoStats.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -407340,6 +407674,26 @@
       "symbols": [
         "all(f: Folder)",
         "class FolderTreeTest"
+      ]
+    },
+    {
+      "path": "ac_cloud-me/app/src/test/java/com/diegonmarcos/cloudme/FontSheetGateTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "FontSheetGateTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.io.File"
+      ],
+      "symbols": [
+        "the_google_fonts_stylesheet_is_gated()",
+        "other_requests_are_not_gated()",
+        "the_bundled_pages_still_name_that_stylesheet_and_the_page_hands_it_to_the_gate()",
+        "class FontSheetGateTest"
       ]
     },
     {
