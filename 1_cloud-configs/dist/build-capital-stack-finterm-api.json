@@ -31,6 +31,10 @@
     "container_name": "capital-stack-finterm-api",
     "image": "ghcr.io/diegonmarcos/capital-stack-finterm-api:latest",
     "port": 8340,
+    "cloud_run_bridge": {
+      "host": "10.0.0.1",
+      "_doc": "#1686: served from Cloud Run through the gcp-idtoken-bridge (listener 10.0.0.1:8340 on gcp-proxy); the oci-apps container is stopped, its volume and this declaration stay (Rule 16)."
+    },
     "port_env": "FIN_API_PORT",
     "dns": "capital-stack-finterm-api.mesh.diegonmarcos.com",
     "public": true,

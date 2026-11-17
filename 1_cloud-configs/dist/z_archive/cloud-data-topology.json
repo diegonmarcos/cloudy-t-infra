@@ -1319,12 +1319,16 @@
       "domain": "languagetool.diegonmarcos.com",
       "port": 8010,
       "dns": "languagetool.mesh.diegonmarcos.com",
-      "upstream": "10.0.0.6:8010",
+      "upstream": "10.0.0.1:8010",
       "containers": {
         "app": {
           "container_name": "languagetool",
           "image": "erikvl87/languagetool:latest",
           "port": 8010,
+          "cloud_run_bridge": {
+            "host": "10.0.0.1",
+            "_doc": "#1686: served from Cloud Run through the gcp-idtoken-bridge (listener 10.0.0.1:8010 on gcp-proxy); the oci-apps container is stopped, its volume and this declaration stay (Rule 16)."
+          },
           "port_env": null,
           "dns": "languagetool.mesh.diegonmarcos.com",
           "public": false,
@@ -6607,12 +6611,16 @@
       "domain": "api.diegonmarcos.com/capital-stack-finterminal-api",
       "port": 8340,
       "dns": "capital-stack-finterm-api.mesh.diegonmarcos.com",
-      "upstream": "10.0.0.6:8340",
+      "upstream": "10.0.0.1:8340",
       "containers": {
         "app": {
           "container_name": "capital-stack-finterm-api",
           "image": "ghcr.io/diegonmarcos/capital-stack-finterm-api:latest",
           "port": 8340,
+          "cloud_run_bridge": {
+            "host": "10.0.0.1",
+            "_doc": "#1686: served from Cloud Run through the gcp-idtoken-bridge (listener 10.0.0.1:8340 on gcp-proxy); the oci-apps container is stopped, its volume and this declaration stay (Rule 16)."
+          },
           "port_env": "FIN_API_PORT",
           "dns": "capital-stack-finterm-api.mesh.diegonmarcos.com",
           "public": true,
@@ -6689,12 +6697,16 @@
       "description": "Capital-Stack-FinTerminal web (#1351, design 3.5): the FinTerm pages of the SvelteKit webapps site served as static files behind the shared c3-pvt gate (Authelia 2FA session or fleet bearer) at c3-pvt.diegonmarcos.com/capital-stack-finterminal-web/. Same origin as c3-pvt.diegonmarcos.com/capital-stack-finterm-api (renamed in #1450; the pinned bundle may still carry the pre-rename mesh name, which is rewritten to the same route), so the page reads the /v1 API with the gate's session: no CORS, no token in the page. Built by cloudy-h-webapps-mob (ghcr.io/diegonmarcos/capital-stack-finterminal-web).",
       "port": 8341,
       "dns": "capital-stack-finterminal-web.mesh.diegonmarcos.com",
-      "upstream": "10.0.0.6:8341",
+      "upstream": "10.0.0.1:8341",
       "containers": {
         "app": {
           "container_name": "capital-stack-finterminal-web",
           "image": "ghcr.io/diegonmarcos/capital-stack-finterminal-web-binaries:latest",
           "port": 8341,
+          "cloud_run_bridge": {
+            "host": "10.0.0.1",
+            "_doc": "#1686: served from Cloud Run through the gcp-idtoken-bridge (listener 10.0.0.1:8341 on gcp-proxy); the oci-apps container is stopped, its volume and this declaration stay (Rule 16)."
+          },
           "port_env": null,
           "dns": "capital-stack-finterminal-web.mesh.diegonmarcos.com",
           "public": true,

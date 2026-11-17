@@ -1039,12 +1039,16 @@
       "flake": "infra-ai_languagetool",
       "port": 8010,
       "dns": "languagetool.mesh.diegonmarcos.com",
-      "upstream": "10.0.0.6:8010",
+      "upstream": "10.0.0.1:8010",
       "containers": {
         "app": {
           "container_name": "languagetool",
           "image": "erikvl87/languagetool:latest",
           "port": 8010,
+          "cloud_run_bridge": {
+            "host": "10.0.0.1",
+            "_doc": "#1686: served from Cloud Run through the gcp-idtoken-bridge (listener 10.0.0.1:8010 on gcp-proxy); the oci-apps container is stopped, its volume and this declaration stay (Rule 16)."
+          },
           "port_env": null,
           "dns": "languagetool.mesh.diegonmarcos.com",
           "public": false,
@@ -4599,65 +4603,109 @@
           "_doc": "Gitea honours its reverse-proxy user header from ANY peer: REVERSE_PROXY_TRUSTED_PROXIES only feeds the X-Forwarded-For rewrite (gitea v28.0.0 routers/common/middleware.go:33); services/auth/reverseproxy.go never checks the source. With 0.0.0.0:3002 reachable from every wg0/wg-public peer and ~40 host-network containers on oci-apps, enabling reverse-proxy auth on that listener would let any of them become `diego` with one header. So gitea listens only on a unix socket in a tmpfs volume that no other container mounts, and this caddy owns :3002: it forwards `identity.header` (and X-Real-IP) only when the peer is in trusted_proxies AND the Host is this service's domain — the .app catalog routes the hub also serves from 10.0.0.1 carry Host gitea.mesh.diegonmarcos.com, so they cannot mint an identity either. Everything else reaches gitea exactly as before, anonymous."
         },
         "mirrors": {
-          "cloudy-u-containers_cgc": {
-            "upstream": "https://github.com/diegonmarcos/cloudy-u-containers_cgc.git"
+          "cloudy-u-android": {
+            "upstream": "https://github.com/diegonmarcos/cloudy-u-android.git"
+          },
+          "cloud-me-pvt-tasks": {
+            "upstream": "https://github.com/diegonmarcos/cloud-me-pvt-tasks.git",
+            "private": true
+          },
+          "cloudy-h-webapps-mob": {
+            "upstream": "https://github.com/diegonmarcos/cloudy-h-webapps-mob.git"
+          },
+          "_git-repos-master": {
+            "upstream": "https://github.com/diegonmarcos/_git-repos-master.git"
           },
           "cloudy-t-infra": {
             "upstream": "https://github.com/diegonmarcos/cloudy-t-infra.git"
           },
+          "cloud-me-pvt-data": {
+            "upstream": "https://github.com/diegonmarcos/cloud-me-pvt-data.git",
+            "private": true
+          },
           "cloudy-u-containers": {
             "upstream": "https://github.com/diegonmarcos/cloudy-u-containers.git"
           },
-          "cloud-me-pvt-___": {
-            "upstream": "https://github.com/diegonmarcos/cloud-me-pvt-___.git",
+          "cloud-me-pvt-configs": {
+            "upstream": "https://github.com/diegonmarcos/cloud-me-pvt-configs.git",
             "private": true
+          },
+          "cloud-me-pub-profiles-_lnktree": {
+            "upstream": "https://github.com/diegonmarcos/cloud-me-pub-profiles-_lnktree.git"
+          },
+          "cloudy-a-docs": {
+            "upstream": "https://github.com/diegonmarcos/cloudy-a-docs.git",
+            "private": true
+          },
+          "cloudy-u-linux": {
+            "upstream": "https://github.com/diegonmarcos/cloudy-u-linux.git"
+          },
+          "Projects-endeavours": {
+            "upstream": "https://github.com/diegonmarcos/Projects-endeavours.git"
+          },
+          "CG-circus": {
+            "upstream": "https://github.com/diegonmarcos/CG-circus.git"
+          },
+          "CG-galaxy": {
+            "upstream": "https://github.com/diegonmarcos/CG-galaxy.git"
+          },
+          "cloudy-u-desktop": {
+            "upstream": "https://github.com/diegonmarcos/cloudy-u-desktop.git"
+          },
+          "cloudy-u-containers_cgc": {
+            "upstream": "https://github.com/diegonmarcos/cloudy-u-containers_cgc.git"
+          },
+          "cloudy_db_LFS": {
+            "upstream": "https://github.com/diegonmarcos/cloudy_db_LFS.git",
+            "private": true
+          },
+          "cloudy_db_infra-ops-obsv_configs-sync": {
+            "upstream": "https://github.com/diegonmarcos/cloudy_db_infra-ops-obsv_configs-sync.git"
+          },
+          "cloudy_db_assets-cdn": {
+            "upstream": "https://github.com/diegonmarcos/cloudy_db_assets-cdn.git"
+          },
+          "cloudy-___": {
+            "upstream": "https://github.com/diegonmarcos/cloudy-___.git"
+          },
+          "cloud-me-pvt-notes": {
+            "upstream": "https://github.com/diegonmarcos/cloud-me-pvt-notes.git",
+            "private": true
+          },
+          "cloud-me-pvt-cgc": {
+            "upstream": "https://github.com/diegonmarcos/cloud-me-pvt-cgc.git",
+            "private": true
+          },
+          "cloud-me-pvt-my-ai": {
+            "upstream": "https://github.com/diegonmarcos/cloud-me-pvt-my-ai.git",
+            "private": true
+          },
+          "cloud-me-pvt-___": {
+            "upstream": "https://github.com/diegonmarcos/cloud-me-pvt-___.git"
+          },
+          "cloud-me-pub-shared": {
+            "upstream": "https://github.com/diegonmarcos/cloud-me-pub-shared.git"
+          },
+          "cloud-me-pub-profiles-stark.x": {
+            "upstream": "https://github.com/diegonmarcos/cloud-me-pub-profiles-stark.x.git"
+          },
+          "cloud-me-pub-profiles-prf-prs": {
+            "upstream": "https://github.com/diegonmarcos/cloud-me-pub-profiles-prf-prs.git"
+          },
+          "cloud-me-pub-profiles-nexus.z": {
+            "upstream": "https://github.com/diegonmarcos/cloud-me-pub-profiles-nexus.z.git"
+          },
+          "cloud-me-pub-profiles-leaf.y": {
+            "upstream": "https://github.com/diegonmarcos/cloud-me-pub-profiles-leaf.y.git"
+          },
+          "cloud-me-pub-profiles-___": {
+            "upstream": "https://github.com/diegonmarcos/cloud-me-pub-profiles-___.git"
           },
           "cloud-me-pub-___": {
             "upstream": "https://github.com/diegonmarcos/cloud-me-pub-___.git"
           },
           "cloud-me-___": {
             "upstream": "https://github.com/diegonmarcos/cloud-me-___.git"
-          },
-          "_git-repos-master": {
-            "upstream": "https://github.com/diegonmarcos/_git-repos-master.git"
-          },
-          "cloudy-u-android": {
-            "upstream": "https://github.com/diegonmarcos/cloudy-u-android.git"
-          },
-          "cloud-me-pvt-data": {
-            "upstream": "https://github.com/diegonmarcos/cloud-me-pvt-data.git",
-            "private": true
-          },
-          "cloudy-a-docs": {
-            "upstream": "https://github.com/diegonmarcos/cloudy-a-docs.git",
-            "private": true
-          },
-          "cloudy-___": {
-            "upstream": "https://github.com/diegonmarcos/cloudy-___.git"
-          },
-          "cloudy-u-linux": {
-            "upstream": "https://github.com/diegonmarcos/cloudy-u-linux.git"
-          },
-          "cloud-me-pub-profiles-___": {
-            "upstream": "https://github.com/diegonmarcos/cloud-me-pub-profiles-___.git"
-          },
-          "cloud-me-pvt-notes": {
-            "upstream": "https://github.com/diegonmarcos/cloud-me-pvt-notes.git",
-            "private": true
-          },
-          "cloud-me-pub-profiles-prf-prs": {
-            "upstream": "https://github.com/diegonmarcos/cloud-me-pub-profiles-prf-prs.git"
-          },
-          "cloud-me-pub-profiles-_lnktree": {
-            "upstream": "https://github.com/diegonmarcos/cloud-me-pub-profiles-_lnktree.git"
-          },
-          "cloud-me-pvt-configs": {
-            "upstream": "https://github.com/diegonmarcos/cloud-me-pvt-configs.git",
-            "private": true
-          },
-          "cloud-me-pvt-my-ai": {
-            "upstream": "https://github.com/diegonmarcos/cloud-me-pvt-my-ai.git",
-            "private": true
           },
           "cloudy-h-webapps-desk": {
             "upstream": "https://github.com/diegonmarcos/cloudy-h-webapps-desk.git"
@@ -4666,68 +4714,24 @@
             "upstream": "https://github.com/diegonmarcos/z-archived_cloud-me-pvt-containers.git",
             "private": true
           },
+          "z-archived_My-ai-memory": {
+            "upstream": "https://github.com/diegonmarcos/z-archived_My-ai-memory.git",
+            "private": true
+          },
           "z-archived_c3-infra-plugin": {
             "upstream": "https://github.com/diegonmarcos/z-archived_c3-infra-plugin.git",
             "private": true
-          },
-          "cloudy-h-webapps-mob": {
-            "upstream": "https://github.com/diegonmarcos/cloudy-h-webapps-mob.git"
-          },
-          "CG-circus": {
-            "upstream": "https://github.com/diegonmarcos/CG-circus.git"
-          },
-          "cloud-me-pub-profiles-stark.x": {
-            "upstream": "https://github.com/diegonmarcos/cloud-me-pub-profiles-stark.x.git"
-          },
-          "cloud-me-pub-profiles-nexus.z": {
-            "upstream": "https://github.com/diegonmarcos/cloud-me-pub-profiles-nexus.z.git"
-          },
-          "cloud-me-pub-profiles-leaf.y": {
-            "upstream": "https://github.com/diegonmarcos/cloud-me-pub-profiles-leaf.y.git"
-          },
-          "Projects-labtools": {
-            "upstream": "https://github.com/diegonmarcos/Projects-labtools.git"
-          },
-          "CG-galaxy": {
-            "upstream": "https://github.com/diegonmarcos/CG-galaxy.git"
-          },
-          "Projects-endeavours": {
-            "upstream": "https://github.com/diegonmarcos/Projects-endeavours.git"
-          },
-          "cloud-me-pub-shared": {
-            "upstream": "https://github.com/diegonmarcos/cloud-me-pub-shared.git"
-          },
-          "cloudy_db_assets-cdn": {
-            "upstream": "https://github.com/diegonmarcos/cloudy_db_assets-cdn.git"
-          },
-          "cloud-me-pvt-cgc": {
-            "upstream": "https://github.com/diegonmarcos/cloud-me-pvt-cgc.git",
-            "private": true
-          },
-          "cloudy_db_infra-ops-obsv_configs-sync": {
-            "upstream": "https://github.com/diegonmarcos/cloudy_db_infra-ops-obsv_configs-sync.git"
-          },
-          "cloudy-u-desktop": {
-            "upstream": "https://github.com/diegonmarcos/cloudy-u-desktop.git"
           },
           "z-archived_cloud-me-pvt-legacy": {
             "upstream": "https://github.com/diegonmarcos/z-archived_cloud-me-pvt-legacy.git",
             "private": true
           },
-          "cloudy_db_LFS": {
-            "upstream": "https://github.com/diegonmarcos/cloudy_db_LFS.git",
-            "private": true
-          },
-          "z-archived_cloud-me-pub-data": {
-            "upstream": "https://github.com/diegonmarcos/z-archived_cloud-me-pub-data.git"
-          },
           "z-archived_cloud-me-pvt-data-private": {
             "upstream": "https://github.com/diegonmarcos/z-archived_cloud-me-pvt-data-private.git",
             "private": true
           },
-          "z-archived_My-ai-memory": {
-            "upstream": "https://github.com/diegonmarcos/z-archived_My-ai-memory.git",
-            "private": true
+          "z-archived_cloud-me-pub-data": {
+            "upstream": "https://github.com/diegonmarcos/z-archived_cloud-me-pub-data.git"
           }
         }
       },
@@ -11653,12 +11657,16 @@
       "flake": "user-fin_capital-stack-finterm-api",
       "port": 8340,
       "dns": "capital-stack-finterm-api.mesh.diegonmarcos.com",
-      "upstream": "10.0.0.6:8340",
+      "upstream": "10.0.0.1:8340",
       "containers": {
         "app": {
           "container_name": "capital-stack-finterm-api",
           "image": "ghcr.io/diegonmarcos/capital-stack-finterm-api:latest",
           "port": 8340,
+          "cloud_run_bridge": {
+            "host": "10.0.0.1",
+            "_doc": "#1686: served from Cloud Run through the gcp-idtoken-bridge (listener 10.0.0.1:8340 on gcp-proxy); the oci-apps container is stopped, its volume and this declaration stay (Rule 16)."
+          },
           "port_env": "FIN_API_PORT",
           "dns": "capital-stack-finterm-api.mesh.diegonmarcos.com",
           "public": true,
@@ -11769,12 +11777,16 @@
       "flake": "user-fin_capital-stack-finterminal-web",
       "port": 8341,
       "dns": "capital-stack-finterminal-web.mesh.diegonmarcos.com",
-      "upstream": "10.0.0.6:8341",
+      "upstream": "10.0.0.1:8341",
       "containers": {
         "app": {
           "container_name": "capital-stack-finterminal-web",
           "image": "ghcr.io/diegonmarcos/capital-stack-finterminal-web-binaries:latest",
           "port": 8341,
+          "cloud_run_bridge": {
+            "host": "10.0.0.1",
+            "_doc": "#1686: served from Cloud Run through the gcp-idtoken-bridge (listener 10.0.0.1:8341 on gcp-proxy); the oci-apps container is stopped, its volume and this declaration stay (Rule 16)."
+          },
           "port_env": null,
           "dns": "capital-stack-finterminal-web.mesh.diegonmarcos.com",
           "public": true,

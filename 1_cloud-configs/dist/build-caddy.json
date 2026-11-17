@@ -474,7 +474,7 @@
   "routes": [
     {
       "domain": "languagetool.diegonmarcos.com",
-      "upstream": "10.0.0.6:8010",
+      "upstream": "10.0.0.1:8010",
       "auth": "none",
       "wg_only": true,
       "comment": "LanguageTool grammar/spell-check HTTP API — rules-only, no n-grams, WG-only sidecar on oci-apps"
@@ -1654,7 +1654,7 @@
         },
         {
           "base_path": "/capital-stack-finterm-api",
-          "upstream": "10.0.0.6:8340",
+          "upstream": "10.0.0.1:8340",
           "wg_only": true,
           "comment": "Fincept Terminal backend (capital-stack-finterminal-api) — REST + WebSocket over DataHub, 35 data connectors, 7 analytics, 17 brokers, 6 investor personas, MCP tools"
         }
@@ -2271,17 +2271,17 @@
     },
     {
       "service": "capital-stack-finterm-api.mesh.diegonmarcos.com",
-      "upstream": "10.0.0.6:8340",
+      "upstream": "10.0.0.1:8340",
       "private_name": "cloud.capital-stack-finterm-api.mesh.diegonmarcos.com"
     },
     {
       "service": "capital-stack-finterminal-api.mesh.diegonmarcos.com",
-      "upstream": "10.0.0.6:8340",
+      "upstream": "10.0.0.1:8340",
       "private_name": "cloud.capital-stack-finterminal-api.mesh.diegonmarcos.com"
     },
     {
       "service": "capital-stack-finterminal-web.mesh.diegonmarcos.com",
-      "upstream": "10.0.0.6:8341",
+      "upstream": "10.0.0.1:8341",
       "private_name": "cloud.capital-stack-finterminal-web.mesh.diegonmarcos.com"
     },
     {
@@ -2722,19 +2722,19 @@
     },
     {
       "service": "cloud.capital-stack-finterm-api.mesh.diegonmarcos.com",
-      "upstream": "10.0.0.6:8340",
+      "upstream": "10.0.0.1:8340",
       "alias_of": "capital-stack-finterm-api.mesh.diegonmarcos.com",
       "source": "internal_routes"
     },
     {
       "service": "cloud.capital-stack-finterminal-api.mesh.diegonmarcos.com",
-      "upstream": "10.0.0.6:8340",
+      "upstream": "10.0.0.1:8340",
       "alias_of": "capital-stack-finterminal-api.mesh.diegonmarcos.com",
       "source": "internal_routes"
     },
     {
       "service": "cloud.capital-stack-finterminal-web.mesh.diegonmarcos.com",
-      "upstream": "10.0.0.6:8341",
+      "upstream": "10.0.0.1:8341",
       "alias_of": "capital-stack-finterminal-web.mesh.diegonmarcos.com",
       "source": "internal_routes"
     },
@@ -5673,7 +5673,7 @@
     {
       "host": "api.diegonmarcos.com",
       "path": "/capital-stack-finterm-api",
-      "upstream": "10.0.0.6:8340",
+      "upstream": "10.0.0.1:8340",
       "kind": "reverse_proxy",
       "tls": "public",
       "zone": "com",
@@ -5717,7 +5717,7 @@
     {
       "host": "languagetool.diegonmarcos.com",
       "path": null,
-      "upstream": "10.0.0.6:8010",
+      "upstream": "10.0.0.1:8010",
       "kind": "reverse_proxy",
       "tls": "public",
       "zone": "com",
@@ -7529,7 +7529,7 @@
     {
       "host": "capital-stack-finterm-api.mesh.diegonmarcos.com",
       "path": null,
-      "upstream": "10.0.0.6:8340",
+      "upstream": "10.0.0.1:8340",
       "kind": "reverse_proxy",
       "tls": "internal",
       "zone": "com",
@@ -7539,7 +7539,7 @@
     {
       "host": "capital-stack-finterminal-api.mesh.diegonmarcos.com",
       "path": null,
-      "upstream": "10.0.0.6:8340",
+      "upstream": "10.0.0.1:8340",
       "kind": "reverse_proxy",
       "tls": "internal",
       "zone": "com",
@@ -7549,7 +7549,7 @@
     {
       "host": "capital-stack-finterminal-web.mesh.diegonmarcos.com",
       "path": null,
-      "upstream": "10.0.0.6:8341",
+      "upstream": "10.0.0.1:8341",
       "kind": "reverse_proxy",
       "tls": "internal",
       "zone": "com",

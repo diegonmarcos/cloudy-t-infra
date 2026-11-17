@@ -31,6 +31,10 @@
     "container_name": "languagetool",
     "image": "erikvl87/languagetool:latest",
     "port": 8010,
+    "cloud_run_bridge": {
+      "host": "10.0.0.1",
+      "_doc": "#1686: served from Cloud Run through the gcp-idtoken-bridge (listener 10.0.0.1:8010 on gcp-proxy); the oci-apps container is stopped, its volume and this declaration stay (Rule 16)."
+    },
     "port_env": null,
     "dns": "languagetool.mesh.diegonmarcos.com",
     "public": false,
