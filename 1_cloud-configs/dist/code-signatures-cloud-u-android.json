@@ -6,11 +6,11 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 24506,
+    "files": 24512,
     "by_lang": {
-      "sh": 787,
+      "sh": 789,
       "js": 564,
-      "py": 244,
+      "py": 248,
       "kotlin": 13608,
       "ts": 8482,
       "java": 654,
@@ -21,7 +21,7 @@
       "hook": 162,
       "file": 2321,
       "shell": 630,
-      "script": 336,
+      "script": 342,
       "python": 84,
       "module": 6492,
       "java": 653,
@@ -2395,6 +2395,35 @@
       ]
     },
     {
+      "path": ".github/workflows/scripts/cloud-android-sweep-guard.py",
+      "lang": "py",
+      "role": "script",
+      "exports": [
+        "git(*args, check=True)",
+        "tags_of(subject)",
+        "exempt(path)",
+        "owner_of(path, parent)",
+        "revert_marker_ok(message)",
+        "check_commit(sha, threshold)",
+        "main(argv)"
+      ],
+      "imports": [
+        "fnmatch",
+        "re",
+        "subprocess",
+        "sys"
+      ],
+      "symbols": [
+        "git(*args, check=True)",
+        "tags_of(subject)",
+        "exempt(path)",
+        "owner_of(path, parent)",
+        "revert_marker_ok(message)",
+        "check_commit(sha, threshold)",
+        "main(argv)"
+      ]
+    },
+    {
       "path": ".github/workflows/scripts/cloud-android-target-sdk-guard.py",
       "lang": "py",
       "role": "script",
@@ -2570,6 +2599,34 @@
         "load(root, path)",
         "git(root, *args)",
         "main(argv)"
+      ]
+    },
+    {
+      "path": ".github/workflows/scripts/cloud-android-versioncode-guard.py",
+      "lang": "py",
+      "role": "script",
+      "exports": [
+        "block(floor)",
+        "code(root, f)",
+        "migrated(t)",
+        "apply(root, files)",
+        "tracked(root)",
+        "evaluate(floor, minutes)",
+        "check(root)",
+        "main(a)"
+      ],
+      "imports": [
+        "json"
+      ],
+      "symbols": [
+        "block(floor)",
+        "code(root, f)",
+        "migrated(t)",
+        "apply(root, files)",
+        "tracked(root)",
+        "evaluate(floor, minutes)",
+        "check(root)",
+        "main(a)"
       ]
     },
     {
@@ -5634,6 +5691,35 @@
       ]
     },
     {
+      "path": "1_cicd/src/scripts/cloud-android-sweep-guard.py",
+      "lang": "py",
+      "role": "script",
+      "exports": [
+        "git(*args, check=True)",
+        "tags_of(subject)",
+        "exempt(path)",
+        "owner_of(path, parent)",
+        "revert_marker_ok(message)",
+        "check_commit(sha, threshold)",
+        "main(argv)"
+      ],
+      "imports": [
+        "fnmatch",
+        "re",
+        "subprocess",
+        "sys"
+      ],
+      "symbols": [
+        "git(*args, check=True)",
+        "tags_of(subject)",
+        "exempt(path)",
+        "owner_of(path, parent)",
+        "revert_marker_ok(message)",
+        "check_commit(sha, threshold)",
+        "main(argv)"
+      ]
+    },
+    {
       "path": "1_cicd/src/scripts/cloud-android-target-sdk-guard.py",
       "lang": "py",
       "role": "script",
@@ -5809,6 +5895,34 @@
         "load(root, path)",
         "git(root, *args)",
         "main(argv)"
+      ]
+    },
+    {
+      "path": "1_cicd/src/scripts/cloud-android-versioncode-guard.py",
+      "lang": "py",
+      "role": "script",
+      "exports": [
+        "block(floor)",
+        "code(root, f)",
+        "migrated(t)",
+        "apply(root, files)",
+        "tracked(root)",
+        "evaluate(floor, minutes)",
+        "check(root)",
+        "main(a)"
+      ],
+      "imports": [
+        "json"
+      ],
+      "symbols": [
+        "block(floor)",
+        "code(root, f)",
+        "migrated(t)",
+        "apply(root, files)",
+        "tracked(root)",
+        "evaluate(floor, minutes)",
+        "check(root)",
+        "main(a)"
       ]
     },
     {
@@ -8015,6 +8129,30 @@
       ]
     },
     {
+      "path": "1_cicd/src/scripts/test/sweep-guard.test.sh",
+      "lang": "sh",
+      "role": "script",
+      "exports": [
+        "ok()",
+        "fail()",
+        "lines()",
+        "build_repo()",
+        "run_case()",
+        "cases()",
+        "mutate()"
+      ],
+      "imports": [],
+      "symbols": [
+        "ok()",
+        "fail()",
+        "lines()",
+        "build_repo()",
+        "run_case()",
+        "cases()",
+        "mutate()"
+      ]
+    },
+    {
       "path": "1_cicd/src/scripts/test/target-sdk-guard.test.sh",
       "lang": "sh",
       "role": "script",
@@ -8265,6 +8403,24 @@
       "symbols": [
         "fixture()",
         "expect()"
+      ]
+    },
+    {
+      "path": "1_cicd/src/scripts/test/versioncode-guard.test.sh",
+      "lang": "sh",
+      "role": "script",
+      "exports": [
+        "ok()",
+        "fail()",
+        "mk()",
+        "red()"
+      ],
+      "imports": [],
+      "symbols": [
+        "ok()",
+        "fail()",
+        "mk()",
+        "red()"
       ]
     },
     {
