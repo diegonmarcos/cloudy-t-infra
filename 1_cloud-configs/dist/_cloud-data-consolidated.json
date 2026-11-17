@@ -1967,6 +1967,10 @@
           "cmd": "node --experimental-strip-types test-c3-tree.mts",
           "cwd": "src/code"
         },
+        "telegram-relay": {
+          "cmd": "node --experimental-strip-types test-telegram-relay.mts",
+          "cwd": "src/code"
+        },
         "peers-core": {
           "cmd": "node --experimental-strip-types test-peers-core.mts",
           "cwd": "src/code"
@@ -6846,7 +6850,7 @@
       "category": "sec",
       "vm": "oci-A1-f_0",
       "folder": "infra-ops_c3bot-relay",
-      "description": "c3bot-relay (#1579): Telegram <-> c3 relay on a dedicated bot (Bot B). One inbound Telegram long-poll fans out to c3 clients over three transports: WebSocket (/ws, full duplex), Server-Sent Events (/events, Last-Event-ID resume) and long-poll (/poll, cursor). Outbound via POST /send or a WS send frame. Zero npm dependencies. Bearer-gated, mesh-only.",
+      "description": "c3bot-relay (#1579): Telegram <-> c3 relay on the c3-bot (Bot A, ONE token). Primary ingestion is webhook mode via the public c3-pub route /c3bot-webhook (secret_token checked). While the webhook is unhealthy the relay calls deleteWebhook and polls Bot A with getUpdates, then setWebhook again when the route recovers (never both at once, so no 409). Deduped by chat+message_id+date. Inbound events fan out over WebSocket (/ws), SSE (/events, Last-Event-ID resume) and long-poll (/poll, cursor). Outbound via POST /send or a WS send frame, sent as Bot A. Zero npm dependencies. API bearer-gated, mesh-only; only the webhook path is public.",
       "enabled": true,
       "domain": "mcp.diegonmarcos.com",
       "flake": "infra-ops_c3bot-relay",
@@ -6877,7 +6881,9 @@
             "buffer_size": 500,
             "max_clients": 32,
             "poll_max_wait_s": 50,
-            "allowed_from": "6431508617"
+            "allowed_from": "6431508617",
+            "health_window_s": 600,
+            "check_interval_s": 60
           }
         }
       },
@@ -8686,7 +8692,7 @@
           "port": 4183,
           "port_env": null,
           "dns": "mcp-oauth.mesh.diegonmarcos.com",
-          "public": false,
+          "public": true,
           "proxy": null,
           "healthcheck": "/health",
           "monitoring": null,
@@ -8727,7 +8733,7 @@
         "group": "Infra Apps",
         "category": "Net-Routing & Security"
       },
-      "_status": "approved/live: owner approved option 31.1 on 2026-10-28; runtime needs dist/.secrets (INTROSPECT_SECRET, FORM_SECRET) provisioned on gcp-proxy via secrets.yaml. HOST RETARGET (#1252 vs #1104, 2026-10-30): the mcp.diegonmarcos.com host is deleted by #1104, so caddy_config.mcp_oauth (host mcp.diegonmarcos.com) must NOT be derived into build-caddy*.json as is. Decision: container, image and secrets work stay; the AS front door moves to the surviving tiers (open discovery/register/token on the c3-pub allowlist under /mcp-oauth/, /authorize and the MCP tool endpoints on c3-pvt behind the session-or-bearer gate, protected-resource metadata referenced from the 401 WWW-Authenticate). Do not derive or ship the Caddy block until that retarget lands and the owner confirms it against owner decision 31 (fleet MCP clients use bearer, never OAuth; the AS serves only claude.ai-style connectors).",
+      "_status": "front door (#1252, 2026-11-17): mesh-only container made a c3-pvt route (/mcp-oauth/*, session gate, serves /authorize) and the c3-pub sinks /mcp-oauth/.well-known/*, /mcp-oauth/register, /mcp-oauth/token plus the RFC 8414/9728 path-insertion metadata URLs; ISSUER = c3-pub/mcp-oauth, AUTHORIZE_BASE = c3-pvt/mcp-oauth. Earlier status: approved/live: owner approved option 31.1 on 2026-10-28; runtime needs dist/.secrets (INTROSPECT_SECRET, FORM_SECRET) provisioned on gcp-proxy via secrets.yaml. HOST RETARGET (#1252 vs #1104, 2026-10-30): the mcp.diegonmarcos.com host is deleted by #1104, so caddy_config.mcp_oauth (host mcp.diegonmarcos.com) must NOT be derived into build-caddy*.json as is. Decision: container, image and secrets work stay; the AS front door moves to the surviving tiers (open discovery/register/token on the c3-pub allowlist under /mcp-oauth/, /authorize and the MCP tool endpoints on c3-pvt behind the session-or-bearer gate, protected-resource metadata referenced from the 401 WWW-Authenticate). Do not derive or ship the Caddy block until that retarget lands and the owner confirms it against owner decision 31 (fleet MCP clients use bearer, never OAuth; the AS serves only claude.ai-style connectors).",
       "bind_host": "10.0.0.1",
       "_ship_skip": "unparked (#1252, 2026-11-12): secrets provisioned in the vault through the sops-create workflow (Linux-Containers/infra-sec_mcp-oauth/src/secrets.yaml INTROSPECT_SECRET + secrets.form.yaml FORM_SECRET; introspect-proxy gets the same introspect value as fragment secrets.mcp-oauth.yaml MCP_OAUTH_INTROSPECT_SECRET). Ship builds and deploys it to gcp-proxy (mem_limit 128M fits the e2-micro, free tier).",
       "resources": {

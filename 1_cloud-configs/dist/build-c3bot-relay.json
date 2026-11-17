@@ -50,7 +50,9 @@
       "buffer_size": 500,
       "max_clients": 32,
       "poll_max_wait_s": 50,
-      "allowed_from": "6431508617"
+      "allowed_from": "6431508617",
+      "health_window_s": 600,
+      "check_interval_s": 60
     }
   },
   "service": "c3bot-relay",
@@ -1052,7 +1054,7 @@
       "vm": "oci-apps",
       "healthcheck": "node -e \"fetch('http://'+(process.env.HTTP_HOST||'127.0.0.1')+':3119/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))\"",
       "domain": "mcp.diegonmarcos.com",
-      "description": "c3bot-relay (#1579): Telegram <-> c3 relay on a dedicated bot (Bot B). One inbound Telegram long-poll fans out to c3 clients over three transports: WebSocket (/ws, full duplex), Server-Sent Events (/events, Last-Event-ID resume) and long-poll (/poll, cursor). Outbound via POST /send or a WS send frame. Zero npm dependencies. Bearer-gated, mesh-only.",
+      "description": "c3bot-relay (#1579): Telegram <-> c3 relay on the c3-bot (Bot A, ONE token). Primary ingestion is webhook mode via the public c3-pub route /c3bot-webhook (secret_token checked). While the webhook is unhealthy the relay calls deleteWebhook and polls Bot A with getUpdates, then setWebhook again when the route recovers (never both at once, so no 409). Deduped by chat+message_id+date. Inbound events fan out over WebSocket (/ws), SSE (/events, Last-Event-ID resume) and long-poll (/poll, cursor). Outbound via POST /send or a WS send frame, sent as Bot A. Zero npm dependencies. API bearer-gated, mesh-only; only the webhook path is public.",
       "api": {
         "has_api": true,
         "has_web_ui": true,
