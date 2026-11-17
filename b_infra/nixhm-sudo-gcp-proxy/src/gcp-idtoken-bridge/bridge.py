@@ -97,13 +97,17 @@ def make_handler(routes, fetch=fetch_token, fixed=None):
 
 def main():
     routes = json.load(open(os.environ.get("BRIDGE_ROUTES", "/etc/gcp-idtoken-bridge/routes.json")))
+    routes = {k: v for k, v in routes.items() if isinstance(v, str) and not k.startswith("_")}  # drop build-stamp meta keys
     addr = os.environ.get("BRIDGE_LISTEN", "10.0.0.1")
     port = int(os.environ.get("BRIDGE_PORT", "9120"))
     # ports.json (#1686): {"<port>": "<service>"} one extra listener per service on the SAME port the oci-apps
     # container used, so a Caddy route only changes its upstream IP (container bind override), never its path.
     pf = os.environ.get("BRIDGE_PORTS", "")
     ports = json.load(open(pf)) if pf and os.path.exists(pf) else {}
+    # the build stamps JSON with _generated/description meta keys: only "<digits>": "<service>" pairs are listeners
     for p, svc in ports.items():
+        if not (p.isdigit() and isinstance(svc, str)):
+            continue
         if svc not in routes:
             raise SystemExit("ports.json names unknown service " + svc)
         srv = ThreadingHTTPServer((addr, int(p)), make_handler(routes, fixed=svc))

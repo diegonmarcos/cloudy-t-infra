@@ -64,6 +64,20 @@ class T(unittest.TestCase):
         self.assertEqual(urllib.request.urlopen("http://127.0.0.1:%d/v2/check?x=1" % br.server_port).read(), b"ok")
         self.assertEqual(Up.seen[-1][0], "/v2/check?x=1")
 
+    def test_stamped_json_is_tolerated(self):
+        import os, subprocess, tempfile
+        d = tempfile.mkdtemp()
+        json.dump({"_generated": {"w": "x"}, "description": "d", "svc": "http://127.0.0.1:1"}, open(d + "/r.json", "w"))
+        json.dump({"_generated": {"w": "x"}, "description": "d", "18999": "svc"}, open(d + "/p.json", "w"))
+        env = dict(os.environ, BRIDGE_ROUTES=d + "/r.json", BRIDGE_PORTS=d + "/p.json", BRIDGE_LISTEN="127.0.0.1", BRIDGE_PORT="18998")
+        p = subprocess.Popen([sys.executable, "-I", os.path.join(os.path.dirname(os.path.abspath(__file__)), "bridge.py")], env=env)
+        try:
+            time.sleep(1.0)
+            self.assertIsNone(p.poll(), "bridge crashed on stamped json")
+            self.assertEqual(urllib.request.urlopen("http://127.0.0.1:18998/_health").status, 200)
+        finally:
+            p.terminate(); p.wait()
+
     def test_ports_match_registry_and_build_json(self):
         import os
         d = os.path.dirname(__file__)
