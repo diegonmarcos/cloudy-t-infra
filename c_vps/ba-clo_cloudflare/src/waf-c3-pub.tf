@@ -8,6 +8,10 @@
 locals {
   geo_allowed = jsondecode(file("${path.module}/geo-allowed.json")).allowed_countries
   c3_pub_host = "c3-pub.diegonmarcos.com"
+  # #1579: Telegram's published webhook source ranges (cloud-u-containers _shared/geo-fence.json telegram_webhook) skip the
+  # country check for the webhook path ONLY; the relay still rejects a post without the secret_token header.
+  telegram_webhook_cidrs = ["149.154.160.0/20", "91.108.4.0/22"]
+  telegram_webhook_path  = "/c3bot-webhook"
 }
 
 resource "cloudflare_ruleset" "c3_pub_geo_fence" {
@@ -21,6 +25,6 @@ resource "cloudflare_ruleset" "c3_pub_geo_fence" {
     action      = "block"
     description = "c3-pub: client country not in the geo-fence allowlist (unplaceable XX/T1 included)"
     enabled     = true
-    expression  = "(http.host eq \"${local.c3_pub_host}\" and not ip.src.country in {${join(" ", [for c in local.geo_allowed : "\"${c}\""])}})"
+    expression  = "(http.host eq \"${local.c3_pub_host}\" and not ip.src.country in {${join(" ", [for c in local.geo_allowed : "\"${c}\""])}} and not (http.request.uri.path eq \"${local.telegram_webhook_path}\" and ip.src in {${join(" ", local.telegram_webhook_cidrs)}}))"
   }
 }

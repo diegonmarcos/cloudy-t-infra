@@ -1,0 +1,97 @@
+# ╔══════════════════════════════════════════════════════════════════╗
+# ║                                                                  ║
+# ║   GENERATED FILE — DO NOT EDIT                                   ║
+# ║                                                                  ║
+# ║   Source : 1_cicd/src/cicd/sops-copy.yml
+# ║   Engine : 1_cicd/src/scripts/cloud-ship-repo-workflow-engine.sh
+# ║   Rebuild: ./9_others/build.sh
+# ║                                                                  ║
+# ║   Manual edits will be overwritten on next build.                ║
+# ║                                                                  ║
+# ╚══════════════════════════════════════════════════════════════════╝
+
+name: "Sops copy (one key from a vault secrets file into a new encrypted fragment, artifact)"
+
+# Copies ONE existing key of a private-vault sops file into a NEW sops-encrypted fragment under another key name
+# (for example the c3-bot token of cloud-infra-mcp into the c3bot-relay fragment, #1579). The vault is read with the
+# read-only deploy key, the value is decrypted with the fleet age key that only CI holds, masked, re-encrypted to the
+# PUBLIC fleet recipient and handed back as a one-day artifact (encrypted file only; the plaintext never reaches a log,
+# an argument list or an upload). The caller commits the fragment to the vault; this workflow never pushes anywhere.
+on:
+  workflow_dispatch:
+    inputs:
+      src_file:
+        description: "vault-relative path of the sops file to read, e.g. Linux-Containers/<svc>/src/secrets.yaml"
+        required: true
+        type: string
+      src_key:
+        description: "key inside that file, e.g. C3_TELEGRAM_BOT_TOKEN"
+        required: true
+        type: string
+      dst_key:
+        description: "key name in the new fragment, e.g. C3BOT_A_BOT_TOKEN"
+        required: true
+        type: string
+      dst_service:
+        description: "service dir name of the consumer (documentation only, goes into the _credentials note)"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  copy:
+    runs-on: ubuntu-latest
+    env:
+      SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
+      VAULT_DEPLOY_KEY: ${{ secrets.VAULT_DEPLOY_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            2_sops
+      - name: Install sops
+        run: |
+          set -eu
+          curl -fsSL -o /tmp/sops https://github.com/getsops/sops/releases/download/v3.11.0/sops-v3.11.0.linux.amd64
+          sudo install -m 0755 /tmp/sops /usr/local/bin/sops
+          sops --version
+      - name: Read the vault file (read-only deploy key)
+        run: |
+          set -eu
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          umask 077
+          printf '%s\n' "$VAULT_DEPLOY_KEY" > ~/.ssh/vault_deploy
+          ssh-keyscan github.com 2>/dev/null >> ~/.ssh/known_hosts
+          GIT_SSH_COMMAND="ssh -i ~/.ssh/vault_deploy -o IdentitiesOnly=yes -o StrictHostKeyChecking=accept-new" \
+            git clone --depth 1 --filter=blob:none --sparse git@github.com:diegonmarcos/cloud-me-pvt-vault.git "$RUNNER_TEMP/vault"
+          git -C "$RUNNER_TEMP/vault" sparse-checkout set Linux-Containers
+      - name: Copy and encrypt
+        env:
+          T_SRC_FILE: ${{ inputs.src_file }}
+          T_SRC_KEY: ${{ inputs.src_key }}
+          T_DST_KEY: ${{ inputs.dst_key }}
+          T_SERVICE: ${{ inputs.dst_service }}
+        run: |
+          set -eu
+          case "$T_SRC_FILE$T_SRC_KEY$T_DST_KEY$T_SERVICE" in *[!A-Za-z0-9_./-]*|*..*) echo "::error::refusing odd input"; exit 1;; esac
+          case "$T_SRC_FILE" in Linux-Containers/*/src/secrets*.yaml) ;; *) echo "::error::src_file must be Linux-Containers/<svc>/src/secrets*.yaml"; exit 1;; esac
+          mkdir -p ~/.config/sops/age && umask 077 && printf '%s\n' "$SOPS_AGE_KEY" > ~/.config/sops/age/keys.txt
+          export SOPS_AGE_KEY_FILE=~/.config/sops/age/keys.txt
+          VAL="$(sops -d --extract "[\"$T_SRC_KEY\"]" "$RUNNER_TEMP/vault/$T_SRC_FILE")"
+          [ -n "$VAL" ] || { echo "::error::source key is empty or missing"; exit 1; }
+          echo "::add-mask::$VAL"
+          mkdir -p out pl
+          printf '%s: %s\n_credentials:\n  %s:\n    type: token\n    token: %s\n    note: "copied in CI from %s (%s) for %s; app-consumed key %s"\n' \
+            "$T_DST_KEY" "$VAL" "$T_DST_KEY" "$VAL" "$T_SRC_KEY" "$T_SRC_FILE" "$T_SERVICE" "$T_DST_KEY" > pl/secrets.yaml
+          sops --config 2_sops/sops.yaml -e --input-type yaml --output-type yaml pl/secrets.yaml > out/secrets.fragment.yaml
+          shred -u pl/secrets.yaml 2>/dev/null || rm -f pl/secrets.yaml
+          grep -q '^sops:' out/secrets.fragment.yaml
+          if grep -qF "$VAL" out/secrets.fragment.yaml; then echo "::error::plaintext leaked into the encrypted file"; exit 1; fi
+          echo "encrypted fragment ready: $(grep -c 'ENC\[' out/secrets.fragment.yaml) encrypted values"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sops-copy-result
+          path: out/
+          retention-days: 1
