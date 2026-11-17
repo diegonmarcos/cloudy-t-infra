@@ -6,25 +6,25 @@
   },
   "repo": "cloud-u-containers",
   "counts": {
-    "files": 2684,
+    "files": 2687,
     "by_lang": {
-      "sh": 181,
+      "sh": 182,
       "js": 122,
-      "nix": 196,
+      "nix": 198,
       "py": 523,
       "ts": 1291,
       "rust": 371
     },
     "by_role": {
-      "shell": 172,
+      "shell": 173,
       "file": 357,
       "nix-module": 20,
       "python": 508,
       "module": 795,
       "script": 9,
-      "flake": 89,
+      "flake": 90,
       "entrypoint": 72,
-      "compose": 87,
+      "compose": 88,
       "mcp-tool": 150,
       "workflow-dag": 5,
       "rust-module": 367,
@@ -8998,6 +8998,42 @@
       ]
     },
     {
+      "path": "infra-api_cloudy-all-mcp/build.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "get_config()",
+        "get_config_array()",
+        "get_lifecycle()",
+        "detect_layout()",
+        "rewrite_compose_image_refs()",
+        "log()",
+        "log_warn()",
+        "log_error()",
+        "declared_container_names()",
+        "ssh_with_retry()",
+        "ssh_run_detached()",
+        "rsync_with_retry()",
+        "_ship_build_phase()"
+      ],
+      "imports": [],
+      "symbols": [
+        "get_config()",
+        "get_config_array()",
+        "get_lifecycle()",
+        "detect_layout()",
+        "rewrite_compose_image_refs()",
+        "log()",
+        "log_warn()",
+        "log_error()",
+        "declared_container_names()",
+        "ssh_with_retry()",
+        "ssh_run_detached()",
+        "rsync_with_retry()",
+        "_ship_build_phase()"
+      ]
+    },
+    {
       "path": "infra-api_cloudy-all-mcp/src/code/mcp/catalog.ts",
       "lang": "ts",
       "role": "module",
@@ -9112,6 +9148,77 @@
       ],
       "symbols": [
         "registerRouterTools(server: McpServer, router: Router)"
+      ]
+    },
+    {
+      "path": "infra-api_cloudy-all-mcp/src/compose.nix",
+      "lang": "nix",
+      "role": "compose",
+      "exports": [
+        "buildJson",
+        "container"
+      ],
+      "imports": [],
+      "symbols": [
+        "svc",
+        "app",
+        "vmIp",
+        "port",
+        "binariesImage",
+        "services",
+        "image",
+        "container_name",
+        "network_mode",
+        "env_file",
+        "environment",
+        "PORT",
+        "MCP_HTTP_HOST",
+        "healthcheck",
+        "test",
+        "interval",
+        "timeout",
+        "retries",
+        "start_period",
+        "limits",
+        "reservations"
+      ]
+    },
+    {
+      "path": "infra-api_cloudy-all-mcp/src/flake.nix",
+      "lang": "nix",
+      "role": "flake",
+      "exports": [
+        "description",
+        "list_tools",
+        "call)\";",
+        "nixpkgs"
+      ],
+      "imports": [
+        "../../_shared/engine.nix",
+        "./compose.nix",
+        "../_shared/engine.nix",
+        "compose.nix"
+      ],
+      "symbols": [
+        "description",
+        "outputs",
+        "forAllSystems",
+        "buildJson",
+        "container",
+        "engine",
+        "nb",
+        "packages",
+        "pkgs",
+        "default",
+        "srcDir",
+        "templates",
+        "composeSpec",
+        "nativeBuild",
+        "cmd",
+        "binary",
+        "baseImage",
+        "apt",
+        "title"
       ]
     },
     {

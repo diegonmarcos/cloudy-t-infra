@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 24492,
+    "files": 24506,
     "by_lang": {
-      "sh": 780,
+      "sh": 787,
       "js": 564,
-      "py": 240,
-      "kotlin": 13605,
+      "py": 244,
+      "kotlin": 13608,
       "ts": 8482,
       "java": 654,
       "nix": 37,
@@ -20,12 +20,12 @@
     "by_role": {
       "hook": 162,
       "file": 2321,
-      "shell": 628,
-      "script": 327,
+      "shell": 630,
+      "script": 336,
       "python": 84,
       "module": 6492,
       "java": 653,
-      "kotlin": 13602,
+      "kotlin": 13605,
       "flake": 33,
       "rust-module": 130,
       "nix-module": 4,
@@ -893,6 +893,30 @@
       ]
     },
     {
+      "path": ".github/workflows/scripts/cloud-android-fanout-budget-guard.py",
+      "lang": "py",
+      "role": "script",
+      "exports": [
+        "load(root, data=None)",
+        "check_config(cfg)",
+        "shipped(wf_dir, files)",
+        "evaluate(wf_dir, files, cfg)",
+        "main(argv)"
+      ],
+      "imports": [
+        "glob",
+        "json",
+        "cloud_android_ci_fanout"
+      ],
+      "symbols": [
+        "load(root, data=None)",
+        "check_config(cfg)",
+        "shipped(wf_dir, files)",
+        "evaluate(wf_dir, files, cfg)",
+        "main(argv)"
+      ]
+    },
+    {
       "path": ".github/workflows/scripts/cloud-android-fgs-timeout-guard.py",
       "lang": "py",
       "role": "script",
@@ -1131,6 +1155,34 @@
         "links_provider(repo, module)",
         "app_stores(m, app)",
         "check(repo, cfg)",
+        "main(argv)"
+      ]
+    },
+    {
+      "path": ".github/workflows/scripts/cloud-android-fleet-slice.py",
+      "lang": "py",
+      "role": "script",
+      "exports": [
+        "conf(root)",
+        "isolation(root)",
+        "strip(x, c)",
+        "load(root, rev, manifest)",
+        "digest(x)",
+        "slice_of(d, app)",
+        "whole_of(d)",
+        "main(argv)"
+      ],
+      "imports": [
+        "hashlib"
+      ],
+      "symbols": [
+        "conf(root)",
+        "isolation(root)",
+        "strip(x, c)",
+        "load(root, rev, manifest)",
+        "digest(x)",
+        "slice_of(d, app)",
+        "whole_of(d)",
         "main(argv)"
       ]
     },
@@ -2000,6 +2052,7 @@
         "ship_workflows(wf_dir)",
         "static_owners(root, wf_dir)",
         "owns(root, iso, owners, app, name, f)",
+        "lib_manifests(root, iso)",
         "static_check(root, wf_dir)",
         "dynamic_check(root, wf_dir, files, label=\"\")",
         "main(argv)"
@@ -2014,6 +2067,7 @@
         "ship_workflows(wf_dir)",
         "static_owners(root, wf_dir)",
         "owns(root, iso, owners, app, name, f)",
+        "lib_manifests(root, iso)",
         "static_check(root, wf_dir)",
         "dynamic_check(root, wf_dir, files, label=\"\")",
         "main(argv)"
@@ -2051,6 +2105,20 @@
       "symbols": [
         "release_assets(repo, tag)",
         "main()"
+      ]
+    },
+    {
+      "path": ".github/workflows/scripts/cloud-android-release-swap.sh",
+      "lang": "sh",
+      "role": "script",
+      "exports": [
+        "_id()",
+        "_rename()"
+      ],
+      "imports": [],
+      "symbols": [
+        "_id()",
+        "_rename()"
       ]
     },
     {
@@ -2300,6 +2368,11 @@
         "_pin_identity()",
         "_test_sets()",
         "_drop_test_sets()",
+        "_doc_files()",
+        "_drop_docs()",
+        "_manifest()",
+        "_drop_manifest()",
+        "_fleet_identity()",
         "_explain()"
       ],
       "imports": [],
@@ -2313,6 +2386,11 @@
         "_pin_identity()",
         "_test_sets()",
         "_drop_test_sets()",
+        "_doc_files()",
+        "_drop_docs()",
+        "_manifest()",
+        "_drop_manifest()",
+        "_fleet_identity()",
         "_explain()"
       ]
     },
@@ -3329,12 +3407,14 @@
       "role": "script",
       "exports": [
         "dump()",
-        "shot()"
+        "shot()",
+        "bounds()"
       ],
       "imports": [],
       "symbols": [
         "dump()",
-        "shot()"
+        "shot()",
+        "bounds()"
       ]
     },
     {
@@ -4052,6 +4132,30 @@
       ]
     },
     {
+      "path": "1_cicd/src/scripts/cloud-android-fanout-budget-guard.py",
+      "lang": "py",
+      "role": "script",
+      "exports": [
+        "load(root, data=None)",
+        "check_config(cfg)",
+        "shipped(wf_dir, files)",
+        "evaluate(wf_dir, files, cfg)",
+        "main(argv)"
+      ],
+      "imports": [
+        "glob",
+        "json",
+        "cloud_android_ci_fanout"
+      ],
+      "symbols": [
+        "load(root, data=None)",
+        "check_config(cfg)",
+        "shipped(wf_dir, files)",
+        "evaluate(wf_dir, files, cfg)",
+        "main(argv)"
+      ]
+    },
+    {
       "path": "1_cicd/src/scripts/cloud-android-fgs-timeout-guard.py",
       "lang": "py",
       "role": "script",
@@ -4290,6 +4394,34 @@
         "links_provider(repo, module)",
         "app_stores(m, app)",
         "check(repo, cfg)",
+        "main(argv)"
+      ]
+    },
+    {
+      "path": "1_cicd/src/scripts/cloud-android-fleet-slice.py",
+      "lang": "py",
+      "role": "script",
+      "exports": [
+        "conf(root)",
+        "isolation(root)",
+        "strip(x, c)",
+        "load(root, rev, manifest)",
+        "digest(x)",
+        "slice_of(d, app)",
+        "whole_of(d)",
+        "main(argv)"
+      ],
+      "imports": [
+        "hashlib"
+      ],
+      "symbols": [
+        "conf(root)",
+        "isolation(root)",
+        "strip(x, c)",
+        "load(root, rev, manifest)",
+        "digest(x)",
+        "slice_of(d, app)",
+        "whole_of(d)",
         "main(argv)"
       ]
     },
@@ -5159,6 +5291,7 @@
         "ship_workflows(wf_dir)",
         "static_owners(root, wf_dir)",
         "owns(root, iso, owners, app, name, f)",
+        "lib_manifests(root, iso)",
         "static_check(root, wf_dir)",
         "dynamic_check(root, wf_dir, files, label=\"\")",
         "main(argv)"
@@ -5173,6 +5306,7 @@
         "ship_workflows(wf_dir)",
         "static_owners(root, wf_dir)",
         "owns(root, iso, owners, app, name, f)",
+        "lib_manifests(root, iso)",
         "static_check(root, wf_dir)",
         "dynamic_check(root, wf_dir, files, label=\"\")",
         "main(argv)"
@@ -5210,6 +5344,20 @@
       "symbols": [
         "release_assets(repo, tag)",
         "main()"
+      ]
+    },
+    {
+      "path": "1_cicd/src/scripts/cloud-android-release-swap.sh",
+      "lang": "sh",
+      "role": "script",
+      "exports": [
+        "_id()",
+        "_rename()"
+      ],
+      "imports": [],
+      "symbols": [
+        "_id()",
+        "_rename()"
       ]
     },
     {
@@ -5459,6 +5607,11 @@
         "_pin_identity()",
         "_test_sets()",
         "_drop_test_sets()",
+        "_doc_files()",
+        "_drop_docs()",
+        "_manifest()",
+        "_drop_manifest()",
+        "_fleet_identity()",
         "_explain()"
       ],
       "imports": [],
@@ -5472,6 +5625,11 @@
         "_pin_identity()",
         "_test_sets()",
         "_drop_test_sets()",
+        "_doc_files()",
+        "_drop_docs()",
+        "_manifest()",
+        "_drop_manifest()",
+        "_fleet_identity()",
         "_explain()"
       ]
     },
@@ -6488,12 +6646,14 @@
       "role": "script",
       "exports": [
         "dump()",
-        "shot()"
+        "shot()",
+        "bounds()"
       ],
       "imports": [],
       "symbols": [
         "dump()",
-        "shot()"
+        "shot()",
+        "bounds()"
       ]
     },
     {
@@ -6860,6 +7020,22 @@
         "js()",
         "landed()",
         "red()"
+      ]
+    },
+    {
+      "path": "1_cicd/src/scripts/test/fanout-budget-guard.test.sh",
+      "lang": "sh",
+      "role": "script",
+      "exports": [
+        "ok()",
+        "fail()",
+        "green()"
+      ],
+      "imports": [],
+      "symbols": [
+        "ok()",
+        "fail()",
+        "green()"
       ]
     },
     {
@@ -7571,6 +7747,30 @@
       ]
     },
     {
+      "path": "1_cicd/src/scripts/test/publish-identity-doc-only.test.sh",
+      "lang": "sh",
+      "role": "script",
+      "exports": [
+        "ok()",
+        "fail()",
+        "mkwf()",
+        "ident()",
+        "snap()",
+        "commit()",
+        "pubs()"
+      ],
+      "imports": [],
+      "symbols": [
+        "ok()",
+        "fail()",
+        "mkwf()",
+        "ident()",
+        "snap()",
+        "commit()",
+        "pubs()"
+      ]
+    },
+    {
       "path": "1_cicd/src/scripts/test/publish-module-guard.test.sh",
       "lang": "sh",
       "role": "script",
@@ -7668,6 +7868,24 @@
         "ok()",
         "bad()",
         "expect()"
+      ]
+    },
+    {
+      "path": "1_cicd/src/scripts/test/release-swap.test.sh",
+      "lang": "sh",
+      "role": "script",
+      "exports": [
+        "ok()",
+        "fail()",
+        "fresh()",
+        "body()"
+      ],
+      "imports": [],
+      "symbols": [
+        "ok()",
+        "fail()",
+        "fresh()",
+        "body()"
       ]
     },
     {
@@ -44299,6 +44517,49 @@
       ]
     },
     {
+      "path": "ab_cloud-libs-shared/libs/appstore/src/main/java/com/diegonmarcos/superapp/appstore/StorePhoneSearch.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "StorePhoneSearch"
+      ],
+      "imports": [
+        "org.json.JSONObject"
+      ],
+      "symbols": [
+        "label(sub: String)",
+        "tag(sub: String)",
+        "blurb(sub: String)",
+        "sources(sub: String)",
+        "isOpen(r: StoreSuggest.Result)",
+        "keep(sub: String, r: StoreSuggest.Result, gamePkgs: Set<String>)",
+        "priceBadge(price: String)",
+        "closedBadge(r: StoreSuggest.Result, sourceLabel: (String)",
+        "parseIntegrity(text: String?)",
+        "tierOf(data: Integrity?, pkg: String)",
+        "groupByTier(data: Integrity?, items: List<T>, pkgOf: (T)",
+        "integrityResults(data: Integrity, fleetPackages: Set<String>)",
+        "tierLine(data: Integrity?, pkg: String)",
+        "dimLabel(dim: String)",
+        "licenceLabel(open: Boolean)",
+        "parseGames(text: String?)",
+        "games(g: Games, fleetPackages: Set<String>)",
+        "gamesByCategory(g: Games, list: List<Game>)",
+        "split(list: List<Game>, open: Boolean, dim: String)",
+        "sections(g: Games, list: List<Game>)",
+        "label(x: Game)",
+        "sectionTag(label: String)",
+        "gameResult(g: Game)",
+        "matchGames(list: List<Game>, query: String)",
+        "class StorePhoneSearch",
+        "class Tier",
+        "class IntApp",
+        "class Integrity",
+        "class Game",
+        "class Games"
+      ]
+    },
+    {
       "path": "ab_cloud-libs-shared/libs/appstore/src/main/java/com/diegonmarcos/superapp/appstore/StorePlayProtect.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -44512,8 +44773,8 @@
         "phoneRows(recs: StoreRecs.PhoneRecs)",
         "PhoneRecsView( ctx: Context, cfg: ()",
         "ResultGrid( ctx: Context, cfg: ()",
-        "LandingView( ctx: Context, cfg: ()",
-        "AppCard( ctx: Context, cfg: ()"
+        "gameCategoryTag(id: String)",
+        "runsOnPage(source: String, page: String, phoneSub: String)"
       ]
     },
     {
@@ -45848,6 +46109,9 @@
         "storeItselfIsAlwaysAdoptedAndToolbarLayoutHolds()",
         "src(n: String)",
         "has(r: String, vararg items: String)",
+        "adoptAllCoversEveryInstallableLibApk()",
+        "repo(rel: String)",
+        "members(id: String)",
         "class StoreAdoptTest"
       ]
     },
@@ -46010,6 +46274,47 @@
         "theTwoTabsAreDisjointAndCompleteOverTheRealFleet()",
         "phoneOnlyDropsEveryFleetPackageAndKeepsTheRest()",
         "class StoreMembershipTest"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/appstore/src/test/java/com/diegonmarcos/superapp/appstore/StorePhoneSearchTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "StorePhoneSearchTest"
+      ],
+      "imports": [
+        "org.json.JSONObject",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.io.File"
+      ],
+      "symbols": [
+        "repoFile(rel: String)",
+        "page()",
+        "res(pkg: String, vararg src: String, foss: Boolean = false, price: String = \"\", repo: String = \"\")",
+        "fourSubpagesInOrderWithTheirLabels()",
+        "everyPhoneSourceStillRunsOnSomeSubpageAndNoneIsInvented()",
+        "everyPhoneResultLandsOnAtLeastOneSubpage()",
+        "existingActionsAndSurfacesStayInTheSource()",
+        "fleetPackagesStayExcludedFromEverySubpageList()",
+        "openAndNonOpenSplitByLicenceAndSource()",
+        "freeAndPaidBadgeIsPlaysOwnAndNeverGuessed()",
+        "nonOpenKeepsAGamesAndIntegrityResultToo()",
+        "integrityDatasetIsDeclaredServedAndHonest()",
+        "tiersGroupWithEmptyOnesKeptAndAnUnlistedAppIsUnknown()",
+        "badDatasetsNeverThrow()",
+        "gamesCatalogueGroupsByCategoryAndKeepsEveryGame()",
+        "catalogue()",
+        "raw()",
+        "everyEntryCarriesOpenSourceAndDimension()",
+        "nothingWasRemovedFromTheCatalogue()",
+        "theOwnersTenOpenSourceGamesArePresentWithRealPackages()",
+        "theSplitsAndTheirCounts()",
+        "theGamesViewDrawsTheSplitAndKeepsTheGrid()",
+        "class StorePhoneSearchTest"
       ]
     },
     {
@@ -121472,6 +121777,7 @@
         "androidx.compose.runtime.LaunchedEffect",
         "androidx.compose.runtime.getValue",
         "androidx.compose.runtime.mutableStateMapOf",
+        "androidx.compose.runtime.mutableStateListOf",
         "androidx.compose.runtime.mutableStateOf",
         "androidx.compose.runtime.remember",
         "androidx.compose.runtime.saveable.rememberSaveable",
@@ -121483,12 +121789,12 @@
         "androidx.compose.ui.text.font.FontFamily",
         "androidx.compose.ui.text.style.TextOverflow",
         "androidx.compose.ui.unit.dp",
-        "com.diegonmarcos.cloudwebserver.Api",
-        "com.diegonmarcos.cloudwebserver.Decl"
+        "com.diegonmarcos.cloudwebserver.Api"
       ],
       "symbols": [
         "PagesSection(sub: String, open: (String, String?)",
         "RootList(title: String, rows: List<JSONObject>, empty: String, bump: ()",
+        "edit(go: ()",
         "Hairline()",
         "ChipRow(inset: Boolean = true, content: @Composable ()",
         "Chip(label: String, tag: String, primary: Boolean = false, onClick: ()",
@@ -121619,6 +121925,50 @@
         "sshCommand(d: JSONObject)",
         "sshExpanded(d: JSONObject)",
         "class SshState"
+      ]
+    },
+    {
+      "path": "ac_cloud-c3-webserver/src-tauri/gen/android/app/src/main/java/com/diegonmarcos/cloudwebserver/ui/StatusPage.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "UiMode",
+        "SectionBand",
+        "StatusTop",
+        "PagesStatus",
+        "ApiStatus",
+        "mcpTools",
+        "AdbProbe",
+        "EndpointsList"
+      ],
+      "imports": [
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.material3.MaterialTheme",
+        "androidx.compose.material3.Text",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.platform.LocalContext",
+        "androidx.compose.ui.platform.testTag",
+        "androidx.compose.ui.text.font.FontWeight",
+        "androidx.compose.ui.unit.dp",
+        "com.diegonmarcos.cloudwebserver.Api",
+        "com.diegonmarcos.cloudwebserver.Decl",
+        "com.diegonmarcos.superapp.uikit.KitDensity",
+        "org.json.JSONArray",
+        "org.json.JSONObject"
+      ],
+      "symbols": [
+        "SectionBand(id: String, title: String, note: String = \"\")",
+        "StatusTop(pw: JSONObject, health: JSONObject?, served: JSONObject?, sshd: JSONObject?, adb: JSONObject?, bump: ()",
+        "PagesStatus(roots: JSONObject?, served: JSONObject?, open: (String, String?)",
+        "ApiStatus(health: JSONObject?, mcp: JSONObject?, open: (String, String?)",
+        "mcpTools(mcp: JSONObject?)",
+        "AdbProbe(adb: JSONObject?)",
+        "EndpointsList(served: JSONObject?, sshd: JSONObject?, about: JSONArray?, mesh: JSONObject?, mcp: JSONObject?, adb: JSONObject?)",
+        "class UiMode"
       ]
     },
     {
@@ -122576,6 +122926,20 @@
       "imports": [],
       "symbols": [
         "check()",
+        "mut()"
+      ]
+    },
+    {
+      "path": "ac_cloud-c3-webserver/test/test-c3-webserver-status-parity.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "guard()",
+        "mut()"
+      ],
+      "imports": [],
+      "symbols": [
+        "guard()",
         "mut()"
       ]
     },
@@ -543014,6 +543378,30 @@
         "tap_text()",
         "down()",
         "up()"
+      ]
+    },
+    {
+      "path": "ac_cloud-store/test/emulator-store-phone4.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "hide_kb()",
+        "shoot()",
+        "dump()",
+        "tap_text()",
+        "ask()",
+        "sub()",
+        "games_shot()"
+      ],
+      "imports": [],
+      "symbols": [
+        "hide_kb()",
+        "shoot()",
+        "dump()",
+        "tap_text()",
+        "ask()",
+        "sub()",
+        "games_shot()"
       ]
     },
     {

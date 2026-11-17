@@ -2958,12 +2958,12 @@
         "pids_limit": 512,
         "_why_init": "proxy-mcp spawns no children, but tini is cheap insurance against future regressions and unblocks Node SIGTERM handling."
       },
-      "_draft": "MCP rebrand #1450: pending owner deploy; the real build.json is generated from the cloudy-t-infra declaration, mirror this there.",
       "_env_note": "env: ROUTER_BEARER (public-route fallback, from the secrets file, never committed); ROUTER_SERVERS optional override.",
       "_dns_aliases_at_cutover": [
         "cloud-services-mcp.mesh.diegonmarcos.com"
       ],
       "_dns_doc": "The old container keeps these DNS names during the alias release; move them here (dns_aliases) at cutover when the old container is removed.",
+      "_status": "#1450: scaffolded as a standard service (flake, compose, ship engine link); the old cloud-services-mcp keeps serving until this one is healthy.",
       "api": {
         "has_api": false,
         "has_web_ui": false,
