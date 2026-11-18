@@ -13299,8 +13299,8 @@
         "barParams(outsideTouch: Boolean = false)",
         "dp(v: Int)",
         "buildNotification()",
-        "quickActionsNotification(ctx: Context, cfg: FloatingNavConfig)",
-        "quickActions(ctx: Context, cfg: FloatingNavConfig)"
+        "foregroundNotification(ctx: Context, cfg: FloatingNavConfig)",
+        "quickActionsShown(ctx: Context)"
       ]
     },
     {
@@ -30624,6 +30624,8 @@
         "android.content.Context",
         "androidx.test.core.app.ApplicationProvider",
         "com.diegonmarcos.superapp.configs.BadgePanes",
+        "com.diegonmarcos.superapp.floatingnav.FloatingNavConfig",
+        "com.diegonmarcos.superapp.floatingnav.FloatingNavService",
         "org.junit.Assert.assertEquals",
         "org.junit.Assert.assertFalse",
         "org.junit.Assert.assertNotEquals",
@@ -136662,6 +136664,7 @@
         "unfreeze()",
         "openUri(uri: Uri)",
         "openFile(file: File)",
+        "pauseLive()",
         "open(load: ()",
         "detectStill(b: Bitmap, keepText: Boolean)",
         "decode(uri: Uri)",
@@ -136670,12 +136673,11 @@
         "copyAll()",
         "share()",
         "logWords()",
-        "bench(file: File, frames: Int = BENCH_FRAMES)",
+        "bench(file: File, frames: Int = BENCH_FRAMES, runs: Int? = null)",
         "snapshot()",
         "onImageSaved(output: ImageCapture.OutputFileResults)",
         "onError(e: ImageCaptureException)",
-        "toast(msg: String)",
-        "fit(b: Bitmap, side: Int)"
+        "toast(msg: String)"
       ]
     },
     {
@@ -138402,9 +138404,11 @@
       "exports": [
         "ok()",
         "fail()",
+        "unanr()",
         "awake()",
         "shot()",
         "dump()",
+        "diag()",
         "find_xy()",
         "tap_text()",
         "status_line()",
@@ -138416,9 +138420,11 @@
       "symbols": [
         "ok()",
         "fail()",
+        "unanr()",
         "awake()",
         "shot()",
         "dump()",
+        "diag()",
         "find_xy()",
         "tap_text()",
         "status_line()",
@@ -193364,6 +193370,7 @@
       "role": "shell",
       "exports": [
         "wake()",
+        "unanr()",
         "shot()",
         "dump()",
         "scene()",
@@ -193380,6 +193387,7 @@
       "imports": [],
       "symbols": [
         "wake()",
+        "unanr()",
         "shot()",
         "dump()",
         "scene()",
@@ -263702,10 +263710,12 @@
       "lang": "sh",
       "role": "shell",
       "exports": [
+        "seed_target()",
         "trigger()"
       ],
       "imports": [],
       "symbols": [
+        "seed_target()",
         "trigger()"
       ]
     },

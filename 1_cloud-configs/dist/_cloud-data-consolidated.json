@@ -11234,8 +11234,8 @@
           "env_file": true,
           "depends_on": [],
           "resources": {
-            "_doc_mem_limit": "Measured on oci-mail 2026-10-13: anon <=30MiB (6MiB resident + 24MiB swapped), cgroup peak 171MiB of which nearly all was reclaimable page cache over imapsql.db. 128M bounds the cache without touching the working set; it replaces the 2G category default, which on a 954MiB VM capped nothing. Gate: _shared/test-mail-stack-limits.mjs.",
-            "mem_limit": "128M",
+            "_doc_mem_limit": "Measured on oci-mail 2026-10-13: anon <=30MiB (6MiB resident + 24MiB swapped), cgroup peak 171MiB of which nearly all was reclaimable page cache over imapsql.db. 128M bounds the cache without touching the working set; it replaces the 2G category default, which on a 954MiB VM capped nothing. Gate: _shared/test-mail-stack-limits.mjs. 128M -> 192M (2026-11-18 oci-mail incident: load 13, IO PSI ~75%, maddy 145GB read / 29GB written lifetime). At 128M the cgroup could not hold the imapsql.db page cache next to maddy-sorter's full-file backups, so the DB was re-read from disk on every pass. 192M keeps the four mail ceilings at 704MiB, inside the 954MiB box with the 250MiB host reserve (L7). The backups are now rate-limited too (BACKUP_MIN_INTERVAL).",
+            "mem_limit": "192M",
             "reservations": {
               "memory": "32M"
             }

@@ -6,9 +6,9 @@
   },
   "repo": "cloud",
   "counts": {
-    "files": 1583,
+    "files": 1584,
     "by_lang": {
-      "sh": 1068,
+      "sh": 1069,
       "js": 169,
       "nix": 304,
       "py": 12,
@@ -17,7 +17,7 @@
     "by_role": {
       "hook": 377,
       "file": 86,
-      "shell": 547,
+      "shell": 548,
       "flake": 6,
       "script": 146,
       "module": 113,
@@ -19640,6 +19640,28 @@
       ]
     },
     {
+      "path": "9_others/test/hm-dns-hickory-mesh-domain.test.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "ck()",
+        "line()",
+        "mk()",
+        "act()",
+        "cnt()",
+        "UF()"
+      ],
+      "imports": [],
+      "symbols": [
+        "ck()",
+        "line()",
+        "mk()",
+        "act()",
+        "cnt()",
+        "UF()"
+      ]
+    },
+    {
       "path": "9_others/test/hm-dns-hickory-resolver.test.sh",
       "lang": "sh",
       "role": "shell",
@@ -22573,6 +22595,19 @@
         "dns",
         "primaryDns",
         "fallbackDns",
+        "meshDomain",
+        "meshIface",
+        "meshUnitName",
+        "meshDevUnit",
+        "meshUnit",
+        "Description",
+        "BindsTo",
+        "After",
+        "Wants",
+        "Type",
+        "RemainAfterExit",
+        "ExecStart",
+        "WantedBy",
         "SUDO",
         "SYSTEMCTL",
         "RESOLVED_ACTIVE",
@@ -22580,7 +22615,10 @@
         "HICKORY_DROPIN",
         "WANT",
         "DNS",
-        "FallbackDNS"
+        "FallbackDNS",
+        "RESOLVECTL",
+        "UNIT",
+        "TEMPLATE"
       ]
     },
     {
@@ -25061,6 +25099,19 @@
         "dns",
         "primaryDns",
         "fallbackDns",
+        "meshDomain",
+        "meshIface",
+        "meshUnitName",
+        "meshDevUnit",
+        "meshUnit",
+        "Description",
+        "BindsTo",
+        "After",
+        "Wants",
+        "Type",
+        "RemainAfterExit",
+        "ExecStart",
+        "WantedBy",
         "SUDO",
         "SYSTEMCTL",
         "RESOLVED_ACTIVE",
@@ -25068,7 +25119,10 @@
         "HICKORY_DROPIN",
         "WANT",
         "DNS",
-        "FallbackDNS"
+        "FallbackDNS",
+        "RESOLVECTL",
+        "UNIT",
+        "TEMPLATE"
       ]
     },
     {
@@ -27412,6 +27466,19 @@
         "dns",
         "primaryDns",
         "fallbackDns",
+        "meshDomain",
+        "meshIface",
+        "meshUnitName",
+        "meshDevUnit",
+        "meshUnit",
+        "Description",
+        "BindsTo",
+        "After",
+        "Wants",
+        "Type",
+        "RemainAfterExit",
+        "ExecStart",
+        "WantedBy",
         "SUDO",
         "SYSTEMCTL",
         "RESOLVED_ACTIVE",
@@ -27419,7 +27486,10 @@
         "HICKORY_DROPIN",
         "WANT",
         "DNS",
-        "FallbackDNS"
+        "FallbackDNS",
+        "RESOLVECTL",
+        "UNIT",
+        "TEMPLATE"
       ]
     },
     {
@@ -29767,6 +29837,19 @@
         "dns",
         "primaryDns",
         "fallbackDns",
+        "meshDomain",
+        "meshIface",
+        "meshUnitName",
+        "meshDevUnit",
+        "meshUnit",
+        "Description",
+        "BindsTo",
+        "After",
+        "Wants",
+        "Type",
+        "RemainAfterExit",
+        "ExecStart",
+        "WantedBy",
         "SUDO",
         "SYSTEMCTL",
         "RESOLVED_ACTIVE",
@@ -29774,7 +29857,10 @@
         "HICKORY_DROPIN",
         "WANT",
         "DNS",
-        "FallbackDNS"
+        "FallbackDNS",
+        "RESOLVECTL",
+        "UNIT",
+        "TEMPLATE"
       ]
     },
     {
@@ -32121,6 +32207,19 @@
         "dns",
         "primaryDns",
         "fallbackDns",
+        "meshDomain",
+        "meshIface",
+        "meshUnitName",
+        "meshDevUnit",
+        "meshUnit",
+        "Description",
+        "BindsTo",
+        "After",
+        "Wants",
+        "Type",
+        "RemainAfterExit",
+        "ExecStart",
+        "WantedBy",
         "SUDO",
         "SYSTEMCTL",
         "RESOLVED_ACTIVE",
@@ -32128,7 +32227,10 @@
         "HICKORY_DROPIN",
         "WANT",
         "DNS",
-        "FallbackDNS"
+        "FallbackDNS",
+        "RESOLVECTL",
+        "UNIT",
+        "TEMPLATE"
       ]
     },
     {
