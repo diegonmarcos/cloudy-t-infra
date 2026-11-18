@@ -249,7 +249,7 @@
       "cpu_throttling": true,
       "timeout_s": 900,
       "invoker": "iam",
-      "env": {},
+      "env": { "IMAGE_REVISION": "cloudy-u-containers@dc5a624e" },
       "secret_env": {},
       "volumes": [],
       "persistence": "none",
