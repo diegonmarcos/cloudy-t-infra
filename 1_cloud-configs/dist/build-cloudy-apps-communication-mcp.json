@@ -2245,5 +2245,43 @@
   "runtime": {
     "oom_score_adj": -900,
     "_why_oom_score_adj": "#1659: every MCP server on oci-apps is in the last tier the kernel OOM killer picks (_shared/oom-priority.json, tier mcp). Restart policy is 'no' (owner rule), so a killed MCP stays down and its tools are gone until someone starts it by hand. -900 = the host's connectivity tier; not -1000, which would also exempt it from its own cgroup limit."
+  },
+  "delivery_api": {
+    "_doc": "#1802 + #1803 REST surface of the fleet mail API, served by this same Node process ahead of the MCP transport (src/code/mcp/delivery; contract: DELIVERY-API.md). Same auth as the MCP: WG-mesh-only (Caddy wg_only + listener bound to the oci-apps WG IP). The ledger is fed by Stalwart itself (user-comm_tools-stalwart build.json#delivery_ledger: WebHook + MtaHook to /v1/internal/stalwart/*), accepted only from ingest_allowed. relay_hosts are next hops that are relays (OCI Email Delivery, the Maddy leg), so their 250 is recorded as 'accepted by relay' (pending), never as delivered. Mailbox probes run from this host: OCI blocks outbound TCP/25, so a remote-MX probe reports mailbox=unknown with the connect error; local domains are probed at Stalwart's own SMTP over wg0 (probe_overrides).",
+    "ledger_path": "/data/delivery-ledger.jsonl",
+    "retention_days": 90,
+    "relay_hosts": [
+      "smtp.email.eu-marseille-1.oci.oraclecloud.com",
+      "10.0.0.3"
+    ],
+    "local_domains": [
+      "diegonmarcos.com"
+    ],
+    "ingest_allowed": [
+      "10.0.0.3",
+      "10.1.0.3"
+    ],
+    "dns_servers": [
+      "1.1.1.1",
+      "9.9.9.9"
+    ],
+    "probe": {
+      "helo": "mail.diegonmarcos.com",
+      "mail_from": "",
+      "port": 25,
+      "timeout_ms": 8000,
+      "overrides": {
+        "diegonmarcos.com": "10.0.0.3:2025"
+      }
+    },
+    "recipient_cache_ttl_ms": 21600000,
+    "recipient_cache_ttl_unknown_ms": 900000,
+    "recipient_rate_limit_per_min": 60
+  },
+  "tests": {
+    "delivery-api": {
+      "cmd": "node --test delivery.test.ts recipients.test.ts rest.test.ts",
+      "cwd": "src/code/mcp/delivery"
+    }
   }
 }

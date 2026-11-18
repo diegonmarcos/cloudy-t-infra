@@ -3283,6 +3283,44 @@
         "oom_score_adj": -900,
         "_why_oom_score_adj": "#1659: every MCP server on oci-apps is in the last tier the kernel OOM killer picks (_shared/oom-priority.json, tier mcp). Restart policy is 'no' (owner rule), so a killed MCP stays down and its tools are gone until someone starts it by hand. -900 = the host's connectivity tier; not -1000, which would also exempt it from its own cgroup limit."
       },
+      "delivery_api": {
+        "_doc": "#1802 + #1803 REST surface of the fleet mail API, served by this same Node process ahead of the MCP transport (src/code/mcp/delivery; contract: DELIVERY-API.md). Same auth as the MCP: WG-mesh-only (Caddy wg_only + listener bound to the oci-apps WG IP). The ledger is fed by Stalwart itself (user-comm_tools-stalwart build.json#delivery_ledger: WebHook + MtaHook to /v1/internal/stalwart/*), accepted only from ingest_allowed. relay_hosts are next hops that are relays (OCI Email Delivery, the Maddy leg), so their 250 is recorded as 'accepted by relay' (pending), never as delivered. Mailbox probes run from this host: OCI blocks outbound TCP/25, so a remote-MX probe reports mailbox=unknown with the connect error; local domains are probed at Stalwart's own SMTP over wg0 (probe_overrides).",
+        "ledger_path": "/data/delivery-ledger.jsonl",
+        "retention_days": 90,
+        "relay_hosts": [
+          "smtp.email.eu-marseille-1.oci.oraclecloud.com",
+          "10.0.0.3"
+        ],
+        "local_domains": [
+          "diegonmarcos.com"
+        ],
+        "ingest_allowed": [
+          "10.0.0.3",
+          "10.1.0.3"
+        ],
+        "dns_servers": [
+          "1.1.1.1",
+          "9.9.9.9"
+        ],
+        "probe": {
+          "helo": "mail.diegonmarcos.com",
+          "mail_from": "",
+          "port": 25,
+          "timeout_ms": 8000,
+          "overrides": {
+            "diegonmarcos.com": "10.0.0.3:2025"
+          }
+        },
+        "recipient_cache_ttl_ms": 21600000,
+        "recipient_cache_ttl_unknown_ms": 900000,
+        "recipient_rate_limit_per_min": 60
+      },
+      "tests": {
+        "delivery-api": {
+          "cmd": "node --test delivery.test.ts recipients.test.ts rest.test.ts",
+          "cwd": "src/code/mcp/delivery"
+        }
+      },
       "_status": "#1450: standard service (flake, compose, ship engine link); replaces cloud-mail-mcp + cloud-mattermost-mcp, takes port 3103 over at deploy (engine port eviction).",
       "api": {
         "has_api": false,
@@ -11601,6 +11639,39 @@
         "10.0.0.0/24",
         "172.18.0.0/16"
       ],
+      "delivery_ledger": {
+        "_doc": "#1802 delivery-status ledger. Stalwart's own records of every authenticated submission and its delivery, streamed to the fleet mail API (infra-api_cloudy-apps-communication-mcp, oci-apps 10.0.0.6:3103) over wg0. Two registry objects, upserted by configs/apply-delivery-ledger.py from activate.sh Step I, matched by url (neither object has a name): (1) a WebHook (telemetry subscriber) carrying the queue/delivery/DSN/sender-auth events listed below as JSON batches — the source for received, delivered and per-recipient results; (2) an MtaHook at the DATA stage, enabled only for authenticated submissions and for null-sender mail (bounces/DSNs) — the only Stalwart record that ties the RFC 5322 Message-ID, header From and SASL login to the queue id, and the path remote DSNs arrive on. tempFailOnError is false and the API answers accept before doing any work, so the ledger being down never delays or bounces mail; it only leaves a gap in the ledger. No shared secret: the API accepts these two paths only from oci-mail's WG addresses (WireGuard binds the source IP to the peer key). Schema verified against stalwartlabs/stalwart v0.16.5 crates/registry/src/schema/structs.rs (WebHook, MtaHook) and crates/trc event names.",
+        "webhook_url": "http://10.0.0.6:3103/v1/internal/stalwart/events",
+        "mta_hook_url": "http://10.0.0.6:3103/v1/internal/stalwart/mta-hook",
+        "mta_hook_enable": "!is_empty(authenticated_as) || is_empty(sender)",
+        "mta_hook_timeout_ms": 5000,
+        "webhook_throttle_ms": 1000,
+        "webhook_discard_after_ms": 3600000,
+        "events": [
+          "queue.authenticated-message-queued",
+          "queue.rescheduled",
+          "queue.quota-exceeded",
+          "queue.dsn-queued",
+          "smtp.mail-from-unauthorized",
+          "smtp.mail-from-not-allowed",
+          "dkim.signer-not-found",
+          "dkim.unsupported-algorithm",
+          "dkim.unsupported-key-type",
+          "delivery.attempt-start",
+          "delivery.delivered",
+          "delivery.rcpt-to-rejected",
+          "delivery.rcpt-to-failed",
+          "delivery.message-rejected",
+          "delivery.mail-from-rejected",
+          "delivery.connect-error",
+          "delivery.failed",
+          "delivery.completed",
+          "delivery.dsn-success",
+          "delivery.dsn-temp-fail",
+          "delivery.dsn-perm-fail",
+          "delivery.double-bounce"
+        ]
+      },
       "_doc_tests": "Registered #502 (this repo's tester CI only runs what a build.json's `tests` key names, per .github/scripts/run-service-tests.sh -- an unnamed tester sits in the tree, executable, and reached by nothing, same pattern cloud-u-android's #368 found 44 times over). mail-rules was a golden+structural suite for derive-mail-rules.ts with no build.json anywhere pointing at it, so it had never run in CI despite existing since #269. It pins the declared mail folder tree (parent/child nesting, not just names) and the Sieve/maddy artifact derivation; #502 added the structural assertions for the Alerts/noAlerts split, the 24 House -> F0 move (with real de-dup), and the CLOUD -> 40 C3 renumber.",
       "tests": {
         "mail-rules": {
@@ -11608,6 +11679,10 @@
         },
         "mail-stack-limits": {
           "cmd": "node ../_shared/test-mail-stack-limits.mjs"
+        },
+        "delivery-ledger": {
+          "cmd": "python3 test-apply-delivery-ledger.py",
+          "cwd": "src"
         }
       },
       "api": {

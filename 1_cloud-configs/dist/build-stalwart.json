@@ -2324,12 +2324,49 @@
     "10.0.0.0/24",
     "172.18.0.0/16"
   ],
+  "delivery_ledger": {
+    "_doc": "#1802 delivery-status ledger. Stalwart's own records of every authenticated submission and its delivery, streamed to the fleet mail API (infra-api_cloudy-apps-communication-mcp, oci-apps 10.0.0.6:3103) over wg0. Two registry objects, upserted by configs/apply-delivery-ledger.py from activate.sh Step I, matched by url (neither object has a name): (1) a WebHook (telemetry subscriber) carrying the queue/delivery/DSN/sender-auth events listed below as JSON batches — the source for received, delivered and per-recipient results; (2) an MtaHook at the DATA stage, enabled only for authenticated submissions and for null-sender mail (bounces/DSNs) — the only Stalwart record that ties the RFC 5322 Message-ID, header From and SASL login to the queue id, and the path remote DSNs arrive on. tempFailOnError is false and the API answers accept before doing any work, so the ledger being down never delays or bounces mail; it only leaves a gap in the ledger. No shared secret: the API accepts these two paths only from oci-mail's WG addresses (WireGuard binds the source IP to the peer key). Schema verified against stalwartlabs/stalwart v0.16.5 crates/registry/src/schema/structs.rs (WebHook, MtaHook) and crates/trc event names.",
+    "webhook_url": "http://10.0.0.6:3103/v1/internal/stalwart/events",
+    "mta_hook_url": "http://10.0.0.6:3103/v1/internal/stalwart/mta-hook",
+    "mta_hook_enable": "!is_empty(authenticated_as) || is_empty(sender)",
+    "mta_hook_timeout_ms": 5000,
+    "webhook_throttle_ms": 1000,
+    "webhook_discard_after_ms": 3600000,
+    "events": [
+      "queue.authenticated-message-queued",
+      "queue.rescheduled",
+      "queue.quota-exceeded",
+      "queue.dsn-queued",
+      "smtp.mail-from-unauthorized",
+      "smtp.mail-from-not-allowed",
+      "dkim.signer-not-found",
+      "dkim.unsupported-algorithm",
+      "dkim.unsupported-key-type",
+      "delivery.attempt-start",
+      "delivery.delivered",
+      "delivery.rcpt-to-rejected",
+      "delivery.rcpt-to-failed",
+      "delivery.message-rejected",
+      "delivery.mail-from-rejected",
+      "delivery.connect-error",
+      "delivery.failed",
+      "delivery.completed",
+      "delivery.dsn-success",
+      "delivery.dsn-temp-fail",
+      "delivery.dsn-perm-fail",
+      "delivery.double-bounce"
+    ]
+  },
   "tests": {
     "mail-rules": {
       "cmd": "bash ../_shared/lib/mail-rules.tests/run-tests.sh"
     },
     "mail-stack-limits": {
       "cmd": "node ../_shared/test-mail-stack-limits.mjs"
+    },
+    "delivery-ledger": {
+      "cmd": "python3 test-apply-delivery-ledger.py",
+      "cwd": "src"
     }
   }
 }

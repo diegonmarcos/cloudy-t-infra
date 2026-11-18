@@ -6,26 +6,26 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 24486,
+    "files": 24518,
     "by_lang": {
-      "sh": 793,
+      "sh": 798,
       "js": 581,
       "py": 251,
-      "kotlin": 13660,
+      "kotlin": 13687,
       "ts": 8380,
       "java": 654,
       "nix": 37,
       "rust": 130
     },
     "by_role": {
-      "hook": 162,
+      "hook": 166,
       "file": 2266,
-      "shell": 633,
+      "shell": 634,
       "script": 343,
       "python": 87,
       "module": 6462,
       "java": 653,
-      "kotlin": 13657,
+      "kotlin": 13684,
       "flake": 33,
       "rust-module": 130,
       "nix-module": 4,
@@ -116,6 +116,38 @@
       "symbols": [
         "wipe()",
         "msg()"
+      ]
+    },
+    {
+      "path": "_dotfiles/apps/src/claude/hooks/c3/relay-inbox.sh",
+      "lang": "sh",
+      "role": "hook",
+      "exports": [
+        "rq()",
+        "cloud_msg()",
+        "out()"
+      ],
+      "imports": [],
+      "symbols": [
+        "rq()",
+        "cloud_msg()",
+        "out()"
+      ]
+    },
+    {
+      "path": "_dotfiles/apps/src/claude/hooks/c3/tests/relay-inbox.sh",
+      "lang": "sh",
+      "role": "hook",
+      "exports": [
+        "run()",
+        "sent()",
+        "ck()"
+      ],
+      "imports": [],
+      "symbols": [
+        "run()",
+        "sent()",
+        "ck()"
       ]
     },
     {
@@ -265,6 +297,38 @@
       "symbols": [
         "wipe()",
         "msg()"
+      ]
+    },
+    {
+      "path": ".claude/hooks/c3/relay-inbox.sh",
+      "lang": "sh",
+      "role": "hook",
+      "exports": [
+        "rq()",
+        "cloud_msg()",
+        "out()"
+      ],
+      "imports": [],
+      "symbols": [
+        "rq()",
+        "cloud_msg()",
+        "out()"
+      ]
+    },
+    {
+      "path": ".claude/hooks/c3/tests/relay-inbox.sh",
+      "lang": "sh",
+      "role": "hook",
+      "exports": [
+        "run()",
+        "sent()",
+        "ck()"
+      ],
+      "imports": [],
+      "symbols": [
+        "run()",
+        "sent()",
+        "ck()"
       ]
     },
     {
@@ -59891,6 +59955,59 @@
       ]
     },
     {
+      "path": "ab_cloud-libs-shared/libs/decisions-core/src/test/kotlin/com/diegonmarcos/superapp/decisions/core/ImageEngineTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ImageEngineTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.decisions.Http",
+        "org.json.JSONObject",
+        "org.junit.Assert.assertArrayEquals",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNotNull",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.io.IOException",
+        "java.net.UnknownHostException",
+        "java.util.Base64"
+      ],
+      "symbols": [
+        "imageOk(bytes: ByteArray = out, cost: Double? = 0.04, mime: String = \"image/png\")",
+        "send(url: String, token: String?, body: String?, timeoutMs: Int)",
+        "block(tweak: (JSONObject)",
+        "run(use: String = \"enh\", model: String = \"q/img-1\", prompt: String = \"make it better\", input: ByteArray = png, app: String = Fixtures.APP)",
+        "lastLine()",
+        "reason(a: ImageAnswer)",
+        "aRunSendsTheDeclaredEndpointTheTokenAndOneMultimodalMessageAndReturnsThePicture()",
+        "aJpegIsSentAsJpegAndTheAnswersMimeIsRead()",
+        "theJournalNamesTheCallAndNeverThePromptThePictureOrTheToken()",
+        "theDeclarationRefusesFirst()",
+        "theRequestIsCheckedBeforeAnythingIsSent()",
+        "consentIsTheUsersAndTheSwitchHostRecordsIt()",
+        "thePhonesStateFollowsTheImageBlocksOwnSuppression()",
+        "noKeyIsRefusedAfterTheChecksAndBeforeTheLedger()",
+        "theImageLedgerHoldsTheHourlyLimitTheQuotaAndTheDailyCap()",
+        "theImageBudgetIsNotTheDecisionsBudget()",
+        "theApisFailuresComeBackWithTheirKindAndMessage()",
+        "anAnswerWithNoPictureIsEmpty()",
+        "aTransportFailureIsOfflineInTheUsersWords()",
+        "aPictureOverTheOutputLimitIsRefusedButCharged()",
+        "serverAndNetworkFailuresOpenTheImageBreakerAndTheUsersOwnMistakesDoNot()",
+        "anExceptionIsARefusalNotACrash()",
+        "statusNamesTheImageUsesAndTheSpendNeverContent()",
+        "anImageUseIsValidatedLikeADecisionUse()",
+        "anImageBlockThatDoesNotValidateServesNoImageAndKeepsTheDecisions()",
+        "theShippedDeclarationServesTheCanvasEnhancerForCanvasOnly()",
+        "class ImageEngineTest",
+        "class ImgHttp",
+        "class ImgRig"
+      ]
+    },
+    {
       "path": "ab_cloud-libs-shared/libs/decisions-core/src/test/kotlin/com/diegonmarcos/superapp/decisions/core/JournalTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -60142,6 +60259,51 @@
       ]
     },
     {
+      "path": "ab_cloud-libs-shared/libs/decisions-engine/src/main/java/com/diegonmarcos/superapp/decisions/core/Images.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ImageUseDecl",
+        "ImagePolicy",
+        "ImageWire",
+        "ImageAnswer",
+        "ImageEngine"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.decisions.Http",
+        "org.json.JSONArray",
+        "org.json.JSONObject",
+        "java.io.IOException",
+        "java.net.UnknownHostException",
+        "java.util.Base64"
+      ],
+      "symbols": [
+        "asUse()",
+        "parse(d: JSONObject, sensitive: Set<String>)",
+        "check(u: JSONObject, sensitive: Set<String>)",
+        "decl(name: String, u: JSONObject)",
+        "pos(key: String)",
+        "mimeOf(bytes: ByteArray)",
+        "dataUrl(bytes: ByteArray, mime: String)",
+        "body(model: String, prompt: String, image: ByteArray)",
+        "parse(code: Int, body: String)",
+        "transport(e: Throwable)",
+        "run(app: String, request: JSONObject, input: ByteArray)",
+        "go(app: String, name: String, request: JSONObject, input: ByteArray)",
+        "status(app: String)",
+        "refuse( app: String, use: String, reason: String, kind: ImageWire.Kind? = null, message: String? = null, extra: JSONObject? = null, )",
+        "class ImageUseDecl",
+        "class ImagePolicy",
+        "class ImageWire",
+        "class Kind",
+        "class Result",
+        "class Image",
+        "class Failure",
+        "class ImageAnswer",
+        "class ImageEngine"
+      ]
+    },
+    {
       "path": "ab_cloud-libs-shared/libs/decisions-engine/src/main/java/com/diegonmarcos/superapp/decisions/core/Journal.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -60361,14 +60523,22 @@
         "android.content.Intent",
         "android.os.Binder",
         "android.os.IBinder",
+        "android.os.ParcelFileDescriptor",
+        "android.util.Log",
+        "com.diegonmarcos.superapp.decisions.core.ImageAnswer",
         "com.diegonmarcos.superapp.decisions.link.IDecisionsEngine",
-        "org.json.JSONObject"
+        "org.json.JSONObject",
+        "java.io.ByteArrayOutputStream",
+        "java.io.InputStream"
       ],
       "symbols": [
         "methodNames()",
         "dispatch(method: String, request: String, app: String)",
         "call(method: String?, request: String?)",
         "methods()",
+        "image(request: String?, input: ParcelFileDescriptor?, output: ParcelFileDescriptor?)",
+        "serveImage(request: String, input: ParcelFileDescriptor?, output: ParcelFileDescriptor?, app: String)",
+        "bounded(s: InputStream, max: Int)",
         "callerPackage()",
         "onBind(intent: Intent?)",
         "class DecisionsEngineService"
@@ -60383,6 +60553,8 @@
       ],
       "imports": [
         "com.diegonmarcos.superapp.decisions.core.Engine",
+        "com.diegonmarcos.superapp.decisions.core.ImageAnswer",
+        "com.diegonmarcos.superapp.decisions.core.ImageEngine",
         "org.json.JSONObject"
       ],
       "symbols": [
@@ -60390,6 +60562,8 @@
         "status(app: String)",
         "outcome(app: String, request: String)",
         "consent(app: String, request: String)",
+        "image(app: String, request: String, input: ByteArray)",
+        "imageWithoutFiles()",
         "noPolicy()",
         "class Dispatcher"
       ]
@@ -60410,6 +60584,7 @@
         "com.diegonmarcos.superapp.decisions.core.CircuitBreaker",
         "com.diegonmarcos.superapp.decisions.core.ConsentBook",
         "com.diegonmarcos.superapp.decisions.core.Engine",
+        "com.diegonmarcos.superapp.decisions.core.ImageEngine",
         "com.diegonmarcos.superapp.decisions.core.Journal",
         "com.diegonmarcos.superapp.decisions.core.Ledger",
         "com.diegonmarcos.superapp.decisions.core.Policy",
@@ -60419,6 +60594,7 @@
       ],
       "symbols": [
         "get(context: Context)",
+        "images(context: Context)",
         "holder(context: Context)",
         "build(ctx: Context)",
         "accountToken(ctx: Context, provider: String)",
@@ -60487,6 +60663,7 @@
         "com.diegonmarcos.superapp.decisions.core.ConsentBook",
         "com.diegonmarcos.superapp.decisions.core.Engine",
         "com.diegonmarcos.superapp.decisions.core.Env",
+        "com.diegonmarcos.superapp.decisions.core.ImageEngine",
         "com.diegonmarcos.superapp.decisions.core.Journal",
         "com.diegonmarcos.superapp.decisions.core.Ledger",
         "com.diegonmarcos.superapp.decisions.core.MemorySink",
@@ -60494,10 +60671,13 @@
         "com.diegonmarcos.superapp.decisions.core.Policy",
         "org.json.JSONObject",
         "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertArrayEquals",
         "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNull",
         "org.junit.Assert.assertTrue",
         "org.junit.Test",
-        "java.io.File"
+        "java.io.File",
+        "java.util.Base64"
       ],
       "symbols": [
         "send(url: String, token: String?, body: String?, timeoutMs: Int)",
@@ -60509,6 +60689,10 @@
         "consentIsAcceptedFromTheSettingAppOnly()",
         "withoutAPolicyEveryMethodIsNoPolicy()",
         "outcomeRunsTheEngineForTheCallerTheBinderNamed()",
+        "imageRunsTheCanvasEnhancerForCanvasOnlyWithTheTokenHeldHere()",
+        "imageThroughTheJsonCallIsRefusedAndWithoutAnImagePolicyIsNoPolicy()",
+        "statusCarriesTheImageUsesForTheCaller()",
+        "theManifestDeclaresTheContractThePolicyServes()",
         "class DispatcherTest"
       ]
     },
@@ -60592,7 +60776,9 @@
         "android.content.ServiceConnection",
         "android.content.pm.PackageManager",
         "android.os.IBinder",
+        "android.os.ParcelFileDescriptor",
         "org.json.JSONObject",
+        "java.io.File",
         "java.util.concurrent.CountDownLatch",
         "java.util.concurrent.TimeUnit"
       ],
@@ -60602,14 +60788,30 @@
         "report(context: Context, use: String, call: String, label: Any)",
         "status(context: Context)",
         "setConsent(context: Context, app: String, use: String, granted: Boolean)",
+        "image(context: Context, use: String, model: String, prompt: String, picture: ByteArray)",
         "ask(method: String, context: Context, request: JSONObject)",
         "fail(why: String)",
         "onServiceConnected(name: ComponentName?, binder: IBinder?)",
         "onServiceDisconnected(name: ComponentName?)",
-        "check(ctx: Context)",
+        "check(ctx: Context, needed: Int = BuildConfig.DECISIONS_ENGINE_MIN_CONTRACT)",
         "release(ctx: Context)",
         "class DecisionsLink",
         "class Conn"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/decisions-link/src/main/java/com/diegonmarcos/superapp/decisions/link/ImageReply.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ImageReply"
+      ],
+      "imports": [
+        "org.json.JSONObject"
+      ],
+      "symbols": [
+        "parse(reply: JSONObject, picture: ByteArray?)",
+        "class ImageReply"
       ]
     },
     {
@@ -60666,6 +60868,31 @@
         "theFileIsBoundedAndATornFileIsEmptyNotACrash()",
         "aRepeatedCallReplacesItsEntry()",
         "class AdviceTest"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/decisions-link/src/test/java/com/diegonmarcos/superapp/decisions/link/ImageReplyTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ImageReplyTest"
+      ],
+      "imports": [
+        "org.json.JSONObject",
+        "org.junit.Assert.assertArrayEquals",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.io.File"
+      ],
+      "symbols": [
+        "anOkWithItsPictureIsAPicture()",
+        "anOkWithoutAPictureIsMalformedNeverAnEmptyImage()",
+        "aRefusalKeepsItsReasonKindMessageAndDetail()",
+        "theWireAndTheDeclarationCarryTheImageCallAtContractTwo()",
+        "class ImageReplyTest"
       ]
     },
     {
@@ -137814,10 +138041,9 @@
       "imports": [
         "android.content.Context",
         "android.content.SharedPreferences",
-        "android.os.SystemClock",
-        "com.diegonmarcos.superapp.ai.AiConfig",
         "com.diegonmarcos.superapp.crash.SafeEncryptedPrefs",
-        "com.diegonmarcos.superapp.texttools.TextToolsClient"
+        "com.diegonmarcos.superapp.decisions.link.DecisionsLink",
+        "org.json.JSONObject"
       ],
       "symbols": [
         "get(key: String)",
@@ -137825,12 +138051,37 @@
         "hasOwnKey()",
         "saveOwnKey(v: String)",
         "clearOwnKey()",
+        "ownKey()",
         "resolve()",
+        "fleet(s: JSONObject)",
         "class PrefsKv",
         "class secret",
         "class AiSettings",
         "class Source",
         "class Resolved"
+      ]
+    },
+    {
+      "path": "ac_cloud-canvas/app/src/main/java/com/diegonmarcos/cloudcanvas/enhance/EngineRoute.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "EngineRoute"
+      ],
+      "imports": [
+        "android.content.Context",
+        "com.diegonmarcos.superapp.decisions.link.DecisionsLink",
+        "com.diegonmarcos.superapp.decisions.link.ImageReply",
+        "org.json.JSONObject"
+      ],
+      "symbols": [
+        "image(model: String, prompt: String, picture: ByteArray)",
+        "link(ctx: Context)",
+        "run(engine: Engine, model: String, prompt: String, picture: ByteArray)",
+        "toResult(r: ImageReply)",
+        "refusal(reason: String, detail: String)",
+        "class EngineRoute",
+        "class Engine"
       ]
     },
     {
@@ -138270,6 +138521,7 @@
         "com.diegonmarcos.cloudcanvas.enhance.AiSettings",
         "com.diegonmarcos.cloudcanvas.enhance.EnhanceClient",
         "com.diegonmarcos.cloudcanvas.enhance.EnhanceRequest",
+        "com.diegonmarcos.cloudcanvas.enhance.EngineRoute",
         "com.diegonmarcos.cloudcanvas.enhance.PresetLibrary",
         "com.diegonmarcos.cloudcanvas.enhance.PromptExpander",
         "com.diegonmarcos.cloudcanvas.enhance.Task",
@@ -138547,6 +138799,48 @@
       ]
     },
     {
+      "path": "ac_cloud-canvas/app/src/test/java/com/diegonmarcos/cloudcanvas/EnhanceEngineTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "EnhanceEngineTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.cloudcanvas.enhance.AiSettings",
+        "com.diegonmarcos.cloudcanvas.enhance.EngineRoute",
+        "com.diegonmarcos.cloudcanvas.enhance.EnhanceRequest",
+        "com.diegonmarcos.superapp.decisions.link.ImageReply",
+        "java.io.File",
+        "org.json.JSONObject",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "root()",
+        "image(model: String, prompt: String, picture: ByteArray)",
+        "refused(reason: String, kind: String? = null, message: String? = null, detail: String = \"\")",
+        "failure(r: EnhanceRequest.Result)",
+        "aRunSendsModelPromptAndPictureAndReturnsTheEnginesPicture()",
+        "anOkWithNoPictureIsAFailureNotAnEmptyImage()",
+        "theModelApisOwnFailuresReachTheUserUnchanged()",
+        "noKeyIsTheSentenceTheEnhancerShowedBefore()",
+        "noNetworkIsTheSentenceTheEnhancerShowedBefore()",
+        "everyEngineRefusalIsSurfacedWithItsOwnSentence()",
+        "aMissingOrOldEngineSaysWhatToDo()",
+        "status(token: Boolean = true, served: Boolean = true, enabled: Boolean = true, allowed: Boolean = true, consent: Boolean = true)",
+        "theKeyLineReadsTheEngineNeverTheKey()",
+        "theCallSiteNamesTheDeclaredImageUseForThisApp()",
+        "noSourceReadsTheFleetKey()",
+        "everyEnhancerOptionIsKept()",
+        "useDrawing(\", \"fun load(\", \"fun refreshPrompt(\", \"fun pick(\", \"fun task(\", \"fun estimate(\", \"fun run(\", \"fun saveTo(\", \"fun sendToDraw(\", \"EnhanceRequest.overCap(\", \"No image model is available. Open Configs > AI.\", \"The returned image could not be read.\", \"EnhanceClient.run(ctx, own,\")",
+        "class EnhanceEngineTest",
+        "class Fake"
+      ]
+    },
+    {
       "path": "ac_cloud-canvas/app/src/test/java/com/diegonmarcos/cloudcanvas/EnhanceTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -138815,6 +139109,34 @@
         "name",
         "buildInputs",
         "shellHook"
+      ]
+    },
+    {
+      "path": "ac_cloud-canvas/test/emulator-canvas-enhance-engine.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "awake()",
+        "shot()",
+        "dump()",
+        "find_xy()",
+        "tap_text()",
+        "wait_text()",
+        "start()",
+        "ok()",
+        "fail()"
+      ],
+      "imports": [],
+      "symbols": [
+        "awake()",
+        "shot()",
+        "dump()",
+        "find_xy()",
+        "tap_text()",
+        "wait_text()",
+        "start()",
+        "ok()",
+        "fail()"
       ]
     },
     {
@@ -264920,6 +265242,95 @@
       ]
     },
     {
+      "path": "ac_cloud-mail/app/src/main/kotlin/app/sterna/send/delivery/DeliveryStages.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "DeliveryStage",
+        "StageMark",
+        "DeliveryReason",
+        "SenderCheck",
+        "RecipientState",
+        "RecipientDelivery",
+        "PhoneDelivery",
+        "ServerDeliveryReport",
+        "StageView",
+        "DeliveryTimeline"
+      ],
+      "imports": [],
+      "symbols": [
+        "answer(check: SenderCheck)",
+        "get(stage: DeliveryStage)",
+        "class DeliveryStage",
+        "class StageMark",
+        "class Pending",
+        "class NotReached",
+        "class Confirmed",
+        "class Deferred",
+        "class Failed",
+        "class DeliveryReason",
+        "class PhoneFailed",
+        "class SubmissionRefused",
+        "class SenderRejected",
+        "class Bounced",
+        "class DeferredBy",
+        "class SenderCheck",
+        "class RecipientState",
+        "class RecipientDelivery",
+        "class PhoneDelivery",
+        "class ServerDeliveryReport",
+        "class Submission",
+        "class SenderAuth",
+        "class StageView",
+        "class DeliveryTimeline"
+      ]
+    },
+    {
+      "path": "ac_cloud-mail/app/src/main/kotlin/app/sterna/send/delivery/DeliveryStateMachine.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "DeliveryStateMachine"
+      ],
+      "imports": [],
+      "symbols": [
+        "timeline(phone: PhoneDelivery, server: ServerDeliveryReport?)",
+        "leftPhone(phone: PhoneDelivery)",
+        "serverReceived(submission: ServerDeliveryReport.Submission?)",
+        "validSender(auth: ServerDeliveryReport.SenderAuth?)",
+        "sent(recipients: List<RecipientDelivery>)",
+        "class DeliveryStateMachine"
+      ]
+    },
+    {
+      "path": "ac_cloud-mail/app/src/main/kotlin/app/sterna/send/delivery/DeliveryStatusRepository.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "DeliveryStatusSource",
+        "DeliveryKey",
+        "CachedDelivery",
+        "DeliveryStatusRepository"
+      ],
+      "imports": [
+        "kotlinx.coroutines.flow.MutableStateFlow",
+        "kotlinx.coroutines.flow.StateFlow",
+        "kotlinx.coroutines.flow.asStateFlow",
+        "kotlinx.coroutines.flow.update"
+      ],
+      "symbols": [
+        "fetch(key: DeliveryKey)",
+        "cached(key: DeliveryKey)",
+        "refresh(key: DeliveryKey)",
+        "timeline(key: DeliveryKey, phone: PhoneDelivery)",
+        "nextPollDelayMillis(timeline: DeliveryTimeline, sentAgeMillis: Long)",
+        "class DeliveryStatusSource",
+        "class DeliveryKey",
+        "class CachedDelivery",
+        "class DeliveryStatusRepository"
+      ]
+    },
+    {
       "path": "ac_cloud-mail/app/src/main/kotlin/app/sterna/send/Outbox.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -265358,6 +265769,7 @@
         "openExternally( app: Application, repo: MailRepository, storage: StorageRepository, credentials: AccountCredentials, part: EmailBodyPart, ownerId: String, )",
         "shareFile(app: Application, file: java.io.File, mime: String, subject: String, chooserTitle: String)",
         "mimeFromName(name: String)",
+        "cameraCaptureUri(context: Context, name: String)",
         "isMetered(context: Context)",
         "cacheForScan( app: Application, repo: MailRepository, storage: StorageRepository, credentials: AccountCredentials, part: EmailBodyPart, ownerId: String, )",
         "class AttachmentOpen"
@@ -265608,6 +266020,72 @@
       "symbols": [
         "ContactAvatar( email: String, name: String?, photoUri: String?, modifier: Modifier = Modifier, size: Dp = ContactAvatarSize, placeholder: (@Composable ()",
         "resolve( context: android.content.Context, email: String, photoUri: String?, )"
+      ]
+    },
+    {
+      "path": "ac_cloud-mail/app/src/main/kotlin/app/sterna/ui/components/DeliveryTicker.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "DeliveryTickerTags",
+        "DeliveryTicker",
+        "DeliveryTimelineView"
+      ],
+      "imports": [
+        "androidx.compose.foundation.clickable",
+        "androidx.compose.foundation.layout.Arrangement",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.Row",
+        "androidx.compose.foundation.layout.Spacer",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.foundation.layout.width",
+        "androidx.compose.material3.AlertDialog",
+        "androidx.compose.material3.MaterialTheme",
+        "androidx.compose.material3.Text",
+        "androidx.compose.material3.TextButton",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.saveable.rememberSaveable",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.ui.Alignment",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.graphics.Color",
+        "androidx.compose.ui.platform.testTag",
+        "androidx.compose.ui.res.stringResource",
+        "androidx.compose.ui.semantics.contentDescription",
+        "androidx.compose.ui.semantics.semantics",
+        "androidx.compose.ui.text.font.FontWeight",
+        "app.sterna.R",
+        "app.sterna.send.delivery.DeliveryReason",
+        "app.sterna.send.delivery.DeliveryStage",
+        "app.sterna.send.delivery.DeliveryTimeline",
+        "app.sterna.send.delivery.RecipientDelivery",
+        "app.sterna.send.delivery.RecipientState",
+        "app.sterna.send.delivery.SenderCheck",
+        "app.sterna.send.delivery.StageMark",
+        "app.sterna.send.delivery.StageView",
+        "app.sterna.ui.theme.MailMetrics",
+        "app.sterna.util.MailDates",
+        "java.time.Instant"
+      ],
+      "symbols": [
+        "mark(stage: DeliveryStage)",
+        "markGlyph(mark: StageMark)",
+        "markColor(mark: StageMark, ink: Color)",
+        "stageName(stage: DeliveryStage)",
+        "markWord(mark: StageMark)",
+        "reasonText(reason: DeliveryReason)",
+        "checkText(check: SenderCheck)",
+        "recipientStateWord(state: RecipientState)",
+        "atMillis()",
+        "reason()",
+        "stamp(millis: Long?)",
+        "DeliveryTicker(timeline: DeliveryTimeline, ink: Color, modifier: Modifier = Modifier)",
+        "DeliveryTimelineView(timeline: DeliveryTimeline, modifier: Modifier = Modifier)",
+        "StageLine(view: StageView, ink: Color)",
+        "RecipientLine(r: RecipientDelivery)",
+        "class DeliveryTickerTags"
       ]
     },
     {
@@ -266015,6 +266493,49 @@
       ]
     },
     {
+      "path": "ac_cloud-mail/app/src/main/kotlin/app/sterna/ui/compose/ComposeMenuParts.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [],
+      "imports": [
+        "androidx.annotation.StringRes",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.Row",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.foundation.layout.heightIn",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.foundation.rememberScrollState",
+        "androidx.compose.foundation.verticalScroll",
+        "androidx.compose.material.icons.Icons",
+        "androidx.compose.material.icons.filled.ContentPaste",
+        "androidx.compose.material.icons.filled.Delete",
+        "androidx.compose.material.icons.filled.Edit",
+        "androidx.compose.material3.AlertDialog",
+        "androidx.compose.material3.HorizontalDivider",
+        "androidx.compose.material3.MaterialTheme",
+        "androidx.compose.material3.OutlinedTextField",
+        "androidx.compose.material3.Text",
+        "androidx.compose.material3.TextButton",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.saveable.rememberSaveable",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.ui.Alignment",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.res.stringResource",
+        "androidx.compose.ui.text.style.TextOverflow",
+        "app.sterna.R",
+        "app.sterna.ui.components.Icon",
+        "app.sterna.ui.components.IconButton",
+        "app.sterna.ui.theme.MailMetrics"
+      ],
+      "symbols": [
+        "ComposeMenuSection(@StringRes label: Int, first: Boolean = false)",
+        "ComposeTemplatesDialog( templates: List<ComposeTemplate>, onChange: (List<ComposeTemplate>)"
+      ]
+    },
+    {
       "path": "ac_cloud-mail/app/src/main/kotlin/app/sterna/ui/compose/ComposerResumeSlot.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -266140,6 +266661,10 @@
         "runTextTool(tool: TextTool)",
         "applyTextTool(result: String)",
         "applySignatureChange(change: SignatureChange?)",
+        "applyQr(outcome: QrScanOutcome)",
+        "add(field: String, more: List<String>)",
+        "openQrCamera()",
+        "scanQr()",
         "isSelectableDate(utcTimeMillis: Long)",
         "SchedulePickerDialog( onDismissRequest: ()",
         "ComposeField( value: TextFieldValue, onValueChange: (TextFieldValue)",
@@ -266169,6 +266694,30 @@
       ],
       "symbols": [
         "composeSendBodies(wireHtml: String, plainTextMode: Boolean)"
+      ]
+    },
+    {
+      "path": "ac_cloud-mail/app/src/main/kotlin/app/sterna/ui/compose/ComposeTemplates.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ComposeTemplate"
+      ],
+      "imports": [
+        "android.content.Context",
+        "org.json.JSONArray",
+        "org.json.JSONObject"
+      ],
+      "symbols": [
+        "encode(list: List<ComposeTemplate>)",
+        "decode(json: String?)",
+        "upsert(list: List<ComposeTemplate>, t: ComposeTemplate)",
+        "remove(list: List<ComposeTemplate>, id: String)",
+        "load(context: Context)",
+        "save(context: Context, list: List<ComposeTemplate>)",
+        "class ComposeTemplate",
+        "class ComposeTemplateCodec",
+        "class ComposeTemplateStore"
       ]
     },
     {
@@ -266316,6 +266865,15 @@
         "clearForgotAttachment()",
         "askManyRecipients()",
         "clearManyRecipients()",
+        "messageSizeBytes(bodyBytes: Long)",
+        "publishRecipientStatus(addresses: List<String>, fresh: Map<String, RecipientStatus>)",
+        "checkRecipients(addresses: List<String>, bodyBytes: Long)",
+        "recheckRecipient(address: String, addresses: List<String>, bodyBytes: Long)",
+        "recheckBeforeSend(addresses: List<String>, bodyBytes: Long)",
+        "askUndeliverable(recipients: List<String>)",
+        "clearUndeliverable()",
+        "showRecipientDetail(address: String)",
+        "clearRecipientDetail()",
         "askScheduleDay()",
         "clearScheduleDay()",
         "askScheduleTime()",
@@ -266331,23 +266889,14 @@
         "signatureHtmlOf(identity: StoredIdentity?)",
         "setPlainTextMode(on: Boolean)",
         "selectSignature(signature: StoredSignature)",
+        "addSignature(name: String, source: String, makeDefault: Boolean)",
         "openingHtml(isReply: Boolean, quoteBlock: String, typed: String = suggestedReply.orEmpty()",
         "pgpAccount()",
         "refreshPgp()",
         "cachePgpPublicKey(account: StoredAccount?)",
         "cyclePgpMode()",
         "setPgpMode(mode: PgpMode)",
-        "updateRecipientKeys(to: String, cc: String, bcc: String)",
-        "deriveAutoMode(addresses: List<String>)",
-        "markContactsPrimed()",
-        "setContactSuggestions(enabled: Boolean)",
-        "suggest(fieldValue: String)",
-        "clearSuggestions()",
-        "onComposerBodyLost()",
-        "carriedDraftAccount()",
-        "takeEditingDraft()",
-        "credentials()",
-        "selves(credentials: AccountCredentials)"
+        "updateRecipientKeys(to: String, cc: String, bcc: String)"
       ]
     },
     {
@@ -266582,6 +267131,165 @@
       ],
       "symbols": [
         "resumeOutboxRow(id: Long, startupRecovery: Job, take: suspend (Long)"
+      ]
+    },
+    {
+      "path": "ac_cloud-mail/app/src/main/kotlin/app/sterna/ui/compose/QrRecipients.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "QrRecipients",
+        "parseQrRecipients",
+        "QrScanOutcome",
+        "scanQrRecipients"
+      ],
+      "imports": [
+        "android.content.Context",
+        "android.net.Uri",
+        "com.diegonmarcos.superapp.image.mlkit.ImageScanEngine",
+        "java.net.URLDecoder"
+      ],
+      "symbols": [
+        "addressesIn(s: String?)",
+        "distinctFolded(list: List<String>)",
+        "urlDecode(s: String)",
+        "semicolonFields(body: String)",
+        "flush()",
+        "parseQrRecipients(raw: String)",
+        "scanQrRecipients(context: Context, uri: Uri)",
+        "class QrRecipients",
+        "class QrScanOutcome",
+        "class Found",
+        "class Unreadable",
+        "class NoAddress",
+        "class EngineUnavailable"
+      ]
+    },
+    {
+      "path": "ac_cloud-mail/app/src/main/kotlin/app/sterna/ui/compose/RecipientCheck.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "RecipientVerdict",
+        "RecipientCheckKind",
+        "CheckOutcome",
+        "CheckSource",
+        "RecipientCheckItem",
+        "RecipientStatus",
+        "RecipientCheckRequest",
+        "RecipientChecker",
+        "UnboundRecipientChecker",
+        "RecipientChecks",
+        "recipientKey",
+        "recipientSyntaxProblem",
+        "SyntaxProblem",
+        "localSyntaxItem",
+        "verdictOf",
+        "localRecipientStatus",
+        "mergeRecipientStatus",
+        "RecipientStatusCache",
+        "recipientsToAsk",
+        "worstVerdict",
+        "SEND_RECHECK_MAX_AGE_MILLIS",
+        "SEND_RECHECK_TIMEOUT_MILLIS",
+        "willFailRecipients",
+        "runRecipientCheck"
+      ],
+      "imports": [
+        "app.sterna.util.isValidEmail"
+      ],
+      "symbols": [
+        "check(kind: RecipientCheckKind)",
+        "check(request: RecipientCheckRequest)",
+        "recipientKey(address: String)",
+        "recipientSyntaxProblem(address: String)",
+        "localSyntaxItem(address: String)",
+        "verdictOf(checks: List<RecipientCheckItem>)",
+        "unknownItem(kind: RecipientCheckKind)",
+        "localRecipientStatus(address: String, pending: Boolean, nowMillis: Long, serverNote: String? = null)",
+        "mergeRecipientStatus(address: String, remote: RecipientStatus?, nowMillis: Long, serverNote: String? = null)",
+        "ttlOf(status: RecipientStatus)",
+        "put(status: RecipientStatus, nowMillis: Long, sizeBytes: Long?)",
+        "get(address: String, nowMillis: Long, sizeBytes: Long?, maxAgeMillis: Long? = null)",
+        "invalidate(address: String)",
+        "size()",
+        "recipientsToAsk( addresses: List<String>, cache: RecipientStatusCache, nowMillis: Long, sizeBytes: Long?, maxAgeMillis: Long? = null, )",
+        "worstVerdict(statuses: List<RecipientStatus?>)",
+        "willFailRecipients(addresses: List<String>, statuses: Map<String, RecipientStatus>)",
+        "runRecipientCheck( addresses: List<String>, sizeBytes: Long?, checker: RecipientChecker, cache: RecipientStatusCache, now: ()",
+        "class RecipientVerdict",
+        "class RecipientCheckKind",
+        "class CheckOutcome",
+        "class CheckSource",
+        "class RecipientCheckItem",
+        "class RecipientStatus",
+        "class RecipientCheckRequest",
+        "class RecipientChecker",
+        "class UnboundRecipientChecker",
+        "class RecipientChecks",
+        "class SyntaxProblem",
+        "class RecipientStatusCache",
+        "class Entry"
+      ]
+    },
+    {
+      "path": "ac_cloud-mail/app/src/main/kotlin/app/sterna/ui/compose/RecipientStatusUi.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [],
+      "imports": [
+        "androidx.compose.foundation.clickable",
+        "androidx.compose.foundation.layout.Arrangement",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.Row",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.foundation.layout.size",
+        "androidx.compose.foundation.rememberScrollState",
+        "androidx.compose.foundation.verticalScroll",
+        "androidx.compose.material.icons.Icons",
+        "androidx.compose.material.icons.automirrored.outlined.HelpOutline",
+        "androidx.compose.material.icons.filled.CheckCircle",
+        "androidx.compose.material.icons.filled.Error",
+        "androidx.compose.material.icons.filled.RemoveCircleOutline",
+        "androidx.compose.material.icons.filled.Warning",
+        "androidx.compose.material3.AlertDialog",
+        "androidx.compose.material3.CircularProgressIndicator",
+        "androidx.compose.material3.ExperimentalMaterial3Api",
+        "androidx.compose.material3.HorizontalDivider",
+        "app.sterna.ui.components.Icon",
+        "androidx.compose.material3.MaterialTheme",
+        "androidx.compose.material3.ModalBottomSheet",
+        "androidx.compose.material3.Text",
+        "androidx.compose.material3.TextButton",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.ui.Alignment",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.graphics.Color",
+        "androidx.compose.ui.graphics.vector.ImageVector",
+        "androidx.compose.ui.res.stringResource",
+        "androidx.compose.ui.semantics.Role",
+        "androidx.compose.ui.semantics.contentDescription",
+        "androidx.compose.ui.semantics.semantics",
+        "app.sterna.R",
+        "app.sterna.ui.theme.MailMetrics",
+        "java.text.DateFormat",
+        "java.util.Date"
+      ],
+      "symbols": [
+        "verdictIcon(verdict: RecipientVerdict)",
+        "verdictColor(verdict: RecipientVerdict)",
+        "verdictLabel(verdict: RecipientVerdict)",
+        "checkKindLabel(kind: RecipientCheckKind)",
+        "outcomeLabel(outcome: CheckOutcome)",
+        "outcomeVerdict(outcome: CheckOutcome)",
+        "sourceLabel(source: CheckSource)",
+        "syntaxProblemText(problem: SyntaxProblem)",
+        "VerdictGlyph(verdict: RecipientVerdict, modifier: Modifier = Modifier)",
+        "RecipientStatusMark(status: RecipientStatus?, onClick: ()",
+        "checkDetailText(item: RecipientCheckItem)",
+        "RecipientStatusSheet( address: String, status: RecipientStatus?, checkerBound: Boolean, onCheckAgain: ()",
+        "UndeliverableRecipientsDialog( recipients: List<String>, statuses: Map<String, RecipientStatus>, onSendAnyway: ()"
       ]
     },
     {
@@ -272560,6 +273268,30 @@
       ]
     },
     {
+      "path": "ac_cloud-mail/app/src/navWalk/kotlin/app/sterna/navwalk/ScriptedRecipientChecker.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ScriptedRecipientChecker"
+      ],
+      "imports": [
+        "app.sterna.ui.compose.CheckOutcome",
+        "app.sterna.ui.compose.CheckSource",
+        "app.sterna.ui.compose.RecipientCheckItem",
+        "app.sterna.ui.compose.RecipientCheckKind",
+        "app.sterna.ui.compose.RecipientCheckRequest",
+        "app.sterna.ui.compose.RecipientChecker",
+        "app.sterna.ui.compose.RecipientStatus",
+        "app.sterna.ui.compose.verdictOf"
+      ],
+      "symbols": [
+        "check(request: RecipientCheckRequest)",
+        "item(kind: RecipientCheckKind, outcome: CheckOutcome, detail: String? = null, acceptsAll: Boolean = false)",
+        "answer(address: String, size: Long?)",
+        "class ScriptedRecipientChecker"
+      ]
+    },
+    {
       "path": "ac_cloud-mail/app/src/test/kotlin/app/sterna/agentapi/AgentMailContractTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -273849,6 +274581,50 @@
       ]
     },
     {
+      "path": "ac_cloud-mail/app/src/test/kotlin/app/sterna/send/delivery/DeliveryStateMachineTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "DeliveryStateMachineTest"
+      ],
+      "imports": [
+        "app.sterna.send.delivery.DeliveryStage.LEFT_PHONE",
+        "app.sterna.send.delivery.DeliveryStage.SENT",
+        "app.sterna.send.delivery.DeliveryStage.SERVER_RECEIVED",
+        "app.sterna.send.delivery.DeliveryStage.VALID_SENDER",
+        "app.sterna.send.delivery.ServerDeliveryReport.SenderAuth",
+        "app.sterna.send.delivery.ServerDeliveryReport.Submission",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "rcpt(a: String, s: RecipientState, at: Long? = null, code: Int? = null, detail: String? = null)",
+        "marks(t: DeliveryTimeline)",
+        "stage4(vararg r: RecipientDelivery)",
+        "class DeliveryStateMachineTest"
+      ]
+    },
+    {
+      "path": "ac_cloud-mail/app/src/test/kotlin/app/sterna/send/delivery/DeliveryStatusRepositoryTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "DeliveryStatusRepositoryTest"
+      ],
+      "imports": [
+        "kotlinx.coroutines.test.runTest",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertNull",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "class DeliveryStatusRepositoryTest"
+      ]
+    },
+    {
       "path": "ac_cloud-mail/app/src/test/kotlin/app/sterna/send/OutboxParkWiringTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -274346,6 +275122,67 @@
       ]
     },
     {
+      "path": "ac_cloud-mail/app/src/test/kotlin/app/sterna/ui/components/SentRowDeliveryTickerParityTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "SentRowDeliveryTickerParityTest"
+      ],
+      "imports": [
+        "android.app.Application",
+        "app.sterna.util.MailDates",
+        "android.content.ComponentName",
+        "androidx.activity.ComponentActivity",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.runtime.CompositionLocalProvider",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.platform.testTag",
+        "androidx.compose.ui.semantics.SemanticsNode",
+        "androidx.compose.ui.semantics.SemanticsProperties",
+        "androidx.compose.ui.semantics.getOrNull",
+        "androidx.compose.ui.test.assertIsDisplayed",
+        "androidx.compose.ui.test.junit4.createAndroidComposeRule",
+        "androidx.compose.ui.test.onNodeWithTag",
+        "androidx.compose.ui.test.onNodeWithText",
+        "androidx.compose.ui.test.performClick",
+        "androidx.compose.ui.test.hasTestTag",
+        "androidx.compose.ui.test.hasAnyAncestor",
+        "androidx.compose.ui.test.onAllNodesWithText",
+        "androidx.compose.ui.test.filter",
+        "app.sterna.R",
+        "app.sterna.core.data.settings.AppStyle",
+        "app.sterna.core.data.settings.ThemeMode",
+        "app.sterna.core.jmap.model.Email",
+        "app.sterna.core.jmap.model.EmailAddress",
+        "app.sterna.send.delivery.DeliveryStage",
+        "app.sterna.send.delivery.DeliveryStateMachine",
+        "app.sterna.send.delivery.PhoneDelivery",
+        "app.sterna.send.delivery.RecipientDelivery",
+        "app.sterna.send.delivery.RecipientState",
+        "app.sterna.send.delivery.ServerDeliveryReport",
+        "app.sterna.ui.theme.SternaTheme",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Rule",
+        "org.junit.Test",
+        "org.junit.rules.RuleChain",
+        "org.junit.rules.TestRule",
+        "org.junit.runner.RunWith",
+        "org.junit.runners.model.Statement"
+      ],
+      "symbols": [
+        "evaluate()",
+        "show(style: AppStyle)",
+        "fields(root: SemanticsNode)",
+        "walk(n: SemanticsNode)",
+        "row(tag: String)",
+        "assertParity(style: AppStyle)",
+        "sentTime()",
+        "stageRes(s: DeliveryStage)",
+        "class SentRowDeliveryTickerParityTest"
+      ]
+    },
+    {
       "path": "ac_cloud-mail/app/src/test/kotlin/app/sterna/ui/compose/ComposeBarWiringTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -274549,6 +275386,9 @@
       "symbols": [
         "src(name: String)",
         "referenced(code: String)",
+        "overflowMenu()",
+        "sectionOf(needle: String)",
+        "src0()",
         "class ComposeOptionsParityTest"
       ]
     },
@@ -274730,6 +275570,21 @@
         "withoutTheDelimiterTheBlockIsTheBlankLineAndTheSignatureAlone()",
         "withoutTheDelimiterABlankSignatureStillAddsNothing()",
         "withoutTheDelimiterASeparatorTypedIntoTheFieldIsTheOnlyOne()"
+      ]
+    },
+    {
+      "path": "ac_cloud-mail/app/src/test/kotlin/app/sterna/ui/compose/ComposeTemplateCodecTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ComposeTemplateCodecTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "class ComposeTemplateCodecTest"
       ]
     },
     {
@@ -275926,6 +276781,22 @@
       ]
     },
     {
+      "path": "ac_cloud-mail/app/src/test/kotlin/app/sterna/ui/compose/QrRecipientsTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "QrRecipientsTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertNull",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "class QrRecipientsTest"
+      ]
+    },
+    {
       "path": "ac_cloud-mail/app/src/test/kotlin/app/sterna/ui/compose/QuoteDepthTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -276008,6 +276879,48 @@
         "parseArguments(text: String)",
         "codeOf(source: String)",
         "class ReadReceiptWiringTest"
+      ]
+    },
+    {
+      "path": "ac_cloud-mail/app/src/test/kotlin/app/sterna/ui/compose/RecipientCheckTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "RecipientCheckTest"
+      ],
+      "imports": [
+        "kotlinx.coroutines.test.runTest",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNotNull",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "server(address: String, vararg lines: Pair<RecipientCheckKind, CheckOutcome>, verdict: RecipientVerdict? = null)",
+        "v(vararg o: CheckOutcome)",
+        "class RecipientCheckTest"
+      ]
+    },
+    {
+      "path": "ac_cloud-mail/app/src/test/kotlin/app/sterna/ui/compose/RecipientCheckWiringTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "RecipientCheckWiringTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.io.File"
+      ],
+      "symbols": [
+        "src(name: String)",
+        "fieldBody()",
+        "RecipientChipsField(\")",
+        "class RecipientCheckWiringTest"
       ]
     },
     {
@@ -633408,6 +634321,9 @@
         "symbols(items: List<BoxItem>)",
         "cbCell(s: CbSeries?, mode: String, currentYear: Int)",
         "cbCountries(top: List<String>, all: List<CbCountry>)",
+        "cbResolve(decl: CbDecl?, snap: CbSnapshot?, live: SovCurves?, country: String, col: CbBoxCol)",
+        "cbWhere(c: CbCell, staleWord: String)",
+        "cbShortDate(asOf: String)",
         "cbText(c: CbCell)",
         "class BoxItem",
         "class QuoteBox",
@@ -633946,6 +634862,54 @@
         "read(id: String)",
         "class SecretBox",
         "class SourceKeys"
+      ]
+    },
+    {
+      "path": "ad_Capital-Stack-FinTerminal/app/src/main/java/com/diegonmarcos/capitalfinterm/SovCurves.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "SovPoint",
+        "SovMeta",
+        "SovCurves",
+        "SovCurvesApi"
+      ],
+      "imports": [
+        "org.json.JSONArray",
+        "org.json.JSONObject"
+      ],
+      "symbols": [
+        "point(country: String, tenor: String)",
+        "stale(country: String)",
+        "tenorKey(t: String)",
+        "strs(a: JSONArray?)",
+        "liveRules(decl: CbDecl, indicators: List<String>)",
+        "path(source: CbSource, rules: List<CbRule>)",
+        "parse(json: String)",
+        "cell(decl: CbDecl, curves: SovCurves?, country: String, indicator: String)",
+        "covers(decl: CbDecl, indicators: List<String>, country: String)",
+        "status(curves: SovCurves?, country: String, unreached: String, staleWord: String, missingWord: String)",
+        "class SovPoint",
+        "class SovMeta",
+        "class SovCurves",
+        "class SovCurvesApi"
+      ]
+    },
+    {
+      "path": "ad_Capital-Stack-FinTerminal/app/src/main/java/com/diegonmarcos/capitalfinterm/SovCurvesStore.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "SovLive",
+        "SovCurvesStore"
+      ],
+      "imports": [
+        "android.content.Context"
+      ],
+      "symbols": [
+        "load(ctx: Context, decl: CbDecl, indicators: List<String>, notMesh: String, noAnswer: String)",
+        "class SovLive",
+        "class SovCurvesStore"
       ]
     },
     {
@@ -635254,7 +636218,7 @@
         "colW(c: String)",
         "dirOf(v: Double?)",
         "CbOverview(onOpen: (String)",
-        "CbBoxPanel(b: CbBox, decl: HomeBoxesDecl, cbDecl: CbDecl?, snap: CbSnapshot?, onOpen: ()",
+        "CbBoxPanel(b: CbBox, decl: HomeBoxesDecl, cbDecl: CbDecl?, snap: CbSnapshot?, live: SovLive?, onOpen: ()",
         "class HomeBoxesStore",
         "class BoxQuotes"
       ]
@@ -636840,6 +637804,30 @@
       ]
     },
     {
+      "path": "ad_Capital-Stack-FinTerminal/app/src/test/java/com/diegonmarcos/capitalfinterm/Reorg1786CbHomeParityTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "Reorg1786CbHomeParityTest"
+      ],
+      "imports": [
+        "org.json.JSONArray",
+        "org.json.JSONObject",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertNotNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "arr(a: JSONArray?)",
+        "everyCbBoxKeepsEveryFieldAndColumn()",
+        "theOrderTopAndEveryWordStay()",
+        "everyIndicatorABoxReadsKeepsEveryRuleInOrder()",
+        "everySourceStays()",
+        "class Reorg1786CbHomeParityTest"
+      ]
+    },
+    {
       "path": "ad_Capital-Stack-FinTerminal/app/src/test/java/com/diegonmarcos/capitalfinterm/Reorg1786ParityTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -636924,6 +637912,31 @@
         "theKeyIsInNoStringTheClassPrints()",
         "class SourceKeysTest",
         "class MemBox"
+      ]
+    },
+    {
+      "path": "ad_Capital-Stack-FinTerminal/app/src/test/java/com/diegonmarcos/capitalfinterm/SovCurvesTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "SovCurvesTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNotNull",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "col(label: String)",
+        "theLiveSourceIsDeclaredAndAskedForTheMajorsAtTheFourTenors()",
+        "theLiveSampleParsesWithItsDatesAndSources()",
+        "aCbHomeCellShowsTheLivePrintWithItsDateAndSourceElseTheSnapshot()",
+        "aStaleCurveIsMarkedAndAnUnavailableCountryShowsItsReason()",
+        "theDeclaredWordsOfTheLiveRowsExist()",
+        "class SovCurvesTest"
       ]
     },
     {
