@@ -6,24 +6,24 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 24440,
+    "files": 24421,
     "by_lang": {
       "sh": 789,
-      "js": 564,
+      "js": 569,
       "py": 248,
       "kotlin": 13617,
-      "ts": 8401,
+      "ts": 8377,
       "java": 654,
       "nix": 37,
       "rust": 130
     },
     "by_role": {
       "hook": 162,
-      "file": 2275,
+      "file": 2264,
       "shell": 630,
       "script": 342,
       "python": 84,
-      "module": 6457,
+      "module": 6449,
       "java": 653,
       "kotlin": 13614,
       "flake": 33,
@@ -476109,6 +476109,7 @@
         "openSection(id: String)",
         "openPage(section: String, page: String)",
         "openFleetConfigs()",
+        "openFleetConfigsPage(id: String)",
         "openConfigsUi()",
         "showVault()",
         "host()",
@@ -476839,7 +476840,6 @@
         "@cloud-notes/core/modules/cloud",
         "@cloud-notes/core/modules/code-block-preview-renderer",
         "@cloud-notes/core/modules/doc",
-        "@cloud-notes/core/modules/import",
         "@cloud-notes/core/modules/global-context",
         "@cloud-notes/core/modules/i18n",
         "@cloud-notes/core/modules/lifecycle",
@@ -476856,7 +476856,6 @@
         "@cloud-notes/track",
         "@blocksuite/cloud-notes/global/di",
         "@blocksuite/cloud-notes/shared/adapters",
-        "@blocksuite/cloud-notes/widgets/linked-doc",
         "@capacitor/app",
         "@capacitor/keyboard",
         "@capacitor/status-bar",
@@ -476864,7 +476863,9 @@
         "@toeverything/infra",
         "@toeverything/infra/op",
         "async-call-rpc",
-        "next-themes"
+        "next-themes",
+        "react",
+        "react-router-dom"
       ],
       "symbols": [
         "App()",
@@ -477159,44 +477160,6 @@
         "@blocksuite/cloud-notes/std/gfx"
       ],
       "symbols": []
-    },
-    {
-      "path": "ac_cloud-notes/packages/frontend/apps/android/src/vault-import.spec.ts",
-      "lang": "ts",
-      "role": "module",
-      "exports": [],
-      "imports": [
-        "vitest",
-        "./plugins/external-file",
-        "./vault-import"
-      ],
-      "symbols": []
-    },
-    {
-      "path": "ac_cloud-notes/packages/frontend/apps/android/src/vault-import.ts",
-      "lang": "ts",
-      "role": "module",
-      "exports": [
-        "collectVault",
-        "toVaultFiles",
-        "vaultNameOf",
-        "VaultFS",
-        "VaultLimits",
-        "VAULT_LIMITS",
-        "CollectedAttachment",
-        "CollectedNote",
-        "VaultCollection"
-      ],
-      "imports": [
-        "./plugins/external-file"
-      ],
-      "symbols": [
-        "collectVault(\n  fs: VaultFS,\n  root: string,\n  limits: VaultLimits = VAULT_LIMITS\n)",
-        "collectAttachments(\n  fs: VaultFS,\n  dir: string,\n  base: string,\n  limits: VaultLimits,\n  out: VaultCollection,\n  addBytes: (n: number)",
-        "base64ToBytes(b64: string)",
-        "toVaultFiles(\n  notes: CollectedNote[],\n  vaultName: string,\n  attachments: CollectedAttachment[] = []\n)",
-        "vaultNameOf(root: string)"
-      ]
     },
     {
       "path": "ac_cloud-notes/packages/frontend/apps/android/vitest.phase0.config.mts",
@@ -510424,7 +510387,6 @@
       ],
       "imports": [
         "@cloud-notes/core/blocksuite/block-suite-page-list/utils",
-        "@cloud-notes/core/modules/dialogs",
         "@cloud-notes/core/modules/doc",
         "@cloud-notes/core/modules/workbench",
         "@cloud-notes/core/modules/workspace",
@@ -511847,7 +511809,6 @@
         "./selectors/date-selector",
         "./selectors/doc-selector",
         "./selectors/tag-selector",
-        "./setting",
         "./sign-in"
       ],
       "symbols": []
@@ -511974,519 +511935,6 @@
         "@cloud-notes/theme/v2",
         "react",
         "./generic-selector"
-      ],
-      "symbols": []
-    },
-    {
-      "path": "ac_cloud-notes/packages/frontend/core/src/mobile/dialogs/setting/about/index.tsx",
-      "lang": "ts",
-      "role": "file",
-      "exports": [
-        "AboutGroup"
-      ],
-      "imports": [
-        "@cloud-notes/i18n",
-        "../group",
-        "../row.layout"
-      ],
-      "symbols": [
-        "hiddenVersionVariant(version: string)"
-      ]
-    },
-    {
-      "path": "ac_cloud-notes/packages/frontend/core/src/mobile/dialogs/setting/appearance/font.tsx",
-      "lang": "ts",
-      "role": "file",
-      "exports": [
-        "FontStyleSetting"
-      ],
-      "imports": [
-        "@cloud-notes/core/desktop/dialogs/setting/general-setting/editor/general",
-        "@cloud-notes/core/modules/editor-setting",
-        "@cloud-notes/i18n",
-        "@toeverything/infra",
-        "react",
-        "../dropdown-select",
-        "../row.layout"
-      ],
-      "symbols": []
-    },
-    {
-      "path": "ac_cloud-notes/packages/frontend/core/src/mobile/dialogs/setting/appearance/index.tsx",
-      "lang": "ts",
-      "role": "file",
-      "exports": [
-        "AppearanceGroup"
-      ],
-      "imports": [
-        "@cloud-notes/i18n",
-        "../group",
-        "./font",
-        "./language",
-        "./theme"
-      ],
-      "symbols": []
-    },
-    {
-      "path": "ac_cloud-notes/packages/frontend/core/src/mobile/dialogs/setting/appearance/language.tsx",
-      "lang": "ts",
-      "role": "file",
-      "exports": [
-        "LanguageSetting"
-      ],
-      "imports": [
-        "@cloud-notes/core/modules/i18n",
-        "@cloud-notes/i18n",
-        "@toeverything/infra",
-        "react",
-        "../dropdown-select",
-        "../row.layout"
-      ],
-      "symbols": []
-    },
-    {
-      "path": "ac_cloud-notes/packages/frontend/core/src/mobile/dialogs/setting/appearance/theme.tsx",
-      "lang": "ts",
-      "role": "file",
-      "exports": [
-        "ThemeSetting"
-      ],
-      "imports": [
-        "@cloud-notes/core/desktop/dialogs/setting/general-setting/appearance",
-        "@cloud-notes/i18n",
-        "next-themes",
-        "react",
-        "../dropdown-select",
-        "../row.layout"
-      ],
-      "symbols": []
-    },
-    {
-      "path": "ac_cloud-notes/packages/frontend/core/src/mobile/dialogs/setting/devices/index.tsx",
-      "lang": "ts",
-      "role": "file",
-      "exports": [
-        "DevicesGroup"
-      ],
-      "imports": [
-        "@cloud-notes/component",
-        "@cloud-notes/core/modules/cloud",
-        "@cloud-notes/i18n",
-        "@toeverything/infra",
-        "react",
-        "../group",
-        "../row.layout"
-      ],
-      "symbols": []
-    },
-    {
-      "path": "ac_cloud-notes/packages/frontend/core/src/mobile/dialogs/setting/dropdown-select.css.ts",
-      "lang": "ts",
-      "role": "module",
-      "exports": [
-        "root",
-        "label",
-        "icon",
-        "nativeSelect"
-      ],
-      "imports": [
-        "@cloud-notes/theme/typography",
-        "@cloud-notes/theme/v2",
-        "@vanilla-extract/css"
-      ],
-      "symbols": []
-    },
-    {
-      "path": "ac_cloud-notes/packages/frontend/core/src/mobile/dialogs/setting/dropdown-select.tsx",
-      "lang": "ts",
-      "role": "file",
-      "exports": [
-        "SettingDropdownSelectProps",
-        "SettingDropdownSelect",
-        "NativeSettingDropdownSelect"
-      ],
-      "imports": [
-        "@cloud-notes/component",
-        "@blocksuite/icons/rc",
-        "clsx",
-        "react",
-        "./dropdown-select.css"
-      ],
-      "symbols": []
-    },
-    {
-      "path": "ac_cloud-notes/packages/frontend/core/src/mobile/dialogs/setting/experimental/index.tsx",
-      "lang": "ts",
-      "role": "file",
-      "exports": [
-        "ExperimentalFeatureSetting"
-      ],
-      "imports": [
-        "@cloud-notes/component",
-        "@cloud-notes/core/modules/feature-flag",
-        "@cloud-notes/i18n",
-        "@blocksuite/icons/rc",
-        "@toeverything/infra",
-        "react",
-        "../group",
-        "../row.layout",
-        "../swipe-dialog",
-        "./styles.css"
-      ],
-      "symbols": []
-    },
-    {
-      "path": "ac_cloud-notes/packages/frontend/core/src/mobile/dialogs/setting/experimental/styles.css.ts",
-      "lang": "ts",
-      "role": "module",
-      "exports": [
-        "content",
-        "itemBlock",
-        "itemDescription"
-      ],
-      "imports": [
-        "@cloud-notes/theme/typography",
-        "@cloud-notes/theme/v2",
-        "@vanilla-extract/css"
-      ],
-      "symbols": []
-    },
-    {
-      "path": "ac_cloud-notes/packages/frontend/core/src/mobile/dialogs/setting/group.css.ts",
-      "lang": "ts",
-      "role": "module",
-      "exports": [
-        "group",
-        "groupTitle",
-        "groupContent"
-      ],
-      "imports": [
-        "@cloud-notes/theme/v2",
-        "@vanilla-extract/css"
-      ],
-      "symbols": []
-    },
-    {
-      "path": "ac_cloud-notes/packages/frontend/core/src/mobile/dialogs/setting/group.tsx",
-      "lang": "ts",
-      "role": "file",
-      "exports": [
-        "SettingGroupProps",
-        "SettingGroup"
-      ],
-      "imports": [
-        "@cloud-notes/core/components/mobile",
-        "clsx",
-        "react",
-        "./group.css"
-      ],
-      "symbols": [
-        "SettingGroup(\n    { children, title, className, contentClassName, contentStyle, ...attrs },\n    ref\n  )"
-      ]
-    },
-    {
-      "path": "ac_cloud-notes/packages/frontend/core/src/mobile/dialogs/setting/index.tsx",
-      "lang": "ts",
-      "role": "file",
-      "exports": [
-        "SettingDialog"
-      ],
-      "imports": [
-        "@cloud-notes/component",
-        "@cloud-notes/core/modules/cloud",
-        "@cloud-notes/core/modules/dialogs",
-        "@cloud-notes/core/modules/url",
-        "@cloud-notes/core/utils/clipboard",
-        "@cloud-notes/i18n",
-        "@toeverything/infra",
-        "react",
-        "./about",
-        "./appearance",
-        "./devices",
-        "./experimental",
-        "./group",
-        "./others",
-        "./others/delete-account",
-        "./row.layout",
-        "./style.css",
-        "./subscription",
-        "./swipe-dialog",
-        "./user-profile",
-        "./user-usage"
-      ],
-      "symbols": []
-    },
-    {
-      "path": "ac_cloud-notes/packages/frontend/core/src/mobile/dialogs/setting/others/delete-account.css.ts",
-      "lang": "ts",
-      "role": "module",
-      "exports": [
-        "description",
-        "deleteAccountLabel",
-        "inputWrapper"
-      ],
-      "imports": [
-        "@cloud-notes/theme",
-        "@cloud-notes/theme/v2",
-        "@vanilla-extract/css"
-      ],
-      "symbols": []
-    },
-    {
-      "path": "ac_cloud-notes/packages/frontend/core/src/mobile/dialogs/setting/others/delete-account.spec.tsx",
-      "lang": "ts",
-      "role": "file",
-      "exports": [],
-      "imports": [
-        "@testing-library/react",
-        "@toeverything/infra",
-        "react",
-        "vitest",
-        "./delete-account"
-      ],
-      "symbols": [
-        "class AuthService",
-        "class ServerService",
-        "class WorkspacesService"
-      ]
-    },
-    {
-      "path": "ac_cloud-notes/packages/frontend/core/src/mobile/dialogs/setting/others/delete-account.tsx",
-      "lang": "ts",
-      "role": "file",
-      "exports": [
-        "DeleteAccount"
-      ],
-      "imports": [
-        "@cloud-notes/component",
-        "@cloud-notes/core/modules/cloud",
-        "@cloud-notes/core/modules/workspace",
-        "@cloud-notes/error",
-        "@cloud-notes/i18n",
-        "@cloud-notes/track",
-        "@toeverything/infra",
-        "react",
-        "rxjs",
-        "../row.layout",
-        "./delete-account.css"
-      ],
-      "symbols": []
-    },
-    {
-      "path": "ac_cloud-notes/packages/frontend/core/src/mobile/dialogs/setting/others/index.tsx",
-      "lang": "ts",
-      "role": "file",
-      "exports": [
-        "OthersGroup"
-      ],
-      "imports": [
-        "@cloud-notes/i18n",
-        "../group",
-        "../row.layout"
-      ],
-      "symbols": []
-    },
-    {
-      "path": "ac_cloud-notes/packages/frontend/core/src/mobile/dialogs/setting/row.layout.tsx",
-      "lang": "ts",
-      "role": "file",
-      "exports": [
-        "RowLayout"
-      ],
-      "imports": [
-        "@cloud-notes/core/components/mobile",
-        "@blocksuite/icons/rc",
-        "clsx",
-        "react",
-        "./style.css"
-      ],
-      "symbols": []
-    },
-    {
-      "path": "ac_cloud-notes/packages/frontend/core/src/mobile/dialogs/setting/style.css.ts",
-      "lang": "ts",
-      "role": "module",
-      "exports": [
-        "pageTitle",
-        "root",
-        "baseSettingItem",
-        "interactiveRow",
-        "baseSettingItemName",
-        "emphasizedSettingItemName",
-        "rowText",
-        "rowDescription",
-        "rowPrefix",
-        "baseSettingItemAction",
-        "linkRowContent",
-        "linkIcon",
-        "dangerZoneTitle"
-      ],
-      "imports": [
-        "@cloud-notes/theme/typography",
-        "@cloud-notes/theme/v2",
-        "@vanilla-extract/css"
-      ],
-      "symbols": []
-    },
-    {
-      "path": "ac_cloud-notes/packages/frontend/core/src/mobile/dialogs/setting/subscription/index.tsx",
-      "lang": "ts",
-      "role": "file",
-      "exports": [
-        "PlansGroup"
-      ],
-      "imports": [
-        "@cloud-notes/core/modules/cloud",
-        "@cloud-notes/core/modules/dialogs",
-        "@cloud-notes/core/modules/paywall",
-        "@cloud-notes/core/modules/url",
-        "@cloud-notes/i18n",
-        "@blocksuite/icons/rc",
-        "@toeverything/infra",
-        "react",
-        "../group",
-        "../row.layout",
-        "./styles.css"
-      ],
-      "symbols": []
-    },
-    {
-      "path": "ac_cloud-notes/packages/frontend/core/src/mobile/dialogs/setting/subscription/styles.css.ts",
-      "lang": "ts",
-      "role": "module",
-      "exports": [
-        "planRow"
-      ],
-      "imports": [
-        "@vanilla-extract/css"
-      ],
-      "symbols": []
-    },
-    {
-      "path": "ac_cloud-notes/packages/frontend/core/src/mobile/dialogs/setting/swipe-dialog.css.ts",
-      "lang": "ts",
-      "role": "module",
-      "exports": [
-        "root",
-        "overlay",
-        "dialog",
-        "content",
-        "header",
-        "dialogTitle",
-        "scrollArea",
-        "triggerSizeVar",
-        "swipeBackTrigger"
-      ],
-      "imports": [
-        "@cloud-notes/theme",
-        "@cloud-notes/theme/typography",
-        "@cloud-notes/theme/v2",
-        "@vanilla-extract/css"
-      ],
-      "symbols": []
-    },
-    {
-      "path": "ac_cloud-notes/packages/frontend/core/src/mobile/dialogs/setting/swipe-dialog.tsx",
-      "lang": "ts",
-      "role": "file",
-      "exports": [
-        "SwipeDialogProps",
-        "SwipeDialog"
-      ],
-      "imports": [
-        "@cloud-notes/component",
-        "@cloud-notes/core/mobile/components",
-        "@blocksuite/icons/rc",
-        "@vanilla-extract/dynamic",
-        "animejs",
-        "react",
-        "react-dom",
-        "../../modules/back-coordinator",
-        "../../utils",
-        "./swipe-dialog.css"
-      ],
-      "symbols": []
-    },
-    {
-      "path": "ac_cloud-notes/packages/frontend/core/src/mobile/dialogs/setting/user-profile/index.tsx",
-      "lang": "ts",
-      "role": "file",
-      "exports": [
-        "UserProfile"
-      ],
-      "imports": [
-        "@cloud-notes/component",
-        "@cloud-notes/core/components/hooks/cloud-notes/use-sign-out",
-        "@cloud-notes/core/modules/cloud",
-        "@cloud-notes/core/modules/dialogs",
-        "@cloud-notes/i18n",
-        "@blocksuite/icons/rc",
-        "@toeverything/infra",
-        "react",
-        "../../../components",
-        "../group",
-        "../row.layout",
-        "./style.css"
-      ],
-      "symbols": []
-    },
-    {
-      "path": "ac_cloud-notes/packages/frontend/core/src/mobile/dialogs/setting/user-profile/style.css.ts",
-      "lang": "ts",
-      "role": "module",
-      "exports": [
-        "profile",
-        "avatarWrapper",
-        "content",
-        "title",
-        "caption",
-        "suffixIcon",
-        "emailInfo",
-        "nameWithTag",
-        "name"
-      ],
-      "imports": [
-        "@cloud-notes/theme/typography",
-        "@cloud-notes/theme/v2",
-        "@vanilla-extract/css"
-      ],
-      "symbols": []
-    },
-    {
-      "path": "ac_cloud-notes/packages/frontend/core/src/mobile/dialogs/setting/user-usage/index.tsx",
-      "lang": "ts",
-      "role": "file",
-      "exports": [
-        "UserUsage"
-      ],
-      "imports": [
-        "@cloud-notes/component",
-        "@cloud-notes/core/modules/cloud",
-        "@toeverything/infra",
-        "@cloud-notes/theme",
-        "@cloud-notes/theme/v2",
-        "react",
-        "../group",
-        "./style.css"
-      ],
-      "symbols": []
-    },
-    {
-      "path": "ac_cloud-notes/packages/frontend/core/src/mobile/dialogs/setting/user-usage/style.css.ts",
-      "lang": "ts",
-      "role": "module",
-      "exports": [
-        "progressRoot",
-        "progressInfoRow",
-        "progressName",
-        "progressDesc",
-        "progressTrack",
-        "progressBar"
-      ],
-      "imports": [
-        "@cloud-notes/theme/typography",
-        "@cloud-notes/theme/v2",
-        "@vanilla-extract/css"
       ],
       "symbols": []
     },
@@ -512838,7 +512286,9 @@
       "exports": [
         "Component"
       ],
-      "imports": [],
+      "imports": [
+        "react-router-dom"
+      ],
       "symbols": []
     },
     {
@@ -513169,6 +512619,27 @@
       ]
     },
     {
+      "path": "ac_cloud-notes/packages/frontend/core/src/mobile/vault/core/html-edit.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "markInjected",
+        "stripInjected",
+        "doctypeOf",
+        "toFileText",
+        "editSandbox",
+        "INJECTED_ATTR"
+      ],
+      "imports": [],
+      "symbols": [
+        "markInjected(srcdoc: string)",
+        "stripInjected(html: string)",
+        "doctypeOf(page: string)",
+        "toFileText(original: string, documentElementHtml: string)",
+        "editSandbox(declared: string)"
+      ]
+    },
+    {
       "path": "ac_cloud-notes/packages/frontend/core/src/mobile/vault/core/link-resolver.ts",
       "lang": "ts",
       "role": "module",
@@ -513204,14 +512675,43 @@
       ]
     },
     {
+      "path": "ac_cloud-notes/packages/frontend/core/src/mobile/vault/core/md-serialize.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "fromDom",
+        "escapeText",
+        "toMarkdown",
+        "HEl",
+        "HNode"
+      ],
+      "imports": [],
+      "symbols": [
+        "fromDom(node: Node)",
+        "inline(kids: HNode[])",
+        "wrap(mark: string, inner: string)",
+        "escapeText(v: string)",
+        "inl(n: HNode)",
+        "anchor(n: HEl)",
+        "blocks(kids: HNode[])",
+        "block(n: HEl)",
+        "callout(n: HEl)",
+        "list(n: HEl, depth: number)",
+        "table(n: HEl)",
+        "toMarkdown(root: HNode[])"
+      ]
+    },
+    {
       "path": "ac_cloud-notes/packages/frontend/core/src/mobile/vault/core/tab-store.ts",
       "lang": "ts",
       "role": "module",
       "exports": [
-        "modeOfPath",
-        "modeOfTab",
         "modesFor",
         "viewForMode",
+        "modeOfPath",
+        "modeOfTab",
+        "withMode",
+        "toggledMode",
         "openTab",
         "activateTab",
         "closeTab",
@@ -513227,6 +512727,7 @@
         "readLastVault",
         "writeLastVault",
         "ViewMode",
+        "VIEW_MODES",
         "TabMeta",
         "TabState",
         "EMPTY_TABS",
@@ -513241,11 +512742,13 @@
         "../recent-vaults"
       ],
       "symbols": [
-        "modeOfPath(decl: Decl, path: string)",
-        "modeOfTab(decl: Decl, tab: Pick<TabMeta, 'path' | 'view'> | null | undefined)",
         "modesFor(decl: Decl, path: string)",
         "viewForMode(decl: Decl, path: string, mode: ViewMode)",
-        "openTab(s: TabState, decl: Pick<VaultDecl, 'file_types' | 'html'>, path: string, max: number)",
+        "modeOfPath(decl: Decl, path: string)",
+        "modeOfTab(decl: Decl, tab: Pick<TabMeta, 'path' | 'mode'> | null | undefined)",
+        "withMode(decl: Decl, tab: TabMeta, mode: ViewMode)",
+        "toggledMode(decl: Decl, tab: Pick<TabMeta, 'path' | 'mode'>)",
+        "openTab(s: TabState, decl: Pick<VaultDecl, 'file_types' | 'html' | 'view_modes'>, path: string, max: number)",
         "activateTab(s: TabState, path: string)",
         "closeTab(s: TabState, path: string)",
         "patchTab(s: TabState, path: string, patch: Partial<Omit<TabMeta, 'path'>>)",
@@ -513254,11 +512757,31 @@
         "goBack(s: TabState)",
         "goForward(s: TabState)",
         "serializeTabs(s: TabState)",
-        "parseTabs(raw: string | null, decl: Pick<VaultDecl, 'file_types' | 'html'>, max: number)",
+        "parseTabs(raw: string | null, decl: Pick<VaultDecl, 'file_types' | 'html' | 'view_modes'>, max: number)",
         "saveTabs(store: KeyValueStore, root: string, s: TabState)",
-        "loadTabs(store: KeyValueStore, root: string, decl: Pick<VaultDecl, 'file_types' | 'html'>, max: number)",
+        "loadTabs(store: KeyValueStore, root: string, decl: Pick<VaultDecl, 'file_types' | 'html' | 'view_modes'>, max: number)",
         "readLastVault(store: KeyValueStore)",
         "writeLastVault(store: KeyValueStore, vault: { root: string; name: string } | null)"
+      ]
+    },
+    {
+      "path": "ac_cloud-notes/packages/frontend/core/src/mobile/vault/core/ui-prefs.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "parseUiPrefs",
+        "uiCssVars",
+        "FontFamilyDecl",
+        "RangeDecl",
+        "UiDecl",
+        "UiPrefs",
+        "defaultUiPrefs",
+        "serializeUiPrefs"
+      ],
+      "imports": [],
+      "symbols": [
+        "parseUiPrefs(raw: string | null, d: UiDecl)",
+        "uiCssVars(p: UiPrefs, d: UiDecl)"
       ]
     },
     {
@@ -513303,7 +512826,8 @@
         "VaultDecl"
       ],
       "imports": [
-        "./core/vault-source"
+        "./core/vault-source",
+        "./core/ui-prefs"
       ],
       "symbols": []
     },
@@ -513317,6 +512841,25 @@
       "imports": [
         "./vault-decl.json",
         "./decl-types"
+      ],
+      "symbols": []
+    },
+    {
+      "path": "ac_cloud-notes/packages/frontend/core/src/mobile/vault/edit-mode/EditPane.tsx",
+      "lang": "ts",
+      "role": "file",
+      "exports": [
+        "EditPane"
+      ],
+      "imports": [
+        "react",
+        "../core/html-edit",
+        "../core/md-serialize",
+        "../decl-types",
+        "../icons",
+        "../markdown",
+        "../html-sandbox",
+        "../use-vault"
       ],
       "symbols": []
     },
@@ -513366,6 +512909,7 @@
       "imports": [
         "react",
         "../decl-types",
+        "../edit-mode/EditPane",
         "../file-types",
         "../icons",
         "../use-vault",
@@ -513492,16 +513036,22 @@
       "exports": [
         "parseJson",
         "jsonRows",
+        "searchRows",
+        "valueAtPointer",
         "JsonKind",
         "JsonRow",
         "JsonParse",
         "kindOf",
+        "pathChild",
+        "copyText",
         "formatJson"
       ],
       "imports": [],
       "symbols": [
         "parseJson(text: string)",
-        "jsonRows(value: unknown, expanded: ReadonlySet<string>, maxRows = 5000)"
+        "jsonRows(value: unknown, expanded: ReadonlySet<string>, maxRows = 5000)",
+        "searchRows(value: unknown, expanded: ReadonlySet<string>, query: string, maxRows = 5000)",
+        "valueAtPointer(value: unknown, pointer: string)"
       ]
     },
     {
@@ -513688,6 +513238,25 @@
       ]
     },
     {
+      "path": "ac_cloud-notes/packages/frontend/core/src/mobile/vault/settings/SettingsPane.tsx",
+      "lang": "ts",
+      "role": "file",
+      "exports": [
+        "SettingsProps",
+        "SettingsPane"
+      ],
+      "imports": [
+        "react",
+        "../core/ui-prefs",
+        "../decl-types",
+        "../icons",
+        "../panes",
+        "../sidebar/SourcePanel",
+        "../use-vault"
+      ],
+      "symbols": []
+    },
+    {
       "path": "ac_cloud-notes/packages/frontend/core/src/mobile/vault/sidebar/Menu.tsx",
       "lang": "ts",
       "role": "file",
@@ -513726,8 +513295,6 @@
       "lang": "ts",
       "role": "file",
       "exports": [
-        "IMPORT_EVENT",
-        "requestImport",
         "SourcePanel"
       ],
       "imports": [
@@ -513881,11 +513448,12 @@
         "./file-types",
         "./icons",
         "./markdown",
+        "./core/ui-prefs",
         "./panes",
+        "./settings/SettingsPane",
         "./palette",
         "./sidebar/Menu",
         "./sidebar/Sidebar",
-        "./sidebar/SourcePanel",
         "./use-vault",
         "./vault-graph"
       ],
@@ -513921,12 +513489,14 @@
         "MermaidView",
         "JsonView",
         "HtmlView",
-        "ImageView"
+        "ImageView",
+        "XmlView"
       ],
       "imports": [
         "react",
         "./decl-types",
         "./enhance",
+        "./icons",
         "./html-sandbox",
         "./json-tree",
         "./markdown",
@@ -530603,6 +530173,20 @@
       "symbols": []
     },
     {
+      "path": "ac_cloud-notes/test/vault/edit.test.mjs",
+      "lang": "js",
+      "role": "file",
+      "exports": [],
+      "imports": [
+        "node:test",
+        "node:assert/strict",
+        "node:fs",
+        "node:path",
+        "./helpers.mjs"
+      ],
+      "symbols": []
+    },
+    {
       "path": "ac_cloud-notes/test/vault/external-open.test.mjs",
       "lang": "js",
       "role": "file",
@@ -530647,6 +530231,18 @@
       ],
       "symbols": [
         "walk(root, dir = '')"
+      ]
+    },
+    {
+      "path": "ac_cloud-notes/test/vault/html-tree.mjs",
+      "lang": "js",
+      "role": "file",
+      "exports": [
+        "parseHtml"
+      ],
+      "imports": [],
+      "symbols": [
+        "parseHtml(html)"
       ]
     },
     {
@@ -530729,6 +530325,21 @@
       ]
     },
     {
+      "path": "ac_cloud-notes/test/vault/md-serialize.test.mjs",
+      "lang": "js",
+      "role": "file",
+      "exports": [],
+      "imports": [
+        "node:test",
+        "node:assert/strict",
+        "node:fs",
+        "node:path",
+        "./helpers.mjs",
+        "./html-tree.mjs"
+      ],
+      "symbols": []
+    },
+    {
       "path": "ac_cloud-notes/test/vault/parity.test.mjs",
       "lang": "js",
       "role": "file",
@@ -530764,6 +530375,20 @@
       ]
     },
     {
+      "path": "ac_cloud-notes/test/vault/settings.test.mjs",
+      "lang": "js",
+      "role": "file",
+      "exports": [],
+      "imports": [
+        "node:test",
+        "node:assert/strict",
+        "node:fs",
+        "node:path",
+        "./helpers.mjs"
+      ],
+      "symbols": []
+    },
+    {
       "path": "ac_cloud-notes/test/vault/source.test.mjs",
       "lang": "js",
       "role": "file",
@@ -530789,6 +530414,18 @@
         "node:assert/strict",
         "node:fs",
         "node:path",
+        "./helpers.mjs"
+      ],
+      "symbols": []
+    },
+    {
+      "path": "ac_cloud-notes/test/vault/ui-prefs.test.mjs",
+      "lang": "js",
+      "role": "file",
+      "exports": [],
+      "imports": [
+        "node:test",
+        "node:assert/strict",
         "./helpers.mjs"
       ],
       "symbols": []

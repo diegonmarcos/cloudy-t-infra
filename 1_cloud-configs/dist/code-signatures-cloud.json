@@ -6,9 +6,9 @@
   },
   "repo": "cloud",
   "counts": {
-    "files": 1580,
+    "files": 1581,
     "by_lang": {
-      "sh": 1065,
+      "sh": 1066,
       "js": 169,
       "nix": 304,
       "py": 12,
@@ -17,7 +17,7 @@
     "by_role": {
       "hook": 377,
       "file": 86,
-      "shell": 544,
+      "shell": 545,
       "flake": 6,
       "script": 146,
       "module": 113,
@@ -20548,6 +20548,22 @@
         "ok()",
         "nope()",
         "check()"
+      ]
+    },
+    {
+      "path": "9_others/test/test_health_profile_gated_stack.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "mkfake()",
+        "log()",
+        "ssh_with_retry()"
+      ],
+      "imports": [],
+      "symbols": [
+        "mkfake()",
+        "log()",
+        "ssh_with_retry()"
       ]
     },
     {
