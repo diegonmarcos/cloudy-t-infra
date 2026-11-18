@@ -1,0 +1,88 @@
+name: "Sops cover (add the _credentials entry for one existing key of a vault secrets file, artifact)"
+
+# lint-secrets-coverage requires every app-facing key of a sops file to be referenced, by VALUE, inside that file's
+# _credentials block. A key added without its entry (e.g. AUTH_NOREPLY_PASSWORD in user-comm_tools-stalwart) can only be
+# covered by someone holding the plaintext, i.e. CI. This reads the vault file with the read-only deploy key, decrypts
+# the ONE named key with the fleet age key, writes _credentials.<key> = {type, <type>: value, note} INTO THE SAME FILE
+# with `sops set` (value on stdin, masked), checks the file is still encrypted and carries no plaintext, and hands the
+# re-encrypted file back as a one-day artifact. Nothing else in the file changes and the value itself is unchanged
+# (no rotation). The caller commits the file to the vault; this workflow never pushes anywhere.
+on:
+  workflow_dispatch:
+    inputs:
+      file:
+        description: "vault-relative path of the sops file, e.g. Linux-Containers/<svc>/src/secrets.yaml"
+        required: true
+        type: string
+      key:
+        description: "existing top-level key to cover, e.g. AUTH_NOREPLY_PASSWORD"
+        required: true
+        type: string
+      type:
+        description: "credential type recorded in the entry (password | token)"
+        required: false
+        default: "password"
+        type: string
+      note:
+        description: "what the credential is for (documentation, goes into the entry)"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  cover:
+    runs-on: ubuntu-latest
+    env:
+      SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
+      VAULT_DEPLOY_KEY: ${{ secrets.VAULT_DEPLOY_KEY }}
+    steps:
+      - name: Install sops
+        run: |
+          set -eu
+          curl -fsSL -o /tmp/sops https://github.com/getsops/sops/releases/download/v3.11.0/sops-v3.11.0.linux.amd64
+          sudo install -m 0755 /tmp/sops /usr/local/bin/sops
+          sops --version
+      - name: Read the vault file (read-only deploy key)
+        run: |
+          set -eu
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          umask 077
+          printf '%s\n' "$VAULT_DEPLOY_KEY" > ~/.ssh/vault_deploy
+          ssh-keyscan github.com 2>/dev/null >> ~/.ssh/known_hosts
+          export GIT_SSH_COMMAND="ssh -i $HOME/.ssh/vault_deploy -o IdentitiesOnly=yes -o StrictHostKeyChecking=accept-new"
+          git clone --depth 1 --filter=blob:none --sparse git@github.com:diegonmarcos/cloud-me-pvt-vault.git "$RUNNER_TEMP/vault"
+          git -C "$RUNNER_TEMP/vault" sparse-checkout set Linux-Containers
+      - name: Add the _credentials entry
+        env:
+          T_FILE: ${{ inputs.file }}
+          T_KEY: ${{ inputs.key }}
+          T_TYPE: ${{ inputs.type }}
+          T_NOTE: ${{ inputs.note }}
+        run: |
+          set -eu
+          case "$T_FILE$T_KEY$T_TYPE" in *[!A-Za-z0-9_./-]*|*..*) echo "::error::refusing odd input"; exit 1;; esac
+          case "$T_FILE" in Linux-Containers/*/src/secrets*.yaml) ;; *) echo "::error::file must be Linux-Containers/<svc>/src/secrets*.yaml"; exit 1;; esac
+          case "$T_TYPE" in password|token) ;; *) echo "::error::type must be password or token"; exit 1;; esac
+          case "$T_NOTE" in *'"'*|*'\'*) echo "::error::note must not contain quotes or backslashes"; exit 1;; esac
+          mkdir -p ~/.config/sops/age && umask 077 && printf '%s\n' "$SOPS_AGE_KEY" > ~/.config/sops/age/keys.txt
+          export SOPS_AGE_KEY_FILE=~/.config/sops/age/keys.txt
+          F="$RUNNER_TEMP/vault/$T_FILE"
+          VAL="$(sops -d --extract "[\"$T_KEY\"]" "$F")"
+          [ -n "$VAL" ] || { echo "::error::key is empty or missing"; exit 1; }
+          echo "::add-mask::$VAL"
+          ENTRY="$(VAL="$VAL" T_TYPE="$T_TYPE" T_NOTE="$T_NOTE" T_KEY="$T_KEY" python3 -c 'import json,os; print(json.dumps({"type": os.environ["T_TYPE"], os.environ["T_TYPE"]: os.environ["VAL"], "note": os.environ["T_NOTE"] + " (entry added in CI by sops-cover for " + os.environ["T_KEY"] + ")"}))')"
+          printf '%s' "$ENTRY" | sops set --value-stdin "$F" "[\"_credentials\"][\"$T_KEY\"]"
+          unset ENTRY
+          grep -q '^sops:' "$F"
+          if grep -qF "$VAL" "$F"; then echo "::error::plaintext leaked into the encrypted file"; exit 1; fi
+          [ "$(sops -d --extract "[\"_credentials\"][\"$T_KEY\"][\"$T_TYPE\"]" "$F")" = "$VAL" ] || { echo "::error::entry does not hold the key's value"; exit 1; }
+          [ "$(sops -d --extract "[\"$T_KEY\"]" "$F")" = "$VAL" ] || { echo "::error::the key itself changed"; exit 1; }
+          mkdir -p out && cp "$F" out/result.enc
+          echo "covered $T_KEY in $T_FILE"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sops-cover-result
+          path: out/result.enc
+          retention-days: 1
