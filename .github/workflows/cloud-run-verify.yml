@@ -78,4 +78,9 @@ jobs:
           [ $rc = 0 ] || echo "- scrappers-api health: FAIL" >> "$GITHUB_STEP_SUMMARY"
           "$RUNNER_TEMP/req.sh" scrappers-api GET /openapi.json || true
           jq -r '.paths | to_entries[] | "\(.key) [\(.value|keys|join(","))]"' "$RUNNER_TEMP/body" || true
+          cp "$RUNNER_TEMP/body" "$RUNNER_TEMP/openapi.json"
+          jq -c '.paths["/download/youtube"].post.requestBody, .paths["/scrape/{platform}"].post.requestBody, .paths["/scrape/{platform}"].post.parameters' "$RUNNER_TEMP/openapi.json" || true
+          jq -c '.components.schemas | with_entries(select(.key|test("Download|Scrape|Request|Body";"i")))' "$RUNNER_TEMP/openapi.json" | head -c 3000 || true
+          echo
+          "$RUNNER_TEMP/req.sh" scrappers-api GET /targets || true
           exit $rc
