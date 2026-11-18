@@ -964,6 +964,7 @@
         "_sync_published_port_dnat()",
         "_assert_published_ports()",
         "_container_liveness()",
+        "_profile_gated()",
         "assert_declared_containers_live()",
         "step_health()"
       ],
@@ -972,6 +973,7 @@
         "_sync_published_port_dnat()",
         "_assert_published_ports()",
         "_container_liveness()",
+        "_profile_gated()",
         "assert_declared_containers_live()",
         "step_health()"
       ]
@@ -16923,6 +16925,7 @@
         "_sync_published_port_dnat()",
         "_assert_published_ports()",
         "_container_liveness()",
+        "_profile_gated()",
         "assert_declared_containers_live()",
         "step_health()"
       ],
@@ -16931,6 +16934,7 @@
         "_sync_published_port_dnat()",
         "_assert_published_ports()",
         "_container_liveness()",
+        "_profile_gated()",
         "assert_declared_containers_live()",
         "step_health()"
       ]
@@ -20557,13 +20561,17 @@
       "exports": [
         "mkfake()",
         "log()",
-        "ssh_with_retry()"
+        "ssh_with_retry()",
+        "log_error()",
+        "declared_container_names()"
       ],
       "imports": [],
       "symbols": [
         "mkfake()",
         "log()",
-        "ssh_with_retry()"
+        "ssh_with_retry()",
+        "log_error()",
+        "declared_container_names()"
       ]
     },
     {
