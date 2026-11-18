@@ -18,6 +18,14 @@ in {
   home.stateVersion = cloudData.home_manager.state_version;
   programs.home-manager.enable = true;
 
+  # dockerd pulls up to 3 layers in parallel by default. On this 1 GB E2 Micro
+  # the home-manager image pull timed out / hit "unexpected EOF" twice on
+  # 2026-11-18 (ship runs 44259524045, 44294316188) while the other VMs pulled
+  # fine. Two parallel layer streams is gentler on its CPU and link; the pull
+  # itself also retries with backoff (hm-pull-retry in the HM activate step).
+  # Live-reloadable key: daemon.nix applies it with a reload, not a restart.
+  docker.daemon.settings."max-concurrent-downloads" = 2;
+
   # VM-specific aliases (analytics tools)
   programs.bash.shellAliases = { };
 }

@@ -97,23 +97,124 @@ dock_api() {
     curl -sf --unix-socket "$DOCKER_SOCK" -X "$_method" "http://localhost$_endpoint" "$@"
 }
 
-# ── Step 1: Pull image ──
-echo "[hm-docker] Pulling $FULL_IMAGE"
-if [ "$USE_CLI" = true ]; then
-    docker pull "$FULL_IMAGE" 2>&1 | tail -3
-else
-    HTTP_CODE=$(curl -s --unix-socket "$DOCKER_SOCK" -o /tmp/.hm-pull-out -w '%{http_code}' \
-        -X POST "http://localhost/images/create?fromImage=${IMAGE}&tag=${TAG}")
-    if [ "$HTTP_CODE" -ge 400 ]; then
-        echo "[hm-docker] Pull failed (HTTP $HTTP_CODE):"
-        cat /tmp/.hm-pull-out 2>/dev/null
-        rm -f /tmp/.hm-pull-out
-        exit 1
+# ── Step 1: Pull image (bounded retry) ──
+# >>> hm-pull-retry (extracted by 9_others/test/test_hm_docker_pull_retry.sh)
+# oci-analytics (1 GB E2 Micro) failed ship twice on 2026-11-18: runs
+# 44259524045 (registry timeout awaiting headers) and 44294316188 (layer
+# stream "unexpected EOF"). One bad network moment killed the whole ship.
+# Retry transient registry/network errors with exponential backoff (5
+# attempts: waits 15s 30s 60s 120s); layers already fetched are reused by
+# dockerd on the next attempt. Auth / manifest / reference errors are not
+# transient and fail at once. After the pull the image must resolve locally,
+# with the digest the registry advertised when it advertised one.
+HM_PULL_ATTEMPTS="${HM_PULL_ATTEMPTS:-5}"
+HM_PULL_BACKOFF="${HM_PULL_BACKOFF:-15 30 60 120}"
+HM_PULL_SLEEP="${HM_PULL_SLEEP:-sleep}"
+HM_PULL_OUT="${HM_PULL_OUT:-/tmp/.hm-pull-out}"
+
+# Classify a failed pull's output: prints "permanent" or "transient".
+# Permanent wins when both match (e.g. a 401 wrapped in a retry message).
+# Anything unrecognised is treated as permanent: only known-transient
+# failures are retried.
+hm_pull_classify() {
+    if grep -qiE 'unauthorized|authentication required|denied|forbidden|manifest unknown|manifest for .* not found|not found: manifest|repository does not exist|name unknown|invalid reference format|no matching manifest|HTTP (401|403|404)\b' "$1" 2>/dev/null; then
+        echo permanent
+    elif grep -qiE 'timeout|timed out|deadline exceeded|unexpected EOF|\bEOF\b|connection reset|connection refused|broken pipe|request canceled|TLS handshake|i/o timeout|no such host|temporary failure in name resolution|network is unreachable|toomanyrequests|too many requests|\b429\b|\b50[0-9]\b|internal server error|bad gateway|service unavailable|gateway timeout' "$1" 2>/dev/null; then
+        echo transient
+    else
+        echo permanent
     fi
-    tail -3 /tmp/.hm-pull-out 2>/dev/null || true
-    rm -f /tmp/.hm-pull-out
-    echo "[hm-docker] Pull complete"
-fi
+}
+
+# Last error-looking line of a pull's output, for the attempt log. Pull
+# output is registry/daemon text (no credentials); strip any bearer/basic
+# token fragment defensively anyway.
+hm_pull_reason() {
+    { grep -iE 'error|fail|EOF|timeout|denied|unauthorized|refused|reset|unknown|not found|HTTP [0-9]{3}' "$1" 2>/dev/null || tail -1 "$1" 2>/dev/null; } \
+        | tail -1 | sed -E 's/(Bearer|Basic|token=)[^ "]*/\1<redacted>/Ig' | cut -c1-300
+}
+
+# One pull attempt; output to $HM_PULL_OUT; non-zero on failure.
+hm_pull_once() {
+    : > "$HM_PULL_OUT"
+    if [ "$USE_CLI" = true ]; then
+        docker pull "$FULL_IMAGE" > "$HM_PULL_OUT" 2>&1
+        return $?
+    fi
+    _code=$(curl -s --unix-socket "$DOCKER_SOCK" -o "$HM_PULL_OUT" -w '%{http_code}' \
+        -X POST "http://localhost/images/create?fromImage=${IMAGE}&tag=${TAG}") || _code=000
+    if [ "${_code:-000}" -ge 400 ] 2>/dev/null || [ "${_code:-000}" = 000 ]; then
+        printf '\nHTTP %s\n' "${_code:-000}" >> "$HM_PULL_OUT"
+        return 1
+    fi
+    # /images/create answers 200 and streams the failure as errorDetail.
+    if grep -q '"errorDetail"' "$HM_PULL_OUT" 2>/dev/null; then
+        return 1
+    fi
+    return 0
+}
+
+# Digest the registry advertised in this pull ("Digest: sha256:..."), if any.
+hm_pull_digest() {
+    grep -oE 'Digest: sha256:[0-9a-f]{64}' "$HM_PULL_OUT" 2>/dev/null | tail -1 | sed 's/^Digest: //'
+}
+
+# RepoDigests of the local image, one per line; non-zero if it does not resolve.
+hm_image_repodigests() {
+    if [ "$USE_CLI" = true ]; then
+        docker image inspect --format '{{range .RepoDigests}}{{println .}}{{end}}' "$FULL_IMAGE" 2>/dev/null
+    else
+        _j=$(curl -sf --unix-socket "$DOCKER_SOCK" "http://localhost/images/${FULL_IMAGE}/json" 2>/dev/null) || return 1
+        printf '%s' "$_j" | grep -oE '"[^"]*@sha256:[0-9a-f]{64}"' | tr -d '"'
+        return 0
+    fi
+}
+
+hm_pull_with_retry() {
+    _attempt=1
+    set -- $HM_PULL_BACKOFF
+    while :; do
+        echo "[hm-docker] Pull attempt ${_attempt}/${HM_PULL_ATTEMPTS}: $FULL_IMAGE"
+        if hm_pull_once; then
+            tail -3 "$HM_PULL_OUT" 2>/dev/null || true
+            _want=$(hm_pull_digest)
+            if _have=$(hm_image_repodigests); then
+                if [ -z "$_want" ]; then
+                    echo "[hm-docker] Pull complete (image resolves; registry advertised no digest)"
+                    rm -f "$HM_PULL_OUT"; return 0
+                elif printf '%s\n' "$_have" | grep -qF "@${_want}"; then
+                    echo "[hm-docker] Pull complete (verified digest $_want)"
+                    rm -f "$HM_PULL_OUT"; return 0
+                fi
+                echo "[hm-docker] ERROR: pulled image digest mismatch: registry advertised $_want, local RepoDigests: $(printf '%s' "$_have" | tr '\n' ' ')"
+                rm -f "$HM_PULL_OUT"; return 1
+            fi
+            _class=transient
+            _reason="pull reported success but 'docker image inspect' does not resolve $FULL_IMAGE"
+        else
+            _class=$(hm_pull_classify "$HM_PULL_OUT")
+            _reason=$(hm_pull_reason "$HM_PULL_OUT")
+        fi
+        if [ "$_class" = permanent ]; then
+            echo "[hm-docker] Pull attempt ${_attempt}/${HM_PULL_ATTEMPTS} failed (permanent, not retrying): ${_reason}"
+            cat "$HM_PULL_OUT" 2>/dev/null | tail -5 || true
+            rm -f "$HM_PULL_OUT"; return 1
+        fi
+        if [ "$_attempt" -ge "$HM_PULL_ATTEMPTS" ]; then
+            echo "[hm-docker] Pull attempt ${_attempt}/${HM_PULL_ATTEMPTS} failed (transient): ${_reason}"
+            echo "[hm-docker] ERROR: pull failed after ${HM_PULL_ATTEMPTS} attempts: $FULL_IMAGE"
+            rm -f "$HM_PULL_OUT"; return 1
+        fi
+        _wait="${1:-120}"; [ "$#" -gt 1 ] && shift
+        echo "[hm-docker] Pull attempt ${_attempt}/${HM_PULL_ATTEMPTS} failed (transient): ${_reason} — retrying in ${_wait}s"
+        "$HM_PULL_SLEEP" "$_wait"
+        _attempt=$((_attempt + 1))
+    done
+}
+# <<< hm-pull-retry
+
+echo "[hm-docker] Pulling $FULL_IMAGE"
+hm_pull_with_retry || exit 1
 
 # ── Step 2: Clean up any previous hm-activate container ──
 # Kill EVERY hm-activate-* container, not just the same-PID one. Orphans
