@@ -25,7 +25,12 @@
     "delivery": "docker",
     "image": "ghcr.io/diegonmarcos/nixhm-sudo-oci-analytics",
     "platform": "linux/amd64",
-    "remote_build": false
+    "remote_build": false,
+    "edge_guard": {
+      "_doc": "This VM is the fleet's public edge. The home-manager ship refuses to start, to send another closure batch, or to activate while caddy-public is not running/healthy or does not answer HTTPS for host on 127.0.0.1:443, and reports a failure if the edge is unhealthy after activation (2026-11-18: two image pulls took the public site down 30-60 min). Engine: 1_cicd/src/scripts/cloud-ship-nix-homemanager-step-deploy-closure.sh hm_edge_guard.",
+      "container": "caddy-public",
+      "host": "diegonmarcos.com"
+    }
   },
   "firewall": {
     "public_ports": [

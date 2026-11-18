@@ -334,12 +334,17 @@ export INJECT_HEADER ENGINE_NAME
 . "$STEPS_DIR/cloud-ship-nix-homemanager-step-build-flake.sh"
 . "$STEPS_DIR/cloud-ship-nix-homemanager-step-secrets-decrypt.sh"
 . "$STEPS_DIR/cloud-ship-nix-homemanager-step-deploy-rsync.sh"
+. "$STEPS_DIR/cloud-ship-nix-homemanager-step-deploy-closure.sh"
 . "$STEPS_DIR/cloud-ship-nix-homemanager-step-deploy-activate.sh"
 . "$STEPS_DIR/cloud-ship-nix-homemanager-step-build-docker.sh"
 . "$STEPS_DIR/cloud-ship-nix-homemanager-step-deploy-push.sh"
 
 # ── Main ──────────────────────────────────────────────────────────────
-if [ "$HM_DELIVERY" = "docker" ]; then
+# image | closure (step-deploy-closure.sh): <=1 GB VMs never docker-pull.
+HM_TRANSPORT="$(hm_transport)"
+if [ "$HM_DELIVERY" = "docker" ] && [ "$HM_REMOTE_BUILDER" != "true" ] && [ "$HM_TRANSPORT" = "closure" ]; then
+    STRATEGY="closure built on runner → delta streamed to VM (low-memory, no docker pull)"
+elif [ "$HM_DELIVERY" = "docker" ]; then
     STRATEGY="docker image → GHCR → VM pulls"
 elif [ "$REMOTE_BUILD" = "true" ]; then
     STRATEGY="remote build on VM"
@@ -350,6 +355,7 @@ fi
 log "========================================"
 log "  Home Manager: $SERVICE_NAME"
 log "  Strategy: $STRATEGY"
+log "  Transport: $HM_TRANSPORT"
 log "  Host: ${DEPLOY_HOST:-none}"
 log "  HM config: ${HM_CONFIG:-none}"
 log "  Image: ${HM_IMAGE:-none}"
@@ -365,7 +371,13 @@ case "${1:-all}" in
     docker-push)     CURRENT_STEP=docker-push; step_docker_push ;;
     all)             CURRENT_STEP=build; step_build; CURRENT_STEP=secrets; step_secrets ;;
     ship)
-        if [ "$HM_DELIVERY" = "docker" ] && [ "$HM_REMOTE_BUILDER" != "true" ]; then
+        if [ "$HM_DELIVERY" = "docker" ] && [ "$HM_REMOTE_BUILDER" != "true" ] && [ "$HM_TRANSPORT" = "closure" ]; then
+            # Low-memory VM: same closure build, no image push, no VM pull.
+            CURRENT_STEP=build;          step_build
+            CURRENT_STEP=secrets;        step_secrets
+            CURRENT_STEP=docker-package; step_docker_package
+            CURRENT_STEP=compose;        step_compose
+        elif [ "$HM_DELIVERY" = "docker" ] && [ "$HM_REMOTE_BUILDER" != "true" ]; then
             CURRENT_STEP=build;          step_build
             CURRENT_STEP=secrets;        step_secrets
             CURRENT_STEP=docker-package; step_docker_package

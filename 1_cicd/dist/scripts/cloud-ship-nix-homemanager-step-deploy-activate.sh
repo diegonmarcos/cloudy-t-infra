@@ -29,8 +29,16 @@ IMAGE="@@IMAGE@@"
 TAG="@@TAG@@"
 HM_USER="@@HM_USER@@"
 FULL_IMAGE="${IMAGE}:${TAG}"
+# image: pull + activation container (Steps 0-3.5). closure: the runner has
+# already streamed the store paths and left the DB dump + activation path
+# (step-deploy-closure.sh), so dockerd is not needed: skip straight to Step 4.
+HM_TRANSPORT="@@TRANSPORT@@"
 
 export PATH="$HOME/.nix-profile/bin:/nix/var/nix/profiles/default/bin:$PATH"
+
+if [ "$HM_TRANSPORT" = closure ]; then
+    echo "[hm-docker] Transport: closure (no docker pull, no activation container)"
+else
 
 # ── Self-heal: corrupt /etc/docker/daemon.json blocks dockerd entirely ──
 # 2026-07-03 oci-mail: a torn write left two concatenated JSON objects and
@@ -356,6 +364,8 @@ else
       || true
 fi
 
+fi  # HM_TRANSPORT != closure
+
 # ── Step 4: Register nix paths in host DB (native, not container) ──
 echo "[hm-docker] Registering nix paths (native)..."
 export PATH="$HOME/.nix-profile/bin:/nix/var/nix/profiles/default/bin:$PATH"
@@ -500,7 +510,14 @@ step_compose() {
     if [ "$HM_DELIVERY" = "docker" ] && [ "$HM_REMOTE_BUILDER" != "true" ]; then
         # ── Docker delivery: pull image on VM, run activation container ──
         [ -z "$HM_IMAGE" ] && { log "ERROR: hm.image not set"; return 1; }
-        log "Docker delivery: activating $HM_IMAGE on $DEPLOY_HOST"
+        HM_TRANSPORT="${HM_TRANSPORT:-$(hm_transport)}"
+        if [ "$HM_TRANSPORT" = closure ]; then
+            log "Docker delivery, closure transport (low-memory VM): activating on $DEPLOY_HOST without pulling $HM_IMAGE"
+        else
+            log "Docker delivery: activating $HM_IMAGE on $DEPLOY_HOST"
+        fi
+        # Edge VMs: never start while their own public Caddy is unhealthy.
+        hm_edge_guard "pre-flight" || return 1
 
         # ── Pre-flight: ensure VM has disk headroom for activation ──
         # HM activation is a 3-stage pipeline that all writes to the VM's /:
@@ -763,8 +780,15 @@ PREFLIGHT_EOF
         fi
 
         # Build the remote script with variables substituted
+        if [ "$HM_TRANSPORT" = closure ]; then
+            _hm_closure=$(cat "$SERVICE_DIR/.closure-path" 2>/dev/null || true)
+            [ -n "$_hm_closure" ] || { log "ERROR: no .closure-path — docker-package did not run"; return 1; }
+            hm_closure_transfer "$_hm_closure" || { log "FAILED: closure transfer to $DEPLOY_HOST"; return 1; }
+        fi
+        hm_edge_guard "before activation" || return 1
+
         REMOTE_SCRIPT=$(_build_docker_activate_script)
-        REMOTE_SCRIPT=$(printf '%s' "$REMOTE_SCRIPT" | sed "s|@@IMAGE@@|$HM_IMAGE|g; s|@@TAG@@|latest|g; s|@@HM_USER@@|$HM_USER|g")
+        REMOTE_SCRIPT=$(printf '%s' "$REMOTE_SCRIPT" | sed "s|@@IMAGE@@|$HM_IMAGE|g; s|@@TAG@@|latest|g; s|@@HM_USER@@|$HM_USER|g; s|@@TRANSPORT@@|$HM_TRANSPORT|g")
 
         # ── Activate over SSH, with retry on transient tunnel drops ──
         # The activation streams a multi-minute remote script (pull image →
@@ -851,6 +875,7 @@ PREFLIGHT_EOF
             return 1
         fi
         log "Docker HM activated on $DEPLOY_HOST"
+        hm_edge_guard "after activation" || { log "FAILED: public edge on $DEPLOY_HOST unhealthy after activation — investigate before the next ship"; return 1; }
 
     elif [ "$REMOTE_BUILD" = "true" ]; then
         # ── Remote build: full nix run on VM ──
