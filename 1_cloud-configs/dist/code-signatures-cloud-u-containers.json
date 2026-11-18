@@ -6,10 +6,10 @@
   },
   "repo": "cloud-u-containers",
   "counts": {
-    "files": 2696,
+    "files": 2698,
     "by_lang": {
       "sh": 184,
-      "js": 122,
+      "js": 124,
       "nix": 202,
       "py": 524,
       "ts": 1293,
@@ -20,7 +20,7 @@
       "file": 357,
       "nix-module": 20,
       "python": 509,
-      "module": 797,
+      "module": 799,
       "script": 9,
       "flake": 92,
       "entrypoint": 72,
@@ -21913,6 +21913,18 @@
       ]
     },
     {
+      "path": "infra-ops_c3bot-relay/src/code/lease.js",
+      "lang": "js",
+      "role": "module",
+      "exports": [
+        "Lease"
+      ],
+      "imports": [],
+      "symbols": [
+        "class Lease"
+      ]
+    },
+    {
       "path": "infra-ops_c3bot-relay/src/code/relay.js",
       "lang": "js",
       "role": "module",
@@ -21939,6 +21951,7 @@
         "relay",
         "botA",
         "telegram",
+        "lease",
         "failover",
         "server"
       ],
@@ -21947,7 +21960,8 @@
         "node:crypto",
         "./relay.js",
         "./failover.js",
-        "./ws.js"
+        "./ws.js",
+        "./lease.js"
       ],
       "symbols": [
         "doSend(msg)",
@@ -21957,6 +21971,18 @@
         "leavePolling()",
         "healthTick({ self = selfTest } = {})"
       ]
+    },
+    {
+      "path": "infra-ops_c3bot-relay/src/code/test/lease.test.js",
+      "lang": "js",
+      "role": "module",
+      "exports": [],
+      "imports": [
+        "node:test",
+        "node:assert/strict",
+        "../lease.js"
+      ],
+      "symbols": []
     },
     {
       "path": "infra-ops_c3bot-relay/src/code/test/relay.test.js",
