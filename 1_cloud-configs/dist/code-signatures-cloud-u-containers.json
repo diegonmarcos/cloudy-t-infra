@@ -6,9 +6,9 @@
   },
   "repo": "cloud-u-containers",
   "counts": {
-    "files": 2701,
+    "files": 2702,
     "by_lang": {
-      "sh": 184,
+      "sh": 185,
       "js": 125,
       "nix": 202,
       "py": 524,
@@ -16,7 +16,7 @@
       "rust": 373
     },
     "by_role": {
-      "shell": 175,
+      "shell": 176,
       "file": 357,
       "nix-module": 20,
       "python": 509,
@@ -23206,6 +23206,22 @@
         "prep()",
         "measure()",
         "check()"
+      ]
+    },
+    {
+      "path": "infra-sec_caddy/src/test/test-mesh-wildcard-cert.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "blocks()",
+        "body_of()",
+        "pub()"
+      ],
+      "imports": [],
+      "symbols": [
+        "blocks()",
+        "body_of()",
+        "pub()"
       ]
     },
     {
