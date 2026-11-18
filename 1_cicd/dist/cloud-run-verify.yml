@@ -77,4 +77,5 @@ jobs:
           done
           [ $rc = 0 ] || echo "- scrappers-api health: FAIL" >> "$GITHUB_STEP_SUMMARY"
           "$RUNNER_TEMP/req.sh" scrappers-api GET /openapi.json || true
+          jq -r '.paths | to_entries[] | "\(.key) [\(.value|keys|join(","))]"' "$RUNNER_TEMP/body" || true
           exit $rc
