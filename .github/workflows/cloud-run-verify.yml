@@ -83,7 +83,7 @@ jobs:
           jq -c '.components.schemas | with_entries(select(.key|test("Download|Scrape|Request|Body";"i")))' "$RUNNER_TEMP/openapi.json" | head -c 3000 || true
           echo
           "$RUNNER_TEMP/req.sh" scrappers-api GET /targets || true
-          # yt-dlp on the first public YouTube video (19 s, tiny): no metadata-only mode exists (video|audio|audio_extract)
-          QUIET=1 "$RUNNER_TEMP/req.sh" scrappers-api POST /download/youtube "" '{"url":"https://www.youtube.com/watch?v=jNQXAC9IWRw","mode":"video","quality":144}' || true
+          # yt-dlp on the public YouTube test video (small at 144p): no metadata-only mode exists (video|audio|audio_extract)
+          QUIET=1 "$RUNNER_TEMP/req.sh" scrappers-api POST /download/youtube "" '{"url":"https://www.youtube.com/watch?v=dQw4w9WgXcQ","mode":"video","quality":144}' || true
           echo "- scrappers-api POST /download/youtube mode=video q=144: HTTP $(cat "$RUNNER_TEMP/last_code")" >> "$GITHUB_STEP_SUMMARY"
           exit $rc
