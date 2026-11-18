@@ -6,13 +6,13 @@
   },
   "repo": "cloud-u-containers",
   "counts": {
-    "files": 2716,
+    "files": 2717,
     "by_lang": {
       "sh": 185,
       "js": 125,
       "nix": 202,
       "py": 525,
-      "ts": 1306,
+      "ts": 1307,
       "rust": 373
     },
     "by_role": {
@@ -20,7 +20,7 @@
       "file": 357,
       "nix-module": 20,
       "python": 510,
-      "module": 812,
+      "module": 813,
       "script": 9,
       "flake": 92,
       "entrypoint": 73,
@@ -9280,6 +9280,25 @@
       ]
     },
     {
+      "path": "infra-api_cloudy-apps-communication-mcp/src/code/mcp/delivery/client-view.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "sentView",
+        "checkView",
+        "SentView",
+        "ClientVerdict",
+        "ClientCheck"
+      ],
+      "imports": [
+        "./recipients.ts"
+      ],
+      "symbols": [
+        "sentView(status: any)",
+        "checkView(r: CheckResult, sizeBytes: number | null)"
+      ]
+    },
+    {
       "path": "infra-api_cloudy-apps-communication-mcp/src/code/mcp/delivery/delivery.test.ts",
       "lang": "ts",
       "role": "module",
@@ -9398,6 +9417,7 @@
         "list(v: unknown)",
         "num(v: unknown)",
         "reasonOf(d: Record<string, unknown>)",
+        "dsnCode(diag: string | null)",
         "class Ledger"
       ]
     },
@@ -9470,6 +9490,7 @@
       "role": "module",
       "exports": [
         "callerId",
+        "accountMatches",
         "statusFor",
         "handleRest",
         "RestDeps"
@@ -9479,7 +9500,8 @@
         "./ledger.ts",
         "./sender-valid.ts",
         "./recipients.ts",
-        "./stalwart-wire.ts"
+        "./stalwart-wire.ts",
+        "./client-view.ts"
       ],
       "symbols": [
         "send(res: ServerResponse, status: number, body: unknown, extra: Record<string, string> = {})",
@@ -9487,7 +9509,8 @@
         "readBody(req: IncomingMessage, limit: number)",
         "sourceIp(req: IncomingMessage)",
         "callerId(req: IncomingMessage)",
-        "statusFor(deps: RestDeps, id: string)",
+        "accountMatches(login: string | null | undefined, account: string)",
+        "statusFor(deps: RestDeps, id: string, account: string | null = null)",
         "handleRest(req: IncomingMessage, res: ServerResponse, deps: RestDeps)",
         "class TooLarge"
       ]

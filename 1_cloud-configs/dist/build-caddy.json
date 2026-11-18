@@ -2243,6 +2243,11 @@
       "private_name": "cloud.chat-mattermost.mesh.diegonmarcos.com"
     },
     {
+      "service": "chat.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:8065",
+      "private_name": "cloud.chat.mesh.diegonmarcos.com"
+    },
+    {
       "service": "webmail.mesh.diegonmarcos.com",
       "upstream": "10.0.0.6:3000",
       "private_name": "cloud.webmail.mesh.diegonmarcos.com"
@@ -2689,6 +2694,12 @@
       "service": "cloud.chat-mattermost.mesh.diegonmarcos.com",
       "upstream": "10.0.0.6:8065",
       "alias_of": "chat-mattermost.mesh.diegonmarcos.com",
+      "source": "internal_routes"
+    },
+    {
+      "service": "cloud.chat.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:8065",
+      "alias_of": "chat.mesh.diegonmarcos.com",
       "source": "internal_routes"
     },
     {
@@ -7509,6 +7520,16 @@
     },
     {
       "host": "chat-mattermost.mesh.diegonmarcos.com",
+      "path": null,
+      "upstream": "10.0.0.6:8065",
+      "kind": "reverse_proxy",
+      "tls": "internal",
+      "zone": "com",
+      "service": null,
+      "notes": null
+    },
+    {
+      "host": "chat.mesh.diegonmarcos.com",
       "path": null,
       "upstream": "10.0.0.6:8065",
       "kind": "reverse_proxy",

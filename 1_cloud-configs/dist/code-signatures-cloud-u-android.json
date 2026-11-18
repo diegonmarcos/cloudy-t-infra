@@ -6,13 +6,13 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 24518,
+    "files": 24522,
     "by_lang": {
-      "sh": 798,
+      "sh": 799,
       "js": 581,
       "py": 251,
-      "kotlin": 13687,
-      "ts": 8380,
+      "kotlin": 13688,
+      "ts": 8382,
       "java": 654,
       "nix": 37,
       "rust": 130
@@ -20,12 +20,12 @@
     "by_role": {
       "hook": 166,
       "file": 2266,
-      "shell": 634,
+      "shell": 635,
       "script": 343,
       "python": 87,
-      "module": 6462,
+      "module": 6464,
       "java": 653,
-      "kotlin": 13684,
+      "kotlin": 13685,
       "flake": 33,
       "rust-module": 130,
       "nix-module": 4,
@@ -140299,6 +140299,43 @@
       ]
     },
     {
+      "path": "ac_cloud-chat/android/app/src/main/java/com/mattermost/rnbeta/ServerProbeModule.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ServerProbeModule"
+      ],
+      "imports": [
+        "com.facebook.react.bridge.Arguments",
+        "com.facebook.react.bridge.Promise",
+        "com.facebook.react.bridge.ReactApplicationContext",
+        "com.facebook.react.bridge.ReactContextBaseJavaModule",
+        "com.facebook.react.bridge.ReactMethod",
+        "com.facebook.react.module.annotations.ReactModule",
+        "java.net.InetAddress",
+        "java.net.InetSocketAddress",
+        "java.net.Socket",
+        "java.security.cert.X509Certificate",
+        "javax.net.ssl.SSLContext",
+        "javax.net.ssl.SSLParameters",
+        "javax.net.ssl.SSLSocket",
+        "javax.net.ssl.SSLSocketFactory",
+        "javax.net.ssl.X509TrustManager"
+      ],
+      "symbols": [
+        "getName()",
+        "resolveHost(host: String, promise: Promise)",
+        "checkTls(host: String, port: Int, promise: Promise)",
+        "handshake(host: String, port: Int, factory: SSLSocketFactory, verifyHost: Boolean)",
+        "putCert(r: com.facebook.react.bridge.WritableMap, cert: X509Certificate?)",
+        "captureOnlyFactory()",
+        "checkClientTrusted(chain: Array<out X509Certificate>?, authType: String?)",
+        "checkServerTrusted(chain: Array<out X509Certificate>?, authType: String?)",
+        "getAcceptedIssuers()",
+        "class ServerProbeModule"
+      ]
+    },
+    {
       "path": "ac_cloud-chat/app/actions/app/global.test.ts",
       "lang": "ts",
       "role": "module",
@@ -142498,6 +142535,7 @@
         "scheduleSessionNotification",
         "sendPasswordResetEmail",
         "ssoLogin",
+        "tokenLogin",
         "ssoLoginWithCodeExchange",
         "nativeEntraLogin",
         "getUserLoginType",
@@ -180579,6 +180617,7 @@
         "@hooks/device",
         "@utils/theme",
         "@utils/typography",
+        "./single_login",
         "react-native-keyboard-aware-scroll-view"
       ],
       "symbols": []
@@ -180617,10 +180656,12 @@
         "react-native-reanimated",
         "react-native-safe-area-context",
         "@actions/remote/general",
+        "@actions/remote/session",
         "@actions/remote/systems",
         "@assets/config.json",
         "@components/app_version",
         "@constants",
+        "@constants/screens",
         "@hooks/did_mount",
         "@hooks/navigation_button_pressed",
         "@hooks/screen_transition_animation",
@@ -180630,6 +180671,7 @@
         "@managers/security_manager",
         "@queries/app/servers",
         "@screens/background",
+        "@screens/login/form",
         "@screens/navigation",
         "@utils/errors",
         "@utils/fleet_setup",
@@ -180639,10 +180681,75 @@
         "@utils/url",
         "./form",
         "./header",
+        "./single_login",
         "@typings/launch",
         "@typings/screens/navigation"
       ],
       "symbols": []
+    },
+    {
+      "path": "ac_cloud-chat/app/screens/server/single_login.test.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [],
+      "imports": [
+        "fs",
+        "path",
+        "./single_login"
+      ],
+      "symbols": []
+    },
+    {
+      "path": "ac_cloud-chat/app/screens/server/single_login.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "validateCustomUrl",
+        "resolveServerUrl",
+        "choiceForUrl",
+        "hostOf",
+        "defaultServerName",
+        "effectiveServerName",
+        "loginMode",
+        "initialFlow",
+        "flowReducer",
+        "alternativeFor",
+        "portOf",
+        "runConnectAndLogin",
+        "MESH_SERVER_URL",
+        "MESH_ALT_SERVER_URL",
+        "PUBLIC_SERVER_URL",
+        "UrlChoice",
+        "UrlOption",
+        "SERVER_URL_OPTIONS",
+        "UrlInvalidReason",
+        "UrlCheck",
+        "Credentials",
+        "LoginMode",
+        "STEP_ORDER",
+        "StepId",
+        "StepStatus",
+        "StepState",
+        "FlowPhase",
+        "FlowState",
+        "FlowEvent",
+        "FALLBACK_CHOICE"
+      ],
+      "imports": [],
+      "symbols": [
+        "hostLooksValid(host: string)",
+        "validateCustomUrl(text: string)",
+        "resolveServerUrl(choice: UrlChoice, customText: string)",
+        "choiceForUrl(url?: string)",
+        "hostOf(url: string)",
+        "defaultServerName(url: string)",
+        "effectiveServerName(name: string, url: string)",
+        "loginMode(c: Credentials)",
+        "initialFlow()",
+        "flowReducer(state: FlowState, ev: FlowEvent)",
+        "alternativeFor(choice: UrlChoice, step: StepId)",
+        "portOf(url: string)"
+      ]
     },
     {
       "path": "ac_cloud-chat/app/screens/settings/about/about.tsx",
@@ -192106,6 +192213,42 @@
       "symbols": [
         "toFileInfo(f: SharedItem)",
         "imageDimensions(imgHeight: number, imgWidth: number, maxHeight: number, viewportWidth: number)"
+      ]
+    },
+    {
+      "path": "ac_cloud-chat/test/emulator-single-login.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "wake()",
+        "shot()",
+        "dump()",
+        "scene()",
+        "has()",
+        "hasnt()",
+        "kbd_hide()",
+        "find_xy()",
+        "tap()",
+        "type_in()",
+        "clear_in()",
+        "top()",
+        "run_and_wait()"
+      ],
+      "imports": [],
+      "symbols": [
+        "wake()",
+        "shot()",
+        "dump()",
+        "scene()",
+        "has()",
+        "hasnt()",
+        "kbd_hide()",
+        "find_xy()",
+        "tap()",
+        "type_in()",
+        "clear_in()",
+        "top()",
+        "run_and_wait()"
       ]
     },
     {
@@ -266118,6 +266261,7 @@
         "EmailListItem"
       ],
       "imports": [
+        "app.sterna.send.delivery.DeliveryTimeline",
         "androidx.compose.foundation.ExperimentalFoundationApi",
         "androidx.compose.foundation.background",
         "androidx.compose.foundation.clickable",
@@ -266156,8 +266300,7 @@
         "androidx.compose.runtime.mutableStateOf",
         "androidx.compose.runtime.remember",
         "androidx.compose.runtime.rememberCoroutineScope",
-        "androidx.compose.runtime.setValue",
-        "app.sterna.core.jmap.model.EmailBodyPart"
+        "androidx.compose.runtime.setValue"
       ],
       "symbols": [
         "rowBackground( scheme: ColorScheme, selected: Boolean, current: Boolean, flash: Float, card: Color, )",
@@ -266218,6 +266361,7 @@
       "role": "kotlin",
       "exports": [],
       "imports": [
+        "app.sterna.send.delivery.DeliveryTimeline",
         "android.widget.Toast",
         "androidx.compose.animation.core.Animatable",
         "androidx.compose.animation.core.FastOutSlowInEasing",
@@ -266256,8 +266400,7 @@
         "androidx.compose.runtime.Composable",
         "androidx.compose.runtime.CompositionLocalProvider",
         "androidx.compose.runtime.LaunchedEffect",
-        "androidx.compose.runtime.remember",
-        "androidx.compose.runtime.rememberCoroutineScope"
+        "androidx.compose.runtime.remember"
       ],
       "symbols": [
         "gmailIsImportant(email: Email)",
