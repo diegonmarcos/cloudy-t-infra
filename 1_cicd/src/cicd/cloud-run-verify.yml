@@ -1,0 +1,68 @@
+# Live verification of the Cloud Run services (#1686): mints an ID token with the deploy service account and sends
+# real requests to cloudy-browser-headless and scrappers-api. The ID token goes in X-Serverless-Authorization so the
+# Authorization header stays free for the app's own bearer (BROWSER_TOKEN, read from Secret Manager in memory and
+# masked). Nothing secret is printed; response bodies are truncated and checked for the token before printing.
+name: cloud-run-verify
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    env:
+      PROJECT: diegonmarcos-infra-prod
+      REGION: us-central1
+    steps:
+      - name: Authenticate GCP
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+          create_credentials_file: true
+      - uses: google-github-actions/setup-gcloud@v2
+      - name: Request helper
+        run: |
+          set -eu
+          cat > "$RUNNER_TEMP/req.sh" <<'SH'
+          # usage: req.sh <service> <METHOD> <path> [app-bearer-file] [json-body]
+          set -u
+          svc="$1"; method="$2"; path="$3"; bearer_file="${4:-}"; body="${5:-}"
+          url="$(gcloud run services describe "$svc" --project "$PROJECT" --region "$REGION" --format='value(status.url)')"
+          idt="$(gcloud auth print-identity-token --audiences="$url")"
+          echo "::add-mask::$idt"
+          args=(-sS -m 120 -o "$RUNNER_TEMP/body" -w '%{http_code}' -X "$method" -H "X-Serverless-Authorization: Bearer $idt")
+          [ -n "$bearer_file" ] && args+=(-H "Authorization: Bearer $(cat "$bearer_file")")
+          [ -n "$body" ] && args+=(-H 'Content-Type: application/json' --data "$body")
+          code="$(curl "${args[@]}" "$url$path" || echo 000)"
+          echo "$svc $method $path -> HTTP $code"
+          if [ -n "$bearer_file" ] && grep -qF "$(cat "$bearer_file")" "$RUNNER_TEMP/body" 2>/dev/null; then echo "(body withheld: contains the app token)"; else head -c 600 "$RUNNER_TEMP/body"; echo; fi
+          echo "$code" > "$RUNNER_TEMP/last_code"
+          SH
+          chmod +x "$RUNNER_TEMP/req.sh"
+      - name: cloudy-browser-headless
+        run: |
+          set -u
+          umask 077
+          gcloud secrets versions access latest --secret=cloudy-browser-headless-token --project "$PROJECT" > "$RUNNER_TEMP/bt"
+          echo "::add-mask::$(cat "$RUNNER_TEMP/bt")"
+          rc=0
+          for p in /cloudy-browser-headless/health /health; do
+            "$RUNNER_TEMP/req.sh" cloudy-browser-headless GET "$p" "$RUNNER_TEMP/bt"
+            [ "$(cat "$RUNNER_TEMP/last_code")" = 200 ] && { echo "browser-headless health OK via $p"; rc=0; break; } || rc=1
+          done
+          echo "- cloudy-browser-headless health: $([ $rc = 0 ] && echo OK || echo FAIL)" >> "$GITHUB_STEP_SUMMARY"
+          exit $rc
+      - name: scrappers-api
+        run: |
+          set -u
+          rc=1
+          for p in /health /scrappers/health; do
+            "$RUNNER_TEMP/req.sh" scrappers-api GET "$p"
+            [ "$(cat "$RUNNER_TEMP/last_code")" = 200 ] && { rc=0; echo "- scrappers-api health ($p): OK" >> "$GITHUB_STEP_SUMMARY"; break; }
+          done
+          [ $rc = 0 ] || echo "- scrappers-api health: FAIL" >> "$GITHUB_STEP_SUMMARY"
+          "$RUNNER_TEMP/req.sh" scrappers-api GET /openapi.json || true
+          exit $rc
