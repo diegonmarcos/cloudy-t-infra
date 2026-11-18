@@ -32,8 +32,8 @@
 #      - dispatch: oci-mail only when vm=oci-mail or include_opt_in_vms=true;
 #      - an unknown event fails loud.
 #   2. Workflow wiring (source AND generated .github copy): HM_OPT_IN_VMS is
-#      exactly "oci-mail", the matrix still lists all four VMs in the same
-#      order (gcp-proxy last), the input defaults to false, and the opt-in
+#      exactly "oci-mail", the declared fleet (plan.env.HM_FLEET) still lists
+#      all four VMs in the same order (gcp-proxy last), the input defaults to false, and the opt-in
 #      block runs BEFORE the authorization gate.
 #   3. Generated copies are the source plus the banner, nothing else.
 set -eu
@@ -83,8 +83,12 @@ expect "empty HM_OPT_IN_VMS = old behaviour for oci-mail too" "deploy not-opt-in
 echo "2. workflow wiring"
 for wf in "$SRC_WF" "$GEN_WF"; do
   n="${wf#"$ROOT/"}"
-  grep -qE '^      HM_OPT_IN_VMS: "oci-mail"$' "$wf" && ok "$n: HM_OPT_IN_VMS is exactly oci-mail" || bad "$n: HM_OPT_IN_VMS not exactly \"oci-mail\""
-  grep -qF 'vm: [oci-analytics, oci-mail, oci-apps, gcp-proxy]' "$wf" && ok "$n: matrix unchanged (all four, gcp-proxy last)" || bad "$n: matrix changed"
+  # HM_OPT_IN_VMS is workflow-level env since the plan job (2026-11-18), so the
+  # matrix filter and the in-job gate read one value.
+  grep -qE '^  HM_OPT_IN_VMS: "oci-mail"$' "$wf" && ok "$n: HM_OPT_IN_VMS is exactly oci-mail" || bad "$n: HM_OPT_IN_VMS not exactly \"oci-mail\""
+  # The declared fleet moved to plan.env.HM_FLEET; the matrix reads plan's filtered list.
+  grep -qF 'HM_FLEET: "oci-analytics oci-mail oci-apps gcp-proxy"' "$wf" && grep -qF 'vm: ${{ fromJSON(needs.plan.outputs.vms) }}' "$wf" \
+    && ok "$n: fleet unchanged (all four, gcp-proxy last), matrix from plan" || bad "$n: fleet list or matrix wiring changed"
   grep -A4 -E '^      include_opt_in_vms:' "$wf" | grep -qE 'default: false' && ok "$n: include_opt_in_vms defaults to false" || bad "$n: include_opt_in_vms missing or not default false"
   l_opt=$(grep -n 'cloud-ship-hm-vm-optin.sh' "$wf" | head -1 | cut -d: -f1)
   l_auth=$(grep -n 'AUTH=".github/workflows/scripts/cloud-ship-b-infra-deploy-authorization.sh"' "$wf" | head -1 | cut -d: -f1)

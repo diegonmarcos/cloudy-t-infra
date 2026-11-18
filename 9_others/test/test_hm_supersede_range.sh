@@ -84,9 +84,10 @@ suite "$SRC"
 # ── 4. wiring ──
 for wf in "$WF_SRC" "$WF_GEN"; do
   n=$(basename "$(dirname "$wf")")/$(basename "$wf")
-  ck "$n: gate calls the range helper" "$(grep -c 'cloud-ship-hm-supersede-range.sh paths "${{ github.run_id }}"' "$wf")" "1"
+  # 2: the deploy gate AND the plan job (matrix opt-in filter, 2026-11-18)
+  ck "$n: gate + plan call the range helper" "$(grep -c 'cloud-ship-hm-supersede-range.sh paths "${{ github.run_id }}"' "$wf")" "2"
   ck "$n: range hits skip the per-commit marker check only via KIND=range" "$(grep -c '"${KIND:-}" != "range"' "$wf")" "1"
-  ck "$n: job may list runs (actions: read)" "$(grep -c '^      actions: read' "$wf")" "1"
+  ck "$n: deploy + plan may list runs (actions: read)" "$(grep -c '^      actions: read' "$wf")" "2"
 done
 ck "generated workflow == banner + source" "$(tail -n +13 "$WF_GEN" | cmp -s - "$WF_SRC" && echo same)" "same"
 ck "dist script == banner + source" "$(tail -n +15 "$DIST" | cmp -s - <(tail -n +2 "$SRC") && echo same)" "same"

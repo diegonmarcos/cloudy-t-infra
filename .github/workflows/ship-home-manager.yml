@@ -53,6 +53,20 @@ on:
         default: false
         type: boolean
 
+# Workflow-level so the plan job (matrix) and every deploy job read ONE value.
+env:
+  # OPT-IN VMs: shipped only when explicitly requested (dispatch `vm` names
+  # it, or include_opt_in_vms=true) or when the commit touches THAT VM's
+  # own home-manager config (b_infra/nixhm-sudo-<vm>/ or its own
+  # build-vm-<vm>.json). Shared inputs — the consolidated artifact that
+  # every gen-configs refresh rewrites — no longer wake them. oci-mail is a
+  # 1 OCPU / 954MiB E2.1.Micro running the mail stack: on 2026-10-13 it
+  # took 6 HM runs in 3h, each pulling a ~2GB image and activating for
+  # 36-64 min, on top of load 6-10 and io PSI ~78%. Every other VM's
+  # behaviour is unchanged. Logic: cloud-ship-hm-vm-optin.sh; test:
+  # 9_others/test/test_hm_ship_vm_optin.sh.
+  HM_OPT_IN_VMS: "oci-mail"
+
 # TWO locks, on purpose (2026-10-14).
 #
 # 1. Workflow level: this workflow's OWN group, one running + ONE pending run.
@@ -81,7 +95,61 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  # plan: computes the deploy matrix. A VM the run was never going to touch
+  # (dispatch targets another VM, or an opt-in VM that was not requested and
+  # whose own config did not change) gets NO job, instead of a green job that
+  # deployed nothing (2026-11-18: run 44348642929's oci-mail job read as
+  # deployed). Every other VM keeps its job and the deploy gate below decides
+  # for it exactly as before. Logic: cloud-ship-hm-matrix.sh; test:
+  # 9_others/test/test_hm_ship_matrix.sh.
+  plan:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      # actions: read — supersede-range lists this workflow's runs.
+      actions: read
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
+    outputs:
+      vms: ${{ steps.matrix.outputs.vms }}
+    env:
+      # ORDER IS LOAD-BEARING: gcp-proxy MUST BE LAST (see the deploy matrix).
+      HM_FLEET: "oci-analytics oci-mail oci-apps gcp-proxy"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: false
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+          fetch-depth: 2
+      - name: Matrix (dispatch target + opt-in filter)
+        id: matrix
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # Same change set the deploy gate's opt-in step reads.
+          case "${{ github.event_name }}" in
+            push)
+              OPT_PATHS=$(jq -r '(.commits // [])[] | ((.added // []) + (.modified // []) + (.removed // []))[]' "$GITHUB_EVENT_PATH" | sort -u) ;;
+            workflow_run)
+              OPT_PATHS=$(git diff --name-only HEAD^ HEAD 2>/dev/null || true) ;;
+            *) OPT_PATHS="" ;;
+          esac
+          case "${{ github.event_name }}" in
+            push|workflow_run)
+              if RANGE_PATHS=$(bash .github/workflows/scripts/cloud-ship-hm-supersede-range.sh paths "${{ github.run_id }}"); then
+                OPT_PATHS=$(printf '%s\n%s\n' "$OPT_PATHS" "$RANGE_PATHS" | grep . | sort -u || true)
+              else
+                echo "::warning::supersede-range unavailable — matrix from this run's own commit(s) only"
+              fi ;;
+          esac
+          VMS=$(printf '%s\n' "$OPT_PATHS" | bash .github/workflows/scripts/cloud-ship-hm-matrix.sh \
+                  "${{ github.event_name }}" "${{ inputs.vm }}" "${{ inputs.include_opt_in_vms }}")
+          echo "vms=$VMS" >> "$GITHUB_OUTPUT"
+          echo "### home-manager deploy jobs: $VMS" >> "$GITHUB_STEP_SUMMARY"
+          echo "VMs not listed get no job on this run (not a green no-op)." >> "$GITHUB_STEP_SUMMARY"
+
   deploy:
+    needs: plan
     # timeout-minutes caps each per-VM matrix job. Without it GitHub's 6h
     # default applies: a wedged ship-hm (slow/failing nix-copy+activate onto a
     # 1GB VM, or a dropped WG tunnel) holds this max-parallel:1 +
@@ -140,7 +208,9 @@ jobs:
         # safe — it bounds the blast radius to one VM instead of four. The real
         # fix is to stop shipping a 2 GB image to a 1 GB VM that is also the
         # fleet's single point of routing.
-        vm: [oci-analytics, oci-mail, oci-apps, gcp-proxy]
+        # Declared list: plan.env.HM_FLEET (oci-analytics oci-mail oci-apps
+        # gcp-proxy), filtered by cloud-ship-hm-matrix.sh, order kept.
+        vm: ${{ fromJSON(needs.plan.outputs.vms) }}
     runs-on: ubuntu-latest
     name: ${{ matrix.vm }}
     permissions:
@@ -151,7 +221,7 @@ jobs:
       actions: read
     # Skip when triggered by gen-configs failure (workflow_run fires
     # regardless of upstream conclusion — guard explicitly).
-    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
+    if: ${{ (github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success') && needs.plan.outputs.vms != '[]' }}
     # Job-level so the composite `fetch-vault` action (Fetch vault step) inherits
     # it — that action materialises the age key and sops-decrypts BEFORE the Ship
     # step. Without this the run aborts "No SOPS age key available". Mirrors
@@ -164,17 +234,7 @@ jobs:
       # inline in the gate step) so every invocation of the authorization
       # script reads the same value and it can be audited in one place.
       B_INFRA_DEPLOY_MARKER: "[deploy-fleet]"
-      # OPT-IN VMs: shipped only when explicitly requested (dispatch `vm` names
-      # it, or include_opt_in_vms=true) or when the commit touches THAT VM's
-      # own home-manager config (b_infra/nixhm-sudo-<vm>/ or its own
-      # build-vm-<vm>.json). Shared inputs — the consolidated artifact that
-      # every gen-configs refresh rewrites — no longer wake them. oci-mail is a
-      # 1 OCPU / 954MiB E2.1.Micro running the mail stack: on 2026-10-13 it
-      # took 6 HM runs in 3h, each pulling a ~2GB image and activating for
-      # 36-64 min, on top of load 6-10 and io PSI ~78%. Every other VM's
-      # behaviour is unchanged. Logic: cloud-ship-hm-vm-optin.sh; test:
-      # 9_others/test/test_hm_ship_vm_optin.sh.
-      HM_OPT_IN_VMS: "oci-mail"
+      # HM_OPT_IN_VMS: workflow-level env (above), shared with the plan job.
     steps:
       # Checkout FIRST so the gate's `git diff` has history.
       # ref = upstream SHA (workflow_run) so we examine the commit that

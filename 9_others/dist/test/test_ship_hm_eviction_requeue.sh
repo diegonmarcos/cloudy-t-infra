@@ -258,7 +258,11 @@ def static(hm, rec):
     out.append(("each per-VM deploy job takes ship-wg-runner (FIFO, never cancels)",
                 jc.get("group") == "ship-wg-runner" and jc.get("queue") == "max" and jc.get("cancel-in-progress") is False))
     out.append(("per-VM order kept: max-parallel 1, gcp-proxy last",
-                dj["strategy"].get("max-parallel") == 1 and dj["strategy"]["matrix"]["vm"][-1] == "gcp-proxy"))
+                dj["strategy"].get("max-parallel") == 1
+                # matrix = plan's filtered list (cloud-ship-hm-matrix.sh keeps
+                # HM_FLEET order); the declared fleet must end with gcp-proxy.
+                and dj["strategy"]["matrix"]["vm"] == "${{ fromJSON(needs.plan.outputs.vms) }}"
+                and hm["jobs"]["plan"]["env"]["HM_FLEET"].split()[-1] == "gcp-proxy"))
     gate = next(x for x in dj["steps"] if x.get("id") == "gate")
     out.append(("gate widens relevance to the superseded range", "cloud-ship-hm-supersede-range.sh paths" in gate["run"]))
     txt = json.dumps(s)
