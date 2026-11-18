@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 24477,
+    "files": 24482,
     "by_lang": {
       "sh": 793,
       "js": 581,
       "py": 251,
-      "kotlin": 13651,
+      "kotlin": 13656,
       "ts": 8380,
       "java": 654,
       "nix": 37,
@@ -25,7 +25,7 @@
       "python": 87,
       "module": 6462,
       "java": 653,
-      "kotlin": 13648,
+      "kotlin": 13653,
       "flake": 33,
       "rust-module": 130,
       "nix-module": 4,
@@ -17168,6 +17168,7 @@
         "effective(d: Decl, presetId: String?)",
         "splitServers(csv: String)",
         "vpnServers(d: Decl, presetId: String?, fallbacks: List<String>, fleetResolvers: List<String>)",
+        "nonFleet(actual: List<String>, fleetResolvers: List<String>)",
         "presetServers(d: Decl, presetId: String?, fallbacks: List<String>, fleetResolvers: List<String>)",
         "meshDownServers(d: Decl, presetId: String?, fallbacks: List<String>, fleetResolvers: List<String>)",
         "meshDownConfig(d: Decl, servers: List<String>, fleetResolvers: List<String>, self: KeyPair, sink: KeyPair)",
@@ -17200,8 +17201,7 @@
         "class Decl",
         "class SelfResolver",
         "class Prefs",
-        "class Verdict",
-        "class Live"
+        "class Verdict"
       ]
     },
     {
@@ -17677,6 +17677,51 @@
       ]
     },
     {
+      "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/network/mesh/MeshProbeRows.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "LightLine",
+        "lightLines",
+        "peerFields"
+      ],
+      "imports": [
+        "androidx.compose.foundation.clickable",
+        "androidx.compose.foundation.horizontalScroll",
+        "androidx.compose.foundation.layout.Arrangement",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.Row",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.foundation.layout.width",
+        "androidx.compose.foundation.rememberScrollState",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.remember",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.ui.Alignment",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.platform.testTag",
+        "androidx.compose.ui.res.stringResource",
+        "com.diegonmarcos.superapp.R",
+        "com.diegonmarcos.superapp.fleetxray.mesh.C3MeshProbe",
+        "com.diegonmarcos.superapp.ui.StatusLight",
+        "com.diegonmarcos.superapp.uikit.LocalKitPalette"
+      ],
+      "symbols": [
+        "stateOf(ok: Boolean?)",
+        "lightLines( s: MeshSnapshot, profile: C3MeshProbe.Report?, reach: List<MeshReach.Result>, probes: List<ProbeLine> = emptyList()",
+        "fromProfile(id: String, cols: List<String>, what: String)",
+        "MeshLightsRow(store: MeshStore, s: MeshSnapshot, tag: String)",
+        "MeshTableRow(store: MeshStore, tag: String)",
+        "MeshPeersRow(store: MeshStore, s: MeshSnapshot, tag: String)",
+        "peerFields(p: PeerLive, s: MeshSnapshot)",
+        "MeshProfilerRow(store: MeshStore, tag: String)",
+        "MeshStatusLogRow(store: MeshStore, tag: String)",
+        "class LightLine"
+      ]
+    },
+    {
       "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/network/mesh/MeshProfilesPage.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -17735,12 +17780,25 @@
         "java.net.InetAddress",
         "java.net.InetSocketAddress",
         "java.net.Socket",
-        "java.net.URL"
+        "java.net.URL",
+        "java.security.KeyStore",
+        "java.security.cert.CertificateException",
+        "java.security.cert.X509Certificate",
+        "javax.net.ssl.HttpsURLConnection",
+        "javax.net.ssl.SNIHostName",
+        "javax.net.ssl.SSLContext",
+        "javax.net.ssl.SSLSocket",
+        "javax.net.ssl.TrustManagerFactory",
+        "javax.net.ssl.X509TrustManager"
       ],
       "symbols": [
         "resolve(host: String)",
         "connect(address: String, port: Int, timeoutMs: Int)",
         "https(url: String, timeoutMs: Int)",
+        "cert(host: String, port: Int, timeoutMs: Int)",
+        "checkClientTrusted(c: Array<X509Certificate>, authType: String)",
+        "checkServerTrusted(c: Array<X509Certificate>, authType: String)",
+        "getAcceptedIssuers()",
         "run(hosts: List<String>, io: Io = SystemIo, timeoutMs: Int = 4000, nowMs: ()",
         "timed(nowMs: ()",
         "probe(host: String, io: Io, timeoutMs: Int, nowMs: ()",
@@ -17749,6 +17807,7 @@
         "class Step",
         "class Result",
         "class Io",
+        "class Cert",
         "class SystemIo"
       ]
     },
@@ -17899,6 +17958,7 @@
         "com.diegonmarcos.superapp.network.AlwaysOnVpn",
         "com.diegonmarcos.superapp.network.MeshIntent",
         "com.diegonmarcos.superapp.network.WireGuardProfiles",
+        "com.diegonmarcos.superapp.fleetxray.mesh.C3MeshProbe",
         "java.util.concurrent.Executors"
       ],
       "symbols": [
@@ -17914,11 +17974,13 @@
         "connectFlow(label: String, call: ()",
         "run(engineId: String, arg: String = \"\", index: Int = -1)",
         "reachNow()",
+        "probeNow()",
         "reportText()",
         "confirmCloudPreset()",
         "nameOf(id: String)",
         "storedKey(stored: Map<String, String>, id: String)",
         "profileText(id: String)",
+        "ipLiterals(s: String)",
         "class Block",
         "class MeshStore"
       ]
@@ -18177,6 +18239,7 @@
         "current(ctx: Context)",
         "relayLine(ctx: Context)",
         "test(ctx: Context)",
+        "udpPerPeer(ctx: Context)",
         "udpProbe(ctx: Context)",
         "class MeshTransport",
         "class Doh",
@@ -26074,7 +26137,9 @@
         "androidx.compose.foundation.rememberScrollState",
         "androidx.compose.foundation.verticalScroll",
         "androidx.compose.ui.Modifier",
-        "androidx.compose.ui.geometry.Rect",
+        "androidx.compose.ui.test.getUnclippedBoundsInRoot",
+        "androidx.compose.ui.unit.DpRect",
+        "androidx.compose.ui.unit.dp",
         "androidx.compose.ui.test.onAllNodesWithTag",
         "androidx.compose.ui.test.onAllNodesWithText",
         "androidx.compose.ui.test.performClick",
@@ -29580,6 +29645,34 @@
       ]
     },
     {
+      "path": "aa_cloud-superapp/app/src/test/java/com/diegonmarcos/superapp/network/mesh/C3MeshProbeTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "C3MeshProbeTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.fleetxray.mesh.C3MeshProbe",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.net.SocketTimeoutException",
+        "java.net.UnknownHostException"
+      ],
+      "symbols": [
+        "query(server: String, name: String, timeoutMs: Int, padTo: Int)",
+        "systemResolve(name: String)",
+        "tcp(host: String, port: Int, timeoutMs: Int)",
+        "https(url: String, timeoutMs: Int)",
+        "input(resolvers: List<String>, peers: List<C3MeshProbe.Peer> = this.peers, up: Boolean = true)",
+        "class C3MeshProbeTest",
+        "class FakeMeshIo",
+        "class MTU"
+      ]
+    },
+    {
       "path": "aa_cloud-superapp/app/src/test/java/com/diegonmarcos/superapp/network/mesh/MeshDeclTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -29744,6 +29837,76 @@
         "show(port: FakePort, tab: String)",
         "snap(name: String)",
         "class MeshScreensShotTest"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/test/java/com/diegonmarcos/superapp/network/mesh/MeshStatus1797ShotTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "MeshStatus1797ShotTest"
+      ],
+      "imports": [
+        "android.app.Application",
+        "android.graphics.Bitmap",
+        "android.graphics.Canvas",
+        "android.view.View",
+        "androidx.compose.ui.test.hasTestTag",
+        "com.diegonmarcos.superapp.fleetxray.mesh.C3MeshProbe",
+        "com.diegonmarcos.superapp.network.FleetDns",
+        "com.diegonmarcos.superapp.ui.KitPageHarness",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "org.junit.runner.RunWith",
+        "org.robolectric.RobolectricTestRunner",
+        "org.robolectric.annotation.Config",
+        "org.robolectric.annotation.GraphicsMode",
+        "java.io.File"
+      ],
+      "symbols": [
+        "phone(dnsLine: String, io: C3MeshProbe.Io)",
+        "wire()",
+        "shoot(s: MeshStore, name: String)",
+        "class MeshStatus1797ShotTest"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/test/java/com/diegonmarcos/superapp/network/mesh/MeshStatusParityTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "MeshStatusParityTest"
+      ],
+      "imports": [
+        "android.app.Application",
+        "androidx.compose.ui.test.hasTestTag",
+        "androidx.compose.ui.test.hasText",
+        "com.diegonmarcos.superapp.ui.KitPageHarness",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "org.junit.runner.RunWith",
+        "org.robolectric.RobolectricTestRunner",
+        "org.robolectric.annotation.Config",
+        "java.util.TimeZone"
+      ],
+      "symbols": [
+        "resolve(host: String)",
+        "connect(address: String, port: Int, timeoutMs: Int)",
+        "https(url: String, timeoutMs: Int)",
+        "seeded(profile: Boolean)",
+        "previous(s: MeshStore)",
+        "current(s: MeshStore)",
+        "assertSubsequence(old: String, new: String)",
+        "has(tag: String)",
+        "shows(text: String)",
+        "build( s: MeshSnapshot?, dnsPreset: String, provider: String, transport: TransportView?, probes: List<ProbeLine>, reach: List<MeshReach.Result>, journal: List<LogEvent>, nowMs: Long, tz: TimeZone = TimeZone.getDefault()",
+        "line(t: String = \"\")",
+        "kv(k: String, v: String)",
+        "class MeshStatusParityTest",
+        "class ReachIo",
+        "class PreviousMeshReport"
       ]
     },
     {
@@ -65759,6 +65922,60 @@
         "update(uri: Uri, values: ContentValues?, selection: String?, selectionArgs: Array<out String>?)",
         "class FleetXrayTab",
         "class FleetXrayInitProvider"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/fleetconfigs-xray/src/main/java/com/diegonmarcos/superapp/fleetxray/mesh/C3MeshProbe.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "C3MeshProbe"
+      ],
+      "imports": [
+        "java.io.ByteArrayOutputStream",
+        "java.math.BigInteger",
+        "java.net.DatagramPacket",
+        "java.net.DatagramSocket",
+        "java.net.HttpURLConnection",
+        "java.net.InetAddress",
+        "java.net.InetSocketAddress",
+        "java.net.Socket",
+        "java.net.URL"
+      ],
+      "symbols": [
+        "cell(id: String)",
+        "query(server: String, name: String, timeoutMs: Int, padTo: Int = 0)",
+        "systemResolve(name: String)",
+        "tcp(host: String, port: Int, timeoutMs: Int)",
+        "https(url: String, timeoutMs: Int)",
+        "run(input: Input, io: Io = SystemIo, nowMs: ()",
+        "timed(group: String, id: String, body: ()",
+        "skip(group: String, id: String, why: String)",
+        "text(r: Report)",
+        "verdict(ok: Boolean?)",
+        "isV4(s: String)",
+        "cidrs(csv: String)",
+        "literal(s: String)",
+        "net(cidr: String)",
+        "contains(cidr: String, ip: String)",
+        "covers(outer: String, inner: String)",
+        "age(s: Long?)",
+        "clock(epochMs: Long)",
+        "buildQuery(id: Int, name: String, padTo: Int)",
+        "parseAnswer(b: ByteArray, len: Int, id: Int, questionEnd: Int)",
+        "u16(i: Int)",
+        "query(server: String, name: String, timeoutMs: Int, padTo: Int)",
+        "class C3MeshProbe",
+        "class Target",
+        "class Peer",
+        "class Input",
+        "class Step",
+        "class Cell",
+        "class Row",
+        "class Report",
+        "class Io",
+        "class MTU",
+        "class SystemIo"
       ]
     },
     {
@@ -103422,7 +103639,6 @@
         "org.libtorrent4j.SettingsPack",
         "org.libtorrent4j.Sha1Hash",
         "org.libtorrent4j.TorrentFlags",
-        "org.libtorrent4j.TorrentInfo",
         "org.libtorrent4j.alerts.Alert",
         "org.libtorrent4j.alerts.AlertType",
         "org.libtorrent4j.swig.settings_pack",
@@ -103448,7 +103664,8 @@
         "class in",
         "class code",
         "class owns",
-        "class LibtorrentBackend"
+        "class LibtorrentBackend",
+        "class touched"
       ]
     },
     {

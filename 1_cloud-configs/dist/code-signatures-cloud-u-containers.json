@@ -6,10 +6,10 @@
   },
   "repo": "cloud-u-containers",
   "counts": {
-    "files": 2698,
+    "files": 2699,
     "by_lang": {
       "sh": 184,
-      "js": 124,
+      "js": 125,
       "nix": 202,
       "py": 524,
       "ts": 1293,
@@ -20,7 +20,7 @@
       "file": 357,
       "nix-module": 20,
       "python": 509,
-      "module": 799,
+      "module": 800,
       "script": 9,
       "flake": 92,
       "entrypoint": 72,
@@ -21934,7 +21934,10 @@
         "Relay",
         "Telegram"
       ],
-      "imports": [],
+      "imports": [
+        "node:fs",
+        "node:path"
+      ],
       "symbols": [
         "chunkText(text, max = TELEGRAM_MAX)",
         "class Relay",
@@ -21981,6 +21984,21 @@
         "node:test",
         "node:assert/strict",
         "../lease.js"
+      ],
+      "symbols": []
+    },
+    {
+      "path": "infra-ops_c3bot-relay/src/code/test/persist.test.js",
+      "lang": "js",
+      "role": "module",
+      "exports": [],
+      "imports": [
+        "node:test",
+        "node:assert/strict",
+        "node:fs",
+        "node:os",
+        "node:path",
+        "../relay.js"
       ],
       "symbols": []
     },
@@ -22063,6 +22081,7 @@
         "C3BOT_WEBHOOK_URL",
         "HEALTH_WINDOW_S",
         "CHECK_INTERVAL_S",
+        "RELAY_STATE_FILE",
         "limits",
         "memory",
         "pids",
@@ -22071,7 +22090,8 @@
         "interval",
         "timeout",
         "retries",
-        "start_period"
+        "start_period",
+        "c3bot_relay_state"
       ]
     },
     {
