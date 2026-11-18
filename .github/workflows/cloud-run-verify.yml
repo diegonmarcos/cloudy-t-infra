@@ -50,7 +50,7 @@ jobs:
           [ -n "$body" ] && args+=(-H 'Content-Type: application/json' --data "$body")
           code="$(curl "${args[@]}" "$url$path" || echo 000)"
           echo "$svc $method $path -> HTTP $code"
-          if [ -n "${QUIET:-}" ]; then echo "(body $(wc -c < "$RUNNER_TEMP/body") bytes, not printed)"; elif [ -n "$bearer_file" ] && grep -qF "$(cat "$bearer_file")" "$RUNNER_TEMP/body" 2>/dev/null; then echo "(body withheld: contains the app token)"; else head -c 600 "$RUNNER_TEMP/body"; echo; fi
+          if [ -n "${QUIET:-}" ] && [ "$code" = 200 ]; then echo "(body $(wc -c < "$RUNNER_TEMP/body") bytes, not printed)"; elif [ -n "$bearer_file" ] && grep -qF "$(cat "$bearer_file")" "$RUNNER_TEMP/body" 2>/dev/null; then echo "(body withheld: contains the app token)"; else head -c 600 "$RUNNER_TEMP/body"; echo; fi
           echo "$code" > "$RUNNER_TEMP/last_code"
           SH
           chmod +x "$RUNNER_TEMP/req.sh"
