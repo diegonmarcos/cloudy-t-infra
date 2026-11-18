@@ -249,9 +249,7 @@
       "cpu_throttling": true,
       "timeout_s": 900,
       "invoker": "iam",
-      "env": {
-        "PORT": "3020"
-      },
+      "env": {},
       "secret_env": {},
       "volumes": [],
       "persistence": "none",
