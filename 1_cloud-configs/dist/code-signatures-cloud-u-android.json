@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 24567,
+    "files": 24570,
     "by_lang": {
       "sh": 805,
       "js": 581,
       "py": 251,
-      "kotlin": 13727,
+      "kotlin": 13730,
       "ts": 8382,
       "java": 654,
       "nix": 37,
@@ -25,7 +25,7 @@
       "python": 87,
       "module": 6464,
       "java": 653,
-      "kotlin": 13724,
+      "kotlin": 13727,
       "flake": 33,
       "rust-module": 130,
       "nix-module": 4,
@@ -9023,6 +9023,56 @@
       ]
     },
     {
+      "path": "aa_cloud-superapp/app/src/androidTest/java/com/diegonmarcos/superapp/MeshFallbacksOnDeviceTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "MeshFallbacksOnDeviceTest"
+      ],
+      "imports": [
+        "android.app.Activity",
+        "android.content.Intent",
+        "android.graphics.Bitmap",
+        "android.graphics.Canvas",
+        "android.os.SystemClock",
+        "android.util.Log",
+        "androidx.test.ext.junit.runners.AndroidJUnit4",
+        "androidx.test.platform.app.InstrumentationRegistry",
+        "androidx.test.runner.lifecycle.ActivityLifecycleMonitorRegistry",
+        "androidx.test.runner.lifecycle.Stage",
+        "com.diegonmarcos.superapp.network.MeshTransport",
+        "com.diegonmarcos.superapp.network.mesh.AndroidMeshPort",
+        "com.diegonmarcos.superapp.network.mesh.MeshDecl",
+        "com.diegonmarcos.superapp.network.mesh.MeshHost",
+        "com.diegonmarcos.superapp.network.mesh.MeshReport",
+        "com.diegonmarcos.superapp.network.mesh.MeshStatusPage",
+        "com.diegonmarcos.superapp.network.mesh.MeshStore",
+        "com.diegonmarcos.superapp.network.mesh.lightLines",
+        "com.diegonmarcos.superapp.ui.LauncherPalette",
+        "com.diegonmarcos.superapp.uikit.kitComposeView",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "org.junit.runner.RunWith",
+        "java.io.File"
+      ],
+      "symbols": [
+        "requestConsent(intent: Intent, then: ()",
+        "copy(label: String, text: String)",
+        "paste()",
+        "openVpnSettings()",
+        "openAccount()",
+        "importConf()",
+        "exportConf()",
+        "exportProfiles()",
+        "openCustomTab(url: String)",
+        "resumed()",
+        "fallbackTestsAndStatusRunOnTheDevice()",
+        "class MeshFallbacksOnDeviceTest",
+        "class Host"
+      ]
+    },
+    {
       "path": "aa_cloud-superapp/app/src/androidTest/java/com/diegonmarcos/superapp/PermissionRolesTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -17780,6 +17830,7 @@
         "stateOf(ok: Boolean?)",
         "lightLines( s: MeshSnapshot, profile: C3MeshProbe.Report?, reach: List<MeshReach.Result>, probes: List<ProbeLine> = emptyList()",
         "fromProfile(id: String, cols: List<String>, what: String)",
+        "ok(prefix: String)",
         "MeshLightsRow(store: MeshStore, s: MeshSnapshot, tag: String)",
         "MeshTableRow(store: MeshStore, tag: String)",
         "MeshPeersRow(store: MeshStore, s: MeshSnapshot, tag: String)",
@@ -18227,6 +18278,7 @@
         "com.diegonmarcos.superapp.notificationcenter.MeshDownAlert",
         "com.wireguard.android.backend.Tunnel",
         "com.wireguard.crypto.Key",
+        "com.diegonmarcos.superapp.network.mesh.MeshDecl",
         "java.util.concurrent.Executors",
         "java.util.concurrent.TimeUnit"
       ],
@@ -18266,6 +18318,8 @@
         "com.diegonmarcos.superapp.BuildConfig",
         "com.diegonmarcos.superapp.appstore.DnsLadder",
         "com.diegonmarcos.superapp.net.RelaySpec",
+        "com.diegonmarcos.superapp.fleetendpoints.AppCredentialsContract",
+        "com.diegonmarcos.superapp.fleetendpoints.android.AccountClient",
         "com.diegonmarcos.superapp.network.mesh.MeshDecl",
         "com.wireguard.android.backend.Tunnel",
         "com.wireguard.config.Config",
@@ -18297,6 +18351,10 @@
         "plan(ctx: Context)",
         "save(ctx: Context, p: Plan?)",
         "route(ctx: Context, cfg: Config)",
+        "failover(mode: String, up: Boolean, path: String, newestHandshakeAgeS: Long?, staleS: Long, onRelaySinceMs: Long, nowMs: Long)",
+        "toString()",
+        "pickRelayKey(manual: String, fleet: AppCredentialsContract.Credential)",
+        "relayKey(ctx: Context)",
         "ensureRelay(ctx: Context, p: Plan)",
         "release(ctx: Context)",
         "directPlan(peers: List<WireGuardPrefs.PeerData>)",
@@ -18313,11 +18371,7 @@
         "class MeshTransport",
         "class Doh",
         "class Decl",
-        "class RelayRoute",
-        "class Relay",
-        "class Bootstrap",
-        "class Path",
-        "class Plan"
+        "class RelayRoute"
       ]
     },
     {
@@ -30077,6 +30131,29 @@
       "symbols": [
         "reading(wanted: Boolean = true, up: Boolean = false, engine: Boolean = true, hs: List<Long?> = listOf(null, null)",
         "class MeshDownModelTest"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/test/java/com/diegonmarcos/superapp/network/MeshFailoverTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "MeshFailoverTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.fleetendpoints.AppCredentialsContract",
+        "com.diegonmarcos.superapp.network.MeshTransport.Failover",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "org.junit.runner.RunWith",
+        "org.robolectric.RobolectricTestRunner",
+        "org.robolectric.annotation.Config"
+      ],
+      "symbols": [
+        "f(mode: String = \"auto\", up: Boolean = true, path: String = \"direct\", age: Long? = 20, since: Long = 0)",
+        "class MeshFailoverTest"
       ]
     },
     {
@@ -116305,6 +116382,28 @@
         "fieldKindsComeFromTheDeclaration()",
         "connectorsParse()",
         "class ProfileSotTest"
+      ]
+    },
+    {
+      "path": "ac_cloud-account/app/src/test/java/com/diegonmarcos/cloudaccount/RelayKeyDefaultGrantTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "RelayKeyDefaultGrantTest"
+      ],
+      "imports": [
+        "androidx.test.core.app.ApplicationProvider",
+        "com.diegonmarcos.superapp.fleetendpoints.AppCredentialsContract",
+        "com.diegonmarcos.superapp.settings.AccountVault",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "org.junit.runner.RunWith",
+        "org.robolectric.RobolectricTestRunner"
+      ],
+      "symbols": [
+        "class RelayKeyDefaultGrantTest"
       ]
     },
     {

@@ -6,9 +6,9 @@
   },
   "repo": "cloud",
   "counts": {
-    "files": 1584,
+    "files": 1585,
     "by_lang": {
-      "sh": 1069,
+      "sh": 1070,
       "js": 169,
       "nix": 304,
       "py": 12,
@@ -17,7 +17,7 @@
     "by_role": {
       "hook": 377,
       "file": 86,
-      "shell": 548,
+      "shell": 549,
       "flake": 6,
       "script": 146,
       "module": 113,
@@ -19692,6 +19692,24 @@
       ]
     },
     {
+      "path": "9_others/test/hm-zram-low-ram.test.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "ok()",
+        "bad()",
+        "render()",
+        "run_script()"
+      ],
+      "imports": [],
+      "symbols": [
+        "ok()",
+        "bad()",
+        "render()",
+        "run_script()"
+      ]
+    },
+    {
       "path": "9_others/test/host-sync-declaration.test.sh",
       "lang": "sh",
       "role": "shell",
@@ -23392,6 +23410,7 @@
         "swappiness",
         "vfsCachePressure",
         "minFreeKB",
+        "lowRam",
         "zramSizeMB",
         "zramSizeBytes",
         "dockerMaxMB",
@@ -23402,6 +23421,10 @@
         "ForwardToSyslog",
         "executable",
         "text",
+        "WANT",
+        "HAVE",
+        "DELTA",
+        "ID",
         "Description",
         "After",
         "Type",
@@ -23413,7 +23436,8 @@
         "OOMScoreAdjust",
         "SUDO",
         "SRC",
-        "live"
+        "live",
+        "ZRAM_CHANGED"
       ]
     },
     {
@@ -25896,6 +25920,7 @@
         "swappiness",
         "vfsCachePressure",
         "minFreeKB",
+        "lowRam",
         "zramSizeMB",
         "zramSizeBytes",
         "dockerMaxMB",
@@ -25906,6 +25931,10 @@
         "ForwardToSyslog",
         "executable",
         "text",
+        "WANT",
+        "HAVE",
+        "DELTA",
+        "ID",
         "Description",
         "After",
         "Type",
@@ -25917,7 +25946,8 @@
         "OOMScoreAdjust",
         "SUDO",
         "SRC",
-        "live"
+        "live",
+        "ZRAM_CHANGED"
       ]
     },
     {
@@ -28263,6 +28293,7 @@
         "swappiness",
         "vfsCachePressure",
         "minFreeKB",
+        "lowRam",
         "zramSizeMB",
         "zramSizeBytes",
         "dockerMaxMB",
@@ -28273,6 +28304,10 @@
         "ForwardToSyslog",
         "executable",
         "text",
+        "WANT",
+        "HAVE",
+        "DELTA",
+        "ID",
         "Description",
         "After",
         "Type",
@@ -28284,7 +28319,8 @@
         "OOMScoreAdjust",
         "SUDO",
         "SRC",
-        "live"
+        "live",
+        "ZRAM_CHANGED"
       ]
     },
     {
@@ -30634,6 +30670,7 @@
         "swappiness",
         "vfsCachePressure",
         "minFreeKB",
+        "lowRam",
         "zramSizeMB",
         "zramSizeBytes",
         "dockerMaxMB",
@@ -30644,6 +30681,10 @@
         "ForwardToSyslog",
         "executable",
         "text",
+        "WANT",
+        "HAVE",
+        "DELTA",
+        "ID",
         "Description",
         "After",
         "Type",
@@ -30655,7 +30696,8 @@
         "OOMScoreAdjust",
         "SUDO",
         "SRC",
-        "live"
+        "live",
+        "ZRAM_CHANGED"
       ]
     },
     {
@@ -33004,6 +33046,7 @@
         "swappiness",
         "vfsCachePressure",
         "minFreeKB",
+        "lowRam",
         "zramSizeMB",
         "zramSizeBytes",
         "dockerMaxMB",
@@ -33014,6 +33057,10 @@
         "ForwardToSyslog",
         "executable",
         "text",
+        "WANT",
+        "HAVE",
+        "DELTA",
+        "ID",
         "Description",
         "After",
         "Type",
@@ -33025,7 +33072,8 @@
         "OOMScoreAdjust",
         "SUDO",
         "SRC",
-        "live"
+        "live",
+        "ZRAM_CHANGED"
       ]
     },
     {

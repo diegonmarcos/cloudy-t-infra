@@ -62511,16 +62511,20 @@
         "tokio_util::compat::",
         "std::env",
         "crate::",
-        "of"
+        "of",
+        "super::"
       ],
       "symbols": [
         "process(&mut self, _challenge: &[u8])",
         "tls_config()",
         "run(src: &Source, mbox: &str, cfg: &Config, state: State)",
         "one_cycle(src: &Source, mbox: &str, cfg: &Config, state: &State)",
+        "nothing_new(uid_next: Option<u32>, from_uid: u32)",
         "initial_from_uid(session: &mut Session<ImapStream>, since: &str, uid_next: Option<u32>)",
         "to_imap_date(s: &str)",
-        "fetch_and_deliver(\n    session: &mut Session<ImapStream>,\n    src: &Source,\n    mbox: &str,\n    cfg: &Config,\n    state: &State,\n    from_uid: u32,\n    uidvalidity: u32,\n)"
+        "fetch_and_deliver(\n    session: &mut Session<ImapStream>,\n    src: &Source,\n    mbox: &str,\n    cfg: &Config,\n    state: &State,\n    from_uid: u32,\n    uidvalidity: u32,\n)",
+        "skips_fetch_only_when_uidnext_proves_nothing_new()",
+        "imap_date_format()"
       ]
     },
     {
@@ -63508,9 +63512,16 @@
       "lang": "rust",
       "role": "rust-module",
       "exports": [
+        "get",
+        "insert",
+        "len",
+        "retain_ids",
+        "missing",
+        "uses_attach_type",
         "headers_referenced",
         "email_matches",
-        "maintain_filters"
+        "maintain_filters",
+        "AttachTypeCache"
       ],
       "imports": [
         "anyhow::Result",
@@ -63524,18 +63535,27 @@
         "serde_json::json"
       ],
       "symbols": [
+        "get(&self, id: &str)",
+        "insert(&mut self, id: String, types: HashSet<String>)",
+        "len(&self)",
+        "retain_ids(&mut self, live: &[String])",
+        "uses_attach_type(node: &PredicateNode)",
         "from_email(em: &Email)",
         "from_domain(em: &Email)",
         "walk(node: &PredicateNode, out: &mut HashSet<String>)",
         "has_attachment(em: &Email)",
         "attachment_types(em: &Email)",
+        "body_attachment_types(em: &Email)",
         "walk(part: &BodyPart, out: &mut HashSet<String>)",
         "parse_utcdate(value: &str)",
         "email_matches(em: &Email, node: &PredicateNode, now: f64)",
         "atom_matches(em: &Email, predicate: &Predicate, now: f64)",
-        "maintain_filters(\n    client: &Client,\n    rules: &Rules,\n    name_to_id: &HashMap<String, String>,\n    mailboxes: &[Mailbox],\n)",
+        "maintain_filters(\n    client: &Client,\n    rules: &Rules,\n    name_to_id: &HashMap<String, String>,\n    mailboxes: &[Mailbox],\n    attach_cache: &mut AttachTypeCache,\n)",
         "email(v: Value)",
         "pred(v: Value)",
+        "email_props_never_force_a_blob_read()",
+        "cached_attach_types_drive_attach_type_without_body_structure()",
+        "attach_cache_fetches_once_and_stays_bounded()",
         "size_buckets_tile_exactly_once()",
         "unread_is_absence_of_seen()",
         "newer_than_hours_uses_received_at()",
@@ -63687,7 +63707,7 @@
         "now_epoch()",
         "is_transport_error(err: &anyhow::Error)",
         "take_reapply_request(client: &jmap::Client)",
-        "one_poll(client: &jmap::Client, rules: &Rules)",
+        "one_poll(\n    client: &jmap::Client,\n    rules: &Rules,\n    attach_cache: &mut filters::AttachTypeCache,\n)",
         "apply_renames_step(client: &jmap::Client, rules: &Rules)",
         "main()"
       ]
