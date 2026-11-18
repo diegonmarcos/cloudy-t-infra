@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-containers",
   "counts": {
-    "files": 2687,
+    "files": 2688,
     "by_lang": {
       "sh": 182,
       "js": 122,
       "nix": 198,
-      "py": 523,
+      "py": 524,
       "ts": 1291,
       "rust": 371
     },
@@ -19,7 +19,7 @@
       "shell": 173,
       "file": 357,
       "nix-module": 20,
-      "python": 508,
+      "python": 509,
       "module": 795,
       "script": 9,
       "flake": 90,
@@ -63665,7 +63665,7 @@
       "lang": "py",
       "role": "python",
       "exports": [
-        "scrape(handle: str, max_posts: int = 60, **_)"
+        "scrape(handle: str, max_posts: int = 60, source: str = \"repo\", **_)"
       ],
       "imports": [
         "pathlib",
@@ -63673,7 +63673,10 @@
       ],
       "symbols": [
         "_loader()",
-        "scrape(handle: str, max_posts: int = 60, **_)"
+        "_fetch(url: str)",
+        "_parse_dataset(text: str)",
+        "_repo(handle: str, max_posts: int | None)",
+        "scrape(handle: str, max_posts: int = 60, source: str = \"repo\", **_)"
       ]
     },
     {
@@ -63761,6 +63764,25 @@
         "_find(node, pred)",
         "_duration_seconds(text: str)",
         "scrape(playlist_url=None, playlist_id=None, url=None, **_)"
+      ]
+    },
+    {
+      "path": "user-data_cloudy-browser-scrapper-api/src/code/test_instagram.py",
+      "lang": "py",
+      "role": "python",
+      "exports": [
+        "fake_fetch(url)",
+        "check(name, cond)"
+      ],
+      "imports": [
+        "scrapers",
+        "json",
+        "os",
+        "sys"
+      ],
+      "symbols": [
+        "fake_fetch(url)",
+        "check(name, cond)"
       ]
     },
     {
