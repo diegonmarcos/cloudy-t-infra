@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 24570,
+    "files": 24579,
     "by_lang": {
-      "sh": 805,
-      "js": 581,
-      "py": 251,
-      "kotlin": 13730,
+      "sh": 806,
+      "js": 585,
+      "py": 252,
+      "kotlin": 13733,
       "ts": 8382,
       "java": 654,
       "nix": 37,
@@ -20,12 +20,12 @@
     "by_role": {
       "hook": 166,
       "file": 2266,
-      "shell": 641,
+      "shell": 642,
       "script": 343,
-      "python": 87,
-      "module": 6464,
+      "python": 88,
+      "module": 6468,
       "java": 653,
-      "kotlin": 13727,
+      "kotlin": 13730,
       "flake": 33,
       "rust-module": 130,
       "nix-module": 4,
@@ -138894,6 +138894,117 @@
       ]
     },
     {
+      "path": "ac_cloud-canvas/app/src/main/assets/painter/grid.js",
+      "lang": "js",
+      "role": "module",
+      "exports": [],
+      "imports": [],
+      "symbols": [
+        "hexGrid(r)",
+        "squareGrid(r)",
+        "triangleGrid(r)",
+        "octagonGrid(r)",
+        "generate(shape, r)",
+        "shapeOfKey(key)",
+        "world2d(cell, scale)",
+        "sphere(cell, scale, lift)",
+        "camera3dDistance(scale)",
+        "defaults()",
+        "clampScale(s)",
+        "isColor(c)",
+        "paint(state, key, color)",
+        "erase(state, key)",
+        "clear(state, shape)",
+        "activeCount(state, shape)",
+        "colorOf(state, key)",
+        "Stroke(state)",
+        "startStroke(state)",
+        "encode(state)",
+        "decode(text)",
+        "applyOverrides(state, q)"
+      ]
+    },
+    {
+      "path": "ac_cloud-canvas/app/src/main/assets/painter/painter.js",
+      "lang": "js",
+      "role": "module",
+      "exports": [],
+      "imports": [],
+      "symbols": [
+        "aspect()",
+        "geometries()",
+        "disposeGrid()",
+        "buildGrid()",
+        "place(cell, lift, k)",
+        "layoutGrid()",
+        "paintAll()",
+        "paintOne(mesh, index)",
+        "applyControls()",
+        "useCamera()",
+        "center()",
+        "onResize()",
+        "hitKey(ev)",
+        "strokeAt(ev)",
+        "endStroke()",
+        "updateCount()",
+        "syncUi()",
+        "send(o)",
+        "save()",
+        "scheduleSave()",
+        "apply(text)",
+        "loop()"
+      ]
+    },
+    {
+      "path": "ac_cloud-canvas/app/src/main/assets/painter/vendor/three/OrbitControls.js",
+      "lang": "js",
+      "role": "module",
+      "exports": [],
+      "imports": [],
+      "symbols": [
+        "update()",
+        "getAutoRotationAngle()",
+        "getZoomScale()",
+        "rotateLeft( angle )",
+        "rotateUp( angle )",
+        "panLeft( distance, objectMatrix )",
+        "panUp( distance, objectMatrix )",
+        "pan( deltaX, deltaY )",
+        "dollyOut( dollyScale )",
+        "dollyIn( dollyScale )",
+        "handleMouseDownRotate( event )",
+        "handleMouseDownDolly( event )",
+        "handleMouseDownPan( event )",
+        "handleMouseMoveRotate( event )",
+        "handleMouseMoveDolly( event )",
+        "handleMouseMovePan( event )",
+        "handleMouseUp( )",
+        "handleMouseWheel( event )",
+        "handleKeyDown( event )",
+        "handleTouchStartRotate( event )",
+        "handleTouchStartPan( event )",
+        "handleTouchStartDolly( event )",
+        "handleTouchStartDollyPan( event )",
+        "handleTouchStartDollyRotate( event )",
+        "handleTouchMoveRotate( event )",
+        "handleTouchMovePan( event )",
+        "handleTouchMoveDolly( event )",
+        "handleTouchMoveDollyPan( event )",
+        "handleTouchMoveDollyRotate( event )",
+        "handleTouchEnd( )",
+        "onPointerDown( event )",
+        "onPointerMove( event )",
+        "onPointerUp( event )",
+        "onMouseDown( event )",
+        "onMouseMove( event )",
+        "onMouseUp( event )",
+        "onMouseWheel( event )",
+        "onKeyDown( event )",
+        "onTouchStart( event )",
+        "onTouchMove( event )"
+      ]
+    },
+    {
       "path": "ac_cloud-canvas/app/src/main/java/com/diegonmarcos/cloudcanvas/audio/AudioOut.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -139440,6 +139551,26 @@
       ]
     },
     {
+      "path": "ac_cloud-canvas/app/src/main/java/com/diegonmarcos/cloudcanvas/painter/PainterStore.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "PainterStore"
+      ],
+      "imports": [
+        "java.io.File",
+        "org.json.JSONObject"
+      ],
+      "symbols": [
+        "read()",
+        "write(state: String)",
+        "reset()",
+        "valid(state: String)",
+        "activeCount(state: String, shape: String)",
+        "class PainterStore"
+      ]
+    },
+    {
       "path": "ac_cloud-canvas/app/src/main/java/com/diegonmarcos/cloudcanvas/ui/AiConfigsPage.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -139867,6 +139998,69 @@
       ]
     },
     {
+      "path": "ac_cloud-canvas/app/src/main/java/com/diegonmarcos/cloudcanvas/ui/PainterScreen.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "PainterController",
+        "PAINTER_URL",
+        "painterUrl",
+        "PainterScreen"
+      ],
+      "imports": [
+        "android.annotation.SuppressLint",
+        "android.content.Context",
+        "android.content.Intent",
+        "android.net.Uri",
+        "android.webkit.WebResourceRequest",
+        "android.webkit.WebResourceResponse",
+        "android.webkit.WebView",
+        "androidx.compose.foundation.layout.Box",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.fillMaxSize",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.material3.Text",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.DisposableEffect",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.platform.testTag",
+        "androidx.compose.ui.res.colorResource",
+        "androidx.compose.ui.unit.dp",
+        "androidx.compose.ui.unit.sp",
+        "androidx.compose.ui.viewinterop.AndroidView",
+        "androidx.webkit.JavaScriptReplyProxy",
+        "androidx.webkit.WebMessageCompat",
+        "androidx.webkit.WebViewAssetLoader",
+        "androidx.webkit.WebViewCompat",
+        "androidx.webkit.WebViewFeature",
+        "com.diegonmarcos.cloudcanvas.R",
+        "com.diegonmarcos.cloudcanvas.painter.PainterStore",
+        "com.diegonmarcos.cloudlib.web.CloudWeb",
+        "com.diegonmarcos.cloudlib.web.CloudWebClient",
+        "com.diegonmarcos.cloudlib.web.WebProfile",
+        "java.io.File",
+        "org.json.JSONObject"
+      ],
+      "symbols": [
+        "onMessage(data: String, proxy: JavaScriptReplyProxy)",
+        "flush()",
+        "url()",
+        "shouldInterceptRequest(view: WebView, request: WebResourceRequest)",
+        "shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest)",
+        "onRecovered(dead: WebView, fresh: WebView?)",
+        "painterUrl(query: Map<String, String>)",
+        "PainterScreen(ctl: PainterController, modifier: Modifier = Modifier)",
+        "painterWebView(c: Context, ctl: PainterController)",
+        "bridge(wv: WebView)",
+        "class PainterController",
+        "class PainterWebClient"
+      ]
+    },
+    {
       "path": "ac_cloud-canvas/app/src/main/java/com/diegonmarcos/cloudcanvas/ui/PlayController.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -140154,7 +140348,39 @@
         "theBarHasFourItemsAndTheMusicSectionIsTheLast()",
         "everyBarIdIsASectionWithAnIcon()",
         "drawSectionHasDrawAndBoardPages()",
+        "painterSitsRightAfterDrawAndNothingElseMoved()",
         "class NavShapeTest"
+      ]
+    },
+    {
+      "path": "ac_cloud-canvas/app/src/test/java/com/diegonmarcos/cloudcanvas/PainterTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "PainterTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.cloudcanvas.painter.PainterStore",
+        "java.io.File",
+        "java.nio.file.Files",
+        "org.json.JSONObject",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Assert.fail",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "dir()",
+        "state( shape: String = \"hex\", mode: String = \"paint\", layout: String = \"2d\", scale: Int = 40, color: String = \"#ffffff\", painted: Map<String, Map<String, String>> = emptyMap()",
+        "aFreshStoreHasNoState()",
+        "paintedCellsPerShapeAndTheChoicesSurviveARestart()",
+        "paintEraseAndClearAreSavedAsTheyHappen()",
+        "writeIsAtomicAndRefusesAMalformedState()",
+        "anUnreadableFileLoadsAsNothing()",
+        "launchExtrasBecomeThePageQuery()",
+        "class PainterTest"
       ]
     },
     {
@@ -140395,7 +140621,9 @@
         "tap_text()",
         "start()",
         "sw()",
-        "corner()"
+        "corner()",
+        "pstart()",
+        "pstroke()"
       ],
       "imports": [],
       "symbols": [
@@ -140405,8 +140633,22 @@
         "tap_text()",
         "start()",
         "sw()",
-        "corner()"
+        "corner()",
+        "pstart()",
+        "pstroke()"
       ]
+    },
+    {
+      "path": "ac_cloud-canvas/test/painter/grid.test.js",
+      "lang": "js",
+      "role": "module",
+      "exports": [],
+      "imports": [
+        "node:test",
+        "node:assert/strict",
+        "node:path"
+      ],
+      "symbols": []
     },
     {
       "path": "ac_cloud-canvas/test/test-canvas-app.sh",
@@ -140445,6 +140687,24 @@
       ]
     },
     {
+      "path": "ac_cloud-canvas/test/test-painter.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "ok()",
+        "bad()",
+        "check()",
+        "mut()"
+      ],
+      "imports": [],
+      "symbols": [
+        "ok()",
+        "bad()",
+        "check()",
+        "mut()"
+      ]
+    },
+    {
       "path": "ac_cloud-canvas/tools/vendor-board.py",
       "lang": "py",
       "role": "python",
@@ -140468,6 +140728,30 @@
         "fetch_quickdraw(out)",
         "fetch_tldraw(out)",
         "check_one(out)"
+      ]
+    },
+    {
+      "path": "ac_cloud-canvas/tools/vendor-painter.py",
+      "lang": "py",
+      "role": "python",
+      "exports": [
+        "sha(b)",
+        "get(url)",
+        "tarball(pkg, version, want_licence)",
+        "out_dir(app)",
+        "fetch(out)",
+        "check(out)"
+      ],
+      "imports": [
+        "base64"
+      ],
+      "symbols": [
+        "sha(b)",
+        "get(url)",
+        "tarball(pkg, version, want_licence)",
+        "out_dir(app)",
+        "fetch(out)",
+        "check(out)"
       ]
     },
     {

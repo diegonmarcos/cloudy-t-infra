@@ -6,9 +6,9 @@
   },
   "repo": "cloud-u-containers",
   "counts": {
-    "files": 2718,
+    "files": 2720,
     "by_lang": {
-      "sh": 185,
+      "sh": 187,
       "js": 125,
       "nix": 202,
       "py": 526,
@@ -16,7 +16,7 @@
       "rust": 373
     },
     "by_role": {
-      "shell": 176,
+      "shell": 178,
       "file": 357,
       "nix-module": 20,
       "python": 510,
@@ -202,6 +202,18 @@
         "AGENT_MEMORY_TYPES",
         "AGENT_MEMORY_BRIEFING",
         "aliasEnv"
+      ]
+    },
+    {
+      "path": "_shared/courier-decide.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "emit()"
+      ],
+      "imports": [],
+      "symbols": [
+        "emit()"
       ]
     },
     {
@@ -1082,6 +1094,20 @@
       "imports": [],
       "symbols": [
         "set_of()"
+      ]
+    },
+    {
+      "path": "_shared/test/courier-decide.test.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "g()",
+        "check()"
+      ],
+      "imports": [],
+      "symbols": [
+        "g()",
+        "check()"
       ]
     },
     {
