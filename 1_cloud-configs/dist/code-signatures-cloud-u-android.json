@@ -137045,6 +137045,8 @@
       "imports": [
         "androidx.compose.foundation.background",
         "androidx.compose.foundation.layout.Box",
+        "androidx.compose.foundation.layout.Row",
+        "androidx.compose.foundation.layout.Spacer",
         "androidx.compose.foundation.layout.fillMaxHeight",
         "androidx.compose.foundation.layout.Column",
         "androidx.compose.foundation.layout.WindowInsets",
@@ -137060,7 +137062,6 @@
         "androidx.compose.runtime.remember",
         "androidx.compose.runtime.saveable.rememberSaveable",
         "androidx.compose.runtime.setValue",
-        "androidx.compose.ui.Alignment",
         "androidx.compose.ui.Modifier",
         "androidx.compose.ui.res.colorResource",
         "com.diegonmarcos.cloudcanvas.R",
@@ -260291,7 +260292,7 @@
         "InkConversion"
       ],
       "imports": [
-        "com.google.mlkit.vision.digitalink.Ink",
+        "com.google.mlkit.vision.digitalink.recognition.Ink",
         "helium314.keyboard.keyboard.handwrite.InkStroke"
       ],
       "symbols": [
@@ -260310,12 +260311,12 @@
         "com.google.mlkit.common.MlKitException",
         "com.google.mlkit.common.model.DownloadConditions",
         "com.google.mlkit.common.model.RemoteModelManager",
-        "com.google.mlkit.vision.digitalink.DigitalInkRecognition",
-        "com.google.mlkit.vision.digitalink.DigitalInkRecognitionModel",
-        "com.google.mlkit.vision.digitalink.DigitalInkRecognitionModelIdentifier",
-        "com.google.mlkit.vision.digitalink.DigitalInkRecognizer",
-        "com.google.mlkit.vision.digitalink.DigitalInkRecognizerOptions",
-        "com.google.mlkit.vision.digitalink.RecognitionContext",
+        "com.google.mlkit.vision.digitalink.recognition.DigitalInkRecognition",
+        "com.google.mlkit.vision.digitalink.recognition.DigitalInkRecognitionModel",
+        "com.google.mlkit.vision.digitalink.recognition.DigitalInkRecognitionModelIdentifier",
+        "com.google.mlkit.vision.digitalink.recognition.DigitalInkRecognizer",
+        "com.google.mlkit.vision.digitalink.recognition.DigitalInkRecognizerOptions",
+        "com.google.mlkit.vision.digitalink.recognition.RecognitionContext",
         "helium314.keyboard.keyboard.handwrite.HandwritingEngine",
         "helium314.keyboard.keyboard.handwrite.InkStroke",
         "helium314.keyboard.keyboard.handwrite.Recognition"
@@ -260561,10 +260562,12 @@
       ],
       "imports": [
         "helium314.keyboard.keyboard.handwrite.StrokeCapture",
+        "com.google.mlkit.vision.digitalink.recognition.Ink",
         "org.junit.Assert.assertEquals",
         "org.junit.Test"
       ],
       "symbols": [
+        "stroke(ink: Ink, i: Int)",
         "capturedStrokesBecomeAnInkWithTheSameStrokesAndPoints()",
         "anEmptyPadGivesAnEmptyInk()",
         "class InkConversionTest"
@@ -638193,30 +638196,31 @@
         "androidx.compose.ui.draw.clip",
         "androidx.compose.ui.platform.LocalContext",
         "androidx.compose.ui.platform.testTag",
+        "androidx.compose.ui.res.stringResource",
         "androidx.compose.ui.text.font.FontWeight",
         "androidx.compose.ui.unit.dp",
         "com.diegonmarcos.cgomniverse.Voxelverse",
         "com.diegonmarcos.cgomniverse.VoxelverseDecl",
         "com.diegonmarcos.cgomniverse.Decl",
+        "com.diegonmarcos.cgomniverse.Pages",
+        "com.diegonmarcos.cgomniverse.R",
         "com.diegonmarcos.superapp.uikit.GroupTitle",
         "com.diegonmarcos.superapp.uikit.KitCard",
         "com.diegonmarcos.superapp.uikit.KitOutlinedButton",
         "com.diegonmarcos.superapp.uikit.LocalKitPalette",
-        "java.io.File",
-        "java.net.HttpURLConnection",
-        "java.net.URL",
-        "kotlinx.coroutines.Dispatchers"
+        "java.io.File"
       ],
       "symbols": [
         "sub(id: String)",
         "cache(ctx: Context, name: String)",
         "saved(ctx: Context, name: String)",
         "fetch(ctx: Context, url: String, name: String)",
-        "VoxelversePage(decl: VoxelverseDecl = Decl.voxelverse)",
+        "VoxelversePage()",
         "StatusCard(decl: VoxelverseDecl, st: VoxState, onRefresh: (()",
         "PlanSubpage(decl: VoxelverseDecl, st: VoxState, onRefresh: ()",
         "Phases(decl: VoxelverseDecl, md: String)",
         "ViewerSubpage(decl: VoxelverseDecl, st: VoxState)",
+        "rememberDecl()",
         "class VoxTags",
         "class VoxState",
         "class VoxelverseRepo"
@@ -638274,36 +638278,26 @@
       "lang": "kotlin",
       "role": "kotlin",
       "exports": [
-        "VoxSub",
         "VoxSection",
         "VoxPhase",
         "VoxCommit",
-        "VoxMilestone",
         "VoxBlock",
         "VoxelverseDecl",
         "Voxelverse"
       ],
-      "imports": [
-        "org.json.JSONArray",
-        "org.json.JSONObject"
-      ],
+      "imports": [],
       "symbols": [
         "t(key: String)",
-        "parse(json: String)",
-        "arr(k: String)",
+        "decl(repoUrl: String, planPath: String, text: Map<String, String>)",
         "sections(md: String)",
         "clean(s: String)",
         "block(title: String, body: String)",
         "plan(decl: VoxelverseDecl, md: String)",
         "phases(decl: VoxelverseDecl, md: String)",
-        "commit(json: String)",
-        "milestones(json: String)",
-        "hasEngine(rootJson: String, marker: String)",
-        "class VoxSub",
+        "commit(atom: String)",
         "class VoxSection",
         "class VoxPhase",
         "class VoxCommit",
-        "class VoxMilestone",
         "class VoxBlock",
         "class VoxelverseDecl",
         "class Voxelverse"
@@ -638763,7 +638757,6 @@
         "org.json.JSONObject",
         "org.junit.Assert.assertEquals",
         "org.junit.Assert.assertFalse",
-        "org.junit.Assert.assertNotNull",
         "org.junit.Assert.assertTrue",
         "org.junit.Test",
         "java.io.File"
