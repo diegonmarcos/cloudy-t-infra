@@ -6,9 +6,9 @@
   },
   "repo": "cloud",
   "counts": {
-    "files": 1586,
+    "files": 1589,
     "by_lang": {
-      "sh": 1071,
+      "sh": 1074,
       "js": 169,
       "nix": 304,
       "py": 12,
@@ -17,9 +17,9 @@
     "by_role": {
       "hook": 377,
       "file": 86,
-      "shell": 550,
+      "shell": 551,
       "flake": 6,
-      "script": 146,
+      "script": 148,
       "module": 113,
       "python": 9,
       "engine": 1,
@@ -1322,6 +1322,7 @@
         "$STEPS_DIR/cloud-ship-nix-homemanager-step-build-flake.sh",
         "$STEPS_DIR/cloud-ship-nix-homemanager-step-secrets-decrypt.sh",
         "$STEPS_DIR/cloud-ship-nix-homemanager-step-deploy-rsync.sh",
+        "$STEPS_DIR/cloud-ship-nix-homemanager-step-deploy-closure.sh",
         "$STEPS_DIR/cloud-ship-nix-homemanager-step-deploy-activate.sh",
         "$STEPS_DIR/cloud-ship-nix-homemanager-step-build-docker.sh",
         "$STEPS_DIR/cloud-ship-nix-homemanager-step-deploy-push.sh"
@@ -1398,6 +1399,28 @@
         "hm_pull_with_retry()",
         "_hm_detached_wait()",
         "step_compose()"
+      ]
+    },
+    {
+      "path": ".github/workflows/scripts/cloud-ship-nix-homemanager-step-deploy-closure.sh",
+      "lang": "sh",
+      "role": "script",
+      "exports": [
+        "hm_transport()",
+        "_hm_edge_probe_script()",
+        "hm_edge_guard()",
+        "_hm_xfer_receiver()",
+        "hm_closure_transfer()",
+        "_hm_send_batch()"
+      ],
+      "imports": [],
+      "symbols": [
+        "hm_transport()",
+        "_hm_edge_probe_script()",
+        "hm_edge_guard()",
+        "_hm_xfer_receiver()",
+        "hm_closure_transfer()",
+        "_hm_send_batch()"
       ]
     },
     {
@@ -17299,6 +17322,7 @@
         "$STEPS_DIR/cloud-ship-nix-homemanager-step-build-flake.sh",
         "$STEPS_DIR/cloud-ship-nix-homemanager-step-secrets-decrypt.sh",
         "$STEPS_DIR/cloud-ship-nix-homemanager-step-deploy-rsync.sh",
+        "$STEPS_DIR/cloud-ship-nix-homemanager-step-deploy-closure.sh",
         "$STEPS_DIR/cloud-ship-nix-homemanager-step-deploy-activate.sh",
         "$STEPS_DIR/cloud-ship-nix-homemanager-step-build-docker.sh",
         "$STEPS_DIR/cloud-ship-nix-homemanager-step-deploy-push.sh"
@@ -17375,6 +17399,28 @@
         "hm_pull_with_retry()",
         "_hm_detached_wait()",
         "step_compose()"
+      ]
+    },
+    {
+      "path": "1_cicd/src/scripts/cloud-ship-nix-homemanager-step-deploy-closure.sh",
+      "lang": "sh",
+      "role": "script",
+      "exports": [
+        "hm_transport()",
+        "_hm_edge_probe_script()",
+        "hm_edge_guard()",
+        "_hm_xfer_receiver()",
+        "hm_closure_transfer()",
+        "_hm_send_batch()"
+      ],
+      "imports": [],
+      "symbols": [
+        "hm_transport()",
+        "_hm_edge_probe_script()",
+        "hm_edge_guard()",
+        "_hm_xfer_receiver()",
+        "hm_closure_transfer()",
+        "_hm_send_batch()"
       ]
     },
     {
@@ -20696,6 +20742,32 @@
         "ok()",
         "bad()",
         "run_orchestrator()"
+      ]
+    },
+    {
+      "path": "9_others/test/test_hm_closure_delivery.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "ok()",
+        "bad()",
+        "run_xfer()",
+        "log()",
+        "get_config()",
+        "fresh()",
+        "same_store()",
+        "tr_of()"
+      ],
+      "imports": [],
+      "symbols": [
+        "ok()",
+        "bad()",
+        "run_xfer()",
+        "log()",
+        "get_config()",
+        "fresh()",
+        "same_store()",
+        "tr_of()"
       ]
     },
     {
@@ -24181,6 +24253,7 @@
         "$STEPS_DIR/cloud-ship-nix-homemanager-step-build-flake.sh",
         "$STEPS_DIR/cloud-ship-nix-homemanager-step-secrets-decrypt.sh",
         "$STEPS_DIR/cloud-ship-nix-homemanager-step-deploy-rsync.sh",
+        "$STEPS_DIR/cloud-ship-nix-homemanager-step-deploy-closure.sh",
         "$STEPS_DIR/cloud-ship-nix-homemanager-step-deploy-activate.sh",
         "$STEPS_DIR/cloud-ship-nix-homemanager-step-build-docker.sh",
         "$STEPS_DIR/cloud-ship-nix-homemanager-step-deploy-push.sh"
@@ -26616,6 +26689,7 @@
         "$STEPS_DIR/cloud-ship-nix-homemanager-step-build-flake.sh",
         "$STEPS_DIR/cloud-ship-nix-homemanager-step-secrets-decrypt.sh",
         "$STEPS_DIR/cloud-ship-nix-homemanager-step-deploy-rsync.sh",
+        "$STEPS_DIR/cloud-ship-nix-homemanager-step-deploy-closure.sh",
         "$STEPS_DIR/cloud-ship-nix-homemanager-step-deploy-activate.sh",
         "$STEPS_DIR/cloud-ship-nix-homemanager-step-build-docker.sh",
         "$STEPS_DIR/cloud-ship-nix-homemanager-step-deploy-push.sh"
@@ -28989,6 +29063,7 @@
         "$STEPS_DIR/cloud-ship-nix-homemanager-step-build-flake.sh",
         "$STEPS_DIR/cloud-ship-nix-homemanager-step-secrets-decrypt.sh",
         "$STEPS_DIR/cloud-ship-nix-homemanager-step-deploy-rsync.sh",
+        "$STEPS_DIR/cloud-ship-nix-homemanager-step-deploy-closure.sh",
         "$STEPS_DIR/cloud-ship-nix-homemanager-step-deploy-activate.sh",
         "$STEPS_DIR/cloud-ship-nix-homemanager-step-build-docker.sh",
         "$STEPS_DIR/cloud-ship-nix-homemanager-step-deploy-push.sh"
@@ -31366,6 +31441,7 @@
         "$STEPS_DIR/cloud-ship-nix-homemanager-step-build-flake.sh",
         "$STEPS_DIR/cloud-ship-nix-homemanager-step-secrets-decrypt.sh",
         "$STEPS_DIR/cloud-ship-nix-homemanager-step-deploy-rsync.sh",
+        "$STEPS_DIR/cloud-ship-nix-homemanager-step-deploy-closure.sh",
         "$STEPS_DIR/cloud-ship-nix-homemanager-step-deploy-activate.sh",
         "$STEPS_DIR/cloud-ship-nix-homemanager-step-build-docker.sh",
         "$STEPS_DIR/cloud-ship-nix-homemanager-step-deploy-push.sh"
