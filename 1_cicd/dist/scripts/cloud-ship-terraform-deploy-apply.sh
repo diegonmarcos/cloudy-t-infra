@@ -168,26 +168,28 @@ for name in cloudflare gcloud oci hetzner; do
     for vf in "$HOME/git/cloud-vault/C_A0-env/dist/vault-keys-bash.env" /root/git/cloud-vault/C_A0-env/dist/vault-keys-bash.env; do
       [ -f "$vf" ] && { set -a; . "$vf" 2>/dev/null || true; set +a; break; }
     done
-    if command -v python3 >/dev/null 2>&1; then
-      TF_VAR_cloud_run_secret_values="$(python3 -I - <<'PYEOF'
-import json, os, sys
-src = json.load(open("terraform.json")).get("cloud_run_secret_sources", {})
-out, miss = {}, []
-for name, key in src.items():
-    if name.startswith("_"):
-        continue
-    v = os.environ.get(key, "")
-    (out.__setitem__(name, v) if v else miss.append(name))
-if miss:
-    print("  secret-sync: no vault value for: " + ", ".join(miss), file=sys.stderr)
-print(json.dumps(out))
-PYEOF
-)"
-      export TF_VAR_cloud_run_secret_values
-      echo "  secret-sync: $(printf '%s' "$TF_VAR_cloud_run_secret_values" | python3 -I -c 'import json,sys;print(len(json.load(sys.stdin)))') secret value(s) staged for terraform"
-    else
-      echo "  secret-sync: python3 missing in builder; no secret values staged"
-    fi
+    # Pure bash/sed/awk: the terraform builder image has neither python3 nor a guaranteed jq (the python3 variant
+    # silently staged zero secrets, which held back cloudy-browser-headless). Values stay in env/shell variables,
+    # are never echoed and never put on a command line.
+    _sync_json=""; _sync_n=0; _sync_miss=""
+    while read -r _sname _skey; do
+      [ -n "$_sname" ] || continue
+      case "$_skey" in *[!A-Za-z0-9_]*|"") continue ;; esac
+      _sval="${!_skey:-}"
+      if [ -n "$_sval" ]; then
+        _sesc="$(printf '%s' "$_sval" | tr -d '\r\n' | sed 's/\\/\\\\/g; s/"/\\"/g')"
+        _sync_json="${_sync_json}${_sync_json:+,}\"${_sname}\":\"${_sesc}\""
+        _sync_n=$((_sync_n + 1))
+      else
+        _sync_miss="${_sync_miss} ${_sname}"
+      fi
+    done < <(awk '/"cloud_run_secret_sources"/{f=1;next} f&&/}/{exit} f' terraform.json \
+      | sed -n 's/^[[:space:]]*"\([^"_][^"]*\)"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1 \2/p')
+    [ -z "$_sync_miss" ] || echo "  secret-sync: no vault value for:${_sync_miss}"
+    TF_VAR_cloud_run_secret_values="{${_sync_json}}"
+    export TF_VAR_cloud_run_secret_values
+    unset _sval _sesc _sync_json
+    echo "  secret-sync: ${_sync_n} secret value(s) staged for terraform"
   fi
 
   tf_cleanup() { rm -f terraform.tfstate terraform.tfstate.backup terraform.tfvars tfplan; rm -rf .terraform; }
