@@ -6,9 +6,9 @@
   },
   "repo": "cloud",
   "counts": {
-    "files": 1582,
+    "files": 1583,
     "by_lang": {
-      "sh": 1067,
+      "sh": 1068,
       "js": 169,
       "nix": 304,
       "py": 12,
@@ -17,7 +17,7 @@
     "by_role": {
       "hook": 377,
       "file": 86,
-      "shell": 546,
+      "shell": 547,
       "flake": 6,
       "script": 146,
       "module": 113,
@@ -1371,6 +1371,12 @@
       "exports": [
         "_build_docker_activate_script()",
         "dock_api()",
+        "hm_pull_classify()",
+        "hm_pull_reason()",
+        "hm_pull_once()",
+        "hm_pull_digest()",
+        "hm_image_repodigests()",
+        "hm_pull_with_retry()",
         "_hm_detached_wait()",
         "step_compose()"
       ],
@@ -1380,6 +1386,12 @@
       "symbols": [
         "_build_docker_activate_script()",
         "dock_api()",
+        "hm_pull_classify()",
+        "hm_pull_reason()",
+        "hm_pull_once()",
+        "hm_pull_digest()",
+        "hm_image_repodigests()",
+        "hm_pull_with_retry()",
         "_hm_detached_wait()",
         "step_compose()"
       ]
@@ -17332,6 +17344,12 @@
       "exports": [
         "_build_docker_activate_script()",
         "dock_api()",
+        "hm_pull_classify()",
+        "hm_pull_reason()",
+        "hm_pull_once()",
+        "hm_pull_digest()",
+        "hm_image_repodigests()",
+        "hm_pull_with_retry()",
         "_hm_detached_wait()",
         "step_compose()"
       ],
@@ -17341,6 +17359,12 @@
       "symbols": [
         "_build_docker_activate_script()",
         "dock_api()",
+        "hm_pull_classify()",
+        "hm_pull_reason()",
+        "hm_pull_once()",
+        "hm_pull_digest()",
+        "hm_image_repodigests()",
+        "hm_pull_with_retry()",
         "_hm_detached_wait()",
         "step_compose()"
       ]
@@ -20624,6 +20648,22 @@
         "ok()",
         "bad()",
         "run_orchestrator()"
+      ]
+    },
+    {
+      "path": "9_others/test/test_hm_docker_pull_retry.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "ok()",
+        "bad()",
+        "run_case()"
+      ],
+      "imports": [],
+      "symbols": [
+        "ok()",
+        "bad()",
+        "run_case()"
       ]
     },
     {
