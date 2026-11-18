@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 24524,
+    "files": 24567,
     "by_lang": {
-      "sh": 799,
+      "sh": 805,
       "js": 581,
       "py": 251,
-      "kotlin": 13690,
+      "kotlin": 13727,
       "ts": 8382,
       "java": 654,
       "nix": 37,
@@ -20,12 +20,12 @@
     "by_role": {
       "hook": 166,
       "file": 2266,
-      "shell": 635,
+      "shell": 641,
       "script": 343,
       "python": 87,
       "module": 6464,
       "java": 653,
-      "kotlin": 13687,
+      "kotlin": 13724,
       "flake": 33,
       "rust-module": 130,
       "nix-module": 4,
@@ -964,6 +964,7 @@
         "load(root, data=None)",
         "check_config(cfg)",
         "shipped(wf_dir, files)",
+        "doc_only(root, files)",
         "evaluate(wf_dir, files, cfg)",
         "main(argv)"
       ],
@@ -976,6 +977,7 @@
         "load(root, data=None)",
         "check_config(cfg)",
         "shipped(wf_dir, files)",
+        "doc_only(root, files)",
         "evaluate(wf_dir, files, cfg)",
         "main(argv)"
       ]
@@ -4264,6 +4266,7 @@
         "load(root, data=None)",
         "check_config(cfg)",
         "shipped(wf_dir, files)",
+        "doc_only(root, files)",
         "evaluate(wf_dir, files, cfg)",
         "main(argv)"
       ],
@@ -4276,6 +4279,7 @@
         "load(root, data=None)",
         "check_config(cfg)",
         "shipped(wf_dir, files)",
+        "doc_only(root, files)",
         "evaluate(wf_dir, files, cfg)",
         "main(argv)"
       ]
@@ -18303,6 +18307,7 @@
         "current(ctx: Context)",
         "relayLine(ctx: Context)",
         "test(ctx: Context)",
+        "tried(p: com.diegonmarcos.superapp.net.RelayProbe)",
         "udpPerPeer(ctx: Context)",
         "udpProbe(ctx: Context)",
         "class MeshTransport",
@@ -18312,8 +18317,7 @@
         "class Relay",
         "class Bootstrap",
         "class Path",
-        "class Plan",
-        "class Probe"
+        "class Plan"
       ]
     },
     {
@@ -37282,6 +37286,7 @@
         "com.diegonmarcos.superapp.settings.ConfigsPrefs",
         "com.diegonmarcos.superapp.texttools.TextToolsClient",
         "org.json.JSONArray",
+        "com.diegonmarcos.superapp.decisions.link.DecisionsLink",
         "org.json.JSONObject"
       ],
       "symbols": [
@@ -37293,6 +37298,7 @@
         "paths(apps: JSONObject?, key: String)",
         "aboutPaths(fields: Map<String, String>)",
         "drivePaths()",
+        "engineKeys(ctx: Context)",
         "aiPaths(tokens: Map<String, String>)",
         "meshPath(name: String)",
         "meshName(path: String)",
@@ -39159,7 +39165,7 @@
         "applyDrive(bundle: JSONObject, prefs: ConfigsPrefs)",
         "aiState(snapshotJson: String?)",
         "aiRows(bundle: JSONObject, layout: Layout, state: AiState?, peerDownText: String, unmappedText: String)",
-        "applyAi(bundle: JSONObject, layout: Layout, client: TextToolsClient)",
+        "applyAi(bundle: JSONObject, layout: Layout, open: (provider: String)",
         "appsDeclared(bundle: JSONObject, device: Device, fleet: Set<String>)",
         "appsDeclared(bundle: JSONObject, deviceId: String, fleet: Set<String>)",
         "walk(v: Any?)",
@@ -40696,7 +40702,10 @@
         "AiBackend",
         "AiChatBackend",
         "AiGatewayBackend",
-        "AiOpenRouterBackend"
+        "AiOpenRouterBackend",
+        "AiRelayBackend",
+        "AiRelayed",
+        "AiRelay"
       ],
       "imports": [
         "java.net.HttpURLConnection",
@@ -40714,6 +40723,7 @@
         "headers(req: AiRequest)",
         "why()",
         "model(req: AiRequest)",
+        "post(body: String)",
         "class AiHttp",
         "class Response",
         "class AiUrlHttp",
@@ -40722,7 +40732,11 @@
         "class AiBackend",
         "class AiChatBackend",
         "class AiGatewayBackend",
-        "class AiOpenRouterBackend"
+        "class AiOpenRouterBackend",
+        "class AiRelayBackend",
+        "class RelayHttp",
+        "class AiRelayed",
+        "class AiRelay"
       ]
     },
     {
@@ -60030,6 +60044,27 @@
       ]
     },
     {
+      "path": "ab_cloud-libs-shared/libs/decisions-core/src/test/kotlin/com/diegonmarcos/superapp/decisions/core/KeyBookTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "KeyBookTest"
+      ],
+      "imports": [
+        "org.json.JSONObject",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "read()",
+        "write(doc: JSONObject)",
+        "class KeyBookTest"
+      ]
+    },
+    {
       "path": "ab_cloud-libs-shared/libs/decisions-core/src/test/kotlin/com/diegonmarcos/superapp/decisions/core/LedgerTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -60123,6 +60158,36 @@
         "nullAndNumbersAreStates()",
         "theCapIsInclusiveAndCountsTheSerialisedState()",
         "class RedactorTest"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/decisions-core/src/test/kotlin/com/diegonmarcos/superapp/decisions/core/RelayEngineTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "RelayEngineTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.decisions.Http",
+        "org.json.JSONObject",
+        "org.junit.Assert.assertArrayEquals",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.io.IOException",
+        "java.net.UnknownHostException"
+      ],
+      "symbols": [
+        "send(url: String, token: String?, body: String?, timeoutMs: Int)",
+        "block(tweak: (JSONObject)",
+        "run(use: String = \"chat\", endpoint: String = \"chat\", b: String = body, who: String = app)",
+        "reason(a: RelayAnswer)",
+        "rejected(tweak: (JSONObject)",
+        "class RelayEngineTest",
+        "class RelHttp",
+        "class RRig"
       ]
     },
     {
@@ -60321,6 +60386,32 @@
       ]
     },
     {
+      "path": "ab_cloud-libs-shared/libs/decisions-engine/src/main/java/com/diegonmarcos/superapp/decisions/core/KeyBook.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "KeyBook"
+      ],
+      "imports": [
+        "org.json.JSONArray",
+        "org.json.JSONObject"
+      ],
+      "symbols": [
+        "get(provider: String, app: String? = null)",
+        "set(provider: String, value: String?, app: String? = null)",
+        "clear(provider: String, app: String? = null)",
+        "importOnce(provider: String, value: String?, app: String? = null)",
+        "present(provider: String, app: String? = null)",
+        "hint(provider: String, app: String? = null)",
+        "overrides(provider: String)",
+        "status(providers: Map<String, String>)",
+        "raw(provider: String, app: String?)",
+        "slot(provider: String, app: String?)",
+        "class KeyBook",
+        "class Import"
+      ]
+    },
+    {
       "path": "ab_cloud-libs-shared/libs/decisions-engine/src/main/java/com/diegonmarcos/superapp/decisions/core/Ledger.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -60397,6 +60488,46 @@
         "class Redactor",
         "class Cleaned",
         "class Counter"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/decisions-engine/src/main/java/com/diegonmarcos/superapp/decisions/core/Relay.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "RelayProvider",
+        "RelayUseDecl",
+        "RelayPolicy",
+        "RelayAnswer",
+        "RelayEngine"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.decisions.Http",
+        "org.json.JSONArray",
+        "org.json.JSONObject",
+        "java.net.UnknownHostException"
+      ],
+      "symbols": [
+        "asUse()",
+        "labels()",
+        "parse(d: JSONObject, sensitive: Set<String>)",
+        "check(u: JSONObject, sensitive: Set<String>, providers: Map<String, RelayProvider>)",
+        "decl(name: String, u: JSONObject)",
+        "pos(key: String)",
+        "providers()",
+        "apps()",
+        "run(app: String, request: JSONObject, body: ByteArray)",
+        "go(app: String, name: String, request: JSONObject, body: ByteArray)",
+        "status(app: String)",
+        "refuse(app: String, use: String, reason: String, message: String? = null, extra: JSONObject? = null)",
+        "noKey(label: String)",
+        "transport(e: Throwable)",
+        "costOf(body: String)",
+        "class RelayProvider",
+        "class RelayUseDecl",
+        "class RelayPolicy",
+        "class RelayAnswer",
+        "class RelayEngine"
       ]
     },
     {
@@ -60526,6 +60657,7 @@
         "android.os.ParcelFileDescriptor",
         "android.util.Log",
         "com.diegonmarcos.superapp.decisions.core.ImageAnswer",
+        "com.diegonmarcos.superapp.decisions.core.RelayAnswer",
         "com.diegonmarcos.superapp.decisions.link.IDecisionsEngine",
         "org.json.JSONObject",
         "java.io.ByteArrayOutputStream",
@@ -60537,6 +60669,8 @@
         "call(method: String?, request: String?)",
         "methods()",
         "image(request: String?, input: ParcelFileDescriptor?, output: ParcelFileDescriptor?)",
+        "relay(request: String?, input: ParcelFileDescriptor?, output: ParcelFileDescriptor?)",
+        "serveRelay(request: String, input: ParcelFileDescriptor?, output: ParcelFileDescriptor?, app: String)",
         "serveImage(request: String, input: ParcelFileDescriptor?, output: ParcelFileDescriptor?, app: String)",
         "bounded(s: InputStream, max: Int)",
         "callerPackage()",
@@ -60555,6 +60689,9 @@
         "com.diegonmarcos.superapp.decisions.core.Engine",
         "com.diegonmarcos.superapp.decisions.core.ImageAnswer",
         "com.diegonmarcos.superapp.decisions.core.ImageEngine",
+        "com.diegonmarcos.superapp.decisions.core.KeyBook",
+        "com.diegonmarcos.superapp.decisions.core.RelayAnswer",
+        "com.diegonmarcos.superapp.decisions.core.RelayEngine",
         "org.json.JSONObject"
       ],
       "symbols": [
@@ -60564,6 +60701,10 @@
         "consent(app: String, request: String)",
         "image(app: String, request: String, input: ByteArray)",
         "imageWithoutFiles()",
+        "relay(app: String, request: String, body: ByteArray)",
+        "relayWithoutFiles()",
+        "keys(settingsAction: String)",
+        "importKey(app: String, request: String, journal: com.diegonmarcos.superapp.decisions.core.Journal?)",
         "noPolicy()",
         "class Dispatcher"
       ]
@@ -60577,7 +60718,6 @@
       ],
       "imports": [
         "android.content.Context",
-        "android.os.SystemClock",
         "android.util.Log",
         "com.diegonmarcos.superapp.decisions.UrlHttp",
         "com.diegonmarcos.superapp.decisions.core.AnswerCache",
@@ -60586,18 +60726,21 @@
         "com.diegonmarcos.superapp.decisions.core.Engine",
         "com.diegonmarcos.superapp.decisions.core.ImageEngine",
         "com.diegonmarcos.superapp.decisions.core.Journal",
+        "com.diegonmarcos.superapp.decisions.core.KeyBook",
         "com.diegonmarcos.superapp.decisions.core.Ledger",
         "com.diegonmarcos.superapp.decisions.core.Policy",
-        "com.diegonmarcos.superapp.texttools.TextToolsClient",
+        "com.diegonmarcos.superapp.decisions.core.RelayEngine",
         "org.json.JSONObject",
         "java.io.File"
       ],
       "symbols": [
         "get(context: Context)",
         "images(context: Context)",
+        "relay(context: Context)",
+        "keys(context: Context)",
+        "keyBook(ctx: Context)",
         "holder(context: Context)",
         "build(ctx: Context)",
-        "accountToken(ctx: Context, provider: String)",
         "class EngineHolder",
         "class Holder"
       ]
@@ -60624,6 +60767,85 @@
         "trim(keep: Int)",
         "class FileKv",
         "class FileSink"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/decisions-engine/src/main/java/com/diegonmarcos/superapp/decisions/engine/KeysActivity.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "KeysActivity"
+      ],
+      "imports": [
+        "android.os.Bundle",
+        "androidx.activity.ComponentActivity",
+        "androidx.activity.compose.setContent",
+        "androidx.compose.foundation.layout.Arrangement",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.Row",
+        "androidx.compose.foundation.layout.fillMaxSize",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.foundation.rememberScrollState",
+        "androidx.compose.foundation.verticalScroll",
+        "androidx.compose.material3.Button",
+        "androidx.compose.material3.Card",
+        "androidx.compose.material3.DropdownMenu",
+        "androidx.compose.material3.DropdownMenuItem",
+        "androidx.compose.material3.MaterialTheme",
+        "androidx.compose.material3.OutlinedButton",
+        "androidx.compose.material3.OutlinedTextField",
+        "androidx.compose.material3.Surface",
+        "androidx.compose.material3.Text",
+        "androidx.compose.material3.TextButton",
+        "androidx.compose.material3.darkColorScheme",
+        "androidx.compose.material3.lightColorScheme",
+        "androidx.compose.foundation.isSystemInDarkTheme",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableIntStateOf",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.remember",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.text.input.PasswordVisualTransformation",
+        "androidx.compose.ui.text.input.VisualTransformation",
+        "androidx.compose.ui.unit.dp",
+        "com.diegonmarcos.superapp.decisions.core.KeyBook"
+      ],
+      "symbols": [
+        "onCreate(savedInstanceState: Bundle?)",
+        "action(pkg: String)",
+        "KeysScreen(book: KeyBook, providers: Map<String, String>, apps: List<String>, pickProvider: String?, pickApp: String?)",
+        "KeySlot(book: KeyBook, provider: String, app: String?, tick: Int, changed: ()",
+        "NewOverride(book: KeyBook, provider: String, apps: List<String>, preselect: String?, changed: ()",
+        "class KeysActivity"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/decisions-engine/src/main/java/com/diegonmarcos/superapp/decisions/engine/SealedKv.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "SealedKv"
+      ],
+      "imports": [
+        "android.security.keystore.KeyGenParameterSpec",
+        "android.security.keystore.KeyProperties",
+        "com.diegonmarcos.superapp.decisions.core.KvStore",
+        "org.json.JSONObject",
+        "java.io.File",
+        "java.security.KeyStore",
+        "javax.crypto.Cipher",
+        "javax.crypto.KeyGenerator",
+        "javax.crypto.SecretKey",
+        "javax.crypto.spec.GCMParameterSpec"
+      ],
+      "symbols": [
+        "read()",
+        "write(doc: JSONObject)",
+        "key()",
+        "class SealedKv"
       ]
     },
     {
@@ -60665,6 +60887,8 @@
         "com.diegonmarcos.superapp.decisions.core.Env",
         "com.diegonmarcos.superapp.decisions.core.ImageEngine",
         "com.diegonmarcos.superapp.decisions.core.Journal",
+        "com.diegonmarcos.superapp.decisions.core.KeyBook",
+        "com.diegonmarcos.superapp.decisions.core.RelayEngine",
         "com.diegonmarcos.superapp.decisions.core.Ledger",
         "com.diegonmarcos.superapp.decisions.core.MemorySink",
         "com.diegonmarcos.superapp.decisions.core.MemoryStore",
@@ -60693,6 +60917,9 @@
         "imageThroughTheJsonCallIsRefusedAndWithoutAnImagePolicyIsNoPolicy()",
         "statusCarriesTheImageUsesForTheCaller()",
         "theManifestDeclaresTheContractThePolicyServes()",
+        "relayAddsTheKeyHeldHereForTheDeclaredAppOnly()",
+        "keysSaysPresenceAndHintNeverTheKey()",
+        "importMigratesAFormerCopyOnceTheEngineKeyWinsAndTheJournalCarriesNoValue()",
         "class DispatcherTest"
       ]
     },
@@ -60720,6 +60947,66 @@
         "aWriteThatCannotHappenIsSwallowed()",
         "theJournalAppendsTailsAndTrims()",
         "class FileStoresTest"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/decisions-engine/test/emulator-relay-common.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "relay_init()",
+        "pkg_of()",
+        "launcher_of()",
+        "ok()",
+        "fail()",
+        "warn()",
+        "awake()",
+        "shot()",
+        "dump()",
+        "find_xy()",
+        "tap_node()",
+        "tap_text()",
+        "tap_id()",
+        "tap_sub()",
+        "wait_text()",
+        "type_into_first_edit()",
+        "hide_ime()",
+        "engine_reset()",
+        "engine_lines()",
+        "wait_relay()",
+        "wait_relay_ok()",
+        "save_logs()",
+        "set_engine_key()",
+        "relay_phases()"
+      ],
+      "imports": [
+        "(emulator-relay-*.sh"
+      ],
+      "symbols": [
+        "relay_init()",
+        "pkg_of()",
+        "launcher_of()",
+        "ok()",
+        "fail()",
+        "warn()",
+        "awake()",
+        "shot()",
+        "dump()",
+        "find_xy()",
+        "tap_node()",
+        "tap_text()",
+        "tap_id()",
+        "tap_sub()",
+        "wait_text()",
+        "type_into_first_edit()",
+        "hide_ime()",
+        "engine_reset()",
+        "engine_lines()",
+        "wait_relay()",
+        "wait_relay_ok()",
+        "save_logs()",
+        "set_engine_key()",
+        "relay_phases()"
       ]
     },
     {
@@ -60789,7 +61076,12 @@
         "status(context: Context)",
         "setConsent(context: Context, app: String, use: String, granted: Boolean)",
         "image(context: Context, use: String, model: String, prompt: String, picture: ByteArray)",
-        "ask(method: String, context: Context, request: JSONObject)",
+        "relay(context: Context, use: String, endpoint: String, body: String, get: Boolean = false)",
+        "keys(context: Context)",
+        "keySettings(provider: String? = null, app: String? = null)",
+        "handOver(context: Context, provider: String, value: String, perApp: Boolean)",
+        "openKeySettings(context: Context, provider: String? = null, app: String? = null)",
+        "ask(method: String, context: Context, request: JSONObject, needed: Int = BuildConfig.DECISIONS_ENGINE_MIN_CONTRACT)",
         "fail(why: String)",
         "onServiceConnected(name: ComponentName?, binder: IBinder?)",
         "onServiceDisconnected(name: ComponentName?)",
@@ -60812,6 +61104,22 @@
       "symbols": [
         "parse(reply: JSONObject, picture: ByteArray?)",
         "class ImageReply"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/decisions-link/src/main/java/com/diegonmarcos/superapp/decisions/link/RelayReply.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "RelayReply"
+      ],
+      "imports": [
+        "org.json.JSONObject"
+      ],
+      "symbols": [
+        "parse(reply: JSONObject, body: String?)",
+        "endpointOf(url: String)",
+        "class RelayReply"
       ]
     },
     {
@@ -60892,7 +61200,31 @@
         "anOkWithoutAPictureIsMalformedNeverAnEmptyImage()",
         "aRefusalKeepsItsReasonKindMessageAndDetail()",
         "theWireAndTheDeclarationCarryTheImageCallAtContractTwo()",
+        "thePictureFilesArePrefixesTheJvmAccepts()",
         "class ImageReplyTest"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/decisions-link/src/test/java/com/diegonmarcos/superapp/decisions/link/RelayReplyTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "RelayReplyTest"
+      ],
+      "imports": [
+        "org.json.JSONObject",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "anAnswerCarriesTheProvidersCodeAndBody()",
+        "aRefusalCarriesTheReasonAndItsSentence()",
+        "anOkWithoutABodyOrCodeIsMalformed()",
+        "endpointNamesNotUrls()",
+        "class RelayReplyTest"
       ]
     },
     {
@@ -60929,6 +61261,7 @@
       "role": "kotlin",
       "exports": [
         "Http",
+        "EngineKeyedHttp",
         "UrlHttp",
         "Option",
         "Decision",
@@ -60957,6 +61290,7 @@
         "optionsJson(opts: List<Option>)",
         "class Http",
         "class Response",
+        "class EngineKeyedHttp",
         "class UrlHttp",
         "class Option",
         "class Decision",
@@ -71331,8 +71665,8 @@
         "settingsSnapshot()",
         "translateLanguages()",
         "aiRoutingSnapshot()",
-        "setAiRouting( providerId: String?, apiKey: String?, modelId: String?, clearKey: Boolean, )",
-        "revealAiKey(providerId: String?)",
+        "retiredRoutingWrite()",
+        "retiredRevealSlot()",
         "clipboardLists()",
         "importClipboardLists(json: String?)",
         "clipboardListsSlice(start: Int, length: Int)",
@@ -76130,6 +76464,7 @@
         "android.util.Base64",
         "helium314.keyboard.latin.settings.Settings",
         "helium314.keyboard.latin.utils.prefs",
+        "com.diegonmarcos.superapp.decisions.link.DecisionsLink",
         "org.json.JSONArray",
         "org.json.JSONObject",
         "java.net.HttpURLConnection",
@@ -76146,6 +76481,11 @@
         "provider(context: Context)",
         "model(context: Context, p: Provider = provider(context)",
         "token(context: Context, p: Provider = provider(context)",
+        "keyState(context: Context, p: Provider)",
+        "keyHeldNow(context: Context, p: Provider)",
+        "retireStoredKey(context: Context, p: Provider, handOver: (String)",
+        "forgetKeyState()",
+        "openKeySettings(context: Context, p: Provider)",
         "route(context: Context)",
         "routeOf(context: Context, providerId: String?, modelId: String?)",
         "style(context: Context)",
@@ -76160,6 +76500,7 @@
         "pick(context: Context, set: List<Style>, key: String, fallback: String)",
         "complete(context: Context, system: String, user: String)",
         "complete(context: Context, system: String, user: String, route: Route)",
+        "read(p: Provider, route: Route, code: Int, text: String)",
         "class AiRouter",
         "class Pricing",
         "class Model",
@@ -87353,6 +87694,28 @@
       ]
     },
     {
+      "path": "ab_cloud-libs-shared/libs/keyboard/src/test/java/helium314/keyboard/latin/AiRouterRelayTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "AiRouterRelayTest"
+      ],
+      "imports": [
+        "org.json.JSONObject",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.io.File"
+      ],
+      "symbols": [
+        "src(rel: String)",
+        "complete(context: Context, system: String, user: String, route: Route)",
+        "retireStoredKey(\")",
+        "class AiRouterRelayTest"
+      ]
+    },
+    {
       "path": "ab_cloud-libs-shared/libs/keyboard/src/test/java/helium314/keyboard/latin/autocomplete/AutocompleteEngineTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -91945,9 +92308,10 @@
         "android.content.Intent",
         "android.os.IBinder",
         "android.os.ParcelFileDescriptor",
-        "android.os.SystemClock",
+        "com.diegonmarcos.superapp.decisions.EngineKeyedHttp",
+        "com.diegonmarcos.superapp.decisions.Http",
         "com.diegonmarcos.superapp.decisions.UrlHttp",
-        "com.diegonmarcos.superapp.texttools.TextToolsClient",
+        "com.diegonmarcos.superapp.decisions.link.DecisionsLink",
         "org.json.JSONObject",
         "java.io.ByteArrayOutputStream"
       ],
@@ -91958,7 +92322,7 @@
         "methods()",
         "scanWith(method: String?, request: String?, image: ParcelFileDescriptor?)",
         "models(req: JSONObject)",
-        "accountToken(provider: String)",
+        "send(url: String, token: String?, body: String?, timeoutMs: Int)",
         "onBind(intent: Intent?)",
         "readAll(image: ParcelFileDescriptor)",
         "class ImageScanBackendService"
@@ -92076,6 +92440,123 @@
       ]
     },
     {
+      "path": "ab_cloud-libs-shared/libs/ml-l-image-mlkit/src/main/java/com/diegonmarcos/superapp/image/Scene.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [],
+      "imports": [
+        "android.graphics.Bitmap",
+        "org.json.JSONArray",
+        "org.json.JSONObject"
+      ],
+      "symbols": [
+        "objects(detector: String, frame: Bitmap, minConfidence: Float, max: Int, iou: Float)",
+        "textRegions(frame: Bitmap)",
+        "ocr(frame: Bitmap, script: String)",
+        "model(detector: String)",
+        "json(image: ByteArray, request: String)",
+        "benchJson(image: ByteArray, request: String)",
+        "sized(loaded: Bitmap, s: JSONObject)",
+        "scene(image: ByteArray, req: JSONObject)",
+        "ocr(sz: Sized, scripts: List<String>)",
+        "bench(image: ByteArray, req: JSONObject)",
+        "stats(ms: List<Long>)",
+        "scripts(s: JSONObject)",
+        "recycle(loaded: Bitmap, sz: Sized)",
+        "failure(why: String)",
+        "box(o: JSONObject, r: Rect)",
+        "obj(cls: String, label: String, p: Float, r: Rect)",
+        "block(b: SceneMath.Block)",
+        "class with",
+        "class class",
+        "class too",
+        "class SceneDetector",
+        "class so",
+        "class Backends",
+        "class Sized"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/ml-l-image-mlkit/src/main/java/com/diegonmarcos/superapp/image/SceneMath.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [],
+      "imports": [
+        "kotlin.math.exp",
+        "kotlin.math.max",
+        "kotlin.math.min",
+        "kotlin.math.roundToInt"
+      ],
+      "symbols": [
+        "scaled(s: Float)",
+        "intersection(o: Rect)",
+        "iou(o: Rect)",
+        "containment(o: Rect)",
+        "nms(objs: List<SceneObj>, iou: Float, max: Int)",
+        "toFrame(box: Rect, w: Int, h: Int)",
+        "letterbox(w: Int, h: Int, side: Int)",
+        "decodeYolo( out: FloatArray, channels: Int, anchors: Int, channelsFirst: Boolean, labels: List<String>, lb: Letterbox, frameW: Int, frameH: Int, minConfidence: Float, iou: Float, max: Int, )",
+        "at(c: Int, a: Int)",
+        "score(b: Block)",
+        "mergeScripts(reads: Map<String, List<Block>>, order: List<String>, iou: Float = 0.3f, contain: Float = 0.6f)",
+        "readingOrder(blocks: List<Block>)",
+        "percentile(ms: List<Long>, q: Double)",
+        "class Rect",
+        "class index",
+        "class SceneObj",
+        "class SceneMath",
+        "class NMS",
+        "class Letterbox",
+        "class at",
+        "class Word",
+        "class Line",
+        "class Block"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/ml-l-image-mlkit/src/main/java/com/diegonmarcos/superapp/image/SceneOnDevice.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [],
+      "imports": [
+        "android.content.Context",
+        "android.graphics.Bitmap",
+        "android.graphics.Canvas",
+        "android.graphics.Color",
+        "android.graphics.Paint",
+        "android.graphics.RectF",
+        "com.diegonmarcos.superapp.mlocr.MlKitOcr",
+        "com.google.mediapipe.framework.image.BitmapImageBuilder",
+        "com.google.mediapipe.tasks.core.BaseOptions",
+        "com.google.mediapipe.tasks.core.Delegate",
+        "com.google.mediapipe.tasks.vision.core.RunningMode",
+        "com.google.mediapipe.tasks.vision.objectdetector.ObjectDetector",
+        "com.google.mlkit.vision.text.Text",
+        "org.tensorflow.lite.DataType",
+        "org.tensorflow.lite.Interpreter",
+        "java.io.FileInputStream",
+        "java.nio.ByteBuffer",
+        "java.nio.ByteOrder",
+        "java.nio.MappedByteBuffer",
+        "java.nio.channels.FileChannel",
+        "kotlin.math.roundToInt"
+      ],
+      "symbols": [
+        "model(detector: String)",
+        "objects(detector: String, frame: Bitmap, minConfidence: Float, max: Int, iou: Float)",
+        "textRegions(frame: Bitmap)",
+        "ocr(frame: Bitmap, script: String)",
+        "blocks(t: Text, script: String)",
+        "map(asset: String)",
+        "detect(frame: Bitmap, minConfidence: Float, max: Int, iou: Float)",
+        "fill()",
+        "put(index: Int, v: Int)",
+        "class detectors",
+        "class SceneOnDevice",
+        "class Yolo"
+      ]
+    },
+    {
       "path": "ab_cloud-libs-shared/libs/ml-l-image-mlkit/src/test/java/com/diegonmarcos/superapp/image/ColoursTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -92128,6 +92609,36 @@
       ]
     },
     {
+      "path": "ab_cloud-libs-shared/libs/ml-l-image-mlkit/src/test/java/com/diegonmarcos/superapp/image/RecognizerRelayTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "RecognizerRelayTest"
+      ],
+      "imports": [
+        "android.graphics.Bitmap",
+        "com.diegonmarcos.superapp.decisions.EngineKeyedHttp",
+        "com.diegonmarcos.superapp.decisions.Http",
+        "org.json.JSONObject",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "org.junit.runner.RunWith",
+        "org.robolectric.RobolectricTestRunner",
+        "org.robolectric.annotation.Config",
+        "org.robolectric.annotation.GraphicsMode"
+      ],
+      "symbols": [
+        "labels(bitmap: Bitmap, minConfidence: Double, max: Int)",
+        "objects(bitmap: Bitmap, max: Int)",
+        "send(url: String, token: String?, body: String?, timeoutMs: Int)",
+        "golden(name: String)",
+        "request(token: String? = null)",
+        "class RecognizerRelayTest"
+      ]
+    },
+    {
       "path": "ab_cloud-libs-shared/libs/ml-l-image-mlkit/src/test/java/com/diegonmarcos/superapp/image/RecognizerTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -92169,6 +92680,45 @@
       ]
     },
     {
+      "path": "ab_cloud-libs-shared/libs/ml-l-image-mlkit/src/test/java/com/diegonmarcos/superapp/image/SceneTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "SceneTest"
+      ],
+      "imports": [
+        "android.graphics.Bitmap",
+        "org.json.JSONObject",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNotNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "org.junit.runner.RunWith",
+        "org.robolectric.RobolectricTestRunner",
+        "org.robolectric.annotation.Config",
+        "org.robolectric.annotation.GraphicsMode",
+        "java.io.File",
+        "java.security.MessageDigest",
+        "java.util.zip.ZipFile"
+      ],
+      "symbols": [
+        "out(vararg anchors: FloatArray, channels: Int = 4 + labels.size)",
+        "block(text: String, l: Float, t: Float, r: Float, b: Float, script: String, p: Float = 0.9f)",
+        "objects(detector: String, frame: Bitmap, minConfidence: Float, max: Int, iou: Float)",
+        "textRegions(frame: Bitmap)",
+        "ocr(frame: Bitmap, script: String)",
+        "model(detector: String)",
+        "golden(name: String)",
+        "request(detector: String = \"efficientdet\", objects: Boolean = true, text: Boolean = false, ocr: Boolean = false)",
+        "pinned(id: String, prop: String)",
+        "class SceneTest",
+        "class are",
+        "class Fake",
+        "class labelled"
+      ]
+    },
+    {
       "path": "ab_cloud-libs-shared/libs/ml-l-image-ocr/src/main/java/com/diegonmarcos/superapp/mlocr/MlKitOcr.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -92179,6 +92729,7 @@
         "android.graphics.Bitmap",
         "com.google.android.gms.tasks.Tasks",
         "com.google.mlkit.vision.common.InputImage",
+        "com.google.mlkit.vision.text.Text",
         "com.google.mlkit.vision.text.TextRecognizer",
         "com.google.mlkit.vision.text.TextRecognition",
         "com.google.mlkit.vision.text.chinese.ChineseTextRecognizerOptions",
@@ -92192,6 +92743,7 @@
         "recognizer(s: Script)",
         "score(t: String)",
         "nonLatinNeeded(latin: String)",
+        "text(bitmap: Bitmap, script: Script, timeoutSeconds: Long = 30)",
         "read(bitmap: Bitmap, timeoutSeconds: Long = 30)",
         "class MlKitOcr",
         "class Script",
@@ -92309,6 +92861,10 @@
         "recognize(bitmap: Bitmap, request: org.json.JSONObject)",
         "detect(bitmap: Bitmap, request: org.json.JSONObject)",
         "detect(file: File, request: org.json.JSONObject)",
+        "scene(bitmap: Bitmap, request: org.json.JSONObject)",
+        "scene(file: File, request: org.json.JSONObject)",
+        "sceneBench(file: File, request: org.json.JSONObject)",
+        "sceneOf(request: org.json.JSONObject, open: ()",
         "detection(request: org.json.JSONObject, open: ()",
         "recognition(request: org.json.JSONObject, open: ()",
         "decisionModels(request: org.json.JSONObject)",
@@ -92392,6 +92948,35 @@
         "class RecognitionRoutes",
         "class Plan",
         "class Used"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/ml-l-image/src/main/java/com/diegonmarcos/superapp/image/Scene.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "Scene"
+      ],
+      "imports": [
+        "org.json.JSONArray",
+        "org.json.JSONObject"
+      ],
+      "symbols": [
+        "failed(why: String)",
+        "objs(a: JSONArray?)",
+        "f(o: JSONObject, k: String)",
+        "parse(json: String)",
+        "decl(decl: JSONObject = RecognitionConfig.json)",
+        "detectors(decl: JSONObject = RecognitionConfig.json)",
+        "defaultDetector(decl: JSONObject = RecognitionConfig.json)",
+        "request(detector: String, objects: Boolean, text: Boolean, ocr: Boolean, frameId: Long? = null, decl: JSONObject = RecognitionConfig.json)",
+        "benchRequest(runs: Int? = null, decl: JSONObject = RecognitionConfig.json)",
+        "class Scene",
+        "class Obj",
+        "class Word",
+        "class Line",
+        "class Block",
+        "class Ocr"
       ]
     },
     {
@@ -92964,6 +93549,8 @@
         "toUpright(x: Float, y: Float, imageW: Int, imageH: Int, rotationDegrees: Int, mirrored: Boolean)",
         "pointToView( x: Float, y: Float, imageW: Int, imageH: Int, rotationDegrees: Int, mirrored: Boolean, viewW: Int, viewH: Int, cover: Boolean = true, )",
         "boxToView( box: Box, imageW: Int, imageH: Int, rotationDegrees: Int, mirrored: Boolean, viewW: Int, viewH: Int, cover: Boolean = true, )",
+        "viewToImage( vx: Float, vy: Float, imageW: Int, imageH: Int, rotationDegrees: Int, mirrored: Boolean, viewW: Int, viewH: Int, cover: Boolean = true, )",
+        "viewScale(imageW: Int, imageH: Int, rotationDegrees: Int, viewW: Int, viewH: Int, cover: Boolean = true)",
         "norm(deg: Int)",
         "class Box",
         "class FrameMapping"
@@ -93012,6 +93599,103 @@
         "segment(frame: Bitmap)",
         "close()",
         "class MlKitPersonSegmenter"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/ml-l-vision-mlkit/src/main/java/com/diegonmarcos/superapp/vision/SceneOverlayView.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "SceneOverlayView"
+      ],
+      "imports": [
+        "android.content.Context",
+        "android.graphics.Paint",
+        "android.util.AttributeSet",
+        "android.view.MotionEvent",
+        "androidx.compose.foundation.Canvas",
+        "androidx.compose.foundation.gestures.detectDragGestures",
+        "androidx.compose.foundation.gestures.detectTapGestures",
+        "androidx.compose.foundation.layout.fillMaxSize",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.geometry.Offset",
+        "androidx.compose.ui.geometry.Size",
+        "androidx.compose.ui.graphics.Color",
+        "androidx.compose.ui.graphics.drawscope.Stroke",
+        "androidx.compose.ui.graphics.nativeCanvas",
+        "androidx.compose.ui.input.pointer.pointerInput",
+        "androidx.compose.ui.platform.AbstractComposeView"
+      ],
+      "symbols": [
+        "onSelected(text: String, selection: TextSelection)",
+        "onCleared()",
+        "show(objects: List<Detection>, textRegions: List<Detection>, geo: Geometry)",
+        "showText(layout: TextLayout?, geo: Geometry?)",
+        "showWords(on: Boolean)",
+        "select(sel: TextSelection?)",
+        "selectAll()",
+        "clear()",
+        "wordBoxes()",
+        "dispatchTouchEvent(ev: MotionEvent)",
+        "toFrame(o: Offset, g: Geometry)",
+        "handlesInView(s: State)",
+        "Content()",
+        "frame(d: Detection, colour: Color, label: String)",
+        "class SceneOverlayView",
+        "class Listener",
+        "class Geometry",
+        "class State"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/ml-l-vision-mlkit/src/main/java/com/diegonmarcos/superapp/vision/TextLayout.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "TextLayout",
+        "TextSelection",
+        "OcrCache"
+      ],
+      "imports": [],
+      "symbols": [
+        "textOf(from: Int, to: Int)",
+        "rangeOf(hit: Hit)",
+        "hit(x: Float, y: Float, slop: Float = 0f)",
+        "inside(b: Box, s: Float)",
+        "d2(b: Box)",
+        "nearestWord(x: Float, y: Float)",
+        "scaled(s: Float, width: Int = Math.round(frameWidth * s)",
+        "b(x: Box)",
+        "block(text: String, box: Box, script: String, lines: List<L>)",
+        "build()",
+        "text(layout: TextLayout)",
+        "of(r: IntRange)",
+        "tap(layout: TextLayout, current: TextSelection?, x: Float, y: Float, slop: Float = 0f)",
+        "drag(layout: TextLayout, sel: TextSelection, handle: Handle, x: Float, y: Float)",
+        "all(layout: TextLayout)",
+        "size()",
+        "put(frameId: Long, layout: TextLayout, pixels: P, atMs: Long)",
+        "get(frameId: Long)",
+        "latest()",
+        "freshSince(sinceMs: Long)",
+        "clear()",
+        "class TextLayout",
+        "class Word",
+        "class Line",
+        "class Block",
+        "class Level",
+        "class Hit",
+        "class Builder",
+        "class W",
+        "class L",
+        "class TextSelection",
+        "class Handle",
+        "class OcrCache",
+        "class Entry"
       ]
     },
     {
@@ -94040,6 +94724,33 @@
       ]
     },
     {
+      "path": "ab_cloud-libs-shared/libs/net-wg/src/main/java/com/diegonmarcos/superapp/netwg/HappyEyeballs.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "HappyEyeballs"
+      ],
+      "imports": [
+        "java.io.Closeable",
+        "java.net.DatagramSocket",
+        "java.net.InetAddress",
+        "java.net.InetSocketAddress",
+        "java.util.concurrent.ExecutorCompletionService",
+        "java.util.concurrent.Executors",
+        "java.util.concurrent.TimeUnit"
+      ],
+      "symbols": [
+        "line()",
+        "systemRoute(addr: String)",
+        "plan(addrs: List<String>, hasRoute: (String)",
+        "race(cands: List<String>, attempt: (String)",
+        "text(attempts: List<Attempt>)",
+        "why(t: Throwable?)",
+        "class HappyEyeballs",
+        "class Attempt"
+      ]
+    },
+    {
       "path": "ab_cloud-libs-shared/libs/net-wg/src/main/java/com/diegonmarcos/superapp/netwg/MeshRelay.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -94070,7 +94781,9 @@
         "stop()",
         "status()",
         "probe(s: RelaySpec)",
-        "connect(s: RelaySpec, addr: String)",
+        "open(s: RelaySpec, remote: String)",
+        "tcp(s: RelaySpec, addr: String)",
+        "secure(s: RelaySpec, raw: Socket, addr: String)",
         "dial(s: RelaySpec, remote: String)",
         "pumpOut()",
         "tunnel()",
@@ -94080,6 +94793,7 @@
         "failed(relay: MeshRelay, spec: RelaySpec, route: RelaySpec.Route, t: Throwable)",
         "why(t: Throwable)",
         "class MeshRelay",
+        "class Opened",
         "class Leg"
       ]
     },
@@ -94297,6 +95011,27 @@
       ]
     },
     {
+      "path": "ab_cloud-libs-shared/libs/net-wg/src/test/java/com/diegonmarcos/superapp/netwg/HappyEyeballsTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "HappyEyeballsTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.io.Closeable",
+        "java.io.IOException"
+      ],
+      "symbols": [
+        "close()",
+        "class HappyEyeballsTest",
+        "class Conn"
+      ]
+    },
+    {
       "path": "ab_cloud-libs-shared/libs/net-wg/src/test/java/com/diegonmarcos/superapp/netwg/MeshRelayTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -94334,6 +95069,7 @@
         "datagramsCrossTheRelayAndComeBack()",
         "aWrongKeyIsNamedNotHidden()",
         "anUnreachableAddressFallsToTheNext()",
+        "anIpv6AddressWithNoRouteIsSkippedAndIpv4CarriesTheRelay()",
         "theSocketIsBoundBeforeItIsProtected()",
         "stoppingReleasesThePort()",
         "framesOfEveryLengthClassRoundTrip()",
@@ -103790,8 +104526,6 @@
         "translateLanguages()",
         "isServingAppInstalled()",
         "aiRoutingSnapshot()",
-        "setAiRouting( providerId: String, apiKey: String = \"\", modelId: String = \"\", clearKey: Boolean = false, )",
-        "revealAiKey(providerId: String)",
         "clipboardLists()",
         "importClipboardLists(json: String)",
         "appendClipboardLists(json: String)",
@@ -103850,6 +104584,36 @@
       "symbols": [
         "spread(c: Color)",
         "class ThemeBackgroundTest"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/torrent/src/main/java/com/diegonmarcos/superapp/torrent/ArchiveSeeds.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ArchiveSeeds"
+      ],
+      "imports": [
+        "java.net.HttpURLConnection",
+        "java.net.URL"
+      ],
+      "symbols": [
+        "identifier(meta: Magnet.MetaInfo)",
+        "fromMetadata(json: String, identifier: String)",
+        "hostOk(h: String)",
+        "parentOf(dir: Any?)",
+        "resolve(meta: Magnet.MetaInfo, get: (String)",
+        "httpGet(url: String)",
+        "parse()",
+        "ws()",
+        "value()",
+        "lit(w: String, v: Any?)",
+        "num()",
+        "obj()",
+        "arr()",
+        "str()",
+        "class ArchiveSeeds",
+        "class Json"
       ]
     },
     {
@@ -104225,6 +104989,32 @@
         "class TorrentStore",
         "class MemoryStore",
         "class FileTorrentStore"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/torrent/src/test/java/com/diegonmarcos/superapp/torrent/ArchiveSeedsTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ArchiveSeedsTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "meta(name: String, seeds: List<String>)",
+        "identifierOnlyForArchiveSeededTorrents()",
+        "liveServersBecomeHttpSeedsWithTheItemsParent()",
+        "eachServerKeepsItsOwnDir()",
+        "alternateLocationsOnlyWhenTheItemListsNoServer()",
+        "malformedJsonGivesNothing()",
+        "fallsBackToD1D2ServerWithoutWorkableServers()",
+        "rejectsForeignHostsAndOddDirs()",
+        "resolveFetchesTheItemsMetadataAndSurvivesFailure()",
+        "class ArchiveSeedsTest"
       ]
     },
     {
@@ -111195,6 +111985,7 @@
       ],
       "imports": [
         "com.diegonmarcos.superapp.decisions.Decisions",
+        "com.diegonmarcos.superapp.decisions.EngineKeyedHttp",
         "com.diegonmarcos.superapp.decisions.Http",
         "org.json.JSONArray",
         "org.json.JSONObject",
@@ -111508,6 +112299,30 @@
         "model(o: Outcome)",
         "ml(o: Outcome)",
         "class RoutingTest"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/writer-core/src/test/kotlin/com/diegonmarcos/cloudwriter/core/WriterRelayTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "WriterRelayTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.decisions.EngineKeyedHttp",
+        "com.diegonmarcos.superapp.decisions.Http",
+        "org.json.JSONObject",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.io.File",
+        "java.io.IOException"
+      ],
+      "symbols": [
+        "send(url: String, token: String?, body: String?, timeoutMs: Int)",
+        "class WriterRelayTest"
       ]
     },
     {
@@ -112233,7 +113048,11 @@
         "com.diegonmarcos.superapp.mlocr.OcrImage",
         "com.diegonmarcos.superapp.mlocr.VisionOcr",
         "android.graphics.Bitmap",
+        "com.diegonmarcos.superapp.decisions.EngineKeyedHttp",
+        "com.diegonmarcos.superapp.decisions.Http",
         "com.diegonmarcos.superapp.decisions.UrlHttp",
+        "com.diegonmarcos.superapp.decisions.link.DecisionsLink",
+        "com.diegonmarcos.superapp.decisions.link.RelayReply",
         "com.diegonmarcos.superapp.texttools.TextToolsClient",
         "org.json.JSONObject"
       ],
@@ -112254,8 +113073,11 @@
         "languageIdOf(idOrTag: String)",
         "online(context: Context)",
         "textTools(context: Context)",
-        "accountToken(context: Context)",
+        "relayHttp(context: Context)",
+        "send(url: String, token: String?, body: String?, timeoutMs: Int)",
         "accountHasKey(context: Context)",
+        "openKeySettings(context: Context)",
+        "engineHasKey(context: Context, provider: String)",
         "translate(context: Context, text: String, languageId: String)",
         "ocrEngine(context: Context)",
         "setOcrEngine(context: Context, engine: OcrEngine)",
@@ -115054,6 +115876,26 @@
       ]
     },
     {
+      "path": "ac_cloud-account/app/src/test/java/com/diegonmarcos/cloudaccount/MailEndpointsDefaultGrantTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "MailEndpointsDefaultGrantTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.fleetendpoints.FleetEndpointsContract",
+        "com.diegonmarcos.superapp.settings.AccountVault",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "org.junit.runner.RunWith",
+        "org.robolectric.RobolectricTestRunner"
+      ],
+      "symbols": [
+        "class MailEndpointsDefaultGrantTest"
+      ]
+    },
+    {
       "path": "ac_cloud-account/app/src/test/java/com/diegonmarcos/cloudaccount/MailEndpointsPublishTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -117407,7 +118249,6 @@
       ],
       "imports": [
         "android.content.Context",
-        "android.os.SystemClock",
         "android.util.Base64",
         "com.diegonmarcos.cloudbrowser.BuildConfig",
         "com.diegonmarcos.cloudsearch.core.SearchConfig",
@@ -117415,15 +118256,15 @@
         "com.diegonmarcos.superapp.ai.AiHost",
         "com.diegonmarcos.superapp.ai.AiMemoryPrefs",
         "com.diegonmarcos.superapp.ai.AiMemorySessions",
-        "com.diegonmarcos.superapp.ai.AiOpenRouterBackend",
+        "com.diegonmarcos.superapp.ai.AiRelay",
+        "com.diegonmarcos.superapp.ai.AiRelayBackend",
+        "com.diegonmarcos.superapp.ai.AiRelayed",
         "com.diegonmarcos.superapp.ai.AiSession",
         "com.diegonmarcos.superapp.ai.AiSink",
         "com.diegonmarcos.superapp.ai.AiStandardHost",
-        "com.diegonmarcos.superapp.ai.AiToken",
-        "com.diegonmarcos.superapp.ai.AiTokenSource",
         "com.diegonmarcos.superapp.browser.BrowserSearch",
         "com.diegonmarcos.superapp.browser.BrowserSearchEngine",
-        "com.diegonmarcos.superapp.texttools.TextToolsClient",
+        "com.diegonmarcos.superapp.decisions.link.DecisionsLink",
         "org.json.JSONArray",
         "org.json.JSONObject"
       ],
@@ -117432,13 +118273,14 @@
         "enginesJson()",
         "searchUrl(q: String, engineId: String?)",
         "sessionsJson()",
-        "backend(token: ()",
+        "backend(relay: AiRelay)",
         "host(app: Context, open: (String)",
-        "send(sessionId: String?, text: String, model: String?, web: Boolean, token: ()",
+        "send(sessionId: String?, text: String, model: String?, web: Boolean, relay: AiRelay)",
         "outcomeJson(o: Outcome)",
         "fromBuild()",
         "get(b64: String)",
-        "accountToken(ctx: Context, provider: String)",
+        "relay(ctx: Context)",
+        "openKeySettings(ctx: Context, provider: String)",
         "class SearchAddon",
         "class Outcome"
       ]
@@ -117454,6 +118296,7 @@
         "android.content.Context",
         "androidx.compose.foundation.background",
         "androidx.compose.foundation.layout.Box",
+        "androidx.compose.foundation.layout.Row",
         "androidx.compose.foundation.layout.fillMaxSize",
         "androidx.compose.material3.Text",
         "androidx.compose.material3.TextButton",
@@ -118904,6 +119747,8 @@
         "BrowserSearchAddonTest"
       ],
       "imports": [
+        "com.diegonmarcos.superapp.ai.AiRelay",
+        "com.diegonmarcos.superapp.ai.AiRelayed",
         "com.diegonmarcos.cloudbrowser.search.SearchAddon",
         "com.diegonmarcos.cloudsearch.core.SearchConfig",
         "com.diegonmarcos.superapp.browser.BrowserConfig",
@@ -119671,6 +120516,30 @@
       ]
     },
     {
+      "path": "ac_cloud-browser/app/src/test/java/com/diegonmarcos/cloudbrowser/search/SearchAddonRelayTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "SearchAddonRelayTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.cloudsearch.core.SearchConfig",
+        "com.diegonmarcos.superapp.ai.AiRelay",
+        "com.diegonmarcos.superapp.ai.AiRelayed",
+        "org.json.JSONObject",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.io.File"
+      ],
+      "symbols": [
+        "searchCfg()",
+        "class SearchAddonRelayTest"
+      ]
+    },
+    {
       "path": "ac_cloud-browser/app/src/test/java/com/diegonmarcos/cloudbrowser/sites/CloudyTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -120344,6 +121213,18 @@
         "tap_text()",
         "wait_for()",
         "fg_service()"
+      ]
+    },
+    {
+      "path": "ac_cloud-browser/test/emulator-relay-browser.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "trigger()"
+      ],
+      "imports": [],
+      "symbols": [
+        "trigger()"
       ]
     },
     {
@@ -128421,18 +129302,20 @@
         "com.diegonmarcos.superapp.crash.SafeEncryptedPrefs",
         "android.content.Context",
         "android.content.SharedPreferences",
-        "android.os.SystemClock",
         "androidx.security.crypto.EncryptedSharedPreferences",
         "com.diegonmarcos.cloudcalc.BuildConfig",
         "com.diegonmarcos.cloudcalc.Declarations",
         "com.diegonmarcos.superapp.decisions.Http",
         "com.diegonmarcos.cloudcalc.jev.JevConfig",
         "com.diegonmarcos.cloudcalc.jev.Models",
+        "com.diegonmarcos.superapp.decisions.EngineKeyedHttp",
         "com.diegonmarcos.superapp.decisions.UrlHttp",
-        "com.diegonmarcos.superapp.texttools.TextToolsClient",
+        "com.diegonmarcos.superapp.decisions.link.DecisionsLink",
+        "com.diegonmarcos.superapp.decisions.link.RelayReply",
         "org.json.JSONObject"
       ],
       "symbols": [
+        "send(url: String, token: String?, body: String?, timeoutMs: Int)",
         "prefs(ctx: Context)",
         "isEdited(ctx: Context)",
         "config(ctx: Context)",
@@ -128446,10 +129329,11 @@
         "modelChoice(ctx: Context, use: String)",
         "setModelChoice(ctx: Context, use: String, slug: String?)",
         "model(ctx: Context, use: String)",
-        "manualToken(ctx: Context)",
-        "setManualToken(ctx: Context, token: String?)",
+        "hasOverride(ctx: Context)",
         "token(ctx: Context)",
-        "readAccount(ctx: Context, provider: String)",
+        "openKeySettings(ctx: Context, override: Boolean)",
+        "retireOldOverride(ctx: Context)",
+        "readStatus(ctx: Context, provider: String)",
         "class JevStore",
         "class Token"
       ]
@@ -129071,6 +129955,9 @@
         "com.diegonmarcos.cloudcalc.sheet.A1",
         "com.diegonmarcos.cloudcalc.sheet.Area",
         "com.diegonmarcos.cloudcalc.sheetui.SheetHub",
+        "com.diegonmarcos.superapp.ai.AiRelay",
+        "com.diegonmarcos.superapp.ai.AiRelayBackend",
+        "com.diegonmarcos.superapp.ai.AiRelayed",
         "com.diegonmarcos.superapp.ai.AiAgents",
         "com.diegonmarcos.superapp.ai.AiChatPage",
         "com.diegonmarcos.superapp.ai.AiChatState",
@@ -129078,11 +129965,8 @@
         "com.diegonmarcos.superapp.ai.AiFileSessions",
         "com.diegonmarcos.superapp.ai.AiGatewayBackend",
         "com.diegonmarcos.superapp.ai.AiMemoryPrefs",
-        "com.diegonmarcos.superapp.ai.AiOpenRouterBackend",
         "com.diegonmarcos.superapp.ai.AiStandardHost",
         "com.diegonmarcos.superapp.ai.AiTool",
-        "com.diegonmarcos.superapp.ai.AiToken",
-        "com.diegonmarcos.superapp.ai.AiTokenSource",
         "com.diegonmarcos.superapp.ai.materialAiTheme",
         "org.json.JSONObject",
         "java.io.File"
@@ -131111,6 +131995,30 @@
       ]
     },
     {
+      "path": "ac_cloud-calc/app/src/test/java/com/diegonmarcos/cloudcalc/decide/JevRelayTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "JevRelayTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.decisions.Decisions",
+        "com.diegonmarcos.superapp.decisions.EngineKeyedHttp",
+        "com.diegonmarcos.superapp.decisions.Http",
+        "org.json.JSONObject",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.io.File"
+      ],
+      "symbols": [
+        "send(url: String, token: String?, body: String?, timeoutMs: Int)",
+        "class JevRelayTest"
+      ]
+    },
+    {
       "path": "ac_cloud-calc/app/src/test/java/com/diegonmarcos/cloudcalc/DeclarationsTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -131193,6 +132101,7 @@
         "com.diegonmarcos.cloudcalc.decide.JevFlow",
         "com.diegonmarcos.cloudcalc.decide.JevStore",
         "com.diegonmarcos.cloudcalc.engine.CalcApi",
+        "com.diegonmarcos.superapp.decisions.EngineKeyedHttp",
         "com.diegonmarcos.superapp.decisions.Http",
         "com.diegonmarcos.cloudcalc.jev.JevConfig",
         "com.diegonmarcos.cloudcalc.ui.CalcShell",
@@ -133133,6 +134042,30 @@
       ]
     },
     {
+      "path": "ac_cloud-calc/test/emulator-relay-image.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "trigger()"
+      ],
+      "imports": [],
+      "symbols": [
+        "trigger()"
+      ]
+    },
+    {
+      "path": "ac_cloud-calc/test/emulator-relay-jev.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "trigger()"
+      ],
+      "imports": [],
+      "symbols": [
+        "trigger()"
+      ]
+    },
+    {
       "path": "ac_cloud-calc/test/emulator-worldclock.sh",
       "lang": "sh",
       "role": "shell",
@@ -134695,6 +135628,10 @@
         "models()",
         "detectLive(frame: Bitmap, mode: String)",
         "detect(file: File, mode: String)",
+        "scene(frame: Bitmap, request: JSONObject)",
+        "scene(file: File, request: JSONObject)",
+        "sceneBench(file: File, request: JSONObject)",
+        "sceneStatus()",
         "detectStatus()",
         "status()",
         "request(ctx: Context, route: String? = null)",
@@ -135657,9 +136594,18 @@
         "ObjectsController"
       ],
       "imports": [
+        "android.content.ClipData",
+        "android.content.ClipboardManager",
+        "android.content.Context",
+        "android.content.Intent",
+        "android.graphics.Bitmap",
+        "android.graphics.ImageDecoder",
+        "android.net.Uri",
         "android.os.SystemClock",
+        "android.util.Log",
         "android.view.View",
         "android.widget.Button",
+        "android.widget.ImageView",
         "android.widget.SeekBar",
         "android.widget.TextView",
         "android.widget.Toast",
@@ -135674,10 +136620,17 @@
         "cld.camera.analyzer.ImageContentScanner",
         "cld.camera.ui.activities.MainActivity",
         "com.diegonmarcos.superapp.image.mlkit.RecognitionConfig",
+        "com.diegonmarcos.superapp.image.mlkit.Scene",
         "com.diegonmarcos.superapp.vision.AnalysisGate",
         "com.diegonmarcos.superapp.vision.AnalyzerLifecycle",
-        "com.diegonmarcos.superapp.vision.DetectionOverlayView",
+        "com.diegonmarcos.superapp.vision.Detection",
         "com.diegonmarcos.superapp.vision.FrameResult",
+        "com.diegonmarcos.superapp.vision.OcrCache",
+        "com.diegonmarcos.superapp.vision.SceneOverlayView",
+        "com.diegonmarcos.superapp.vision.TextLayout",
+        "com.diegonmarcos.superapp.vision.TextSelection",
+        "org.json.JSONArray",
+        "org.json.JSONObject",
         "java.io.File",
         "java.util.concurrent.ExecutorService",
         "java.util.concurrent.Executors"
@@ -135688,20 +136641,41 @@
         "onProgressChanged(bar: SeekBar, progress: Int, fromUser: Boolean)",
         "onStartTrackingTouch(bar: SeekBar)",
         "onStopTrackingTouch(bar: SeekBar)",
+        "onSelected(text: String, selection: TextSelection)",
+        "onCleared()",
         "percent()",
+        "detectorLabel()",
         "analysisUseCase(aspectRatio: Int)",
         "enter()",
         "leave()",
         "onActivityPaused()",
         "setPaused(p: Boolean)",
+        "nextDetector()",
+        "sceneAvailable()",
         "analyze(image: ImageProxy)",
+        "analyzeScene(frame: Bitmap)",
+        "readText(id: Long, pixels: Bitmap, geo: SceneOverlayView.Geometry, live: Boolean)",
+        "showText(l: TextLayout, geo: SceneOverlayView.Geometry)",
+        "textSummary()",
+        "freeze()",
+        "showStill(b: Bitmap, cover: Boolean, label: String?)",
+        "unfreeze()",
+        "openUri(uri: Uri)",
+        "openFile(file: File)",
+        "open(load: ()",
+        "detectStill(b: Bitmap, keepText: Boolean)",
+        "decode(uri: Uri)",
         "render()",
+        "copy(text: String, selection: TextSelection?)",
+        "copyAll()",
+        "share()",
+        "logWords()",
+        "bench(file: File, frames: Int = BENCH_FRAMES)",
         "snapshot()",
         "onImageSaved(output: ImageCapture.OutputFileResults)",
         "onError(e: ImageCaptureException)",
         "toast(msg: String)",
-        "class detection",
-        "class ObjectsController"
+        "fit(b: Bitmap, side: Int)"
       ]
     },
     {
@@ -135718,15 +136692,55 @@
         "android.provider.MediaStore",
         "androidxc.exifinterface.media.ExifInterface",
         "cld.camera.capturer.DEFAULT_MEDIA_STORE_CAPTURE_PATH",
+        "com.diegonmarcos.superapp.vision.Detection",
         "com.diegonmarcos.superapp.vision.FrameResult",
+        "com.diegonmarcos.superapp.vision.TextLayout",
+        "org.json.JSONArray",
+        "org.json.JSONObject",
         "java.io.File",
         "java.text.SimpleDateFormat",
         "java.util.Date",
         "java.util.Locale"
       ],
       "symbols": [
-        "save(ctx: Context, jpeg: File, result: FrameResult?, minConfidence: Float)",
+        "save(ctx: Context, jpeg: File, result: FrameResult?, minConfidence: Float, text: TextLayout? = null, textRegions: List<Detection> = emptyList()",
+        "withText(o: JSONObject, text: TextLayout?, regions: List<Detection>)",
+        "box(b: com.diegonmarcos.superapp.vision.Box)",
         "class ObjectsSnapshot"
+      ]
+    },
+    {
+      "path": "ac_cloud-camera/app/src/main/java/cld/camera/objects/SceneFrames.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "SceneFrames",
+        "SceneThrottle",
+        "FpsMeter"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.image.mlkit.Scene",
+        "com.diegonmarcos.superapp.vision.Box",
+        "com.diegonmarcos.superapp.vision.Detection",
+        "com.diegonmarcos.superapp.vision.FrameResult",
+        "com.diegonmarcos.superapp.vision.TextLayout"
+      ],
+      "symbols": [
+        "objects(s: Scene)",
+        "textRegions(s: Scene)",
+        "detection(o: Scene.Obj)",
+        "box(x: Float, y: Float, w: Float, h: Float)",
+        "layout(s: Scene)",
+        "wantText(now: Long)",
+        "sawText(present: Boolean)",
+        "startOcr(now: Long)",
+        "ocrDone()",
+        "reset()",
+        "tick(now: Long)",
+        "fps()",
+        "class SceneFrames",
+        "class SceneThrottle",
+        "class FpsMeter"
       ]
     },
     {
@@ -135947,6 +136961,8 @@
         "openPerms(feature: String, ids: List<String>)",
         "deniedOnce(vararg ids: String)",
         "resumeAfterPerms()",
+        "consumeObjectsCheckIntent()",
+        "file(p: String)",
         "showAudioPermissionDeniedDialog(onDisableAudio: ()",
         "updateLastFrame()",
         "animateFocusRing(x: Float, y: Float)",
@@ -135977,9 +136993,7 @@
         "onTouch(v: View, event: MotionEvent)",
         "onScale(detector: ScaleGestureDetector)",
         "onScaleBegin(detector: ScaleGestureDetector)",
-        "onScaleEnd(detector: ScaleGestureDetector)",
-        "rotateView(view: View?, angle: Float)",
-        "onOrientationChange(orientation: Int)"
+        "onScaleEnd(detector: ScaleGestureDetector)"
       ]
     },
     {
@@ -137206,6 +138220,100 @@
       ]
     },
     {
+      "path": "ac_cloud-camera/app/src/test/java/cld/camera/SceneFramesTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "SceneFramesTest"
+      ],
+      "imports": [
+        "cld.camera.objects.FpsMeter",
+        "cld.camera.objects.ObjectsSnapshot",
+        "cld.camera.objects.SceneFrames",
+        "cld.camera.objects.SceneThrottle",
+        "com.diegonmarcos.superapp.image.mlkit.RecognitionConfig",
+        "com.diegonmarcos.superapp.image.mlkit.Scene",
+        "com.diegonmarcos.superapp.vision.Box",
+        "com.diegonmarcos.superapp.vision.FrameResult",
+        "com.diegonmarcos.superapp.vision.TextSelection",
+        "org.json.JSONObject",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "theAnswerBecomesObjectsTextFramesAndASelectableLayout()",
+        "aFailedOrForeignAnswerIsAStatedFailure()",
+        "theRequestCarriesTheDeclaredSceneBlockAndRefusesAnUnknownDetector()",
+        "ocrRunsOnlyWhileTextIsInViewAtItsCadenceAndNeverTwiceAtOnce()",
+        "theFpsMeterCountsFramesOverItsWindow()",
+        "theSnapshotJsonKeepsTheDetectionsAndAddsTheTextRegionsAndTheReadText()",
+        "class SceneFramesTest"
+      ]
+    },
+    {
+      "path": "ac_cloud-camera/app/src/test/java/cld/camera/SceneOverlayMappingTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "SceneOverlayMappingTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.vision.Box",
+        "com.diegonmarcos.superapp.vision.FrameMapping",
+        "com.diegonmarcos.superapp.vision.TextLayout",
+        "com.diegonmarcos.superapp.vision.TextSelection",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "everyRotationMirrorAndScaleModeRoundTrips()",
+        "coverCropAndFitLetterboxMapTapsBackExactly()",
+        "theFrontCameraMirrorFlipsTapsToo()",
+        "aSensorOrientedFrameTurnedAQuarterMapsTapsIntoTheSensorFrame()",
+        "layout()",
+        "aTapOnADrawnWordSelectsThatWordThroughTheMapping()",
+        "aTapBesideTheTextSelectsNothingButTheFingerSlopReaches()",
+        "class SceneOverlayMappingTest"
+      ]
+    },
+    {
+      "path": "ac_cloud-camera/app/src/test/java/cld/camera/TextSelectionTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "TextSelectionTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.vision.Box",
+        "com.diegonmarcos.superapp.vision.OcrCache",
+        "com.diegonmarcos.superapp.vision.TextLayout",
+        "com.diegonmarcos.superapp.vision.TextLayout.Builder.L",
+        "com.diegonmarcos.superapp.vision.TextLayout.Builder.W",
+        "com.diegonmarcos.superapp.vision.TextSelection",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertSame",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "layout()",
+        "wordsAreNumberedInReadingOrderAndTheTextKeepsItsBreaks()",
+        "hitTestingFindsTheSmallestElementUnderTheFinger()",
+        "aTapSelectsAWordAndTappingItAgainGrowsToItsLineThenItsBlock()",
+        "theHandlesExtendTheSelectionToTheWordNearestTheFingerNeverPastTheOtherEnd()",
+        "copyAllSelectsEveryWord()",
+        "aLayoutReadLargerScalesOntoTheDetectionFrame()",
+        "theCacheKeepsEachFramesTextAndEvictsTheLeastRecentlyUsed()",
+        "class TextSelectionTest"
+      ]
+    },
+    {
       "path": "ac_cloud-camera/build.sh",
       "lang": "sh",
       "role": "shell",
@@ -137285,6 +138393,38 @@
         "_sha256_sidecar()",
         "_verify_release_asset()",
         "_publish_release_asset()"
+      ]
+    },
+    {
+      "path": "ac_cloud-camera/test/emulator-camera-scene.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "ok()",
+        "fail()",
+        "awake()",
+        "shot()",
+        "dump()",
+        "find_xy()",
+        "tap_text()",
+        "status_line()",
+        "wait_log()",
+        "start()",
+        "xy()"
+      ],
+      "imports": [],
+      "symbols": [
+        "ok()",
+        "fail()",
+        "awake()",
+        "shot()",
+        "dump()",
+        "find_xy()",
+        "tap_text()",
+        "status_line()",
+        "wait_log()",
+        "start()",
+        "xy()"
       ]
     },
     {
@@ -140316,6 +141456,7 @@
         "java.net.InetSocketAddress",
         "java.net.Socket",
         "java.security.cert.X509Certificate",
+        "javax.net.ssl.SNIHostName",
         "javax.net.ssl.SSLContext",
         "javax.net.ssl.SSLParameters",
         "javax.net.ssl.SSLSocket",
@@ -140327,11 +141468,13 @@
         "resolveHost(host: String, promise: Promise)",
         "checkTls(host: String, port: Int, promise: Promise)",
         "handshake(host: String, port: Int, factory: SSLSocketFactory, verifyHost: Boolean)",
+        "connectAny(host: String, port: Int)",
         "putCert(r: com.facebook.react.bridge.WritableMap, cert: X509Certificate?)",
         "captureOnlyFactory()",
         "checkClientTrusted(chain: Array<out X509Certificate>?, authType: String?)",
         "checkServerTrusted(chain: Array<out X509Certificate>?, authType: String?)",
         "getAcceptedIssuers()",
+        "isIpLiteral()",
         "class ServerProbeModule"
       ]
     },
@@ -262555,6 +263698,18 @@
       "symbols": []
     },
     {
+      "path": "ac_cloud-keyboard/test/emulator-relay-writer.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "trigger()"
+      ],
+      "imports": [],
+      "symbols": [
+        "trigger()"
+      ]
+    },
+    {
       "path": "ac_cloud-keyboard/test/test-fleet-setup.sh",
       "lang": "sh",
       "role": "shell",
@@ -264134,15 +265289,20 @@
         "app.sterna.ui.compose.RecipientChecker",
         "app.sterna.ui.compose.RecipientStatus",
         "app.sterna.ui.compose.RecipientVerdict",
+        "android.content.Context",
+        "com.diegonmarcos.superapp.fleetendpoints.FleetEndpointsContract",
         "com.diegonmarcos.superapp.fleetendpoints.FleetHttp",
+        "com.diegonmarcos.superapp.fleetendpoints.android.FleetEndpointsClient",
         "org.json.JSONArray",
         "org.json.JSONObject",
         "java.io.IOException",
         "java.util.concurrent.TimeUnit"
       ],
       "symbols": [
+        "bind(app: Context)",
+        "endpoints()",
         "check(request: RecipientCheckRequest)",
-        "post(body: String)",
+        "post(ends: Endpoints, body: String)",
         "recipientCheckError(httpCode: Int, body: String)",
         "str(name: String)",
         "verdictOf(wire: String?)",
@@ -264156,9 +265316,16 @@
         "disposableRoleItem(checks: JSONObject)",
         "sizeItem(o: JSONObject?, messageSizeBytes: Long?)",
         "checkedAt(s: String?)",
+        "detailKeys(kind: RecipientCheckKind)",
+        "detailLine(v: Any?)",
+        "withCheckDetails(item: RecipientCheckItem, details: JSONObject)",
+        "listItems(a: JSONArray)",
         "parseRecipientCheckResponse(body: String, messageSizeBytes: Long?)",
         "class FleetRecipientChecker",
-        "class with"
+        "class Endpoints",
+        "class with",
+        "class as",
+        "class shape"
       ]
     },
     {
@@ -264214,6 +265381,31 @@
         "class Synced",
         "class AccountMissing",
         "class Refused"
+      ]
+    },
+    {
+      "path": "ac_cloud-mail/app/src/main/kotlin/app/sterna/fleet/MailFleetServices.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "MailFleetServices"
+      ],
+      "imports": [
+        "android.content.Context",
+        "com.diegonmarcos.superapp.fleetendpoints.EndpointPolicy",
+        "com.diegonmarcos.superapp.fleetendpoints.EndpointRouter",
+        "com.diegonmarcos.superapp.fleetendpoints.FleetBearers",
+        "com.diegonmarcos.superapp.fleetendpoints.FleetEndpointsContract",
+        "com.diegonmarcos.superapp.fleetendpoints.FleetTransport",
+        "com.diegonmarcos.superapp.fleetendpoints.android.FleetEndpointsClient",
+        "java.io.IOException",
+        "okhttp3.HttpUrl.Companion.toHttpUrlOrNull"
+      ],
+      "symbols": [
+        "bind(app: Context)",
+        "communicationMcpBase(clock: ()",
+        "register( published: FleetEndpointsContract.Published, service: String, router: EndpointRouter, bearers: FleetBearers, )",
+        "class MailFleetServices"
       ]
     },
     {
@@ -265494,6 +266686,7 @@
       "role": "kotlin",
       "exports": [
         "DeliveryStatusSource",
+        "DeliveryStatusBinding",
         "DeliveryKey",
         "CachedDelivery",
         "DeliveryStatusRepository"
@@ -265511,9 +266704,56 @@
         "timeline(key: DeliveryKey, phone: PhoneDelivery)",
         "nextPollDelayMillis(timeline: DeliveryTimeline, sentAgeMillis: Long)",
         "class DeliveryStatusSource",
+        "class DeliveryStatusBinding",
         "class DeliveryKey",
         "class CachedDelivery",
         "class DeliveryStatusRepository"
+      ]
+    },
+    {
+      "path": "ac_cloud-mail/app/src/main/kotlin/app/sterna/send/delivery/FleetDeliveryStatusSource.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "FleetDeliveryStatusSource",
+        "DeliveryStatusJson"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.fleetendpoints.EndpointRouteInterceptor",
+        "com.diegonmarcos.superapp.fleetendpoints.EndpointRouter",
+        "com.diegonmarcos.superapp.fleetendpoints.FleetBearerInterceptor",
+        "com.diegonmarcos.superapp.fleetendpoints.FleetBearers",
+        "java.io.IOException",
+        "java.net.URLEncoder",
+        "java.time.Instant",
+        "java.util.concurrent.TimeUnit",
+        "kotlinx.coroutines.Dispatchers",
+        "kotlinx.coroutines.withContext",
+        "okhttp3.OkHttpClient",
+        "okhttp3.Request",
+        "org.json.JSONArray",
+        "org.json.JSONObject"
+      ],
+      "symbols": [
+        "fetch(key: DeliveryKey)",
+        "errorCode(body: String)",
+        "parse(o: JSONObject)",
+        "flat(o: JSONObject)",
+        "bool(o: JSONObject, k: String)",
+        "int(o: JSONObject, k: String)",
+        "submission(o: JSONObject, submitted: JSONObject?, received: JSONObject?)",
+        "sender(s: JSONObject?)",
+        "recipients(d: JSONObject?)",
+        "state(o: JSONObject)",
+        "str(o: JSONObject, k: String)",
+        "reason(o: JSONObject)",
+        "smtpCode(o: JSONObject)",
+        "at(o: JSONObject)",
+        "check(checks: JSONObject?, k: String)",
+        "word(s: String)",
+        "class FleetDeliveryStatusSource",
+        "class DeliveryStatusJson",
+        "class with"
       ]
     },
     {
@@ -266593,6 +267833,39 @@
         "SwipeToDismissRow( onDismiss: ()",
         "PendingAccountRow(account: StoredAccount, onClick: ()",
         "authHintRes(account: StoredAccount)"
+      ]
+    },
+    {
+      "path": "ac_cloud-mail/app/src/main/kotlin/app/sterna/ui/components/SentDelivery.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "rememberSentDeliveryTimeline"
+      ],
+      "imports": [
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.LaunchedEffect",
+        "androidx.compose.runtime.collectAsState",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.remember",
+        "androidx.compose.ui.platform.LocalContext",
+        "app.sterna.SternaApplication",
+        "app.sterna.core.jmap.model.Email",
+        "app.sterna.send.delivery.DeliveryKey",
+        "app.sterna.send.delivery.DeliveryStatusRepository",
+        "app.sterna.send.delivery.DeliveryTimeline",
+        "app.sterna.send.delivery.PhoneDelivery",
+        "java.time.Instant",
+        "java.time.OffsetDateTime",
+        "kotlinx.coroutines.delay"
+      ],
+      "symbols": [
+        "isSentRole(role: String?)",
+        "deliveryKeyOf(email: Email)",
+        "sentAtMillis(email: Email)",
+        "sentFolderPhoneDelivery(email: Email)",
+        "rememberSentDeliveryTimeline(email: Email, enabled: Boolean)",
+        "rememberDeliveryTimeline( repo: DeliveryStatusRepository, key: DeliveryKey, phone: PhoneDelivery, sentAt: Long?, )"
       ]
     },
     {
@@ -269619,6 +270892,10 @@
         "MessageScreen"
       ],
       "imports": [
+        "app.sterna.send.delivery.DeliveryTimeline",
+        "app.sterna.ui.components.DeliveryTimelineView",
+        "app.sterna.ui.components.isSentRole",
+        "app.sterna.ui.components.rememberSentDeliveryTimeline",
         "com.diegonmarcos.cloudlib.web.CloudWeb",
         "com.diegonmarcos.cloudlib.web.CloudWebClient",
         "com.diegonmarcos.cloudlib.web.WebProfile",
@@ -269654,11 +270931,7 @@
         "android.print.PrintAttributes",
         "android.print.PrintDocumentAdapter",
         "android.print.PrintManager",
-        "android.provider.CalendarContract",
-        "android.provider.ContactsContract",
-        "android.util.Log",
-        "android.view.KeyEvent",
-        "android.view.MotionEvent"
+        "android.provider.CalendarContract"
       ],
       "symbols": [
         "pagerKey(entry: Pair<String, String?>)",
@@ -273454,6 +274727,27 @@
       ]
     },
     {
+      "path": "ac_cloud-mail/app/src/navWalk/kotlin/app/sterna/navwalk/ScriptedDeliveryStatus.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ScriptedDeliveryStatus"
+      ],
+      "imports": [
+        "app.sterna.send.delivery.DeliveryKey",
+        "app.sterna.send.delivery.DeliveryStatusSource",
+        "app.sterna.send.delivery.RecipientDelivery",
+        "app.sterna.send.delivery.RecipientState",
+        "app.sterna.send.delivery.ServerDeliveryReport",
+        "app.sterna.send.delivery.ServerDeliveryReport.SenderAuth",
+        "app.sterna.send.delivery.ServerDeliveryReport.Submission"
+      ],
+      "symbols": [
+        "fetch(key: DeliveryKey)",
+        "class ScriptedDeliveryStatus"
+      ]
+    },
+    {
       "path": "ac_cloud-mail/app/src/navWalk/kotlin/app/sterna/navwalk/ScriptedRecipientChecker.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -273969,6 +275263,30 @@
         "class MailEndpointSyncTest",
         "class FakeAccount",
         "class Mem"
+      ]
+    },
+    {
+      "path": "ac_cloud-mail/app/src/test/kotlin/app/sterna/fleet/MailFleetServicesTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "MailFleetServicesTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.fleetendpoints.EndpointRouter",
+        "com.diegonmarcos.superapp.fleetendpoints.FleetBearers",
+        "com.diegonmarcos.superapp.fleetendpoints.FleetEndpointsContract",
+        "com.diegonmarcos.superapp.fleetendpoints.MeshProbe",
+        "java.io.IOException",
+        "okhttp3.HttpUrl.Companion.toHttpUrl",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "class MailFleetServicesTest"
       ]
     },
     {
@@ -274830,6 +276148,39 @@
       ],
       "symbols": [
         "class DeliveryStatusRepositoryTest"
+      ]
+    },
+    {
+      "path": "ac_cloud-mail/app/src/test/kotlin/app/sterna/send/delivery/FleetDeliveryStatusSourceTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "FleetDeliveryStatusSourceTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.fleetendpoints.EndpointPolicy",
+        "com.diegonmarcos.superapp.fleetendpoints.EndpointRouter",
+        "com.diegonmarcos.superapp.fleetendpoints.FleetBearers",
+        "com.diegonmarcos.superapp.fleetendpoints.FleetHeaders",
+        "com.diegonmarcos.superapp.fleetendpoints.MeshProbe",
+        "java.io.IOException",
+        "java.time.Instant",
+        "kotlinx.coroutines.test.runTest",
+        "okhttp3.mockwebserver.MockResponse",
+        "okhttp3.mockwebserver.MockWebServer",
+        "org.json.JSONObject",
+        "org.junit.After",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "stop()",
+        "iso(ms: Long)",
+        "parse(stages: String)",
+        "source(meshUp: Boolean)",
+        "class FleetDeliveryStatusSourceTest"
       ]
     },
     {
@@ -289919,6 +291270,35 @@
         "theRegisteredMigrationsCarryAPublishedInstallAllTheWayToTheLocalDraftsTable()",
         "theRegisteredMigrationsReachTheDeclaredSchemaVersion()",
         "class LocalDraftsMigrationSqlTest"
+      ]
+    },
+    {
+      "path": "ac_cloud-mail/core/data/src/test/kotlin/app/sterna/core/data/db/MessageIdMigrationSqlTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "MessageIdMigrationSqlTest"
+      ],
+      "imports": [
+        "androidx.sqlite.db.SupportSQLiteDatabase",
+        "app.sterna.core.data.mail.toEmail",
+        "app.sterna.core.data.mail.toEntity",
+        "app.sterna.core.jmap.model.Email",
+        "java.lang.reflect.Proxy",
+        "java.sql.Connection",
+        "java.sql.DriverManager",
+        "org.junit.After",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Before",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "setUp()",
+        "tearDown()",
+        "supportDb()",
+        "class MessageIdMigrationSqlTest"
       ]
     },
     {
@@ -539556,12 +540936,14 @@
       ],
       "imports": [
         "android.content.Context",
-        "android.os.SystemClock",
-        "com.diegonmarcos.superapp.texttools.TextToolsClient"
+        "com.diegonmarcos.superapp.decisions.link.DecisionsLink",
+        "com.diegonmarcos.superapp.decisions.link.RelayReply"
       ],
       "symbols": [
         "token(ctx: Context, provider: String)",
-        "readAccount(ctx: Context, provider: String)",
+        "relay(ctx: Context, body: String)",
+        "openSettings(ctx: Context, provider: String)",
+        "readStatus(ctx: Context, provider: String)",
         "class Account",
         "class Token"
       ]
@@ -539758,11 +541140,11 @@
         "com.diegonmarcos.superapp.ai.AiHost",
         "com.diegonmarcos.superapp.ai.AiHttp",
         "com.diegonmarcos.superapp.ai.AiModel",
-        "com.diegonmarcos.superapp.ai.AiOpenRouterBackend",
+        "com.diegonmarcos.superapp.ai.AiRelayBackend",
+        "com.diegonmarcos.superapp.ai.AiRelayed",
+        "com.diegonmarcos.superapp.ai.AiRelay",
         "com.diegonmarcos.superapp.ai.AiPrefs",
-        "com.diegonmarcos.superapp.ai.AiStandardHost",
-        "com.diegonmarcos.superapp.ai.AiToken",
-        "com.diegonmarcos.superapp.ai.AiTokenSource"
+        "com.diegonmarcos.superapp.ai.AiStandardHost"
       ],
       "symbols": [
         "host(s: Services)",
@@ -540683,6 +542065,29 @@
       ]
     },
     {
+      "path": "ac_cloud-search/app/src/test/java/com/diegonmarcos/cloudsearch/AccountRelayTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "AccountRelayTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.cloudsearch.core.agents.LlmRequest",
+        "com.diegonmarcos.cloudsearch.core.agents.RelayLlm",
+        "com.diegonmarcos.cloudsearch.data.Account",
+        "org.json.JSONObject",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.io.File"
+      ],
+      "symbols": [
+        "class AccountRelayTest"
+      ]
+    },
+    {
       "path": "ac_cloud-search/app/src/test/java/com/diegonmarcos/cloudsearch/ComposerDeclTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -541241,7 +542646,8 @@
         "LlmRequest",
         "LlmReply",
         "Llm",
-        "OpenRouterLlm"
+        "OpenRouterLlm",
+        "RelayLlm"
       ],
       "imports": [
         "com.diegonmarcos.cloudsearch.core.Chat",
@@ -541252,10 +542658,14 @@
       ],
       "symbols": [
         "complete(req: LlmRequest)",
+        "body(req: LlmRequest)",
+        "parse(code: Int, body: String)",
         "class LlmRequest",
         "class LlmReply",
         "class Llm",
-        "class OpenRouterLlm"
+        "class OpenRouterLlm",
+        "class RelayLlm",
+        "class Relayed"
       ]
     },
     {

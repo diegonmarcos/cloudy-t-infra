@@ -9548,7 +9548,8 @@
         "ProbeConn",
         "Connector",
         "ProbeResult",
-        "ProbeOptions"
+        "ProbeOptions",
+        "Port25Gate"
       ],
       "imports": [
         "node:net",
@@ -9557,7 +9558,8 @@
       "symbols": [
         "tcpConnector()",
         "parseSize(ehlo: string)",
-        "probeMailbox(connector: Connector, host: string, address: string, opt: ProbeOptions)"
+        "probeMailbox(connector: Connector, host: string, address: string, opt: ProbeOptions)",
+        "class Port25Gate"
       ]
     },
     {

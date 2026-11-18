@@ -3306,7 +3306,12 @@
           "helo": "mail.diegonmarcos.com",
           "mail_from": "",
           "port": 25,
-          "timeout_ms": 8000,
+          "timeout_ms": 6000,
+          "_doc_budgets": "timeout_ms = the whole SMTP dialogue after connect; connect_timeout_ms = the TCP connect; request_budget_ms = the whole POST /v1/recipients/check (unfinished checks answer unknown). canary_host: one TCP connect (no SMTP command) decides, cached recheck_ms, whether outbound :25 works from this host; while it does not, remote MX probes are skipped instantly (OCI drops outbound :25).",
+          "connect_timeout_ms": 3000,
+          "request_budget_ms": 8000,
+          "canary_host": "gmail-smtp-in.l.google.com",
+          "recheck_ms": 3600000,
           "overrides": {
             "diegonmarcos.com": "10.0.0.3:2025"
           }
