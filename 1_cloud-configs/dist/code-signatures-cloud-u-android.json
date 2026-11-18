@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 24482,
+    "files": 24486,
     "by_lang": {
       "sh": 793,
       "js": 581,
       "py": 251,
-      "kotlin": 13656,
+      "kotlin": 13660,
       "ts": 8380,
       "java": 654,
       "nix": 37,
@@ -25,7 +25,7 @@
       "python": 87,
       "module": 6462,
       "java": 653,
-      "kotlin": 13653,
+      "kotlin": 13657,
       "flake": 33,
       "rust-module": 130,
       "nix-module": 4,
@@ -261177,7 +261177,6 @@
         "java.util.Locale"
       ],
       "symbols": [
-        "age(ms: Long)",
         "where(ctx: Context)",
         "openNav(ctx: Context)",
         "class GrabberLocation",
@@ -261233,6 +261232,7 @@
         "grab(remember: Boolean = true)",
         "loadMedia(kind: SelectionKind, query: String)",
         "loadTrip(gen: Int, to: MediaResult.MapView)",
+        "watchForFix(gen: Int, to: MediaResult.MapView, shownTs: Long)",
         "retryTrip()",
         "failure(t: Throwable)",
         "run(action: GrabberAction, onReply: (ProcessTextReply)",
@@ -261340,6 +261340,7 @@
         "Lru",
         "TermImage",
         "PlaceParsers",
+        "FixAge",
         "TripPlan"
       ],
       "imports": [
@@ -261375,7 +261376,10 @@
         "wikipediaSummary(json: String, lang: String = \"en\")",
         "commonsFirst(json: String)",
         "m(k: String)",
-        "of(fromLat: Double, fromLon: Double, toLat: Double, toLon: Double, note: String)",
+        "stale(ageMs: Long)",
+        "text(ageMs: Long)",
+        "newer(shownTs: Long, ts: Long)",
+        "of(fromLat: Double, fromLon: Double, toLat: Double, toLon: Double, note: String, stale: Boolean = false, fixTs: Long = 0L)",
         "class is",
         "class GeoMath",
         "class TravelMode",
@@ -261386,6 +261390,7 @@
         "class Lru",
         "class TermImage",
         "class PlaceParsers",
+        "class FixAge",
         "class TripPlan"
       ]
     },
@@ -261933,6 +261938,7 @@
         "theZoomFollowsThePlaceRank()",
         "greatCircleDistances()",
         "theFlightIsDistanceAt800KmhPlusOneHour()",
+        "theFixAgeIsSaidAndOver30MinutesItIsStale()",
         "distancesAndDurationsReadable()",
         "eachRoutedModeHasItsFreeOsrmServerAndAirIsNeverRouted()",
         "osrmAnswers()",
@@ -266153,6 +266159,19 @@
       ]
     },
     {
+      "path": "ac_cloud-mail/app/src/main/kotlin/app/sterna/ui/compose/ComposeSendBodies.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [],
+      "imports": [
+        "app.sterna.core.data.text.plainTextToHtml",
+        "app.sterna.core.imap.htmlToPlainText"
+      ],
+      "symbols": [
+        "composeSendBodies(wireHtml: String, plainTextMode: Boolean)"
+      ]
+    },
+    {
       "path": "ac_cloud-mail/app/src/main/kotlin/app/sterna/ui/compose/ComposeText.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -266310,6 +266329,7 @@
         "activeSignature(identity: StoredIdentity?)",
         "signatureTextOf(identity: StoredIdentity?)",
         "signatureHtmlOf(identity: StoredIdentity?)",
+        "setPlainTextMode(on: Boolean)",
         "selectSignature(signature: StoredSignature)",
         "openingHtml(isReply: Boolean, quoteBlock: String, typed: String = suggestedReply.orEmpty()",
         "pgpAccount()",
@@ -266327,8 +266347,7 @@
         "carriedDraftAccount()",
         "takeEditingDraft()",
         "credentials()",
-        "selves(credentials: AccountCredentials)",
-        "preselectReceivingIdentity(accountId: String, original: Email)"
+        "selves(credentials: AccountCredentials)"
       ]
     },
     {
@@ -266460,7 +266479,7 @@
         "shouldInterceptRequest(view: WebView, request: WebResourceRequest)",
         "HtmlBodyPane( controller: HtmlEditorController, bodyHtml: String, placeholder: String, onChange: (String)",
         "HtmlLinkDialog( existing: String?, labelEditable: Boolean, onApply: (url: String, label: String)",
-        "HtmlFormattingBar( controller: HtmlEditorController, onLink: ()"
+        "HtmlFormattingBar( controller: HtmlEditorController, plainText: Boolean, onPlainText: (Boolean)"
       ]
     },
     {
@@ -274452,6 +274471,38 @@
       ]
     },
     {
+      "path": "ac_cloud-mail/app/src/test/kotlin/app/sterna/ui/compose/ComposeHtmlSignatureDefaultTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ComposeHtmlSignatureDefaultTest"
+      ],
+      "imports": [
+        "app.sterna.core.data.account.StoredAccount",
+        "app.sterna.core.data.account.StoredIdentity",
+        "app.sterna.core.data.account.StoredSignature",
+        "app.sterna.core.data.text.composeOpeningHtml",
+        "app.sterna.core.data.text.composeSignatureHtml",
+        "app.sterna.core.data.text.htmlForWire",
+        "app.sterna.core.data.text.linkifiedSignatureHtml",
+        "app.sterna.core.data.text.signatureEditorBlock",
+        "app.sterna.core.data.text.signatureHtmlCandidates",
+        "app.sterna.core.data.text.signatureHtmlTwin",
+        "app.sterna.core.imap.OutgoingMessage",
+        "app.sterna.core.imap.OutgoingMime",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.util.Base64"
+      ],
+      "symbols": [
+        "leaves(mime: String)",
+        "mimeOf(plainTextMode: Boolean)",
+        "class ComposeHtmlSignatureDefaultTest"
+      ]
+    },
+    {
       "path": "ac_cloud-mail/app/src/test/kotlin/app/sterna/ui/compose/ComposeOpeningTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -274480,6 +274531,25 @@
         "theOriginalTravelsExactlyOneWayInAForwardAndNoWayInAReply()",
         "onlyTheForwardsSkipThreadingAndQuoting()",
         "class ComposeOpeningTest"
+      ]
+    },
+    {
+      "path": "ac_cloud-mail/app/src/test/kotlin/app/sterna/ui/compose/ComposeOptionsParityTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ComposeOptionsParityTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.io.File"
+      ],
+      "symbols": [
+        "src(name: String)",
+        "referenced(code: String)",
+        "class ComposeOptionsParityTest"
       ]
     },
     {
@@ -286781,6 +286851,28 @@
         "htmlBodyFrom(html: String?, plainText: ()",
         "withoutUnusedInlineParts( parts: List<app.sterna.core.jmap.model.EmailBodyPart>, wireHtml: String, )",
         "extractEditorBlock(html: String, kind: String)"
+      ]
+    },
+    {
+      "path": "ac_cloud-mail/core/data/src/main/kotlin/app/sterna/core/data/text/ComposeSignatureHtml.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "signatureHtmlCandidates",
+        "signatureHtmlTwin",
+        "linkifiedSignatureHtml",
+        "composeSignatureHtml"
+      ],
+      "imports": [
+        "app.sterna.core.data.account.StoredAccount",
+        "app.sterna.core.data.account.StoredSignature"
+      ],
+      "symbols": [
+        "signatureMatchKey(text: String)",
+        "signatureHtmlCandidates(account: StoredAccount?, email: String)",
+        "signatureHtmlTwin(text: String, candidates: List<String>)",
+        "linkifiedSignatureHtml(text: String)",
+        "composeSignatureHtml(signature: StoredSignature?, candidates: List<String>)"
       ]
     },
     {

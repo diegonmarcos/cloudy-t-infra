@@ -6,9 +6,9 @@
   },
   "repo": "cloud",
   "counts": {
-    "files": 1581,
+    "files": 1582,
     "by_lang": {
-      "sh": 1066,
+      "sh": 1067,
       "js": 169,
       "nix": 304,
       "py": 12,
@@ -17,7 +17,7 @@
     "by_role": {
       "hook": 377,
       "file": 86,
-      "shell": 545,
+      "shell": 546,
       "flake": 6,
       "script": 146,
       "module": 113,
@@ -19616,6 +19616,28 @@
       ]
     },
     {
+      "path": "9_others/test/hm-dns-hickory-resolver.test.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "ck()",
+        "mk()",
+        "act()",
+        "cnt()",
+        "has()",
+        "DROP()"
+      ],
+      "imports": [],
+      "symbols": [
+        "ck()",
+        "mk()",
+        "act()",
+        "cnt()",
+        "has()",
+        "DROP()"
+      ]
+    },
+    {
       "path": "9_others/test/host-sync-declaration.test.sh",
       "lang": "sh",
       "role": "shell",
@@ -22512,7 +22534,13 @@
         "primaryDns",
         "fallbackDns",
         "SUDO",
-        "RESOLVCONF"
+        "SYSTEMCTL",
+        "RESOLVED_ACTIVE",
+        "RESOLVCONF",
+        "HICKORY_DROPIN",
+        "WANT",
+        "DNS",
+        "FallbackDNS"
       ]
     },
     {
@@ -24994,7 +25022,13 @@
         "primaryDns",
         "fallbackDns",
         "SUDO",
-        "RESOLVCONF"
+        "SYSTEMCTL",
+        "RESOLVED_ACTIVE",
+        "RESOLVCONF",
+        "HICKORY_DROPIN",
+        "WANT",
+        "DNS",
+        "FallbackDNS"
       ]
     },
     {
@@ -27339,7 +27373,13 @@
         "primaryDns",
         "fallbackDns",
         "SUDO",
-        "RESOLVCONF"
+        "SYSTEMCTL",
+        "RESOLVED_ACTIVE",
+        "RESOLVCONF",
+        "HICKORY_DROPIN",
+        "WANT",
+        "DNS",
+        "FallbackDNS"
       ]
     },
     {
@@ -29688,7 +29728,13 @@
         "primaryDns",
         "fallbackDns",
         "SUDO",
-        "RESOLVCONF"
+        "SYSTEMCTL",
+        "RESOLVED_ACTIVE",
+        "RESOLVCONF",
+        "HICKORY_DROPIN",
+        "WANT",
+        "DNS",
+        "FallbackDNS"
       ]
     },
     {
@@ -32036,7 +32082,13 @@
         "primaryDns",
         "fallbackDns",
         "SUDO",
-        "RESOLVCONF"
+        "SYSTEMCTL",
+        "RESOLVED_ACTIVE",
+        "RESOLVCONF",
+        "HICKORY_DROPIN",
+        "WANT",
+        "DNS",
+        "FallbackDNS"
       ]
     },
     {

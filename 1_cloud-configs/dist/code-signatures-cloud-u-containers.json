@@ -6,14 +6,14 @@
   },
   "repo": "cloud-u-containers",
   "counts": {
-    "files": 2699,
+    "files": 2701,
     "by_lang": {
       "sh": 184,
       "js": 125,
       "nix": 202,
       "py": 524,
       "ts": 1293,
-      "rust": 371
+      "rust": 373
     },
     "by_role": {
       "shell": 175,
@@ -27,7 +27,7 @@
       "compose": 90,
       "mcp-tool": 150,
       "workflow-dag": 5,
-      "rust-module": 367,
+      "rust-module": 369,
       "hook": 53
     }
   },
@@ -66409,6 +66409,86 @@
       ]
     },
     {
+      "path": "user-fin_capital-stack-finterm-api/src/code/crates/server/src/finterm/sovereign.rs",
+      "lang": "rust",
+      "role": "rust-module",
+      "exports": [
+        "from_json",
+        "parse",
+        "tenor_years",
+        "newest",
+        "mof_jgb_csv",
+        "boe_iadb_csv",
+        "chinabond_chart_json",
+        "chinabond_table_html",
+        "boe_glc_zip",
+        "glc_sheet",
+        "unzip",
+        "source_url",
+        "country",
+        "router",
+        "Point",
+        "Entry",
+        "Sovereign"
+      ],
+      "imports": [
+        "crate::state::AppState",
+        "axum::extract::",
+        "axum::http::",
+        "axum::response::",
+        "axum::routing::get",
+        "axum::",
+        "chrono::",
+        "serde_json::",
+        "std::collections::HashMap",
+        "std::io::Read",
+        "std::sync::Arc",
+        "super::"
+      ],
+      "symbols": [
+        "default()",
+        "from_json(text: &str)",
+        "ttl(&self)",
+        "retry(&self)",
+        "parse(format: &str, body: &[u8], src: &Value)",
+        "tenor_years(t: &str)",
+        "same_tenor(a: f64, b: f64)",
+        "newest(points: &[Point], years: f64)",
+        "mof_jgb_csv(body: &str)",
+        "boe_iadb_csv(body: &str, src: &Value)",
+        "chinabond_chart_json(body: &str, src: &Value)",
+        "tds(html: &str)",
+        "chinabond_table_html(body: &str)",
+        "maturity_label(s: &str)",
+        "boe_glc_zip(body: &[u8], src: &Value)",
+        "glc_sheet(xml: &str)",
+        "sheet_rows(xml: &str)",
+        "elements(xml: &str, name: &str)",
+        "attr(tag: &str, name: &str)",
+        "u16le(b: &[u8], i: usize)",
+        "u32le(b: &[u8], i: usize)",
+        "unzip(data: &[u8], want: &str)",
+        "source_url(src: &Value, day: NaiveDate)",
+        "allowed(url: &str)",
+        "fetch(client: &reqwest::Client, src: &Value)",
+        "fetch_country(client: &reqwest::Client, sources: &[Value])",
+        "country(s: &AppState, cc: &str)",
+        "router()",
+        "list(q: &HashMap<String, String>, k: &str, default: &Value)",
+        "bad(msg: String)",
+        "sovereign_curves(State(s)",
+        "decl_elsewhere(s: &AppState, cc: &str)",
+        "decl()",
+        "src(cc: &str, i: usize)",
+        "the_declaration_loads_and_every_format_has_a_parser()",
+        "tenors_parse_in_years_and_months()",
+        "mof_jgb_current_month_csv()",
+        "boe_glc_spot_curve_from_the_zipped_workbook()",
+        "boe_iadb_zero_coupon_fallback()",
+        "chinabond_chart_json_and_table()"
+      ]
+    },
+    {
       "path": "user-fin_capital-stack-finterm-api/src/code/crates/server/src/finterm/store.rs",
       "lang": "rust",
       "role": "rust-module",
@@ -66698,6 +66778,34 @@
         "unknown_persona_returns_404()",
         "finterm_catalog_lists_the_declared_jobs()",
         "finterm_admin_refresh_refuses_the_edge()"
+      ]
+    },
+    {
+      "path": "user-fin_capital-stack-finterm-api/src/code/crates/server/tests/sovereign_curves.rs",
+      "lang": "rust",
+      "role": "rust-module",
+      "exports": [],
+      "imports": [
+        "axum::extract::",
+        "axum::http::StatusCode",
+        "axum::response::IntoResponse",
+        "axum::routing::any",
+        "axum::Router",
+        "fin_api::finterm::sovereign::",
+        "fin_api::",
+        "serde_json::Value",
+        "std::collections::HashMap",
+        "std::net::SocketAddr",
+        "std::sync::",
+        "tokio::net::TcpListener"
+      ],
+      "symbols": [
+        "fixtures()",
+        "decl(base: &str, urls: &[(&str, &[&str])",
+        "api(decl: &str)",
+        "gb_jp_cn_from_the_recorded_answers_cached_and_failing_soft()",
+        "cn_from_chinabond_and_a_missing_tenor_is_left_out()",
+        "everything_down_is_a_503_in_the_api_error_shape_and_bad_tenors_a_400()"
       ]
     },
     {
