@@ -119,10 +119,19 @@ in {
   # youki registered but NOT default (2026-07-03): the whole fleet runs runc in
   # production; youki 0.4.1 + systemd cgroup driver fails `create` on Ubuntu
   # (verified on oci-mail). Opt in per-container until youki is proven.
+  #
+  # max-concurrent-downloads: dockerd pulls 3 layers in parallel by default.
+  # On the 1 GB VMs that is enough memory pressure to kill dockerd mid-pull
+  # (2026-11-18 oci-analytics, ship run 44315729287: "Cannot connect to the
+  # Docker daemon" on pull attempt 2, SSH unresponsive ~30 min). VMs with a
+  # declared ram_gb <= 1 pull one layer at a time. Unknown size (ramGb = 0)
+  # keeps the dockerd default. Live-reloadable key (daemon.nix reloads).
   docker.daemon.settings = {
     runtimes = {
       youki = { path = youkiBin; };
     };
+  } // lib.optionalAttrs (ramGb > 0 && ramGb <= 1) {
+    "max-concurrent-downloads" = 1;
   };
 
   # ── Docker unit file — NO [Install], container-init starts it ───────

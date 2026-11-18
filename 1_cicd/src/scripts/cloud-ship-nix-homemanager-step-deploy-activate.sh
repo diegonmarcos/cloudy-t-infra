@@ -111,13 +111,23 @@ HM_PULL_ATTEMPTS="${HM_PULL_ATTEMPTS:-5}"
 HM_PULL_BACKOFF="${HM_PULL_BACKOFF:-15 30 60 120}"
 HM_PULL_SLEEP="${HM_PULL_SLEEP:-sleep}"
 HM_PULL_OUT="${HM_PULL_OUT:-/tmp/.hm-pull-out}"
+# dockerd itself can die mid-pull on the 1 GB VMs (run 44315729287,
+# oci-analytics: attempt 2 hit "Cannot connect to the Docker daemon" and was
+# wrongly treated as permanent). That is classified "daemon": wait up to
+# HM_DAEMON_WAIT seconds for dockerd to answer again, starting it through
+# systemd if the unit is not active, then retry the pull. Never resets the VM.
+HM_DAEMON_WAIT="${HM_DAEMON_WAIT:-180}"
+HM_DAEMON_POLL="${HM_DAEMON_POLL:-5}"
 
-# Classify a failed pull's output: prints "permanent" or "transient".
-# Permanent wins when both match (e.g. a 401 wrapped in a retry message).
-# Anything unrecognised is treated as permanent: only known-transient
-# failures are retried.
+# Classify a failed pull's output: prints "daemon", "permanent" or
+# "transient". "daemon" (dockerd unreachable) is checked first: it says
+# nothing about the image. Permanent wins over transient when both match
+# (e.g. a 401 wrapped in a retry message). Anything unrecognised is treated
+# as permanent: only known-transient failures are retried.
 hm_pull_classify() {
-    if grep -qiE 'unauthorized|authentication required|denied|forbidden|manifest unknown|manifest for .* not found|not found: manifest|repository does not exist|name unknown|invalid reference format|no matching manifest|HTTP (401|403|404)\b' "$1" 2>/dev/null; then
+    if grep -qiE 'Cannot connect to the Docker daemon|Is the docker daemon running|docker\.sock: connect: (connection refused|no such file)|dial unix .*docker\.sock|^HTTP 000$' "$1" 2>/dev/null; then
+        echo daemon
+    elif grep -qiE 'unauthorized|authentication required|denied|forbidden|manifest unknown|manifest for .* not found|not found: manifest|repository does not exist|name unknown|invalid reference format|no matching manifest|HTTP (401|403|404)\b' "$1" 2>/dev/null; then
         echo permanent
     elif grep -qiE 'timeout|timed out|deadline exceeded|unexpected EOF|\bEOF\b|connection reset|connection refused|broken pipe|request canceled|TLS handshake|i/o timeout|no such host|temporary failure in name resolution|network is unreachable|toomanyrequests|too many requests|\b429\b|\b50[0-9]\b|internal server error|bad gateway|service unavailable|gateway timeout' "$1" 2>/dev/null; then
         echo transient
@@ -170,6 +180,37 @@ hm_image_repodigests() {
     fi
 }
 
+# Does dockerd answer?
+hm_daemon_up() {
+    if [ "$USE_CLI" = true ]; then
+        docker info >/dev/null 2>&1
+    else
+        curl -sf --max-time 5 --unix-socket "$DOCKER_SOCK" http://localhost/_ping >/dev/null 2>&1
+    fi
+}
+
+# Wait for dockerd to come back (up to HM_DAEMON_WAIT s, polling every
+# HM_DAEMON_POLL s). If systemd owns docker and the unit is not active
+# (crashed, OOM-killed, failed restart), start it. Non-zero on timeout.
+hm_wait_daemon() {
+    _waited=0
+    while [ "$_waited" -lt "$HM_DAEMON_WAIT" ]; do
+        if hm_daemon_up; then
+            echo "[hm-docker] Docker daemon answering again after ${_waited}s"
+            return 0
+        fi
+        if command -v systemctl >/dev/null 2>&1 && ! systemctl is-active --quiet docker 2>/dev/null; then
+            echo "[hm-docker] docker.service not active — starting it"
+            sudo systemctl start docker 2>&1 | tail -2 || true
+        fi
+        "$HM_PULL_SLEEP" "$HM_DAEMON_POLL"
+        _waited=$((_waited + HM_DAEMON_POLL))
+    done
+    hm_daemon_up && { echo "[hm-docker] Docker daemon answering again after ${_waited}s"; return 0; }
+    echo "[hm-docker] ERROR: Docker daemon did not answer within ${HM_DAEMON_WAIT}s"
+    return 1
+}
+
 hm_pull_with_retry() {
     _attempt=1
     set -- $HM_PULL_BACKOFF
@@ -204,6 +245,14 @@ hm_pull_with_retry() {
             echo "[hm-docker] Pull attempt ${_attempt}/${HM_PULL_ATTEMPTS} failed (transient): ${_reason}"
             echo "[hm-docker] ERROR: pull failed after ${HM_PULL_ATTEMPTS} attempts: $FULL_IMAGE"
             rm -f "$HM_PULL_OUT"; return 1
+        fi
+        if [ "$_class" = daemon ]; then
+            echo "[hm-docker] Pull attempt ${_attempt}/${HM_PULL_ATTEMPTS} failed (daemon unreachable): ${_reason} — waiting up to ${HM_DAEMON_WAIT}s for dockerd"
+            if ! hm_wait_daemon; then
+                rm -f "$HM_PULL_OUT"; return 1
+            fi
+            _attempt=$((_attempt + 1))
+            continue
         fi
         _wait="${1:-120}"; [ "$#" -gt 1 ] && shift
         echo "[hm-docker] Pull attempt ${_attempt}/${HM_PULL_ATTEMPTS} failed (transient): ${_reason} — retrying in ${_wait}s"

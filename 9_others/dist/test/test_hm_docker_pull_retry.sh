@@ -29,6 +29,10 @@
 #   4. advertised digest is verified against `docker image inspect`
 #   5. pull "succeeds" but image does not resolve → retried
 #   6. the script calls the retry wrapper (no bare `docker pull` left)
+#   7. dockerd unreachable mid-pull (run 44315729287) → waits for the daemon
+#      (polling `docker info`, starting an inactive docker.service), then
+#      retries; gives up after HM_DAEMON_WAIT if dockerd never answers
+#   8. VMs with ram_gb <= 1 declare max-concurrent-downloads = 1
 set -u
 
 REPO_ROOT="$(_d="$(cd "$(dirname "$0")" && pwd)"; while [ "$_d" != "/" ] && [ ! -e "$_d/.git" ]; do _d="$(dirname "$_d")"; done; printf '%s' "$_d")"
@@ -63,7 +67,13 @@ case "$1 ${2:-}" in
       429)      echo "Error response from daemon: toomanyrequests: retry later" >&2; exit 1 ;;
       unauth)   echo 'Error response from daemon: Head "https://ghcr.io/v2/x/manifests/latest": unauthorized' >&2; exit 1 ;;
       manifest) echo "Error response from daemon: manifest unknown" >&2; exit 1 ;;
+      daemon)   echo "Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?" >&2; exit 1 ;;
     esac ;;
+  "info "*|"info")
+    # dockerd answers after FAKE_DAEMON_UP_AFTER failed probes (never = -1)
+    n=$(( $(cat "$FAKE_STATE/info" 2>/dev/null || echo 0) + 1 )); echo "$n" > "$FAKE_STATE/info"
+    [ "${FAKE_DAEMON_UP_AFTER:-0}" -ge 0 ] && [ "$n" -gt "${FAKE_DAEMON_UP_AFTER:-0}" ] && exit 0
+    echo "Cannot connect to the Docker daemon" >&2; exit 1 ;;
   "image inspect")
     case "${FAKE_INSPECT:-digest}" in
       digest) echo "ghcr.io/diegonmarcos/nixhm-sudo-oci-analytics@$FAKE_INSPECT_DIGEST"; exit 0 ;;
@@ -77,6 +87,20 @@ esac
 exit 0
 FAKE
 chmod +x "$WORK/bin/docker"
+# Fake systemctl/sudo: unit state from $FAKE_UNIT; `start` calls recorded.
+cat > "$WORK/bin/systemctl" <<'FAKE'
+#!/usr/bin/env bash
+case "$1" in
+  is-active) [ "${FAKE_UNIT:-active}" = active ] ;;
+  start) echo "$*" >> "$FAKE_STATE/systemctl"; exit 0 ;;
+  *) exit 0 ;;
+esac
+FAKE
+cat > "$WORK/bin/sudo" <<'FAKE'
+#!/usr/bin/env bash
+exec "$@"
+FAKE
+chmod +x "$WORK/bin/systemctl" "$WORK/bin/sudo"
 # Fake sleep records requested waits instead of sleeping.
 cat > "$WORK/bin/fake-sleep" <<'FAKE'
 #!/usr/bin/env bash
@@ -102,6 +126,7 @@ run_case() {
                  FULL_IMAGE="$IMAGE:$TAG" DOCKER_SOCK=/nonexistent
                  . "$1"; hm_pull_with_retry' _ "$WORK/retry.sh" 2>&1
     ); RC=$?
+    STARTS=$(cat "$WORK/state/systemctl" 2>/dev/null | wc -l | tr -d ' ')
     COUNT=$(cat "$WORK/state/count" 2>/dev/null || echo 0)
     SLEEPS=$( { tr '\n' ' ' < "$WORK/state/sleeps"; } 2>/dev/null | sed 's/ $//')
 }
@@ -157,6 +182,44 @@ grep -q 'HM_PULL_ATTEMPTS="${HM_PULL_ATTEMPTS:-5}"' "$SCRIPT" && grep -q 'HM_PUL
     && ok "defaults: 5 attempts, 15 30 60 120" || bad "retry defaults changed"
 [ "$(sed -n '/^# >>> hm-pull-retry/,/^# <<< hm-pull-retry/!p' "$SCRIPT" | grep -v '^[[:space:]]*#' | grep -c 'docker pull ')" -eq 0 ] \
     && ok "no unwrapped docker pull outside the retry block" || bad "a bare docker pull remains outside the retry block"
+
+# 7. dockerd dies mid-pull (run 44315729287: timeout, then daemon gone)
+export FAKE_UNIT=inactive FAKE_DAEMON_UP_AFTER=2
+run_case "timeout daemon ok" digest
+if [ "$RC" -eq 0 ] && [ "$COUNT" -eq 3 ] && [ "$SLEEPS" = "15 5 5" ] && [ "$STARTS" -ge 1 ] \
+   && printf '%s\n' "$OUT" | grep -q 'failed (daemon unreachable)' \
+   && printf '%s\n' "$OUT" | grep -q 'docker.service not active — starting it' \
+   && printf '%s\n' "$OUT" | grep -q 'answering again after 10s'; then
+    ok "daemon unreachable → waits (polls docker info), starts docker.service, retries, passes on attempt 3"
+else bad "daemon wait/retry: rc=$RC pulls=$COUNT waits='$SLEEPS' starts=$STARTS" "$OUT"; fi
+printf '%s\n' "$OUT" | grep -q 'permanent, not retrying' \
+    && bad "daemon-unreachable still classified permanent" "$OUT" || ok "'Cannot connect to the Docker daemon' is not permanent"
+
+export FAKE_UNIT=active FAKE_DAEMON_UP_AFTER=1
+run_case "daemon ok" digest
+[ "$RC" -eq 0 ] && [ "$COUNT" -eq 2 ] && [ "$STARTS" -eq 0 ] \
+    && ok "active docker.service is not restarted while waiting" || bad "active unit: rc=$RC pulls=$COUNT starts=$STARTS" "$OUT"
+
+export FAKE_UNIT=inactive FAKE_DAEMON_UP_AFTER=-1 HM_DAEMON_WAIT=20
+run_case "daemon ok" digest
+if [ "$RC" -ne 0 ] && [ "$COUNT" -eq 1 ] && [ "$SLEEPS" = "5 5 5 5" ] \
+   && printf '%s\n' "$OUT" | grep -q 'did not answer within 20s'; then
+    ok "dockerd never returns → fails after HM_DAEMON_WAIT (no further pull, no VM reset)"
+else bad "daemon never back: rc=$RC pulls=$COUNT waits='$SLEEPS'" "$OUT"; fi
+unset FAKE_UNIT FAKE_DAEMON_UP_AFTER HM_DAEMON_WAIT
+grep -q 'HM_DAEMON_WAIT="${HM_DAEMON_WAIT:-180}"' "$SCRIPT" && ok "default daemon wait 180s" || bad "daemon wait default changed"
+grep -qE 'reboot|vm_reset|systemctl (stop|kill)' <(sed -n '/^# >>> hm-pull-retry/,/^# <<< hm-pull-retry/p' "$SCRIPT" | grep -v '^[[:space:]]*#') \
+    && bad "retry block reboots/stops something" || ok "retry block never reboots or stops services"
+
+# 8. low-memory VMs: one layer download at a time, declared from cloud-data
+INIT="$REPO_ROOT/b_infra/_shared/vm-pilot/src/modules/container/init.nix"
+grep -q 'lib.optionalAttrs (ramGb > 0 && ramGb <= 1)' "$INIT" && grep -q '"max-concurrent-downloads" = 1;' "$INIT" \
+    && ok "init.nix: max-concurrent-downloads = 1 when ram_gb <= 1" || bad "init.nix lacks the ram_gb <= 1 download cap"
+if command -v nix-instantiate >/dev/null 2>&1 && nix-instantiate --eval -E '(import <nixpkgs> {}).lib.version' >/dev/null 2>&1; then
+    expr=$(sed -n '/docker.daemon.settings = {/,/^  };/p' "$INIT" | sed '1s/.*docker.daemon.settings = /s = /; $s/;$//' | sed 's/youkiBin/"youki"/')
+    got=$(nix-instantiate --eval --strict -E "let lib = (import <nixpkgs> {}).lib; f = ramGb: let $expr; in s.\"max-concurrent-downloads\" or 0; in [ (f 1) (f 24) (f 0) ]" 2>&1)
+    [ "$got" = "[ 1 0 0 ]" ] && ok "evaluated: 1 GB → 1, 24 GB → default, unknown → default" || bad "nix eval of the cap: $got"
+fi
 
 [ "$FAIL" -eq 0 ] && echo "PASS: hm-docker pull retry" || echo "FAIL: hm-docker pull retry"
 exit "$FAIL"
