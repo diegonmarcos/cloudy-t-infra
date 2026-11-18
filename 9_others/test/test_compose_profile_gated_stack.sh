@@ -4,7 +4,7 @@
 # resolve, must still reach down/up (and fail loudly in the second case). Drives the REAL GATED_PROBE string
 # extracted from the deploy step against a fake `docker`; mutation: dropping the probe from a PAYLOAD fails S1.
 set -u
-ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
+ROOT="$(_d="$(cd "$(dirname "$0")" && pwd)"; while [ "$_d" != "/" ] && [ ! -e "$_d/.git" ]; do _d="$(dirname "$_d")"; done; printf '%s' "$_d")"
 STEP="$ROOT/1_cicd/src/scripts/cloud-ship-container-step-deploy-compose.sh"
 fails=0; ok(){ echo "ok:   $1"; }; bad(){ echo "FAIL: $1"; fails=$((fails+1)); }
 T_DIR="$(mktemp -d)"; trap 'rm -rf "$T_DIR"' EXIT
