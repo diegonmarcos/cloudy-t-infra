@@ -3272,7 +3272,6 @@
         "stalwart_smtp": 2465,
         "stalwart_jmap_https": 2443
       },
-      "_draft": "MCP rebrand #1450: pending owner deploy; the real build.json is generated from the cloudy-t-infra declaration, mirror this there.",
       "_env_note": "env_file must carry the mail vars (MADDY_ME_*/MAIL_*, RESEND, STALWART) AND the mattermost vars (MM_URL, MM_CLAUDE_PASSWORD, MM_TEAM_ID, MM_ADMIN_USERNAME).",
       "_dns_aliases_at_cutover": [
         "cloud-mail-mcp.mesh.diegonmarcos.com",
@@ -3284,6 +3283,7 @@
         "oom_score_adj": -900,
         "_why_oom_score_adj": "#1659: every MCP server on oci-apps is in the last tier the kernel OOM killer picks (_shared/oom-priority.json, tier mcp). Restart policy is 'no' (owner rule), so a killed MCP stays down and its tools are gone until someone starts it by hand. -900 = the host's connectivity tier; not -1000, which would also exempt it from its own cgroup limit."
       },
+      "_status": "#1450: standard service (flake, compose, ship engine link); replaces cloud-mail-mcp + cloud-mattermost-mcp, takes port 3103 over at deploy (engine port eviction).",
       "api": {
         "has_api": false,
         "has_web_ui": false,
@@ -3544,7 +3544,6 @@
           }
         }
       },
-      "_draft": "MCP rebrand #1450: pending owner deploy; the real build.json is generated from the cloudy-t-infra declaration, mirror this there.",
       "_vault_gate": "Public route serves ONLY the drive tool. cloud_vault is exposed when the TCP peer is in VAULT_MESH_CIDR (default 10.0.0.0/24) and no X-Forwarded-*/Authorization header is present: clients reach it by direct mesh IP http://10.0.0.6:3109/mcp (mcp-policy.json direct_http). env_file also needs VAULT_PATH, CONFIG_PATH.",
       "_dns_aliases_at_cutover": [
         "cloud-drive-mcp.mesh.diegonmarcos.com",
@@ -3556,6 +3555,7 @@
         "oom_score_adj": -900,
         "_why_oom_score_adj": "#1659: every MCP server on oci-apps is in the last tier the kernel OOM killer picks (_shared/oom-priority.json, tier mcp). Restart policy is 'no' (owner rule), so a killed MCP stays down and its tools are gone until someone starts it by hand. -900 = the host's connectivity tier; not -1000, which would also exempt it from its own cgroup limit."
       },
+      "_status": "#1450: standard service (flake, compose, ship engine link); replaces cloud-drive-mcp + cloud-vault-mcp, takes port 3109 over at deploy (engine port eviction). No secrets file: neither old service had one; Vaultwarden credentials come from the mounted vault tree.",
       "api": {
         "has_api": false,
         "has_web_ui": false,
