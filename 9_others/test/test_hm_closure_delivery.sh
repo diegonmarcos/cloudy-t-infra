@@ -55,7 +55,13 @@ cat > "$W/bin/ssh" <<'EOF'
 #!/usr/bin/env bash
 while [ "$#" -gt 0 ]; do case "$1" in -o) shift 2 ;; -*) shift ;; *) break ;; esac; done
 shift   # host
-cmd="${*//\/tmp\//$VMROOT/tmp/}"
+cmd="$*"; cmd="${cmd// put \/tmp\// put @PUT@}"   # receiver prefixes HM_XFER_ROOT itself
+cmd="${cmd//\/tmp\//$VMROOT/tmp/}"; cmd="${cmd//@PUT@//tmp/}"
+# Model fs.protected_regular in sticky /tmp: a plain (non-root) redirect onto
+# an existing hand-off file owned by someone else is refused.
+case "$cmd" in *"cat > $VMROOT/tmp/.hm-"*)
+  f="${cmd##*cat > }"; [ -e "$f" ] && [ -e "$STATE/stale-root-owned" ] && { echo "bash: $f: Permission denied" >&2; exit 1; } ;;
+esac
 case "$cmd" in
   *" recv "*)
     n=$(( $(cat "$STATE/recv" 2>/dev/null || echo 0) + 1 )); echo "$n" > "$STATE/recv"
@@ -147,6 +153,18 @@ if [ "$RC" -eq 0 ] && same_store && [ "$(cat "$VMROOT/tmp/.hm-activation-path")"
     ok "empty VM: all 5 paths byte-identical (modes, symlinks), DB dump + activation path + nix-* links handed off"
 else bad "empty VM transfer rc=$RC" "$OUT"; fi
 [ ! -e "$STATE/probes" ] && ok "no edge_guard declared → no probe" || bad "probe ran without an edge_guard declaration"
+
+# 2b. stale root-owned hand-off files from the old docker path (run 44405057517)
+fresh; touch "$STATE/stale-root-owned"
+echo /nix/store/old-generation > "$VMROOT/tmp/.hm-activation-path"; echo OLDDUMP > "$VMROOT/tmp/.hm-nix-db-dump.txt"
+chmod 0400 "$VMROOT/tmp/.hm-activation-path" "$VMROOT/tmp/.hm-nix-db-dump.txt"
+run_xfer no
+mode=$(stat -c %a "$VMROOT/tmp/.hm-activation-path" 2>/dev/null)
+if [ "$RC" -eq 0 ] && [ "$(cat "$VMROOT/tmp/.hm-activation-path")" = "$RESULT" ] \
+   && grep -q '^DBDUMP' "$VMROOT/tmp/.hm-nix-db-dump.txt" && [ "$mode" = 644 ] \
+   && [ -z "$(ls -A "$VMROOT/tmp" | grep -E '^\.hm-put\.|^hm-xfer-recv')" ]; then
+    ok "stale root-owned hand-off files are replaced atomically via sudo (0644, no temp or receiver left)"
+else bad "stale hand-off overwrite rc=$RC mode=$mode" "$OUT"; fi
 
 # 3. delta + half-copied path
 fresh

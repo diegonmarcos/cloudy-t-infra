@@ -32,7 +32,9 @@ HM_XFER_SRC_STORE="${HM_XFER_SRC_STORE:-/nix/store}"
 HM_XFER_SLEEP="${HM_XFER_SLEEP:-sleep}"
 HM_EDGE_TRIES="${HM_EDGE_TRIES:-3}"
 HM_EDGE_GAP="${HM_EDGE_GAP:-10}"
-HM_XFER_RECV="/tmp/hm-xfer-recv.sh"
+# Unique per run: a receiver left by an earlier run (possibly another owner)
+# must never be what this run tries to overwrite.
+HM_XFER_RECV="/tmp/hm-xfer-recv-$(date +%s)-$$.sh"
 
 # image | closure — declared override first, then the declared VM RAM.
 # Unknown RAM keeps the image transport (unchanged behaviour).
@@ -94,6 +96,11 @@ hm_edge_guard() {  # <phase>
 # ── Receiver (runs on the VM as root) ──────────────────────────────────
 #   query            stdin: store basenames; prints those missing or empty
 #   recv <id> <codec> stdin: compressed tar of basenames; stage, then move
+#   put <dest>       stdin → <dest>, as root, atomically (temp file in the
+#                    same dir + mv -f, mode 0644). 2026-11-18 run 44405057517:
+#                    a plain `cat > /tmp/.hm-activation-path` failed because
+#                    the docker path had left a root-owned copy in sticky
+#                    /tmp (fs.protected_regular blocks even an O_CREAT open).
 #   finish <nixbin>  create nix-* command symlinks next to nix
 # HM_XFER_ROOT (tests only) prefixes every path.
 _hm_xfer_receiver() {
@@ -127,6 +134,11 @@ case "$1" in
     done
     rm -rf "$STG"
     echo "recv ok $n" ;;
+  put)
+    d="$R$2"; mkdir -p "$(dirname "$d")"
+    t=$(mktemp "$(dirname "$d")/.hm-put.XXXXXX")
+    cat > "$t"; chmod 0644 "$t"; mv -f "$t" "$d"
+    echo "put ok" ;;
   finish)
     nb="$R$2"
     if [ -x "$nb/nix" ]; then
@@ -135,7 +147,7 @@ case "$1" in
       done
     fi
     echo "finish ok" ;;
-  *) echo "usage: query | recv <id> <codec> | finish <nixbin>" >&2; exit 2 ;;
+  *) echo "usage: query | recv <id> <codec> | put <dest> | finish <nixbin>" >&2; exit 2 ;;
 esac
 RECV_EOF
 }
@@ -209,11 +221,12 @@ hm_closure_transfer() {  # <closure-store-path>
 
     # Same hand-off the activation container produced.
     if ! nix-store --dump-db $(nix-store -qR "$_result") \
-        | ssh $SSH_OPTS "$DEPLOY_HOST" "cat > /tmp/.hm-nix-db-dump.txt"; then
+        | ssh $SSH_OPTS "$DEPLOY_HOST" "sudo bash $HM_XFER_RECV put /tmp/.hm-nix-db-dump.txt" | grep -q '^put ok'; then
         log "ERROR: could not send the nix DB dump to $DEPLOY_HOST"; return 1
     fi
-    printf '%s\n' "$_result" | ssh $SSH_OPTS "$DEPLOY_HOST" "cat > /tmp/.hm-activation-path" \
+    printf '%s\n' "$_result" | ssh $SSH_OPTS "$DEPLOY_HOST" "sudo bash $HM_XFER_RECV put /tmp/.hm-activation-path" | grep -q '^put ok' \
         || { log "ERROR: could not write the activation path on $DEPLOY_HOST"; return 1; }
     ssh $SSH_OPTS "$DEPLOY_HOST" "sudo bash $HM_XFER_RECV finish /nix/var/nix/profiles/default/bin" >/dev/null 2>&1 || true
+    ssh $SSH_OPTS "$DEPLOY_HOST" "rm -f $HM_XFER_RECV" >/dev/null 2>&1 || true
     log "Closure delivered to $DEPLOY_HOST: $_result"
 }
