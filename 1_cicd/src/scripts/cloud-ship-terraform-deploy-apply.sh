@@ -161,8 +161,24 @@ for name in cloudflare gcloud oci hetzner; do
     _sync_json=""; _sync_n=0; _sync_miss=""
     while read -r _sname _skey; do
       [ -n "$_sname" ] || continue
-      case "$_skey" in *[!A-Za-z0-9_]*|"") continue ;; esac
-      _sval="${!_skey:-}"
+      _sval=""
+      case "$_skey" in
+        *'#'*)
+          # "<vault-relative sops file>#<KEY>": read the EXISTING key straight from the cloned vault (read-only,
+          # in memory, never rotated, never printed) for keys the env generator does not export.
+          _sfile="${_skey%%#*}"; _skk="${_skey#*#}"
+          case "$_sfile" in Linux-Containers/*/src/secrets*.yaml) ;; *) continue ;; esac
+          case "$_sfile" in *[!A-Za-z0-9_./-]*|*..*) continue ;; esac
+          case "$_skk" in *[!A-Za-z0-9_]*|"") continue ;; esac
+          for _vd in "$HOME/git/cloud-vault" /root/git/cloud-vault; do
+            if [ -f "$_vd/$_sfile" ]; then
+              _sval="$(sops -d --extract "[\"$_skk\"]" "$_vd/$_sfile" 2>/dev/null || true)"
+              break
+            fi
+          done ;;
+        *[!A-Za-z0-9_]*|"") continue ;;
+        *) _sval="${!_skey:-}" ;;
+      esac
       if [ -n "$_sval" ]; then
         _sesc="$(printf '%s' "$_sval" | tr -d '\r\n' | sed 's/\\/\\\\/g; s/"/\\"/g')"
         _sync_json="${_sync_json}${_sync_json:+,}\"${_sname}\":\"${_sesc}\""

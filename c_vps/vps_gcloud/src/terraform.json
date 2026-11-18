@@ -77,7 +77,7 @@
 
   "cloud_run_secret_sources": {
     "_doc": "#1686 Secret Manager secret name -> key in the decrypted vault env (CI only). cloud-ship-terraform-deploy-apply.sh builds TF_VAR_cloud_run_secret_values from it; main.tf creates the secret, its version and the runtime-SA secretAccessor grant. A managed service whose secret has no value is held back (output cloud_run_skipped_missing_secrets), never failing the apply.",
-    "cloudy-browser-headless-token": "BROWSER_TOKEN"
+    "cloudy-browser-headless-token": "Linux-Containers/user-data_cloudy-browser-headless/src/secrets.yaml#BROWSER_TOKEN"
   },
 
   "cloud_run_services": [
