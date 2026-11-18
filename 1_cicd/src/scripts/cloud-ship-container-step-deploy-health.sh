@@ -125,6 +125,20 @@ _container_liveness() {
     return "$dead"
 }
 
+# #1686: true (rc 0) iff the deployed compose project RESOLVES (config exit 0) to zero services, i.e. every service
+# sits behind an inactive profile (cloud-run) and the stack is served elsewhere. step_compose then changes nothing on
+# the VM, so neither the health wait nor the liveness assertion applies: containers left on the VM from before the
+# move (stopped on purpose, volumes kept under Rule 16) are not this deploy's output. A compose file that does not
+# resolve is NOT gated and goes through the normal checks.
+_profile_gated() {
+    [ -n "${REMOTE_COMPOSE_REL:-}" ] && [ -n "${DEPLOY_PATH:-}" ] || return 1
+    local cf="-f $REMOTE_COMPOSE_REL --project-directory ."
+    [ -f "${DIST_DIR:-/nonexistent}/.secrets" ] && cf="--env-file .secrets $cf"
+    local g
+    g=$(ssh_with_retry "$DEPLOY_HOST" "bash -c 'cd \"$DEPLOY_PATH\" && _s=\$(docker compose $cf config --services 2>/dev/null) && [ -z \"\$_s\" ] && echo GATED'" 2>/dev/null || true)
+    [ "$g" = "GATED" ]
+}
+
 # Observe the declared containers on the VM and fail the step on any DEAD one.
 # Called at the end of step_compose (the deploy cannot END in created) and by
 # step_health (the post-deploy guard), so both `ship` and `rollout` see it.
@@ -133,6 +147,7 @@ assert_declared_containers_live() {
     names="$(declared_container_names "$bj")" || return 1
     names="$(printf '%s' "$names" | tr '\n' ' ')"
     [ -n "${names// /}" ] || { log "liveness: no containers{}.container_name declared — nothing to check"; return 0; }
+    if _profile_gated; then log "liveness: every service is profile-gated (served elsewhere, e.g. Cloud Run); containers left on this VM are not this deploy's output"; return 0; fi
     oneshot="$(jq -r '(.containers // {}) | to_entries[] | .value
                       | select(type == "object" and .one_shot == true)
                       | .container_name // empty' "$bj" | tr '\n' ' ')" || return 1
@@ -182,9 +197,7 @@ step_health() {
     # starts nothing on this VM by design, so there is no container to wait for or to prove alive; waiting would
     # time out as "liveness: MISSING" on every Cloud Run-moved service. Only a project that RESOLVES (config exit 0)
     # to zero services is skipped; a compose file that fails to resolve still goes through the normal wait and fails.
-    local _gated
-    _gated=$(ssh_with_retry "$DEPLOY_HOST" "bash -c 'cd \"$DEPLOY_PATH\" && _s=\$(docker compose $cf config --services 2>/dev/null) && [ -z \"\$_s\" ] && echo GATED'" 2>/dev/null || true)
-    if [ "$_gated" = "GATED" ]; then
+    if _profile_gated; then
         log "Health: every service is profile-gated (served elsewhere, e.g. Cloud Run); no container on this VM to check"
         return 0
     fi

@@ -9,7 +9,7 @@ fails=0; ok(){ echo "ok:   $1"; }; bad(){ echo "FAIL: $1"; fails=$((fails+1)); }
 T_DIR="$(mktemp -d)"; trap 'rm -rf "$T_DIR"' EXIT; mkdir -p "$T_DIR/bin" "$T_DIR/vm"
 mkfake(){ cat > "$T_DIR/bin/docker" <<EOF
 #!/bin/sh
-case "\$*" in *"config --services"*) printf '%s' "$1"; exit $2;; *" ps"*) exit 0;; esac
+case "\$*" in *"config --services"*) printf '%s' "$1"; exit $2;; *" ps"*) exit 0;; inspect*) echo "/app|exited|143"; exit 0;; esac
 exit 0
 EOF
 chmod +x "$T_DIR/bin/docker"; }
@@ -25,4 +25,13 @@ mkfake "app" 0; : > "$T_DIR/log"; ( step_health ) >/dev/null 2>&1
 ! grep -q "profile-gated" "$T_DIR/log" && ok "H2 a project with services is not skipped" || bad "H2"
 mkfake "" 1; : > "$T_DIR/log"; ( step_health ) >/dev/null 2>&1
 ! grep -q "profile-gated" "$T_DIR/log" && ok "H3 an unresolvable project is not skipped" || bad "H3"
-echo "$((3-fails)) passed, $fails failed"; [ $fails -eq 0 ]
+# liveness (#560 assertion): a gated stack whose old container is stopped on purpose is not a dead deploy;
+# the same stopped container on a NON-gated stack still fails.
+log_error(){ echo "ERR $*" >> "$T_DIR/log"; }
+declared_container_names(){ echo app; }
+SERVICE_DIR="$T_DIR/svc"; mkdir -p "$SERVICE_DIR"; echo '{"containers":{"app":{"container_name":"app"}}}' > "$SERVICE_DIR/build.json"; export SERVICE_DIR
+mkfake "" 0; : > "$T_DIR/log"; ( assert_declared_containers_live ) >/dev/null 2>&1; rc=$?
+[ $rc -eq 0 ] && grep -q "profile-gated" "$T_DIR/log" && ok "L1 gated stack with a stopped leftover container: liveness passes" || bad "L1 (rc=$rc)"
+mkfake "app" 0; : > "$T_DIR/log"; ( assert_declared_containers_live ) >/dev/null 2>&1; rc=$?
+[ $rc -ne 0 ] && ok "L2 non-gated stack with an exited container still fails liveness" || bad "L2 (rc=$rc)"
+echo "$((5-fails)) passed, $fails failed"; [ $fails -eq 0 ]
