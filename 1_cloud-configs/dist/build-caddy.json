@@ -965,7 +965,7 @@
     },
     {
       "domain": "c3-cloudy-browser-headless.diegonmarcos.com",
-      "upstream": "10.0.0.6:3118",
+      "upstream": "10.0.0.1:3118",
       "auth": "none",
       "wg_only": true,
       "container": "cloudy-browser-headless",
@@ -973,7 +973,7 @@
     },
     {
       "domain": "c3-cloudy-browser-scrapper-api.diegonmarcos.com",
-      "upstream": "10.0.0.6:3020",
+      "upstream": "10.0.0.1:3020",
       "auth": "none",
       "wg_only": true,
       "container": "cloudy-browser-scrapper-api",
@@ -1652,7 +1652,7 @@
         },
         {
           "base_path": "/cloudy-browser-scrapper-api",
-          "upstream": "10.0.0.6:3020",
+          "upstream": "10.0.0.1:3020",
           "public_paths": [
             "/scrappers/health",
             "/scrappers/openapi.json"
@@ -1723,7 +1723,7 @@
       "paths": [
         {
           "base_path": "/cloudy-browser-headless",
-          "upstream": "10.0.0.6:3118",
+          "upstream": "10.0.0.1:3118",
           "wg_only": true,
           "auth": "none",
           "comment": "Headless browser for agents: official Playwright image (Apache-2.0, not browserless/SSPL) plus a small Node server implementing the shared headless-api JSON command API (open/wait/eval/click/type/scroll/html/text/readable (markdown|json|xml)/screenshot/cookies/storage/network, run(steps), sessions). Bearer-gated, mesh-only."
@@ -2269,17 +2269,17 @@
     },
     {
       "service": "cloudy-browser-headless.mesh.diegonmarcos.com",
-      "upstream": "10.0.0.6:3118",
+      "upstream": "10.0.0.1:3118",
       "private_name": "cloud.cloudy-browser-headless.mesh.diegonmarcos.com"
     },
     {
       "service": "cloudy-browser-scrapper-api.mesh.diegonmarcos.com",
-      "upstream": "10.0.0.6:3020",
+      "upstream": "10.0.0.1:3020",
       "private_name": "cloud.cloudy-browser-scrapper-api.mesh.diegonmarcos.com"
     },
     {
       "service": "scrappers-api.mesh.diegonmarcos.com",
-      "upstream": "10.0.0.6:3020",
+      "upstream": "10.0.0.1:3020",
       "private_name": "cloud.scrappers-api.mesh.diegonmarcos.com"
     },
     {
@@ -2723,19 +2723,19 @@
     },
     {
       "service": "cloud.cloudy-browser-headless.mesh.diegonmarcos.com",
-      "upstream": "10.0.0.6:3118",
+      "upstream": "10.0.0.1:3118",
       "alias_of": "cloudy-browser-headless.mesh.diegonmarcos.com",
       "source": "internal_routes"
     },
     {
       "service": "cloud.cloudy-browser-scrapper-api.mesh.diegonmarcos.com",
-      "upstream": "10.0.0.6:3020",
+      "upstream": "10.0.0.1:3020",
       "alias_of": "cloudy-browser-scrapper-api.mesh.diegonmarcos.com",
       "source": "internal_routes"
     },
     {
       "service": "cloud.scrappers-api.mesh.diegonmarcos.com",
-      "upstream": "10.0.0.6:3020",
+      "upstream": "10.0.0.1:3020",
       "alias_of": "scrappers-api.mesh.diegonmarcos.com",
       "source": "internal_routes"
     },
@@ -3125,13 +3125,13 @@
     },
     {
       "service": "c3-cloudy-browser-headless.mesh.diegonmarcos.com",
-      "upstream": "10.0.0.6:3118",
+      "upstream": "10.0.0.1:3118",
       "scheme": "c3",
       "source": "url_scheme"
     },
     {
       "service": "c3-cloudy-browser-scrapper-api.mesh.diegonmarcos.com",
-      "upstream": "10.0.0.6:3020",
+      "upstream": "10.0.0.1:3020",
       "scheme": "c3",
       "source": "url_scheme"
     },
@@ -5001,7 +5001,7 @@
       "vm": "oci-A1-f_0",
       "port": 3118,
       "protocol": "http",
-      "upstream": "10.0.0.6:3118",
+      "upstream": "10.0.0.1:3118",
       "source": "containers.app.port"
     },
     {
@@ -5022,7 +5022,7 @@
       "vm": "oci-A1-f_0",
       "port": 3020,
       "protocol": "http",
-      "upstream": "10.0.0.6:3020",
+      "upstream": "10.0.0.1:3020",
       "source": "containers.app.port"
     },
     {
@@ -5512,7 +5512,7 @@
     {
       "host": "mcp.diegonmarcos.com",
       "path": "/cloudy-browser-headless",
-      "upstream": "10.0.0.6:3118",
+      "upstream": "10.0.0.1:3118",
       "kind": "reverse_proxy",
       "tls": "public",
       "zone": "com",
@@ -5714,7 +5714,7 @@
     {
       "host": "api.diegonmarcos.com",
       "path": "/cloudy-browser-scrapper-api",
-      "upstream": "10.0.0.6:3020",
+      "upstream": "10.0.0.1:3020",
       "kind": "reverse_proxy",
       "tls": "public",
       "zone": "com",
@@ -6378,7 +6378,7 @@
     {
       "host": "c3-cloudy-browser-headless.diegonmarcos.com",
       "path": null,
-      "upstream": "10.0.0.6:3118",
+      "upstream": "10.0.0.1:3118",
       "kind": "reverse_proxy",
       "tls": "public",
       "zone": "com",
@@ -6388,7 +6388,7 @@
     {
       "host": "c3-cloudy-browser-scrapper-api.diegonmarcos.com",
       "path": null,
-      "upstream": "10.0.0.6:3020",
+      "upstream": "10.0.0.1:3020",
       "kind": "reverse_proxy",
       "tls": "public",
       "zone": "com",
@@ -7570,7 +7570,7 @@
     {
       "host": "cloudy-browser-headless.mesh.diegonmarcos.com",
       "path": null,
-      "upstream": "10.0.0.6:3118",
+      "upstream": "10.0.0.1:3118",
       "kind": "reverse_proxy",
       "tls": "internal",
       "zone": "com",
@@ -7580,7 +7580,7 @@
     {
       "host": "cloudy-browser-scrapper-api.mesh.diegonmarcos.com",
       "path": null,
-      "upstream": "10.0.0.6:3020",
+      "upstream": "10.0.0.1:3020",
       "kind": "reverse_proxy",
       "tls": "internal",
       "zone": "com",
@@ -7590,7 +7590,7 @@
     {
       "host": "scrappers-api.mesh.diegonmarcos.com",
       "path": null,
-      "upstream": "10.0.0.6:3020",
+      "upstream": "10.0.0.1:3020",
       "kind": "reverse_proxy",
       "tls": "internal",
       "zone": "com",
@@ -8262,7 +8262,7 @@
     {
       "host": "cloudy-browser-headless-http-3118.mesh.diegonmarcos.com",
       "path": null,
-      "upstream": "10.0.0.6:3118",
+      "upstream": "10.0.0.1:3118",
       "kind": "reverse_proxy",
       "tls": "on_demand",
       "zone": "com",
@@ -8272,7 +8272,7 @@
     {
       "host": "cloudy-browser-scrapper-api-http-3020.mesh.diegonmarcos.com",
       "path": null,
-      "upstream": "10.0.0.6:3020",
+      "upstream": "10.0.0.1:3020",
       "kind": "reverse_proxy",
       "tls": "on_demand",
       "zone": "com",

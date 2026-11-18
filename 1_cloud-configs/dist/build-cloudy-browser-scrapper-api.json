@@ -31,6 +31,10 @@
     "container_name": "cloudy-browser-scrapper-api",
     "image": "ghcr.io/diegonmarcos/cloudy-browser-scrapper-api:latest",
     "port": 3020,
+    "cloud_run_bridge": {
+      "host": "10.0.0.1",
+      "_doc": "#1686: served from Cloud Run through the gcp-idtoken-bridge (listener 10.0.0.1:3020 on gcp-proxy); the oci-apps container is stopped, its volume and this declaration stay (Rule 16)."
+    },
     "port_env": "PORT",
     "protocol": "http",
     "dns": "cloudy-browser-scrapper-api.mesh.diegonmarcos.com",
