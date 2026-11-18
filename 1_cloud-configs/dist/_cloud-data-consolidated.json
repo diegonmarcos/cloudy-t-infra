@@ -11239,8 +11239,9 @@
           "resources": {
             "_doc_mem_limit": "Measured on oci-mail 2026-10-13: anon <=30MiB (6MiB resident + 24MiB swapped), cgroup peak 171MiB of which nearly all was reclaimable page cache over imapsql.db. 128M bounds the cache without touching the working set; it replaces the 2G category default, which on a 954MiB VM capped nothing. Gate: _shared/test-mail-stack-limits.mjs. 128M -> 192M (2026-11-18 oci-mail incident: load 13, IO PSI ~75%, maddy 145GB read / 29GB written lifetime). At 128M the cgroup could not hold the imapsql.db page cache next to maddy-sorter's full-file backups, so the DB was re-read from disk on every pass. 192M keeps the four mail ceilings at 704MiB, inside the 954MiB box with the 250MiB host reserve (L7). The backups are now rate-limited too (BACKUP_MIN_INTERVAL).",
             "mem_limit": "192M",
+            "_doc_reservation": "32M -> 96M (2026-11-18 21:00, oci-mail IO PSI some 78; maddy's cgroup reading 832KB/s while the maddy process itself read 0KB/s, i.e. page-cache refaults of imapsql.db and its own binary after host-wide reclaim). Docker renders reservations.memory as cgroup v2 memory.low, so under host pressure the kernel reclaims unprotected cache elsewhere before maddy's first 96M. It is a reclaim floor, not an allocation, and the 192M ceiling is unchanged. SQLite settings were checked and are no lever here: maddy 0.9's storage.imapsql sqlite3_cache_size is parsed but never applied by the pinned go-imap-sql (8da5567, Opts.CacheSize has no reader), and nothing sets mmap_size, so imapsql.db is read through the page cache, which is exactly what memory.low protects. Mail-stack reservations total 256M of 954M (stalwart 128, maddy 96, sorter 16, puller 16). Gate: _shared/test-mail-stack-limits.mjs R3/R4.",
             "reservations": {
-              "memory": "32M"
+              "memory": "96M"
             }
           },
           "read_only": false,
