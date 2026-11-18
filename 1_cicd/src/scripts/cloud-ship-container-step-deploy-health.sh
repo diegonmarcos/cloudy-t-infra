@@ -178,6 +178,17 @@ step_health() {
     # step puts .secrets at $DEPLOY_PATH/.secrets exactly when this exists.
     [ -f "$DIST_DIR/.secrets" ] && cf="--env-file .secrets $cf"
 
+    # #1686: the same gate as step_compose. A stack whose every service sits behind an inactive profile (cloud-run)
+    # starts nothing on this VM by design, so there is no container to wait for or to prove alive; waiting would
+    # time out as "liveness: MISSING" on every Cloud Run-moved service. Only a project that RESOLVES (config exit 0)
+    # to zero services is skipped; a compose file that fails to resolve still goes through the normal wait and fails.
+    local _gated
+    _gated=$(ssh_with_retry "$DEPLOY_HOST" "bash -c 'cd \"$DEPLOY_PATH\" && _s=\$(docker compose $cf config --services 2>/dev/null) && [ -z \"\$_s\" ] && echo GATED'" 2>/dev/null || true)
+    if [ "$_gated" = "GATED" ]; then
+        log "Health: every service is profile-gated (served elsewhere, e.g. Cloud Run); no container on this VM to check"
+        return 0
+    fi
+
     log "Waiting for containers to be healthy (timeout: ${timeout}s)..."
 
     while [ "$elapsed" -lt "$timeout" ]; do
