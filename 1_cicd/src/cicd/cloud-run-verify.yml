@@ -38,7 +38,7 @@ jobs:
           [ -n "$body" ] && args+=(-H 'Content-Type: application/json' --data "$body")
           code="$(curl "${args[@]}" "$url$path" || echo 000)"
           echo "$svc $method $path -> HTTP $code"
-          if [ -n "$bearer_file" ] && grep -qF "$(cat "$bearer_file")" "$RUNNER_TEMP/body" 2>/dev/null; then echo "(body withheld: contains the app token)"; else head -c 600 "$RUNNER_TEMP/body"; echo; fi
+          if [ -n "${QUIET:-}" ]; then echo "(body $(wc -c < "$RUNNER_TEMP/body") bytes, not printed)"; elif [ -n "$bearer_file" ] && grep -qF "$(cat "$bearer_file")" "$RUNNER_TEMP/body" 2>/dev/null; then echo "(body withheld: contains the app token)"; else head -c 600 "$RUNNER_TEMP/body"; echo; fi
           echo "$code" > "$RUNNER_TEMP/last_code"
           SH
           chmod +x "$RUNNER_TEMP/req.sh"
@@ -71,13 +71,7 @@ jobs:
           jq -c '.components.schemas | with_entries(select(.key|test("Download|Scrape|Request|Body";"i")))' "$RUNNER_TEMP/openapi.json" | head -c 3000 || true
           echo
           "$RUNNER_TEMP/req.sh" scrappers-api GET /targets || true
-          # logged-out Instagram scrape of the public handle (optional live refresh; burner secrets are not configured)
-          "$RUNNER_TEMP/req.sh" scrappers-api POST /scrape/instagram "" '{"handle":"diegonmarcos"}' || true
-          echo "- scrappers-api POST /scrape/instagram: HTTP $(cat "$RUNNER_TEMP/last_code")" >> "$GITHUB_STEP_SUMMARY"
-          # yt-dlp metadata on the first public YouTube video; the mode name is not documented, so try info first
-          for m in info metadata; do
-            "$RUNNER_TEMP/req.sh" scrappers-api POST /download/youtube "" "{\"url\":\"https://www.youtube.com/watch?v=jNQXAC9IWRw\",\"mode\":\"$m\"}" || true
-            echo "- scrappers-api POST /download/youtube mode=$m: HTTP $(cat "$RUNNER_TEMP/last_code")" >> "$GITHUB_STEP_SUMMARY"
-            [ "$(cat "$RUNNER_TEMP/last_code")" = 200 ] && break
-          done
+          # yt-dlp on the first public YouTube video (19 s, tiny): no metadata-only mode exists (video|audio|audio_extract)
+          QUIET=1 "$RUNNER_TEMP/req.sh" scrappers-api POST /download/youtube "" '{"url":"https://www.youtube.com/watch?v=jNQXAC9IWRw","mode":"video","quality":144}' || true
+          echo "- scrappers-api POST /download/youtube mode=video q=144: HTTP $(cat "$RUNNER_TEMP/last_code")" >> "$GITHUB_STEP_SUMMARY"
           exit $rc
