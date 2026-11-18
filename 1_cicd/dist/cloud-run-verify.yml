@@ -83,4 +83,13 @@ jobs:
           jq -c '.components.schemas | with_entries(select(.key|test("Download|Scrape|Request|Body";"i")))' "$RUNNER_TEMP/openapi.json" | head -c 3000 || true
           echo
           "$RUNNER_TEMP/req.sh" scrappers-api GET /targets || true
+          # logged-out Instagram scrape of the public handle (optional live refresh; burner secrets are not configured)
+          "$RUNNER_TEMP/req.sh" scrappers-api POST /scrape/instagram "" '{"handle":"diegonmarcos"}' || true
+          echo "- scrappers-api POST /scrape/instagram: HTTP $(cat "$RUNNER_TEMP/last_code")" >> "$GITHUB_STEP_SUMMARY"
+          # yt-dlp metadata on the first public YouTube video; the mode name is not documented, so try info first
+          for m in info metadata; do
+            "$RUNNER_TEMP/req.sh" scrappers-api POST /download/youtube "" "{\"url\":\"https://www.youtube.com/watch?v=jNQXAC9IWRw\",\"mode\":\"$m\"}" || true
+            echo "- scrappers-api POST /download/youtube mode=$m: HTTP $(cat "$RUNNER_TEMP/last_code")" >> "$GITHUB_STEP_SUMMARY"
+            [ "$(cat "$RUNNER_TEMP/last_code")" = 200 ] && break
+          done
           exit $rc
