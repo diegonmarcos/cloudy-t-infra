@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 24522,
+    "files": 24524,
     "by_lang": {
       "sh": 799,
       "js": 581,
       "py": 251,
-      "kotlin": 13688,
+      "kotlin": 13690,
       "ts": 8382,
       "java": 654,
       "nix": 37,
@@ -25,7 +25,7 @@
       "python": 87,
       "module": 6464,
       "java": 653,
-      "kotlin": 13685,
+      "kotlin": 13687,
       "flake": 33,
       "rust-module": 130,
       "nix-module": 4,
@@ -264119,6 +264119,49 @@
       ]
     },
     {
+      "path": "ac_cloud-mail/app/src/main/kotlin/app/sterna/fleet/FleetRecipientChecker.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "FleetRecipientChecker"
+      ],
+      "imports": [
+        "app.sterna.ui.compose.CheckOutcome",
+        "app.sterna.ui.compose.CheckSource",
+        "app.sterna.ui.compose.RecipientCheckItem",
+        "app.sterna.ui.compose.RecipientCheckKind",
+        "app.sterna.ui.compose.RecipientCheckRequest",
+        "app.sterna.ui.compose.RecipientChecker",
+        "app.sterna.ui.compose.RecipientStatus",
+        "app.sterna.ui.compose.RecipientVerdict",
+        "com.diegonmarcos.superapp.fleetendpoints.FleetHttp",
+        "org.json.JSONArray",
+        "org.json.JSONObject",
+        "java.io.IOException",
+        "java.util.concurrent.TimeUnit"
+      ],
+      "symbols": [
+        "check(request: RecipientCheckRequest)",
+        "post(body: String)",
+        "recipientCheckError(httpCode: Int, body: String)",
+        "str(name: String)",
+        "verdictOf(wire: String?)",
+        "stateOutcome(state: String?)",
+        "item(kind: RecipientCheckKind, outcome: CheckOutcome, detail: String?, acceptsAll: Boolean = false)",
+        "syntaxItem(o: JSONObject?)",
+        "domainItem(o: JSONObject?)",
+        "mailboxItem(o: JSONObject?)",
+        "bounceItem(o: JSONObject?)",
+        "flag(root: JSONObject, name: String)",
+        "disposableRoleItem(checks: JSONObject)",
+        "sizeItem(o: JSONObject?, messageSizeBytes: Long?)",
+        "checkedAt(s: String?)",
+        "parseRecipientCheckResponse(body: String, messageSizeBytes: Long?)",
+        "class FleetRecipientChecker",
+        "class with"
+      ]
+    },
+    {
       "path": "ac_cloud-mail/app/src/main/kotlin/app/sterna/fleet/MailAccountSync.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -273802,6 +273845,28 @@
       ],
       "symbols": [
         "class CloudSecretsTest"
+      ]
+    },
+    {
+      "path": "ac_cloud-mail/app/src/test/kotlin/app/sterna/fleet/FleetRecipientCheckerTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "FleetRecipientCheckerTest"
+      ],
+      "imports": [
+        "app.sterna.ui.compose.CheckOutcome",
+        "app.sterna.ui.compose.RecipientCheckKind",
+        "app.sterna.ui.compose.RecipientVerdict",
+        "app.sterna.ui.compose.mergeRecipientStatus",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.io.File"
+      ],
+      "symbols": [
+        "class FleetRecipientCheckerTest"
       ]
     },
     {
