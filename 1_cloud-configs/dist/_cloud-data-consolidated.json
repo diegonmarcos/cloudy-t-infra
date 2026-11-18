@@ -11461,8 +11461,9 @@
             "_doc_file_rereads": "2026-11-18 16:20 UTC oci-mail: io PSI some 61.6 / full 13.4, ~12MB/s file refaults (pgpgin 12188KB/s, workingset_refault_file 393/s), stalwart 1474MB cumulative cgroup reads, swap not involved, stalwart ~70MiB resident. Cause: the stalwart-sorter filter pass asked Email/get for bodyStructure on every in-scope message (~11.7k) every pass, and v0.16.5 serves bodyStructure by reading the whole raw blob (crates/jmap/src/email/get.rs needs_body), so each pass read the entire mailbox off the boot disk. Fixed in the sorter (src/crate/src/filters.rs AttachTypeCache: bodyStructure once per message per process, only for attach_type views). Stalwart-side settings checked against the v0.16.5 registry schema and left at defaults because none of them re-reads on a cadence: the RocksDb store exposes only blobSize/bufferSize/poolWorkers (no block-cache knob); Search indexes on ingest (indexBatchSize 100), not on a timer; SpamClassifier trains every 12h from a 1024-sample reservoir; DataRetention purges run once a day (00:00/02:00/04:00); the queue wakes on due events; the tracer is Stdout at info (writes, not reads). mem_limit stays 384M: ~70MiB resident leaves ~300MiB of headroom, and the 704MiB mail total has no room to raise it. Gate: _shared/test-mail-stack-limits.mjs B1-B4.",
             "mem_limit": "384M",
             "cpus": "0.7",
+            "_doc_reservation": "32M -> 128M (2026-11-18). Docker maps reservations.memory to cgroup v2 memory.low: under host pressure the kernel reclaims everyone else's unprotected page cache before stalwart's protected part. 128M covers the ~70MiB resident plus ~58MiB of hot RocksDB index/property pages, so those stop being evicted and re-read. It reserves nothing up front and caps nothing. Mail-stack reservations total 192M of 954M. Gate: _shared/test-mail-stack-limits.mjs R1-R3.",
             "reservations": {
-              "memory": "32M"
+              "memory": "128M"
             }
           },
           "read_only": false,
