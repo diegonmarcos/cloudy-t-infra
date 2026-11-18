@@ -164,7 +164,8 @@
         "FINTERM_DB": "/data/finterm.db",
         "FIN_API_HOST": "0.0.0.0",
         "FIN_API_PORT": "8340",
-        "RUST_LOG": "info,tower_http=info"
+        "RUST_LOG": "info,tower_http=info",
+        "IMAGE_REVISION": "cloudy-u-containers@61f86532"
       },
       "secret_env": {},
       "volumes": [
