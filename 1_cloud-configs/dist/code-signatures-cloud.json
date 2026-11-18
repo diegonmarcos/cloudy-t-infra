@@ -6,9 +6,9 @@
   },
   "repo": "cloud",
   "counts": {
-    "files": 1585,
+    "files": 1586,
     "by_lang": {
-      "sh": 1070,
+      "sh": 1071,
       "js": 169,
       "nix": 304,
       "py": 12,
@@ -17,7 +17,7 @@
     "by_role": {
       "hook": 377,
       "file": 86,
-      "shell": 549,
+      "shell": 550,
       "flake": 6,
       "script": 146,
       "module": 113,
@@ -20712,6 +20712,26 @@
         "ok()",
         "bad()",
         "run_case()"
+      ]
+    },
+    {
+      "path": "9_others/test/test_hm_ship_matrix.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "ok()",
+        "bad()",
+        "run()",
+        "expect()"
+      ],
+      "imports": [
+        "cloud-ship-hm-matrix.sh"
+      ],
+      "symbols": [
+        "ok()",
+        "bad()",
+        "run()",
+        "expect()"
       ]
     },
     {
