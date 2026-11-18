@@ -419,6 +419,13 @@ PULL_GATE
         # single quotes) so it can be single-quote-wrapped for fish→bash verbatim.
         CF="-f $REMOTE_COMPOSE_REL --project-directory ."
         ENV_FILE_PROBE='ENV_FILE_FLAG="$([ -f compose/.secrets ] && echo --env-file compose/.secrets || { [ -f .secrets ] && echo --env-file .secrets; })"'
+        # #1686: a service moved to Cloud Run keeps its compose under `profiles: [cloud-run]` (Rule 16: the
+        # declaration stays). With every service profile-gated, `up` fails "no service selected" AFTER `down`
+        # has already removed the running containers, which took cloudy-browser-headless and scrappers-api
+        # off oci-apps on 2026-11-18 03:16 before their Cloud Run path was live. When the resolved project
+        # selects no service, the stack is served elsewhere: change nothing on the VM and succeed. A compose
+        # file that does not resolve at all (config exits non-zero) is NOT this case and goes on to fail loudly.
+        GATED_PROBE='_svcs="$(docker compose '"$CF"' $ENV_FILE_FLAG config --services 2>/dev/null)"; _crc=$?; if [ "$_crc" -eq 0 ] && [ -z "$_svcs" ]; then echo "compose: every service is profile-gated (served elsewhere, e.g. Cloud Run); nothing started or stopped on this VM"; exit 0; fi'
         log "Running docker compose up on $DEPLOY_HOST:$DEPLOY_PATH (compose=$REMOTE_COMPOSE_REL)"
         if [ "$COMPOSE_PULL_FIRST" = "true" ]; then
             # Pull-gate: obtain the new image BEFORE `down`. On pull failure,
@@ -429,9 +436,9 @@ PULL_GATE
             # doesn't re-hit the failing pull.
             _STD_UP_FLAGS="${COMPOSE_UP_FLAGS/--pull always/--pull missing}"
             PULL_GATE="docker compose $CF \$ENV_FILE_FLAG pull || { for _img in \$(docker compose $CF \$ENV_FILE_FLAG config --images 2>/dev/null); do docker image inspect \"\$_img\" >/dev/null 2>&1 || { echo \"ERROR: \$_img neither pullable nor cached — refusing teardown\" >&2; exit 1; }; done; }"
-            PAYLOAD="cd \"$DEPLOY_PATH\" && $ENV_FILE_PROBE; ${LEGACY_COMPOSE_CLEANUP:+$LEGACY_COMPOSE_CLEANUP; }$PULL_GATE; ${EVICT_SOCKET_PRE:+$EVICT_SOCKET_PRE; }docker compose $CF \$ENV_FILE_FLAG down --remove-orphans 2>/dev/null; ${EVICT_NAMED:+$EVICT_NAMED; }${EVICT_PORTS:+$EVICT_PORTS; }${EVICT_SOCKET:+$EVICT_SOCKET; }docker compose $CF \$ENV_FILE_FLAG up -d $_STD_UP_FLAGS"
+            PAYLOAD="cd \"$DEPLOY_PATH\" && $ENV_FILE_PROBE; $GATED_PROBE; ${LEGACY_COMPOSE_CLEANUP:+$LEGACY_COMPOSE_CLEANUP; }$PULL_GATE; ${EVICT_SOCKET_PRE:+$EVICT_SOCKET_PRE; }docker compose $CF \$ENV_FILE_FLAG down --remove-orphans 2>/dev/null; ${EVICT_NAMED:+$EVICT_NAMED; }${EVICT_PORTS:+$EVICT_PORTS; }${EVICT_SOCKET:+$EVICT_SOCKET; }docker compose $CF \$ENV_FILE_FLAG up -d $_STD_UP_FLAGS"
         else
-            PAYLOAD="cd \"$DEPLOY_PATH\" && $ENV_FILE_PROBE; ${LEGACY_COMPOSE_CLEANUP:+$LEGACY_COMPOSE_CLEANUP; }${EVICT_SOCKET_PRE:+$EVICT_SOCKET_PRE; }docker compose $CF \$ENV_FILE_FLAG down --remove-orphans 2>/dev/null; ${EVICT_NAMED:+$EVICT_NAMED; }${EVICT_PORTS:+$EVICT_PORTS; }${EVICT_SOCKET:+$EVICT_SOCKET; }docker compose $CF \$ENV_FILE_FLAG up -d $COMPOSE_UP_FLAGS"
+            PAYLOAD="cd \"$DEPLOY_PATH\" && $ENV_FILE_PROBE; $GATED_PROBE; ${LEGACY_COMPOSE_CLEANUP:+$LEGACY_COMPOSE_CLEANUP; }${EVICT_SOCKET_PRE:+$EVICT_SOCKET_PRE; }docker compose $CF \$ENV_FILE_FLAG down --remove-orphans 2>/dev/null; ${EVICT_NAMED:+$EVICT_NAMED; }${EVICT_PORTS:+$EVICT_PORTS; }${EVICT_SOCKET:+$EVICT_SOCKET; }docker compose $CF \$ENV_FILE_FLAG up -d $COMPOSE_UP_FLAGS"
         fi
         # Detached + poll, NOT one long-held ssh: the pull/extract can run for
         # minutes with an almost-idle ssh channel, which is exactly when the
