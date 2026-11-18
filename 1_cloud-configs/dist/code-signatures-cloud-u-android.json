@@ -136656,6 +136656,7 @@
         "sceneAvailable()",
         "analyze(image: ImageProxy)",
         "analyzeScene(frame: Bitmap)",
+        "checkText(id: Long, pixels: Bitmap)",
         "readText(id: Long, pixels: Bitmap, geo: SceneOverlayView.Geometry, live: Boolean)",
         "showText(l: TextLayout, geo: SceneOverlayView.Geometry)",
         "textSummary()",
@@ -136676,8 +136677,7 @@
         "bench(file: File, frames: Int = BENCH_FRAMES, runs: Int? = null)",
         "snapshot()",
         "onImageSaved(output: ImageCapture.OutputFileResults)",
-        "onError(e: ImageCaptureException)",
-        "toast(msg: String)"
+        "onError(e: ImageCaptureException)"
       ]
     },
     {
