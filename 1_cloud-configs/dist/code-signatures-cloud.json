@@ -6,9 +6,9 @@
   },
   "repo": "cloud",
   "counts": {
-    "files": 1579,
+    "files": 1580,
     "by_lang": {
-      "sh": 1064,
+      "sh": 1065,
       "js": 169,
       "nix": 304,
       "py": 12,
@@ -17,7 +17,7 @@
     "by_role": {
       "hook": 377,
       "file": 86,
-      "shell": 543,
+      "shell": 544,
       "flake": 6,
       "script": 146,
       "module": 113,
@@ -20041,6 +20041,20 @@
         "nope()",
         "check()",
         "build_and_run()"
+      ]
+    },
+    {
+      "path": "9_others/test/test_compose_profile_gated_stack.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "mkfake()",
+        "run()"
+      ],
+      "imports": [],
+      "symbols": [
+        "mkfake()",
+        "run()"
       ]
     },
     {
