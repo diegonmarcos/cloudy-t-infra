@@ -6,9 +6,9 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 24421,
+    "files": 24422,
     "by_lang": {
-      "sh": 789,
+      "sh": 790,
       "js": 569,
       "py": 248,
       "kotlin": 13617,
@@ -21,7 +21,7 @@
       "hook": 162,
       "file": 2264,
       "shell": 630,
-      "script": 342,
+      "script": 343,
       "python": 84,
       "module": 6449,
       "java": 653,
@@ -7680,6 +7680,20 @@
         "variant_fleet()",
         "n8()",
         "web_stage()"
+      ]
+    },
+    {
+      "path": "1_cicd/src/scripts/test/nav-walk-driver.test.sh",
+      "lang": "sh",
+      "role": "script",
+      "exports": [
+        "run()",
+        "mutate()"
+      ],
+      "imports": [],
+      "symbols": [
+        "run()",
+        "mutate()"
       ]
     },
     {
