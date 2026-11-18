@@ -17,6 +17,51 @@ set -eu
 # 9_others/test/ and 1_cicd/dist/test/ (generated), which sit at
 # different depths, so one literal count is wrong for one of the two copies.
 REPO_ROOT="$(_d="$(cd "$(dirname "$0")" && pwd)"; while [ "$_d" != "/" ] && [ ! -e "$_d/.git" ]; do _d="$(dirname "$_d")"; done; printf '%s' "$_d")"
+# Fixture override for the deployed-only check below (its own tester).
+REPO_ROOT="${DIST_SYNC_REPO_ROOT:-$REPO_ROOT}"
+
+# ── Deployed workflow vs its src, BEFORE anything is rebuilt ───────────
+#
+# 2026-11-18: the #1686 step "Use the newest committed tfstate (never the
+# trigger commit's)" (7ec458ab2) had been edited into the DEPLOYED
+# .github/workflows/ship-terraform.yml only. The rebuild below re-emits
+# .github/workflows/ from src, so it silently deleted the fix and reported
+# no more than "ship-terraform.yml drifts". This check reads each deployed
+# workflow's GENERATED banner for its Source, and compares the two before
+# the rebuild can overwrite the evidence: it names every step that exists
+# only in the deployed copy, and flags any other content difference.
+DEPLOYED_ONLY=0
+echo "── deployed .github/workflows/*.yml vs their src (before rebuild) ──"
+for wf in "$REPO_ROOT/.github/workflows/"*.yml; do
+    [ -f "$wf" ] || continue
+    src_rel=$(sed -n '1,20{s/^# ║[[:space:]]*Source[[:space:]]*:[[:space:]]*//p}' "$wf" | head -1 | sed 's/[[:space:]]*║*[[:space:]]*$//')
+    [ -n "$src_rel" ] || continue
+    src="$REPO_ROOT/$src_rel"
+    bn=$(basename "$wf")
+    if [ ! -f "$src" ]; then
+        echo "::error::$bn is deployed but its src $src_rel does not exist"
+        DEPLOYED_ONLY=1; continue
+    fi
+    # Deployed body = file without the leading GENERATED banner and the one
+    # blank line the engine emits after it.
+    body=$(awk 'h==0 && /^# [╔║╚]/ {next} h==0 && /^$/ {h=1; next} {h=1; print}' "$wf")
+    steps_only=$(comm -23 \
+        <(printf '%s\n' "$body" | grep -E '^[[:space:]]*- name:' | sed 's/^[[:space:]]*- name:[[:space:]]*//' | sort) \
+        <(grep -E '^[[:space:]]*- name:' "$src" | sed 's/^[[:space:]]*- name:[[:space:]]*//' | sort))
+    if [ -n "$steps_only" ]; then
+        printf '%s\n' "$steps_only" | while IFS= read -r st; do
+            echo "::error::.github/workflows/$bn has step \"$st\" that is NOT in its src $src_rel — the next build/deploy deletes it. Port it into src."
+        done
+        DEPLOYED_ONLY=1
+    elif [ "$body" != "$(cat "$src")" ]; then
+        echo "::error::.github/workflows/$bn differs from its src $src_rel (edited in the deployed copy?) — the next build/deploy overwrites it."
+        DEPLOYED_ONLY=1
+    fi
+done
+[ "$DEPLOYED_ONLY" -eq 0 ] && echo "  ok — every deployed workflow matches its src"
+if [ "${DIST_SYNC_DEPLOYED_ONLY:-0}" = 1 ]; then
+    exit "$DEPLOYED_ONLY"
+fi
 
 [ -f "$REPO_ROOT/9_others/build.sh" ] || { echo "::error::build.sh not found"; exit 1; }
 
@@ -39,7 +84,7 @@ find "$REPO_ROOT/.github/workflows" -maxdepth 1 -name '*.yml' -exec cp {} "$TMP/
     exit 1
 }
 
-DRIFT=0
+DRIFT=$DEPLOYED_ONLY
 
 # --no-dereference: dist/ legitimately holds symlinks that point into
 # submodule build outputs (e.g. front-fleet-gh-declared.json →
