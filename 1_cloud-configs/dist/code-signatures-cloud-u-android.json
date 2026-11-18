@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 24579,
+    "files": 24583,
     "by_lang": {
       "sh": 806,
       "js": 585,
-      "py": 252,
-      "kotlin": 13733,
+      "py": 254,
+      "kotlin": 13735,
       "ts": 8382,
       "java": 654,
       "nix": 37,
@@ -22,10 +22,10 @@
       "file": 2266,
       "shell": 642,
       "script": 343,
-      "python": 88,
+      "python": 90,
       "module": 6468,
       "java": 653,
-      "kotlin": 13730,
+      "kotlin": 13732,
       "flake": 33,
       "rust-module": 130,
       "nix-module": 4,
@@ -139009,6 +139009,8 @@
       "lang": "kotlin",
       "role": "kotlin",
       "exports": [
+        "OboeNative",
+        "OutStatus",
         "AudioOut"
       ],
       "imports": [
@@ -139017,11 +139019,24 @@
         "android.media.AudioFormat",
         "android.media.AudioManager",
         "android.media.AudioTrack",
-        "android.os.Process"
+        "android.os.Process",
+        "java.io.File"
       ],
       "symbols": [
+        "open(rate: Int, exclusive: Boolean, ringBursts: Int)",
+        "info(h: Long)",
+        "write(h: Long, lr: FloatArray, frames: Int)",
+        "latencyMs(h: Long)",
+        "underruns(h: Long)",
+        "close(h: Long)",
+        "line()",
         "start(engine: MixEngine)",
+        "runOboe(engine: MixEngine, exclusive: Boolean, ringBursts: Int)",
+        "runAudioTrack(engine: MixEngine)",
+        "writeLatency(st: OutStatus)",
         "stop()",
+        "class OboeNative",
+        "class OutStatus",
         "class AudioOut"
       ]
     },
@@ -139032,11 +139047,15 @@
       "exports": [
         "Session",
         "MixEngine",
+        "FadeVoice",
+        "MasterLimiter",
         "OfflineMix"
       ],
       "imports": [
         "java.util.concurrent.ConcurrentLinkedQueue",
-        "kotlin.math.tanh",
+        "kotlin.math.exp",
+        "kotlin.math.max",
+        "kotlin.math.pow",
         "kotlinx.coroutines.flow.MutableStateFlow",
         "kotlinx.coroutines.flow.update"
       ],
@@ -139048,16 +139067,33 @@
         "stop()",
         "record()",
         "key(inst: Inst, note: Int)",
+        "voiceFor(backend: SfBackend?, decl: SfDecl?, track: Int, inst: Inst, note: Int, wave: Wave, vel: Float)",
         "render(left: FloatArray, right: FloatArray, n: Int)",
-        "noteOff()",
+        "off(a: Active, offset: Int)",
+        "unwrap(v: Voice)",
+        "renderSoundFont(backend: SfBackend, s: Session, n: Int)",
+        "syncAudible(backend: SfBackend, s: Session)",
+        "setVolume(backend: SfBackend, decl: SfDecl, track: Int, audible: Boolean)",
         "mix(out: FloatArray, n: Int)",
-        "render(source: Session, sampleRate: Int, repeats: Int = 1, block: Int = 512)",
+        "release(offset: Int)",
+        "noteOff()",
+        "clear()",
+        "add(o: Int, isOn: Boolean, c: Int, k: Int, v: Int)",
+        "sort()",
+        "swap(a: Int, b: Int)",
+        "process(left: FloatArray, right: FloatArray, n: Int)",
+        "render(source: Session, sampleRate: Int, repeats: Int = 1, block: Int = 512, sf: SfBackend? = null, decl: SfDecl? = null)",
         "class Session",
         "class MixEngine",
         "class LiveNote",
         "class Active",
         "class Held",
+        "class SfVoice",
         "class DelayVoice",
+        "class per",
+        "class SfEventList",
+        "class FadeVoice",
+        "class MasterLimiter",
         "class OfflineMix"
       ]
     },
@@ -139158,6 +139194,64 @@
         "class SampleBank",
         "class SampleVoice",
         "class TouchVelocity"
+      ]
+    },
+    {
+      "path": "ac_cloud-canvas/app/src/main/java/com/diegonmarcos/cloudcanvas/audio/SoundFont.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "EngineKind",
+        "Preset",
+        "SfDecl",
+        "GmMap",
+        "SfBackend",
+        "SfNative",
+        "SfStatus",
+        "FluidSynthBackend"
+      ],
+      "imports": [
+        "android.content.res.AssetManager",
+        "org.json.JSONObject",
+        "kotlin.math.roundToInt"
+      ],
+      "symbols": [
+        "of(id: String?)",
+        "parse(json: String)",
+        "load(assets: AssetManager)",
+        "kind(inst: Inst, wave: Wave)",
+        "allKinds()",
+        "channel(d: SfDecl, track: Int, inst: Inst, wave: Wave)",
+        "drum(note: Int)",
+        "key(d: SfDecl, inst: Inst, note: Int)",
+        "velocity(vel: Float)",
+        "preset(d: SfDecl, inst: Inst, wave: Wave)",
+        "noteOn(ch: Int, key: Int, vel: Int)",
+        "noteOff(ch: Int, key: Int)",
+        "cc(ch: Int, num: Int, value: Int)",
+        "allNotesOff()",
+        "process(planes: FloatArray, stride: Int, offset: Int, len: Int)",
+        "close()",
+        "create(assets: AssetManager, bank: String, rate: Int, groups: Int, channels: Int, keys: Array<String>, values: Array<String>)",
+        "lastError()",
+        "version()",
+        "destroy(h: Long)",
+        "program(h: Long, chan: Int, bank: Int, prog: Int, drum: Boolean)",
+        "presetName(h: Long, bank: Int, prog: Int)",
+        "noteOn(h: Long, chan: Int, key: Int, vel: Int)",
+        "noteOff(h: Long, chan: Int, key: Int)",
+        "cc(h: Long, chan: Int, num: Int, value: Int)",
+        "allNotesOff(h: Long)",
+        "process(h: Long, len: Int, offset: Int, stride: Int, planes: FloatArray)",
+        "open(assets: AssetManager, d: SfDecl, rate: Int)",
+        "class EngineKind",
+        "class Preset",
+        "class SfDecl",
+        "class GmMap",
+        "class SfBackend",
+        "class SfNative",
+        "class SfStatus",
+        "class FluidSynthBackend"
       ]
     },
     {
@@ -139264,6 +139358,7 @@
         "com.diegonmarcos.superapp.bottomnav.NavDecl"
       ],
       "symbols": [
+        "resolve(section: String?, page: String?)",
         "class Decl"
       ]
     },
@@ -139545,6 +139640,7 @@
       ],
       "symbols": [
         "from(i: Intent?)",
+        "of(section: String?, panel: String?, view: String?, demo: Boolean, configs: String?, page: String?, tool: String?, painter: Map<String, String>)",
         "onCreate(savedInstanceState: Bundle?)",
         "class CanvasStart",
         "class MainActivity"
@@ -139749,6 +139845,8 @@
         "com.diegonmarcos.superapp.fleetconfigs.FleetConfigsPage",
         "com.diegonmarcos.superapp.navbarbottom.NavBarBottom",
         "com.diegonmarcos.superapp.navbartop2.NavBarTopSecondRow",
+        "com.diegonmarcos.superapp.navbartop2.SecondRowIcons",
+        "androidx.compose.ui.graphics.vector.rememberVectorPainter",
         "com.diegonmarcos.superapp.navbartop1.NavBarTopFirstRowScaffold",
         "com.diegonmarcos.superapp.navbartop1.titleHierarchy",
         "com.diegonmarcos.superapp.themebg.themeBackground"
@@ -140076,6 +140174,11 @@
         "androidx.compose.runtime.setValue",
         "com.diegonmarcos.cloudcanvas.audio.AudioOut",
         "com.diegonmarcos.cloudcanvas.audio.Drum",
+        "com.diegonmarcos.cloudcanvas.audio.EngineKind",
+        "com.diegonmarcos.cloudcanvas.audio.FluidSynthBackend",
+        "com.diegonmarcos.cloudcanvas.audio.GmMap",
+        "com.diegonmarcos.cloudcanvas.audio.SfDecl",
+        "com.diegonmarcos.cloudcanvas.audio.SfStatus",
         "com.diegonmarcos.cloudcanvas.audio.Inst",
         "com.diegonmarcos.cloudcanvas.audio.MixEngine",
         "com.diegonmarcos.cloudcanvas.audio.NoteEvent",
@@ -140088,8 +140191,13 @@
       ],
       "symbols": [
         "start()",
-        "soundLine(inst: Inst)",
+        "selectEngine(k: EngineKind)",
+        "applyEngine()",
+        "loadClassic()",
+        "engineLine()",
+        "soundLine(inst: Inst, wave: Wave = Wave.Sine)",
         "stopAll()",
+        "release()",
         "togglePlay()",
         "loadDemo()",
         "d(beat: Double, d: Drum)",
@@ -140339,15 +140447,23 @@
         "java.io.File",
         "org.json.JSONObject",
         "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertNotNull",
         "org.junit.Assert.assertTrue",
         "org.junit.Test"
       ],
       "symbols": [
         "ui()",
+        "bar(u: JSONObject = ui()",
+        "sections(u: JSONObject = ui()",
+        "pagesOf(s: JSONObject)",
+        "field(p: JSONObject)",
+        "bottomNavIsDrawPainterBoardPlayEnhancers()",
         "bottomNavIsDrawPlayEnhancerMusic()",
-        "theBarHasFourItemsAndTheMusicSectionIsTheLast()",
         "everyBarIdIsASectionWithAnIcon()",
         "drawSectionHasDrawAndBoardPages()",
+        "everyEarlierPageIsStillDeclaredWithItsFields()",
+        "everyEarlierDeepLinkStillReachesItsPage()",
+        "boardSitsRightAfterPainterAndEnhancersIsLast()",
         "painterSitsRightAfterDrawAndNothingElseMoved()",
         "class NavShapeTest"
       ]
@@ -140475,6 +140591,67 @@
       ]
     },
     {
+      "path": "ac_cloud-canvas/app/src/test/java/com/diegonmarcos/cloudcanvas/SoundFontTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "SoundFontTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.cloudcanvas.audio.Drum",
+        "com.diegonmarcos.cloudcanvas.audio.EngineKind",
+        "com.diegonmarcos.cloudcanvas.audio.FadeVoice",
+        "com.diegonmarcos.cloudcanvas.audio.GmMap",
+        "com.diegonmarcos.cloudcanvas.audio.Inst",
+        "com.diegonmarcos.cloudcanvas.audio.MasterLimiter",
+        "com.diegonmarcos.cloudcanvas.audio.MixEngine",
+        "com.diegonmarcos.cloudcanvas.audio.MixerState",
+        "com.diegonmarcos.cloudcanvas.audio.NoteEvent",
+        "com.diegonmarcos.cloudcanvas.audio.OfflineMix",
+        "com.diegonmarcos.cloudcanvas.audio.Session",
+        "com.diegonmarcos.cloudcanvas.audio.SfBackend",
+        "com.diegonmarcos.cloudcanvas.audio.SfDecl",
+        "com.diegonmarcos.cloudcanvas.audio.Voice",
+        "com.diegonmarcos.cloudcanvas.audio.Wave",
+        "java.io.File",
+        "java.io.RandomAccessFile",
+        "java.security.MessageDigest",
+        "org.json.JSONObject",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNotNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "root()",
+        "buildJson()",
+        "asset(path: String)",
+        "decl()",
+        "sf2Presets(f: File)",
+        "u32()",
+        "id()",
+        "everyInstrumentResolvesToAPresetOfTheBank()",
+        "theBankAndTheDeclarationMatchTheirPins()",
+        "engineDefaultsToSoundFontAndClassicStaysSelectable()",
+        "eachTrackHasItsOwnOutputGroupAndEachKindItsOwnChannel()",
+        "noteOn(ch: Int, key: Int, vel: Int)",
+        "noteOff(ch: Int, key: Int)",
+        "cc(ch: Int, num: Int, value: Int)",
+        "allNotesOff()",
+        "process(planes: FloatArray, stride: Int, offset: Int, len: Int)",
+        "close()",
+        "liveNotesGoToTheirTracksChannelAndAScheduledNoteStartsAtItsExactFrame()",
+        "aMutedOrUnsoloedSoundFontTrackIsSilentAndSendsNoReverb()",
+        "peak(s: Session)",
+        "theMasterLimiterHoldsTheCeilingAndLeavesQuietSoundAlone()",
+        "aStolenVoiceFadesOutInsteadOfBeingCut()",
+        "mix(out: FloatArray, n: Int)",
+        "class SoundFontTest",
+        "class FakeSf"
+      ]
+    },
+    {
       "path": "ac_cloud-canvas/build.sh",
       "lang": "sh",
       "role": "shell",
@@ -140569,6 +140746,8 @@
         "buildToolsVersions",
         "platformVersions",
         "includeNDK",
+        "ndkVersions",
+        "cmakeVersions",
         "androidEnv",
         "androidSdk",
         "emulatorEnv",
@@ -140621,6 +140800,8 @@
         "tap_text()",
         "start()",
         "sw()",
+        "labels()",
+        "tap_low()",
         "corner()",
         "pstart()",
         "pstroke()"
@@ -140633,6 +140814,8 @@
         "tap_text()",
         "start()",
         "sw()",
+        "labels()",
+        "tap_low()",
         "corner()",
         "pstart()",
         "pstroke()"
@@ -140702,6 +140885,44 @@
         "bad()",
         "check()",
         "mut()"
+      ]
+    },
+    {
+      "path": "ac_cloud-canvas/tools/sf-render/check.py",
+      "lang": "py",
+      "role": "python",
+      "exports": [
+        "selftest(src, dst)"
+      ],
+      "imports": [
+        "array",
+        "glob",
+        "json",
+        "math",
+        "os",
+        "struct",
+        "sys"
+      ],
+      "symbols": [
+        "selftest(src, dst)"
+      ]
+    },
+    {
+      "path": "ac_cloud-canvas/tools/sf-render/plan.py",
+      "lang": "py",
+      "role": "python",
+      "exports": [
+        "chan(kind, track=1)",
+        "take(name, seconds, events)"
+      ],
+      "imports": [
+        "json",
+        "os",
+        "sys"
+      ],
+      "symbols": [
+        "chan(kind, track=1)",
+        "take(name, seconds, events)"
       ]
     },
     {

@@ -11280,8 +11280,9 @@
             "mem_limit": "384M",
             "cpus": "0.7",
             "_doc_reservation": "32M -> 128M (2026-11-18). Docker maps reservations.memory to cgroup v2 memory.low: under host pressure the kernel reclaims everyone else's unprotected page cache before stalwart's protected part. 128M covers the ~70MiB resident plus ~58MiB of hot RocksDB index/property pages, so those stop being evicted and re-read. It reserves nothing up front and caps nothing. Mail-stack reservations total 192M of 954M. Gate: _shared/test-mail-stack-limits.mjs R1-R3.",
+            "_doc_reservation_192": "128M -> 192M (2026-11-18 23:08). After the sorter, puller and maddy fixes, oci-mail was back to PSI avg300 34 with stalwart the only cgroup reading (950KB/s over 10s) and its logs showing only light SMTP (3 inbound, 3 queue retries). 128M of memory.low covered the ~100MiB of anon/active memory plus ~28MiB of cache, so stalwart's RocksDB SST pages beyond that were still reclaimed by host pressure and read again on the next lookup. RocksDB's block cache is not configurable in v0.16.5 (see _doc_file_rereads), so the page cache IS its block cache, and memory.low is the declarative way to keep it. 192M is half the unchanged 384M ceiling. Mail-stack reservations total 320M of 954M (stalwart 192, maddy 96, sorter 16, puller 16), at the R3 budget.",
             "reservations": {
-              "memory": "128M"
+              "memory": "192M"
             }
           },
           "read_only": false,
