@@ -5689,6 +5689,9 @@
         "health_mail-reconcile": {
           "cmd": "python3 src/dags/test_health_mail-reconcile.py"
         },
+        "health_mail-ingest": {
+          "cmd": "python3 src/dags/test_health_mail-ingest.py"
+        },
         "dag-keys": {
           "cmd": "python3 src/dags/test_dag-keys.py"
         },

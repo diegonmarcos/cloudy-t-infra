@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-containers",
   "counts": {
-    "files": 2717,
+    "files": 2718,
     "by_lang": {
       "sh": 185,
       "js": 125,
       "nix": 202,
-      "py": 525,
+      "py": 526,
       "ts": 1307,
       "rust": 373
     },
@@ -26,7 +26,7 @@
       "entrypoint": 73,
       "compose": 90,
       "mcp-tool": 150,
-      "workflow-dag": 5,
+      "workflow-dag": 6,
       "rust-module": 369,
       "hook": 53
     }
@@ -17999,6 +17999,24 @@
       ],
       "symbols": [
         "walk(node, path)"
+      ]
+    },
+    {
+      "path": "infra-obs_dagu/src/dags/test_health_mail-ingest.py",
+      "lang": "py",
+      "role": "workflow-dag",
+      "exports": [
+        "check(c, label)",
+        "db()",
+        "steps(conn, q)"
+      ],
+      "imports": [
+        "re"
+      ],
+      "symbols": [
+        "check(c, label)",
+        "db()",
+        "steps(conn, q)"
       ]
     },
     {
