@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 24590,
+    "files": 24592,
     "by_lang": {
       "sh": 806,
       "js": 585,
       "py": 254,
-      "kotlin": 13742,
+      "kotlin": 13744,
       "ts": 8382,
       "java": 654,
       "nix": 37,
@@ -25,7 +25,7 @@
       "python": 90,
       "module": 6468,
       "java": 653,
-      "kotlin": 13739,
+      "kotlin": 13741,
       "flake": 33,
       "rust-module": 130,
       "nix-module": 4,
@@ -266377,6 +266377,7 @@
         "app.sterna.ui.theme.SternaTheme"
       ],
       "symbols": [
+        "onResume()",
         "onCreate(savedInstanceState: Bundle?)",
         "onNewIntent(intent: Intent)",
         "consumeOAuthRedirect()",
@@ -273654,7 +273655,6 @@
       ],
       "symbols": [
         "SettingsScreen( onBack: ()",
-        "SettingsHub( onBack: ()",
         "openUrl(context: android.content.Context, url: String)",
         "AppearanceScreen(viewModel: SettingsViewModel, onBack: ()",
         "languageLabel(context: Context, language: AppLanguage)",
@@ -273679,9 +273679,10 @@
         "StorageStatRow(label: String, value: String)",
         "syncWindowLabel(context: Context, window: SyncWindow)",
         "formatBytes(bytes: Long)",
-        "AccountsScreen( viewModel: AccountsViewModel, onBack: ()",
+        "AccountsScreen( viewModel: AccountsViewModel, title: String? = null, onBack: ()",
         "dismissWithUndo(account: StoredAccount)",
         "AccountDetailScreen( accountId: String, viewModel: AccountsViewModel, onBack: ()",
+        "show(page: String)",
         "markEdited()",
         "saveAccountEdits()",
         "leaveOrConfirm()",
@@ -273693,6 +273694,69 @@
         "PgpAccountSection( accountId: String, account: StoredAccount, viewModel: AccountsViewModel, )",
         "pgpProviderLabel(context: Context, packageName: String)",
         "pgpProviderDisplayName(declaredName: String?, packageName: String)"
+      ]
+    },
+    {
+      "path": "ac_cloud-mail/app/src/main/kotlin/app/sterna/ui/settings/SettingsTree.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [],
+      "imports": [
+        "androidx.annotation.StringRes",
+        "androidx.compose.foundation.layout.Box",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.fillMaxSize",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.foundation.rememberScrollState",
+        "androidx.compose.foundation.verticalScroll",
+        "androidx.compose.material.icons.Icons",
+        "androidx.compose.material.icons.automirrored.filled.List",
+        "androidx.compose.material.icons.filled.Add",
+        "androidx.compose.material.icons.filled.AutoFixHigh",
+        "androidx.compose.material.icons.filled.BeachAccess",
+        "androidx.compose.material.icons.filled.Backup",
+        "androidx.compose.material.icons.filled.Code",
+        "androidx.compose.material.icons.filled.Description",
+        "androidx.compose.material.icons.filled.Edit",
+        "androidx.compose.material.icons.filled.FilterAlt",
+        "androidx.compose.material.icons.filled.Folder",
+        "androidx.compose.material.icons.filled.Hub",
+        "androidx.compose.material.icons.filled.Info",
+        "androidx.compose.material.icons.filled.Lock",
+        "androidx.compose.material.icons.filled.MoreHoriz",
+        "androidx.compose.material.icons.filled.Notifications",
+        "androidx.compose.material.icons.filled.Palette",
+        "androidx.compose.material.icons.filled.Person",
+        "androidx.compose.material.icons.filled.Refresh",
+        "androidx.compose.material.icons.filled.RssFeed",
+        "androidx.compose.material.icons.filled.Search",
+        "androidx.compose.material.icons.filled.Settings",
+        "androidx.compose.material.icons.filled.Storage",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.remember",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.graphics.vector.ImageVector",
+        "androidx.compose.ui.platform.LocalContext",
+        "androidx.compose.ui.res.stringResource",
+        "androidx.lifecycle.compose.collectAsStateWithLifecycle",
+        "androidx.navigation.NavController",
+        "androidx.navigation.NavGraphBuilder"
+      ],
+      "symbols": [
+        "fleetNode(id: String, icon: ImageVector)",
+        "urlNode(id: String, @StringRes title: Int, icon: ImageVector)",
+        "page(id: String, route: String, @StringRes title: Int, icon: ImageVector, @StringRes summary: Int, group: String = \"\")",
+        "accountPage(focus: String, @StringRes title: Int, icon: ImageVector)",
+        "walk()",
+        "settingsTreeReach(tree: List<TreeNode> = SETTINGS_TREE)",
+        "focusRouteFor(focus: String, accountId: String, accounts: List<StoredAccount>)",
+        "settingsTreeDestinations( nav: NavController, accountsViewModel: AccountsViewModel, onBack: ()",
+        "fleetStrip()",
+        "SettingsTreePage( node: TreeNode?, onBack: ()",
+        "AboutRow(n: TreeNode, onOpenUrl: (String)",
+        "class TreeKind",
+        "class TreeNode"
       ]
     },
     {
@@ -284910,6 +284974,29 @@
         "stringFiles()",
         "indentWidth()",
         "class SettingsScreenHonestyTest"
+      ]
+    },
+    {
+      "path": "ac_cloud-mail/app/src/test/kotlin/app/sterna/ui/settings/SettingsTreeParityTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "SettingsTreeParityTest"
+      ],
+      "imports": [
+        "app.sterna.R",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.io.File"
+      ],
+      "symbols": [
+        "expectedKeys()",
+        "gaps(tree: List<TreeNode>)",
+        "without(route: String)",
+        "show(page: String)",
+        "stringOf(xml: String, key: String)",
+        "class SettingsTreeParityTest"
       ]
     },
     {
