@@ -105,7 +105,6 @@
       "idle_shutdown": null,
       "containers": [
         "alerts-api",
-        "c3-public-api",
         "cloud-me-api",
         "cloudy-drive-git-proxy-api",
         "unbound-dns64",
@@ -121,7 +120,6 @@
         "tier1_services": [
           "caddy-public",
           "unbound-dns64",
-          "c3-public-api",
           "cloudy-drive-git-proxy-api"
         ],
         "_tier1_rename_doc": "2026-11-19: the #1450 API rebrand renamed this container git-proxy-api -> cloudy-drive-git-proxy-api; the list kept the old name, so the tier-1 watchdog paged CIRCUIT OPEN for a healthy service and the real container became sheddable again. Names here must equal docker container names (guard: 9_others/test/test_tier1_names_are_containers.sh).",
@@ -156,6 +154,7 @@
         "cloudy-ai-embeddings-api",
         "jev-sidecar",
         "languagetool",
+        "c3-public-api",
         "cloud-drive-mcp",
         "cloud-infra-mcp",
         "cloud-mail-mcp",
@@ -237,7 +236,8 @@
           "ntfy",
           "syslog-bridge",
           "cloudy-c3-api",
-          "crowdsec"
+          "crowdsec",
+          "c3-public-api"
         ],
         "_tier1_rename_doc": "2026-11-19: the #1450 API rebrand renamed c3-infra-api -> cloudy-c3-api; the list kept the old name, so the C3 API was silently sheddable. Names here must equal docker container names (guard: 9_others/test/test_tier1_names_are_containers.sh).",
         "unshed_delay_secs": 5

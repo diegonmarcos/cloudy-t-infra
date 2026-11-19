@@ -170,11 +170,11 @@
       }
     },
     "c3-public-api": {
-      "ip": "10.0.0.4",
+      "ip": "10.0.0.6",
       "ports": {
         "app": 8087
       },
-      "vm": "oci-analytics",
+      "vm": "oci-apps",
       "healthcheck": "/health",
       "domain": "api.diegonmarcos.com/pub",
       "description": "C3 Public API — single public-edge listener on oci-analytics. Consolidates http-to-smtp-proxy-api (Bearer-gated /mail/*) and c3-analytics-api passthrough (public /analytics/*). Replaces split listeners across gcp-proxy + oci-analytics so gcp-proxy becomes a pure wg0 spoke.",

@@ -10,11 +10,6 @@
         "log_level": "info"
       },
       {
-        "container": "c3-public-api",
-        "service": "c3-public-api",
-        "log_level": "info"
-      },
-      {
         "container": "cloud-me-api",
         "service": "cloud-me-api",
         "log_level": "info"
@@ -54,6 +49,11 @@
       {
         "container": "languagetool",
         "service": "languagetool",
+        "log_level": "info"
+      },
+      {
+        "container": "c3-public-api",
+        "service": "c3-public-api",
         "log_level": "info"
       },
       {

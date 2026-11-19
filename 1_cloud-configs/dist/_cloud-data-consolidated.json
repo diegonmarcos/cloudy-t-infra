@@ -122,13 +122,12 @@
       "instance_id": "ocid1.instance.oc1.eu-marseille-1.anwxeljruadvczacgwg5rkrjyomuxvjtvtuk5xrbmy7hmslwn4pse4kw5jkq",
       "services": [
         "alerts-api",
-        "c3-public-api",
         "cloud-me-api",
         "cloudy-drive-git-proxy-api",
         "unbound-dns64",
         "caddy-public"
       ],
-      "container_count": 6
+      "container_count": 5
     },
     "oci-A1-f_0": {
       "ip": "82.70.229.129",
@@ -166,6 +165,7 @@
         "cloudy-ai-embeddings-api",
         "jev-sidecar",
         "languagetool",
+        "c3-public-api",
         "cloud-drive-mcp",
         "cloud-infra-mcp",
         "cloud-mail-mcp",
@@ -235,7 +235,7 @@
         "send",
         "vaultwarden"
       ],
-      "container_count": 86
+      "container_count": 87
     },
     "gcp-E2-f_0": {
       "ip": "35.226.147.64",
@@ -1319,7 +1319,7 @@
     },
     "c3-public-api": {
       "category": "obs",
-      "vm": "oci-E2-f_1",
+      "vm": "oci-A1-f_0",
       "folder": "infra-api_c3-public-api",
       "description": "C3 Public API — single public-edge listener on oci-analytics. Consolidates http-to-smtp-proxy-api (Bearer-gated /mail/*) and c3-analytics-api passthrough (public /analytics/*). Replaces split listeners across gcp-proxy + oci-analytics so gcp-proxy becomes a pure wg0 spoke.",
       "enabled": true,
@@ -1327,7 +1327,7 @@
       "flake": "infra-api_c3-public-api",
       "port": 8087,
       "dns": "c3-public-api.mesh.diegonmarcos.com",
-      "upstream": "10.0.0.4:8087",
+      "upstream": "10.0.0.6:8087",
       "containers": {
         "app": {
           "container_name": "c3-public-api",
@@ -16378,7 +16378,7 @@
       {
         "name": "c3-public-api.mesh.diegonmarcos.com",
         "type": "A",
-        "value": "10.0.0.4",
+        "value": "10.0.0.6",
         "service": "c3-public-api"
       },
       {
@@ -17326,7 +17326,6 @@
         "idle_shutdown": null,
         "containers": [
           "alerts-api",
-          "c3-public-api",
           "cloud-me-api",
           "cloudy-drive-git-proxy-api",
           "unbound-dns64",
@@ -17342,7 +17341,6 @@
           "tier1_services": [
             "caddy-public",
             "unbound-dns64",
-            "c3-public-api",
             "cloudy-drive-git-proxy-api"
           ],
           "_tier1_rename_doc": "2026-11-19: the #1450 API rebrand renamed this container git-proxy-api -> cloudy-drive-git-proxy-api; the list kept the old name, so the tier-1 watchdog paged CIRCUIT OPEN for a healthy service and the real container became sheddable again. Names here must equal docker container names (guard: 9_others/test/test_tier1_names_are_containers.sh).",
@@ -17377,6 +17375,7 @@
           "cloudy-ai-embeddings-api",
           "jev-sidecar",
           "languagetool",
+          "c3-public-api",
           "cloud-drive-mcp",
           "cloud-infra-mcp",
           "cloud-mail-mcp",
@@ -17458,7 +17457,8 @@
             "ntfy",
             "syslog-bridge",
             "cloudy-c3-api",
-            "crowdsec"
+            "crowdsec",
+            "c3-public-api"
           ],
           "_tier1_rename_doc": "2026-11-19: the #1450 API rebrand renamed c3-infra-api -> cloudy-c3-api; the list kept the old name, so the C3 API was silently sheddable. Names here must equal docker container names (guard: 9_others/test/test_tier1_names_are_containers.sh).",
           "unshed_delay_secs": 5
@@ -17938,7 +17938,7 @@
       },
       "c3-public-api": {
         "dir": "infra-api_c3-public-api",
-        "vm": "oci-analytics",
+        "vm": "oci-apps",
         "has_docker": true
       },
       "cloud-drive-mcp": {

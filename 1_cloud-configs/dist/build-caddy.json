@@ -669,7 +669,7 @@
     },
     {
       "domain": "c3-public-api.diegonmarcos.com",
-      "upstream": "10.0.0.4:8087",
+      "upstream": "10.0.0.6:8087",
       "auth": "none",
       "wg_only": true,
       "container": "c3-public-api",
@@ -1616,7 +1616,7 @@
       "paths": [
         {
           "base_path": "/pub",
-          "upstream": "10.0.0.4:8087",
+          "upstream": "10.0.0.6:8087",
           "public_paths": [
             "/pub/health",
             "/pub/ready",
@@ -1989,7 +1989,7 @@
     },
     {
       "service": "c3-public-api.mesh.diegonmarcos.com",
-      "upstream": "10.0.0.4:8087",
+      "upstream": "10.0.0.6:8087",
       "private_name": "cloud.c3-public-api.mesh.diegonmarcos.com"
     },
     {
@@ -2392,7 +2392,7 @@
     },
     {
       "service": "cloud.c3-public-api.mesh.diegonmarcos.com",
-      "upstream": "10.0.0.4:8087",
+      "upstream": "10.0.0.6:8087",
       "alias_of": "c3-public-api.mesh.diegonmarcos.com",
       "source": "internal_routes"
     },
@@ -4063,7 +4063,7 @@
       "container": "c3-public-api",
       "container_key": "app",
       "svc": "c3-public-api",
-      "vm": "oci-E2-f_1"
+      "vm": "oci-A1-f_0"
     },
     {
       "kind": "canonical",
@@ -4071,10 +4071,10 @@
       "container": "c3-public-api",
       "container_key": "app",
       "svc": "c3-public-api",
-      "vm": "oci-E2-f_1",
+      "vm": "oci-A1-f_0",
       "port": 8087,
       "protocol": "http",
-      "upstream": "10.0.0.4:8087",
+      "upstream": "10.0.0.6:8087",
       "source": "containers.app.port"
     },
     {
@@ -5685,7 +5685,7 @@
     {
       "host": "api.diegonmarcos.com",
       "path": "/pub",
-      "upstream": "10.0.0.4:8087",
+      "upstream": "10.0.0.6:8087",
       "kind": "reverse_proxy",
       "tls": "public",
       "zone": "com",
@@ -6019,7 +6019,7 @@
     {
       "host": "c3-public-api.diegonmarcos.com",
       "path": null,
-      "upstream": "10.0.0.4:8087",
+      "upstream": "10.0.0.6:8087",
       "kind": "reverse_proxy",
       "tls": "public",
       "zone": "com",
@@ -7021,7 +7021,7 @@
     {
       "host": "c3-public-api.mesh.diegonmarcos.com",
       "path": null,
-      "upstream": "10.0.0.4:8087",
+      "upstream": "10.0.0.6:8087",
       "kind": "reverse_proxy",
       "tls": "internal",
       "zone": "com",
@@ -7823,7 +7823,7 @@
     {
       "host": "c3-public-api-http-8087.mesh.diegonmarcos.com",
       "path": null,
-      "upstream": "10.0.0.4:8087",
+      "upstream": "10.0.0.6:8087",
       "kind": "reverse_proxy",
       "tls": "on_demand",
       "zone": "com",

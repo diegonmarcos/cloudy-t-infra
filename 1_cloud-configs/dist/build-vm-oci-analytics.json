@@ -11,15 +11,6 @@
       "has_docker_build": true
     },
     {
-      "name": "c3-public-api",
-      "dir": "infra-api_c3-public-api",
-      "compose_path": "/opt/containers/c3-public-api",
-      "images": [
-        "ghcr.io/diegonmarcos/c3-public-api:latest"
-      ],
-      "has_docker_build": true
-    },
-    {
       "name": "cloud-me-api",
       "dir": "infra-api_cloud-me-api",
       "compose_path": "/opt/containers/cloud-me-api",

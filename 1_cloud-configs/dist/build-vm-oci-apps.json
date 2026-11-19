@@ -40,6 +40,15 @@
       "has_docker_build": false
     },
     {
+      "name": "c3-public-api",
+      "dir": "infra-api_c3-public-api",
+      "compose_path": "/opt/containers/c3-public-api",
+      "images": [
+        "ghcr.io/diegonmarcos/c3-public-api:latest"
+      ],
+      "has_docker_build": true
+    },
+    {
       "name": "cloud-drive-mcp",
       "dir": "infra-api_cloud-drive-mcp",
       "compose_path": "/opt/containers/cloud-drive-mcp",

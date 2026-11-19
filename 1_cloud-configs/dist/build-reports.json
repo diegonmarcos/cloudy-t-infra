@@ -540,7 +540,7 @@
     },
     "c3-public-api": {
       "name": "c3-public-api",
-      "vm": "oci-E2-f_1",
+      "vm": "oci-A1-f_0",
       "domain": "api.diegonmarcos.com/pub",
       "enabled": true,
       "category": "obs",
@@ -2525,7 +2525,6 @@
         "provider": null,
         "services": [
           "alerts-api",
-          "c3-public-api",
           "cloud-me-api",
           "cloudy-drive-git-proxy-api",
           "unbound-dns64",
@@ -2543,6 +2542,7 @@
           "cloudy-ai-embeddings-api",
           "jev-sidecar",
           "languagetool",
+          "c3-public-api",
           "cloud-drive-mcp",
           "cloud-infra-mcp",
           "cloud-mail-mcp",
@@ -2712,7 +2712,7 @@
       },
       "c3-public-api": {
         "name": "c3-public-api",
-        "vm": "oci-E2-f_1",
+        "vm": "oci-A1-f_0",
         "domain": "api.diegonmarcos.com/pub",
         "enabled": true,
         "category": "obs",

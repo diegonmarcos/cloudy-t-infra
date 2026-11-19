@@ -50,7 +50,6 @@
       },
       "containers": [
         "alerts-api",
-        "c3-public-api",
         "cloud-me-api",
         "cloudy-drive-git-proxy-api",
         "unbound-dns64",
@@ -83,6 +82,7 @@
         "cloudy-ai-embeddings-api",
         "jev-sidecar",
         "languagetool",
+        "c3-public-api",
         "cloud-drive-mcp",
         "cloud-infra-mcp",
         "cloud-mail-mcp",
@@ -653,7 +653,7 @@
       {
         "name": "c3-public-api.mesh.diegonmarcos.com",
         "type": "A",
-        "value": "10.0.0.4",
+        "value": "10.0.0.6",
         "service": "c3-public-api"
       },
       {
@@ -1399,13 +1399,13 @@
     },
     "c3-public-api": {
       "category": "obs",
-      "vm": "oci-E2-f_1",
+      "vm": "oci-A1-f_0",
       "folder": "infra-api_c3-public-api",
       "description": "C3 Public API — single public-edge listener on oci-analytics. Consolidates http-to-smtp-proxy-api (Bearer-gated /mail/*) and c3-analytics-api passthrough (public /analytics/*). Replaces split listeners across gcp-proxy + oci-analytics so gcp-proxy becomes a pure wg0 spoke.",
       "domain": "api.diegonmarcos.com/pub",
       "port": 8087,
       "dns": "c3-public-api.mesh.diegonmarcos.com",
-      "upstream": "10.0.0.4:8087",
+      "upstream": "10.0.0.6:8087",
       "containers": {
         "app": {
           "container_name": "c3-public-api",

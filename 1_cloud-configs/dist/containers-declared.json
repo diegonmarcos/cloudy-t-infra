@@ -358,7 +358,7 @@
       "category": "Ops-API-MCP",
       "description": "C3 Public API — single public-edge listener on oci-analytics. Consolidates http-to-smtp-proxy-api (Bearer-gated /mail/*) and c3-analytics-api passthrough (public /analytics/*). Replaces split listeners across gcp-proxy + oci-analytics so gcp-proxy becomes a pure wg0 spoke.",
       "image": "ghcr.io/diegonmarcos/c3-public-api:latest",
-      "host": "oci-analytics",
+      "host": "oci-apps",
       "dns": "c3-public-api.mesh.diegonmarcos.com",
       "port": 8087,
       "public": true,
