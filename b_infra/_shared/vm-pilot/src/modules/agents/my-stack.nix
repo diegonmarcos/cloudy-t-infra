@@ -96,7 +96,12 @@ let
       fi
     }
 
-    get my-watchdog-latest  "my-watchdog-$suffix"  my-watchdog
+    # The watchdog is published as c3-watchdog since the rename; the
+    # my-watchdog-latest release froze on 2026-09-03 and never got another
+    # build, so fetching it kept every VM on an old sampler (no small-box
+    # docker cadence, 2026-11-19). The binary keeps its installed name
+    # (my-watchdog), its --no-tray flag and its /run/my-watchdog output.
+    get c3-watchdog-latest  "c3-watchdog-$suffix"  my-watchdog
     get my-webserver-latest "my-webserver-$suffix" my-webserver
   '';
 in
