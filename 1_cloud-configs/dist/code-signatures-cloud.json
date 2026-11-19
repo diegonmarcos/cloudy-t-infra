@@ -6,9 +6,9 @@
   },
   "repo": "cloud",
   "counts": {
-    "files": 1589,
+    "files": 1590,
     "by_lang": {
-      "sh": 1074,
+      "sh": 1075,
       "js": 169,
       "nix": 304,
       "py": 12,
@@ -17,7 +17,7 @@
     "by_role": {
       "hook": 377,
       "file": 86,
-      "shell": 551,
+      "shell": 552,
       "flake": 6,
       "script": 148,
       "module": 113,
@@ -20742,6 +20742,26 @@
         "ok()",
         "bad()",
         "run_orchestrator()"
+      ]
+    },
+    {
+      "path": "9_others/test/test_hm_activation_false_failures.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "ok()",
+        "bad()",
+        "snippet()",
+        "run()",
+        "t1_case()"
+      ],
+      "imports": [],
+      "symbols": [
+        "ok()",
+        "bad()",
+        "snippet()",
+        "run()",
+        "t1_case()"
       ]
     },
     {
