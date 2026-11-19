@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 24586,
+    "files": 24590,
     "by_lang": {
       "sh": 806,
       "js": 585,
       "py": 254,
-      "kotlin": 13738,
+      "kotlin": 13742,
       "ts": 8382,
       "java": 654,
       "nix": 37,
@@ -25,7 +25,7 @@
       "python": 90,
       "module": 6468,
       "java": 653,
-      "kotlin": 13735,
+      "kotlin": 13739,
       "flake": 33,
       "rust-module": 130,
       "nix-module": 4,
@@ -16770,11 +16770,15 @@
       "imports": [
         "android.content.Context",
         "android.content.Intent",
+        "androidx.compose.ui.graphics.ColorFilter",
+        "androidx.compose.ui.graphics.ColorMatrix",
         "android.provider.Settings"
       ],
       "symbols": [
         "mediaAppsVisible(@Suppress(\"UNUSED_PARAMETER\")",
-        "mediaAppsWhite(playing: Boolean)",
+        "mediaAppsMonochrome(playing: Boolean)",
+        "seekFraction(x: Float, width: Float)",
+        "routeLabel(label: String)",
         "budsPackages(deviceName: String)",
         "pickLaunch(candidates: List<String>, launchIntentFor: (String)",
         "openBudsApp(ctx: Context, deviceName: String)",
@@ -16817,10 +16821,10 @@
         "androidx.compose.foundation.layout.height",
         "androidx.compose.foundation.layout.padding",
         "androidx.compose.foundation.layout.size",
+        "androidx.compose.foundation.layout.widthIn",
         "androidx.compose.foundation.layout.width",
         "androidx.compose.foundation.shape.RoundedCornerShape",
         "androidx.compose.material3.Icon",
-        "androidx.compose.material3.Slider",
         "androidx.compose.material3.Text",
         "androidx.compose.runtime.Composable",
         "androidx.compose.runtime.DisposableEffect",
@@ -16841,7 +16845,7 @@
         "onMetadataChanged(metadata: MediaMetadata?)",
         "Glyph(res: Int, sizeDp: Int, tag: String, tint: Color?, onClick: ()",
         "MediaAppIcons(ctx: Context, playing: Boolean, close: ()",
-        "RouteRow(ctx: Context, route: Route)",
+        "RouteRow(ctx: Context, route: Route, modifier: Modifier = Modifier)",
         "SessionSwitcher(ctx: Context, hub: MediaHub.State, currentKey: String?, onPick: (String)",
         "IdleRows(last: LastMediaSession.Last? = null)",
         "LiveRows(ctx: Context, c: MediaController, snap: MusicSnapshot, routeState: androidx.compose.runtime.MutableState<Route>)",
@@ -29541,6 +29545,8 @@
         "java.io.File"
       ],
       "symbols": [
+        "apply(r: Float, g: Float, b: Float)",
+        "popupSource()",
         "class MusicBadgeLayoutTest"
       ]
     },
@@ -77118,6 +77124,7 @@
         "onPrimaryClipChanged()",
         "fetchPrimaryClip()",
         "pasteWithoutChangingClips(content: InputContentInfoCompat)",
+        "pasteEntryAsHtml(entry: ClipboardHistoryEntry)",
         "filteredEntries()",
         "getCurrentList()",
         "setCurrentList(listName: String?)",
@@ -77145,6 +77152,22 @@
         "maySaveFromUri(uri: Uri?, context: Context)",
         "class ClipboardHistoryManager",
         "class HistoryChangeListener"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/keyboard/src/main/java/helium314/keyboard/latin/ClipboardHtml.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ClipboardHtml"
+      ],
+      "imports": [],
+      "symbols": [
+        "migrationStatements(oldVersion: Int)",
+        "htmlToStore(keepHtml: Boolean, htmlText: String?)",
+        "pasteMode(keepHtml: Boolean, entryHtml: String?, hasFile: Boolean)",
+        "class ClipboardHtml",
+        "class PasteMode"
       ]
     },
     {
@@ -77930,6 +77953,7 @@
         "androidx.core.content.FileProvider",
         "androidx.core.database.getStringOrNull",
         "helium314.keyboard.latin.ClipboardHistoryEntry",
+        "helium314.keyboard.latin.ClipboardHtml",
         "helium314.keyboard.latin.common.FileUtils",
         "helium314.keyboard.latin.settings.Defaults",
         "helium314.keyboard.latin.settings.Settings",
@@ -77943,10 +77967,11 @@
         "onClipInserted(position: Int)",
         "onClipsRemoved(position: Int, count: Int)",
         "onClipMoved(oldPosition: Int, newPosition: Int)",
-        "addClip(timestamp: Long, pinned: Boolean, text: String)",
+        "addClip(timestamp: Long, pinned: Boolean, text: String, html: String? = null)",
         "addClipUri(timestamp: Long, pinned: Boolean, uri: Uri, description: ClipDescription, context: Context)",
         "deleteIfSizeExceeded(prefs: SharedPreferences)",
-        "insertNewEntry(timestamp: Long, listName: String?, text: String?, filename: String?, mimeTypes: List<String>?, context: Context?)",
+        "insertNewEntry(timestamp: Long, listName: String?, text: String?, filename: String?, mimeTypes: List<String>?, context: Context?, html: String? = null)",
+        "updateHtmlAt(index: Int, html: String)",
         "updateTimestampAt(index: Int, timestamp: Long)",
         "getAt(index: Int)",
         "get(id: Long)",
@@ -77994,6 +78019,7 @@
         "android.database.sqlite.SQLiteOpenHelper",
         "androidx.core.database.getStringOrNull",
         "androidx.core.database.sqlite.transaction",
+        "helium314.keyboard.latin.ClipboardHtml",
         "helium314.keyboard.latin.utils.GestureDataDao",
         "helium314.keyboard.latin.utils.Log",
         "java.io.File"
@@ -87989,6 +88015,32 @@
         "snippets_only_on_multi_line_fields()",
         "suppressed_and_id_fields_get_nothing()",
         "class ImeAutofillTest"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/keyboard/src/test/java/helium314/keyboard/latin/ClipboardHtmlTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ClipboardHtmlTest"
+      ],
+      "imports": [
+        "java.io.File",
+        "java.sql.DriverManager",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "htmlIsStoredWhenPresentAndToggleOn()",
+        "htmlIsNotStoredWhenToggleOff()",
+        "blankOrMissingHtmlIsNotStored()",
+        "htmlEntryWithToggleOnPastesAsHtmlClip()",
+        "otherwiseTheTextIsCommittedAsToday()",
+        "keepHtmlIsOnByDefault()",
+        "migrationKeepsOldRowsWithNullHtml()",
+        "class ClipboardHtmlTest"
       ]
     },
     {
@@ -273764,11 +273816,32 @@
       ]
     },
     {
+      "path": "ac_cloud-mail/app/src/main/kotlin/app/sterna/ui/settings/SignatureClipboard.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [],
+      "imports": [
+        "android.content.ClipDescription",
+        "android.content.ClipboardManager",
+        "androidx.compose.ui.text.TextRange",
+        "androidx.compose.ui.text.input.TextFieldValue"
+      ],
+      "symbols": [
+        "clipToSignatureSource(htmlText: String?, text: CharSequence?)",
+        "readSignatureClip(cm: ClipboardManager)",
+        "signatureSource()",
+        "substitutePaste(before: TextFieldValue, after: TextFieldValue, clip: ()",
+        "class SignatureClip"
+      ]
+    },
+    {
       "path": "ac_cloud-mail/app/src/main/kotlin/app/sterna/ui/settings/SignatureCodeEditor.kt",
       "lang": "kotlin",
       "role": "kotlin",
       "exports": [],
       "imports": [
+        "android.content.ClipboardManager",
+        "android.content.Context",
         "androidx.compose.foundation.background",
         "androidx.compose.foundation.clickable",
         "androidx.compose.foundation.horizontalScroll",
@@ -273797,6 +273870,7 @@
         "androidx.compose.ui.input.key.key",
         "androidx.compose.ui.input.key.onPreviewKeyEvent",
         "androidx.compose.ui.input.key.type",
+        "androidx.compose.ui.platform.LocalContext",
         "androidx.compose.ui.platform.testTag",
         "androidx.compose.ui.text.AnnotatedString",
         "androidx.compose.ui.text.SpanStyle",
@@ -273805,10 +273879,7 @@
         "androidx.compose.ui.text.font.FontFamily",
         "androidx.compose.ui.text.input.OffsetMapping",
         "androidx.compose.ui.text.input.TextFieldValue",
-        "androidx.compose.ui.text.input.TransformedText",
-        "androidx.compose.ui.text.input.VisualTransformation",
-        "androidx.compose.ui.text.style.TextAlign",
-        "app.sterna.ui.theme.MailMetrics"
+        "androidx.compose.ui.text.input.TransformedText"
       ],
       "symbols": [
         "filter(text: AnnotatedString)",
@@ -273977,7 +274048,7 @@
       ],
       "symbols": [
         "show(edit: Edit)",
-        "typed(v: TextFieldValue)",
+        "typed(incoming: TextFieldValue, clip: (()",
         "commit(edit: Edit?)",
         "tab(outdent: Boolean)",
         "replaceAll(text: String)",
@@ -284884,6 +284955,36 @@
         "only(lines: List<String>, needle: String, exact: Boolean = true)",
         "codeLines(file: File)",
         "class ShowOnlySubscribedFoldersWiringTest"
+      ]
+    },
+    {
+      "path": "ac_cloud-mail/app/src/test/kotlin/app/sterna/ui/settings/SignatureClipboardTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "SignatureClipboardTest"
+      ],
+      "imports": [
+        "androidx.compose.ui.text.TextRange",
+        "androidx.compose.ui.text.input.TextFieldValue",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertNull",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "htmlIsPreferredOverText()",
+        "blankHtmlFallsBackToText()",
+        "nothingOnTheClipboardGivesNull()",
+        "fragmentHtmlIsKeptAsIs()",
+        "state()",
+        "pasteAt1(clip: ()",
+        "pasteWithHtmlInsertsTheHtmlAtTheSelection()",
+        "pasteWithoutHtmlInsertsThePlainText()",
+        "pasteOverASelectionReplacesIt()",
+        "aSingleTypedCharacterIsUntouched()",
+        "anInsertionThatIsNotTheClipboardTextIsUntouched()",
+        "theHtmlPasteIsOneUndoStep()",
+        "class SignatureClipboardTest"
       ]
     },
     {

@@ -16397,6 +16397,7 @@
         "retryLeg",
         "notifyLegLost",
         "_retry",
+        "MAIL_TARGETS",
         "default"
       ],
       "imports": [],
@@ -16404,6 +16405,8 @@
         "retryLeg(name, attemptFn, attempts, backoffsMs, firstStatus)",
         "notifyLegLost(marker, target, { messageId, from, to, status })",
         "deliverToMaddy(rawEmail, to, env)",
+        "deliverToStalwart(rawEmail, to, env)",
+        "deliverViaBridge(rawEmail, to, env, target, label)",
         "deliverToGoogle(rawEmail, env)",
         "getGoogleAccessToken(env)",
         "importPrivateKey(pem)",
@@ -16423,7 +16426,7 @@
         "./email-forwarder.js"
       ],
       "symbols": [
-        "setup({ google = 0, maddy = 0, healthy = true, googleThrows = false } = {})",
+        "setup({ google = 0, maddy = 0, stalwart = 0, healthy = true, googleThrows = false } = {})",
         "run(opts)"
       ]
     },
