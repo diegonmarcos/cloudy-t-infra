@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 24598,
+    "files": 24604,
     "by_lang": {
       "sh": 806,
       "js": 585,
       "py": 254,
-      "kotlin": 13750,
+      "kotlin": 13756,
       "ts": 8382,
       "java": 654,
       "nix": 37,
@@ -25,7 +25,7 @@
       "python": 90,
       "module": 6468,
       "java": 653,
-      "kotlin": 13747,
+      "kotlin": 13753,
       "flake": 33,
       "rust-module": 130,
       "nix-module": 4,
@@ -22296,6 +22296,52 @@
       ]
     },
     {
+      "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/system/DevVerifierNotifier.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "DevVerifierNotifier",
+        "DevVerifierCheckWorker",
+        "DevVerifierReceiver"
+      ],
+      "imports": [
+        "android.app.AlarmManager",
+        "android.app.NotificationChannel",
+        "android.app.NotificationManager",
+        "android.app.PendingIntent",
+        "android.content.BroadcastReceiver",
+        "android.content.Context",
+        "android.content.Intent",
+        "androidx.core.app.NotificationCompat",
+        "androidx.core.app.NotificationManagerCompat",
+        "androidx.work.ExistingPeriodicWorkPolicy",
+        "androidx.work.PeriodicWorkRequestBuilder",
+        "androidx.work.WorkManager",
+        "androidx.work.Worker",
+        "androidx.work.WorkerParameters",
+        "com.diegonmarcos.superapp.R",
+        "com.diegonmarcos.superapp.configs.BrokerGrantChannel",
+        "com.diegonmarcos.superapp.perms.DevVerifier",
+        "com.diegonmarcos.superapp.perms.DevVerifierFlow",
+        "java.util.concurrent.TimeUnit"
+      ],
+      "symbols": [
+        "title(k: DevVerifierFlow.Kind)",
+        "body(k: DevVerifierFlow.Kind)",
+        "run(ctx: Context, exec: (String)",
+        "reschedule(ctx: Context)",
+        "schedule(ctx: Context, r: DevVerifierFlow.Result)",
+        "alarmIntent(ctx: Context, k: DevVerifierFlow.Kind)",
+        "post(ctx: Context, k: DevVerifierFlow.Kind)",
+        "enqueuePeriodic(ctx: Context)",
+        "doWork()",
+        "onReceive(context: Context, intent: Intent)",
+        "class DevVerifierNotifier",
+        "class DevVerifierCheckWorker",
+        "class DevVerifierReceiver"
+      ]
+    },
+    {
       "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/system/DumpsysParsers.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -24422,6 +24468,7 @@
         "quickDisplayCommandsAreAllowed()",
         "privateDnsAndNightModeAreAllowed()",
         "playProtectCommandsAreAllowed()",
+        "developerVerifierProbesAndOpenersAreAllowed()",
         "wirelessDebuggingSwitchCommandIsAllowed()",
         "outputDoorKeepsTheInProcessBudget()",
         "auditGrantIsTheOwnerHostsOnly()",
@@ -31552,6 +31599,25 @@
       "symbols": [
         "host(navigate: (String)",
         "class StarsComposeTest"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/test/java/com/diegonmarcos/superapp/perms/DevVerifierRowTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "DevVerifierRowTest"
+      ],
+      "imports": [
+        "org.json.JSONObject",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.io.File"
+      ],
+      "symbols": [
+        "src(p: String)",
+        "class DevVerifierRowTest"
       ]
     },
     {
@@ -81658,6 +81724,7 @@
         "android.content.Context",
         "android.content.Intent",
         "android.provider.Settings",
+        "android.view.inputmethod.InputMethodManager",
         "helium314.keyboard.settings.SettingsActivity",
         "helium314.keyboard.settings.SettingsActivity2"
       ],
@@ -81665,6 +81732,7 @@
         "intent()",
         "configsIntent(context: Context)",
         "launchConfigs(context: Context)",
+        "showSystemPicker(context: Context)",
         "launch(context: Context)",
         "class AndroidKeyboardSettings"
       ]
@@ -88490,7 +88558,7 @@
       "symbols": [
         "src(rel: String)",
         "theIconIsTheAndroidSettingsKeyAndItsCodeIsTheImeSettingsCode()",
-        "theKeyCodeHandlerLaunchesTheKeyboardConfigsNotTheSystemList()",
+        "theKeyCodeHandlerOpensTheSystemInputMethodPicker()",
         "theDestinationIsTheImeSettingsActivityAtTheGroupedAllSettings()",
         "theSystemKeyboardListStaysReachableFromTheConfigsRow()",
         "class AndroidConfigsIconTest"
@@ -98409,6 +98477,66 @@
       ]
     },
     {
+      "path": "ab_cloud-libs-shared/libs/perms/src/main/java/com/diegonmarcos/superapp/perms/DevVerifier.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "DevVerifier"
+      ],
+      "imports": [
+        "android.content.Context"
+      ],
+      "symbols": [
+        "packageLine(out: String?)",
+        "matches(listOut: String?)",
+        "interpret(key: String, value: String, now: Long)",
+        "parse(present: String?, disabled: String?, global: String?, secure: String?, now: Long)",
+        "parseFlag(out: String?)",
+        "parseUptimeMs(out: String?)",
+        "parseBootId(out: String?)",
+        "saved(ctx: Context)",
+        "measure(ctx: Context, exec: (String)",
+        "markRestartPrompted(ctx: Context)",
+        "recall(ctx: Context, now: Long = System.currentTimeMillis()",
+        "flow(ctx: Context, now: Long = System.currentTimeMillis()",
+        "at(ms: Long)",
+        "status(r: Reading)",
+        "status(ctx: Context)",
+        "class DevVerifier",
+        "class State",
+        "class Reading"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/perms/src/main/java/com/diegonmarcos/superapp/perms/DevVerifierFlow.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "DevVerifierFlow"
+      ],
+      "imports": [],
+      "symbols": [
+        "advance(f: Facts, saved: Saved, now: Long)",
+        "res(step: Step, s: Saved = saved, end: Long = 0L, expiry: Long = 0L, note: String = \"\", reset: Boolean = false)",
+        "requestStep(f: Facts)",
+        "openCmd(step: Step)",
+        "at(ms: Long)",
+        "remaining(ms: Long)",
+        "text(r: Result, now: Long)",
+        "status(r: Result, now: Long)",
+        "alarms(r: Result, now: Long)",
+        "shouldPromptRestart(r: Result)",
+        "immediate(r: Result)",
+        "class DevVerifierFlow",
+        "class Step",
+        "class Saved",
+        "class Facts",
+        "class Result",
+        "class Kind",
+        "class Alarm"
+      ]
+    },
+    {
       "path": "ab_cloud-libs-shared/libs/perms/src/main/java/com/diegonmarcos/superapp/perms/FleetPerms.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -99268,6 +99396,50 @@
       ],
       "symbols": [
         "class AdbGrantTest"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/perms/src/test/java/com/diegonmarcos/superapp/perms/DevVerifierFlowTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "DevVerifierFlowTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.perms.DevVerifier.Reading",
+        "com.diegonmarcos.superapp.perms.DevVerifier.State",
+        "com.diegonmarcos.superapp.perms.DevVerifierFlow.Facts",
+        "com.diegonmarcos.superapp.perms.DevVerifierFlow.Kind",
+        "com.diegonmarcos.superapp.perms.DevVerifierFlow.Saved",
+        "com.diegonmarcos.superapp.perms.DevVerifierFlow.Step",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "facts(s: State, until: Long = 0, dev: Boolean? = true, boot: String? = \"boot-A\", up: Long? = 0L)",
+        "t(s: State, saved: Saved = Saved()",
+        "dev(on: Boolean)",
+        "class DevVerifierFlowTest"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/perms/src/test/java/com/diegonmarcos/superapp/perms/DevVerifierTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "DevVerifierTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.perms.DevVerifier.State",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "parse(present: String? = pkg, disabled: String? = \"\", global: String? = \"adb_enabled=1\\n\", secure: String? = \"\", n: Long = now)",
+        "class DevVerifierTest"
       ]
     },
     {
