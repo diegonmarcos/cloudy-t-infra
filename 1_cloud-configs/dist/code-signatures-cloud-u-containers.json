@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-containers",
   "counts": {
-    "files": 2730,
+    "files": 2731,
     "by_lang": {
       "sh": 188,
       "js": 126,
       "nix": 202,
-      "py": 526,
+      "py": 527,
       "ts": 1315,
       "rust": 373
     },
@@ -26,7 +26,7 @@
       "entrypoint": 73,
       "compose": 90,
       "mcp-tool": 150,
-      "workflow-dag": 6,
+      "workflow-dag": 7,
       "rust-module": 369,
       "hook": 53
     }
@@ -18258,6 +18258,20 @@
         "run_dag(name, answer)",
         "outcome_test(fails)",
         "main()"
+      ]
+    },
+    {
+      "path": "infra-obs_dagu/src/dags/test_ops_docker-prune.py",
+      "lang": "py",
+      "role": "workflow-dag",
+      "exports": [
+        "check(name, cond)"
+      ],
+      "imports": [
+        "os"
+      ],
+      "symbols": [
+        "check(name, cond)"
       ]
     },
     {

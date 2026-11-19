@@ -2249,6 +2249,9 @@
     },
     "jev-call-sites": {
       "cmd": "python3 src/dags/test_jev-call-sites.py"
+    },
+    "ops_docker-prune": {
+      "cmd": "python3 src/dags/test_ops_docker-prune.py"
     }
   }
 }
