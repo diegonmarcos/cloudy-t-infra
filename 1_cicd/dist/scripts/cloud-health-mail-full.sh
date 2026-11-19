@@ -39,15 +39,15 @@
 #       - a_solutions/infra-api_google-workspace-mcp/src/code/gmail/count_recent.py --message-ids
 #         (Gmail REST API via the container's service account, run via
 #         `docker exec google-workspace-mcp`)
-#       - a_solutions/infra-api_cloud-mail-mcp/src/code/mcp/tools/others/count-since.ts
-#         (maddy IMAP + Stalwart JMAP, run via `docker exec cloud-mail-mcp`)
+#       - a_solutions/infra-api_cloudy-apps-communication-mcp/src/code/mcp/tools/others/count-since.ts
+#         (maddy IMAP + Stalwart JMAP, run via `docker exec cloudy-apps-communication-mcp`)
 #     Both containers run on oci-apps (see each service's build.json
 #     deploy.host). The Message-IDs are piped from one container into the other
 #     ON oci-apps and never reach this job's log — only the counts come back.
 #
 #  3. SEND/RECEIVE ROUND-TRIP — nothing above proves a message submitted now
-#     is delivered. a_solutions/infra-api_cloud-mail-mcp/src/code/mcp/tools/others/round-trip.ts
-#     (run via `docker exec cloud-mail-mcp`, credentials from that container's
+#     is delivered. a_solutions/infra-api_cloudy-apps-communication-mcp/src/code/mcp/tools/others/round-trip.ts
+#     (run via `docker exec cloudy-apps-communication-mcp`, credentials from that container's
 #     sops-deployed env) submits one message with a random Message-ID, asserts
 #     it reaches maddy (IMAP) and Stalwart (JMAP) within 180s, and removes it.
 #     Gate: sent and received by both stores.
@@ -233,7 +233,7 @@ GMAIL_COUNT=-1
 MADDY_MISSING=-1
 STALWART_MISSING=-1
 GMAIL_SCRIPT="$REPO_ROOT/a_solutions/infra-api_google-workspace-mcp/src/code/gmail/count_recent.py"
-MAIL_SCRIPT="$REPO_ROOT/a_solutions/infra-api_cloud-mail-mcp/src/code/mcp/tools/others/count-since.ts"
+MAIL_SCRIPT="$REPO_ROOT/a_solutions/infra-api_cloudy-apps-communication-mcp/src/code/mcp/tools/others/count-since.ts"
 if [ -f "$GMAIL_SCRIPT" ] && [ -f "$MAIL_SCRIPT" ]; then
   # Both scripts travel in one tar stream (no local-file dependency on the
   # remote side — this checkout only exists on the GHA runner / dev machine),
@@ -250,14 +250,14 @@ set -uo pipefail
 since="$1"
 staging=/tmp/mail-health-reconcile
 docker cp "$staging/count_recent.py" google-workspace-mcp:/tmp/count_recent.py || exit 1
-docker exec cloud-mail-mcp mkdir -p /app/mcp/tools/others || exit 1
-docker cp "$staging/count-since.ts" cloud-mail-mcp:/app/mcp/tools/others/count-since.ts || exit 1
+docker exec cloudy-apps-communication-mcp mkdir -p /app/mcp/tools/others || exit 1
+docker cp "$staging/count-since.ts" cloudy-apps-communication-mcp:/app/mcp/tools/others/count-since.ts || exit 1
 if ! message_ids=$(docker exec google-workspace-mcp /app/.venv/bin/python /tmp/count_recent.py --since "$since" --message-ids); then
   echo "GMAIL_UNAVAILABLE"
   exit 0
 fi
 printf '%s\n' "$message_ids" \
-  | docker exec -i cloud-mail-mcp node /app/node_modules/tsx/dist/cli.mjs /app/mcp/tools/others/count-since.ts --since "$since"
+  | docker exec -i cloudy-apps-communication-mcp node /app/node_modules/tsx/dist/cli.mjs /app/mcp/tools/others/count-since.ts --since "$since"
 EOF
   )
   RECONCILE_STATUS=$?
@@ -331,14 +331,14 @@ echo "═══ 3. Send/receive round-trip (submission -> maddy and Stalwart, by
 # so the fish login shell on oci-apps never has to parse `&&`. Only the JSON
 # fields are printed: the script's stderr can carry SMTP replies with
 # addresses in them, and this log carries pass/fail, seconds and counts only.
-ROUND_TRIP_SCRIPT="$REPO_ROOT/a_solutions/infra-api_cloud-mail-mcp/src/code/mcp/tools/others/round-trip.ts"
+ROUND_TRIP_SCRIPT="$REPO_ROOT/a_solutions/infra-api_cloudy-apps-communication-mcp/src/code/mcp/tools/others/round-trip.ts"
 if [ -f "$ROUND_TRIP_SCRIPT" ]; then
   # stderr goes to a file rather than /dev/null: it still must not reach this
   # log (it can carry SMTP replies with addresses in them), but discarding it
   # outright left the failure path blind. The classifier reads it and prints a
   # label only — the text itself is never echoed and the file is removed below.
   ROUND_TRIP_STDERR=$(mktemp)
-  ROUND_TRIP_RESULT=$(ssh $SSH_OPTS oci-apps "docker exec -i cloud-mail-mcp sh -c 'mkdir -p /app/mcp/tools/others && cat > /app/mcp/tools/others/round-trip.ts && exec node /app/node_modules/tsx/dist/cli.mjs /app/mcp/tools/others/round-trip.ts'" \
+  ROUND_TRIP_RESULT=$(ssh $SSH_OPTS oci-apps "docker exec -i cloudy-apps-communication-mcp sh -c 'mkdir -p /app/mcp/tools/others && cat > /app/mcp/tools/others/round-trip.ts && exec node /app/node_modules/tsx/dist/cli.mjs /app/mcp/tools/others/round-trip.ts'" \
     < "$ROUND_TRIP_SCRIPT" 2>"$ROUND_TRIP_STDERR" | tail -1)
   # $? and not PIPESTATUS: `set -o pipefail` is on at the top of this file, so
   # the substitution already carries ssh's status rather than tail's always-zero.
