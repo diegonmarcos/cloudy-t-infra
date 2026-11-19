@@ -25,10 +25,15 @@
 # against musl so one artifact per architecture runs on the Ubuntu, Fedora and
 # NixOS boxes alike. Compiling Rust on these VMs is what no-build-guard.nix
 # exists to prevent.
-{ vmName }:
+{ vmName, ramMB ? 0 }:
 { config, pkgs, lib, ... }:
 
 let
+  # On a 1 GB / 1-OCPU burstable VM the sampler's 2 s loop alone was ~13% of
+  # the CPU (oci-mail, 2026-11-19, steal 44-74%, mail timing out). Cap it
+  # there: a slower snapshot costs nothing, a starved mail stack costs mail.
+  # ramMB = 0 (unknown) and bigger boxes get no cap.
+  cpuQuotaLine = if ramMB > 0 && ramMB <= 1536 then "CPUQuota=8%" else "";
   # 2026-08-27: my-webserver and my-watchdog moved to cloud-u-linux in the d*
   # split, so their rolling releases are published there now.
   repo = "diegonmarcos/cloudy-u-linux";
@@ -126,6 +131,7 @@ in
     Nice=10
     IOSchedulingClass=idle
     MemoryMax=96M
+    ${cpuQuotaLine}
 
     [Install]
     WantedBy=default.target
@@ -240,6 +246,7 @@ RestartSec=5
 Nice=10
 IOSchedulingClass=idle
 MemoryMax=96M
+${cpuQuotaLine}
 
 [Install]
 WantedBy=multi-user.target

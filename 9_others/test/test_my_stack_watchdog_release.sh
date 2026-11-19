@@ -45,5 +45,39 @@ printf '%s\n' "$code" | grep -q 'my-watchdog-latest' \
   && { echo "FAIL: a code line still fetches the frozen my-watchdog-latest"; fail=1; } \
   || echo "ok:   nothing fetches the frozen my-watchdog-latest"
 
+# 5. Small boxes cap the sampler's CPU (oci-mail: its 2 s loop was ~13% of a
+#    starved 1-OCPU VM). Checked by a pure nix eval when nix-instantiate is
+#    present (lib/pkgs stubbed: my-stack only uses writeShellScript and
+#    hm.dag.entryAfter), statically otherwise.
+SP="$ROOT/b_infra/_shared/vm-pilot/src/modules/protection/system-protection.nix"
+grep -q 'agents/my-stack.nix { inherit vmName ramMB; }' "$SP" \
+  && echo "ok:   system-protection passes ramMB to my-stack" \
+  || { echo "FAIL: system-protection does not pass ramMB to my-stack"; fail=1; }
+if command -v nix-instantiate >/dev/null 2>&1; then
+  T="$(mktemp --suffix=.nix)"; trap 'rm -f "$T"' EXIT
+  cat > "$T" <<EOF
+let
+  lib = { hm.dag.entryAfter = deps: text: { data = text; }; };
+  pkgs = { writeShellScript = n: t: t; };
+  has = needle: hay: builtins.match ".*\${needle}.*" (builtins.replaceStrings ["\n"] [" "] hay) != null;
+  m = ram: import $F { vmName = "t"; ramMB = ram; } { config = {}; inherit pkgs lib; };
+  u = ram: (m ram).home.file.".local/share/vm-pilot/my-watchdog.service".text;
+  a = ram: builtins.toJSON (m ram).home.activation;
+in [ (has "CPUQuota=8%" (u 1024)) (has "CPUQuota=8%" (a 1024))
+     (! has "CPUQuota" (u 24576)) (! has "CPUQuota" (a 24576)) (! has "CPUQuota" (u 0)) ]
+EOF
+  out="$(nix-instantiate --eval --strict "$T" 2>&1)"
+  if [ "$out" = "[ true true true true true ]" ]; then
+    echo "ok:   CPUQuota=8% on a 1 GB box (user + root unit), none on 24 GB or unknown"
+  else
+    echo "FAIL: CPUQuota eval: $out"; fail=1
+  fi
+else
+  grep -q 'cpuQuotaLine = if ramMB > 0 && ramMB <= 1536 then "CPUQuota=8%"' "$F" \
+    && [ "$(grep -c '\${cpuQuotaLine}' "$F")" -eq 2 ] \
+    && echo "ok:   CPUQuota=8% declared for <=1.5 GB boxes in both units (static)" \
+    || { echo "FAIL: small-box CPUQuota missing from my-stack.nix"; fail=1; }
+fi
+
 [ "$fail" -eq 0 ] && echo "PASS" || echo "FAILED"
 exit "$fail"

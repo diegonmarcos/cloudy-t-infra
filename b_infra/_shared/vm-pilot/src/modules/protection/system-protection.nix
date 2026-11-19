@@ -33,7 +33,7 @@ in {
     (import ../agents/health-agent.nix { inherit config pkgs lib vmName; })
     # my-webserver + my-watchdog: the two jobs vm-pilot used to implement
     # itself, now their own products in cloud-u-linux. vm-pilot deploys them.
-    (import ../agents/my-stack.nix { inherit vmName; })
+    (import ../agents/my-stack.nix { inherit vmName ramMB; })
     # guardrails.nix disabled (POSIX sh bug)
     # no-build-guard.nix imported by default.nix directly
   ];
