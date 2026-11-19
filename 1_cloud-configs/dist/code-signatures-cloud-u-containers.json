@@ -6,13 +6,13 @@
   },
   "repo": "cloud-u-containers",
   "counts": {
-    "files": 2723,
+    "files": 2725,
     "by_lang": {
       "sh": 188,
       "js": 125,
       "nix": 202,
       "py": 526,
-      "ts": 1309,
+      "ts": 1311,
       "rust": 373
     },
     "by_role": {
@@ -20,7 +20,7 @@
       "file": 357,
       "nix-module": 20,
       "python": 510,
-      "module": 815,
+      "module": 817,
       "script": 9,
       "flake": 92,
       "entrypoint": 73,
@@ -9751,6 +9751,33 @@
       ]
     },
     {
+      "path": "infra-api_cloudy-apps-communication-mcp/src/code/mcp/shared/fetch-connect-retry.test.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [],
+      "imports": [
+        "node:test",
+        "node:assert/strict",
+        "node:fs",
+        "./fetch-connect-retry.ts"
+      ],
+      "symbols": []
+    },
+    {
+      "path": "infra-api_cloudy-apps-communication-mcp/src/code/mcp/shared/fetch-connect-retry.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "isConnectPhaseError",
+        "fetchConnectRetry"
+      ],
+      "imports": [],
+      "symbols": [
+        "isConnectPhaseError(e: unknown)",
+        "fetchConnectRetry(\n  url: string,\n  init: RequestInit = {},\n  { attempts = 3, delayMs = 2000, fetchImpl = fetch as FetchFn } = {},\n)"
+      ]
+    },
+    {
       "path": "infra-api_cloudy-apps-communication-mcp/src/code/mcp/shared/imap-guard.test.ts",
       "lang": "ts",
       "role": "module",
@@ -9802,7 +9829,8 @@
         "JmapSendMsg"
       ],
       "imports": [
-        "./config.js"
+        "./config.js",
+        "./fetch-connect-retry.js"
       ],
       "symbols": [
         "authHeader(user: string, pass: string)",
@@ -10039,7 +10067,8 @@
       "imports": [
         "node:fs",
         "../../shared/imap.js",
-        "../../shared/config.js"
+        "../../shared/config.js",
+        "../../shared/fetch-connect-retry.js"
       ],
       "symbols": [
         "normalizeMessageId(value: string | undefined | null)",
@@ -10087,7 +10116,8 @@
         "imapflow",
         "../../shared/smtp.js",
         "../../shared/imap.js",
-        "../../shared/config.js"
+        "../../shared/config.js",
+        "../../shared/fetch-connect-retry.js"
       ],
       "symbols": [
         "maddyTestMessages(client: ImapFlow, lookbackMilliseconds: number)",

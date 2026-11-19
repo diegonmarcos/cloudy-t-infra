@@ -3326,7 +3326,7 @@
           "cwd": "src/code/mcp/delivery"
         },
         "imap-guard": {
-          "cmd": "node --test imap-guard.test.ts",
+          "cmd": "node --test imap-guard.test.ts fetch-connect-retry.test.ts",
           "cwd": "src/code/mcp/shared"
         }
       },
