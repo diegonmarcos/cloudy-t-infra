@@ -209,12 +209,24 @@ lib.mkIf hasTier1 {
     echo "[tier1-watchdog] step: enable+restart watchdog (no-block)"
     timeout 10 $SUDO systemctl enable tier1-watchdog.service 2>/dev/null || true
     timeout 10 $SUDO systemctl restart --no-block tier1-watchdog.service 2>/dev/null || true
-    sleep 2
 
-    if timeout 10 $SUDO systemctl is-active --quiet tier1-watchdog.service; then
+    # --no-block returns before the unit is up. One check 2 s later raced it:
+    # on a 1 GB VM the unit went active ~5 s after the restart and every
+    # activation logged a false "failed to start" (2026-11-18, oci-analytics
+    # run 44419144605: unit active since 23:41:02, 0 restarts). Poll the
+    # state for up to ~30 s; "failed" ends the wait at once, and a real
+    # failure now prints the unit state and its last journal lines.
+    T1_STATE=unknown
+    for _i in $(seq 1 15); do
+      T1_STATE=$(timeout 10 $SUDO systemctl show -p ActiveState --value tier1-watchdog.service 2>/dev/null || echo unknown)
+      case "$T1_STATE" in active|failed) break ;; esac
+      sleep 2
+    done
+    if [ "$T1_STATE" = active ]; then
       echo "[tier1-watchdog] ARMED ✓ (tier1: ${tier1List}) | tier1.slice reserve=${toString tier1ReserveMB}M"
     else
-      echo "[tier1-watchdog] WARNING: failed to start — tier1 apps will not auto-recover" >&2
+      echo "[tier1-watchdog] WARNING: failed to start (state: $T1_STATE) — tier1 apps will not auto-recover" >&2
+      timeout 10 $SUDO journalctl -u tier1-watchdog.service -n 5 --no-pager 2>&1 | sed 's/^/[tier1-watchdog]   /' >&2 || true
     fi
     ) || echo "[tier1-watchdog] activation error — check above"
   '';
