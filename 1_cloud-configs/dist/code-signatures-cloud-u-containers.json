@@ -6,13 +6,13 @@
   },
   "repo": "cloud-u-containers",
   "counts": {
-    "files": 2727,
+    "files": 2729,
     "by_lang": {
       "sh": 188,
       "js": 125,
       "nix": 202,
       "py": 526,
-      "ts": 1313,
+      "ts": 1315,
       "rust": 373
     },
     "by_role": {
@@ -20,7 +20,7 @@
       "file": 357,
       "nix-module": 20,
       "python": 510,
-      "module": 819,
+      "module": 821,
       "script": 9,
       "flake": 92,
       "entrypoint": 73,
@@ -2167,7 +2167,8 @@
         "zod",
         "../../shared/config.js",
         "../plugins/auth.js",
-        "../../shared/mail-target.js"
+        "../../shared/mail-target.js",
+        "../../shared/delivery-ledger.js"
       ],
       "symbols": [
         "extractHeader(body: Buffer, name: string)",
@@ -2227,6 +2228,22 @@
       "symbols": [
         "readInt(name: string, fallback: number)",
         "loadConfig()"
+      ]
+    },
+    {
+      "path": "infra-api_c3-public-api/src/code/shared/delivery-ledger.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "ledgerKey",
+        "createDeliveryLedger",
+        "LedgerResult",
+        "DeliveryLedger"
+      ],
+      "imports": [],
+      "symbols": [
+        "ledgerKey(target: string, msgId: string | null | undefined, rcpt: string)",
+        "createDeliveryLedger(ttlMs: number, now: ()"
       ]
     },
     {
@@ -2363,6 +2380,18 @@
         "apt",
         "title"
       ]
+    },
+    {
+      "path": "infra-api_c3-public-api/src/test-delivery-ledger.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [],
+      "imports": [
+        "node:assert/strict",
+        "node:fs",
+        "./code/shared/delivery-ledger.ts"
+      ],
+      "symbols": []
     },
     {
       "path": "infra-api_c3-public-api/src/test-mail-targets.ts",

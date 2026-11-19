@@ -1450,6 +1450,10 @@
         "mail-targets": {
           "cmd": "node test-mail-targets.ts",
           "cwd": "src"
+        },
+        "delivery-ledger": {
+          "cmd": "node test-delivery-ledger.ts",
+          "cwd": "src"
         }
       },
       "backends": {
@@ -1486,7 +1490,11 @@
         "max_ingest_lines": 5000,
         "rate_per_ip_per_min": 60,
         "rate_per_sid_per_min": 1000,
-        "request_timeout_ms": 15000
+        "request_timeout_ms": 15000,
+        "_doc_smtp_timeout_ms": "#1819: the SMTP session's own connection/greeting/socket timeouts, decoupled from the HTTP answer (request_timeout_ms). oci-mail under swap and CPU steal accepted messages after the 15 s answer deadline; the old shared timeout aborted the session, answered 500, and each Worker retry opened a new session, storing the mail 2-3 times. Now the session keeps running up to this long, the answer is 504 pending, and a retry joins it (shared/delivery-ledger.ts).",
+        "smtp_timeout_ms": 120000,
+        "_doc_dedupe_ttl_ms": "#1819: how long a delivered (target, Message-ID, rcpt) is remembered, so a late Worker retry is answered delivered without a second send. 30 min covers the Worker's inline try plus its background retries many times over.",
+        "dedupe_ttl_ms": 1800000
       },
       "api": {
         "has_api": true,
