@@ -31,6 +31,7 @@
     "container_name": "stalwart",
     "image": "stalwartlabs/stalwart:v0.16.5",
     "port": 2443,
+    "_doc_host_move": "#1821 (2026-11-19): moved from oci-mail (E2.1.Micro, 954 MB, steal 50-78%, maddy acceptance 33-80 s) to oci-apps (A1 arm64, 24 GB). Binds are oci-apps wg0 10.0.0.6 and wg-public 10.1.0.4 (infra-net_wireguard-public build.json). The L4 SNI upstreams name oci-apps. maddy-relay (mta_routes) still points at maddy on oci-mail. Rollback: deploy.host back to oci-mail, binds 10.0.0.3/10.1.0.3, upstreams oci-mail, arch amd64, and start the untouched stalwart_stalwart_data volume on oci-mail. Gate: _shared/test-stalwart-host.mjs.",
     "_doc_dual_bind": "Phase 4 of public-surface collapse: each port dual-binds on wg0 (10.0.0.3) AND wg-public (10.1.0.3). Caddy on oci-analytics reaches mail ports via wg-public mesh; legacy clients on wg0 keep working unchanged. compose.nix expands `bind` arrays into one host-port mapping per IP.",
     "_doc_container_port": "v0.16 binds protocols on STANDARD ports inside the container (SMTP:25, IMAPS:993, SMTPS:465, HTTPS:443, Sieve:4190) — listeners are not configurable in v0.16 schema. We map host_offset → container_standard so external clients keep using offset ports (maddy owns the standard ones on the host network until decommissioned).",
     "extra_ports": [
@@ -39,8 +40,8 @@
         "container_port": 25,
         "protocol": "starttls",
         "bind": [
-          "10.0.0.3",
-          "10.1.0.3"
+          "10.0.0.6",
+          "10.1.0.4"
         ],
         "service": "smtp_shadow",
         "desc": "SMTP shadow (host:2025 → stalwart:25)"
@@ -50,8 +51,8 @@
         "container_port": 443,
         "protocol": "tls",
         "bind": [
-          "10.0.0.3",
-          "10.1.0.3"
+          "10.0.0.6",
+          "10.1.0.4"
         ],
         "service": "jmap_tls",
         "desc": "HTTPS admin/JMAP (host:2443 → stalwart:443)"
@@ -61,8 +62,8 @@
         "container_port": 465,
         "protocol": "tls",
         "bind": [
-          "10.0.0.3",
-          "10.1.0.3"
+          "10.0.0.6",
+          "10.1.0.4"
         ],
         "service": "smtp_ssl",
         "desc": "SMTPS (host:2465 → stalwart:465)"
@@ -72,8 +73,8 @@
         "container_port": 993,
         "protocol": "tls",
         "bind": [
-          "10.0.0.3",
-          "10.1.0.3"
+          "10.0.0.6",
+          "10.1.0.4"
         ],
         "service": "imap_ssl",
         "desc": "IMAPS (host:2993 → stalwart:993)"
@@ -83,8 +84,8 @@
         "container_port": 8080,
         "protocol": "http",
         "bind": [
-          "10.0.0.3",
-          "10.1.0.3"
+          "10.0.0.6",
+          "10.1.0.4"
         ],
         "service": "jmap_mesh_http",
         "desc": "Plain-HTTP JMAP on the MESH ONLY (host:2080 → stalwart:8080). Bound on wg0/wg-public, never on a public interface: .app is WireGuard-only and WG already encrypts, so the mesh endpoint stalwart.mesh.diegonmarcos.com is plain http (fleet convention, #1093). Cloud Mail and the fleet apps reach JMAP here first and fall back to the public jmap.diegonmarcos.com with the bearer."
@@ -94,8 +95,8 @@
         "container_port": 4190,
         "protocol": "tls",
         "bind": [
-          "10.0.0.3",
-          "10.1.0.3"
+          "10.0.0.6",
+          "10.1.0.4"
         ],
         "service": "manage_sieve",
         "desc": "ManageSieve (host:6190 → stalwart:4190)"
@@ -142,7 +143,7 @@
   },
   "service": "stalwart",
   "role": "app",
-  "vm": "oci-mail",
+  "vm": "oci-apps",
   "services": {
     "alerts-api": {
       "ip": "10.0.0.4",
@@ -1767,11 +1768,11 @@
       }
     },
     "stalwart": {
-      "ip": "10.0.0.3",
+      "ip": "10.0.0.6",
       "ports": {
         "app": 2443
       },
-      "vm": "oci-mail",
+      "vm": "oci-apps",
       "healthcheck": "/",
       "domain": "jmap.diegonmarcos.com",
       "description": "Stalwart Mail Server — JMAP webmail backend (jmap.diegonmarcos.com)",
@@ -1817,8 +1818,8 @@
         "2025": {
           "protocol": "starttls",
           "bind": [
-            "10.0.0.3",
-            "10.1.0.3"
+            "10.0.0.6",
+            "10.1.0.4"
           ],
           "desc": "SMTP shadow (host:2025 → stalwart:25)",
           "service": "smtp_shadow",
@@ -1827,8 +1828,8 @@
         "2080": {
           "protocol": "http",
           "bind": [
-            "10.0.0.3",
-            "10.1.0.3"
+            "10.0.0.6",
+            "10.1.0.4"
           ],
           "desc": "Plain-HTTP JMAP on the MESH ONLY (host:2080 → stalwart:8080). Bound on wg0/wg-public, never on a public interface: .app is WireGuard-only and WG already encrypts, so the mesh endpoint stalwart.mesh.diegonmarcos.com is plain http (fleet convention, #1093). Cloud Mail and the fleet apps reach JMAP here first and fall back to the public jmap.diegonmarcos.com with the bearer.",
           "service": "jmap_mesh_http",
@@ -1837,8 +1838,8 @@
         "2443": {
           "protocol": "tls",
           "bind": [
-            "10.0.0.3",
-            "10.1.0.3"
+            "10.0.0.6",
+            "10.1.0.4"
           ],
           "desc": "HTTPS admin/JMAP (host:2443 → stalwart:443)",
           "service": "jmap_tls",
@@ -1847,8 +1848,8 @@
         "2465": {
           "protocol": "tls",
           "bind": [
-            "10.0.0.3",
-            "10.1.0.3"
+            "10.0.0.6",
+            "10.1.0.4"
           ],
           "desc": "SMTPS (host:2465 → stalwart:465)",
           "service": "smtp_ssl",
@@ -1857,8 +1858,8 @@
         "2993": {
           "protocol": "tls",
           "bind": [
-            "10.0.0.3",
-            "10.1.0.3"
+            "10.0.0.6",
+            "10.1.0.4"
           ],
           "desc": "IMAPS (host:2993 → stalwart:993)",
           "service": "imap_ssl",
@@ -1867,8 +1868,8 @@
         "6190": {
           "protocol": "tls",
           "bind": [
-            "10.0.0.3",
-            "10.1.0.3"
+            "10.0.0.6",
+            "10.1.0.4"
           ],
           "desc": "ManageSieve (host:6190 → stalwart:4190)",
           "service": "manage_sieve",
@@ -2376,6 +2377,9 @@
     },
     "mail-stack-limits": {
       "cmd": "node ../_shared/test-mail-stack-limits.mjs"
+    },
+    "stalwart-host": {
+      "cmd": "node ../_shared/test-stalwart-host.mjs"
     },
     "delivery-ledger": {
       "cmd": "python3 test-apply-delivery-ledger.py",

@@ -69,10 +69,9 @@
       "instance_id": "ocid1.instance.oc1.eu-marseille-1.anwxeljruadvczacbwylmkqr253ay7binepapgsyopllfayovkzaky6oigbq",
       "services": [
         "mail-puller",
-        "maddy",
-        "stalwart"
+        "maddy"
       ],
-      "container_count": 4
+      "container_count": 2
     },
     "oci-E2-f_1": {
       "ip": "129.151.228.66",
@@ -215,6 +214,7 @@
         "matrix-continuwuity",
         "matrix-element",
         "matrix-mautrix-whatsapp",
+        "stalwart",
         "cloudy-browser-headless",
         "cloudy-browser-scrapper-api",
         "capital-stack-finterm-api",
@@ -235,7 +235,7 @@
         "send",
         "vaultwarden"
       ],
-      "container_count": 87
+      "container_count": 89
     },
     "gcp-E2-f_0": {
       "ip": "35.226.147.64",
@@ -11402,7 +11402,7 @@
     },
     "stalwart": {
       "category": "app",
-      "vm": "oci-E2-f_0",
+      "vm": "oci-A1-f_0",
       "folder": "user-comm_tools-stalwart",
       "description": "Stalwart Mail Server — JMAP webmail backend (jmap.diegonmarcos.com)",
       "enabled": true,
@@ -11410,12 +11410,13 @@
       "flake": "user-comm_tools-stalwart",
       "port": 2443,
       "dns": "stalwart.mesh.diegonmarcos.com",
-      "upstream": "10.0.0.3:2443",
+      "upstream": "10.0.0.6:2443",
       "containers": {
         "app": {
           "container_name": "stalwart",
           "image": "stalwartlabs/stalwart:v0.16.5",
           "port": 2443,
+          "_doc_host_move": "#1821 (2026-11-19): moved from oci-mail (E2.1.Micro, 954 MB, steal 50-78%, maddy acceptance 33-80 s) to oci-apps (A1 arm64, 24 GB). Binds are oci-apps wg0 10.0.0.6 and wg-public 10.1.0.4 (infra-net_wireguard-public build.json). The L4 SNI upstreams name oci-apps. maddy-relay (mta_routes) still points at maddy on oci-mail. Rollback: deploy.host back to oci-mail, binds 10.0.0.3/10.1.0.3, upstreams oci-mail, arch amd64, and start the untouched stalwart_stalwart_data volume on oci-mail. Gate: _shared/test-stalwart-host.mjs.",
           "_doc_dual_bind": "Phase 4 of public-surface collapse: each port dual-binds on wg0 (10.0.0.3) AND wg-public (10.1.0.3). Caddy on oci-analytics reaches mail ports via wg-public mesh; legacy clients on wg0 keep working unchanged. compose.nix expands `bind` arrays into one host-port mapping per IP.",
           "_doc_container_port": "v0.16 binds protocols on STANDARD ports inside the container (SMTP:25, IMAPS:993, SMTPS:465, HTTPS:443, Sieve:4190) — listeners are not configurable in v0.16 schema. We map host_offset → container_standard so external clients keep using offset ports (maddy owns the standard ones on the host network until decommissioned).",
           "extra_ports": [
@@ -11424,8 +11425,8 @@
               "container_port": 25,
               "protocol": "starttls",
               "bind": [
-                "10.0.0.3",
-                "10.1.0.3"
+                "10.0.0.6",
+                "10.1.0.4"
               ],
               "service": "smtp_shadow",
               "desc": "SMTP shadow (host:2025 → stalwart:25)"
@@ -11435,8 +11436,8 @@
               "container_port": 443,
               "protocol": "tls",
               "bind": [
-                "10.0.0.3",
-                "10.1.0.3"
+                "10.0.0.6",
+                "10.1.0.4"
               ],
               "service": "jmap_tls",
               "desc": "HTTPS admin/JMAP (host:2443 → stalwart:443)"
@@ -11446,8 +11447,8 @@
               "container_port": 465,
               "protocol": "tls",
               "bind": [
-                "10.0.0.3",
-                "10.1.0.3"
+                "10.0.0.6",
+                "10.1.0.4"
               ],
               "service": "smtp_ssl",
               "desc": "SMTPS (host:2465 → stalwart:465)"
@@ -11457,8 +11458,8 @@
               "container_port": 993,
               "protocol": "tls",
               "bind": [
-                "10.0.0.3",
-                "10.1.0.3"
+                "10.0.0.6",
+                "10.1.0.4"
               ],
               "service": "imap_ssl",
               "desc": "IMAPS (host:2993 → stalwart:993)"
@@ -11468,8 +11469,8 @@
               "container_port": 8080,
               "protocol": "http",
               "bind": [
-                "10.0.0.3",
-                "10.1.0.3"
+                "10.0.0.6",
+                "10.1.0.4"
               ],
               "service": "jmap_mesh_http",
               "desc": "Plain-HTTP JMAP on the MESH ONLY (host:2080 → stalwart:8080). Bound on wg0/wg-public, never on a public interface: .app is WireGuard-only and WG already encrypts, so the mesh endpoint stalwart.mesh.diegonmarcos.com is plain http (fleet convention, #1093). Cloud Mail and the fleet apps reach JMAP here first and fall back to the public jmap.diegonmarcos.com with the bearer."
@@ -11479,8 +11480,8 @@
               "container_port": 4190,
               "protocol": "tls",
               "bind": [
-                "10.0.0.3",
-                "10.1.0.3"
+                "10.0.0.6",
+                "10.1.0.4"
               ],
               "service": "manage_sieve",
               "desc": "ManageSieve (host:6190 → stalwart:4190)"
@@ -11598,14 +11599,14 @@
             {
               "port": 443,
               "sni": "imap.diegonmarcos.com",
-              "upstream": "oci-mail:2993",
+              "upstream": "oci-apps:2993",
               "comment": "IMAPS via SNI on :443 -> STALWART :2993 (2026-09-02). Maddy :993 (go-imap v1) advertises no CONDSTORE/QRESYNC/UIDPLUS, which forces clients into a full flag rescan of every synced folder each poll -- measured on-device: 9355 UID FLAGS fetches per 15-min pass, all night, phone dead at 04:49. Stalwart :2993 advertises CONDSTORE+QRESYNC+UIDPLUS+IMAP4rev2. The earlier objection to :2993 (IMAP clients see Stalwart's ENTIRE 1*-9* + A*-F* tree because JMAP and IMAP share one store) is mitigated by the subscription policy in mail-rules-profile-diego.json folder_options: only INBOX + the F* sender folders are subscribed, and clients honouring LSUB/subscriptions see the intended menu. Maddy keeps :25 inbound and its store stays intact for rollback: revert this upstream to oci-mail:993.",
               "protocol": "tls"
             },
             {
               "port": 443,
               "sni": "smtps.diegonmarcos.com",
-              "upstream": "oci-mail:2465",
+              "upstream": "oci-apps:2465",
               "comment": "SMTPS via SNI on :443 → Stalwart :2465 (Maddy's :465 is legacy)",
               "protocol": "tls"
             }
@@ -11736,6 +11737,9 @@
         },
         "mail-stack-limits": {
           "cmd": "node ../_shared/test-mail-stack-limits.mjs"
+        },
+        "stalwart-host": {
+          "cmd": "node ../_shared/test-stalwart-host.mjs"
         },
         "delivery-ledger": {
           "cmd": "python3 test-apply-delivery-ledger.py",
@@ -14300,7 +14304,7 @@
           "mount": "/opt/stalwart-mail/data"
         },
         "port": null,
-        "vm": "oci-E2-f_0",
+        "vm": "oci-A1-f_0",
         "backup": {
           "enabled": true,
           "strategy": null
@@ -16722,7 +16726,7 @@
       {
         "name": "stalwart.mesh.diegonmarcos.com",
         "type": "A",
-        "value": "10.0.0.3",
+        "value": "10.0.0.6",
         "service": "stalwart"
       },
       {
@@ -17266,8 +17270,7 @@
         "idle_shutdown": null,
         "containers": [
           "mail-puller",
-          "maddy",
-          "stalwart"
+          "maddy"
         ],
         "method": "key",
         "gha": {
@@ -17433,6 +17436,7 @@
           "matrix-continuwuity",
           "matrix-element",
           "matrix-mautrix-whatsapp",
+          "stalwart",
           "cloudy-browser-headless",
           "cloudy-browser-scrapper-api",
           "capital-stack-finterm-api",
@@ -18271,7 +18275,7 @@
       },
       "stalwart": {
         "dir": "user-comm_tools-stalwart",
-        "vm": "oci-mail",
+        "vm": "oci-apps",
         "has_docker": true
       },
       "cloudy-browser-headless": {

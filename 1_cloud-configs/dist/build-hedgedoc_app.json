@@ -1684,11 +1684,11 @@
       }
     },
     "stalwart": {
-      "ip": "10.0.0.3",
+      "ip": "10.0.0.6",
       "ports": {
         "app": 2443
       },
-      "vm": "oci-mail",
+      "vm": "oci-apps",
       "healthcheck": "/",
       "domain": "jmap.diegonmarcos.com",
       "description": "Stalwart Mail Server — JMAP webmail backend (jmap.diegonmarcos.com)",
@@ -1734,8 +1734,8 @@
         "2025": {
           "protocol": "starttls",
           "bind": [
-            "10.0.0.3",
-            "10.1.0.3"
+            "10.0.0.6",
+            "10.1.0.4"
           ],
           "desc": "SMTP shadow (host:2025 → stalwart:25)",
           "service": "smtp_shadow",
@@ -1744,8 +1744,8 @@
         "2080": {
           "protocol": "http",
           "bind": [
-            "10.0.0.3",
-            "10.1.0.3"
+            "10.0.0.6",
+            "10.1.0.4"
           ],
           "desc": "Plain-HTTP JMAP on the MESH ONLY (host:2080 → stalwart:8080). Bound on wg0/wg-public, never on a public interface: .app is WireGuard-only and WG already encrypts, so the mesh endpoint stalwart.mesh.diegonmarcos.com is plain http (fleet convention, #1093). Cloud Mail and the fleet apps reach JMAP here first and fall back to the public jmap.diegonmarcos.com with the bearer.",
           "service": "jmap_mesh_http",
@@ -1754,8 +1754,8 @@
         "2443": {
           "protocol": "tls",
           "bind": [
-            "10.0.0.3",
-            "10.1.0.3"
+            "10.0.0.6",
+            "10.1.0.4"
           ],
           "desc": "HTTPS admin/JMAP (host:2443 → stalwart:443)",
           "service": "jmap_tls",
@@ -1764,8 +1764,8 @@
         "2465": {
           "protocol": "tls",
           "bind": [
-            "10.0.0.3",
-            "10.1.0.3"
+            "10.0.0.6",
+            "10.1.0.4"
           ],
           "desc": "SMTPS (host:2465 → stalwart:465)",
           "service": "smtp_ssl",
@@ -1774,8 +1774,8 @@
         "2993": {
           "protocol": "tls",
           "bind": [
-            "10.0.0.3",
-            "10.1.0.3"
+            "10.0.0.6",
+            "10.1.0.4"
           ],
           "desc": "IMAPS (host:2993 → stalwart:993)",
           "service": "imap_ssl",
@@ -1784,8 +1784,8 @@
         "6190": {
           "protocol": "tls",
           "bind": [
-            "10.0.0.3",
-            "10.1.0.3"
+            "10.0.0.6",
+            "10.1.0.4"
           ],
           "desc": "ManageSieve (host:6190 → stalwart:4190)",
           "service": "manage_sieve",

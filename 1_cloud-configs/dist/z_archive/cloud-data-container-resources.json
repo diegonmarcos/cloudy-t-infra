@@ -834,9 +834,9 @@
       }
     },
     "stalwart": {
-      "vm": "oci-mail",
-      "vm_ram_gb": 1,
-      "vm_cpu": 1,
+      "vm": "oci-apps",
+      "vm_ram_gb": 24,
+      "vm_cpu": 4,
       "containers": [
         "stalwart",
         "stalwart-sorter"

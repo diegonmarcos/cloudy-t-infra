@@ -1420,7 +1420,7 @@
     },
     "stalwart": {
       "name": "stalwart",
-      "vm": "oci-E2-f_0",
+      "vm": "oci-A1-f_0",
       "domain": "jmap.diegonmarcos.com",
       "enabled": true,
       "category": "app",
@@ -2513,8 +2513,7 @@
         "provider": null,
         "services": [
           "mail-puller",
-          "maddy",
-          "stalwart"
+          "maddy"
         ]
       },
       "oci-E2-f_1": {
@@ -2592,6 +2591,7 @@
           "matrix-continuwuity",
           "matrix-element",
           "matrix-mautrix-whatsapp",
+          "stalwart",
           "cloudy-browser-headless",
           "cloudy-browser-scrapper-api",
           "capital-stack-finterm-api",
@@ -3592,7 +3592,7 @@
       },
       "stalwart": {
         "name": "stalwart",
-        "vm": "oci-E2-f_0",
+        "vm": "oci-A1-f_0",
         "domain": "jmap.diegonmarcos.com",
         "enabled": true,
         "category": "app",

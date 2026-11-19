@@ -6,10 +6,10 @@
   },
   "repo": "cloud-u-containers",
   "counts": {
-    "files": 2729,
+    "files": 2730,
     "by_lang": {
       "sh": 188,
-      "js": 125,
+      "js": 126,
       "nix": 202,
       "py": 526,
       "ts": 1315,
@@ -17,7 +17,7 @@
     },
     "by_role": {
       "shell": 179,
-      "file": 357,
+      "file": 358,
       "nix-module": 20,
       "python": 510,
       "module": 821,
@@ -1082,6 +1082,26 @@
       "symbols": [
         "pass()",
         "fail()"
+      ]
+    },
+    {
+      "path": "_shared/test-stalwart-host.mjs",
+      "lang": "js",
+      "role": "file",
+      "exports": [
+        "stalwartFacts",
+        "HOST",
+        "WG0",
+        "WG_PUBLIC",
+        "OLD_WG0"
+      ],
+      "imports": [
+        "node:fs",
+        "node:path",
+        "node:url"
+      ],
+      "symbols": [
+        "stalwartFacts(b)"
       ]
     },
     {

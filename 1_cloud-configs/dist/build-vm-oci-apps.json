@@ -488,6 +488,16 @@
       "has_docker_build": true
     },
     {
+      "name": "stalwart",
+      "dir": "user-comm_tools-stalwart",
+      "compose_path": "/opt/containers/stalwart",
+      "images": [
+        "stalwartlabs/stalwart:v0.16.5",
+        "ghcr.io/diegonmarcos/stalwart-sorter-binaries:latest"
+      ],
+      "has_docker_build": true
+    },
+    {
       "name": "cloudy-browser-headless",
       "dir": "user-data_cloudy-browser-headless",
       "compose_path": "/opt/containers/cloudy-browser-headless",

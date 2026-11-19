@@ -448,13 +448,13 @@
     },
     {
       "port": 443,
-      "upstream": "10.0.0.3:2993",
+      "upstream": "10.0.0.6:2993",
       "comment": "IMAPS via SNI on :443 -> STALWART :2993 (2026-09-02). Maddy :993 (go-imap v1) advertises no CONDSTORE/QRESYNC/UIDPLUS, which forces clients into a full flag rescan of every synced folder each poll -- measured on-device: 9355 UID FLAGS fetches per 15-min pass, all night, phone dead at 04:49. Stalwart :2993 advertises CONDSTORE+QRESYNC+UIDPLUS+IMAP4rev2. The earlier objection to :2993 (IMAP clients see Stalwart's ENTIRE 1*-9* + A*-F* tree because JMAP and IMAP share one store) is mitigated by the subscription policy in mail-rules-profile-diego.json folder_options: only INBOX + the F* sender folders are subscribed, and clients honouring LSUB/subscriptions see the intended menu. Maddy keeps :25 inbound and its store stays intact for rollback: revert this upstream to oci-mail:993.",
       "sni": "imap.diegonmarcos.com"
     },
     {
       "port": 443,
-      "upstream": "10.0.0.3:2465",
+      "upstream": "10.0.0.6:2465",
       "comment": "SMTPS via SNI on :443 → Stalwart :2465 (Maddy's :465 is legacy)",
       "sni": "smtps.diegonmarcos.com"
     }
@@ -573,7 +573,7 @@
     },
     {
       "domain": "jmap.diegonmarcos.com",
-      "upstream": "10.0.0.3:2443",
+      "upstream": "10.0.0.6:2443",
       "tls_skip_verify": true,
       "auth": "none",
       "wg_only": true,
@@ -1603,7 +1603,7 @@
     },
     {
       "domain": "mails.diegonmarcos.com",
-      "upstream": "10.0.0.3:2443",
+      "upstream": "10.0.0.6:2443",
       "tls_skip_verify": true,
       "auth": "none",
       "wg_only": true,
@@ -1797,7 +1797,7 @@
     {
       "path": "/.well-known/jmap",
       "target_domain": "diegonmarcos.com",
-      "upstream": "10.0.0.3:2443",
+      "upstream": "10.0.0.6:2443",
       "tls_skip_verify": true,
       "rewrite_to": "/jmap/session",
       "comment": "JMAP autoconfig — proxies to Stalwart (preserves per-user session)"
@@ -1805,7 +1805,7 @@
     {
       "path": "/jmap/*",
       "target_domain": "diegonmarcos.com",
-      "upstream": "10.0.0.3:2443",
+      "upstream": "10.0.0.6:2443",
       "tls_skip_verify": true,
       "comment": "JMAP API follow-through (matches relative redirect from /.well-known/jmap)"
     },
@@ -2269,7 +2269,7 @@
     },
     {
       "service": "stalwart.mesh.diegonmarcos.com",
-      "upstream": "10.0.0.3:2443",
+      "upstream": "10.0.0.6:2443",
       "private_name": "cloud.stalwart.mesh.diegonmarcos.com"
     },
     {
@@ -2728,7 +2728,7 @@
     },
     {
       "service": "cloud.stalwart.mesh.diegonmarcos.com",
-      "upstream": "10.0.0.3:2443",
+      "upstream": "10.0.0.6:2443",
       "alias_of": "stalwart.mesh.diegonmarcos.com",
       "source": "internal_routes"
     },
@@ -4903,7 +4903,7 @@
       "container": "stalwart",
       "container_key": "app",
       "svc": "stalwart",
-      "vm": "oci-E2-f_0"
+      "vm": "oci-A1-f_0"
     },
     {
       "kind": "canonical",
@@ -4911,10 +4911,10 @@
       "container": "stalwart",
       "container_key": "app",
       "svc": "stalwart",
-      "vm": "oci-E2-f_0",
+      "vm": "oci-A1-f_0",
       "port": 2443,
       "protocol": "https",
-      "upstream": "10.0.0.3:2443",
+      "upstream": "10.0.0.6:2443",
       "source": "containers.app.port"
     },
     {
@@ -4923,10 +4923,10 @@
       "container": "stalwart",
       "container_key": "app",
       "svc": "stalwart",
-      "vm": "oci-E2-f_0",
+      "vm": "oci-A1-f_0",
       "port": 2025,
       "protocol": "starttls",
-      "upstream": "10.0.0.3:2025",
+      "upstream": "10.0.0.6:2025",
       "source": "containers.app.extra_ports"
     },
     {
@@ -4935,10 +4935,10 @@
       "container": "stalwart",
       "container_key": "app",
       "svc": "stalwart",
-      "vm": "oci-E2-f_0",
+      "vm": "oci-A1-f_0",
       "port": 2465,
       "protocol": "tls",
-      "upstream": "10.0.0.3:2465",
+      "upstream": "10.0.0.6:2465",
       "source": "containers.app.extra_ports"
     },
     {
@@ -4947,10 +4947,10 @@
       "container": "stalwart",
       "container_key": "app",
       "svc": "stalwart",
-      "vm": "oci-E2-f_0",
+      "vm": "oci-A1-f_0",
       "port": 2993,
       "protocol": "tls",
-      "upstream": "10.0.0.3:2993",
+      "upstream": "10.0.0.6:2993",
       "source": "containers.app.extra_ports"
     },
     {
@@ -4959,10 +4959,10 @@
       "container": "stalwart",
       "container_key": "app",
       "svc": "stalwart",
-      "vm": "oci-E2-f_0",
+      "vm": "oci-A1-f_0",
       "port": 2080,
       "protocol": "http",
-      "upstream": "10.0.0.3:2080",
+      "upstream": "10.0.0.6:2080",
       "source": "containers.app.extra_ports"
     },
     {
@@ -4971,10 +4971,10 @@
       "container": "stalwart",
       "container_key": "app",
       "svc": "stalwart",
-      "vm": "oci-E2-f_0",
+      "vm": "oci-A1-f_0",
       "port": 6190,
       "protocol": "tls",
-      "upstream": "10.0.0.3:6190",
+      "upstream": "10.0.0.6:6190",
       "source": "containers.app.extra_ports"
     },
     {
@@ -4984,7 +4984,7 @@
       "container": "stalwart-sorter",
       "container_key": "sorter",
       "svc": "stalwart",
-      "vm": "oci-E2-f_0"
+      "vm": "oci-A1-f_0"
     },
     {
       "kind": "portless",
@@ -4992,7 +4992,7 @@
       "container": "stalwart-sorter",
       "container_key": "sorter",
       "svc": "stalwart",
-      "vm": "oci-E2-f_0"
+      "vm": "oci-A1-f_0"
     },
     {
       "kind": "redirect",
@@ -5469,7 +5469,7 @@
       "container": "stalwart",
       "container_key": "app",
       "svc": "stalwart",
-      "vm": "oci-E2-f_0",
+      "vm": "oci-A1-f_0",
       "engine": "rocksdb",
       "port": null,
       "path": "/opt/stalwart-mail/data"
@@ -5899,7 +5899,7 @@
     {
       "host": "jmap.diegonmarcos.com",
       "path": null,
-      "upstream": "10.0.0.3:2443",
+      "upstream": "10.0.0.6:2443",
       "kind": "reverse_proxy",
       "tls": "public",
       "zone": "com",
@@ -6889,7 +6889,7 @@
     {
       "host": "mails.diegonmarcos.com",
       "path": null,
-      "upstream": "10.0.0.3:2443",
+      "upstream": "10.0.0.6:2443",
       "kind": "reverse_proxy",
       "tls": "public",
       "zone": "com",
@@ -7581,7 +7581,7 @@
     {
       "host": "stalwart.mesh.diegonmarcos.com",
       "path": null,
-      "upstream": "10.0.0.3:2443",
+      "upstream": "10.0.0.6:2443",
       "kind": "reverse_proxy",
       "tls": "internal",
       "zone": "com",
@@ -8223,7 +8223,7 @@
     {
       "host": "stalwart-https-2443.mesh.diegonmarcos.com",
       "path": null,
-      "upstream": "10.0.0.3:2443",
+      "upstream": "10.0.0.6:2443",
       "kind": "reverse_proxy",
       "tls": "on_demand",
       "zone": "com",
@@ -8233,7 +8233,7 @@
     {
       "host": "stalwart-starttls-2025.mesh.diegonmarcos.com",
       "path": null,
-      "upstream": "10.0.0.3:2025",
+      "upstream": "10.0.0.6:2025",
       "kind": "reverse_proxy",
       "tls": "on_demand",
       "zone": "com",
@@ -8243,7 +8243,7 @@
     {
       "host": "stalwart-tls-2465.mesh.diegonmarcos.com",
       "path": null,
-      "upstream": "10.0.0.3:2465",
+      "upstream": "10.0.0.6:2465",
       "kind": "reverse_proxy",
       "tls": "on_demand",
       "zone": "com",
@@ -8253,7 +8253,7 @@
     {
       "host": "stalwart-tls-2993.mesh.diegonmarcos.com",
       "path": null,
-      "upstream": "10.0.0.3:2993",
+      "upstream": "10.0.0.6:2993",
       "kind": "reverse_proxy",
       "tls": "on_demand",
       "zone": "com",
@@ -8263,7 +8263,7 @@
     {
       "host": "stalwart-http-2080.mesh.diegonmarcos.com",
       "path": null,
-      "upstream": "10.0.0.3:2080",
+      "upstream": "10.0.0.6:2080",
       "kind": "reverse_proxy",
       "tls": "on_demand",
       "zone": "com",
@@ -8273,7 +8273,7 @@
     {
       "host": "stalwart-tls-6190.mesh.diegonmarcos.com",
       "path": null,
-      "upstream": "10.0.0.3:6190",
+      "upstream": "10.0.0.6:6190",
       "kind": "reverse_proxy",
       "tls": "on_demand",
       "zone": "com",
@@ -8562,7 +8562,7 @@
       "tls": "on_demand",
       "zone": "db",
       "service": "stalwart",
-      "notes": "engine=rocksdb vm=oci-E2-f_0"
+      "notes": "engine=rocksdb vm=oci-A1-f_0"
     },
     {
       "host": "calendar-radicale-files-null.db",
@@ -8671,7 +8671,7 @@
     {
       "host": ":443",
       "path": null,
-      "upstream": "10.0.0.3:2993",
+      "upstream": "10.0.0.6:2993",
       "kind": "l4_forward",
       "tls": "none",
       "zone": "l4",
@@ -8681,7 +8681,7 @@
     {
       "host": ":443",
       "path": null,
-      "upstream": "10.0.0.3:2465",
+      "upstream": "10.0.0.6:2465",
       "kind": "l4_forward",
       "tls": "none",
       "zone": "l4",

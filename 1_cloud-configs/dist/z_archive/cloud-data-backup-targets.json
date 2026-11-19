@@ -222,8 +222,8 @@
     },
     {
       "service": "stalwart",
-      "vm": "oci-E2-f_0",
-      "vm_alias": "oci-mail",
+      "vm": "oci-A1-f_0",
+      "vm_alias": "oci-apps",
       "volumes": [
         "stalwart_data"
       ],
@@ -404,6 +404,14 @@
           "path": "/data/mautrix-whatsapp.db"
         },
         {
+          "service": "stalwart",
+          "container": "stalwart",
+          "container_key": "app",
+          "type": "rocksdb",
+          "path": "/opt/stalwart-mail/data",
+          "dump_cmd": "sh -c 'stalwart-mail --export /tmp/stalwart-export && tar cf - -C /tmp stalwart-export && rm -rf /tmp/stalwart-export'"
+        },
+        {
           "service": "photoprism",
           "container": "photoprism_mariadb",
           "container_key": "db",
@@ -450,6 +458,7 @@
         "mattermost_postgres",
         "continuwuity_data",
         "mautrix_whatsapp_data",
+        "stalwart_data",
         "photoprism_originals",
         "photoprism_storage",
         "photoprism_import",
@@ -501,20 +510,11 @@
           "container_key": "app",
           "type": "sqlite",
           "path": "/data/imapsql.db"
-        },
-        {
-          "service": "stalwart",
-          "container": "stalwart",
-          "container_key": "app",
-          "type": "rocksdb",
-          "path": "/opt/stalwart-mail/data",
-          "dump_cmd": "sh -c 'stalwart-mail --export /tmp/stalwart-export && tar cf - -C /tmp stalwart-export && rm -rf /tmp/stalwart-export'"
         }
       ],
       "volumes": [
         "mail_puller_state",
-        "maddy_data",
-        "stalwart_data"
+        "maddy_data"
       ]
     }
   },

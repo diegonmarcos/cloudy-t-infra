@@ -364,9 +364,9 @@
       "container_key": "app",
       "type": "rocksdb",
       "enabled": true,
-      "vm": "oci-E2-f_0",
-      "vm_alias": "oci-mail",
-      "wg_ip": "10.0.0.3",
+      "vm": "oci-A1-f_0",
+      "vm_alias": "oci-apps",
+      "wg_ip": "10.0.0.6",
       "image": "stalwartlabs/stalwart:v0.16.5",
       "port": 2443,
       "dns": "stalwart.mesh.diegonmarcos.com",
@@ -1039,9 +1039,9 @@
         "container_key": "app",
         "type": "rocksdb",
         "enabled": true,
-        "vm": "oci-E2-f_0",
-        "vm_alias": "oci-mail",
-        "wg_ip": "10.0.0.3",
+        "vm": "oci-A1-f_0",
+        "vm_alias": "oci-apps",
+        "wg_ip": "10.0.0.6",
         "image": "stalwartlabs/stalwart:v0.16.5",
         "port": 2443,
         "dns": "stalwart.mesh.diegonmarcos.com",
@@ -1341,6 +1341,37 @@
           "backup": true
         },
         {
+          "service": "stalwart",
+          "container": "stalwart",
+          "container_key": "app",
+          "type": "rocksdb",
+          "enabled": true,
+          "vm": "oci-A1-f_0",
+          "vm_alias": "oci-apps",
+          "wg_ip": "10.0.0.6",
+          "image": "stalwartlabs/stalwart:v0.16.5",
+          "port": 2443,
+          "dns": "stalwart.mesh.diegonmarcos.com",
+          "dump_cmd": "sh -c 'stalwart-mail --export /tmp/stalwart-export && tar cf - -C /tmp stalwart-export && rm -rf /tmp/stalwart-export'",
+          "healthcheck": "/",
+          "volumes": [
+            "stalwart_data:/opt/stalwart-mail/data",
+            "./tls:/opt/stalwart-mail/tls:ro"
+          ],
+          "resources": {
+            "_doc_limits": "oci-mail is a VM.Standard.E2.1.Micro (1 OCPU, 954MiB). 2026-10-13 it ran load 6-10, io PSI ~78%, cpu PSI ~74%, with stalwart at 110-160% CPU and 105GB read in 21h, every mail container capped only by the 2G category default (i.e. by nothing on a 954MiB box). cpus 0.7 leaves 0.3 OCPU for maddy (the MX leg) whatever stalwart does. mem_limit is NOT the 256M first proposed: measured on the box the same day stalwart's anon commit was ~306MiB 30 min after a restart (130MiB resident + 176MiB swapped) and ~345MiB after 21h, and the fleet already learned that 256M on stalwart is a thrash wall (_shared/docker.nix: 2909 memory.max breach events on oci-apps). restart is \"no\" fleet-wide, so an OOM kill here is not a blip -- it is webmail/IMAP down until someone notices. 384M sits above the measured peak with docker's default 2x memswap behind it. Gate: _shared/test-mail-stack-limits.mjs.",
+            "_doc_file_rereads": "2026-11-18 16:20 UTC oci-mail: io PSI some 61.6 / full 13.4, ~12MB/s file refaults (pgpgin 12188KB/s, workingset_refault_file 393/s), stalwart 1474MB cumulative cgroup reads, swap not involved, stalwart ~70MiB resident. Cause: the stalwart-sorter filter pass asked Email/get for bodyStructure on every in-scope message (~11.7k) every pass, and v0.16.5 serves bodyStructure by reading the whole raw blob (crates/jmap/src/email/get.rs needs_body), so each pass read the entire mailbox off the boot disk. Fixed in the sorter (src/crate/src/filters.rs AttachTypeCache: bodyStructure once per message per process, only for attach_type views). Stalwart-side settings checked against the v0.16.5 registry schema and left at defaults because none of them re-reads on a cadence: the RocksDb store exposes only blobSize/bufferSize/poolWorkers (no block-cache knob); Search indexes on ingest (indexBatchSize 100), not on a timer; SpamClassifier trains every 12h from a 1024-sample reservoir; DataRetention purges run once a day (00:00/02:00/04:00); the queue wakes on due events; the tracer is Stdout at info (writes, not reads). mem_limit stays 384M: ~70MiB resident leaves ~300MiB of headroom, and the 704MiB mail total has no room to raise it. Gate: _shared/test-mail-stack-limits.mjs B1-B4.",
+            "mem_limit": "384M",
+            "cpus": "0.7",
+            "_doc_reservation": "32M -> 128M (2026-11-18). Docker maps reservations.memory to cgroup v2 memory.low: under host pressure the kernel reclaims everyone else's unprotected page cache before stalwart's protected part. 128M covers the ~70MiB resident plus ~58MiB of hot RocksDB index/property pages, so those stop being evicted and re-read. It reserves nothing up front and caps nothing. Mail-stack reservations total 192M of 954M. Gate: _shared/test-mail-stack-limits.mjs R1-R3.",
+            "_doc_reservation_192": "128M -> 192M (2026-11-18 23:08). After the sorter, puller and maddy fixes, oci-mail was back to PSI avg300 34 with stalwart the only cgroup reading (950KB/s over 10s) and its logs showing only light SMTP (3 inbound, 3 queue retries). 128M of memory.low covered the ~100MiB of anon/active memory plus ~28MiB of cache, so stalwart's RocksDB SST pages beyond that were still reclaimed by host pressure and read again on the next lookup. RocksDB's block cache is not configurable in v0.16.5 (see _doc_file_rereads), so the page cache IS its block cache, and memory.low is the declarative way to keep it. 192M is half the unchanged 384M ceiling. Mail-stack reservations total 320M of 954M (stalwart 192, maddy 96, sorter 16, puller 16), at the R3 budget.",
+            "reservations": {
+              "memory": "192M"
+            }
+          },
+          "backup": true
+        },
+        {
           "service": "photoprism",
           "container": "photoprism_mariadb",
           "container_key": "db",
@@ -1624,37 +1655,6 @@
             "_doc_reservation": "32M -> 96M (2026-11-18 21:00, oci-mail IO PSI some 78; maddy's cgroup reading 832KB/s while the maddy process itself read 0KB/s, i.e. page-cache refaults of imapsql.db and its own binary after host-wide reclaim). Docker renders reservations.memory as cgroup v2 memory.low, so under host pressure the kernel reclaims unprotected cache elsewhere before maddy's first 96M. It is a reclaim floor, not an allocation, and the 192M ceiling is unchanged. SQLite settings were checked and are no lever here: maddy 0.9's storage.imapsql sqlite3_cache_size is parsed but never applied by the pinned go-imap-sql (8da5567, Opts.CacheSize has no reader), and nothing sets mmap_size, so imapsql.db is read through the page cache, which is exactly what memory.low protects. Mail-stack reservations total 256M of 954M (stalwart 128, maddy 96, sorter 16, puller 16). Gate: _shared/test-mail-stack-limits.mjs R3/R4.",
             "reservations": {
               "memory": "96M"
-            }
-          },
-          "backup": true
-        },
-        {
-          "service": "stalwart",
-          "container": "stalwart",
-          "container_key": "app",
-          "type": "rocksdb",
-          "enabled": true,
-          "vm": "oci-E2-f_0",
-          "vm_alias": "oci-mail",
-          "wg_ip": "10.0.0.3",
-          "image": "stalwartlabs/stalwart:v0.16.5",
-          "port": 2443,
-          "dns": "stalwart.mesh.diegonmarcos.com",
-          "dump_cmd": "sh -c 'stalwart-mail --export /tmp/stalwart-export && tar cf - -C /tmp stalwart-export && rm -rf /tmp/stalwart-export'",
-          "healthcheck": "/",
-          "volumes": [
-            "stalwart_data:/opt/stalwart-mail/data",
-            "./tls:/opt/stalwart-mail/tls:ro"
-          ],
-          "resources": {
-            "_doc_limits": "oci-mail is a VM.Standard.E2.1.Micro (1 OCPU, 954MiB). 2026-10-13 it ran load 6-10, io PSI ~78%, cpu PSI ~74%, with stalwart at 110-160% CPU and 105GB read in 21h, every mail container capped only by the 2G category default (i.e. by nothing on a 954MiB box). cpus 0.7 leaves 0.3 OCPU for maddy (the MX leg) whatever stalwart does. mem_limit is NOT the 256M first proposed: measured on the box the same day stalwart's anon commit was ~306MiB 30 min after a restart (130MiB resident + 176MiB swapped) and ~345MiB after 21h, and the fleet already learned that 256M on stalwart is a thrash wall (_shared/docker.nix: 2909 memory.max breach events on oci-apps). restart is \"no\" fleet-wide, so an OOM kill here is not a blip -- it is webmail/IMAP down until someone notices. 384M sits above the measured peak with docker's default 2x memswap behind it. Gate: _shared/test-mail-stack-limits.mjs.",
-            "_doc_file_rereads": "2026-11-18 16:20 UTC oci-mail: io PSI some 61.6 / full 13.4, ~12MB/s file refaults (pgpgin 12188KB/s, workingset_refault_file 393/s), stalwart 1474MB cumulative cgroup reads, swap not involved, stalwart ~70MiB resident. Cause: the stalwart-sorter filter pass asked Email/get for bodyStructure on every in-scope message (~11.7k) every pass, and v0.16.5 serves bodyStructure by reading the whole raw blob (crates/jmap/src/email/get.rs needs_body), so each pass read the entire mailbox off the boot disk. Fixed in the sorter (src/crate/src/filters.rs AttachTypeCache: bodyStructure once per message per process, only for attach_type views). Stalwart-side settings checked against the v0.16.5 registry schema and left at defaults because none of them re-reads on a cadence: the RocksDb store exposes only blobSize/bufferSize/poolWorkers (no block-cache knob); Search indexes on ingest (indexBatchSize 100), not on a timer; SpamClassifier trains every 12h from a 1024-sample reservoir; DataRetention purges run once a day (00:00/02:00/04:00); the queue wakes on due events; the tracer is Stdout at info (writes, not reads). mem_limit stays 384M: ~70MiB resident leaves ~300MiB of headroom, and the 704MiB mail total has no room to raise it. Gate: _shared/test-mail-stack-limits.mjs B1-B4.",
-            "mem_limit": "384M",
-            "cpus": "0.7",
-            "_doc_reservation": "32M -> 128M (2026-11-18). Docker maps reservations.memory to cgroup v2 memory.low: under host pressure the kernel reclaims everyone else's unprotected page cache before stalwart's protected part. 128M covers the ~70MiB resident plus ~58MiB of hot RocksDB index/property pages, so those stop being evicted and re-read. It reserves nothing up front and caps nothing. Mail-stack reservations total 192M of 954M. Gate: _shared/test-mail-stack-limits.mjs R1-R3.",
-            "_doc_reservation_192": "128M -> 192M (2026-11-18 23:08). After the sorter, puller and maddy fixes, oci-mail was back to PSI avg300 34 with stalwart the only cgroup reading (950KB/s over 10s) and its logs showing only light SMTP (3 inbound, 3 queue retries). 128M of memory.low covered the ~100MiB of anon/active memory plus ~28MiB of cache, so stalwart's RocksDB SST pages beyond that were still reclaimed by host pressure and read again on the next lookup. RocksDB's block cache is not configurable in v0.16.5 (see _doc_file_rereads), so the page cache IS its block cache, and memory.low is the declarative way to keep it. 192M is half the unchanged 384M ceiling. Mail-stack reservations total 320M of 954M (stalwart 192, maddy 96, sorter 16, puller 16), at the R3 budget.",
-            "reservations": {
-              "memory": "192M"
             }
           },
           "backup": true

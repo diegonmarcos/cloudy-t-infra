@@ -2220,7 +2220,7 @@
         "description": "Stalwart Mail Server — JMAP webmail backend (jmap.diegonmarcos.com)",
         "domain": "jmap.diegonmarcos.com",
         "port": 2443,
-        "vm": "oci-mail",
+        "vm": "oci-apps",
         "folder": "user-comm_tools-stalwart"
       }
     },
@@ -5826,8 +5826,8 @@
     {
       "table": "hosted_on",
       "from": "service:stalwart",
-      "to": "vm:oci_mail",
-      "key": "service:stalwart->hosted_on->vm:oci_mail",
+      "to": "vm:oci_apps",
+      "key": "service:stalwart->hosted_on->vm:oci_apps",
       "properties": {}
     },
     {

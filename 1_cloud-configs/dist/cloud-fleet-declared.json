@@ -783,11 +783,11 @@
           {
             "id": "stalwart",
             "name": "stalwart",
-            "vm": "oci-E2-f_0",
+            "vm": "oci-A1-f_0",
             "category": "app",
             "subgroup": "Communications",
             "port": 2443,
-            "private_ip": "10.0.0.3",
+            "private_ip": "10.0.0.6",
             "private_url": "https://stalwart.mesh.diegonmarcos.com",
             "public_url": "https://jmap.diegonmarcos.com"
           },
@@ -1300,7 +1300,7 @@
               "mount": "/opt/stalwart-mail/data"
             },
             "port": null,
-            "vm": "oci-E2-f_0",
+            "vm": "oci-A1-f_0",
             "backup": {
               "enabled": true,
               "strategy": null
@@ -1737,7 +1737,7 @@
               "mount": "/opt/stalwart-mail/data"
             },
             "port": null,
-            "vm": "oci-E2-f_0",
+            "vm": "oci-A1-f_0",
             "backup": {
               "enabled": true,
               "strategy": null
@@ -2112,7 +2112,7 @@
               "mount": "/opt/stalwart-mail/data"
             },
             "port": null,
-            "vm": "oci-E2-f_0",
+            "vm": "oci-A1-f_0",
             "backup": {
               "enabled": true,
               "strategy": null
@@ -4480,11 +4480,11 @@
         {
           "id": "stalwart",
           "name": "stalwart",
-          "vm": "oci-E2-f_0",
+          "vm": "oci-A1-f_0",
           "category": "app",
           "subgroup": "Communications",
           "port": 2443,
-          "private_ip": "10.0.0.3",
+          "private_ip": "10.0.0.6",
           "private_url": "https://stalwart.mesh.diegonmarcos.com",
           "public_url": "https://jmap.diegonmarcos.com"
         },
@@ -5131,7 +5131,7 @@
             "mount": "/opt/stalwart-mail/data"
           },
           "port": null,
-          "vm": "oci-E2-f_0",
+          "vm": "oci-A1-f_0",
           "backup": {
             "enabled": true,
             "strategy": null
@@ -5568,7 +5568,7 @@
             "mount": "/opt/stalwart-mail/data"
           },
           "port": null,
-          "vm": "oci-E2-f_0",
+          "vm": "oci-A1-f_0",
           "backup": {
             "enabled": true,
             "strategy": null
@@ -5943,7 +5943,7 @@
             "mount": "/opt/stalwart-mail/data"
           },
           "port": null,
-          "vm": "oci-E2-f_0",
+          "vm": "oci-A1-f_0",
           "backup": {
             "enabled": true,
             "strategy": null
