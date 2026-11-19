@@ -464,7 +464,7 @@ lance_gc_unreferenced_data() { # $1 = octocode home (or staging tree)
 }
 
 stage_image() { # $1 = image ref
-  CURRENT_CID=$(docker create "$1")
+  CURRENT_CID=$(docker create --platform linux/amd64 "$1")
   docker cp "$CURRENT_CID:/octocode-db/." "$STAGING/"
   docker rm -f "$CURRENT_CID" >/dev/null 2>&1 || true
   CURRENT_CID=""
@@ -508,7 +508,7 @@ _base_err=$(docker manifest inspect "$BASE_IMAGE" 2>&1 >/dev/null) || {
   exit 1
 }
 CURRENT_IMG="$BASE_IMAGE"
-docker pull -q "$BASE_IMAGE" >/dev/null
+docker pull -q --platform linux/amd64 "$BASE_IMAGE" >/dev/null
 stage_image "$BASE_IMAGE"
 docker rmi "$BASE_IMAGE" >/dev/null 2>&1 || true
 CURRENT_IMG=""
@@ -557,7 +557,7 @@ for r in "$@"; do
     continue
   fi
   CURRENT_IMG="$img"
-  docker pull -q "$img" >/dev/null
+  docker pull -q --platform linux/amd64 "$img" >/dev/null
   # Name the exact bytes staged. The integrity gate below has refused trees whose
   # every image passes the identical check on GHCR's own layer bytes, and a tag
   # alone cannot tell "the box staged a different image" from "the box staged the

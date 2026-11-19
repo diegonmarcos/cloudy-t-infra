@@ -1371,6 +1371,24 @@ if [ "$USE_LLM" = "true" ] && [ -f "$CFG" ]; then
     fi
   fi
 
+  # CREDIT PREFLIGHT (#1817). /models answers 200 with an exhausted balance, so the
+  # check above green-lights a run whose every completion is HTTP 402 "Insufficient
+  # credits": all matrix jobs then spend 20-60 min each (retries, 90-min windows)
+  # before octocode aborts, and the run ends red hours later. One 1-token completion
+  # fails that in seconds with the real cause. Only a definite 402 fails the job;
+  # any other probe outcome (network blip, 429) is left to the normal retry paths.
+  case "$LLM" in
+    openrouter:*)
+      _cp_code=$(curl -sS -m 30 -o /dev/null -w '%{http_code}' -X POST "$_llm_url" \
+        -H "Authorization: Bearer ${OPENROUTER_API_KEY:-}" -H 'Content-Type: application/json' \
+        -d "{\"model\":\"${LLM#openrouter:}\",\"max_tokens\":1,\"messages\":[{\"role\":\"user\",\"content\":\"ping\"}]}" 2>/dev/null) || _cp_code=""
+      if [ "$_cp_code" = "402" ]; then
+        echo "::error::[cgc-db] OpenRouter answered HTTP 402 Insufficient credits to a 1-token probe: the account balance is exhausted. Top up at https://openrouter.ai/settings/credits; every graphrag LLM call fails until then, so this job stops now instead of after the retry/window budget."
+        exit 1
+      fi
+      echo "[cgc-db] LLM credit preflight: HTTP ${_cp_code:-n/a} (only 402 is fatal)" ;;
+  esac
+
   # FORCE INVALIDATES THE GRAPH, NOT THE EMBEDDINGS.
   # octocode gates its two passes separately: it skips the chunk reindex when the
   # commit is unchanged ("No commit changes since last index, skipping reindex"),

@@ -145,8 +145,10 @@ jobs:
       cancel-in-progress: false
       # #844: FIFO queue instead of GitHub's one-pending-slot eviction (rationale: ship.yml deploy.concurrency).
       queue: max
-    # One surface per run now; the old 240 covered pub+pvt back to back.
-    timeout-minutes: 240
+    # One surface per run now; the old 240 covered pub+pvt back to back. #1817: 120, the
+    # same bound as cgc-db-index.yml restore-all (measured full restore ~63 min) - this job
+    # holds the fleet deploy lock, so a wedged restore must release it within 2h.
+    timeout-minutes: 120
     permissions:
       contents: read
       packages: read
