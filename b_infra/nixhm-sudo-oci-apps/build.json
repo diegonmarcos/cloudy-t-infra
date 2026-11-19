@@ -37,7 +37,7 @@
   },
   "protection": {
     "_doc": "Per-VM overrides for the protection stack; merged over native.protection defaults (config.json). 62 containers on one box, and the load-shedder is the DESIGNED enforcement mechanism for agent-runner concurrency (agents are sheddable demand: culled under pressure, resumed later), so graduated shedding must actually work here — an empty tier1_services made shed_non_tier1() return 1 and escalate to a full `systemctl stop docker`. Tier-1 is deliberately TIGHT: only what must survive for the box to stay observable and recoverable while everything else is culled. ntfy is first because it is the fleet's alert bus AND the load-shedder's own primary notify endpoint (10.0.0.6:8090) — shedding it makes every VM's shedder go silent. NOT tier-1 by design: my-ai-api and the agent-runner containers. unshed_delay_secs is declared here rather than inherited from native.protection: the un-shed path restarts the persisted shed list one container at a time, and with ~58 sheddable containers this box has by far the fleet's longest restore queue — that pause is the only thing keeping the restore from becoming the next pressure event, so on this VM it must be a visible, tunable number rather than a silent cross-VM default.",
-    "tier1_services": ["ntfy", "syslog-bridge", "cloudy-c3-api", "crowdsec"],
+    "tier1_services": ["ntfy", "syslog-bridge", "cloudy-c3-api", "crowdsec", "c3-public-api"],
     "_tier1_rename_doc": "2026-11-19: the #1450 API rebrand renamed c3-infra-api -> cloudy-c3-api; the list kept the old name, so the C3 API was silently sheddable. Names here must equal docker container names (guard: 9_others/test/test_tier1_names_are_containers.sh).",
     "unshed_delay_secs": 5
   },
