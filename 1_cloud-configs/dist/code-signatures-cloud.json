@@ -22106,6 +22106,7 @@
       "role": "nix-module",
       "exports": [
         "vmName",
+        "ramMB",
         "config",
         "pkgs",
         "lib",
@@ -22113,6 +22114,7 @@
       ],
       "imports": [],
       "symbols": [
+        "cpuQuotaLine",
         "repo",
         "webPort",
         "serveScript",
@@ -24617,6 +24619,7 @@
       "role": "nix-module",
       "exports": [
         "vmName",
+        "ramMB",
         "config",
         "pkgs",
         "lib",
@@ -24624,6 +24627,7 @@
       ],
       "imports": [],
       "symbols": [
+        "cpuQuotaLine",
         "repo",
         "webPort",
         "serveScript",
@@ -26991,6 +26995,7 @@
       "role": "nix-module",
       "exports": [
         "vmName",
+        "ramMB",
         "config",
         "pkgs",
         "lib",
@@ -26998,6 +27003,7 @@
       ],
       "imports": [],
       "symbols": [
+        "cpuQuotaLine",
         "repo",
         "webPort",
         "serveScript",
@@ -29369,6 +29375,7 @@
       "role": "nix-module",
       "exports": [
         "vmName",
+        "ramMB",
         "config",
         "pkgs",
         "lib",
@@ -29376,6 +29383,7 @@
       ],
       "imports": [],
       "symbols": [
+        "cpuQuotaLine",
         "repo",
         "webPort",
         "serveScript",
@@ -31746,6 +31754,7 @@
       "role": "nix-module",
       "exports": [
         "vmName",
+        "ramMB",
         "config",
         "pkgs",
         "lib",
@@ -31753,6 +31762,7 @@
       ],
       "imports": [],
       "symbols": [
+        "cpuQuotaLine",
         "repo",
         "webPort",
         "serveScript",

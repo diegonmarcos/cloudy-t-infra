@@ -3138,6 +3138,10 @@
         "delivery-api": {
           "cmd": "node --test delivery.test.ts recipients.test.ts rest.test.ts",
           "cwd": "src/code/mcp/delivery"
+        },
+        "imap-guard": {
+          "cmd": "node --test imap-guard.test.ts",
+          "cwd": "src/code/mcp/shared"
         }
       },
       "_status": "#1450: standard service (flake, compose, ship engine link); replaces cloud-mail-mcp + cloud-mattermost-mcp, takes port 3103 over at deploy (engine port eviction).",

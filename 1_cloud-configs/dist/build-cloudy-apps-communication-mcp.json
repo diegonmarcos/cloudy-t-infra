@@ -2287,6 +2287,10 @@
     "delivery-api": {
       "cmd": "node --test delivery.test.ts recipients.test.ts rest.test.ts",
       "cwd": "src/code/mcp/delivery"
+    },
+    "imap-guard": {
+      "cmd": "node --test imap-guard.test.ts",
+      "cwd": "src/code/mcp/shared"
     }
   }
 }

@@ -6,13 +6,13 @@
   },
   "repo": "cloud-u-containers",
   "counts": {
-    "files": 2721,
+    "files": 2723,
     "by_lang": {
       "sh": 188,
       "js": 125,
       "nix": 202,
       "py": 526,
-      "ts": 1307,
+      "ts": 1309,
       "rust": 373
     },
     "by_role": {
@@ -20,7 +20,7 @@
       "file": 357,
       "nix-module": 20,
       "python": 510,
-      "module": 813,
+      "module": 815,
       "script": 9,
       "flake": 92,
       "entrypoint": 73,
@@ -9751,6 +9751,34 @@
       ]
     },
     {
+      "path": "infra-api_cloudy-apps-communication-mcp/src/code/mcp/shared/imap-guard.test.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "withImap"
+      ],
+      "imports": [
+        "node:test",
+        "node:assert/strict",
+        "node:events",
+        "node:fs",
+        "./imap-guard.ts"
+      ],
+      "symbols": []
+    },
+    {
+      "path": "infra-api_cloudy-apps-communication-mcp/src/code/mcp/shared/imap-guard.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "guardImapErrors"
+      ],
+      "imports": [],
+      "symbols": [
+        "guardImapErrors(\n  client: { on(event: \"error\", fn: (err: unknown)"
+      ]
+    },
+    {
       "path": "infra-api_cloudy-apps-communication-mcp/src/code/mcp/shared/imap.ts",
       "lang": "ts",
       "role": "module",
@@ -9759,7 +9787,8 @@
       ],
       "imports": [
         "imapflow",
-        "./config.js"
+        "./config.js",
+        "./imap-guard.js"
       ],
       "symbols": []
     },
