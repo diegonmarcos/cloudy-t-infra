@@ -6,9 +6,9 @@
   },
   "repo": "cloud",
   "counts": {
-    "files": 1590,
+    "files": 1591,
     "by_lang": {
-      "sh": 1075,
+      "sh": 1076,
       "js": 169,
       "nix": 304,
       "py": 12,
@@ -17,7 +17,7 @@
     "by_role": {
       "hook": 377,
       "file": 86,
-      "shell": 552,
+      "shell": 553,
       "flake": 6,
       "script": 148,
       "module": 113,
@@ -21144,6 +21144,20 @@
       "symbols": [
         "pass()",
         "fail()"
+      ]
+    },
+    {
+      "path": "9_others/test/test_reconcile_excludes_superseded_mcps.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "ok()",
+        "bad()"
+      ],
+      "imports": [],
+      "symbols": [
+        "ok()",
+        "bad()"
       ]
     },
     {
