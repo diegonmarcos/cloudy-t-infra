@@ -10165,8 +10165,7 @@
       "role": "compose",
       "exports": [
         "buildJson",
-        "container",
-        "services"
+        "container"
       ],
       "imports": [],
       "symbols": [
@@ -10196,7 +10195,12 @@
         "services",
         "image",
         "container_name",
+        "user",
+        "restart",
         "network_mode",
+        "volumes",
+        "command",
+        "depends_on",
         "env_file",
         "extra_hosts",
         "environment",
@@ -10204,12 +10208,7 @@
         "MCP_HTTP_PORT",
         "MCP_HTTP_HOST",
         "MM_URL",
-        "MAIL_HOST",
-        "MADDY_HOST",
-        "MADDY_SMTP_IP",
-        "STALWART_SMTP_IP",
-        "MADDY_IMAP_PORT",
-        "MADDY_SMTP_PORT"
+        "MAIL_HOST"
       ]
     },
     {
