@@ -83,6 +83,8 @@ jobs:
         run: bash 9_others/test/test_mail_filter_views_partition.sh
       - name: HM ship — opt-in VMs (oci-mail) ship only on request or own-config change
         run: bash 9_others/test/test_hm_ship_vm_optin.sh
+      - name: Firewall — local docker bridges reach the host (#1821)
+        run: bash 9_others/test/test_firewall_local_bridges.sh
       - name: Phase 3E — npm ci services ship a lockfile
         run: bash 9_others/test/test_npm_lockfile_present.sh
       - name: Phase 4 — build-{container}.json symlinks all resolve
