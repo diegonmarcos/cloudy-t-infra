@@ -6129,6 +6129,16 @@
               "desc": "MX delivery endpoint — dual-bind wg0+wg-public; CF Worker → Caddy → http-to-smtp-proxy-api → SMTP over WG is the public bridge (Phase 5)"
             },
             {
+              "port": 2526,
+              "protocol": "tcp",
+              "bind": [
+                "10.0.0.3",
+                "10.1.0.3"
+              ],
+              "service": "smtp_mx_direct",
+              "desc": "Direct inbound leg of the CF Worker parallel fan-out (#1811): stores in maddy only, no Stalwart mirror (Stalwart gets its own leg). WG-only."
+            },
+            {
               "port": 465,
               "protocol": "tls",
               "bind": [

@@ -6,13 +6,13 @@
   },
   "repo": "cloud-u-containers",
   "counts": {
-    "files": 2725,
+    "files": 2727,
     "by_lang": {
       "sh": 188,
       "js": 125,
       "nix": 202,
       "py": 526,
-      "ts": 1311,
+      "ts": 1313,
       "rust": 373
     },
     "by_role": {
@@ -20,7 +20,7 @@
       "file": 357,
       "nix-module": 20,
       "python": 510,
-      "module": 817,
+      "module": 819,
       "script": 9,
       "flake": 92,
       "entrypoint": 73,
@@ -2166,7 +2166,8 @@
         "nodemailer",
         "zod",
         "../../shared/config.js",
-        "../plugins/auth.js"
+        "../plugins/auth.js",
+        "../../shared/mail-target.js"
       ],
       "symbols": [
         "extractHeader(body: Buffer, name: string)",
@@ -2220,11 +2221,28 @@
         "AppConfig"
       ],
       "imports": [
-        "./profile-connect.js"
+        "./profile-connect.js",
+        "./mail-target.js"
       ],
       "symbols": [
         "readInt(name: string, fallback: number)",
         "loadConfig()"
+      ]
+    },
+    {
+      "path": "infra-api_c3-public-api/src/code/shared/mail-target.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "pickTarget",
+        "MailTarget",
+        "MailTargets",
+        "TargetPick",
+        "DECLARED_TARGETS"
+      ],
+      "imports": [],
+      "symbols": [
+        "pickTarget(header: unknown, mail: MailTargets, declared: readonly string[] = DECLARED_TARGETS)"
       ]
     },
     {
@@ -2289,6 +2307,11 @@
         "ports",
         "matches",
         "primaryPort",
+        "resolveTarget",
+        "p",
+        "resolvedTargets",
+        "mailTargets",
+        "mailTargetsJson",
         "pc",
         "services",
         "c3-public-api",
@@ -2302,12 +2325,7 @@
         "NODE_ENV",
         "BASE_PATH",
         "BACKENDS_JSON",
-        "LIMITS_JSON",
-        "SMTP_HOST",
-        "SMTP_PORT",
-        "SMTP_HELO_DOMAIN",
-        "PROFILE_CONNECT_MAIL_TO",
-        "PROFILE_CONNECT_MAIL_FROM"
+        "LIMITS_JSON"
       ]
     },
     {
@@ -2345,6 +2363,19 @@
         "apt",
         "title"
       ]
+    },
+    {
+      "path": "infra-api_c3-public-api/src/test-mail-targets.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [],
+      "imports": [
+        "node:assert/strict",
+        "node:child_process",
+        "node:fs",
+        "./code/shared/mail-target.ts"
+      ],
+      "symbols": []
     },
     {
       "path": "infra-api_c3-public-api/src/test-profile-connect.ts",

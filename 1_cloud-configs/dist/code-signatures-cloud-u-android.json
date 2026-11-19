@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 24583,
+    "files": 24586,
     "by_lang": {
       "sh": 806,
       "js": 585,
       "py": 254,
-      "kotlin": 13735,
+      "kotlin": 13738,
       "ts": 8382,
       "java": 654,
       "nix": 37,
@@ -25,7 +25,7 @@
       "python": 90,
       "module": 6468,
       "java": 653,
-      "kotlin": 13732,
+      "kotlin": 13735,
       "flake": 33,
       "rust-module": 130,
       "nix-module": 4,
@@ -9658,7 +9658,7 @@
         "folderTag(id: String)",
         "appTag(pkg: String)",
         "phoneSubheadTag(t: String)",
-        "AppIcon(icon: Drawable?, size: Dp, modifier: Modifier = Modifier)",
+        "AppIcon(icon: Drawable?, size: Dp, modifier: Modifier = Modifier, colorFilter: androidx.compose.ui.graphics.ColorFilter? = null)",
         "PhoneSubhead(text: String, modifier: Modifier = Modifier)",
         "PhoneSectionDivider()",
         "PhoneRefreshBar(onRefresh: ()",
@@ -16763,6 +16763,25 @@
       ]
     },
     {
+      "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/media/MusicBadgeLayout.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [],
+      "imports": [
+        "android.content.Context",
+        "android.content.Intent",
+        "android.provider.Settings"
+      ],
+      "symbols": [
+        "mediaAppsVisible(@Suppress(\"UNUSED_PARAMETER\")",
+        "mediaAppsWhite(playing: Boolean)",
+        "budsPackages(deviceName: String)",
+        "pickLaunch(candidates: List<String>, launchIntentFor: (String)",
+        "openBudsApp(ctx: Context, deviceName: String)",
+        "class MusicBadgeLayout"
+      ]
+    },
+    {
       "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/media/MusicControlsPopup.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -16821,10 +16840,11 @@
         "onPlaybackStateChanged(state: PlaybackState?)",
         "onMetadataChanged(metadata: MediaMetadata?)",
         "Glyph(res: Int, sizeDp: Int, tag: String, tint: Color?, onClick: ()",
-        "IdleLaunchers(ctx: Context, close: ()",
+        "MediaAppIcons(ctx: Context, playing: Boolean, close: ()",
+        "RouteRow(ctx: Context, route: Route)",
         "SessionSwitcher(ctx: Context, hub: MediaHub.State, currentKey: String?, onPick: (String)",
         "IdleRows(last: LastMediaSession.Last? = null)",
-        "LiveRows(ctx: Context, c: MediaController, snap: MusicSnapshot)",
+        "LiveRows(ctx: Context, c: MediaController, snap: MusicSnapshot, routeState: androidx.compose.runtime.MutableState<Route>)",
         "routeOf(ctx: Context)",
         "volumeLabel(ctx: Context, c: MediaController)",
         "class MusicControlsPopup",
@@ -23040,6 +23060,35 @@
         "into(view: ImageView, pkg: String)",
         "fresh(view: View, d: Drawable)",
         "class AppIconCache"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/ui/ChannelWaves.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [],
+      "imports": [
+        "androidx.compose.foundation.Canvas",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.LaunchedEffect",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableFloatStateOf",
+        "androidx.compose.runtime.remember",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.runtime.withFrameNanos",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.graphics.Color",
+        "androidx.compose.ui.graphics.Path",
+        "androidx.compose.ui.graphics.drawscope.Stroke",
+        "androidx.compose.ui.unit.dp",
+        "kotlin.math.PI",
+        "kotlin.math.sin"
+      ],
+      "symbols": [
+        "sample(c: Channel, t: Float, time: Float, playing: Boolean)",
+        "ChannelWavesView(playing: Boolean, modifier: Modifier = Modifier)",
+        "class ChannelWaves",
+        "class Channel"
       ]
     },
     {
@@ -29465,6 +29514,34 @@
         "after()",
         "class MediaHubTest",
         "class S"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/test/java/com/diegonmarcos/superapp/media/MusicBadgeLayoutTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "MusicBadgeLayoutTest"
+      ],
+      "imports": [
+        "android.app.Application",
+        "android.content.Intent",
+        "androidx.compose.ui.test.onNodeWithTag",
+        "com.diegonmarcos.superapp.ui.ChannelWaves",
+        "com.diegonmarcos.superapp.ui.KitPageHarness",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertNotEquals",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "org.junit.runner.RunWith",
+        "org.robolectric.RobolectricTestRunner",
+        "org.robolectric.annotation.Config",
+        "androidx.test.core.app.ApplicationProvider",
+        "java.io.File"
+      ],
+      "symbols": [
+        "class MusicBadgeLayoutTest"
       ]
     },
     {

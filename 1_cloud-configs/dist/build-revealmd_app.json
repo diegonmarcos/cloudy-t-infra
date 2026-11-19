@@ -1659,6 +1659,16 @@
           "desc": "IMAPS — dual-bind wg0+wg-public, reached via Caddy L4 from oci-analytics",
           "service": "imap_ssl",
           "role": "app"
+        },
+        "2526": {
+          "protocol": "tcp",
+          "bind": [
+            "10.0.0.3",
+            "10.1.0.3"
+          ],
+          "desc": "Direct inbound leg of the CF Worker parallel fan-out (#1811): stores in maddy only, no Stalwart mirror (Stalwart gets its own leg). WG-only.",
+          "service": "smtp_mx_direct",
+          "role": "app"
         }
       }
     },

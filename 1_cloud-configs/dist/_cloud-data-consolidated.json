@@ -1412,6 +1412,21 @@
           "service": "maddy",
           "via": "smtp_mx"
         },
+        "targets": {
+          "maddy": {
+            "service": "maddy",
+            "via": "smtp_mx"
+          },
+          "maddy-direct": {
+            "service": "maddy",
+            "via": "smtp_mx_direct"
+          },
+          "stalwart": {
+            "service": "stalwart",
+            "via": "smtp_shadow"
+          }
+        },
+        "_doc_targets": "#1811 parallel fan-out. The CF Worker picks one target per request with the X-Mail-Target header and calls this bridge once per store, in parallel: maddy-direct (maddy stores only, no Stalwart mirror) and stalwart (Stalwart SMTP ingest :2025). No header = maddy = the primary above (maddy:25, which still mirrors to Stalwart), so an older Worker keeps working unchanged. Never send one message to both maddy (mirroring) and stalwart: that duplicates it in Stalwart.",
         "helo_domain": "c3-public-api.diegonmarcos.com",
         "default_user_env": "SMTP_USER"
       },
@@ -1430,6 +1445,10 @@
       "tests": {
         "profile-connect": {
           "cmd": "node test-profile-connect.ts",
+          "cwd": "src"
+        },
+        "mail-targets": {
+          "cmd": "node test-mail-targets.ts",
           "cwd": "src"
         }
       },
@@ -11198,6 +11217,16 @@
               ],
               "service": "smtp_mx",
               "desc": "MX delivery endpoint — dual-bind wg0+wg-public; CF Worker → Caddy → http-to-smtp-proxy-api → SMTP over WG is the public bridge (Phase 5)"
+            },
+            {
+              "port": 2526,
+              "protocol": "tcp",
+              "bind": [
+                "10.0.0.3",
+                "10.1.0.3"
+              ],
+              "service": "smtp_mx_direct",
+              "desc": "Direct inbound leg of the CF Worker parallel fan-out (#1811): stores in maddy only, no Stalwart mirror (Stalwart gets its own leg). WG-only."
             },
             {
               "port": 465,
