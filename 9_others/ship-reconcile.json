@@ -18,7 +18,8 @@
       "infra-obs_openobserve": "absent by design per cloud-ship-reconcile.sh (retired, on-demand or run outside compose)",
       "user-media_playlist-syncer": "absent by design per cloud-ship-reconcile.sh; also declares ports.app 8090, which ntfy holds on oci-apps",
       "infra-api_cloud-mail-mcp": "superseded by cloudy-apps-communication-mcp (#1450) on the same port 3103; starting it takes 3103 from the merged MCP (outage 2026-11-19 08:10). Held out of Ship too (build.ship_hold); removed at the #1796 cutover",
-      "infra-api_cloud-drive-mcp": "superseded by cloudy-apps-drive-mcp (#1450) on the same port 3109; starting it would take 3109 from the merged MCP. Held out of Ship too (build.ship_hold); removed at the #1450 cutover"
+      "infra-api_cloud-drive-mcp": "superseded by cloudy-apps-drive-mcp (#1450) on the same port 3109; starting it would take 3109 from the merged MCP. Held out of Ship too (build.ship_hold); removed at the #1450 cutover",
+      "user-comm_tools-stalwart": "#1821 cutover: Stalwart is declared on oci-apps but its RocksDB volume is copied from oci-mail first; starting it earlier would create a second, empty store. Held out of Ship too (build.ship_hold); both are removed after the data copy"
     },
     "_doc_exclude": "Service dirs the redeploy never touches, each with its reason. Seeded with the services cloud-ship-reconcile.sh already names as absent for reasons that are not an eviction and that are still absent on 2026-10-14. Removing an entry lets the reconcile start it again.",
     "ntfy": {
