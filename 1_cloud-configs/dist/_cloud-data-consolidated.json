@@ -3323,8 +3323,10 @@
         ],
         "ingest_allowed": [
           "10.0.0.3",
-          "10.1.0.3"
+          "10.1.0.3",
+          "172.16.0.0/12"
         ],
+        "_doc_ingest_allowed": "#1821: Stalwart moved to oci-apps, the VM this API runs on, so its webhook and MtaHook now arrive from the stalwart_default docker bridge (a 172.16.0.0/12 address), not from oci-mail's WG IPs. The listener is bound to the oci-apps WG IP, so only local containers and mesh peers can reach it at all; the 10.0.0.3/10.1.0.3 entries stay for maddy-side tooling and the rollback.",
         "dns_servers": [
           "1.1.1.1",
           "9.9.9.9"
@@ -3340,7 +3342,7 @@
           "canary_host": "gmail-smtp-in.l.google.com",
           "recheck_ms": 3600000,
           "overrides": {
-            "diegonmarcos.com": "10.0.0.3:2025"
+            "diegonmarcos.com": "10.0.0.6:2025"
           }
         },
         "recipient_cache_ttl_ms": 21600000,
@@ -7288,7 +7290,7 @@
           "send_window_seconds": 600,
           "subject": "Your sign-in code",
           "smtp": {
-            "host": "10.0.0.3",
+            "host": "10.0.0.6",
             "port": 2465,
             "tls_server_name": "mail.diegonmarcos.com",
             "user_env": "AUTH_BROKER_SMTP_USER",
@@ -7589,10 +7591,10 @@
         "type": "special",
         "well_known": [
           {
-            "_doc": "RFC 8620 JMAP discovery on the jmap vhost. These grafts do double duty: caddyfile.nix mkWellKnownBlock emits the public handlers AND mkSubdomainRoute exempts exactly these paths from the vhost's @not_wg mesh gate, so discovery works off-mesh (Stalwart itself enforces Basic auth) while the rest of the vhost (Stalwart web-admin) stays mesh-only. Mirrors the apex's public JMAP surface declared in user-comm_tools-stalwart proxy.well_known. Declared caddy-side because the gate exemption is a Caddy concern; upstream is explicit (auto-resolve would yield caddy's own VM, not Stalwart's 10.0.0.3:2443).",
+            "_doc": "RFC 8620 JMAP discovery on the jmap vhost. These grafts do double duty: caddyfile.nix mkWellKnownBlock emits the public handlers AND mkSubdomainRoute exempts exactly these paths from the vhost's @not_wg mesh gate, so discovery works off-mesh (Stalwart itself enforces Basic auth) while the rest of the vhost (Stalwart web-admin) stays mesh-only. Mirrors the apex's public JMAP surface declared in user-comm_tools-stalwart proxy.well_known. Declared caddy-side because the gate exemption is a Caddy concern; upstream is explicit (auto-resolve would yield caddy's own VM, not Stalwart's 10.0.0.6:2443 (oci-apps since #1821)).",
             "path": "/.well-known/jmap",
             "target_domain": "jmap.diegonmarcos.com",
-            "upstream": "10.0.0.3:2443",
+            "upstream": "10.0.0.6:2443",
             "tls_skip_verify": true,
             "_doc_rewrite_to": "Serve the session AT the discovery URL rather than making the client chase Stalwart's relative 307 (Location: /jmap/session). Legal per RFC 8620 and the original design, but a client that mishandles a RELATIVE Location never arrives: Cloud-Mail failed 2026-09-01 with 'EndpointNotFoundException: Unable to fetch session object(https://jmap.diegonmarcos.com/.well-known/jmap)' while curl -L on that exact URL returned a valid session in ~1.3s. Same upstream, same Authorization passthrough, same per-user session JSON — the /jmap/* sibling below stays for the API calls that follow. Fixes every JMAP client instead of patching one.",
             "rewrite_to": "/jmap/session",
@@ -7601,14 +7603,14 @@
           {
             "path": "/jmap/*",
             "target_domain": "jmap.diegonmarcos.com",
-            "upstream": "10.0.0.3:2443",
+            "upstream": "10.0.0.6:2443",
             "tls_skip_verify": true,
             "comment": "JMAP session/api/download/upload/eventsource follow-through on jmap vhost"
           },
           {
             "path": "/.well-known/jmap",
             "target_domain": "mails.diegonmarcos.com",
-            "upstream": "10.0.0.3:2443",
+            "upstream": "10.0.0.6:2443",
             "tls_skip_verify": true,
             "rewrite_to": "/jmap/session",
             "comment": "JMAP discovery on the mails vhost"
@@ -7616,7 +7618,7 @@
           {
             "path": "/jmap/*",
             "target_domain": "mails.diegonmarcos.com",
-            "upstream": "10.0.0.3:2443",
+            "upstream": "10.0.0.6:2443",
             "tls_skip_verify": true,
             "comment": "JMAP session/api follow-through on the mails vhost"
           },
@@ -11377,6 +11379,11 @@
         }
       },
       "upstream_image": "foxcpp/maddy:0.9",
+      "stalwart_relay": {
+        "_doc": "#1821: where maddy's durable stalwart_queue delivers its Stalwart copy (target.smtp stalwart_relay, plain SMTP :2025 over the mesh). Stalwart moved from oci-mail (10.0.0.3) to oci-apps; the address is the oci-apps wg0 IP and the port is Stalwart's smtp_shadow listener. Pinned to user-comm_tools-stalwart/build.json by _shared/test-stalwart-host.mjs (C2).",
+        "host": "10.0.0.6",
+        "port": 2025
+      },
       "oci_relay": {
         "host": "smtp.email.eu-marseille-1.oci.oraclecloud.com",
         "port": "587"

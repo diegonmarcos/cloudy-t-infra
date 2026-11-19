@@ -2275,6 +2275,11 @@
     "category": "Inboxes"
   },
   "upstream_image": "foxcpp/maddy:0.9",
+  "stalwart_relay": {
+    "_doc": "#1821: where maddy's durable stalwart_queue delivers its Stalwart copy (target.smtp stalwart_relay, plain SMTP :2025 over the mesh). Stalwart moved from oci-mail (10.0.0.3) to oci-apps; the address is the oci-apps wg0 IP and the port is Stalwart's smtp_shadow listener. Pinned to user-comm_tools-stalwart/build.json by _shared/test-stalwart-host.mjs (C2).",
+    "host": "10.0.0.6",
+    "port": 2025
+  },
   "oci_relay": {
     "host": "smtp.email.eu-marseille-1.oci.oraclecloud.com",
     "port": "587"

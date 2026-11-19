@@ -1761,7 +1761,7 @@
     {
       "path": "/.well-known/jmap",
       "target_domain": "jmap.diegonmarcos.com",
-      "upstream": "10.0.0.3:2443",
+      "upstream": "10.0.0.6:2443",
       "tls_skip_verify": true,
       "rewrite_to": "/jmap/session",
       "comment": "JMAP discovery on jmap vhost (public per RFC 8620)"
@@ -1769,14 +1769,14 @@
     {
       "path": "/jmap/*",
       "target_domain": "jmap.diegonmarcos.com",
-      "upstream": "10.0.0.3:2443",
+      "upstream": "10.0.0.6:2443",
       "tls_skip_verify": true,
       "comment": "JMAP session/api/download/upload/eventsource follow-through on jmap vhost"
     },
     {
       "path": "/.well-known/jmap",
       "target_domain": "mails.diegonmarcos.com",
-      "upstream": "10.0.0.3:2443",
+      "upstream": "10.0.0.6:2443",
       "tls_skip_verify": true,
       "rewrite_to": "/jmap/session",
       "comment": "JMAP discovery on the mails vhost"
@@ -1784,7 +1784,7 @@
     {
       "path": "/jmap/*",
       "target_domain": "mails.diegonmarcos.com",
-      "upstream": "10.0.0.3:2443",
+      "upstream": "10.0.0.6:2443",
       "tls_skip_verify": true,
       "comment": "JMAP session/api follow-through on the mails vhost"
     },

@@ -9595,6 +9595,7 @@
       "lang": "ts",
       "role": "module",
       "exports": [
+        "sourceAllowed",
         "callerId",
         "accountMatches",
         "statusFor",
@@ -9614,6 +9615,7 @@
         "fail(res: ServerResponse, status: number, code: string, error: string, extra: Record<string, string> = {})",
         "readBody(req: IncomingMessage, limit: number)",
         "sourceIp(req: IncomingMessage)",
+        "sourceAllowed(allowed: string[], ip: string)",
         "callerId(req: IncomingMessage)",
         "accountMatches(login: string | null | undefined, account: string)",
         "statusFor(deps: RestDeps, id: string, account: string | null = null)",
@@ -10289,6 +10291,7 @@
         "port",
         "stalwartJmap",
         "mailWgIp",
+        "stalwartIp",
         "proxyCfg",
         "initial_ms",
         "max_ms",
@@ -10317,8 +10320,7 @@
         "PORT",
         "MCP_HTTP_PORT",
         "MCP_HTTP_HOST",
-        "MM_URL",
-        "MAIL_HOST"
+        "MM_URL"
       ]
     },
     {
@@ -63508,6 +63510,8 @@
         "MAIL_DOMAIN",
         "OCI_RELAY_HOST",
         "OCI_RELAY_PORT",
+        "STALWART_RELAY_HOST",
+        "STALWART_RELAY_PORT",
         "mkUserLines",
         "addr",
         "passShell",
@@ -63523,9 +63527,7 @@
         "packages",
         "pkgs",
         "default",
-        "srcDir",
-        "templates",
-        "extraAssets"
+        "srcDir"
       ]
     },
     {

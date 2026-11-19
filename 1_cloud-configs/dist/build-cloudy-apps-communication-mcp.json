@@ -2269,8 +2269,10 @@
     ],
     "ingest_allowed": [
       "10.0.0.3",
-      "10.1.0.3"
+      "10.1.0.3",
+      "172.16.0.0/12"
     ],
+    "_doc_ingest_allowed": "#1821: Stalwart moved to oci-apps, the VM this API runs on, so its webhook and MtaHook now arrive from the stalwart_default docker bridge (a 172.16.0.0/12 address), not from oci-mail's WG IPs. The listener is bound to the oci-apps WG IP, so only local containers and mesh peers can reach it at all; the 10.0.0.3/10.1.0.3 entries stay for maddy-side tooling and the rollback.",
     "dns_servers": [
       "1.1.1.1",
       "9.9.9.9"
@@ -2286,7 +2288,7 @@
       "canary_host": "gmail-smtp-in.l.google.com",
       "recheck_ms": 3600000,
       "overrides": {
-        "diegonmarcos.com": "10.0.0.3:2025"
+        "diegonmarcos.com": "10.0.0.6:2025"
       }
     },
     "recipient_cache_ttl_ms": 21600000,

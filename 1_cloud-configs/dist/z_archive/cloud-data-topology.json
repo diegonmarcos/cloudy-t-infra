@@ -4601,10 +4601,10 @@
         "type": "special",
         "well_known": [
           {
-            "_doc": "RFC 8620 JMAP discovery on the jmap vhost. These grafts do double duty: caddyfile.nix mkWellKnownBlock emits the public handlers AND mkSubdomainRoute exempts exactly these paths from the vhost's @not_wg mesh gate, so discovery works off-mesh (Stalwart itself enforces Basic auth) while the rest of the vhost (Stalwart web-admin) stays mesh-only. Mirrors the apex's public JMAP surface declared in user-comm_tools-stalwart proxy.well_known. Declared caddy-side because the gate exemption is a Caddy concern; upstream is explicit (auto-resolve would yield caddy's own VM, not Stalwart's 10.0.0.3:2443).",
+            "_doc": "RFC 8620 JMAP discovery on the jmap vhost. These grafts do double duty: caddyfile.nix mkWellKnownBlock emits the public handlers AND mkSubdomainRoute exempts exactly these paths from the vhost's @not_wg mesh gate, so discovery works off-mesh (Stalwart itself enforces Basic auth) while the rest of the vhost (Stalwart web-admin) stays mesh-only. Mirrors the apex's public JMAP surface declared in user-comm_tools-stalwart proxy.well_known. Declared caddy-side because the gate exemption is a Caddy concern; upstream is explicit (auto-resolve would yield caddy's own VM, not Stalwart's 10.0.0.6:2443 (oci-apps since #1821)).",
             "path": "/.well-known/jmap",
             "target_domain": "jmap.diegonmarcos.com",
-            "upstream": "10.0.0.3:2443",
+            "upstream": "10.0.0.6:2443",
             "tls_skip_verify": true,
             "_doc_rewrite_to": "Serve the session AT the discovery URL rather than making the client chase Stalwart's relative 307 (Location: /jmap/session). Legal per RFC 8620 and the original design, but a client that mishandles a RELATIVE Location never arrives: Cloud-Mail failed 2026-09-01 with 'EndpointNotFoundException: Unable to fetch session object(https://jmap.diegonmarcos.com/.well-known/jmap)' while curl -L on that exact URL returned a valid session in ~1.3s. Same upstream, same Authorization passthrough, same per-user session JSON — the /jmap/* sibling below stays for the API calls that follow. Fixes every JMAP client instead of patching one.",
             "rewrite_to": "/jmap/session",
@@ -4613,14 +4613,14 @@
           {
             "path": "/jmap/*",
             "target_domain": "jmap.diegonmarcos.com",
-            "upstream": "10.0.0.3:2443",
+            "upstream": "10.0.0.6:2443",
             "tls_skip_verify": true,
             "comment": "JMAP session/api/download/upload/eventsource follow-through on jmap vhost"
           },
           {
             "path": "/.well-known/jmap",
             "target_domain": "mails.diegonmarcos.com",
-            "upstream": "10.0.0.3:2443",
+            "upstream": "10.0.0.6:2443",
             "tls_skip_verify": true,
             "rewrite_to": "/jmap/session",
             "comment": "JMAP discovery on the mails vhost"
@@ -4628,7 +4628,7 @@
           {
             "path": "/jmap/*",
             "target_domain": "mails.diegonmarcos.com",
-            "upstream": "10.0.0.3:2443",
+            "upstream": "10.0.0.6:2443",
             "tls_skip_verify": true,
             "comment": "JMAP session/api follow-through on the mails vhost"
           },
