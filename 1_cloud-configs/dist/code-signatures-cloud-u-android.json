@@ -72626,6 +72626,7 @@
         "palette()",
         "Body()",
         "dp(px: Int)",
+        "KeepHtmlToggle(keyText: Int, fontFamily: FontFamily?)",
         "Tabs(m: ClipboardHistoryManager, keyText: Int, fontFamily: FontFamily?)",
         "SearchBox(keyBackground: Drawable?, textColor: Color, fontFamily: FontFamily?)",
         "ClipCard( m: ClipboardHistoryManager, entry: ClipboardHistoryEntry, look: Look, keyBackground: Drawable?, textColor: Color, fontFamily: FontFamily?, modifier: Modifier, )",
@@ -77163,6 +77164,8 @@
       ],
       "imports": [],
       "symbols": [
+        "isKeepHtml(getBoolean: (String, Boolean)",
+        "toggled(current: Boolean)",
         "migrationStatements(oldVersion: Int)",
         "htmlToStore(keepHtml: Boolean, htmlText: String?)",
         "pasteMode(keepHtml: Boolean, entryHtml: String?, hasFile: Boolean)",
@@ -88039,6 +88042,7 @@
         "htmlEntryWithToggleOnPastesAsHtmlClip()",
         "otherwiseTheTextIsCommittedAsToday()",
         "keepHtmlIsOnByDefault()",
+        "settingsScreenAndPanelDriveTheSamePref()",
         "migrationKeepsOldRowsWithNullHtml()",
         "class ClipboardHtmlTest"
       ]
