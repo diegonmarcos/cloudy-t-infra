@@ -6,9 +6,9 @@
   },
   "repo": "cloud-u-containers",
   "counts": {
-    "files": 2720,
+    "files": 2721,
     "by_lang": {
-      "sh": 187,
+      "sh": 188,
       "js": 125,
       "nix": 202,
       "py": 526,
@@ -16,7 +16,7 @@
       "rust": 373
     },
     "by_role": {
-      "shell": 178,
+      "shell": 179,
       "file": 357,
       "nix-module": 20,
       "python": 510,
@@ -63463,6 +63463,20 @@
       "symbols": [
         "check()",
         "ans()"
+      ]
+    },
+    {
+      "path": "user-comm_tools-maddy/src/test-sieve-filter-runs.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "ok()",
+        "bad()"
+      ],
+      "imports": [],
+      "symbols": [
+        "ok()",
+        "bad()"
       ]
     },
     {

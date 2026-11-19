@@ -2263,6 +2263,9 @@
     "jev-fallback": {
       "cmd": "bash src/test-jev-fallback.sh"
     },
+    "sieve-filter-runs": {
+      "cmd": "bash src/test-sieve-filter-runs.sh"
+    },
     "sorter-jev": {
       "cmd": "cargo test --manifest-path src/crate/Cargo.toml"
     }
