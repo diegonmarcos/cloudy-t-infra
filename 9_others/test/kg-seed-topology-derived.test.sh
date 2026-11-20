@@ -25,8 +25,8 @@
 set -u
 
 ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
-SEED="$ROOT/a_solutions/user-ai_kg-store/scripts/seed_from_config.sh"
-SEED_PUB="$ROOT/a_solutions/user-ai_kg-store-pub/scripts/seed_from_config.sh"
+SEED="$ROOT/a_solutions/user-ai_cloud-me-cgc-pvt-graph-api/scripts/seed_from_config.sh"
+SEED_PUB="$ROOT/a_solutions/user-ai_cloudy-cgc-pub-graph-api/scripts/seed_from_config.sh"
 TOPOLOGY="$ROOT/1_cloud-configs/dist/_cloud-data-consolidated.json"
 
 failed=0

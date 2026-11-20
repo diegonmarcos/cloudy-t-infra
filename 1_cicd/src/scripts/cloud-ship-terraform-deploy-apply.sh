@@ -152,7 +152,7 @@ for name in cloudflare gcloud oci hetzner; do
   # TF_VAR (stored only in the sops-encrypted state). Nothing is echoed. A missing key is skipped with a notice;
   # main.tf then holds back any service that needs that secret.
   if [ -f terraform.json ] && grep -q '"cloud_run_secret_sources"' terraform.json; then
-    for vf in "$HOME/git/cloud-vault/C_A0-env/dist/vault-keys-bash.env" /root/git/cloud-vault/C_A0-env/dist/vault-keys-bash.env; do
+    for vf in "$HOME/git/cloud-vault/C_A0-env/dist/vault-keys-bash.env" "${WORKSPACE:-/root/git}"/cloud-vault/C_A0-env/dist/vault-keys-bash.env; do
       [ -f "$vf" ] && { set -a; . "$vf" 2>/dev/null || true; set +a; break; }
     done
     # Pure bash/sed/awk: the terraform builder image has neither python3 nor a guaranteed jq (the python3 variant
@@ -170,7 +170,7 @@ for name in cloudflare gcloud oci hetzner; do
           case "$_sfile" in Linux-Containers/*/src/secrets*.yaml) ;; *) continue ;; esac
           case "$_sfile" in *[!A-Za-z0-9_./-]*|*..*) continue ;; esac
           case "$_skk" in *[!A-Za-z0-9_]*|"") continue ;; esac
-          for _vd in "$HOME/git/cloud-vault" /root/git/cloud-vault; do
+          for _vd in "$HOME/git/cloud-vault" "${WORKSPACE:-/root/git}"/cloud-vault; do
             if [ -f "$_vd/$_sfile" ]; then
               _sval="$(sops -d --extract "[\"$_skk\"]" "$_vd/$_sfile" 2>/dev/null || true)"
               break
