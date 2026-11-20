@@ -16,7 +16,7 @@
 # │       by semantic having advanced HEAD.                      │
 # │                                                              │
 # │  Schedule is data-driven from build.json                     │
-# │    runtime.octocode.update.schedule (twice daily 4/16 UTC).  │
+# │    runtime.octocode.update.schedule (weekly, Sun 03:41 UTC).│
 # │                                                              │
 # │  workflow_dispatch supports running a SINGLE phase manually   │
 # │  via the `phase` input (both | semantic | graphrag).        │
@@ -71,7 +71,8 @@ on:
           - pub
           - pvt
   # Schedule is data-driven from build.json runtime.octocode.update.schedule.
-  # Twice daily (03:41 and 15:41 UTC): keeps the graph current with minimal runner
+  # #1817 WEEKLY (owner decision 2026-11-20): Sundays 03:41 UTC; a reindex in between is a workflow_dispatch.
+  # (Was twice daily, 03:41 and 15:41 UTC.) Keeps the graph current with minimal runner
   # load. Each phase is change-gated per repo (skips repos whose HEAD is already
   # indexed in that phase's manifest) so unchanged repos cost seconds, not hours.
   # #1817 off the hour on purpose: GitHub queues top-of-the-hour crons behind every
@@ -79,7 +80,7 @@ on:
   # (2026-11-10..20: 11:07-12:39 and 20:15-23:55 UTC), so the twice-daily index
   # really ran at noon and midnight. A minute off :00 is the documented remedy.
   schedule:
-    - cron: "41 3,15 * * *"
+    - cron: "41 3 * * 0"
 
 # Serialise cgc-db against ITSELF, not against the deploy fleet.
 #

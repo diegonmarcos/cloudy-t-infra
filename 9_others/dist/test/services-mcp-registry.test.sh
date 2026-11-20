@@ -15,7 +15,7 @@
 # Runs the cloud-services-mcp registry self-checks (#377, #378).
 #
 # The registry module physically lives in the PRE-RENAME tree
-# (a_solutions/infra-api_c3-services-api/src/code/registry/) and is symlinked
+# (a_solutions/infra-api_cloudy-all-api/src/code/registry/) and is symlinked
 # into infra-api_cloud-services-mcp. Two defects of the same shape have already
 # shipped from that arrangement, and both were silent:
 #
@@ -42,7 +42,7 @@
 set -u
 
 ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
-REGISTRY_DIR="$ROOT/a_solutions/infra-api_c3-services-api/src/code/registry"
+REGISTRY_DIR="$ROOT/a_solutions/infra-api_cloudy-all-api/src/code/registry"
 MCP_TOOLS_DIR="$ROOT/a_solutions/infra-api_cloud-services-mcp/src/code/mcp/tools"
 
 if [ ! -d "$REGISTRY_DIR" ]; then
