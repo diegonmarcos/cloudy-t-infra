@@ -6,9 +6,9 @@
   },
   "repo": "cloud-u-containers",
   "counts": {
-    "files": 2731,
+    "files": 2732,
     "by_lang": {
-      "sh": 188,
+      "sh": 189,
       "js": 126,
       "nix": 202,
       "py": 527,
@@ -21,7 +21,7 @@
       "nix-module": 20,
       "python": 510,
       "module": 821,
-      "script": 9,
+      "script": 10,
       "flake": 92,
       "entrypoint": 73,
       "compose": 90,
@@ -45642,6 +45642,24 @@
         "ssh_run_detached()",
         "rsync_with_retry()",
         "_ship_build_phase()"
+      ]
+    },
+    {
+      "path": "user-ai_cloudy-cgc-pub-graph-api/scripts/seed_from_config.sh",
+      "lang": "sh",
+      "role": "script",
+      "exports": [
+        "_resolve_topology()",
+        "log()",
+        "surreal_query()",
+        "_field()"
+      ],
+      "imports": [],
+      "symbols": [
+        "_resolve_topology()",
+        "log()",
+        "surreal_query()",
+        "_field()"
       ]
     },
     {
