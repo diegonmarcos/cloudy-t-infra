@@ -698,6 +698,7 @@ jobs:
             *)   SURFACE_LIST="pub pvt" ;;
           esac
           echo "[cgc-db] restoring surface(s): $SURFACE_LIST"
+          RESTORED=""
           for SURFACE in $SURFACE_LIST; do
             case "$SURFACE" in
               pub)
@@ -858,5 +859,6 @@ jobs:
               exit "$RC"
             fi
             echo "[cgc-db] $SURFACE restore-all OK — $CTR now serving volume $VOL"
+            RESTORED="${RESTORED:+$RESTORED }$SURFACE"
           done
-          echo "[cgc-db] restore-all OK — $HOST serving surface(s) $SURFACE_LIST from the freshly pulled multi-image DB"
+          echo "[cgc-db] restore-all OK — $HOST restored surface(s): ${RESTORED:-none} (requested: $SURFACE_LIST) from the freshly pulled multi-image DB"

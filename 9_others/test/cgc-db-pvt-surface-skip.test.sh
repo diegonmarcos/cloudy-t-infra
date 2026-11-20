@@ -24,6 +24,8 @@ for f in cgc-db-index.yml cgc-db-restore.yml; do
     done' 2>&1)
   [ "$(printf '%s\n' "$out" | grep -c '^RESTORE')" = 1 ] && printf '%s' "$out" | grep -q '^RESTORE pub' \
     && ok "$f: pub is restored, pvt is skipped (never restored with public data only)" || bad "$f: loop result: $out"
+  grep -q 'RESTORED="${RESTORED:+$RESTORED }$SURFACE"' "$y" && grep -q 'restored surface(s): ${RESTORED:-none}' "$y" \
+    && ok "$f: the final OK line names only the surfaces actually restored" || bad "$f: final OK line still claims every requested surface"
   cmp -s <(sed -n '/BOX_GHCR_OK" != "1"/,/^ *fi$/p' "$y") <(sed -n '/BOX_GHCR_OK" != "1"/,/^ *fi$/p' "$ROOT/.github/workflows/$f") \
     && ok "$f: generated .github/workflows copy carries the same gate" || bad "$f: .github/workflows/$f is stale (regenerate)"
 done
