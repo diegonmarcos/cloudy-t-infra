@@ -60,6 +60,13 @@ class H(BaseHTTPRequestHandler):
         if mode == "e500": return self.send(500, {"error": "boom"})
         if mode == "err200": return self.send(200, {"error": {"message": "provider died"}})
         if mode == "e401": return self.send(401, {"error": "no key"})
+        fb = req.get("model") == "fb/model:free"
+        if mode == "empty": return self.send(200, {"id": "x", "choices": [{"message": {"content": ""}}]})
+        if mode == "empty-unless-fb":
+            return self.send(200, OK) if fb else self.send(200, {"id": "x", "choices": [{"message": {"content": ""}}]})
+        if mode == "gone":
+            return self.send(200, OK) if fb else self.send(404, {"error": {"message": "no longer available"}})
+        if mode == "fenced": return self.send(200, {"id": "x", "choices": [{"message": {"content": "```json\n{\"relationships\": []}\n```"}}]})
 ThreadingHTTPServer.daemon_threads = True
 s = ThreadingHTTPServer(("127.0.0.1", 0), H)
 open(sys.argv[1], "w").write(str(s.server_address[1]))
@@ -148,6 +155,34 @@ call rel ok x3
 hits1=$(curl -s --noproxy '*' "http://127.0.0.1:$(cat "$W/up.port")/" | jq .hits)
 [ "$(last | jq -r .outcome)" = breaker ] && [ "$CODE" = 200 ] && lt "$SECS" 0.5 && [ $(( hits1 - hits0 )) = 4 ] \
   && ok "3 spent calls open the breaker: the next call fails fast with no upstream request (${SECS}s)" || bad "breaker: $CODE ${SECS}s hits=$(( hits1 - hits0 )) $(last)"
+
+# #1817: empty / non-JSON content never reaches octocode; retired models fall back.
+kill "${PIDS##* }" 2>/dev/null; : > "$W/calls.jsonl"; start_proxy
+call rel empty
+[ "$CODE" = 200 ] && [ "$(jq -r '.choices[0].message.content' <<<"$BODY")" = '{"relationships": []}' ] \
+  && [ "$(last | jq -r '.outcome + " " + (.badjson|tostring)')" = "degraded 2" ] \
+  && ok "an empty-content 200 is a failed attempt (badjson) and degrades, never 'unparseable JSON' in octocode" || bad "empty content: $CODE $BODY $(last)"
+call desc empty
+[ "$CODE" = 400 ] && [ "$(last | jq -r .outcome)" = deferred ] \
+  && ok "an empty-content description call defers its files" || bad "empty desc: $CODE $(last)"
+call rel fenced
+[ "$CODE" = 200 ] && [ "$(last | jq -r .outcome)" = ok ] && ok "a \`\`\`json-fenced answer still counts as JSON" || bad "fenced: $CODE $(last)"
+call rel gone
+[ "$CODE" = 404 ] && [ "$(last | jq -r .outcome)" = passthrough ] \
+  && ok "with no fallback declared a 404 is passed through as before" || bad "404 without fallback: $CODE $(last)"
+kill "${PIDS##* }" 2>/dev/null; : > "$W/calls.jsonl"
+CGC_LLM_FALLBACK_MODELS="fb/model:free" start_proxy
+call rel gone
+[ "$CODE" = 200 ] && [ "$(last | jq -r '.outcome + " " + .model + " " + (.gone|tostring)')" = "ok fb/model:free 1" ] \
+  && ok "a 404 (model retired) drops to the declared fallback model in the same call" || bad "gone fallback: $CODE $(last)"
+call rel gone x2
+[ "$CODE" = 200 ] && [ "$(last | jq -r '(.attempts|tostring) + " " + (.gone|tostring)')" = "1 0" ] \
+  && ok "the retired model is skipped for the rest of the run (next call: 1 attempt, no 404)" || bad "gone sticky: $CODE $(last)"
+call rel empty-unless-fb
+[ "$CODE" = 200 ] && [ "$(last | jq -r '.outcome + " " + .model')" = "ok fb/model:free" ] \
+  && ok "empty content on one model retries on the fallback model" || bad "badjson fallback: $CODE $(last)"
+grep -q 'CGC_LLM_FALLBACK_MODELS=.*llm_fallback_models' "$UPD" && grep -q 'export CGC_LLM_FALLBACK_MODELS' "$UPD" \
+  && ok "cloud-cgc-db-update.sh feeds build.json llm_fallback_models to the proxy" || bad "update.sh does not wire llm_fallback_models"
 
 grep -qF "$KEY" "$W/calls.jsonl" && bad "the API key reached the call log" || ok "the API key never reaches the call log"
 

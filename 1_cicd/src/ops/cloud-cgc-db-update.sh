@@ -146,6 +146,10 @@ for _r in $(jq -r '(.runtime.octocode.repo_map // {}) | keys[]?' "$BJ"); do
   done
 done
 LLM=$(jq -r     '.runtime.octocode.update.llm_model' "$BJ")
+# #1817: free OpenRouter models are retired without notice (cohere/north-mini-code:free
+# went 404 mid-run on 44646333693). The proxy tries these, in order, after llm_model.
+CGC_LLM_FALLBACK_MODELS="${CGC_LLM_FALLBACK_MODELS:-$(jq -r '[.runtime.octocode.update.llm_fallback_models[]? | sub("^openrouter:"; "")] | join(",")' "$BJ")}"
+export CGC_LLM_FALLBACK_MODELS
 # USE_LLM selects the GraphRAG LLM phase. Two-phase orchestration (cgc-db.yml →
 # cgc-db-index.yml) drives this via the environment: the `semantic` phase exports
 # USE_LLM=false, the `graphrag` phase exports USE_LLM=true. The ENVIRONMENT is

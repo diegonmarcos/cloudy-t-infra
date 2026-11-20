@@ -29,6 +29,15 @@ proxy on 127.0.0.1 and the proxy forwards to the real endpoint with:
   * a circuit breaker: CGC_LLM_BREAKER_FAILS consecutive exhausted calls open it for
     CGC_LLM_BREAKER_COOLDOWN_S; while open every call fails fast (degraded 200), the
     window finishes in minutes, and the update script stops the repo for this run;
+  * #1817 content check: a rel/desc 200 whose message content is empty or not JSON
+    (after stripping a ```json fence) is a failed attempt ("badjson"), retried and
+    bounded like any other, never handed to octocode (which aborts the whole index
+    on "LLM returned unparseable JSON");
+  * #1817 model fallback: CGC_LLM_FALLBACK_MODELS (comma list, from build.json
+    .runtime.octocode.update.llm_fallback_models) are tried in order after the
+    client's own model. A model OpenRouter answers 404 for ("no longer available")
+    is dropped for the rest of the run, so free models retired mid-run cost one
+    attempt, not the window; a badjson/429/5xx attempt moves to the next model;
   * one JSON line per logical call in --log (kind, outcome, attempts, latency, timeouts,
     429s, Retry-After waited, tokens, deferred paths). Headers are never logged, so the
     API key the client sends never reaches the log.
@@ -64,12 +73,13 @@ RA_CAP = _env("CGC_LLM_RETRY_AFTER_CAP_S", 60)
 BACKOFF = _env("CGC_LLM_BACKOFF_S", 2)
 BREAKER_FAILS = max(1, int(_env("CGC_LLM_BREAKER_FAILS", 5)))
 BREAKER_COOLDOWN = _env("CGC_LLM_BREAKER_COOLDOWN_S", 300)
+FALLBACK_MODELS = [m.strip() for m in os.environ.get("CGC_LLM_FALLBACK_MODELS", "").split(",") if m.strip()]
 
 FORWARD_HEADERS = ("content-type", "authorization", "http-referer", "x-title", "accept")
 
 
 class Upstream(Exception):
-    """One failed attempt: kind is timeout | net | 429 | 5xx | bad200."""
+    """One failed attempt: kind is timeout | net | 429 | 5xx | bad200 | badjson | gone."""
 
     def __init__(self, kind, retry_after=None, status=None):
         super().__init__(kind)
@@ -122,6 +132,38 @@ def classify(body):
     return "other", []
 
 
+def content_ok(data):
+    """True when the first choice's content parses as JSON (a ```json fence allowed)."""
+    try:
+        c = json.loads(data)["choices"][0]["message"]["content"]
+    except (ValueError, KeyError, IndexError, TypeError):
+        return False
+    if not isinstance(c, str):
+        return False
+    c = c.strip()
+    m = re.match(r"^```[a-zA-Z]*\s*(.*?)\s*```$", c, re.S)
+    if m:
+        c = m.group(1).strip()
+    if not c:
+        return False
+    try:
+        json.loads(c)
+        return True
+    except ValueError:
+        return False
+
+
+def with_model(body, model):
+    try:
+        req = json.loads(body)
+    except ValueError:
+        return body
+    if req.get("model") == model:
+        return body
+    req["model"] = model
+    return json.dumps(req).encode()
+
+
 def degraded_body(kind, n):
     content = {"relationships": []} if kind == "rel" else {"descriptions": []}
     return json.dumps({
@@ -142,6 +184,7 @@ class Proxy:
         self.open_until = 0.0    # breaker open while now < open_until
         self.exhausted = set()   # body hashes of description calls already given up on
         self.seq = 0
+        self.gone = set()        # models the upstream answered 404 for: skipped all run
 
     def log(self, rec):
         line = json.dumps(rec, separators=(",", ":"))
@@ -149,7 +192,20 @@ class Proxy:
             with open(self.log_path, "a", encoding="utf-8") as f:
                 f.write(line + "\n")
 
-    def attempt(self, body, headers, deadline):
+    def candidates(self, body):
+        try:
+            first = json.loads(body).get("model")
+        except (ValueError, AttributeError):
+            first = None
+        out = []
+        for m in ([first] if first else []) + FALLBACK_MODELS:
+            if m not in out:
+                out.append(m)
+        with self.lock:
+            live = [m for m in out if m not in self.gone]
+        return live or out[-1:]
+
+    def attempt(self, body, headers, deadline, check_content=False):
         """One upstream POST under a hard wall-clock deadline -> (status, ctype, body)."""
         u = self.up
         cls = http.client.HTTPSConnection if u.scheme == "https" else http.client.HTTPConnection
@@ -179,6 +235,8 @@ class Proxy:
             if status == 429 or status >= 500:
                 kind = "429" if status == 429 else "5xx"
                 raise Upstream(kind, retry_after_s(resp.getheader("Retry-After")), status)
+            if status == 404 and FALLBACK_MODELS:
+                raise Upstream("gone", None, status)
             if status == 200:
                 try:
                     ok = bool(json.loads(data).get("choices"))
@@ -186,6 +244,8 @@ class Proxy:
                     ok = False
                 if not ok:  # OpenRouter reports a mid-request provider error as 200 + {"error": ...}
                     raise Upstream("bad200", None, status)
+                if check_content and not content_ok(data):
+                    raise Upstream("badjson", None, status)
             return status, resp.getheader("Content-Type") or "application/json", data
         except TimeoutError as e:
             raise Upstream("timeout") from e
@@ -200,7 +260,7 @@ class Proxy:
         kind, files = classify(body)
         h = hashlib.sha256(body).hexdigest()
         rec = {"t": round(time.time(), 3), "kind": kind, "files": len(files), "attempts": 0,
-               "timeouts": 0, "r429": 0, "r5xx": 0, "neterr": 0, "bad200": 0, "wait_s": 0.0}
+               "timeouts": 0, "r429": 0, "r5xx": 0, "neterr": 0, "bad200": 0, "badjson": 0, "gone": 0, "wait_s": 0.0}
         with self.lock:
             self.seq += 1
             seq = self.seq
@@ -223,20 +283,36 @@ class Proxy:
         deadline_call = t0 + CALL_BUDGET
         result = None
         last = None
-        for n in range(MAX_ATTEMPTS):
+        mi = 0  # index into this call's live model list
+        attempts = MAX_ATTEMPTS + len(FALLBACK_MODELS)  # a gone model costs one extra try, not the call
+        n = 0
+        while n < attempts:
             if time.monotonic() >= deadline_call:
                 break
+            models = self.candidates(body)
+            model = models[mi % len(models)]
             rec["attempts"] = n + 1
+            rec["model"] = model
             try:
-                result = self.attempt(body, headers, min(deadline_call, time.monotonic() + REQ_TIMEOUT))
+                result = self.attempt(with_model(body, model), headers,
+                                      min(deadline_call, time.monotonic() + REQ_TIMEOUT),
+                                      check_content=kind in ("rel", "desc"))
                 break
             except Upstream as e:
                 last = e
-                key = {"timeout": "timeouts", "net": "neterr", "429": "r429", "5xx": "r5xx", "bad200": "bad200"}[e.kind]
+                key = {"timeout": "timeouts", "net": "neterr", "429": "r429", "5xx": "r5xx",
+                       "bad200": "bad200", "badjson": "badjson", "gone": "gone"}[e.kind]
                 rec[key] += 1
-            if n + 1 >= MAX_ATTEMPTS:
+                n += 1
+                if e.kind == "gone":
+                    with self.lock:
+                        self.gone.add(model)
+                    continue  # next live model at once, no backoff
+                if FALLBACK_MODELS and e.kind in ("badjson", "429", "5xx", "bad200"):
+                    mi += 1
+            if n >= attempts or rec["attempts"] - rec["gone"] >= MAX_ATTEMPTS:
                 break
-            wait = last.retry_after if last.retry_after is not None else BACKOFF * (2 ** n)
+            wait = last.retry_after if last.retry_after is not None else BACKOFF * (2 ** (n - 1))
             wait = min(wait, RA_CAP, max(0.0, deadline_call - time.monotonic()))
             rec["wait_s"] = round(rec["wait_s"] + wait, 3)
             time.sleep(wait)

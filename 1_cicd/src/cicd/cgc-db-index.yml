@@ -757,8 +757,13 @@ jobs:
                   BOX_GHCR_OK=1
                 fi
                 if [ "$BOX_GHCR_OK" != "1" ]; then
-                  echo "::error::[cgc-db] refusing the pvt restore: box cannot resolve $_probe_img, so the private repos' images are unpullable and $VOL would silently end up with public data only"
-                  exit 1
+                  # #1817: the PUBLIC run never builds private images (private_repos are
+                  # filtered out of its matrix; they belong to the private cloud-me-pvt-cgc
+                  # run, #951). An unpullable private image therefore means "not this run's
+                  # surface", not a failure: the pvt volume is left exactly as it is (never
+                  # rebuilt with public data only) and the pub surface above stands.
+                  echo "::warning::[cgc-db] skipping the pvt restore: box cannot resolve $_probe_img (private images are published by the private cgc run, #951); $VOL is left unchanged, never rebuilt with public data only"
+                  continue
                 fi
                 ;;
             esac
