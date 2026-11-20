@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 24611,
+    "files": 24621,
     "by_lang": {
       "sh": 806,
       "js": 586,
       "py": 254,
-      "kotlin": 13762,
+      "kotlin": 13772,
       "ts": 8382,
       "java": 654,
       "nix": 37,
@@ -25,7 +25,7 @@
       "python": 90,
       "module": 6469,
       "java": 653,
-      "kotlin": 13759,
+      "kotlin": 13769,
       "flake": 33,
       "rust-module": 130,
       "nix-module": 4,
@@ -66477,6 +66477,7 @@
         "androidx.compose.foundation.rememberScrollState",
         "androidx.compose.foundation.shape.RoundedCornerShape",
         "androidx.compose.foundation.verticalScroll",
+        "androidx.compose.material3.OutlinedTextField",
         "androidx.compose.material3.Switch",
         "androidx.compose.material3.Text",
         "androidx.compose.runtime.Composable",
@@ -66498,16 +66499,19 @@
         "com.diegonmarcos.superapp.devtools.LogPipe",
         "com.diegonmarcos.superapp.fleetconfigs.FleetConfigs",
         "com.diegonmarcos.superapp.themebg.ThemeBackground",
-        "com.diegonmarcos.superapp.themebg.ThemeColors",
-        "kotlinx.coroutines.delay"
+        "com.diegonmarcos.superapp.themebg.ThemeColors"
       ],
       "symbols": [
+        "level(l: LogLevelFilter)",
+        "kind(k: LogKind)",
+        "filteredTail(uid: Int, errorsOnly: Boolean, filter: LogcatFilter)",
         "FleetLogcatPage(dark: Boolean)",
         "LogcatButton(label: String, c: ThemeColors, tag: String, onClick: ()",
-        "snapshot(ctx: Context, errorsOnly: Boolean, uid: Int)",
-        "copyMarkdown(ctx: Context, errorsOnly: Boolean, uid: Int)",
-        "shareMarkdown(ctx: Context, errorsOnly: Boolean, uid: Int)",
-        "saveHtml(ctx: Context, errorsOnly: Boolean, uid: Int)",
+        "FilterChip(label: String, on: Boolean, c: ThemeColors, tag: String, onClick: ()",
+        "snapshot(ctx: Context, errorsOnly: Boolean, uid: Int, filter: LogcatFilter = LogcatFilter()",
+        "copyMarkdown(ctx: Context, errorsOnly: Boolean, uid: Int, filter: LogcatFilter = LogcatFilter()",
+        "shareMarkdown(ctx: Context, errorsOnly: Boolean, uid: Int, filter: LogcatFilter = LogcatFilter()",
+        "saveHtml(ctx: Context, errorsOnly: Boolean, uid: Int, filter: LogcatFilter = LogcatFilter()",
         "class FleetLogcatTags"
       ]
     },
@@ -66556,6 +66560,47 @@
         "class FleetLogExport",
         "class Snapshot",
         "class Record"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/fleetconfigs-logcat/src/main/java/com/diegonmarcos/superapp/fleetlogcat/LogcatFilter.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "LogLevelFilter",
+        "LogKind",
+        "LogcatFilter",
+        "logKindOf"
+      ],
+      "imports": [],
+      "symbols": [
+        "describe()",
+        "matches(r: FleetLogExport.Record)",
+        "apply(lines: List<String>, max: Int = Int.MAX_VALUE)",
+        "levelRank(c: Char)",
+        "logKindOf(r: FleetLogExport.Record)",
+        "class LogLevelFilter",
+        "class LogKind",
+        "class LogcatFilter"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/fleetconfigs-logcat/src/test/java/com/diegonmarcos/superapp/fleetlogcat/FleetLogcatFilterTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "FleetLogcatFilterTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.io.File"
+      ],
+      "symbols": [
+        "line(level: Char, tag: String, msg: String)",
+        "class FleetLogcatFilterTest"
       ]
     },
     {
@@ -107746,10 +107791,10 @@
         "androidx.compose.runtime.staticCompositionLocalOf",
         "androidx.compose.ui.Alignment",
         "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.layout.positionInParent",
+        "androidx.compose.ui.layout.onGloballyPositioned",
         "androidx.compose.ui.draw.clip",
-        "androidx.compose.ui.graphics.painter.Painter",
-        "androidx.compose.ui.platform.LocalDensity",
-        "androidx.compose.ui.platform.testTag"
+        "androidx.compose.ui.graphics.painter.Painter"
       ],
       "symbols": [
         "tab(id: String)",
@@ -263858,6 +263903,7 @@
       ],
       "symbols": [
         "onCreate(savedInstanceState: Bundle?)",
+        "applyViewMode(mode: GrabberViewMode)",
         "deliver(reply: ProcessTextReply)",
         "onDestroy()",
         "openFromKeyboard(ctx: Context, text: String)",
@@ -264025,7 +264071,8 @@
         "GrabberLaunch",
         "GrabberDiag",
         "GrabberAuto",
-        "GrabberSelectionService"
+        "GrabberSelectionService",
+        "SelectionNodeSearch"
       ],
       "imports": [
         "android.accessibilityservice.AccessibilityService",
@@ -264076,16 +264123,16 @@
         "imeFire()",
         "onServiceConnected()",
         "onAccessibilityEvent(e: AccessibilityEvent?)",
-        "selectedNode(root: AccessibilityNodeInfo)",
-        "walk(n: AccessibilityNodeInfo, depth: Int)",
+        "settle(pkg: String, password: Boolean, sel: String?, searchNote: String)",
         "onInterrupt()",
         "onDestroy()",
-        "class SelectionTrigger",
-        "class Candidate",
-        "class SelectionEvent",
-        "class Outcome",
-        "class Decision",
-        "class GrabberLaunch"
+        "children(n: N)",
+        "hasSelection(n: N)",
+        "visible(n: N)",
+        "release(n: N)",
+        "find(root: N, tree: Tree<N>, now: ()",
+        "children(n: AccessibilityNodeInfo)",
+        "hasSelection(n: AccessibilityNodeInfo)"
       ]
     },
     {
@@ -264477,7 +264524,11 @@
         "shimmer",
         "ConsoleBox",
         "GrabberPanel",
-        "GrabberSheet"
+        "GrabberSheet",
+        "GrabberViewMode",
+        "GRABBER_DOCKED_HEIGHT",
+        "GrabberViewTags",
+        "GrabberViewPrefs"
       ],
       "imports": [
         "android.content.Context",
@@ -264497,6 +264548,7 @@
         "androidx.compose.animation.core.infiniteRepeatable",
         "androidx.compose.animation.core.rememberInfiniteTransition",
         "androidx.compose.animation.core.spring",
+        "androidx.compose.animation.core.animateDpAsState",
         "androidx.compose.animation.core.tween",
         "androidx.compose.animation.fadeIn",
         "androidx.compose.animation.fadeOut",
@@ -264518,8 +264570,7 @@
         "androidx.compose.foundation.layout.Row",
         "androidx.compose.foundation.layout.Spacer",
         "androidx.compose.foundation.layout.aspectRatio",
-        "androidx.compose.foundation.layout.fillMaxSize",
-        "androidx.compose.foundation.layout.fillMaxWidth"
+        "androidx.compose.foundation.layout.fillMaxSize"
       ],
       "symbols": [
         "kind(k: SelectionKind)",
@@ -264551,9 +264602,15 @@
         "TripBox(model: GrabberModel)",
         "TripRow(label: String, leg: Load<Leg>)",
         "MapCanvas(m: MediaResult.MapView, modifier: Modifier)",
-        "GrabberSheet(model: GrabberModel, onReply: (ProcessTextReply)",
+        "GrabberSheet( model: GrabberModel, onReply: (ProcessTextReply)",
+        "setMode(m: GrabberViewMode)",
         "dismiss()",
-        "class GC"
+        "get(ctx: android.content.Context)",
+        "set(ctx: android.content.Context, mode: GrabberViewMode)",
+        "class GC",
+        "class GrabberViewMode",
+        "class GrabberViewTags",
+        "class GrabberViewPrefs"
       ]
     },
     {
@@ -265087,6 +265144,33 @@
       ]
     },
     {
+      "path": "ac_cloud-keyboard/app/src/test/java/com/diegonmarcos/cloudkeyboard/grabber/GrabberViewAndBrowserTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "GrabberViewAndBrowserTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.io.File"
+      ],
+      "symbols": [
+        "sheet()",
+        "GrabberSheet(\")",
+        "applyViewMode(\")",
+        "children(n: Int)",
+        "hasSelection(n: Int)",
+        "visible(n: Int)",
+        "page(depth: Int, width: Int)",
+        "class GrabberViewAndBrowserTest",
+        "class GrabberViewMode",
+        "class Fake"
+      ]
+    },
+    {
       "path": "ac_cloud-keyboard/app/src/test/java/com/diegonmarcos/cloudkeyboard/handwrite/InkConversionTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -265126,6 +265210,7 @@
         "activity(name: String)",
         "manifestDeclaresTheFourWriterEntriesWithExactLabels()",
         "askCloudGrabberLabelKeepsTheOldString()",
+        "theMenuEntriesAreNamedAndOrderedWithGrabberFirst()",
         "sixProcessTextEntriesInTotalFromTheKeyboardAreFiveActivitiesPlusWriter()",
         "eachEntryRoutesToItsMode()",
         "replaceInPlaceReturnsTheResultOnlyWhenNotReadOnly()",
@@ -266853,12 +266938,14 @@
         "org.json.JSONArray",
         "org.json.JSONObject",
         "java.io.IOException",
-        "java.util.concurrent.TimeUnit"
+        "java.util.concurrent.TimeUnit",
+        "kotlinx.coroutines.async"
       ],
       "symbols": [
         "bind(app: Context)",
         "endpoints()",
         "check(request: RecipientCheckRequest)",
+        "withPhoneProbes( parsed: Map<String, RecipientStatus>, specs: Map<String, ClientProbeSpec>, messageSizeBytes: Long?, )",
         "post(ends: Endpoints, body: String)",
         "recipientCheckError(httpCode: Int, body: String)",
         "str(name: String)",
@@ -266877,6 +266964,7 @@
         "detailLine(v: Any?)",
         "withCheckDetails(item: RecipientCheckItem, details: JSONObject)",
         "listItems(a: JSONArray)",
+        "clientProbeSpecs(body: String)",
         "parseRecipientCheckResponse(body: String, messageSizeBytes: Long?)",
         "class FleetRecipientChecker",
         "class Endpoints",
@@ -266963,6 +267051,57 @@
         "communicationMcpBase(clock: ()",
         "register( published: FleetEndpointsContract.Published, service: String, router: EndpointRouter, bearers: FleetBearers, )",
         "class MailFleetServices"
+      ]
+    },
+    {
+      "path": "ac_cloud-mail/app/src/main/kotlin/app/sterna/fleet/PhoneMailboxProbe.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ClientProbeSpec",
+        "PhoneProbeResult",
+        "SmtpSession",
+        "SmtpDialer",
+        "SocketSmtpDialer",
+        "PhoneMailboxProbe"
+      ],
+      "imports": [
+        "app.sterna.ui.compose.CheckOutcome",
+        "app.sterna.ui.compose.CheckSource",
+        "app.sterna.ui.compose.RecipientCheckItem",
+        "app.sterna.ui.compose.RecipientCheckKind",
+        "app.sterna.ui.compose.RecipientStatus",
+        "app.sterna.ui.compose.RecipientVerdict",
+        "java.io.BufferedReader",
+        "java.io.Closeable",
+        "java.io.InputStreamReader",
+        "java.io.OutputStream",
+        "java.net.InetSocketAddress",
+        "java.net.Socket",
+        "java.net.SocketTimeoutException",
+        "java.security.SecureRandom"
+      ],
+      "symbols": [
+        "reply(deadlineMillis: Long)",
+        "send(line: String)",
+        "open(host: String, port: Int, connectTimeoutMillis: Int)",
+        "close()",
+        "randomLocal()",
+        "reset()",
+        "probe( spec: ClientProbeSpec, address: String, dialer: SmtpDialer = SocketSmtpDialer, now: ()",
+        "probeHost(dialer: SmtpDialer, host: String, address: String, spec: ClientProbeSpec, random: ()",
+        "say(l: String)",
+        "hear()",
+        "done(mailbox: String, code: Int?, reason: String)",
+        "parseSize(ehlo: String)",
+        "applyPhoneProbe(status: RecipientStatus, probe: PhoneProbeResult, messageSizeBytes: Long?)",
+        "class ClientProbeSpec",
+        "class PhoneProbeResult",
+        "class SmtpSession",
+        "class SmtpDialer",
+        "class SocketSmtpDialer",
+        "class PhoneMailboxProbe",
+        "class Gate"
       ]
     },
     {
@@ -267880,6 +268019,7 @@
       ],
       "symbols": [
         "onCreate()",
+        "goForeground()",
         "onTimeout(startId: Int, fgsType: Int)",
         "onStartCommand(intent: Intent?, flags: Int, startId: Int)",
         "refreshBadge()",
@@ -270263,6 +270403,7 @@
         "androidx.compose.foundation.layout.padding",
         "androidx.compose.foundation.layout.size",
         "androidx.compose.foundation.rememberScrollState",
+        "androidx.compose.foundation.text.selection.SelectionContainer",
         "androidx.compose.foundation.verticalScroll",
         "androidx.compose.material.icons.Icons",
         "androidx.compose.material.icons.automirrored.outlined.HelpOutline",
@@ -270284,14 +270425,16 @@
         "androidx.compose.ui.Modifier",
         "androidx.compose.ui.graphics.Color",
         "androidx.compose.ui.graphics.vector.ImageVector",
+        "androidx.compose.ui.platform.LocalClipboardManager",
+        "androidx.compose.ui.platform.LocalContext",
+        "androidx.compose.ui.text.AnnotatedString",
         "androidx.compose.ui.res.stringResource",
         "androidx.compose.ui.semantics.Role",
         "androidx.compose.ui.semantics.contentDescription",
         "androidx.compose.ui.semantics.semantics",
         "app.sterna.R",
         "app.sterna.ui.theme.MailMetrics",
-        "java.text.DateFormat",
-        "java.util.Date"
+        "android.widget.Toast"
       ],
       "symbols": [
         "verdictIcon(verdict: RecipientVerdict)",
@@ -270306,7 +270449,9 @@
         "RecipientStatusMark(status: RecipientStatus?, onClick: ()",
         "checkDetailText(item: RecipientCheckItem)",
         "RecipientStatusSheet( address: String, status: RecipientStatus?, checkerBound: Boolean, onCheckAgain: ()",
-        "UndeliverableRecipientsDialog( recipients: List<String>, statuses: Map<String, RecipientStatus>, onSendAnyway: ()"
+        "recipientReportText( title: String, address: String, verdict: String, serverReason: String?, cachedNote: String?, checks: List<ReportCheckLine>, checkedAt: String?, notConnected: String?, unreachable: String?, )",
+        "UndeliverableRecipientsDialog( recipients: List<String>, statuses: Map<String, RecipientStatus>, onSendAnyway: ()",
+        "class ReportCheckLine"
       ]
     },
     {
@@ -274514,6 +274659,21 @@
       "imports": [
         "androidx.annotation.StringRes",
         "androidx.compose.foundation.layout.Box",
+        "androidx.compose.foundation.layout.Row",
+        "androidx.compose.foundation.layout.Spacer",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.foundation.layout.width",
+        "androidx.compose.foundation.selection.selectable",
+        "androidx.compose.material3.AlertDialog",
+        "androidx.compose.material3.HorizontalDivider",
+        "androidx.compose.material3.MaterialTheme",
+        "androidx.compose.material3.RadioButton",
+        "androidx.compose.material3.Text",
+        "androidx.compose.material3.TextButton",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.ui.Alignment",
+        "androidx.compose.ui.semantics.Role",
         "androidx.compose.foundation.layout.Column",
         "androidx.compose.foundation.layout.fillMaxSize",
         "androidx.compose.foundation.layout.padding",
@@ -274536,22 +274696,7 @@
         "androidx.compose.material.icons.filled.MoreHoriz",
         "androidx.compose.material.icons.filled.Notifications",
         "androidx.compose.material.icons.filled.Palette",
-        "androidx.compose.material.icons.filled.Person",
-        "androidx.compose.material.icons.filled.Refresh",
-        "androidx.compose.material.icons.filled.RssFeed",
-        "androidx.compose.material.icons.filled.Search",
-        "androidx.compose.material.icons.filled.Settings",
-        "androidx.compose.material.icons.filled.Storage",
-        "androidx.compose.runtime.Composable",
-        "androidx.compose.runtime.getValue",
-        "androidx.compose.runtime.remember",
-        "androidx.compose.ui.Modifier",
-        "androidx.compose.ui.graphics.vector.ImageVector",
-        "androidx.compose.ui.platform.LocalContext",
-        "androidx.compose.ui.res.stringResource",
-        "androidx.lifecycle.compose.collectAsStateWithLifecycle",
-        "androidx.navigation.NavController",
-        "androidx.navigation.NavGraphBuilder"
+        "androidx.compose.material.icons.filled.Person"
       ],
       "symbols": [
         "fleetNode(id: String, icon: ImageVector)",
@@ -274564,6 +274709,10 @@
         "settingsTreeDestinations( nav: NavController, accountsViewModel: AccountsViewModel, onBack: ()",
         "fleetStrip()",
         "SettingsTreePage( node: TreeNode?, onBack: ()",
+        "accountRouteFor(n: TreeNode, currentId: String?, accounts: List<StoredAccount>)",
+        "TreeRow( n: TreeNode, strip: List<NavPage>, currentAccountLabel: String, accounts: List<StoredAccount>, currentId: String?, onOpen: (String)",
+        "AccountSelectorRow( accounts: List<StoredAccount>, currentId: String?, onSelect: (String)",
+        "NavigationModeRows()",
         "AboutRow(n: TreeNode, onOpenUrl: (String)",
         "class TreeKind",
         "class TreeNode"
@@ -276930,6 +277079,39 @@
       ]
     },
     {
+      "path": "ac_cloud-mail/app/src/test/kotlin/app/sterna/fleet/PhoneMailboxProbeTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "PhoneMailboxProbeTest"
+      ],
+      "imports": [
+        "app.sterna.ui.compose.CheckOutcome",
+        "app.sterna.ui.compose.CheckSource",
+        "app.sterna.ui.compose.RecipientCheckKind",
+        "app.sterna.ui.compose.RecipientVerdict",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Before",
+        "org.junit.Test",
+        "java.io.File",
+        "java.io.IOException",
+        "java.net.SocketTimeoutException"
+      ],
+      "symbols": [
+        "clean()",
+        "dialer(reachable: Set<String>)",
+        "reply(deadlineMillis: Long)",
+        "send(line: String)",
+        "close()",
+        "blockedStatus()",
+        "class PhoneMailboxProbeTest",
+        "class FakeMx"
+      ]
+    },
+    {
       "path": "ac_cloud-mail/app/src/test/kotlin/app/sterna/fleet/SignaturesSetupHandlerTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -277542,6 +277724,27 @@
         "bodyOf(file: File, name: String)",
         "class PreviewReachesTheNotificationWiringTest",
         "class of"
+      ]
+    },
+    {
+      "path": "ac_cloud-mail/app/src/test/kotlin/app/sterna/push/PushStartAndCrashProcessTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "PushStartAndCrashProcessTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.io.File"
+      ],
+      "symbols": [
+        "src(rel: String)",
+        "body(text: String, signature: String)",
+        "onStartCommand(\")",
+        "onCreate()",
+        "goForeground()",
+        "class PushStartAndCrashProcessTest"
       ]
     },
     {
@@ -280153,6 +280356,28 @@
         "class RecipientMenuFitTest",
         "class Keyed",
         "class ImeBinding"
+      ]
+    },
+    {
+      "path": "ac_cloud-mail/app/src/test/kotlin/app/sterna/ui/compose/RecipientSheetCopyTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "RecipientSheetCopyTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.io.File"
+      ],
+      "symbols": [
+        "src(name: String)",
+        "res(dir: String)",
+        "sheet()",
+        "RecipientStatusSheet(\")",
+        "class RecipientSheetCopyTest",
+        "class ReportCheckLine"
       ]
     },
     {
@@ -285805,6 +286030,10 @@
         "gaps(tree: List<TreeNode>)",
         "without(route: String)",
         "show(page: String)",
+        "SettingsTreePage(\")",
+        "accountRouteFor(\")",
+        "AccountSelectorRow(\")",
+        "NavigationModeRows(\")",
         "stringOf(xml: String, key: String)",
         "class SettingsTreeParityTest"
       ]
@@ -636094,7 +636323,7 @@
       ]
     },
     {
-      "path": "ac_cloud-wiki/app/src/main/assets/chronos/Chronos/2.Milkwaysphere-Orbits/OrbitControls.js",
+      "path": "ac_cloud-wiki/app/src/main/assets/chronos/vendor/three/0.128.0/OrbitControls.js",
       "lang": "js",
       "role": "module",
       "exports": [],
@@ -636149,7 +636378,10 @@
       "exports": [
         "ChronosPage",
         "ChronosTree",
-        "Chronos"
+        "Chronos",
+        "withChronos",
+        "chronosTabs",
+        "chronosTabOf"
       ],
       "imports": [
         "org.json.JSONArray",
@@ -636164,9 +636396,60 @@
         "parse(sectionsJson: String)",
         "walk(a: JSONArray?, up: String?)",
         "objects(a: JSONArray?)",
+        "withChronos(section: com.diegonmarcos.superapp.bottomnav.NavSection, @Suppress(\"UNUSED_PARAMETER\")",
+        "chronosTabs(tree: ChronosTree)",
+        "chronosTabOf(tree: ChronosTree, id: String?)",
         "class ChronosPage",
         "class ChronosTree",
         "class Chronos"
+      ]
+    },
+    {
+      "path": "ac_cloud-wiki/app/src/main/java/com/diegonmarcos/cloudwiki/ChronosRepo.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ChronosRepo"
+      ],
+      "imports": [
+        "android.content.Context",
+        "kotlinx.coroutines.Dispatchers",
+        "kotlinx.coroutines.flow.MutableStateFlow",
+        "kotlinx.coroutines.flow.StateFlow",
+        "kotlinx.coroutines.flow.asStateFlow",
+        "kotlinx.coroutines.sync.Mutex",
+        "kotlinx.coroutines.sync.withLock",
+        "kotlinx.coroutines.withContext",
+        "org.json.JSONObject",
+        "java.io.File"
+      ],
+      "symbols": [
+        "repoDir(ctx: Context)",
+        "scratchDir(ctx: Context)",
+        "oldDir(ctx: Context)",
+        "runtime(ctx: Context)",
+        "cloneSource()",
+        "mode(ctx: Context)",
+        "setMode(ctx: Context, id: String)",
+        "start(ctx: Context)",
+        "due(mode: Mode, cloned: Boolean, at: Long, now: Long, opening: Boolean)",
+        "refreshIfDue(ctx: Context, opening: Boolean)",
+        "refresh(ctx: Context)",
+        "readOnly(dir: File)",
+        "rewrite(text: String, rewrites: List<Pair<String, String>>)",
+        "scan(sourceDir: File, r: Runtime)",
+        "node(rel: String, parent: String?)",
+        "cardNames(sourceDir: File)",
+        "segId(name: String)",
+        "titleOf(html: String)",
+        "unescape(s: String)",
+        "natural(a: String, b: String)",
+        "parts(s: String)",
+        "parseRuntime(json: String)",
+        "class ChronosRepo",
+        "class Mode",
+        "class Runtime",
+        "class State"
       ]
     },
     {
@@ -636248,6 +636531,11 @@
         "androidx.compose.foundation.layout.fillMaxSize",
         "androidx.compose.foundation.layout.fillMaxWidth",
         "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.LaunchedEffect",
+        "androidx.compose.runtime.collectAsState",
+        "androidx.compose.runtime.rememberCoroutineScope",
+        "androidx.compose.ui.platform.LocalContext",
+        "kotlinx.coroutines.launch",
         "androidx.compose.runtime.getValue",
         "androidx.compose.runtime.mutableStateOf",
         "androidx.compose.runtime.remember",
@@ -636256,19 +636544,24 @@
         "androidx.compose.ui.Modifier",
         "androidx.compose.ui.platform.testTag",
         "androidx.compose.ui.viewinterop.AndroidView",
-        "androidx.webkit.WebViewAssetLoader",
-        "com.diegonmarcos.cloudwiki.Chronos",
-        "com.diegonmarcos.cloudwiki.ChronosPage",
-        "com.diegonmarcos.cloudwiki.ChronosTree",
-        "com.diegonmarcos.cloudlib.web.CloudWeb",
-        "com.diegonmarcos.cloudlib.web.CloudWebClient",
-        "com.diegonmarcos.cloudlib.web.WebProfile",
-        "com.diegonmarcos.superapp.bottomnav.NavPage",
-        "com.diegonmarcos.superapp.navbartop2.NavBarTopSecondRow",
-        "java.io.ByteArrayInputStream"
+        "androidx.compose.foundation.layout.Row",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.foundation.layout.size",
+        "androidx.compose.material3.CircularProgressIndicator",
+        "androidx.compose.material3.DropdownMenu",
+        "androidx.compose.material3.DropdownMenuItem",
+        "androidx.compose.material3.MaterialTheme",
+        "androidx.compose.material3.Text",
+        "androidx.compose.foundation.clickable",
+        "androidx.compose.foundation.shape.RoundedCornerShape",
+        "androidx.compose.ui.draw.clip",
+        "androidx.compose.ui.Alignment",
+        "androidx.compose.ui.res.stringResource",
+        "androidx.compose.ui.unit.dp"
       ],
       "symbols": [
         "serve(path: String)",
+        "cloneServe(asset: String)",
         "onOrigin(u: Uri?)",
         "shouldInterceptRequest(view: WebView, request: WebResourceRequest)",
         "shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest)",
@@ -636279,6 +636572,8 @@
         "mime(p: String)",
         "chronosUrl(page: ChronosPage)",
         "ChronosSimPage(tree: ChronosTree, page: ChronosPage, onOpen: (String)",
+        "ChronosSourceBar( repo: ChronosRepo.State, runtime: ChronosRepo.Runtime, mode: ChronosRepo.Mode, onRefresh: ()",
+        "SourceChip(label: String, tag: String, onClick: ()",
         "class ChronosWebClient",
         "class HeldView"
       ]
@@ -636340,6 +636635,7 @@
         "toggle(tag: String)",
         "clear()",
         "WikiPage(data: WikiData?, wiki: NavSection, pageId: String, nav: WikiNav, onTopic: (String)",
+        "ChronosTopic(data: WikiData?, sim: com.diegonmarcos.cloudwiki.ChronosPage?, nav: WikiNav, onTopic: (String)",
         "TagChip(tag: String, selected: Boolean, onClick: ()",
         "Chips(pages: List<Page>, nav: WikiNav)",
         "Overview(data: WikiData, intro: String, pages: List<Page>, nav: WikiNav, open: (String)",
@@ -636369,6 +636665,7 @@
         "androidx.compose.foundation.layout.union",
         "androidx.compose.foundation.layout.windowInsetsPadding",
         "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.LaunchedEffect",
         "androidx.compose.runtime.collectAsState",
         "androidx.compose.runtime.getValue",
         "androidx.compose.runtime.mutableStateOf",
@@ -636379,7 +636676,10 @@
         "androidx.compose.ui.platform.LocalContext",
         "androidx.compose.ui.platform.testTag",
         "androidx.compose.ui.res.stringResource",
+        "com.diegonmarcos.cloudwiki.Chronos",
+        "com.diegonmarcos.cloudwiki.ChronosRepo",
         "com.diegonmarcos.cloudwiki.Decl",
+        "com.diegonmarcos.cloudwiki.withChronos",
         "com.diegonmarcos.cloudwiki.R",
         "com.diegonmarcos.cloudwiki.WikiStart",
         "com.diegonmarcos.cloudwiki.WikiStore",
@@ -636464,6 +636764,34 @@
       ]
     },
     {
+      "path": "ac_cloud-wiki/app/src/test/java/com/diegonmarcos/cloudwiki/ChronosRepoTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ChronosRepoTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.bottomnav.NavPage",
+        "com.diegonmarcos.superapp.bottomnav.NavSection",
+        "org.json.JSONObject",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.io.File"
+      ],
+      "symbols": [
+        "theRuntimeConfigIsThePins()",
+        "aScannedCloneGivesTheSameTreeAsTheBuildTool()",
+        "pagesOfTheCloneHaveTheirCdnScriptsAnsweredFromTheApk()",
+        "theRefreshModes()",
+        "idsAndOrderFollowTheBuildToolsRules()",
+        "chronosIsOneMenuEntryAndItsSimulatorsAreItsTabs()",
+        "theCloneIsReadOnlyAndServedSafely()",
+        "class ChronosRepoTest"
+      ]
+    },
+    {
       "path": "ac_cloud-wiki/app/src/test/java/com/diegonmarcos/cloudwiki/ChronosTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -636480,7 +636808,7 @@
       ],
       "symbols": [
         "theTreeIsTheRepoHierarchyUnderChronos()",
-        "theLabelsAreThePagesOwnTitles()",
+        "theLabelsAreTheReposOwnNames()",
         "everyDeclaredAssetIsInTheApkAndEveryAssetPageIsDeclared()",
         "noBakedChronosPageIsAPlaceholder()",
         "aPageLoadsByItsDirectorySoRelativeLinksResolve()",
@@ -636773,11 +637101,13 @@
         "title_of(text, where)",
         "natural(s)",
         "seg_id(name)",
+        "card_names(root)",
+        "page_label(rel, text, names, nav, where)",
         "tree(root, pin)",
         "flat(pages)",
         "font_css(url, pin, files, sums, repin)",
         "vendored(rel, url, sums, repin)",
-        "rewrite(text, pin, files, sums, repin, where)",
+        "rewrite(text, pin, files, sums, repin, where, rewrites=None)",
         "generate(pin, commit, repin=False)",
         "declared_parent(bj, pin)",
         "on_disk(root)",
@@ -636801,11 +637131,13 @@
         "title_of(text, where)",
         "natural(s)",
         "seg_id(name)",
+        "card_names(root)",
+        "page_label(rel, text, names, nav, where)",
         "tree(root, pin)",
         "flat(pages)",
         "font_css(url, pin, files, sums, repin)",
         "vendored(rel, url, sums, repin)",
-        "rewrite(text, pin, files, sums, repin, where)",
+        "rewrite(text, pin, files, sums, repin, where, rewrites=None)",
         "generate(pin, commit, repin=False)",
         "declared_parent(bj, pin)",
         "on_disk(root)",
@@ -637306,6 +637638,14 @@
       "symbols": [
         "plus(o: Got)",
         "parse(connector: String, body: String, o: Opt)",
+        "htmlText(html: String)",
+        "commaNum(s: String)",
+        "ccil(body: String)",
+        "anbima(body: String)",
+        "phei(body: String)",
+        "sarb(body: String)",
+        "banxico(body: String, each: String)",
+        "dbnomicsLatest(body: String)",
         "nyfed(body: String)",
         "treasury(body: String)",
         "sdmx(body: String, keyDim: String)",
@@ -637335,11 +637675,7 @@
         "strings(a: JSONArray?)",
         "num(o: JSONObject, key: String)",
         "class Pt",
-        "class Ev",
-        "class Bar",
-        "class Got",
-        "class Feeds",
-        "class Opt"
+        "class Ev"
       ]
     },
     {
@@ -640479,6 +640815,42 @@
         "frankfurterDownFallsBackToTheEcbRatesOnDbnomics()",
         "noFeedsIsAnErrorStateNamingTheReason()",
         "class EmCalcTest",
+        "class Fake"
+      ]
+    },
+    {
+      "path": "ad_Capital-Stack-FinTerminal/app/src/test/java/com/diegonmarcos/capitalfinterm/EmCurvesTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "EmCurvesTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNotNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.io.IOException",
+        "java.time.LocalDate"
+      ],
+      "symbols": [
+        "fx(name: String)",
+        "panel(id: String)",
+        "src(id: String)",
+        "get(url: String)",
+        "post(url: String)",
+        "load(id: String, http: Http)",
+        "theFiveCurvesAreDeclaredUnderCbYieldCurvesEachFromItsPublisher()",
+        "indiaIsTheCcilGovernmentCurveWithoutTheStateLoans()",
+        "brazilIsTheAnbimaPrefixedZeroCurveAtTheCircularVertices()",
+        "indonesiaIsThePheiCurveWithYesterdayAsTheChange()",
+        "southAfricaIsTheSarbBillsBondsAndBands()",
+        "mexicoIsOneBanxicoRequestPerAuctionSeries()",
+        "anUnreachablePublisherFallsBackToTheOecdRatesOnDbnomics()",
+        "nothingAnsweringIsAnErrorNotAnEmptyCurve()",
+        "theParsersReadNothingFromAnotherPage()",
+        "class EmCurvesTest",
         "class Fake"
       ]
     },
