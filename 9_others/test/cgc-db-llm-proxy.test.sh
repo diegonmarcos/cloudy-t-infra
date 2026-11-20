@@ -68,6 +68,8 @@ class H(BaseHTTPRequestHandler):
             return self.send(200, OK) if fb else self.send(404, {"error": {"message": "no longer available"}})
         if mode == "cap-day": return self.send(429, {"error": {"message": "Rate limit exceeded: free-models-per-day. "}})
         if mode == "cap-min": return self.send(429, {"error": {"message": "Rate limit exceeded: free-models-per-min. "}})
+        if mode == "nocredit":
+            return self.send(200, OK) if fb else self.send(402, {"error": {"message": "Insufficient credits"}})
         if mode == "fenced": return self.send(200, {"id": "x", "choices": [{"message": {"content": "```json\n{\"relationships\": []}\n```"}}]})
 ThreadingHTTPServer.daemon_threads = True
 s = ThreadingHTTPServer(("127.0.0.1", 0), H)
@@ -180,6 +182,11 @@ call rel gone
 call rel gone x2
 [ "$CODE" = 200 ] && [ "$(last | jq -r '(.attempts|tostring) + " " + (.gone|tostring)')" = "1 0" ] \
   && ok "the retired model is skipped for the rest of the run (next call: 1 attempt, no 404)" || bad "gone sticky: $CODE $(last)"
+call rel nocredit
+[ "$CODE" = 200 ] && [ "$(last | jq -r '.outcome + " " + .model')" = "ok fb/model:free" ] \
+  && ok "a 402 (paid balance spent) drops to the free fallback in the same call" || bad "402 fallback: $CODE $(last)"
+grep -q '"\$_cp_code" = "402" \] && \[ -n "\${CGC_LLM_FALLBACK_MODELS:-}" \]' "$UPD" \
+  && ok "the credit preflight warns, not fails, on 402 when free fallbacks are declared" || bad "preflight still fatal on 402 with fallbacks"
 call rel empty-unless-fb
 [ "$CODE" = 200 ] && [ "$(last | jq -r '.outcome + " " + .model')" = "ok fb/model:free" ] \
   && ok "empty content on one model retries on the fallback model" || bad "badjson fallback: $CODE $(last)"

@@ -36,6 +36,7 @@ proxy on 127.0.0.1 and the proxy forwards to the real endpoint with:
   * #1817 model fallback: CGC_LLM_FALLBACK_MODELS (comma list, from build.json
     .runtime.octocode.update.llm_fallback_models) are tried in order after the
     client's own model. A model OpenRouter answers 404 for ("no longer available")
+    (or 402 Insufficient credits, the paid primary once the balance is spent)
     is dropped for the rest of the run, so free models retired mid-run cost one
     attempt, not the window; a badjson/429/5xx attempt moves to the next model;
   * one JSON line per logical call in --log (kind, outcome, attempts, latency, timeouts,
@@ -252,7 +253,7 @@ class Proxy:
                 kind = "429" if status == 429 else "5xx"
                 raise Upstream(kind, retry_after_s(resp.getheader("Retry-After")), status,
                                rate_cap(data) if status == 429 else None)
-            if status == 404 and FALLBACK_MODELS:
+            if status in (402, 404) and FALLBACK_MODELS:  # 402 = paid balance spent: same as retired
                 raise Upstream("gone", None, status)
             if status == 200:
                 try:
