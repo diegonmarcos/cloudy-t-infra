@@ -81,9 +81,10 @@ FORWARD_HEADERS = ("content-type", "authorization", "http-referer", "x-title", "
 class Upstream(Exception):
     """One failed attempt: kind is timeout | net | 429 | 5xx | bad200 | badjson | gone."""
 
-    def __init__(self, kind, retry_after=None, status=None):
+    def __init__(self, kind, retry_after=None, status=None, cap=None):
         super().__init__(kind)
         self.kind = kind
+        self.cap = cap  # 429 only: "day" | "min" | None (which OpenRouter limit answered)
         self.retry_after = retry_after
         self.status = status
 
@@ -100,6 +101,21 @@ def retry_after_s(value):
         return max(0.0, parsedate_to_datetime(value).timestamp() - time.time())
     except (TypeError, ValueError):
         return None
+
+
+def rate_cap(data):
+    """#1817: which limit a 429 names. OpenRouter's free tier answers
+    "Rate limit exceeded: free-models-per-day" or "...-per-min"; only the message is
+    read (never headers), so nothing secret can reach the log."""
+    try:
+        msg = json.dumps(json.loads(data).get("error") or "").lower()
+    except (ValueError, AttributeError):
+        msg = data[:400].decode("utf-8", "replace").lower()
+    if "per-day" in msg or "per day" in msg or "daily" in msg:
+        return "day"
+    if "per-min" in msg or "per min" in msg:
+        return "min"
+    return None
 
 
 def user_text(req):
@@ -234,7 +250,8 @@ class Proxy:
             status = resp.status
             if status == 429 or status >= 500:
                 kind = "429" if status == 429 else "5xx"
-                raise Upstream(kind, retry_after_s(resp.getheader("Retry-After")), status)
+                raise Upstream(kind, retry_after_s(resp.getheader("Retry-After")), status,
+                               rate_cap(data) if status == 429 else None)
             if status == 404 and FALLBACK_MODELS:
                 raise Upstream("gone", None, status)
             if status == 200:
@@ -260,7 +277,7 @@ class Proxy:
         kind, files = classify(body)
         h = hashlib.sha256(body).hexdigest()
         rec = {"t": round(time.time(), 3), "kind": kind, "files": len(files), "attempts": 0,
-               "timeouts": 0, "r429": 0, "r5xx": 0, "neterr": 0, "bad200": 0, "badjson": 0, "gone": 0, "wait_s": 0.0}
+               "timeouts": 0, "r429": 0, "r5xx": 0, "neterr": 0, "bad200": 0, "badjson": 0, "gone": 0, "r429_day": 0, "r429_min": 0, "wait_s": 0.0}
         with self.lock:
             self.seq += 1
             seq = self.seq
@@ -303,6 +320,8 @@ class Proxy:
                 key = {"timeout": "timeouts", "net": "neterr", "429": "r429", "5xx": "r5xx",
                        "bad200": "bad200", "badjson": "badjson", "gone": "gone"}[e.kind]
                 rec[key] += 1
+                if e.kind == "429" and e.cap:
+                    rec["r429_" + e.cap] += 1
                 n += 1
                 if e.kind == "gone":
                     with self.lock:

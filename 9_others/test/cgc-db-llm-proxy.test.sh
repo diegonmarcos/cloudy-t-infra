@@ -66,6 +66,8 @@ class H(BaseHTTPRequestHandler):
             return self.send(200, OK) if fb else self.send(200, {"id": "x", "choices": [{"message": {"content": ""}}]})
         if mode == "gone":
             return self.send(200, OK) if fb else self.send(404, {"error": {"message": "no longer available"}})
+        if mode == "cap-day": return self.send(429, {"error": {"message": "Rate limit exceeded: free-models-per-day. "}})
+        if mode == "cap-min": return self.send(429, {"error": {"message": "Rate limit exceeded: free-models-per-min. "}})
         if mode == "fenced": return self.send(200, {"id": "x", "choices": [{"message": {"content": "```json\n{\"relationships\": []}\n```"}}]})
 ThreadingHTTPServer.daemon_threads = True
 s = ThreadingHTTPServer(("127.0.0.1", 0), H)
@@ -181,6 +183,15 @@ call rel gone x2
 call rel empty-unless-fb
 [ "$CODE" = 200 ] && [ "$(last | jq -r '.outcome + " " + .model')" = "ok fb/model:free" ] \
   && ok "empty content on one model retries on the fallback model" || bad "badjson fallback: $CODE $(last)"
+kill "${PIDS##* }" 2>/dev/null; : > "$W/calls.jsonl"; start_proxy
+call rel cap-day
+[ "$(last | jq -r '(.r429|tostring) + " " + (.r429_day|tostring) + " " + (.r429_min|tostring)')" = "2 2 0" ] \
+  && ok "a free-models-per-day 429 is logged as the daily cap" || bad "429 day class: $(last)"
+call rel cap-min
+[ "$(last | jq -r '(.r429_day|tostring) + " " + (.r429_min|tostring)')" = "0 2" ] \
+  && ok "a free-models-per-min 429 is logged as the per-minute cap" || bad "429 min class: $(last)"
+grep -q 'r429_day) daily cap' "$ROOT/1_cicd/src/ops/cloud-cgc-db-chunk.sh" \
+  && ok "the per-window LLM line splits 429s into daily cap / per-minute" || bad "chunk summary lacks the 429 split"
 grep -q 'CGC_LLM_FALLBACK_MODELS=.*llm_fallback_models' "$UPD" && grep -q 'export CGC_LLM_FALLBACK_MODELS' "$UPD" \
   && ok "cloud-cgc-db-update.sh feeds build.json llm_fallback_models to the proxy" || bad "update.sh does not wire llm_fallback_models"
 
