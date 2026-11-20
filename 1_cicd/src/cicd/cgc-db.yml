@@ -71,11 +71,15 @@ on:
           - pub
           - pvt
   # Schedule is data-driven from build.json runtime.octocode.update.schedule.
-  # Twice daily (4:00 and 16:00 UTC): keeps the graph current with minimal runner
+  # Twice daily (03:41 and 15:41 UTC): keeps the graph current with minimal runner
   # load. Each phase is change-gated per repo (skips repos whose HEAD is already
   # indexed in that phase's manifest) so unchanged repos cost seconds, not hours.
+  # #1817 off the hour on purpose: GitHub queues top-of-the-hour crons behind every
+  # other repo's, and "0 4,16" was created 7-8 h late on every day measured
+  # (2026-11-10..20: 11:07-12:39 and 20:15-23:55 UTC), so the twice-daily index
+  # really ran at noon and midnight. A minute off :00 is the documented remedy.
   schedule:
-    - cron: "0 4,16 * * *"
+    - cron: "41 3,15 * * *"
 
 # Serialise cgc-db against ITSELF, not against the deploy fleet.
 #

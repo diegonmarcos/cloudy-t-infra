@@ -299,6 +299,7 @@ chunk_llm_summary() {  # $1 call log|""  $2 lines seen before the window  $3 win
      deferred_calls: map(select(.outcome == "deferred")) | length,
      errors: map(select(.outcome != "ok" and .outcome != "repeat")) | length,
      timeouts: (map(.timeouts // 0) | add // 0), r429: (map(.r429 // 0) | add // 0),
+     r429_day: (map(.r429_day // 0) | add // 0), r429_min: (map(.r429_min // 0) | add // 0),
      r5xx: (map(.r5xx // 0) | add // 0), neterr: (map(.neterr // 0) | add // 0),
      wait_s: (map(.wait_s // 0) | add // 0 | floor),
      p50_s: (pct(0.5) / 1000 | floor), p95_s: (pct(0.95) / 1000 | floor),
@@ -307,7 +308,7 @@ chunk_llm_summary() {  # $1 call log|""  $2 lines seen before the window  $3 win
      breaker: (map(select(.breaker_opened == true or .outcome == "breaker")) | length > 0)}' \
     "$6/llm.jsonl" > "$6/llm.json"
   jq -r --arg l "$5" --argjson d "$3" --argjson f "$4" --argjson df "$(wc -l < "$6/deferred" | tr -d ' ')" '
-    "[cgc-db] \($l): \($d)s for \($f) new-work files (\(if $f > 0 then ($d * 100 / $f | floor) / 100 else "n/a" end) s/file); LLM \(.calls) calls (\(.desc) desc, \(.rel) rel): \(.ok) ok, \(.errors) bounded failures (\(.degraded) degraded, \(.deferred_calls) deferred = \($df) files kept outstanding), \(.timeouts) timeouts, \(.r429) 429s, \(.r5xx) 5xx, \(.neterr) net errors, \(.wait_s)s Retry-After/backoff waited; latency p50 \(.p50_s)s p95 \(.p95_s)s max \(.max_s)s; \(.out_tokens) output tokens\(if .breaker then "; CIRCUIT BREAKER OPENED" else "" end)"' "$6/llm.json"
+    "[cgc-db] \($l): \($d)s for \($f) new-work files (\(if $f > 0 then ($d * 100 / $f | floor) / 100 else "n/a" end) s/file); LLM \(.calls) calls (\(.desc) desc, \(.rel) rel): \(.ok) ok, \(.errors) bounded failures (\(.degraded) degraded, \(.deferred_calls) deferred = \($df) files kept outstanding), \(.timeouts) timeouts, \(.r429) 429s (\(.r429_day) daily cap, \(.r429_min) per-minute), \(.r5xx) 5xx, \(.neterr) net errors, \(.wait_s)s Retry-After/backoff waited; latency p50 \(.p50_s)s p95 \(.p95_s)s max \(.max_s)s; \(.out_tokens) output tokens\(if .breaker then "; CIRCUIT BREAKER OPENED" else "" end)"' "$6/llm.json"
   jq -e '.breaker' "$6/llm.json" >/dev/null 2>&1 && return 3
   return 0
 }

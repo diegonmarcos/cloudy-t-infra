@@ -159,6 +159,10 @@ for _r in $(jq -r '(.runtime.octocode.repo_map // {}) | keys[]?' "$BJ"); do
   done
 done
 LLM=$(jq -r     '.runtime.octocode.update.llm_model' "$BJ")
+# #1817: free OpenRouter models are retired without notice (cohere/north-mini-code:free
+# went 404 mid-run on 44646333693). The proxy tries these, in order, after llm_model.
+CGC_LLM_FALLBACK_MODELS="${CGC_LLM_FALLBACK_MODELS:-$(jq -r '[.runtime.octocode.update.llm_fallback_models[]? | sub("^openrouter:"; "")] | join(",")' "$BJ")}"
+export CGC_LLM_FALLBACK_MODELS
 # USE_LLM selects the GraphRAG LLM phase. Two-phase orchestration (cgc-db.yml →
 # cgc-db-index.yml) drives this via the environment: the `semantic` phase exports
 # USE_LLM=false, the `graphrag` phase exports USE_LLM=true. The ENVIRONMENT is
@@ -1395,7 +1399,12 @@ if [ "$USE_LLM" = "true" ] && [ -f "$CFG" ]; then
       _cp_code=$(curl -sS -m 30 -o /dev/null -w '%{http_code}' -X POST "$_llm_url" \
         -H "Authorization: Bearer ${OPENROUTER_API_KEY:-}" -H 'Content-Type: application/json' \
         -d "{\"model\":\"${LLM#openrouter:}\",\"max_tokens\":1,\"messages\":[{\"role\":\"user\",\"content\":\"ping\"}]}" 2>/dev/null) || _cp_code=""
-      if [ "$_cp_code" = "402" ]; then
+      if [ "$_cp_code" = "402" ] && [ -n "${CGC_LLM_FALLBACK_MODELS:-}" ]; then
+        # #1817 owner choice: paid primary while the balance lasts, declared free
+        # fallbacks otherwise. The proxy treats a 402 like a retired model (dropped
+        # for the run), so the index keeps running on the fallbacks instead of failing.
+        echo "::warning::[cgc-db] OpenRouter answered HTTP 402 Insufficient credits for ${LLM#openrouter:}: the paid balance is exhausted (top up at https://openrouter.ai/settings/credits). This run uses the declared free fallbacks: $CGC_LLM_FALLBACK_MODELS"
+      elif [ "$_cp_code" = "402" ]; then
         echo "::error::[cgc-db] OpenRouter answered HTTP 402 Insufficient credits to a 1-token probe: the account balance is exhausted. Top up at https://openrouter.ai/settings/credits; every graphrag LLM call fails until then, so this job stops now instead of after the retry/window budget."
         exit 1
       fi
