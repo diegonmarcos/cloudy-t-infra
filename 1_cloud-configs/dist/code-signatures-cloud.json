@@ -16474,6 +16474,7 @@
       "role": "python",
       "exports": [
         "retry_after_s(value)",
+        "rate_cap(data)",
         "user_text(req)",
         "classify(body)",
         "content_ok(data)",
@@ -16501,6 +16502,7 @@
       "symbols": [
         "_env(name, default)",
         "retry_after_s(value)",
+        "rate_cap(data)",
         "user_text(req)",
         "classify(body)",
         "content_ok(data)",
