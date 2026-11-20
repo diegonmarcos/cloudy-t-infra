@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 24621,
+    "files": 24632,
     "by_lang": {
-      "sh": 806,
+      "sh": 808,
       "js": 586,
       "py": 254,
-      "kotlin": 13772,
+      "kotlin": 13781,
       "ts": 8382,
       "java": 654,
       "nix": 37,
@@ -20,12 +20,12 @@
     "by_role": {
       "hook": 166,
       "file": 2266,
-      "shell": 642,
+      "shell": 644,
       "script": 343,
       "python": 90,
       "module": 6469,
       "java": 653,
-      "kotlin": 13769,
+      "kotlin": 13778,
       "flake": 33,
       "rust-module": 130,
       "nix-module": 4,
@@ -11522,7 +11522,7 @@
         "GroupHeading(label: String, subtitle: String)",
         "DetailsLink(group: DeviceControls.Group)",
         "tileTag(id: String)",
-        "newInstance(embedded: Boolean = false)",
+        "newInstance(embedded: Boolean = false, tab: String = DeviceControls.TAB_TOOLS)",
         "class of",
         "class ControlFragment",
         "class Reading",
@@ -11569,6 +11569,8 @@
         "org.json.JSONObject"
       ],
       "symbols": [
+        "a11ySet(ctx: Context, id: String, on: Boolean)",
+        "a11yBlocked(ctx: Context, id: String)",
         "launcherToggle(id: String)",
         "state(ctx: Context)",
         "flashCameraId(ctx: Context)",
@@ -11586,6 +11588,7 @@
         "open(ctx: Context, action: String, data: android.net.Uri? = null)",
         "awaitTrue(timeoutMs: Long, check: ()",
         "fmt(state: Boolean?)",
+        "groupsOn(tab: String)",
         "group(g: JSONObject, rows: List<Row>, derived: Boolean)",
         "declared(id: String)",
         "declaredFlag(id: String, flag: String)",
@@ -12136,6 +12139,54 @@
         "class RolesHeld",
         "class Kind",
         "class Held"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/configs/SecurityControls.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "SecurityControls"
+      ],
+      "imports": [
+        "android.Manifest",
+        "android.content.ComponentName",
+        "android.content.Context",
+        "android.content.pm.PackageManager",
+        "android.location.LocationManager",
+        "android.net.ConnectivityManager",
+        "android.net.NetworkCapabilities",
+        "android.provider.Settings",
+        "com.diegonmarcos.superapp.shellclient.ShellClient",
+        "com.diegonmarcos.superapp.shellclient.ShellResult",
+        "com.diegonmarcos.superapp.system.AdbReadiness"
+      ],
+      "symbols": [
+        "fleet(component: String)",
+        "normalize(flat: String)",
+        "parse(list: String?)",
+        "edit(list: String?, component: String, on: Boolean)",
+        "extras(list: String?)",
+        "enabledList(ctx: Context)",
+        "a11yOn(ctx: Context, id: String)",
+        "a11yInstalled(ctx: Context, id: String)",
+        "setA11y(ctx: Context, id: String, on: Boolean)",
+        "extrasOn(ctx: Context)",
+        "clearExtras(ctx: Context)",
+        "writeList(ctx: Context, next: List<String>, agrees: ()",
+        "devOptionsOn(ctx: Context)",
+        "usbDebuggingOn(ctx: Context)",
+        "setGlobal(ctx: Context, key: String, on: Boolean, read: (Context)",
+        "shellUp(ctx: Context)",
+        "setShell(ctx: Context, on: Boolean)",
+        "vpnUp(ctx: Context)",
+        "locationOn(ctx: Context)",
+        "setLocation(ctx: Context, on: Boolean)",
+        "holdsSecure(ctx: Context)",
+        "canWrite(ctx: Context)",
+        "shell(ctx: Context, cmds: List<String>)",
+        "class SecurityControls",
+        "class Write"
       ]
     },
     {
@@ -21741,7 +21792,7 @@
         "Content()",
         "toggleGroups(tab: String, settingsPrefs: LauncherSettingsPrefs, epoch: Int)",
         "BackgroundSection(settingsPrefs: LauncherSettingsPrefs, epoch: Int)",
-        "ControlsGridHost()",
+        "ControlsGridHost(hostId: Int = R.id.controls_grid_host, tab: String = com.diegonmarcos.superapp.configs.DeviceControls.TAB_TOOLS)",
         "stepperRow( label: String, subtitle: String, value: Int, onChange: (Int)",
         "btn(glyph: String, desc: String, delta: Int)",
         "toggleRow( label: String, subtitle: String, epoch: Int, checked: ()",
@@ -26600,6 +26651,27 @@
       ],
       "symbols": [
         "class RolesHeldTest"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/test/java/com/diegonmarcos/superapp/configs/SecurityControlsTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "SecurityControlsTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "shortAndLongFormsAreOneComponent()",
+        "turningOnAddsOnceAndKeepsTheOthers()",
+        "turningOffRemovesOnlyThatService()",
+        "extrasAreFleetServicesNotListed()",
+        "theThreeFleetServicesAreDeclared()",
+        "class SecurityControlsTest"
       ]
     },
     {
@@ -35201,6 +35273,22 @@
       "symbols": [
         "check()",
         "mutate()"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/test/test-panels-security-1833.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "ok()",
+        "bad()",
+        "check()"
+      ],
+      "imports": [],
+      "symbols": [
+        "ok()",
+        "bad()",
+        "check()"
       ]
     },
     {
@@ -44276,6 +44364,7 @@
         "classifyRefusal(cause: String)",
         "parseSetResult(out: String?)",
         "failureLines(rs: Collection<Result>)",
+        "withoutShell(pkg: String, installer: String?, why: String)",
         "resolve(pkg: String, before: String?, setOut: String?, after: String?)",
         "marker(nextUpdateLine: String?)",
         "needing(installers: Map<String, String?>, fleetPkgs: Collection<String>)",
@@ -47018,6 +47107,7 @@
         "aDifferentSignatureStaysFailedWithThatReason()",
         "unknownCertificatesNoReleaseOrNoRefusalDoNothing()",
         "theReinstallIsJudgedByTheReadBack()",
+        "withTheShellDownTheCheckStillReadsTheInstaller()",
         "class StoreAdoptTest"
       ]
     },
@@ -637645,6 +637735,7 @@
         "phei(body: String)",
         "sarb(body: String)",
         "banxico(body: String, each: String)",
+        "mofJgb(body: String)",
         "dbnomicsLatest(body: String)",
         "nyfed(body: String)",
         "treasury(body: String)",
@@ -637674,8 +637765,7 @@
         "objects(a: JSONArray?)",
         "strings(a: JSONArray?)",
         "num(o: JSONObject, key: String)",
-        "class Pt",
-        "class Ev"
+        "class Pt"
       ]
     },
     {
@@ -638129,6 +638219,133 @@
       ]
     },
     {
+      "path": "ad_Capital-Stack-FinTerminal/app/src/main/java/com/diegonmarcos/capitalfinterm/Markz.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "MarkzTab",
+        "MarkzInput",
+        "MarkzPortfolio",
+        "MarkzStep",
+        "MarkzSubstep",
+        "MarkzLine",
+        "MarkzCurve",
+        "MarkzPoint",
+        "MarkzText",
+        "MarkzTarget",
+        "MarkzDiagram",
+        "MarkzAsset",
+        "MarkzStatsDecl",
+        "MarkzDecl",
+        "MarkzInputs",
+        "MarkzFlow",
+        "MarkzCol",
+        "MarkzCell",
+        "MarkzRow",
+        "MarkzMatrix",
+        "Markz"
+      ],
+      "imports": [
+        "org.json.JSONArray",
+        "org.json.JSONObject",
+        "java.text.DecimalFormat",
+        "java.text.DecimalFormatSymbols",
+        "java.util.Locale",
+        "kotlin.math.max",
+        "kotlin.math.min"
+      ],
+      "symbols": [
+        "word(k: String)",
+        "word(k: String, vararg slots: Pair<String, String>)",
+        "tab(id: String)",
+        "substep(id: String)",
+        "objs(a: JSONArray?)",
+        "strs(a: JSONArray?)",
+        "pair(a: JSONArray?)",
+        "asset(o: JSONObject)",
+        "parse(json: String)",
+        "money(v: Double)",
+        "upTo(v: Double, digits: Int)",
+        "fixed(v: Double, n: Int)",
+        "plain(v: Double)",
+        "parseSmart(raw: String?)",
+        "mround(v: Double, step: Double)",
+        "usdBrl(s: MarkzInputs, d: MarkzInputs)",
+        "eurUsd(s: MarkzInputs, d: MarkzInputs)",
+        "eurBrl(s: MarkzInputs, d: MarkzInputs)",
+        "roundStep(s: MarkzInputs)",
+        "real(grossPct: Double, inflPct: Double)",
+        "flow(s: MarkzInputs, d: MarkzInputs)",
+        "syncAum(s: MarkzInputs, d: MarkzInputs)",
+        "solveGross(s: MarkzInputs, targetNet: Double)",
+        "edit(s: MarkzInputs, d: MarkzInputs, id: String, v: Double)",
+        "shown(s: MarkzInputs, d: MarkzInputs, id: String)",
+        "matrix(s: MarkzInputs, d: MarkzInputs, rounded: Boolean)",
+        "heat(decl: MarkzDecl, value: Double, baseline: Double, isCenter: Boolean)",
+        "inspector(decl: MarkzDecl, c: MarkzCell)",
+        "csv(decl: MarkzDecl, m: MarkzMatrix)",
+        "range(decl: MarkzDecl, s: MarkzInputs, m: MarkzMatrix, rounded: Boolean)",
+        "pill(decl: MarkzDecl, s: MarkzInputs)",
+        "stepsBadge(decl: MarkzDecl, s: MarkzInputs)",
+        "crossLine(decl: MarkzDecl, s: MarkzInputs, d: MarkzInputs)",
+        "roundLabel(decl: MarkzDecl, s: MarkzInputs)",
+        "home(decl: MarkzDecl, s: MarkzInputs, d: MarkzInputs)",
+        "kpis(decl: MarkzDecl, s: MarkzInputs, d: MarkzInputs, m: MarkzMatrix, rounded: Boolean)",
+        "targetDot(t: MarkzTarget, targetPct: Double)",
+        "sharpe(p: MarkzPortfolio, rf: Double)",
+        "isActive(p: MarkzPortfolio, s: MarkzInputs)",
+        "class MarkzTab"
+      ]
+    },
+    {
+      "path": "ad_Capital-Stack-FinTerminal/app/src/main/java/com/diegonmarcos/capitalfinterm/MarkzStats.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "MarkzPort",
+        "MarkzOpt",
+        "MarkzVols",
+        "MarkzStatsResult",
+        "MarkzStats"
+      ],
+      "imports": [
+        "org.json.JSONObject",
+        "java.time.Instant",
+        "java.time.LocalDate",
+        "java.time.ZoneOffset",
+        "kotlin.math.pow",
+        "kotlin.math.sqrt"
+      ],
+      "symbols": [
+        "of(model: String)",
+        "closes(chart: String)",
+        "aligned(series: List<List<Pair<LocalDate, Double>>>)",
+        "returns(closes: List<Double>)",
+        "mean(x: List<Double>)",
+        "cov(a: List<Double>, b: List<Double>)",
+        "variance(a: List<Double>)",
+        "corr(a: List<Double>, b: List<Double>)",
+        "histVol(r: List<Double>, annual: Int)",
+        "ewmaVol(r: List<Double>, lambda: Double, annual: Int)",
+        "garchVol(r: List<Double>, alpha: Double, beta: Double, annual: Int)",
+        "beta(rho: Double, sigmaI: Double, sigmaM: Double)",
+        "capm(rf: Double, beta: Double, erm: Double)",
+        "annualised(closes: List<Double>, annual: Int)",
+        "covMatrix(corr: List<List<Double>>, sigma: List<Double>)",
+        "portfolio(w: List<Double>, mu: List<Double>, cov: List<List<Double>>, rf: Double)",
+        "grid(n: Int, step: Double)",
+        "rec(prefix: List<Int>, left: Int)",
+        "optimise(mu: List<Double>, cov: List<List<Double>>, rf: Double, step: Double, points: Int, target: Double?)",
+        "least(atLeast: Double)",
+        "compute(decl: MarkzStatsDecl, ids: List<String>, closes: List<List<Pair<LocalDate, Double>>>, implied: List<Double?>)",
+        "class MarkzPort",
+        "class MarkzOpt",
+        "class MarkzVols",
+        "class MarkzStatsResult",
+        "class MarkzStats"
+      ]
+    },
+    {
       "path": "ad_Capital-Stack-FinTerminal/app/src/main/java/com/diegonmarcos/capitalfinterm/Mesh.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -638178,6 +638395,7 @@
         "homeGroups(cards: List<HomeCard>, entries: List<Entry>)",
         "functions(stacks: String, sections: List<Pair<String, String>>)",
         "function(functions: List<FinFunction>, input: String)",
+        "redirected(redirects: String, input: String)",
         "commandWord(input: String)",
         "homeOverride(entries: List<Entry>)",
         "entryOf(entries: List<Entry>, pageId: String)",
@@ -640000,6 +640218,101 @@
       ]
     },
     {
+      "path": "ad_Capital-Stack-FinTerminal/app/src/main/java/com/diegonmarcos/capitalfinterm/ui/MarkzPage.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "MARKZ_PAGE",
+        "MarkzLoad",
+        "MarkzStore",
+        "MarkzPage"
+      ],
+      "imports": [
+        "android.content.ClipData",
+        "android.content.ClipboardManager",
+        "android.content.Context",
+        "androidx.compose.foundation.Canvas",
+        "androidx.compose.foundation.background",
+        "androidx.compose.foundation.border",
+        "androidx.compose.foundation.clickable",
+        "androidx.compose.foundation.horizontalScroll",
+        "androidx.compose.foundation.layout.Arrangement",
+        "androidx.compose.foundation.layout.Box",
+        "androidx.compose.foundation.layout.BoxWithConstraints",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.Row",
+        "androidx.compose.foundation.layout.Spacer",
+        "androidx.compose.foundation.layout.aspectRatio",
+        "androidx.compose.foundation.layout.fillMaxSize",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.foundation.layout.height",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.foundation.layout.width",
+        "androidx.compose.foundation.rememberScrollState",
+        "androidx.compose.foundation.text.BasicTextField",
+        "androidx.compose.foundation.text.KeyboardOptions",
+        "androidx.compose.foundation.verticalScroll",
+        "androidx.compose.material3.Text",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.LaunchedEffect",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.remember",
+        "androidx.compose.runtime.rememberCoroutineScope",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.ui.Alignment",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.focus.onFocusChanged",
+        "androidx.compose.ui.geometry.Offset",
+        "androidx.compose.ui.graphics.Color",
+        "androidx.compose.ui.graphics.Path",
+        "androidx.compose.ui.graphics.PathEffect",
+        "androidx.compose.ui.graphics.SolidColor"
+      ],
+      "symbols": [
+        "decl(ctx: Context)",
+        "state(d: MarkzDecl)",
+        "reset(d: MarkzDecl)",
+        "loadStats(ctx: Context, d: MarkzDecl)",
+        "read(sym: String)",
+        "hex(c: String)",
+        "toast(ctx: Context, msg: String)",
+        "MarkzPage(view: String, onOpenPage: (String)",
+        "MarkzToast()",
+        "MarkzBar(d: MarkzDecl, s: MarkzInputs)",
+        "Kicker(text: String)",
+        "Body(text: String, modifier: Modifier = Modifier)",
+        "MkButton(label: String, primary: Boolean = false, modifier: Modifier = Modifier, onClick: ()",
+        "KvLine(k: String, v: String, tag: String = \"\", strong: Boolean = false)",
+        "Tile(label: String, value: String, sub: String, modifier: Modifier, value2: String = \"\", tag: String = \"\")",
+        "MarkzHome(d: MarkzDecl, s: MarkzInputs, go: (String)",
+        "MarkzSensy(d: MarkzDecl, s: MarkzInputs)",
+        "Field(d: MarkzDecl, s: MarkzInputs, f: MarkzInput, modifier: Modifier)",
+        "MatrixTable(d: MarkzDecl, m: MarkzMatrix)",
+        "head(label: String, sub: String, values: List<String>, color: Color, tagPrefix: String)",
+        "MatrixCell(d: MarkzDecl, m: MarkzMatrix, c: MarkzCell, wide: Boolean, style: TextStyle, modifier: Modifier, onPick: ()",
+        "MarkzMarkovitz(d: MarkzDecl, s: MarkzInputs, go: (String)",
+        "FrontierDiagram(d: MarkzDecl, target: Double)",
+        "o(x: Double, y: Double)",
+        "label(t: String, x: Double, y: Double, color: Color, middle: Boolean, sizeSvg: Double = 9.0, bold: Boolean = false)",
+        "MarkzSubstepPage(d: MarkzDecl, s: MarkzInputs, id: String, go: (String)",
+        "Grid(columns: List<String>, rows: List<List<String>>, tag: String)",
+        "pct(v: Double?, n: Int = 2)",
+        "sigma(r: MarkzStatsResult, i: Int)",
+        "ModelTabs(d: MarkzDecl)",
+        "VolatilityBody(d: MarkzDecl, r: MarkzStatsResult, names: List<String>)",
+        "betas(r: MarkzStatsResult)",
+        "BetaBody(d: MarkzDecl, r: MarkzStatsResult, names: List<String>)",
+        "RateField(label: String, value: Double, tag: String, onValue: (Double)",
+        "capmMu(d: MarkzDecl, r: MarkzStatsResult)",
+        "CapmBody(d: MarkzDecl, r: MarkzStatsResult, names: List<String>)",
+        "CorrelationBody(d: MarkzDecl, r: MarkzStatsResult, names: List<String>)",
+        "OptimizationBody(d: MarkzDecl, s: MarkzInputs, r: MarkzStatsResult, go: (String)",
+        "weights(pt: MarkzPort)",
+        "card(title: String, pt: MarkzPort, tag: String)"
+      ]
+    },
+    {
       "path": "ad_Capital-Stack-FinTerminal/app/src/main/java/com/diegonmarcos/capitalfinterm/ui/PerfPage.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -640408,7 +640721,7 @@
         "SectionPage(sectionId: String, stack: List<String>, nav: FinNav, onSelectList: (String)",
         "TabList(sectionId: String, entries: List<Entry>, compact: Boolean, selected: String?, nav: FinNav, onOpen: (String)",
         "status(e: Entry)",
-        "EntryPage(e: Entry, nav: FinNav)",
+        "EntryPage(e: Entry, nav: FinNav, onOpenPage: (String)",
         "HomeGrid(sectionId: String, cards: List<HomeCard>, entries: List<Entry>, nav: FinNav, onOpen: (String)",
         "isOpen(page: String)",
         "HomeSectionTitle(title: String, count: Int)",
@@ -640848,6 +641161,7 @@
         "southAfricaIsTheSarbBillsBondsAndBands()",
         "mexicoIsOneBanxicoRequestPerAuctionSeries()",
         "anUnreachablePublisherFallsBackToTheOecdRatesOnDbnomics()",
+        "japanIsTheMinistryOfFinanceCurveWithTheHistoryFileWhenTheMonthHasNoRow()",
         "nothingAnsweringIsAnErrorNotAnEmptyCurve()",
         "theParsersReadNothingFromAnotherPage()",
         "class EmCurvesTest",
@@ -641217,6 +641531,87 @@
       ]
     },
     {
+      "path": "ad_Capital-Stack-FinTerminal/app/src/test/java/com/diegonmarcos/capitalfinterm/MarkzParityTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "MarkzParityTest"
+      ],
+      "imports": [
+        "org.json.JSONArray",
+        "org.json.JSONObject",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertNotNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "strs(a: JSONArray?)",
+        "cover(id: String)",
+        "everyElementOfTheOwnersPageIsCovered()",
+        "everyTabIsAMarkzSubPageInTheOwnersOrder()",
+        "everyInputHasThePagesLabelAndUnit()",
+        "everyHeadingIsDeclared()",
+        "theMarkovitzPageKeepsItsStepsPortfoliosAndDiagram()",
+        "theDefaultsShowThePagesFigures()",
+        "class MarkzParityTest"
+      ]
+    },
+    {
+      "path": "ad_Capital-Stack-FinTerminal/app/src/test/java/com/diegonmarcos/capitalfinterm/MarkzStatsTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "MarkzStatsTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertNotNull",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.time.LocalDate",
+        "kotlin.math.sqrt"
+      ],
+      "symbols": [
+        "theSubstepsReadTheDeclaredInstrumentsFromTheQuoteSource()",
+        "closesAreOnePerDayOldestFirstWithoutGaps()",
+        "seriesAreAlignedOnTheDaysTheyAllHave()",
+        "theEstimatorsOnAKnownSeries()",
+        "betaAndCapm()",
+        "theOptimiserFindsTheKnownPortfolios()",
+        "computeReadsTheWindowOfEverySeries()",
+        "walk(seed: Int, k: Double)",
+        "class MarkzStatsTest"
+      ]
+    },
+    {
+      "path": "ad_Capital-Stack-FinTerminal/app/src/test/java/com/diegonmarcos/capitalfinterm/MarkzTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "MarkzTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "theDefaultsAreThePagesBaseline()",
+        "theHomePageShowsTheOverviewOfThePage()",
+        "theMatrixIsSevenReturnsBySevenFxShocks()",
+        "theKpisAndTheLinesAroundTheMatrix()",
+        "theInspectorAndTheCsv()",
+        "theHeatmapBucketsAreThePagesEdges()",
+        "everyFieldBehavesAsThePagesHandler()",
+        "theSmartParserReadsWhatThePageReads()",
+        "theMarkovitzPageFollowsTheTarget()",
+        "class MarkzTest"
+      ]
+    },
+    {
       "path": "ad_Capital-Stack-FinTerminal/app/src/test/java/com/diegonmarcos/capitalfinterm/ModelEngineTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -641276,6 +641671,8 @@
       ],
       "symbols": [
         "arr(a: JSONArray?)",
+        "secNow(id: String)",
+        "pageNow(id: String)",
         "sectionOf(page: String)",
         "pageOf(page: String)",
         "groupOf(section: String, page: String)",
@@ -641540,6 +641937,35 @@
       ]
     },
     {
+      "path": "ad_Capital-Stack-FinTerminal/app/src/test/java/com/diegonmarcos/capitalfinterm/Rename1832ParityTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "Rename1832ParityTest"
+      ],
+      "imports": [
+        "org.json.JSONArray",
+        "org.json.JSONObject",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertNotNull",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "arr(a: JSONArray?)",
+        "strs(a: JSONArray?)",
+        "pageNow(id: String)",
+        "myPmIsMarkzAtTheSamePlace()",
+        "everyMyPmPageIsAMarkzPageWithItsLabelAndIcon()",
+        "everyMyPmEntryKeepsEveryField()",
+        "theFormerHomepageIsStillReachableAsIndex()",
+        "theOldDeepLinksAndCommandWordStillOpenIt()",
+        "theAboutPageStillNamesTheSection()",
+        "class Rename1832ParityTest"
+      ]
+    },
+    {
       "path": "ad_Capital-Stack-FinTerminal/app/src/test/java/com/diegonmarcos/capitalfinterm/Reorg1786CbHomeParityTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -641584,6 +642010,8 @@
         "sectionOf(page: String)",
         "pageOf(page: String)",
         "now(section: String, page: String)",
+        "secNow(id: String)",
+        "pageNow(id: String)",
         "theBottomNavIsUnchanged()",
         "everyPageKeepsItsLabelAndIconAndOnlyMovesAsDeclared()",
         "everyStackEntryKeepsEveryField()",
@@ -642073,6 +642501,26 @@
         "dump()",
         "node_xy()",
         "walk()"
+      ]
+    },
+    {
+      "path": "ad_Capital-Stack-FinTerminal/test/emulator-markz.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "dump()",
+        "open()",
+        "shot()",
+        "scroll()",
+        "has()"
+      ],
+      "imports": [],
+      "symbols": [
+        "dump()",
+        "open()",
+        "shot()",
+        "scroll()",
+        "has()"
       ]
     },
     {
