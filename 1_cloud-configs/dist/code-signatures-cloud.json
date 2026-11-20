@@ -6,9 +6,9 @@
   },
   "repo": "cloud",
   "counts": {
-    "files": 1591,
+    "files": 1592,
     "by_lang": {
-      "sh": 1076,
+      "sh": 1077,
       "js": 169,
       "nix": 304,
       "py": 12,
@@ -17,7 +17,7 @@
     "by_role": {
       "hook": 377,
       "file": 86,
-      "shell": 553,
+      "shell": 554,
       "flake": 6,
       "script": 148,
       "module": 113,
@@ -16476,6 +16476,8 @@
         "retry_after_s(value)",
         "user_text(req)",
         "classify(body)",
+        "content_ok(data)",
+        "with_model(body, model)",
         "degraded_body(kind, n)",
         "make_handler(proxy)",
         "main(argv=None)",
@@ -16501,6 +16503,8 @@
         "retry_after_s(value)",
         "user_text(req)",
         "classify(body)",
+        "content_ok(data)",
+        "with_model(body, model)",
         "degraded_body(kind, n)",
         "make_handler(proxy)",
         "main(argv=None)",
@@ -19423,6 +19427,20 @@
       "symbols": [
         "ok()",
         "no()"
+      ]
+    },
+    {
+      "path": "9_others/test/cgc-db-pvt-surface-skip.test.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "ok()",
+        "bad()"
+      ],
+      "imports": [],
+      "symbols": [
+        "ok()",
+        "bad()"
       ]
     },
     {
