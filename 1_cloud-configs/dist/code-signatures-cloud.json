@@ -526,8 +526,11 @@
       "role": "script",
       "exports": [
         "retry_after_s(value)",
+        "rate_cap(data)",
         "user_text(req)",
         "classify(body)",
+        "content_ok(data)",
+        "with_model(body, model)",
         "degraded_body(kind, n)",
         "make_handler(proxy)",
         "main(argv=None)",
@@ -551,8 +554,11 @@
       "symbols": [
         "_env(name, default)",
         "retry_after_s(value)",
+        "rate_cap(data)",
         "user_text(req)",
         "classify(body)",
+        "content_ok(data)",
+        "with_model(body, model)",
         "degraded_body(kind, n)",
         "make_handler(proxy)",
         "main(argv=None)",

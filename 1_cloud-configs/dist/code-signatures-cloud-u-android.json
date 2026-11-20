@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 24632,
+    "files": 24635,
     "by_lang": {
       "sh": 808,
       "js": 586,
       "py": 254,
-      "kotlin": 13781,
+      "kotlin": 13784,
       "ts": 8382,
       "java": 654,
       "nix": 37,
@@ -25,7 +25,7 @@
       "python": 90,
       "module": 6469,
       "java": 653,
-      "kotlin": 13778,
+      "kotlin": 13781,
       "flake": 33,
       "rust-module": 130,
       "nix-module": 4,
@@ -103759,6 +103759,8 @@
         "publish(steps: List<StepRun>)",
         "cooldownMs(status: ConnectStatus)",
         "applies(ctx: Context)",
+        "mayRun(reason: String, keepAliveOn: Boolean)",
+        "gated(ctx: Context, reason: String)",
         "request(ctx: Context, reason: String)",
         "runBlocking(ctx: Context, reason: String)",
         "summary(o: ConnectOutcome?)",
@@ -104285,6 +104287,22 @@
         "stepListByProfile()",
         "everyOldFieldHasARow()",
         "class AdbStatusTest"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/shizuku-adb-debug-tools/src/test/java/com/diegonmarcos/superapp/adbdebug/AutoStartPairingGateTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "AutoStartPairingGateTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "class AutoStartPairingGateTest"
       ]
     },
     {
@@ -123806,6 +123824,10 @@
         "install(ctx: Context)",
         "Page(page: String? = null)",
         "HomeStatus(tick: Int, open: (String, String?)",
+        "readLive(ctx: Context)",
+        "setKeepAlive(ctx: Context, on: Boolean)",
+        "startServer(ctx: Context)",
+        "stopServer(ctx: Context)",
         "class AdbOwnerSide"
       ]
     },
@@ -123833,9 +123855,11 @@
         "enc(s: String)",
         "rootPath(id: String, path: String)",
         "get(path: String)",
+        "getDiag(path: String, serving: JSONObject?)",
+        "diagPort(serving: JSONObject?)",
         "getBlocking(path: String)",
         "post(path: String, body: JSONObject)",
-        "call(method: String, path: String, body: JSONObject?)",
+        "call(method: String, path: String, body: JSONObject?, origin: String = base()",
         "absolute(href: String)",
         "class Api",
         "class Reply",
@@ -124183,6 +124207,9 @@
         "DenseCard",
         "DRow",
         "DCols",
+        "DLight",
+        "DLights",
+        "DActMsg",
         "DDot",
         "DAct",
         "DLink",
@@ -124231,6 +124258,9 @@
         "DenseCard(title: String, tag: String = \"\", badges: @Composable RowScope.()",
         "DRow(k: String, v: String, up: Boolean? = null, mono: Boolean = false, tag: String = \"\", onClick: (()",
         "DCols(cells: List<String>, widths: List<Int?>, up: Boolean? = null, head: Boolean = false)",
+        "DLight(up: Boolean?)",
+        "DLights(name: String, l: Lights, v: String, tag: String = \"\", onClick: (()",
+        "DActMsg(label: String, tag: String, msg: String, onClick: ()",
         "DDot(up: Boolean)",
         "DAct(label: String, tag: String = \"\", onClick: ()",
         "DLink(label: String, tag: String = \"\", onClick: ()",
@@ -124242,19 +124272,41 @@
       ]
     },
     {
+      "path": "ac_cloud-c3-webserver/src-tauri/gen/android/app/src/main/java/com/diegonmarcos/cloudwebserver/ui/HomeModel.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "AdbLive",
+        "Lights",
+        "HomeModel"
+      ],
+      "imports": [
+        "org.json.JSONObject"
+      ],
+      "symbols": [
+        "bool(o: JSONObject?, key: String)",
+        "pages(pw: JSONObject?, served: JSONObject?)",
+        "api(pw: JSONObject?, health: JSONObject?)",
+        "doorOn(d: JSONObject)",
+        "sshd(sshd: JSONObject?)",
+        "adb(adb: JSONObject?, live: AdbLive)",
+        "onOff(b: Boolean?)",
+        "startStopMsg(pw: JSONObject?, adb: JSONObject?)",
+        "keepAliveMsg(pw: JSONObject?, live: AdbLive)",
+        "probeMsg(served: JSONObject?, health: JSONObject?, sshd: JSONObject?, adb: JSONObject?, live: AdbLive)",
+        "class AdbLive",
+        "class Lights",
+        "class HomeModel"
+      ]
+    },
+    {
       "path": "ac_cloud-c3-webserver/src-tauri/gen/android/app/src/main/java/com/diegonmarcos/cloudwebserver/ui/HomePage.kt",
       "lang": "kotlin",
       "role": "kotlin",
       "exports": [
         "HomePage",
-        "HealthCard",
         "PowerCard",
         "SwitchRow",
-        "ServedStrip",
-        "SshdStrip",
-        "PortsStrip",
-        "deviceFacts",
-        "DeviceStrip",
         "AboutGroups",
         "aboutText"
       ],
@@ -124275,6 +124327,12 @@
         "androidx.compose.material3.Text",
         "androidx.compose.material3.TextButton",
         "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.LaunchedEffect",
+        "androidx.compose.runtime.rememberCoroutineScope",
+        "com.diegonmarcos.cloudwebserver.owner.AdbOwnerSide",
+        "kotlinx.coroutines.Dispatchers",
+        "kotlinx.coroutines.launch",
+        "kotlinx.coroutines.withContext",
         "androidx.compose.runtime.getValue",
         "androidx.compose.runtime.mutableStateOf",
         "androidx.compose.runtime.remember",
@@ -124287,50 +124345,12 @@
       ],
       "symbols": [
         "HomePage(open: (String, String?)",
-        "HealthCard(pw: JSONObject, health: JSONObject?, healthDown: Boolean, sv: JSONObject?)",
         "PowerCard(st: JSONObject, bump: ()",
         "set(key: String, value: Any?)",
         "SwitchRow(label: String, on: Boolean, note: String, tag: String, onSet: (Boolean)",
         "DRow2(k: String, v: String, up: Boolean)",
-        "ServedStrip(pg: JSONObject, goto: ()",
-        "SshdStrip(d: JSONObject, goto: ()",
-        "PortsStrip(sv: JSONObject)",
-        "deviceFacts(groups: JSONArray)",
-        "sec(title: String)",
-        "v(s: JSONObject?, key: String)",
-        "first(s: JSONObject?)",
-        "DeviceStrip(groups: JSONArray, goto: ()",
         "AboutGroups(groups: JSONArray)",
         "aboutText(groups: JSONArray)"
-      ]
-    },
-    {
-      "path": "ac_cloud-c3-webserver/src-tauri/gen/android/app/src/main/java/com/diegonmarcos/cloudwebserver/ui/KeepAliveHealthCard.kt",
-      "lang": "kotlin",
-      "role": "kotlin",
-      "exports": [
-        "KeepAliveHealthCard"
-      ],
-      "imports": [
-        "androidx.compose.runtime.Composable",
-        "androidx.compose.runtime.DisposableEffect",
-        "androidx.compose.runtime.getValue",
-        "androidx.compose.runtime.mutableStateOf",
-        "androidx.compose.runtime.remember",
-        "androidx.compose.runtime.setValue",
-        "androidx.compose.ui.platform.LocalContext",
-        "androidx.lifecycle.Lifecycle",
-        "androidx.lifecycle.LifecycleEventObserver",
-        "androidx.lifecycle.LifecycleOwner",
-        "com.diegonmarcos.cloudwebserver.ContextProbe",
-        "com.diegonmarcos.cloudwebserver.Decl",
-        "com.diegonmarcos.cloudwebserver.HealthFix",
-        "com.diegonmarcos.cloudwebserver.HealthState",
-        "com.diegonmarcos.cloudwebserver.KeepAliveHealth"
-      ],
-      "symbols": [
-        "KeepAliveHealthCard(tick: Int, open: (String, String?)",
-        "stateWord(s: HealthState)"
       ]
     },
     {
@@ -124683,17 +124703,20 @@
       "exports": [
         "UiMode",
         "SectionBand",
-        "StatusTop",
-        "PagesStatus",
-        "ApiStatus",
+        "HomeData",
         "mcpTools",
-        "AdbProbe",
-        "EndpointsList"
+        "SummaryTable",
+        "PagesTable",
+        "ApiTable",
+        "SshdTable",
+        "AdbTable"
       ],
       "imports": [
         "androidx.compose.runtime.Composable",
         "androidx.compose.runtime.getValue",
         "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.remember",
+        "androidx.compose.runtime.rememberCoroutineScope",
         "androidx.compose.runtime.setValue",
         "androidx.compose.foundation.layout.padding",
         "androidx.compose.material3.MaterialTheme",
@@ -124705,19 +124728,26 @@
         "androidx.compose.ui.unit.dp",
         "com.diegonmarcos.cloudwebserver.Api",
         "com.diegonmarcos.cloudwebserver.Decl",
+        "com.diegonmarcos.cloudwebserver.owner.AdbOwnerSide",
         "com.diegonmarcos.superapp.uikit.KitDensity",
+        "kotlinx.coroutines.Dispatchers",
+        "kotlinx.coroutines.launch",
+        "kotlinx.coroutines.withContext",
         "org.json.JSONArray",
         "org.json.JSONObject"
       ],
       "symbols": [
         "SectionBand(id: String, title: String, note: String = \"\")",
-        "StatusTop(pw: JSONObject, health: JSONObject?, served: JSONObject?, sshd: JSONObject?, adb: JSONObject?, bump: ()",
-        "PagesStatus(roots: JSONObject?, served: JSONObject?, open: (String, String?)",
-        "ApiStatus(health: JSONObject?, mcp: JSONObject?, open: (String, String?)",
         "mcpTools(mcp: JSONObject?)",
-        "AdbProbe(adb: JSONObject?)",
-        "EndpointsList(served: JSONObject?, sshd: JSONObject?, about: JSONArray?, mesh: JSONObject?, mcp: JSONObject?, adb: JSONObject?)",
-        "class UiMode"
+        "edit(ctx: android.content.Context, go: ()",
+        "SummaryTable(h: HomeData)",
+        "PagesTable(h: HomeData)",
+        "ApiTable(h: HomeData)",
+        "SshdTable(h: HomeData)",
+        "op(o: String)",
+        "AdbTable(h: HomeData, tick: Int)",
+        "class UiMode",
+        "class HomeData"
       ]
     },
     {
@@ -124910,6 +124940,10 @@
       "symbols": [
         "install(ctx: Context)",
         "HomeStatus(tick: Int, open: (String, String?)",
+        "readLive(ctx: Context)",
+        "setKeepAlive(ctx: Context, on: Boolean)",
+        "startServer(ctx: Context)",
+        "stopServer(ctx: Context)",
         "Page(page: String? = null)",
         "TesterAndLogs()",
         "AllTab(palette: KitPalette)",
@@ -125024,6 +125058,52 @@
         "StepRow(s: StatusStep, time: SimpleDateFormat, fix: (StepFix)",
         "fixAction(ctx: Context, fix: StepFix, f: ChannelFacts?)",
         "class AdbStatusParity"
+      ]
+    },
+    {
+      "path": "ac_cloud-c3-webserver/src-tauri/gen/android/app/src/test/java/com/diegonmarcos/cloudwebserver/ApiHealthPortTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ApiHealthPortTest"
+      ],
+      "imports": [
+        "org.json.JSONObject",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Test",
+        "java.io.File"
+      ],
+      "symbols": [
+        "theDiagRowGivesThePort()",
+        "noDiagRowMeansNoPortYet()",
+        "homeReadsHealthThroughTheDiagPort()",
+        "class ApiHealthPortTest"
+      ]
+    },
+    {
+      "path": "ac_cloud-c3-webserver/src-tauri/gen/android/app/src/test/java/com/diegonmarcos/cloudwebserver/HomeModelTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "HomeModelTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.cloudwebserver.ui.AdbLive",
+        "com.diegonmarcos.cloudwebserver.ui.HomeModel",
+        "org.json.JSONObject",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "pw(server: Boolean, running: Boolean, ka: Boolean)",
+        "served(vararg serving: Boolean)",
+        "door(verdict: String, process: Boolean)",
+        "class HomeModelTest"
       ]
     },
     {
