@@ -6,21 +6,21 @@
   },
   "repo": "cloud",
   "counts": {
-    "files": 1592,
+    "files": 1629,
     "by_lang": {
-      "sh": 1077,
-      "js": 169,
+      "sh": 1107,
+      "js": 176,
       "nix": 304,
       "py": 12,
       "ts": 30
     },
     "by_role": {
-      "hook": 377,
-      "file": 86,
-      "shell": 554,
+      "hook": 402,
+      "file": 91,
+      "shell": 559,
       "flake": 6,
       "script": 148,
-      "module": 113,
+      "module": 115,
       "python": 9,
       "engine": 1,
       "nix-module": 298
@@ -34229,6 +34229,616 @@
         "cmd_config()",
         "resolve_remote_wins()",
         "cmd_push()"
+      ]
+    },
+    {
+      "path": "I_cloud/_dotfiles/apps/src/claude/hooks/c3/_backlog.sh",
+      "lang": "sh",
+      "role": "hook",
+      "exports": [
+        "backlog_repo()"
+      ],
+      "imports": [],
+      "symbols": [
+        "backlog_repo()"
+      ]
+    },
+    {
+      "path": "I_cloud/_dotfiles/apps/src/claude/hooks/c3/_lib.sh",
+      "lang": "sh",
+      "role": "hook",
+      "exports": [
+        "block()"
+      ],
+      "imports": [],
+      "symbols": [
+        "block()"
+      ]
+    },
+    {
+      "path": "I_cloud/_dotfiles/apps/src/claude/hooks/c3/ai-usage-beacon.sh",
+      "lang": "sh",
+      "role": "hook",
+      "exports": [
+        "TM()",
+        "alive()",
+        "cli_up()",
+        "poster()",
+        "statusline()",
+        "start_cli()",
+        "tick()",
+        "loop()",
+        "start()"
+      ],
+      "imports": [],
+      "symbols": [
+        "TM()",
+        "alive()",
+        "cli_up()",
+        "poster()",
+        "statusline()",
+        "start_cli()",
+        "tick()",
+        "loop()",
+        "start()"
+      ]
+    },
+    {
+      "path": "I_cloud/_dotfiles/apps/src/claude/hooks/c3/ai-usage-post.sh",
+      "lang": "sh",
+      "role": "hook",
+      "exports": [
+        "num()",
+        "int()",
+        "safe()",
+        "send()"
+      ],
+      "imports": [],
+      "symbols": [
+        "num()",
+        "int()",
+        "safe()",
+        "send()"
+      ]
+    },
+    {
+      "path": "I_cloud/_dotfiles/apps/src/claude/hooks/c3/no-mass-delete.sh",
+      "lang": "sh",
+      "role": "hook",
+      "exports": [
+        "wipe()",
+        "msg()"
+      ],
+      "imports": [],
+      "symbols": [
+        "wipe()",
+        "msg()"
+      ]
+    },
+    {
+      "path": "I_cloud/_dotfiles/apps/src/claude/hooks/c3/relay-inbox.sh",
+      "lang": "sh",
+      "role": "hook",
+      "exports": [
+        "rq()",
+        "cloud_msg()",
+        "out()"
+      ],
+      "imports": [],
+      "symbols": [
+        "rq()",
+        "cloud_msg()",
+        "out()"
+      ]
+    },
+    {
+      "path": "I_cloud/_dotfiles/apps/src/claude/hooks/c3/tests/relay-inbox.sh",
+      "lang": "sh",
+      "role": "hook",
+      "exports": [
+        "run()",
+        "sent()",
+        "ck()"
+      ],
+      "imports": [],
+      "symbols": [
+        "run()",
+        "sent()",
+        "ck()"
+      ]
+    },
+    {
+      "path": "I_cloud/_dotfiles/apps/src/claude/hooks/c3/tests/run.sh",
+      "lang": "sh",
+      "role": "hook",
+      "exports": [
+        "t()",
+        "g()",
+        "gj()"
+      ],
+      "imports": [
+        "$0/_backlog.sh"
+      ],
+      "symbols": [
+        "t()",
+        "g()",
+        "gj()"
+      ]
+    },
+    {
+      "path": "I_cloud/_dotfiles/apps/src/claude/mcp-connect.mjs",
+      "lang": "js",
+      "role": "file",
+      "exports": [],
+      "imports": [
+        "node:child_process",
+        "node:path"
+      ],
+      "symbols": [
+        "meshReachable(url)",
+        "bearer()",
+        "send(msg)"
+      ]
+    },
+    {
+      "path": "I_cloud/_dotfiles/deploy.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "render()"
+      ],
+      "imports": [],
+      "symbols": [
+        "render()"
+      ]
+    },
+    {
+      "path": "I_cloud/_dotfiles/readme/readme-render.cjs",
+      "lang": "js",
+      "role": "file",
+      "exports": [],
+      "imports": [
+        "fs",
+        "path"
+      ],
+      "symbols": [
+        "treeLines(entries, depth)",
+        "walk(es, pre, d)",
+        "nodeData(x, name)",
+        "variant(r)",
+        "migrate(md, kind)",
+        "blocks(n, rd)",
+        "render(node, readme, tpl)",
+        "renderRepo(root)"
+      ]
+    },
+    {
+      "path": "I_cloud/.claude/hooks/c3/_backlog.sh",
+      "lang": "sh",
+      "role": "hook",
+      "exports": [
+        "backlog_repo()"
+      ],
+      "imports": [],
+      "symbols": [
+        "backlog_repo()"
+      ]
+    },
+    {
+      "path": "I_cloud/.claude/hooks/c3/_lib.sh",
+      "lang": "sh",
+      "role": "hook",
+      "exports": [
+        "block()"
+      ],
+      "imports": [],
+      "symbols": [
+        "block()"
+      ]
+    },
+    {
+      "path": "I_cloud/.claude/hooks/c3/ai-usage-beacon.sh",
+      "lang": "sh",
+      "role": "hook",
+      "exports": [
+        "TM()",
+        "alive()",
+        "cli_up()",
+        "poster()",
+        "statusline()",
+        "start_cli()",
+        "tick()",
+        "loop()",
+        "start()"
+      ],
+      "imports": [],
+      "symbols": [
+        "TM()",
+        "alive()",
+        "cli_up()",
+        "poster()",
+        "statusline()",
+        "start_cli()",
+        "tick()",
+        "loop()",
+        "start()"
+      ]
+    },
+    {
+      "path": "I_cloud/.claude/hooks/c3/ai-usage-post.sh",
+      "lang": "sh",
+      "role": "hook",
+      "exports": [
+        "num()",
+        "int()",
+        "safe()",
+        "send()"
+      ],
+      "imports": [],
+      "symbols": [
+        "num()",
+        "int()",
+        "safe()",
+        "send()"
+      ]
+    },
+    {
+      "path": "I_cloud/.claude/hooks/c3/no-mass-delete.sh",
+      "lang": "sh",
+      "role": "hook",
+      "exports": [
+        "wipe()",
+        "msg()"
+      ],
+      "imports": [],
+      "symbols": [
+        "wipe()",
+        "msg()"
+      ]
+    },
+    {
+      "path": "I_cloud/.claude/hooks/c3/relay-inbox.sh",
+      "lang": "sh",
+      "role": "hook",
+      "exports": [
+        "rq()",
+        "cloud_msg()",
+        "out()"
+      ],
+      "imports": [],
+      "symbols": [
+        "rq()",
+        "cloud_msg()",
+        "out()"
+      ]
+    },
+    {
+      "path": "I_cloud/.claude/hooks/c3/tests/relay-inbox.sh",
+      "lang": "sh",
+      "role": "hook",
+      "exports": [
+        "run()",
+        "sent()",
+        "ck()"
+      ],
+      "imports": [],
+      "symbols": [
+        "run()",
+        "sent()",
+        "ck()"
+      ]
+    },
+    {
+      "path": "I_cloud/.claude/hooks/c3/tests/run.sh",
+      "lang": "sh",
+      "role": "hook",
+      "exports": [
+        "t()",
+        "g()",
+        "gj()"
+      ],
+      "imports": [
+        "$0/_backlog.sh"
+      ],
+      "symbols": [
+        "t()",
+        "g()",
+        "gj()"
+      ]
+    },
+    {
+      "path": "I_cloud/.claude/mcp-connect.mjs",
+      "lang": "js",
+      "role": "file",
+      "exports": [],
+      "imports": [
+        "node:child_process",
+        "node:path"
+      ],
+      "symbols": [
+        "meshReachable(url)",
+        "bearer()",
+        "send(msg)"
+      ]
+    },
+    {
+      "path": "I_cloud/0_hub/_git-repos-master/.claude/hooks/c3/_lib.sh",
+      "lang": "sh",
+      "role": "hook",
+      "exports": [
+        "block()"
+      ],
+      "imports": [],
+      "symbols": [
+        "block()"
+      ]
+    },
+    {
+      "path": "I_cloud/0_hub/_git-repos-master/.claude/hooks/c3/ai-usage-post.sh",
+      "lang": "sh",
+      "role": "hook",
+      "exports": [
+        "num()",
+        "int()",
+        "safe()",
+        "send()"
+      ],
+      "imports": [],
+      "symbols": [
+        "num()",
+        "int()",
+        "safe()",
+        "send()"
+      ]
+    },
+    {
+      "path": "I_cloud/0_hub/_git-repos-master/.claude/hooks/c3/no-mass-delete.sh",
+      "lang": "sh",
+      "role": "hook",
+      "exports": [
+        "wipe()",
+        "msg()"
+      ],
+      "imports": [],
+      "symbols": [
+        "wipe()",
+        "msg()"
+      ]
+    },
+    {
+      "path": "I_cloud/0_hub/_git-repos-master/.claude/hooks/c3/tests/run.sh",
+      "lang": "sh",
+      "role": "hook",
+      "exports": [
+        "t()"
+      ],
+      "imports": [],
+      "symbols": [
+        "t()"
+      ]
+    },
+    {
+      "path": "I_cloud/0_hub/_git-repos-master/.claude/hooks/session-start.sh",
+      "lang": "sh",
+      "role": "hook",
+      "exports": [],
+      "imports": [
+        "clone.sh",
+        "./clone.sh"
+      ],
+      "symbols": []
+    },
+    {
+      "path": "I_cloud/0_hub/_git-repos-master/.claude/mcp-connect.mjs",
+      "lang": "js",
+      "role": "file",
+      "exports": [],
+      "imports": [
+        "node:child_process",
+        "node:path"
+      ],
+      "symbols": [
+        "meshReachable(url)",
+        "bearer()",
+        "send(msg)"
+      ]
+    },
+    {
+      "path": "I_cloud/0_hub/_git-repos-master/0_apps/src/claude/hooks/c3/_lib.sh",
+      "lang": "sh",
+      "role": "hook",
+      "exports": [
+        "block()"
+      ],
+      "imports": [],
+      "symbols": [
+        "block()"
+      ]
+    },
+    {
+      "path": "I_cloud/0_hub/_git-repos-master/0_apps/src/claude/hooks/c3/ai-usage-post.sh",
+      "lang": "sh",
+      "role": "hook",
+      "exports": [
+        "num()",
+        "int()",
+        "safe()",
+        "send()"
+      ],
+      "imports": [],
+      "symbols": [
+        "num()",
+        "int()",
+        "safe()",
+        "send()"
+      ]
+    },
+    {
+      "path": "I_cloud/0_hub/_git-repos-master/0_apps/src/claude/hooks/c3/no-mass-delete.sh",
+      "lang": "sh",
+      "role": "hook",
+      "exports": [
+        "wipe()",
+        "msg()"
+      ],
+      "imports": [],
+      "symbols": [
+        "wipe()",
+        "msg()"
+      ]
+    },
+    {
+      "path": "I_cloud/0_hub/_git-repos-master/0_apps/src/claude/hooks/c3/tests/run.sh",
+      "lang": "sh",
+      "role": "hook",
+      "exports": [
+        "t()"
+      ],
+      "imports": [],
+      "symbols": [
+        "t()"
+      ]
+    },
+    {
+      "path": "I_cloud/0_hub/_git-repos-master/0_apps/src/claude/mcp-connect.mjs",
+      "lang": "js",
+      "role": "file",
+      "exports": [],
+      "imports": [
+        "node:child_process",
+        "node:path"
+      ],
+      "symbols": [
+        "meshReachable(url)",
+        "bearer()",
+        "send(msg)"
+      ]
+    },
+    {
+      "path": "I_cloud/0_hub/_git-repos-master/9_others/build.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "log()",
+        "do_git()",
+        "do_apps()",
+        "do_cicd()",
+        "do_clean()"
+      ],
+      "imports": [],
+      "symbols": [
+        "log()",
+        "do_git()",
+        "do_apps()",
+        "do_cicd()",
+        "do_clean()"
+      ]
+    },
+    {
+      "path": "I_cloud/0_hub/_git-repos-master/9_others/src/deploy-dotfiles.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "log()",
+        "json_keys()",
+        "json_target()",
+        "json_root_keys()",
+        "json_root_target()",
+        "is_public()",
+        "stamp_or_copy()"
+      ],
+      "imports": [],
+      "symbols": [
+        "log()",
+        "json_keys()",
+        "json_target()",
+        "json_root_keys()",
+        "json_root_target()",
+        "is_public()",
+        "stamp_or_copy()"
+      ]
+    },
+    {
+      "path": "I_cloud/0_hub/_git-repos-master/9_others/test/test-repos-sot.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "ok()",
+        "bad()"
+      ],
+      "imports": [],
+      "symbols": [
+        "ok()",
+        "bad()"
+      ]
+    },
+    {
+      "path": "I_cloud/0_hub/_git-repos-master/clone.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "legacy_store_merge()",
+        "legacy_store_migrate()",
+        "_names()",
+        "_field()",
+        "_groups()",
+        "_path()",
+        "_linkpath()",
+        "_linktarget()",
+        "_pending()",
+        "link_one()",
+        "clone_one()",
+        "do_list()",
+        "_ff_count()",
+        "_ff_from()",
+        "_ff_to()",
+        "_ff_req()",
+        "sync_all()"
+      ],
+      "imports": [],
+      "symbols": [
+        "legacy_store_merge()",
+        "legacy_store_migrate()",
+        "_names()",
+        "_field()",
+        "_groups()",
+        "_path()",
+        "_linkpath()",
+        "_linktarget()",
+        "_pending()",
+        "link_one()",
+        "clone_one()",
+        "do_list()",
+        "_ff_count()",
+        "_ff_from()",
+        "_ff_to()",
+        "_ff_req()",
+        "sync_all()"
+      ]
+    },
+    {
+      "path": "I_cloud/0_hub/_git-repos-master/gen-repos-list.js",
+      "lang": "js",
+      "role": "module",
+      "exports": [],
+      "imports": [
+        "fs"
+      ],
+      "symbols": []
+    },
+    {
+      "path": "I_cloud/0_hub/_git-repos-master/repos-sot.js",
+      "lang": "js",
+      "role": "module",
+      "exports": [],
+      "imports": [
+        "fs",
+        "path"
+      ],
+      "symbols": [
+        "checkRegistry(reg)",
+        "checkLinks(reg)",
+        "checkSubset(file, fix)"
       ]
     },
     {

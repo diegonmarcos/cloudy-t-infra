@@ -2322,7 +2322,7 @@
           },
           {
             "id": "git#gh/cloudy-h-webapps-mob",
-            "service": "gitea",
+            "service": "cloud-cgc-pub-mcp",
             "container": null,
             "engine": "git",
             "kind": "git-remote",
@@ -2331,8 +2331,8 @@
             "visibility": "public",
             "fork": false,
             "pushed_at": "2026-11-16T10:48:47Z",
-            "indexed": false,
-            "local_dir": null,
+            "indexed": true,
+            "local_dir": "cloudy-h-webapps-mob",
             "mirrored": true,
             "persistence": {
               "type": "git",
@@ -3097,7 +3097,7 @@
           },
           {
             "id": "git#gh/cloudy-h-webapps-desk",
-            "service": "gitea",
+            "service": "cloud-cgc-pub-mcp",
             "container": null,
             "engine": "git",
             "kind": "git-remote",
@@ -3106,8 +3106,8 @@
             "visibility": "public",
             "fork": false,
             "pushed_at": "2026-11-06T17:11:08Z",
-            "indexed": false,
-            "local_dir": null,
+            "indexed": true,
+            "local_dir": "cloudy-h-webapps-desk",
             "mirrored": true,
             "persistence": {
               "type": "git",
@@ -6153,7 +6153,7 @@
         },
         {
           "id": "git#gh/cloudy-h-webapps-mob",
-          "service": "gitea",
+          "service": "cloud-cgc-pub-mcp",
           "container": null,
           "engine": "git",
           "kind": "git-remote",
@@ -6162,8 +6162,8 @@
           "visibility": "public",
           "fork": false,
           "pushed_at": "2026-11-16T10:48:47Z",
-          "indexed": false,
-          "local_dir": null,
+          "indexed": true,
+          "local_dir": "cloudy-h-webapps-mob",
           "mirrored": true,
           "persistence": {
             "type": "git",
@@ -6928,7 +6928,7 @@
         },
         {
           "id": "git#gh/cloudy-h-webapps-desk",
-          "service": "gitea",
+          "service": "cloud-cgc-pub-mcp",
           "container": null,
           "engine": "git",
           "kind": "git-remote",
@@ -6937,8 +6937,8 @@
           "visibility": "public",
           "fork": false,
           "pushed_at": "2026-11-06T17:11:08Z",
-          "indexed": false,
-          "local_dir": null,
+          "indexed": true,
+          "local_dir": "cloudy-h-webapps-desk",
           "mirrored": true,
           "persistence": {
             "type": "git",

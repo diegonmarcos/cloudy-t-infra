@@ -1816,6 +1816,10 @@
           "cmd": "node --experimental-strip-types test-peers-core.mts",
           "cwd": "src/code"
         },
+        "mesh-route": {
+          "cmd": "node --experimental-strip-types test-mesh-route.mts",
+          "cwd": "src/code"
+        },
         "oom-priority": {
           "cmd": "node ../_shared/test-oom-priority.mjs"
         },
@@ -9098,7 +9102,7 @@
             "use_llm": false,
             "llm_model": "openrouter:openai/gpt-4o-mini",
             "_llm_model_doc": "#1817 primary openai/gpt-4o-mini, mistralai/mistral-nemo first fallback. Measured 2026-11-20 on the same repo (cloudy-u-containers): gpt-4o-mini run 44697643678 latency p50 7s / p95 10s, 195 s/file; mistral-nemo run 44715675842 p50 38s / p95 58s, 368 s/file, both with every call ok. Mistral is ~5x slower per call, which stretches the run that holds the fleet deploy lock; its price advantage is cents at this volume, so speed wins. llm_fallback_models are tried in order by cloud-cgc-llm-proxy.py on a 402 (balance spent), 404 (model retired), empty/non-JSON content, 429 or 5xx; a 402/404 model is dropped for the rest of the run. With fallbacks declared the credit preflight warns on 402 instead of failing.",
-            "schedule": "41 3,15 * * *",
+            "schedule": "41 3 * * 0",
             "_budget_comment": "repo_timeout_min is a CEILING, not a reservation (corrected 2026-08-21). The gate clamps each repo's slice to min(ceiling, max_minutes - elapsed), so worst-case wall time is max_minutes ALONE and the invariant is simply max_minutes <= timeout-minutes (330) minus slack for the final propagate. The earlier 'max + repo <= timeout' rule described the pre-reserve gate; kept afterwards it deadlocked admission — a FIXED reserve must be big enough for the slowest repo (cloud-infra-desktop ~200m+ at measured throughput) yet small enough to still admit a repo late in a run, and both cannot hold, so the giants were never admitted at all while the small repos alone consumed ~75m. 2026-09-03: raised 240→300 (= max_minutes). In per-repo matrix mode every repo runs ALONE in its own 330-min job, so a ceiling below the budget only shortens the slice — cloud-u-android needs many slices (measured ~670 files/240m in the semantic phase, 27k files) and each minute cut off the clamp is a minute the ratchet loses. The clamp still bounds monolith mode to max_minutes. Do NOT slice android into sub-repos instead: octocode 0.22 keys a project on sha256(origin URL) even with --no-git, so sparse slices of one origin collapse into one project (see cloud-cgc-db-update.sh ensure_repos).",
             "max_minutes": 300,
             "repo_timeout_min": 300,
@@ -9138,8 +9142,8 @@
             "cloudy-u-android",
             "cloudy-u-linux",
             "cloudy-u-containers_cgc",
-            "cloudy-h-webapps",
-            "cloudy-h-webapps-2",
+            "cloudy-h-webapps-mob",
+            "cloudy-h-webapps-desk",
             "cloud-me-pub-shared",
             "cloud-me-pub-profiles-prf-prs",
             "cloud-me-pub-profiles-_lnktree",
@@ -9148,7 +9152,7 @@
             "cloud-me-pub-profiles-stark.x",
             "_git-repos-master",
             "Projects-endeavours",
-            "Projects-labtools",
+            "z-archived_Projects-labtools",
             "CG-circus",
             "CG-galaxy",
             "cloud-me-pvt-data",
@@ -9159,7 +9163,7 @@
           "external_registry": [
             "_git-repos-master",
             "Projects-endeavours",
-            "Projects-labtools",
+            "z-archived_Projects-labtools",
             "CG-circus",
             "CG-galaxy"
           ],
@@ -9178,8 +9182,8 @@
             "cloudy-u-android": "cloudy-u-android",
             "cloudy-u-linux": "cloudy-u-linux",
             "cloudy-u-containers_cgc": "cloudy-u-containers_cgc",
-            "cloudy-h-webapps": "cloudy-h-webapps",
-            "cloudy-h-webapps-2": "cloudy-h-webapps-2",
+            "cloudy-h-webapps-mob": "cloudy-h-webapps-mob",
+            "cloudy-h-webapps-desk": "cloudy-h-webapps-desk",
             "cloud-me-pub-shared": "cloud-me-pub-shared",
             "cloud-me-pub-profiles-prf-prs": "cloud-me-pub-profiles-prf-prs",
             "cloud-me-pub-profiles-_lnktree": "cloud-me-pub-profiles-_lnktree",
@@ -9188,7 +9192,7 @@
             "cloud-me-pub-profiles-stark.x": "cloud-me-pub-profiles-stark.x",
             "_git-repos-master": "_git-repos-master",
             "Projects-endeavours": "Projects-endeavours",
-            "Projects-labtools": "Projects-labtools",
+            "z-archived_Projects-labtools": "z-archived_Projects-labtools",
             "CG-circus": "CG-circus",
             "CG-galaxy": "CG-galaxy",
             "cloud-me-pvt-data": "cloud-me-pvt-data",
@@ -9834,6 +9838,10 @@
         },
         "resume-task-store-reachability": {
           "cmd": "node test-claude-resume-store.mjs",
+          "cwd": "src/code"
+        },
+        "resume-cwd-missing": {
+          "cmd": "node test-resume-cwd-missing.mjs",
           "cwd": "src/code"
         },
         "bootstrap-repos-declared": {

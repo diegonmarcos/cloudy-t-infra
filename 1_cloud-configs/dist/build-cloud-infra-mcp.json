@@ -2366,6 +2366,10 @@
       "cmd": "node --experimental-strip-types test-peers-core.mts",
       "cwd": "src/code"
     },
+    "mesh-route": {
+      "cmd": "node --experimental-strip-types test-mesh-route.mts",
+      "cwd": "src/code"
+    },
     "oom-priority": {
       "cmd": "node ../_shared/test-oom-priority.mjs"
     },

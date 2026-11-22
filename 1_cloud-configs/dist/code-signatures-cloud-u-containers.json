@@ -6,26 +6,26 @@
   },
   "repo": "cloud-u-containers",
   "counts": {
-    "files": 2732,
+    "files": 2737,
     "by_lang": {
       "sh": 189,
-      "js": 126,
+      "js": 128,
       "nix": 202,
       "py": 527,
-      "ts": 1315,
+      "ts": 1318,
       "rust": 373
     },
     "by_role": {
       "shell": 179,
-      "file": 358,
+      "file": 361,
       "nix-module": 20,
       "python": 510,
-      "module": 821,
+      "module": 822,
       "script": 10,
       "flake": 92,
       "entrypoint": 73,
       "compose": 90,
-      "mcp-tool": 150,
+      "mcp-tool": 151,
       "workflow-dag": 7,
       "rust-module": 369,
       "hook": 53
@@ -2716,6 +2716,22 @@
       ]
     },
     {
+      "path": "infra-api_cloud-infra-mcp/src/code/gen-mesh-peers.mjs",
+      "lang": "js",
+      "role": "file",
+      "exports": [
+        "derive",
+        "MCP_PORT"
+      ],
+      "imports": [
+        "node:fs",
+        "node:url"
+      ],
+      "symbols": [
+        "derive(config, build)"
+      ]
+    },
+    {
       "path": "infra-api_cloud-infra-mcp/src/code/mcp/factory.ts",
       "lang": "ts",
       "role": "module",
@@ -2746,6 +2762,7 @@
         "./tools/security.js",
         "./tools/plugin.js",
         "./tools/peers-control.js",
+        "./tools/mesh-peers.js",
         "./tools/backlog.js",
         "./resources/index.js"
       ],
@@ -2876,6 +2893,48 @@
         "call(\n  a: App,\n  path: string,\n  query: Record<string, string> = {},\n  timeoutSec = 20,\n)",
         "qs(query: Record<string, string>)",
         "fetchUrl(url: string, timeoutSec: number)"
+      ]
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/mcp/peers/mesh-route.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "phoneBase",
+        "fleetBearer",
+        "parsePeers",
+        "routeGaps",
+        "findPeer",
+        "toolPath",
+        "peerTools",
+        "callPeer",
+        "health",
+        "Route",
+        "ROUTE_ORDER",
+        "Peer",
+        "Deps",
+        "TOOLS",
+        "Last",
+        "lastOf",
+        "Served",
+        "Health"
+      ],
+      "imports": [],
+      "symbols": [
+        "phoneBase(env: { PHONE_MESH_URL?: string })",
+        "fleetBearer(env: NodeJS.ProcessEnv = process.env)",
+        "parsePeers(doc: unknown)",
+        "routeGaps(p: Peer)",
+        "findPeer(peers: Peer[], q: string)",
+        "toolPath(tool: string, a: Record<string, unknown> = {})",
+        "guard(p: Peer, d: Deps)",
+        "httpText(p: Peer, d: Deps, method: string, path: string, body?: string)",
+        "rpc(p: Peer, d: Deps, method: string, params?: unknown)",
+        "peerTools(p: Peer, d: Deps)",
+        "viaSshd(p: Peer, d: Deps, path: string)",
+        "callPeer(p: Peer, tool: string, args: Record<string, unknown>, d: Deps, only?: Route)",
+        "health(peers: Peer[], d: Deps)",
+        "class routes"
       ]
     },
     {
@@ -3584,6 +3643,28 @@
       ],
       "imports": [],
       "symbols": []
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/mcp/tools/mesh-peers.ts",
+      "lang": "ts",
+      "role": "mcp-tool",
+      "exports": [
+        "registerMeshPeerTools",
+        "meshPeers",
+        "realDeps"
+      ],
+      "imports": [
+        "@modelcontextprotocol/sdk/server/mcp.js",
+        "node:child_process",
+        "node:fs",
+        "zod",
+        "../peers/mesh-route.js"
+      ],
+      "symbols": [
+        "sshRun(host: string, script: string)",
+        "registerMeshPeerTools(server: McpServer, deps: ()",
+        "class route"
+      ]
     },
     {
       "path": "infra-api_cloud-infra-mcp/src/code/mcp/tools/meta.ts",
@@ -5640,6 +5721,22 @@
         "./shared/libs/jev-flake.ts"
       ],
       "symbols": []
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/test-mesh-route.mts",
+      "lang": "ts",
+      "role": "file",
+      "exports": [],
+      "imports": [
+        "node:assert/strict",
+        "node:fs",
+        "./gen-mesh-peers.mjs",
+        "./mcp/peers/mesh-route.ts",
+        "./mcp/tools/phone-api-core.ts"
+      ],
+      "symbols": [
+        "deps(over: Partial<Deps> & { calls?: Call[]; status?: Record<string, number> } = {})"
+      ]
     },
     {
       "path": "infra-api_cloud-infra-mcp/src/code/test-peers-core.mts",
@@ -45130,7 +45227,8 @@
         "cwdSlug",
         "deriveResumeSession",
         "RESUME_ERROR_WORDS",
-        "assertTaskStoreReachable"
+        "assertTaskStoreReachable",
+        "ensureResumeCwd"
       ],
       "imports": [
         "node:fs",
@@ -45383,6 +45481,20 @@
       "imports": [
         "node:fs",
         "node:path"
+      ],
+      "symbols": []
+    },
+    {
+      "path": "user-ai_cloudy-ai-claude-api/src/code/test-resume-cwd-missing.mjs",
+      "lang": "js",
+      "role": "file",
+      "exports": [],
+      "imports": [
+        "node:fs",
+        "node:os",
+        "node:path",
+        "node:child_process",
+        "./claude-resume.mjs"
       ],
       "symbols": []
     },
