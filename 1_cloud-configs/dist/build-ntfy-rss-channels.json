@@ -6,9 +6,9 @@
   "base": "https://rss.diegonmarcos.com/feed",
   "counts": {
     "declared": 22,
-    "logs": 114,
+    "logs": 115,
     "apps": 42,
-    "total": 178
+    "total": 179
   },
   "channels": [
     {
@@ -922,6 +922,17 @@
       "source": "logs",
       "vm": "gcp-proxy",
       "feed": "/feed/c/logs_introspect-proxy.atom",
+      "quiet": true
+    },
+    {
+      "id": "logs_introspect-proxy-go",
+      "topic": "logs_introspect-proxy-go",
+      "title": "introspect-proxy-go",
+      "path": "Cloud-Infra/Logs/gcp-proxy/introspect-proxy-go",
+      "category": "logs",
+      "source": "logs",
+      "vm": "gcp-proxy",
+      "feed": "/feed/c/logs_introspect-proxy-go.atom",
       "quiet": true
     },
     {

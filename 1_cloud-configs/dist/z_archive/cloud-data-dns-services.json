@@ -201,6 +201,10 @@
       "ip": "10.0.0.1",
       "desc": "OIDC token introspection sidecar for Caddy Bearer auth"
     },
+    "introspect-proxy-go": {
+      "ip": "10.0.0.1",
+      "desc": "Go port of introspect-proxy (Caddy forward_auth Bearer check), shadow stage: runs next to the Python container on its own port, outside the request path, and logs a periodic decision comparison against it (ticket #1872)"
+    },
     "mcp-oauth": {
       "ip": "10.0.0.1",
       "desc": "MCP OAuth 2.1 authorization server for mcp.diegonmarcos.com (option 31.1, approved 2026-10-28): RFC 8414/9728 discovery, RFC 7591 DCR, /authorize behind Authelia, PKCE S256 /token, opaque tokens introspected by introspect-proxy"

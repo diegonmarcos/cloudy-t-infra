@@ -206,6 +206,7 @@
         "postlite-authelia",
         "caddy",
         "introspect-proxy",
+        "introspect-proxy-go",
         "mcp-oauth"
       ],
       "ports": [],
@@ -883,6 +884,12 @@
         "type": "A",
         "value": "10.0.0.1",
         "service": "introspect-proxy"
+      },
+      {
+        "name": "introspect-proxy-go.mesh.diegonmarcos.com",
+        "type": "A",
+        "value": "10.0.0.1",
+        "service": "introspect-proxy-go"
       },
       {
         "name": "mcp-oauth.mesh.diegonmarcos.com",
@@ -4970,6 +4977,58 @@
         "path": "/health"
       },
       "flake": "infra-sec_introspect-proxy"
+    },
+    "introspect-proxy-go": {
+      "category": "sec",
+      "vm": "gcp-E2-f_0",
+      "folder": "infra-sec_introspect-proxy-go",
+      "description": "Go port of introspect-proxy (Caddy forward_auth Bearer check), shadow stage: runs next to the Python container on its own port, outside the request path, and logs a periodic decision comparison against it (ticket #1872)",
+      "port": 4186,
+      "dns": "introspect-proxy-go.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.1:4186",
+      "containers": {
+        "app": {
+          "container_name": "introspect-proxy-go",
+          "image": "ghcr.io/diegonmarcos/introspect-proxy-go:latest",
+          "port": 4186,
+          "port_env": null,
+          "dns": "introspect-proxy-go.mesh.diegonmarcos.com",
+          "public": false,
+          "proxy": null,
+          "healthcheck": "/health",
+          "monitoring": null,
+          "volumes": [],
+          "env_file": false,
+          "depends_on": [],
+          "resources": null,
+          "read_only": true,
+          "protocol": "http"
+        }
+      },
+      "container_names": [
+        "introspect-proxy-go"
+      ],
+      "all_ports": [
+        "4186"
+      ],
+      "all_dns": [
+        "introspect-proxy-go.mesh.diegonmarcos.com"
+      ],
+      "compose": {
+        "containers": [],
+        "ports": [],
+        "networks": []
+      },
+      "proxy": {
+        "app_hub": false
+      },
+      "declared_ports": {
+        "app": 4186
+      },
+      "health": {
+        "path": "/health"
+      },
+      "flake": "infra-sec_introspect-proxy-go"
     },
     "mcp-oauth": {
       "category": "sec",

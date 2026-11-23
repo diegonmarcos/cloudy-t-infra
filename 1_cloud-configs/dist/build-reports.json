@@ -1173,6 +1173,19 @@
         "path": "/health"
       }
     },
+    "introspect-proxy-go": {
+      "name": "introspect-proxy-go",
+      "vm": "gcp-E2-f_0",
+      "domain": null,
+      "enabled": true,
+      "category": "sec",
+      "ports": {
+        "app": 4186
+      },
+      "health": {
+        "path": "/health"
+      }
+    },
     "mcp-oauth": {
       "name": "mcp-oauth",
       "vm": "gcp-E2-f_0",
@@ -2092,6 +2105,15 @@
       "dns": "introspect-proxy.mesh.diegonmarcos.com"
     },
     {
+      "service": "introspect-proxy-go",
+      "dns": "introspect-proxy-go.mesh.diegonmarcos.com"
+    },
+    {
+      "service": "introspect-proxy-go",
+      "container": "app",
+      "dns": "introspect-proxy-go.mesh.diegonmarcos.com"
+    },
+    {
       "service": "mcp-oauth",
       "dns": "mcp-oauth.mesh.diegonmarcos.com"
     },
@@ -2628,6 +2650,7 @@
           "authelia",
           "caddy",
           "introspect-proxy",
+          "introspect-proxy-go",
           "mcp-oauth"
         ]
       },
@@ -3340,6 +3363,19 @@
         "category": "sec",
         "ports": {
           "app": 4182
+        },
+        "health": {
+          "path": "/health"
+        }
+      },
+      "introspect-proxy-go": {
+        "name": "introspect-proxy-go",
+        "vm": "gcp-E2-f_0",
+        "domain": null,
+        "enabled": true,
+        "category": "sec",
+        "ports": {
+          "app": 4186
         },
         "health": {
           "path": "/health"

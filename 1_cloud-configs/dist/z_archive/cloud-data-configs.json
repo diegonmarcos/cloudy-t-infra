@@ -901,6 +901,18 @@
       ]
     },
     {
+      "name": "introspect-proxy-go",
+      "category": "sec",
+      "vm": "gcp-E2-f_0",
+      "description": "Go port of introspect-proxy (Caddy forward_auth Bearer check), shadow stage: runs next to the Python container on its own port, outside the request path, and logs a periodic decision comparison against it (ticket #1872)",
+      "domain": "—",
+      "ports": [],
+      "networks": [],
+      "containers": [
+        "introspect-proxy-go"
+      ]
+    },
+    {
       "name": "jev-sidecar",
       "category": "tools",
       "vm": "oci-A1-f_0",
@@ -1649,6 +1661,18 @@
       "networks": [],
       "containers": [
         "introspect-proxy"
+      ]
+    },
+    {
+      "name": "introspect-proxy-go",
+      "category": "sec",
+      "vm": "gcp-E2-f_0",
+      "description": "Go port of introspect-proxy (Caddy forward_auth Bearer check), shadow stage: runs next to the Python container on its own port, outside the request path, and logs a periodic decision comparison against it (ticket #1872)",
+      "domain": "—",
+      "ports": [],
+      "networks": [],
+      "containers": [
+        "introspect-proxy-go"
       ]
     },
     {

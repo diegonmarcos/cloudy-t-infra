@@ -33,15 +33,15 @@
   "_generated": "",
   "_source": "_cloud-data-consolidated.json via cloud-data-config-derive.ts/kg-delta",
   "counts": {
-    "nodes": 381,
-    "edges": 527,
+    "nodes": 384,
+    "edges": 531,
     "by_table": {
       "vm": 4,
-      "service": 94,
-      "container": 114,
+      "service": 95,
+      "container": 115,
       "domain": 44,
       "repo": 3,
-      "module": 94,
+      "module": 95,
       "package": 28
     }
   },
@@ -1665,6 +1665,32 @@
         "image": "ghcr.io/diegonmarcos/introspect-proxy:latest",
         "role": "app",
         "port": 4182,
+        "public": false
+      }
+    },
+    {
+      "table": "service",
+      "id": "introspect_proxy_go",
+      "key": "service:introspect_proxy_go",
+      "properties": {
+        "name": "introspect-proxy-go",
+        "category": "sec",
+        "description": "Go port of introspect-proxy (Caddy forward_auth Bearer check), shadow stage: runs next to the Python container on its own port, outside the request path, and logs a periodic decision comparison against it (ticket #1872)",
+        "domain": null,
+        "port": 4186,
+        "vm": "gcp-proxy",
+        "folder": "infra-sec_introspect-proxy-go"
+      }
+    },
+    {
+      "table": "container",
+      "id": "introspect_proxy_go",
+      "key": "container:introspect_proxy_go",
+      "properties": {
+        "name": "introspect-proxy-go",
+        "image": "ghcr.io/diegonmarcos/introspect-proxy-go:latest",
+        "role": "app",
+        "port": 4186,
         "public": false
       }
     },
@@ -3770,6 +3796,17 @@
     },
     {
       "table": "module",
+      "id": "infra_sec_introspect_proxy_go",
+      "key": "module:infra_sec_introspect_proxy_go",
+      "properties": {
+        "name": "infra-sec_introspect-proxy-go",
+        "repo": "cloud",
+        "category": "sec",
+        "service": "introspect-proxy-go"
+      }
+    },
+    {
+      "table": "module",
       "id": "infra_sec_mcp_oauth",
       "key": "module:infra_sec_mcp_oauth",
       "properties": {
@@ -5486,6 +5523,22 @@
       "from": "service:introspect_proxy",
       "to": "container:introspect_proxy",
       "key": "service:introspect_proxy->runs_container->container:introspect_proxy",
+      "properties": {
+        "role": "app"
+      }
+    },
+    {
+      "table": "hosted_on",
+      "from": "service:introspect_proxy_go",
+      "to": "vm:gcp_proxy",
+      "key": "service:introspect_proxy_go->hosted_on->vm:gcp_proxy",
+      "properties": {}
+    },
+    {
+      "table": "runs_container",
+      "from": "service:introspect_proxy_go",
+      "to": "container:introspect_proxy_go",
+      "key": "service:introspect_proxy_go->runs_container->container:introspect_proxy_go",
       "properties": {
         "role": "app"
       }
@@ -7806,6 +7859,20 @@
       "from": "module:infra_sec_introspect_proxy",
       "to": "service:introspect_proxy",
       "key": "module:infra_sec_introspect_proxy->implements->service:introspect_proxy",
+      "properties": {}
+    },
+    {
+      "table": "belongs_to_repo",
+      "from": "module:infra_sec_introspect_proxy_go",
+      "to": "repo:cloud",
+      "key": "module:infra_sec_introspect_proxy_go->belongs_to_repo->repo:cloud",
+      "properties": {}
+    },
+    {
+      "table": "implements",
+      "from": "module:infra_sec_introspect_proxy_go",
+      "to": "service:introspect_proxy_go",
+      "key": "module:infra_sec_introspect_proxy_go->implements->service:introspect_proxy_go",
       "properties": {}
     },
     {

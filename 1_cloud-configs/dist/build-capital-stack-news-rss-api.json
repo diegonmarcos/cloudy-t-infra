@@ -1255,6 +1255,30 @@
         "auth": "bearer"
       }
     },
+    "introspect-proxy-go": {
+      "ip": "10.0.0.1",
+      "ports": {
+        "app": 4186
+      },
+      "vm": "gcp-proxy",
+      "healthcheck": "/health",
+      "description": "Go port of introspect-proxy (Caddy forward_auth Bearer check), shadow stage: runs next to the Python container on its own port, outside the request path, and logs a periodic decision comparison against it (ticket #1872)",
+      "api": {
+        "has_api": true,
+        "has_web_ui": false,
+        "api_path": "/",
+        "api_url": null,
+        "healthcheck_paths": [
+          "/health"
+        ],
+        "type": "custom-rest",
+        "base_path": "/",
+        "endpoint_count": 2,
+        "display_name": "JWT Introspection Proxy (Go, shadow)",
+        "description": "Same contract as introspect-proxy: validates bearer JWTs against the Authelia JWKS, ft_ tokens against tokens-api, mcpat_ tokens against mcp-oauth, for Caddy forward_auth.",
+        "auth": "bearer"
+      }
+    },
     "mcp-oauth": {
       "ip": "10.0.0.1",
       "ports": {

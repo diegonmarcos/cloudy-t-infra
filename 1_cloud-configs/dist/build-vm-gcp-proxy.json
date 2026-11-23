@@ -74,6 +74,15 @@
       "has_docker_build": true
     },
     {
+      "name": "introspect-proxy-go",
+      "dir": "infra-sec_introspect-proxy-go",
+      "compose_path": "/opt/containers/introspect-proxy-go",
+      "images": [
+        "ghcr.io/diegonmarcos/introspect-proxy-go:latest"
+      ],
+      "has_docker_build": true
+    },
+    {
       "name": "mcp-oauth",
       "dir": "infra-sec_mcp-oauth",
       "compose_path": "/opt/containers/mcp-oauth",

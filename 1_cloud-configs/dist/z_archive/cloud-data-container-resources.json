@@ -617,6 +617,15 @@
       ],
       "resources": null
     },
+    "introspect-proxy-go": {
+      "vm": "gcp-proxy",
+      "vm_ram_gb": 1,
+      "vm_cpu": 2,
+      "containers": [
+        "introspect-proxy-go"
+      ],
+      "resources": null
+    },
     "mcp-oauth": {
       "vm": "gcp-proxy",
       "vm_ram_gb": 1,

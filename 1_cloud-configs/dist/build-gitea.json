@@ -1260,6 +1260,30 @@
         "auth": "bearer"
       }
     },
+    "introspect-proxy-go": {
+      "ip": "10.0.0.1",
+      "ports": {
+        "app": 4186
+      },
+      "vm": "gcp-proxy",
+      "healthcheck": "/health",
+      "description": "Go port of introspect-proxy (Caddy forward_auth Bearer check), shadow stage: runs next to the Python container on its own port, outside the request path, and logs a periodic decision comparison against it (ticket #1872)",
+      "api": {
+        "has_api": true,
+        "has_web_ui": false,
+        "api_path": "/",
+        "api_url": null,
+        "healthcheck_paths": [
+          "/health"
+        ],
+        "type": "custom-rest",
+        "base_path": "/",
+        "endpoint_count": 2,
+        "display_name": "JWT Introspection Proxy (Go, shadow)",
+        "description": "Same contract as introspect-proxy: validates bearer JWTs against the Authelia JWKS, ft_ tokens against tokens-api, mcpat_ tokens against mcp-oauth, for Caddy forward_auth.",
+        "auth": "bearer"
+      }
+    },
     "mcp-oauth": {
       "ip": "10.0.0.1",
       "ports": {
@@ -2257,35 +2281,34 @@
         "upstream": "https://github.com/diegonmarcos/cloud-me-pvt-tasks.git",
         "private": true
       },
-      "cloudy-h-webapps-mob": {
-        "upstream": "https://github.com/diegonmarcos/cloudy-h-webapps-mob.git"
-      },
-      "_git-repos-master": {
-        "upstream": "https://github.com/diegonmarcos/_git-repos-master.git"
-      },
-      "cloudy-t-infra": {
-        "upstream": "https://github.com/diegonmarcos/cloudy-t-infra.git"
-      },
       "cloud-me-pvt-data": {
         "upstream": "https://github.com/diegonmarcos/cloud-me-pvt-data.git",
         "private": true
       },
+      "cloudy-t-infra": {
+        "upstream": "https://github.com/diegonmarcos/cloudy-t-infra.git"
+      },
       "cloudy-u-containers": {
         "upstream": "https://github.com/diegonmarcos/cloudy-u-containers.git"
       },
-      "cloud-me-pvt-configs": {
-        "upstream": "https://github.com/diegonmarcos/cloud-me-pvt-configs.git",
-        "private": true
+      "cloudy-u-linux": {
+        "upstream": "https://github.com/diegonmarcos/cloudy-u-linux.git"
       },
-      "cloud-me-pub-profiles-_lnktree": {
-        "upstream": "https://github.com/diegonmarcos/cloud-me-pub-profiles-_lnktree.git"
+      "_git-repos-master": {
+        "upstream": "https://github.com/diegonmarcos/_git-repos-master.git"
+      },
+      "cloudy-h-webapps-desk": {
+        "upstream": "https://github.com/diegonmarcos/cloudy-h-webapps-desk.git"
+      },
+      "cloudy-h-webapps-mob": {
+        "upstream": "https://github.com/diegonmarcos/cloudy-h-webapps-mob.git"
+      },
+      "cloudy-___": {
+        "upstream": "https://github.com/diegonmarcos/cloudy-___.git"
       },
       "cloudy-a-docs": {
         "upstream": "https://github.com/diegonmarcos/cloudy-a-docs.git",
         "private": true
-      },
-      "cloudy-u-linux": {
-        "upstream": "https://github.com/diegonmarcos/cloudy-u-linux.git"
       },
       "Projects-endeavours": {
         "upstream": "https://github.com/diegonmarcos/Projects-endeavours.git"
@@ -2296,27 +2319,12 @@
       "CG-galaxy": {
         "upstream": "https://github.com/diegonmarcos/CG-galaxy.git"
       },
-      "cloudy-u-desktop": {
-        "upstream": "https://github.com/diegonmarcos/cloudy-u-desktop.git"
-      },
-      "cloudy-u-containers_cgc": {
-        "upstream": "https://github.com/diegonmarcos/cloudy-u-containers_cgc.git"
-      },
-      "cloudy_db_LFS": {
-        "upstream": "https://github.com/diegonmarcos/cloudy_db_LFS.git",
-        "private": true
-      },
-      "cloudy_db_infra-ops-obsv_configs-sync": {
-        "upstream": "https://github.com/diegonmarcos/cloudy_db_infra-ops-obsv_configs-sync.git"
-      },
-      "cloudy_db_assets-cdn": {
-        "upstream": "https://github.com/diegonmarcos/cloudy_db_assets-cdn.git"
-      },
-      "cloudy-___": {
-        "upstream": "https://github.com/diegonmarcos/cloudy-___.git"
-      },
       "cloud-me-pvt-notes": {
         "upstream": "https://github.com/diegonmarcos/cloud-me-pvt-notes.git",
+        "private": true
+      },
+      "cloud-me-pvt-configs": {
+        "upstream": "https://github.com/diegonmarcos/cloud-me-pvt-configs.git",
         "private": true
       },
       "cloud-me-pvt-cgc": {
@@ -2345,6 +2353,9 @@
       "cloud-me-pub-profiles-leaf.y": {
         "upstream": "https://github.com/diegonmarcos/cloud-me-pub-profiles-leaf.y.git"
       },
+      "cloud-me-pub-profiles-_lnktree": {
+        "upstream": "https://github.com/diegonmarcos/cloud-me-pub-profiles-_lnktree.git"
+      },
       "cloud-me-pub-profiles-___": {
         "upstream": "https://github.com/diegonmarcos/cloud-me-pub-profiles-___.git"
       },
@@ -2354,12 +2365,28 @@
       "cloud-me-___": {
         "upstream": "https://github.com/diegonmarcos/cloud-me-___.git"
       },
-      "cloudy-h-webapps-desk": {
-        "upstream": "https://github.com/diegonmarcos/cloudy-h-webapps-desk.git"
+      "cloudy-u-desktop": {
+        "upstream": "https://github.com/diegonmarcos/cloudy-u-desktop.git"
+      },
+      "cloudy-u-containers_cgc": {
+        "upstream": "https://github.com/diegonmarcos/cloudy-u-containers_cgc.git"
+      },
+      "cloudy_db_LFS": {
+        "upstream": "https://github.com/diegonmarcos/cloudy_db_LFS.git",
+        "private": true
+      },
+      "cloudy_db_infra-ops-obsv_configs-sync": {
+        "upstream": "https://github.com/diegonmarcos/cloudy_db_infra-ops-obsv_configs-sync.git"
+      },
+      "cloudy_db_assets-cdn": {
+        "upstream": "https://github.com/diegonmarcos/cloudy_db_assets-cdn.git"
       },
       "z-archived_cloud-me-pvt-containers": {
         "upstream": "https://github.com/diegonmarcos/z-archived_cloud-me-pvt-containers.git",
         "private": true
+      },
+      "z-archived_Projects-labtools": {
+        "upstream": "https://github.com/diegonmarcos/z-archived_Projects-labtools.git"
       },
       "z-archived_My-ai-memory": {
         "upstream": "https://github.com/diegonmarcos/z-archived_My-ai-memory.git",
