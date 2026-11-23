@@ -1620,7 +1620,7 @@
       "description": "Go port of introspect-proxy (Caddy forward_auth Bearer check), shadow stage: runs next to the Python container on its own port, outside the request path, and logs a periodic decision comparison against it (ticket #1872)",
       "image": "ghcr.io/diegonmarcos/introspect-proxy-go:latest",
       "host": "gcp-proxy",
-      "dns": "introspect-proxy-go.mesh.diegonmarcos.com",
+      "dns": "",
       "port": 4186,
       "public": false,
       "protocol": "http",

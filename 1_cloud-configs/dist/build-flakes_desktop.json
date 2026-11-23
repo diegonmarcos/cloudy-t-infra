@@ -8601,7 +8601,6 @@
           "image": "ghcr.io/diegonmarcos/introspect-proxy-go:latest",
           "port": 4186,
           "port_env": null,
-          "dns": "introspect-proxy-go.mesh.diegonmarcos.com",
           "public": false,
           "proxy": null,
           "healthcheck": "/health",
@@ -8620,9 +8619,7 @@
       "all_ports": [
         "4186"
       ],
-      "all_dns": [
-        "introspect-proxy-go.mesh.diegonmarcos.com"
-      ],
+      "all_dns": [],
       "compose": {
         "containers": [],
         "ports": [],
@@ -8656,6 +8653,7 @@
           "cwd": "src/code"
         }
       },
+      "_doc_addressing": "No mesh name on purpose during the shadow stage: nothing dials this container but itself (the comparison loop, at its bind address 10.0.0.1:4186), so it needs no Hickory row and no Caddy fallback-map entry; Caddy's forward_auth is untouched until the switch-over.",
       "api": {
         "has_api": true,
         "has_web_ui": false,

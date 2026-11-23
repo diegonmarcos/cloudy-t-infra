@@ -886,12 +886,6 @@
         "service": "introspect-proxy"
       },
       {
-        "name": "introspect-proxy-go.mesh.diegonmarcos.com",
-        "type": "A",
-        "value": "10.0.0.1",
-        "service": "introspect-proxy-go"
-      },
-      {
         "name": "mcp-oauth.mesh.diegonmarcos.com",
         "type": "A",
         "value": "10.0.0.1",
@@ -4992,7 +4986,6 @@
           "image": "ghcr.io/diegonmarcos/introspect-proxy-go:latest",
           "port": 4186,
           "port_env": null,
-          "dns": "introspect-proxy-go.mesh.diegonmarcos.com",
           "public": false,
           "proxy": null,
           "healthcheck": "/health",
@@ -5011,9 +5004,7 @@
       "all_ports": [
         "4186"
       ],
-      "all_dns": [
-        "introspect-proxy-go.mesh.diegonmarcos.com"
-      ],
+      "all_dns": [],
       "compose": {
         "containers": [],
         "ports": [],
