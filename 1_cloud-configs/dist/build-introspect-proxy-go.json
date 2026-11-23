@@ -2242,7 +2242,7 @@
       "cwd": "src/code"
     },
     "shadow-compare": {
-      "cmd": "python3 -m venv /tmp/ip-shadow-venv && /tmp/ip-shadow-venv/bin/pip install -q -r ../../../infra-sec_introspect-proxy/src/code/requirements.txt && PY_BIN=/tmp/ip-shadow-venv/bin/python PY_APP_DIR=../../../infra-sec_introspect-proxy/src/code go test -count=1 -tags shadow -v -run TestShadowCompare ./shadow/",
+      "cmd": "python3 -m venv /tmp/ip-shadow-venv && /tmp/ip-shadow-venv/bin/pip install -q -r ../../../infra-sec_introspect-proxy/src/code/requirements.txt && PY_BIN=/tmp/ip-shadow-venv/bin/python PY_APP_DIR=$PWD/../../../infra-sec_introspect-proxy/src/code go test -count=1 -tags shadow -v -run TestShadowCompare ./shadow/",
       "cwd": "src/code"
     }
   }
