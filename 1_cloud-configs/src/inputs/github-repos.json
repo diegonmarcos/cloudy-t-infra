@@ -2,12 +2,12 @@
   "_warning": "FETCHED DATA — do not hand-edit. Refreshed by .github/workflows/fetch-github-repos.yml.",
   "_doc": "Source of truth for WHICH REPOS EXIST — the CLOUD family only (#1224), public and private. Repo NAMES are not sensitive; the token used to fetch them is, and never leaves the vault / GH secrets. Declarations (gitea.mirrors / octocode.repo_map) are a policy selection over this, never a substitute.",
   "_source": "GitHub API",
-  "fetched_at": "2026-11-16T14:37:11Z",
+  "fetched_at": "2026-11-23T17:13:41Z",
   "owner": "diegonmarcos",
   "external_registry": [
     "_git-repos-master",
     "Projects-endeavours",
-    "Projects-labtools",
+    "z-archived_Projects-labtools",
     "CG-circus",
     "CG-galaxy"
   ],
@@ -16,211 +16,217 @@
       "name": "cloudy-u-android",
       "visibility": "public",
       "fork": false,
-      "pushed_at": "2026-11-16T14:32:09Z"
+      "pushed_at": "2026-11-23T17:11:28Z"
     },
     {
       "name": "cloud-me-pvt-tasks",
       "visibility": "private",
       "fork": false,
-      "pushed_at": "2026-11-16T12:39:38Z"
-    },
-    {
-      "name": "cloudy-h-webapps-mob",
-      "visibility": "public",
-      "fork": false,
-      "pushed_at": "2026-11-16T10:48:47Z"
-    },
-    {
-      "name": "_git-repos-master",
-      "visibility": "public",
-      "fork": false,
-      "pushed_at": "2026-11-16T09:59:22Z"
-    },
-    {
-      "name": "cloudy-t-infra",
-      "visibility": "public",
-      "fork": false,
-      "pushed_at": "2026-11-16T09:25:25Z"
+      "pushed_at": "2026-11-23T16:48:02Z"
     },
     {
       "name": "cloud-me-pvt-data",
       "visibility": "private",
       "fork": false,
-      "pushed_at": "2026-11-16T07:37:01Z"
+      "pushed_at": "2026-11-23T08:41:34Z"
+    },
+    {
+      "name": "cloudy-t-infra",
+      "visibility": "public",
+      "fork": false,
+      "pushed_at": "2026-11-22T10:11:23Z"
     },
     {
       "name": "cloudy-u-containers",
       "visibility": "public",
       "fork": false,
-      "pushed_at": "2026-11-14T21:39:17Z"
-    },
-    {
-      "name": "cloud-me-pvt-configs",
-      "visibility": "private",
-      "fork": false,
-      "pushed_at": "2026-11-14T20:48:51Z"
-    },
-    {
-      "name": "cloud-me-pub-profiles-_lnktree",
-      "visibility": "public",
-      "fork": false,
-      "pushed_at": "2026-11-14T18:30:01Z"
-    },
-    {
-      "name": "cloudy-a-docs",
-      "visibility": "private",
-      "fork": false,
-      "pushed_at": "2026-11-13T09:05:22Z"
-    },
-    {
-      "name": "cloudy-u-linux",
-      "visibility": "public",
-      "fork": false,
-      "pushed_at": "2026-11-13T08:56:04Z"
-    },
-    {
-      "name": "Projects-endeavours",
-      "visibility": "public",
-      "fork": false,
-      "pushed_at": "2026-11-12T13:15:46Z"
+      "pushed_at": "2026-11-22T10:08:38Z"
     },
     {
       "name": "cloud-me-pvt-vault",
       "visibility": "private",
       "fork": false,
-      "pushed_at": "2026-11-12T13:13:32Z"
+      "pushed_at": "2026-11-22T03:41:51Z"
     },
     {
-      "name": "CG-circus",
+      "name": "cloudy-u-linux",
       "visibility": "public",
       "fork": false,
-      "pushed_at": "2026-11-06T17:17:01Z"
+      "pushed_at": "2026-11-19T21:28:09Z"
     },
     {
-      "name": "CG-galaxy",
+      "name": "_git-repos-master",
       "visibility": "public",
       "fork": false,
-      "pushed_at": "2026-11-06T17:16:52Z"
-    },
-    {
-      "name": "cloudy-u-desktop",
-      "visibility": "public",
-      "fork": false,
-      "pushed_at": "2026-11-06T17:16:18Z"
-    },
-    {
-      "name": "cloudy-u-containers_cgc",
-      "visibility": "public",
-      "fork": false,
-      "pushed_at": "2026-11-06T17:16:14Z"
-    },
-    {
-      "name": "cloudy_db_LFS",
-      "visibility": "private",
-      "fork": false,
-      "pushed_at": "2026-11-06T17:16:06Z"
-    },
-    {
-      "name": "cloudy_db_infra-ops-obsv_configs-sync",
-      "visibility": "public",
-      "fork": false,
-      "pushed_at": "2026-11-06T17:16:02Z"
-    },
-    {
-      "name": "cloudy_db_assets-cdn",
-      "visibility": "public",
-      "fork": false,
-      "pushed_at": "2026-11-06T17:15:58Z"
-    },
-    {
-      "name": "cloudy-___",
-      "visibility": "public",
-      "fork": false,
-      "pushed_at": "2026-11-06T17:15:45Z"
-    },
-    {
-      "name": "cloud-me-pvt-notes",
-      "visibility": "private",
-      "fork": false,
-      "pushed_at": "2026-11-06T17:12:43Z"
-    },
-    {
-      "name": "cloud-me-pvt-cgc",
-      "visibility": "private",
-      "fork": false,
-      "pushed_at": "2026-11-06T17:12:27Z"
-    },
-    {
-      "name": "cloud-me-pvt-my-ai",
-      "visibility": "private",
-      "fork": false,
-      "pushed_at": "2026-11-06T17:12:23Z"
-    },
-    {
-      "name": "cloud-me-pvt-___",
-      "visibility": "public",
-      "fork": false,
-      "pushed_at": "2026-11-06T17:11:59Z"
-    },
-    {
-      "name": "cloud-me-pub-shared",
-      "visibility": "public",
-      "fork": false,
-      "pushed_at": "2026-11-06T17:11:53Z"
-    },
-    {
-      "name": "cloud-me-pub-profiles-stark.x",
-      "visibility": "public",
-      "fork": false,
-      "pushed_at": "2026-11-06T17:11:47Z"
-    },
-    {
-      "name": "cloud-me-pub-profiles-prf-prs",
-      "visibility": "public",
-      "fork": false,
-      "pushed_at": "2026-11-06T17:11:41Z"
-    },
-    {
-      "name": "cloud-me-pub-profiles-nexus.z",
-      "visibility": "public",
-      "fork": false,
-      "pushed_at": "2026-11-06T17:11:33Z"
-    },
-    {
-      "name": "cloud-me-pub-profiles-leaf.y",
-      "visibility": "public",
-      "fork": false,
-      "pushed_at": "2026-11-06T17:11:30Z"
-    },
-    {
-      "name": "cloud-me-pub-profiles-___",
-      "visibility": "public",
-      "fork": false,
-      "pushed_at": "2026-11-06T17:11:20Z"
-    },
-    {
-      "name": "cloud-me-pub-___",
-      "visibility": "public",
-      "fork": false,
-      "pushed_at": "2026-11-06T17:11:16Z"
-    },
-    {
-      "name": "cloud-me-___",
-      "visibility": "public",
-      "fork": false,
-      "pushed_at": "2026-11-06T17:11:12Z"
+      "pushed_at": "2026-11-19T21:18:28Z"
     },
     {
       "name": "cloudy-h-webapps-desk",
       "visibility": "public",
       "fork": false,
-      "pushed_at": "2026-11-06T17:11:08Z"
+      "pushed_at": "2026-11-19T16:36:52Z"
+    },
+    {
+      "name": "cloudy-h-webapps-mob",
+      "visibility": "public",
+      "fork": false,
+      "pushed_at": "2026-11-19T16:32:29Z"
+    },
+    {
+      "name": "cloudy-___",
+      "visibility": "public",
+      "fork": false,
+      "pushed_at": "2026-11-18T10:29:22Z"
+    },
+    {
+      "name": "cloudy-a-docs",
+      "visibility": "private",
+      "fork": false,
+      "pushed_at": "2026-11-18T10:29:20Z"
+    },
+    {
+      "name": "Projects-endeavours",
+      "visibility": "public",
+      "fork": false,
+      "pushed_at": "2026-11-18T10:27:15Z"
+    },
+    {
+      "name": "CG-circus",
+      "visibility": "public",
+      "fork": false,
+      "pushed_at": "2026-11-18T10:24:38Z"
+    },
+    {
+      "name": "CG-galaxy",
+      "visibility": "public",
+      "fork": false,
+      "pushed_at": "2026-11-18T10:24:20Z"
+    },
+    {
+      "name": "cloud-me-pvt-notes",
+      "visibility": "private",
+      "fork": false,
+      "pushed_at": "2026-11-18T10:23:33Z"
+    },
+    {
+      "name": "cloud-me-pvt-configs",
+      "visibility": "private",
+      "fork": false,
+      "pushed_at": "2026-11-18T10:23:24Z"
+    },
+    {
+      "name": "cloud-me-pvt-cgc",
+      "visibility": "private",
+      "fork": false,
+      "pushed_at": "2026-11-18T10:23:19Z"
+    },
+    {
+      "name": "cloud-me-pvt-my-ai",
+      "visibility": "private",
+      "fork": false,
+      "pushed_at": "2026-11-18T10:23:15Z"
+    },
+    {
+      "name": "cloud-me-pvt-___",
+      "visibility": "public",
+      "fork": false,
+      "pushed_at": "2026-11-18T10:23:09Z"
+    },
+    {
+      "name": "cloud-me-pub-shared",
+      "visibility": "public",
+      "fork": false,
+      "pushed_at": "2026-11-18T10:22:35Z"
+    },
+    {
+      "name": "cloud-me-pub-profiles-stark.x",
+      "visibility": "public",
+      "fork": false,
+      "pushed_at": "2026-11-18T10:22:31Z"
+    },
+    {
+      "name": "cloud-me-pub-profiles-prf-prs",
+      "visibility": "public",
+      "fork": false,
+      "pushed_at": "2026-11-18T10:22:27Z"
+    },
+    {
+      "name": "cloud-me-pub-profiles-nexus.z",
+      "visibility": "public",
+      "fork": false,
+      "pushed_at": "2026-11-18T10:22:23Z"
+    },
+    {
+      "name": "cloud-me-pub-profiles-leaf.y",
+      "visibility": "public",
+      "fork": false,
+      "pushed_at": "2026-11-18T10:22:19Z"
+    },
+    {
+      "name": "cloud-me-pub-profiles-_lnktree",
+      "visibility": "public",
+      "fork": false,
+      "pushed_at": "2026-11-18T10:22:15Z"
+    },
+    {
+      "name": "cloud-me-pub-profiles-___",
+      "visibility": "public",
+      "fork": false,
+      "pushed_at": "2026-11-18T10:22:10Z"
+    },
+    {
+      "name": "cloud-me-pub-___",
+      "visibility": "public",
+      "fork": false,
+      "pushed_at": "2026-11-18T10:22:04Z"
+    },
+    {
+      "name": "cloud-me-___",
+      "visibility": "public",
+      "fork": false,
+      "pushed_at": "2026-11-18T10:21:20Z"
+    },
+    {
+      "name": "cloudy-u-desktop",
+      "visibility": "public",
+      "fork": false,
+      "pushed_at": "2026-11-18T10:21:08Z"
+    },
+    {
+      "name": "cloudy-u-containers_cgc",
+      "visibility": "public",
+      "fork": false,
+      "pushed_at": "2026-11-18T10:21:04Z"
+    },
+    {
+      "name": "cloudy_db_LFS",
+      "visibility": "private",
+      "fork": false,
+      "pushed_at": "2026-11-18T10:20:26Z"
+    },
+    {
+      "name": "cloudy_db_infra-ops-obsv_configs-sync",
+      "visibility": "public",
+      "fork": false,
+      "pushed_at": "2026-11-18T10:20:21Z"
+    },
+    {
+      "name": "cloudy_db_assets-cdn",
+      "visibility": "public",
+      "fork": false,
+      "pushed_at": "2026-11-18T10:19:59Z"
     },
     {
       "name": "z-archived_cloud-me-pvt-containers",
       "visibility": "private",
       "fork": false,
       "pushed_at": "2026-10-30T11:05:59Z"
+    },
+    {
+      "name": "z-archived_Projects-labtools",
+      "visibility": "public",
+      "fork": false,
+      "pushed_at": "2026-10-30T01:11:26Z"
     },
     {
       "name": "z-archived_My-ai-memory",
