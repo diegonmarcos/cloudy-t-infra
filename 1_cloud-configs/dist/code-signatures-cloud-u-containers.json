@@ -4988,15 +4988,19 @@
       "exports": [
         "isShadowSafe",
         "shadowDiff",
+        "execdToken",
         "shadowLine",
         "shadowSsh",
         "ShadowResult",
         "shadowStats"
       ],
-      "imports": [],
+      "imports": [
+        "node:fs"
+      ],
       "symbols": [
         "isShadowSafe(command: string)",
         "shadowDiff(command: string, legacy: ShadowResult, sidecar: ShadowResult)",
+        "execdToken(env: Record<string, string | undefined> = process.env, read: (p: string)",
         "shadowLine(alias: string, command: string, diffs: string[])",
         "shadowSsh(\n  alias: string,\n  command: string,\n  timeoutMs: number,\n  legacy: ShadowResult,\n  opts: { url?: string; token?: string; fetch?: Fetch; log?: (l: string)"
       ]
@@ -12491,15 +12495,19 @@
       "exports": [
         "isShadowSafe",
         "shadowDiff",
+        "execdToken",
         "shadowLine",
         "shadowSsh",
         "ShadowResult",
         "shadowStats"
       ],
-      "imports": [],
+      "imports": [
+        "node:fs"
+      ],
       "symbols": [
         "isShadowSafe(command: string)",
         "shadowDiff(command: string, legacy: ShadowResult, sidecar: ShadowResult)",
+        "execdToken(env: Record<string, string | undefined> = process.env, read: (p: string)",
         "shadowLine(alias: string, command: string, diffs: string[])",
         "shadowSsh(\n  alias: string,\n  command: string,\n  timeoutMs: number,\n  legacy: ShadowResult,\n  opts: { url?: string; token?: string; fetch?: Fetch; log?: (l: string)"
       ]
@@ -13303,6 +13311,8 @@
         "CF_API_EMAIL",
         "PATH",
         "REPO_SYNC",
+        "C3_EXECD_URL",
+        "C3_EXECD_TOKEN_FILE",
         "volumes",
         "healthcheck",
         "test",
@@ -13311,8 +13321,7 @@
         "retries",
         "start_period",
         "octocode_repos",
-        "c3_public_logs",
-        "c3_fleet_profiles"
+        "c3_public_logs"
       ]
     },
     {
@@ -23029,6 +23038,7 @@
         "HOME",
         "SSH_CONFIG",
         "DOCKER_SOCK",
+        "EXECD_TOKEN_FILE",
         "volumes",
         "healthcheck",
         "test",
@@ -26848,15 +26858,19 @@
       "exports": [
         "isShadowSafe",
         "shadowDiff",
+        "execdToken",
         "shadowLine",
         "shadowSsh",
         "ShadowResult",
         "shadowStats"
       ],
-      "imports": [],
+      "imports": [
+        "node:fs"
+      ],
       "symbols": [
         "isShadowSafe(command: string)",
         "shadowDiff(command: string, legacy: ShadowResult, sidecar: ShadowResult)",
+        "execdToken(env: Record<string, string | undefined> = process.env, read: (p: string)",
         "shadowLine(alias: string, command: string, diffs: string[])",
         "shadowSsh(\n  alias: string,\n  command: string,\n  timeoutMs: number,\n  legacy: ShadowResult,\n  opts: { url?: string; token?: string; fetch?: Fetch; log?: (l: string)"
       ]
@@ -28562,15 +28576,19 @@
       "exports": [
         "isShadowSafe",
         "shadowDiff",
+        "execdToken",
         "shadowLine",
         "shadowSsh",
         "ShadowResult",
         "shadowStats"
       ],
-      "imports": [],
+      "imports": [
+        "node:fs"
+      ],
       "symbols": [
         "isShadowSafe(command: string)",
         "shadowDiff(command: string, legacy: ShadowResult, sidecar: ShadowResult)",
+        "execdToken(env: Record<string, string | undefined> = process.env, read: (p: string)",
         "shadowLine(alias: string, command: string, diffs: string[])",
         "shadowSsh(\n  alias: string,\n  command: string,\n  timeoutMs: number,\n  legacy: ShadowResult,\n  opts: { url?: string; token?: string; fetch?: Fetch; log?: (l: string)"
       ]

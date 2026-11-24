@@ -7126,7 +7126,7 @@
       }
     },
     "c3-execd": {
-      "category": "ops",
+      "category": "tools",
       "vm": "oci-A1-f_0",
       "folder": "infra-ops_c3-execd",
       "description": "Go sidecar for cloud-infra-mcp / cloudy-c3-api / superapp-mcp: loopback exec with timeouts, pooled native SSH (x/crypto/ssh), policy-gated Docker unix-socket client and an audit log. Shadow stage: runs beside the Node helpers (shared/libs/exec.ts, ssh.ts), nothing calls it until switch-over (ticket #1875)",
@@ -7147,7 +7147,8 @@
           "monitoring": null,
           "volumes": [
             "/opt/ssh-keys/c3-infra-api:/root/.ssh:ro",
-            "/var/run/docker.sock:/var/run/docker.sock"
+            "/var/run/docker.sock:/var/run/docker.sock",
+            "/run/c3-execd:/run/c3-execd"
           ],
           "env_file": false,
           "depends_on": [],
@@ -7179,7 +7180,7 @@
       },
       "taxonomy": {
         "group": "Infra Apps",
-        "category": "Net-Routing & Security"
+        "category": "Ops-Infra"
       },
       "bind_host": "127.0.0.1",
       "resources": {

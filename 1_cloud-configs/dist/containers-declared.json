@@ -11,7 +11,6 @@
           "containers": [
             "cloudy-ai-api",
             "cloudflared",
-            "c3-execd",
             "cloudy-auth-google-api",
             "cloudy-auth-github-api",
             "cloudy-auth-cloudflare-api",
@@ -56,6 +55,7 @@
           "label": "Ops-Infra",
           "containers": [
             "agents-tmp-reaper",
+            "c3-execd",
             "disk-janitor"
           ]
         },
@@ -1480,7 +1480,7 @@
       "role": "app",
       "dir": "infra-ops_c3-execd",
       "group": "Infra Apps",
-      "category": "Net-Routing & Security",
+      "category": "Ops-Infra",
       "description": "Go sidecar for cloud-infra-mcp / cloudy-c3-api / superapp-mcp: loopback exec with timeouts, pooled native SSH (x/crypto/ssh), policy-gated Docker unix-socket client and an audit log. Shadow stage: runs beside the Node helpers (shared/libs/exec.ts, ssh.ts), nothing calls it until switch-over (ticket #1875)",
       "image": "ghcr.io/diegonmarcos/c3-execd:latest",
       "host": "oci-apps",
@@ -1489,7 +1489,7 @@
       "public": false,
       "protocol": "http",
       "db_engine": "",
-      "legacy_category": "ops",
+      "legacy_category": "tools",
       "public_url": "",
       "auth": "",
       "auth_type": "mesh"
