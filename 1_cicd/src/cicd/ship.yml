@@ -185,6 +185,16 @@ jobs:
       - name: Build VM matrix
         id: matrix
         if: ${{ steps.paths.outputs.skip != 'true' }}
+        # #1886 follow-up: event values come in through env so the run block
+        # carries no expression. GitHub caps an expression-bearing string at
+        # 21000 chars and this script is longer, so Ship failed to parse.
+        env:
+          SHIP_EVENT_NAME: ${{ github.event_name }}
+          SHIP_INPUT_SERVICES: ${{ github.event.inputs.services }}
+          SHIP_INPUT_VM: ${{ github.event.inputs.vm }}
+          SHIP_EVENT_BEFORE: ${{ github.event.before }}
+          SHIP_CP_AFTER: ${{ github.event.client_payload.after }}
+          SHIP_CP_BEFORE: ${{ github.event.client_payload.before }}
         run: |
           # Reuse the portable detect logic from ship.sh
           # 2026-04-27 migrated: cloud-data-gha-config.json -> build-gha.json
@@ -223,9 +233,9 @@ jobs:
           [ -n "$GHA_CONFIG" ] || { echo "::error::build-gha.json not found and no consolidated fallback available — run 9_others/build.sh" >&2; exit 1; }
 
           # ── Resolve args from GHA inputs ──
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            INPUT_SERVICES="${{ github.event.inputs.services }}"
-            INPUT_VM="${{ github.event.inputs.vm }}"
+          if [ "${SHIP_EVENT_NAME}" = "workflow_dispatch" ]; then
+            INPUT_SERVICES="${SHIP_INPUT_SERVICES}"
+            INPUT_VM="${SHIP_INPUT_VM}"
             if [ "$INPUT_SERVICES" = "all" ] && [ "$INPUT_VM" = "all" ]; then
               CHANGED_DIRS=""; VM_FILTER=""
             elif [ "$INPUT_SERVICES" != "all" ]; then
@@ -248,7 +258,7 @@ jobs:
             # interpreted by git as a directory pathspec that DOES NOT recurse
             # into nested files like src/code/arm64/Dockerfile (verified 2026-06-05
             # commit dbaf52371 — Dockerfile change missed by detect, matrix
-            # emitted empty, Ship → ${{ matrix.vm }} reported "skipped" even
+            # emitted empty, Ship → <matrix.vm> reported "skipped" even
             # though the source changed and warranted a rebuild). The fix is to
             # use a recursive glob: `**` matches at any depth under src/.
             # Diff across the WHOLE push, not just its tip.
@@ -264,7 +274,7 @@ jobs:
             # events, all-zeros on a branch's first push, and may name a
             # discarded commit after a force-push — fall back to HEAD~1 in all
             # three cases rather than diffing against nothing.
-            BASE="${{ github.event.before }}"
+            BASE="${SHIP_EVENT_BEFORE}"
             if [ "$GITHUB_EVENT_NAME" != "push" ] \
                || [ -z "$BASE" ] \
                || [ "$BASE" = "0000000000000000000000000000000000000000" ] \
@@ -290,8 +300,8 @@ jobs:
             # c3-public-api mail fix committed-but-undeployed on 2026-08-24.
             SUB_CHANGED=""
             if [ "$GITHUB_EVENT_NAME" = "repository_dispatch" ]; then
-              NEW_SUB="${{ github.event.client_payload.after }}"
-              OLD_SUB="${{ github.event.client_payload.before }}"
+              NEW_SUB="${SHIP_CP_AFTER}"
+              OLD_SUB="${SHIP_CP_BEFORE}"
               # No head SHA means the dispatch itself is malformed. Shipping
               # "whatever main happens to be" from here would decouple what was
               # detected from what was announced — fail loudly instead.
@@ -462,7 +472,7 @@ jobs:
               # gen-configs dist refresh landing as a no-op), so it stays green.
               #
               # Exception: only no-deploy paths (_dispatch/) = proven no-op.
-              if [ "${{ github.event_name }}" = "repository_dispatch" ] \
+              if [ "${SHIP_EVENT_NAME}" = "repository_dispatch" ] \
                  && ! printf '%s\n' "$SUB_CHANGED" | bash 1_cicd/src/scripts/cloud-ship-detect-nodeploy-only.sh; then
                 echo "verdict=empty" >> "$GITHUB_OUTPUT"
               else
@@ -480,7 +490,7 @@ jobs:
           # source is .vms[].specs.arch in _cloud-data-consolidated.json,
           # keyed by the VM's ssh_alias (== the matrix `vm` value). We build an
           # ssh_alias→runner map here and attach a `runner` field to every
-          # matrix entry; ship.runs-on reads ${{ matrix.runner }}. Any VM not
+          # matrix entry; ship.runs-on reads <matrix.runner>. Any VM not
           # found in the map defaults to ubuntu-latest (x86) — safe, because
           # the only arm64 VM is oci-apps and it is present in the map.
           _CONS_FOR_ARCH=""
@@ -557,7 +567,7 @@ jobs:
           # two copies of this lookup would be two things to keep in step.
           KNOWN=$(jq -r '.services | to_entries[] | .value.dir' "$GHA_CONFIG" | sort -u)
 
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ -n "$CHANGED_DIRS" ]; then
+          if [ "${SHIP_EVENT_NAME}" = "workflow_dispatch" ] && [ -n "$CHANGED_DIRS" ]; then
             UNKNOWN=""
             for d in $CHANGED_DIRS; do
               printf '%s\n' "$KNOWN" | grep -qxF "$d" || UNKNOWN="$UNKNOWN $d"
@@ -591,7 +601,7 @@ jobs:
           # is about to report success for a deploy that ships nothing. That is
           # the failure mode that hid a57935adb (cloud-cgc-pub-mcp/build.json,
           # 2026-08-26) behind a green run. Fail instead.
-          if [ "${{ github.event_name }}" != "workflow_dispatch" ] \
+          if [ "${SHIP_EVENT_NAME}" != "workflow_dispatch" ] \
              && [ "$COUNT" -eq 0 ] && [ -n "$CHANGED_DIRS" ]; then
             UNREGISTERED=""; REGISTERED=""
             for d in $CHANGED_DIRS; do

@@ -104,6 +104,8 @@ jobs:
         run: bash 9_others/test/test_mcp_json_no_oauth_only.sh
       - name: Phase 14 — proxied_mcps children resolve to real services
         run: bash 9_others/test/test_proxied_mcps_resolution.sh
+      - name: Guard — no workflow string with an expression reaches the 21000-char parse cap
+        run: bash 9_others/test/test_workflow_expression_length.sh
       - name: Phase 15 — engine layout detection works pre-build
         run: bash 9_others/test/test_layout_detection_pre_build.sh
       - name: Phase 15b — a lance manifest never names an absent fragment
