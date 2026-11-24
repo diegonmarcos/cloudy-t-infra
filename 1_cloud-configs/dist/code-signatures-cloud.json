@@ -6,9 +6,9 @@
   },
   "repo": "cloud",
   "counts": {
-    "files": 1635,
+    "files": 1636,
     "by_lang": {
-      "sh": 1113,
+      "sh": 1114,
       "js": 176,
       "nix": 304,
       "py": 12,
@@ -17,7 +17,7 @@
     "by_role": {
       "hook": 402,
       "file": 91,
-      "shell": 563,
+      "shell": 564,
       "flake": 6,
       "script": 150,
       "module": 115,
@@ -20846,6 +20846,18 @@
         "snippet()",
         "run()",
         "t1_case()"
+      ]
+    },
+    {
+      "path": "9_others/test/test_hm_build_clears_homeless_shelter.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "check()"
+      ],
+      "imports": [],
+      "symbols": [
+        "check()"
       ]
     },
     {
