@@ -6,16 +6,16 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 24939,
+    "files": 24944,
     "by_lang": {
       "sh": 832,
       "js": 599,
       "py": 268,
-      "kotlin": 14013,
+      "kotlin": 14016,
       "ts": 8382,
       "java": 656,
       "nix": 37,
-      "rust": 152
+      "rust": 154
     },
     "by_role": {
       "hook": 166,
@@ -25,9 +25,9 @@
       "python": 98,
       "module": 6478,
       "java": 655,
-      "kotlin": 14010,
+      "kotlin": 14013,
       "flake": 33,
-      "rust-module": 152,
+      "rust-module": 154,
       "nix-module": 4,
       "entrypoint": 3,
       "mcp-tool": 53
@@ -93479,6 +93479,50 @@
       ]
     },
     {
+      "path": "ab_cloud-libs-shared/libs/mail-core-rs/src/imap.rs",
+      "lang": "rust",
+      "role": "rust-module",
+      "exports": [
+        "new",
+        "login",
+        "select",
+        "uid_search_all",
+        "fetch",
+        "idle",
+        "logout",
+        "fetch_mailbox",
+        "IoErr",
+        "ImapIo",
+        "FetchArgs",
+        "Fetched",
+        "Report",
+        "Client"
+      ],
+      "imports": [
+        "serde::"
+      ],
+      "symbols": [
+        "write(&mut self, bytes: &[u8])",
+        "read(&mut self, timeout_ms: u32)",
+        "quote(s: &str)",
+        "io_err(e: IoErr)",
+        "new(io: &'a mut dyn ImapIo, timeout_ms: u32)",
+        "fill(&mut self, timeout: u32)",
+        "line_with(&mut self, timeout: u32)",
+        "take(&mut self, n: usize)",
+        "response_line(&mut self, timeout: u32)",
+        "run(&mut self, cmd: &str)",
+        "login(&mut self, user: &str, password: &str)",
+        "select(&mut self, mailbox: &str)",
+        "uid_search_all(&mut self)",
+        "fetch(&mut self, uids: &[u64])",
+        "idle(&mut self, wait_ms: u32)",
+        "logout(&mut self)",
+        "after_num(text: &str, key: &str)",
+        "fetch_mailbox(io: &mut dyn ImapIo, a: &FetchArgs)"
+      ]
+    },
+    {
       "path": "ab_cloud-libs-shared/libs/mail-core-rs/src/jmap.rs",
       "lang": "rust",
       "role": "rust-module",
@@ -93531,7 +93575,8 @@
         "do_sync",
         "do_query",
         "do_fetch_raw",
-        "do_panic_probe"
+        "do_panic_probe",
+        "do_imap_fetch"
       ],
       "imports": [
         "std::cell::RefCell",
@@ -93545,6 +93590,7 @@
         "crate::jmap::Transport",
         "crate::store::Store",
         "crate::",
+        "crate::imap::IoErr",
         "super::"
       ],
       "symbols": [
@@ -93559,6 +93605,11 @@
         "download(&self, blob_id: &str)",
         "post(&self, body: &str)",
         "download_bytes(&self, blob_id: &str)",
+        "clear(&mut self)",
+        "write(&mut self, bytes: &[u8])",
+        "read(&mut self, timeout_ms: u32)",
+        "do_imap_fetch(args: &str, io: &mut dyn crate::imap::ImapIo)",
+        "Java_com_diegonmarcos_cloudlib_mailcore_NativeBridge_nativeImapFetch(\n    mut env: JNIEnv,\n    _c: JClass,\n    args: JString,\n    io: JObject,\n)",
         "read(env: &mut JNIEnv, s: &JString)",
         "answer(env: &mut JNIEnv, text: String)",
         "Java_com_diegonmarcos_cloudlib_mailcore_NativeBridge_nativeVersion(mut env: JNIEnv, _c: JClass)",
@@ -93585,11 +93636,26 @@
         "sync(db: String, configJson: String, transport: MailCoreTransport)",
         "query(db: String, queryJson: String)",
         "fetchRaw(db: String, argsJson: String, transport: MailCoreTransport)",
+        "imapFetch(argsJson: String, io: MailCoreImapIo)",
         "panicProbe()",
         "call(native: ()",
         "decode(answer: String?)",
         "class MailCore",
         "class MailCoreException"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/mail-core-rs/src/main/java/com/diegonmarcos/cloudlib/mailcore/MailCoreImapIo.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "MailCoreImapIo"
+      ],
+      "imports": [],
+      "symbols": [
+        "write(bytes: ByteArray)",
+        "read(timeoutMs: Int)",
+        "class MailCoreImapIo"
       ]
     },
     {
@@ -93618,6 +93684,7 @@
         "nativeVersion()",
         "nativeSync(db: String, config: String, transport: MailCoreTransport)",
         "nativeFetchRaw(db: String, args: String, transport: MailCoreTransport)",
+        "nativeImapFetch(args: String, io: MailCoreImapIo)",
         "nativeQuery(db: String, query: String)",
         "nativePanicProbe()",
         "class NativeBridge"
@@ -93945,6 +94012,34 @@
         "plain_html_and_attachment_variants_read_back_the_same_facts()",
         "header_injection_and_bcc_are_refused()",
         "a_long_subject_is_split_in_valid_encoded_words()"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/mail-core-rs/tests/imap_fetch.rs",
+      "lang": "rust",
+      "role": "rust-module",
+      "exports": [],
+      "imports": [
+        "mail_core::imap::",
+        "std::collections::VecDeque",
+        "std::fs",
+        "std::path::PathBuf"
+      ],
+      "symbols": [
+        "fixtures()",
+        "eml()",
+        "transcript()",
+        "new(login_ok: bool)",
+        "write(&mut self, bytes: &[u8])",
+        "read(&mut self, _t: u32)",
+        "args()",
+        "login_select_search_fetch_reads_the_transcript()",
+        "mail_core_b64(b: &[u8])",
+        "a_refused_login_is_an_error_that_never_echoes_the_password()",
+        "idle_times_out_quietly_and_reports_a_push()",
+        "a_dead_connection_is_an_error()",
+        "write(&mut self, _: &[u8])",
+        "read(&mut self, _: u32)"
       ]
     },
     {
@@ -296271,6 +296366,38 @@
       ]
     },
     {
+      "path": "ac_cloud-mail/core/data/src/main/kotlin/app/sterna/core/data/mail/CoreCompose.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [],
+      "imports": [
+        "app.sterna.core.imap.BlindCopies",
+        "app.sterna.core.imap.OutgoingMessage",
+        "app.sterna.core.imap.OutgoingMime",
+        "com.diegonmarcos.cloudlib.mailcore.MailCore",
+        "kotlinx.serialization.json.JsonArray",
+        "kotlinx.serialization.json.JsonPrimitive",
+        "kotlinx.serialization.json.buildJsonObject",
+        "kotlinx.serialization.json.jsonObject",
+        "kotlinx.serialization.json.jsonPrimitive",
+        "kotlinx.serialization.json.put",
+        "java.time.ZoneOffset",
+        "java.time.ZonedDateTime",
+        "java.time.format.DateTimeFormatter",
+        "java.util.Base64"
+      ],
+      "symbols": [
+        "eligible(m: OutgoingMessage)",
+        "request(m: OutgoingMessage, blind: BlindCopies)",
+        "list(v: List<String>)",
+        "tryBuild(m: OutgoingMessage, blind: BlindCopies)",
+        "build(m: OutgoingMessage, blind: BlindCopies = BlindCopies.OMITTED)",
+        "parse(answer: String)",
+        "class CoreCompose",
+        "class Json"
+      ]
+    },
+    {
       "path": "ac_cloud-mail/core/data/src/main/kotlin/app/sterna/core/data/mail/CrossAccountMove.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -297566,6 +297693,7 @@
         "reader(localAccountId: String, emailId: String)",
         "fetchRaw( client: JmapClient, session: JmapSession, jmapAccountId: String, auth: JmapAuth, localAccountId: String, emailIds: List<String>, )",
         "storedAccounts()",
+        "searchIds(localAccountId: String, text: String, limit: Int)",
         "dropAccount(localAccountId: String)",
         "primaries(localAccountId: String, ids: List<String>)",
         "counts(localAccountId: String)",
@@ -301621,6 +301749,37 @@
         "flatUnifiedDropsRowsOfAnAccountThatNoLongerExists()",
         "flatUnifiedStillListsTheSameRowUnderAKnownAccount()",
         "flatOrdersDoNotPinFavourites()"
+      ]
+    },
+    {
+      "path": "ac_cloud-mail/core/data/src/test/kotlin/app/sterna/core/data/mail/CoreComposeTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "CoreComposeTest"
+      ],
+      "imports": [
+        "app.sterna.core.imap.BlindCopies",
+        "app.sterna.core.imap.OutgoingAttachment",
+        "app.sterna.core.imap.OutgoingMessage",
+        "app.sterna.core.imap.OutgoingMime",
+        "com.diegonmarcos.cloudlib.mailcore.MailCore",
+        "kotlinx.serialization.json.Json",
+        "kotlinx.serialization.json.jsonArray",
+        "kotlinx.serialization.json.jsonObject",
+        "kotlinx.serialization.json.jsonPrimitive",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "msg(html: String? = null, inline: Boolean = false, receipt: Boolean = false)",
+        "theRequestCarriesEveryField()",
+        "whatTheCoreDoesNotExpressStaysOnTheKotlinBuilder()",
+        "withoutTheCoreTheKotlinBuilderAnswersUnchanged()",
+        "class CoreComposeTest"
       ]
     },
     {
@@ -308744,6 +308903,7 @@
         "collapse(s: String)",
         "everyFixtureReadsTheSameInTheKotlinEngine()",
         "composeParity()",
+        "imapTranscript()",
         "class MimeParserParityFixturesTest"
       ]
     },
