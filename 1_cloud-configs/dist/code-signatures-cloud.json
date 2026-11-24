@@ -6,9 +6,9 @@
   },
   "repo": "cloud",
   "counts": {
-    "files": 1637,
+    "files": 1638,
     "by_lang": {
-      "sh": 1115,
+      "sh": 1116,
       "js": 176,
       "nix": 304,
       "py": 12,
@@ -17,7 +17,7 @@
     "by_role": {
       "hook": 402,
       "file": 91,
-      "shell": 565,
+      "shell": 566,
       "flake": 6,
       "script": 150,
       "module": 115,
@@ -852,6 +852,10 @@
         "_ensure_image_public()",
         "_eip_pullable()",
         "materialize_out_of_context_symlinks()",
+        "docker_src_hash()",
+        "image_stale_reason()",
+        "service_src_commit_epoch()",
+        "image_iso_epoch()",
         "step_docker()",
         "_docker_err()",
         "_docker_return_cleanup()",
@@ -867,6 +871,10 @@
         "_ensure_image_public()",
         "_eip_pullable()",
         "materialize_out_of_context_symlinks()",
+        "docker_src_hash()",
+        "image_stale_reason()",
+        "service_src_commit_epoch()",
+        "image_iso_epoch()",
         "step_docker()",
         "_docker_err()",
         "_docker_return_cleanup()",
@@ -972,6 +980,8 @@
         "_container_liveness()",
         "_profile_gated()",
         "assert_declared_containers_live()",
+        "_deployed_image_verdict()",
+        "assert_deployed_image_carries_source()",
         "step_health()"
       ],
       "imports": [],
@@ -981,6 +991,8 @@
         "_container_liveness()",
         "_profile_gated()",
         "assert_declared_containers_live()",
+        "_deployed_image_verdict()",
+        "assert_deployed_image_carries_source()",
         "step_health()"
       ]
     },
@@ -16878,6 +16890,10 @@
         "_ensure_image_public()",
         "_eip_pullable()",
         "materialize_out_of_context_symlinks()",
+        "docker_src_hash()",
+        "image_stale_reason()",
+        "service_src_commit_epoch()",
+        "image_iso_epoch()",
         "step_docker()",
         "_docker_err()",
         "_docker_return_cleanup()",
@@ -16893,6 +16909,10 @@
         "_ensure_image_public()",
         "_eip_pullable()",
         "materialize_out_of_context_symlinks()",
+        "docker_src_hash()",
+        "image_stale_reason()",
+        "service_src_commit_epoch()",
+        "image_iso_epoch()",
         "step_docker()",
         "_docker_err()",
         "_docker_return_cleanup()",
@@ -16998,6 +17018,8 @@
         "_container_liveness()",
         "_profile_gated()",
         "assert_declared_containers_live()",
+        "_deployed_image_verdict()",
+        "assert_deployed_image_carries_source()",
         "step_health()"
       ],
       "imports": [],
@@ -17007,6 +17029,8 @@
         "_container_liveness()",
         "_profile_gated()",
         "assert_declared_containers_live()",
+        "_deployed_image_verdict()",
+        "assert_deployed_image_carries_source()",
         "step_health()"
       ]
     },
@@ -21534,6 +21558,33 @@
         "check()",
         "run_suite()",
         "mutate()"
+      ]
+    },
+    {
+      "path": "9_others/test/test_ship_image_provenance.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "ck()",
+        "run_block()",
+        "log_error()",
+        "f()",
+        "stale()",
+        "verdict()",
+        "image_iso_epoch()"
+      ],
+      "imports": [
+        "$T/prov.sh",
+        "$T/verdict.sh"
+      ],
+      "symbols": [
+        "ck()",
+        "run_block()",
+        "log_error()",
+        "f()",
+        "stale()",
+        "verdict()",
+        "image_iso_epoch()"
       ]
     },
     {
