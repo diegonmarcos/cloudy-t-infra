@@ -199,6 +199,30 @@
         "auth": "mixed"
       }
     },
+    "c3-public-go-api": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 8097
+      },
+      "vm": "oci-apps",
+      "healthcheck": "/health",
+      "description": "Go port of c3-public-api (public API: analytics passthrough, Bearer-gated mail bridge with the delivery ledger, SuperApp config artifact, Profile > Connect with mailed one-time codes), shadow stage: runs next to the Node container on its own port, outside every request path (ticket #1882).",
+      "api": {
+        "has_api": true,
+        "has_web_ui": false,
+        "api_path": "/pub",
+        "api_url": null,
+        "healthcheck_paths": [
+          "/health"
+        ],
+        "type": "custom-rest",
+        "base_path": "/pub",
+        "endpoint_count": 5,
+        "display_name": "C3 Public API (Go, shadow)",
+        "description": "Same contract as c3-public-api: /health, /ready, /analytics/<slug>, /mail/http-to-smtp, /superapp/config/:user, /profile/connect/{start,fetch}.",
+        "auth": "mixed"
+      }
+    },
     "cloud-drive-mcp": {
       "ip": "10.0.0.6",
       "ports": {
@@ -338,6 +362,30 @@
         "endpoint_count": 6,
         "display_name": "Cloud Me API",
         "description": "Authenticated read-only access to declared datasets and config files of the owner's private cloud-me-* repos. Deploy keys stay server-side; secret-looking files are never served.",
+        "auth": "mixed"
+      }
+    },
+    "cloud-me-go-api": {
+      "ip": "10.0.0.4",
+      "ports": {
+        "app": 8134
+      },
+      "vm": "oci-analytics",
+      "healthcheck": "/me/health",
+      "description": "Go port of cloud-me-api (read-only, authenticated read path to the owner's private cloud-me-* repos: git deploy-key sync, file gate, builtin fleet datasets, autocomplete rows), shadow stage: runs next to the Node container on its own port, outside every request path (ticket #1882). Authorization is the shared Go authz package (_shared/go/authz).",
+      "api": {
+        "has_api": true,
+        "has_web_ui": false,
+        "api_path": "/me",
+        "api_url": null,
+        "healthcheck_paths": [
+          "/me/health"
+        ],
+        "type": "custom-rest",
+        "base_path": "/me",
+        "endpoint_count": 6,
+        "display_name": "Cloud Me API (Go, shadow)",
+        "description": "Same contract as cloud-me-api (runtime block pinned by test).",
         "auth": "mixed"
       }
     },
@@ -1368,6 +1416,30 @@
         "endpoint_count": 8,
         "display_name": "Fleet Token Engine",
         "description": "Owner-only token manager (list, reveal, generate, import, revoke, audit) and the mesh-only /v1/verify that introspect-proxy calls.",
+        "auth": "bearer"
+      }
+    },
+    "cloudy-ai-tokens-go-api": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 4188
+      },
+      "vm": "oci-apps",
+      "healthcheck": "/health",
+      "description": "Go port of cloudy-ai-tokens-api (the fleet token engine: AES-256-GCM sealed token values, HMAC lookup index, verifier and owner API, audit trail), shadow stage: own sqlite file, own port, outside every request path (ticket #1877). Parity harness drives the Python original with identical requests.",
+      "api": {
+        "has_api": true,
+        "has_web_ui": false,
+        "api_path": "/",
+        "api_url": null,
+        "healthcheck_paths": [
+          "/health"
+        ],
+        "type": "custom-rest",
+        "base_path": "/",
+        "endpoint_count": 9,
+        "display_name": "Fleet Token Engine (Go, shadow)",
+        "description": "Same contract as cloudy-ai-tokens-api: POST /v1/verify for verifiers, the owner API under /v1/tokens and /v1/audit.",
         "auth": "bearer"
       }
     },

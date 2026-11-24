@@ -20,6 +20,15 @@
       "has_docker_build": true
     },
     {
+      "name": "cloud-me-go-api",
+      "dir": "infra-api_cloud-me-go-api",
+      "compose_path": "/opt/containers/cloud-me-go-api",
+      "images": [
+        "ghcr.io/diegonmarcos/cloud-me-go-api:latest"
+      ],
+      "has_docker_build": true
+    },
+    {
       "name": "cloudy-drive-git-proxy-api",
       "dir": "infra-api_cloudy-drive-git-proxy-api",
       "compose_path": "/opt/containers/cloudy-drive-git-proxy-api",

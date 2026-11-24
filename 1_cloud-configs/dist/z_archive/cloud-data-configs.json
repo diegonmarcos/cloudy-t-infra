@@ -128,6 +128,18 @@
       ]
     },
     {
+      "name": "c3-public-go-api",
+      "category": "app",
+      "vm": "oci-A1-f_0",
+      "description": "Go port of c3-public-api (public API: analytics passthrough, Bearer-gated mail bridge with the delivery ledger, SuperApp config artifact, Profile > Connect with mailed one-time codes), shadow stage: runs next to the Node container on its own port, outside every request path (ticket #1882).",
+      "domain": "—",
+      "ports": [],
+      "networks": [],
+      "containers": [
+        "c3-public-go-api"
+      ]
+    },
+    {
       "name": "c3bot-relay",
       "category": "sec",
       "vm": "oci-A1-f_0",
@@ -371,6 +383,18 @@
       ]
     },
     {
+      "name": "cloud-me-go-api",
+      "category": "app",
+      "vm": "oci-E2-f_1",
+      "description": "Go port of cloud-me-api (read-only, authenticated read path to the owner's private cloud-me-* repos: git deploy-key sync, file gate, builtin fleet datasets, autocomplete rows), shadow stage: runs next to the Node container on its own port, outside every request path (ticket #1882). Authorization is the shared Go authz package (_shared/go/authz).",
+      "domain": "—",
+      "ports": [],
+      "networks": [],
+      "containers": [
+        "cloud-me-go-api"
+      ]
+    },
+    {
       "name": "cloud-notes-sync",
       "category": "app",
       "vm": "oci-A1-f_0",
@@ -548,6 +572,18 @@
       "networks": [],
       "containers": [
         "cloudy-ai-tokens-api"
+      ]
+    },
+    {
+      "name": "cloudy-ai-tokens-go-api",
+      "category": "sec",
+      "vm": "oci-A1-f_0",
+      "description": "Go port of cloudy-ai-tokens-api (the fleet token engine: AES-256-GCM sealed token values, HMAC lookup index, verifier and owner API, audit trail), shadow stage: own sqlite file, own port, outside every request path (ticket #1877). Parity harness drives the Python original with identical requests.",
+      "domain": "—",
+      "ports": [],
+      "networks": [],
+      "containers": [
+        "cloudy-ai-tokens-go-api"
       ]
     },
     {
@@ -1632,6 +1668,18 @@
       ]
     },
     {
+      "name": "cloudy-ai-tokens-go-api",
+      "category": "sec",
+      "vm": "oci-A1-f_0",
+      "description": "Go port of cloudy-ai-tokens-api (the fleet token engine: AES-256-GCM sealed token values, HMAC lookup index, verifier and owner API, audit trail), shadow stage: own sqlite file, own port, outside every request path (ticket #1877). Parity harness drives the Python original with identical requests.",
+      "domain": "—",
+      "ports": [],
+      "networks": [],
+      "containers": [
+        "cloudy-ai-tokens-go-api"
+      ]
+    },
+    {
       "name": "cloudy-browser-headless",
       "category": "data",
       "vm": "oci-A1-f_0",
@@ -1990,6 +2038,18 @@
   ],
   "apps": [
     {
+      "name": "c3-public-go-api",
+      "category": "app",
+      "vm": "oci-A1-f_0",
+      "description": "Go port of c3-public-api (public API: analytics passthrough, Bearer-gated mail bridge with the delivery ledger, SuperApp config artifact, Profile > Connect with mailed one-time codes), shadow stage: runs next to the Node container on its own port, outside every request path (ticket #1882).",
+      "domain": "—",
+      "ports": [],
+      "networks": [],
+      "containers": [
+        "c3-public-go-api"
+      ]
+    },
+    {
       "name": "calendar-radicale",
       "category": "app",
       "vm": "oci-A1-f_0",
@@ -2097,6 +2157,18 @@
       "networks": [],
       "containers": [
         "cloud-me-api"
+      ]
+    },
+    {
+      "name": "cloud-me-go-api",
+      "category": "app",
+      "vm": "oci-E2-f_1",
+      "description": "Go port of cloud-me-api (read-only, authenticated read path to the owner's private cloud-me-* repos: git deploy-key sync, file gate, builtin fleet datasets, autocomplete rows), shadow stage: runs next to the Node container on its own port, outside every request path (ticket #1882). Authorization is the shared Go authz package (_shared/go/authz).",
+      "domain": "—",
+      "ports": [],
+      "networks": [],
+      "containers": [
+        "cloud-me-go-api"
       ]
     },
     {

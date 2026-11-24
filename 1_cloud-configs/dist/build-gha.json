@@ -91,6 +91,11 @@
       "vm": "oci-apps",
       "has_docker": true
     },
+    "c3-public-go-api": {
+      "dir": "infra-api_c3-public-go-api",
+      "vm": "oci-apps",
+      "has_docker": true
+    },
     "cloud-drive-mcp": {
       "dir": "infra-api_cloud-drive-mcp",
       "vm": "oci-apps",
@@ -113,6 +118,11 @@
     },
     "cloud-me-api": {
       "dir": "infra-api_cloud-me-api",
+      "vm": "oci-analytics",
+      "has_docker": true
+    },
+    "cloud-me-go-api": {
+      "dir": "infra-api_cloud-me-go-api",
       "vm": "oci-analytics",
       "has_docker": true
     },
@@ -333,6 +343,11 @@
     },
     "cloudy-ai-tokens-api": {
       "dir": "infra-sec_cloudy-ai-tokens-api",
+      "vm": "oci-apps",
+      "has_docker": true
+    },
+    "cloudy-ai-tokens-go-api": {
+      "dir": "infra-sec_cloudy-ai-tokens-go-api",
       "vm": "oci-apps",
       "has_docker": true
     },

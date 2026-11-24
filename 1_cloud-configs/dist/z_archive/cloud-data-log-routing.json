@@ -15,6 +15,11 @@
         "log_level": "info"
       },
       {
+        "container": "cloud-me-go-api",
+        "service": "cloud-me-go-api",
+        "log_level": "info"
+      },
+      {
         "container": "cloudy-drive-git-proxy-api",
         "service": "cloudy-drive-git-proxy-api",
         "log_level": "info"
@@ -64,6 +69,11 @@
       {
         "container": "c3-public-api",
         "service": "c3-public-api",
+        "log_level": "info"
+      },
+      {
+        "container": "c3-public-go-api",
+        "service": "c3-public-go-api",
         "log_level": "info"
       },
       {
@@ -309,6 +319,11 @@
       {
         "container": "cloudy-ai-tokens-api",
         "service": "cloudy-ai-tokens-api",
+        "log_level": "info"
+      },
+      {
+        "container": "cloudy-ai-tokens-go-api",
+        "service": "cloudy-ai-tokens-go-api",
         "log_level": "info"
       },
       {

@@ -6,25 +6,25 @@
   },
   "repo": "cloud-u-containers",
   "counts": {
-    "files": 2785,
+    "files": 2795,
     "by_lang": {
-      "sh": 205,
+      "sh": 208,
       "js": 129,
-      "nix": 220,
-      "py": 532,
+      "nix": 226,
+      "py": 533,
       "ts": 1324,
       "rust": 375
     },
     "by_role": {
-      "shell": 195,
+      "shell": 198,
       "file": 363,
       "nix-module": 20,
-      "python": 515,
+      "python": 516,
       "module": 826,
       "script": 10,
-      "flake": 101,
+      "flake": 104,
       "entrypoint": 73,
-      "compose": 99,
+      "compose": 102,
       "mcp-tool": 152,
       "workflow-dag": 7,
       "rust-module": 371,
@@ -2578,6 +2578,128 @@
         "./code/shared/profile-connect.ts"
       ],
       "symbols": []
+    },
+    {
+      "path": "infra-api_c3-public-go-api/build.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "get_config()",
+        "get_config_array()",
+        "get_lifecycle()",
+        "detect_layout()",
+        "rewrite_compose_image_refs()",
+        "log()",
+        "log_warn()",
+        "log_error()",
+        "declared_container_names()",
+        "ssh_with_retry()",
+        "ssh_run_detached()",
+        "rsync_with_retry()",
+        "_ship_build_phase()"
+      ],
+      "imports": [],
+      "symbols": [
+        "get_config()",
+        "get_config_array()",
+        "get_lifecycle()",
+        "detect_layout()",
+        "rewrite_compose_image_refs()",
+        "log()",
+        "log_warn()",
+        "log_error()",
+        "declared_container_names()",
+        "ssh_with_retry()",
+        "ssh_run_detached()",
+        "rsync_with_retry()",
+        "_ship_build_phase()"
+      ]
+    },
+    {
+      "path": "infra-api_c3-public-go-api/src/compose.nix",
+      "lang": "nix",
+      "role": "compose",
+      "exports": [
+        "buildJson",
+        "container"
+      ],
+      "imports": [],
+      "symbols": [
+        "svc",
+        "app",
+        "bind",
+        "bin",
+        "pc",
+        "hostDir",
+        "services",
+        "c3-public-go-api",
+        "image",
+        "container_name",
+        "network_mode",
+        "read_only",
+        "command",
+        "environment",
+        "HOST",
+        "PORT",
+        "BASE_PATH",
+        "LIMITS_JSON",
+        "TZ",
+        "SMTP_HELO_DOMAIN",
+        "PROFILE_CONNECT_MAIL_TO",
+        "PROFILE_CONNECT_MAIL_FROM",
+        "PROFILE_CONNECT_CODE_TTL_S",
+        "PROFILE_CONNECT_RESEND_COOLDOWN_S",
+        "PROFILE_CONNECT_MAX_ATTEMPTS",
+        "PROFILE_CONNECT_BUNDLE_DIR",
+        "PROFILE_CONNECT_BUNDLE_FILE",
+        "PROFILE_CONNECT_SCHEMA_FILE",
+        "volumes",
+        "healthcheck",
+        "test",
+        "interval",
+        "timeout",
+        "retries",
+        "start_period"
+      ]
+    },
+    {
+      "path": "infra-api_c3-public-go-api/src/flake.nix",
+      "lang": "nix",
+      "role": "flake",
+      "exports": [
+        "description",
+        "shadow",
+        "Type",
+        "#1882)\";",
+        "nixpkgs"
+      ],
+      "imports": [
+        "../../_shared/engine.nix",
+        "./compose.nix",
+        "../_shared/engine.nix",
+        "compose.nix"
+      ],
+      "symbols": [
+        "description",
+        "outputs",
+        "forAllSystems",
+        "buildJson",
+        "container",
+        "engine",
+        "nb",
+        "packages",
+        "pkgs",
+        "default",
+        "srcDir",
+        "templates",
+        "composeSpec",
+        "nativeBuild",
+        "cmd",
+        "binary",
+        "baseImage",
+        "apt",
+        "title"
+      ]
     },
     {
       "path": "infra-api_cloud-drive-mcp/build.sh",
@@ -7175,6 +7297,115 @@
       ],
       "symbols": [
         "mkRepo(name, files, links = {})"
+      ]
+    },
+    {
+      "path": "infra-api_cloud-me-go-api/build.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "get_config()",
+        "get_config_array()",
+        "get_lifecycle()",
+        "detect_layout()",
+        "rewrite_compose_image_refs()",
+        "log()",
+        "log_warn()",
+        "log_error()",
+        "declared_container_names()",
+        "ssh_with_retry()",
+        "ssh_run_detached()",
+        "rsync_with_retry()",
+        "_ship_build_phase()"
+      ],
+      "imports": [],
+      "symbols": [
+        "get_config()",
+        "get_config_array()",
+        "get_lifecycle()",
+        "detect_layout()",
+        "rewrite_compose_image_refs()",
+        "log()",
+        "log_warn()",
+        "log_error()",
+        "declared_container_names()",
+        "ssh_with_retry()",
+        "ssh_run_detached()",
+        "rsync_with_retry()",
+        "_ship_build_phase()"
+      ]
+    },
+    {
+      "path": "infra-api_cloud-me-go-api/src/compose.nix",
+      "lang": "nix",
+      "role": "compose",
+      "exports": [
+        "buildJson",
+        "container"
+      ],
+      "imports": [],
+      "symbols": [
+        "app",
+        "bind",
+        "bin",
+        "services",
+        "cloud-me-go-api",
+        "image",
+        "container_name",
+        "network_mode",
+        "read_only",
+        "command",
+        "environment",
+        "PORT",
+        "BIND_HOST",
+        "TZ",
+        "ALLOW_NO_KEYS",
+        "tmpfs",
+        "healthcheck",
+        "test",
+        "interval",
+        "timeout",
+        "retries",
+        "start_period"
+      ]
+    },
+    {
+      "path": "infra-api_cloud-me-go-api/src/flake.nix",
+      "lang": "nix",
+      "role": "flake",
+      "exports": [
+        "description",
+        "shadow",
+        "Type",
+        "#1882)\";",
+        "nixpkgs"
+      ],
+      "imports": [
+        "../../_shared/engine.nix",
+        "./compose.nix",
+        "../_shared/engine.nix",
+        "compose.nix"
+      ],
+      "symbols": [
+        "description",
+        "outputs",
+        "forAllSystems",
+        "buildJson",
+        "container",
+        "engine",
+        "nb",
+        "packages",
+        "pkgs",
+        "default",
+        "srcDir",
+        "templates",
+        "composeSpec",
+        "nativeBuild",
+        "cmd",
+        "binary",
+        "baseImage",
+        "apt",
+        "title"
       ]
     },
     {
@@ -25061,6 +25292,149 @@
         "test_input_validation(env)",
         "test_missing_key_fails_startup()",
         "class Clock"
+      ]
+    },
+    {
+      "path": "infra-sec_cloudy-ai-tokens-go-api/build.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "get_config()",
+        "get_config_array()",
+        "get_lifecycle()",
+        "detect_layout()",
+        "rewrite_compose_image_refs()",
+        "log()",
+        "log_warn()",
+        "log_error()",
+        "declared_container_names()",
+        "ssh_with_retry()",
+        "ssh_run_detached()",
+        "rsync_with_retry()",
+        "_ship_build_phase()"
+      ],
+      "imports": [],
+      "symbols": [
+        "get_config()",
+        "get_config_array()",
+        "get_lifecycle()",
+        "detect_layout()",
+        "rewrite_compose_image_refs()",
+        "log()",
+        "log_warn()",
+        "log_error()",
+        "declared_container_names()",
+        "ssh_with_retry()",
+        "ssh_run_detached()",
+        "rsync_with_retry()",
+        "_ship_build_phase()"
+      ]
+    },
+    {
+      "path": "infra-sec_cloudy-ai-tokens-go-api/src/code/parity/ref.py",
+      "lang": "py",
+      "role": "python",
+      "exports": [
+        "load(clockfile=None, seed=\"seed\")",
+        "serve(port, db, clockfile, seed)",
+        "fixture(db, clockfile, seed)",
+        "vault_cmd()",
+        "open_cmd()",
+        "class Stream"
+      ],
+      "imports": [
+        "base64",
+        "hashlib",
+        "importlib.util",
+        "json",
+        "os",
+        "sys",
+        "types"
+      ],
+      "symbols": [
+        "load(clockfile=None, seed=\"seed\")",
+        "serve(port, db, clockfile, seed)",
+        "fixture(db, clockfile, seed)",
+        "vault_cmd()",
+        "open_cmd()",
+        "class Stream"
+      ]
+    },
+    {
+      "path": "infra-sec_cloudy-ai-tokens-go-api/src/compose.nix",
+      "lang": "nix",
+      "role": "compose",
+      "exports": [
+        "buildJson",
+        "container"
+      ],
+      "imports": [],
+      "symbols": [
+        "app",
+        "bind",
+        "bin",
+        "services",
+        "cloudy-ai-tokens-go-api",
+        "image",
+        "container_name",
+        "network_mode",
+        "user",
+        "read_only",
+        "command",
+        "env_file",
+        "environment",
+        "DB_PATH",
+        "OWNER_EMAIL",
+        "ADMIN_CLIENT_IDS",
+        "TRUSTED_PROXIES",
+        "INTROSPECT_URL",
+        "volumes",
+        "healthcheck",
+        "test",
+        "interval",
+        "timeout",
+        "retries",
+        "start_period",
+        "tokens_go_data"
+      ]
+    },
+    {
+      "path": "infra-sec_cloudy-ai-tokens-go-api/src/flake.nix",
+      "lang": "nix",
+      "role": "flake",
+      "exports": [
+        "description",
+        "shadow",
+        "Type",
+        "#1877)\";",
+        "nixpkgs"
+      ],
+      "imports": [
+        "../../_shared/engine.nix",
+        "./compose.nix",
+        "../_shared/engine.nix",
+        "compose.nix"
+      ],
+      "symbols": [
+        "description",
+        "outputs",
+        "forAllSystems",
+        "buildJson",
+        "container",
+        "engine",
+        "nb",
+        "packages",
+        "pkgs",
+        "default",
+        "srcDir",
+        "templates",
+        "composeSpec",
+        "nativeBuild",
+        "cmd",
+        "binary",
+        "baseImage",
+        "apt",
+        "title"
       ]
     },
     {

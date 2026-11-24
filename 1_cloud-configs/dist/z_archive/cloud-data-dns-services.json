@@ -33,6 +33,10 @@
       "ip": "10.0.0.1",
       "desc": "C3 Public API — single public-edge listener on oci-analytics. Consolidates http-to-smtp-proxy-api (Bearer-gated /mail/*) and c3-analytics-api passthrough (public /analytics/*). Replaces split listeners across gcp-proxy + oci-analytics so gcp-proxy becomes a pure wg0 spoke."
     },
+    "c3-public-go-api": {
+      "ip": "10.0.0.1",
+      "desc": "Go port of c3-public-api (public API: analytics passthrough, Bearer-gated mail bridge with the delivery ledger, SuperApp config artifact, Profile > Connect with mailed one-time codes), shadow stage: runs next to the Node container on its own port, outside every request path (ticket #1882)."
+    },
     "drive-mcp": {
       "ip": "10.0.0.1",
       "desc": "Drive MCP server — one facade over every storage unit: repos, files, photos, sync, scrapes, S3 and conversion"
@@ -52,6 +56,10 @@
     "cloud-me-api": {
       "ip": "10.0.0.1",
       "desc": "Cloud Me API: read-only, authenticated read path to the owner's private cloud-me-* repos. The service holds one READ-ONLY deploy key per repo server-side, keeps a shallow clone of each declared repo, and serves declared JSON datasets (and filtered config files) to fleet apps, so no app holds a GitHub credential (#1079). First consumer: the cloud-webapps c3-* sites (#1063)."
+    },
+    "cloud-me-go-api": {
+      "ip": "10.0.0.1",
+      "desc": "Go port of cloud-me-api (read-only, authenticated read path to the owner's private cloud-me-* repos: git deploy-key sync, file gate, builtin fleet datasets, autocomplete rows), shadow stage: runs next to the Node container on its own port, outside every request path (ticket #1882). Authorization is the shared Go authz package (_shared/go/authz)."
     },
     "c3-services-mcp": {
       "ip": "10.0.0.1",
@@ -216,6 +224,10 @@
     "cloudy-ai-tokens-api": {
       "ip": "10.0.0.1",
       "desc": "Fleet token engine: lists, generates, reveals and revokes every fleet bearer token (fleet ft_ tokens and adopted Authelia JWTs); introspect-proxy asks it before accepting a Bearer, so a revoked token stops working within 60 seconds. Public address: c3-pvt.diegonmarcos.com/tokens-api (shared gate, #1104); mesh tokens-api.mesh.diegonmarcos.com"
+    },
+    "cloudy-ai-tokens-go-api": {
+      "ip": "10.0.0.1",
+      "desc": "Go port of cloudy-ai-tokens-api (the fleet token engine: AES-256-GCM sealed token values, HMAC lookup index, verifier and owner API, audit trail), shadow stage: own sqlite file, own port, outside every request path (ticket #1877). Parity harness drives the Python original with identical requests."
     },
     "crowdsec": {
       "ip": "10.0.0.1",

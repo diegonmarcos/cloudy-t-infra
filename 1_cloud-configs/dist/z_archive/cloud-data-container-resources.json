@@ -68,6 +68,15 @@
       ],
       "resources": null
     },
+    "c3-public-go-api": {
+      "vm": "oci-apps",
+      "vm_ram_gb": 24,
+      "vm_cpu": 4,
+      "containers": [
+        "c3-public-go-api"
+      ],
+      "resources": null
+    },
     "cloud-drive-mcp": {
       "vm": "oci-apps",
       "vm_ram_gb": 24,
@@ -117,6 +126,15 @@
       "vm_cpu": 1,
       "containers": [
         "cloud-me-api"
+      ],
+      "resources": null
+    },
+    "cloud-me-go-api": {
+      "vm": "oci-analytics",
+      "vm_ram_gb": 1,
+      "vm_cpu": 1,
+      "containers": [
+        "cloud-me-go-api"
       ],
       "resources": null
     },
@@ -650,6 +668,15 @@
       "vm_cpu": 4,
       "containers": [
         "cloudy-ai-tokens-api"
+      ],
+      "resources": null
+    },
+    "cloudy-ai-tokens-go-api": {
+      "vm": "oci-apps",
+      "vm_ram_gb": 24,
+      "vm_cpu": 4,
+      "containers": [
+        "cloudy-ai-tokens-go-api"
       ],
       "resources": null
     },

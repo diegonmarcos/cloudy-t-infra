@@ -1610,11 +1610,31 @@
         "db_engine": null
       },
       {
+        "name": "c3-public-go-api",
+        "service": "c3-public-go-api",
+        "vm": "oci-A1-f_0",
+        "private_dns": "c3-public-go-api:8097",
+        "port": 8097,
+        "protocol": "http",
+        "category": "app",
+        "db_engine": null
+      },
+      {
         "name": "cloud-me-api",
         "service": "cloud-me-api",
         "vm": "oci-E2-f_1",
         "private_dns": "cloud-me-api.mesh.diegonmarcos.com:8124",
         "port": 8124,
+        "protocol": "http",
+        "category": "app",
+        "db_engine": null
+      },
+      {
+        "name": "cloud-me-go-api",
+        "service": "cloud-me-go-api",
+        "vm": "oci-E2-f_1",
+        "private_dns": "cloud-me-go-api:8134",
+        "port": 8134,
         "protocol": "http",
         "category": "app",
         "db_engine": null
@@ -2085,6 +2105,16 @@
         "vm": "oci-A1-f_0",
         "private_dns": "cloudy-ai-tokens-api.mesh.diegonmarcos.com:4184",
         "port": 4184,
+        "protocol": "http",
+        "category": "sec",
+        "db_engine": null
+      },
+      {
+        "name": "cloudy-ai-tokens-go-api",
+        "service": "cloudy-ai-tokens-go-api",
+        "vm": "oci-A1-f_0",
+        "private_dns": "cloudy-ai-tokens-go-api:4188",
+        "port": 4188,
         "protocol": "http",
         "category": "sec",
         "db_engine": null

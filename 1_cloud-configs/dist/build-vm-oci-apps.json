@@ -58,6 +58,15 @@
       "has_docker_build": true
     },
     {
+      "name": "c3-public-go-api",
+      "dir": "infra-api_c3-public-go-api",
+      "compose_path": "/opt/containers/c3-public-go-api",
+      "images": [
+        "ghcr.io/diegonmarcos/c3-public-go-api:latest"
+      ],
+      "has_docker_build": true
+    },
+    {
       "name": "cloud-drive-mcp",
       "dir": "infra-api_cloud-drive-mcp",
       "compose_path": "/opt/containers/cloud-drive-mcp",
@@ -385,6 +394,15 @@
       "compose_path": "/opt/containers/cloudy-ai-tokens-api",
       "images": [
         "ghcr.io/diegonmarcos/tokens-api-binaries:latest"
+      ],
+      "has_docker_build": true
+    },
+    {
+      "name": "cloudy-ai-tokens-go-api",
+      "dir": "infra-sec_cloudy-ai-tokens-go-api",
+      "compose_path": "/opt/containers/cloudy-ai-tokens-go-api",
+      "images": [
+        "ghcr.io/diegonmarcos/cloudy-ai-tokens-go-api:latest"
       ],
       "has_docker_build": true
     },

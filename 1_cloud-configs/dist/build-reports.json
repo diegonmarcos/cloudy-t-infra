@@ -564,6 +564,19 @@
         "path": "/pub/health"
       }
     },
+    "c3-public-go-api": {
+      "name": "c3-public-go-api",
+      "vm": "oci-A1-f_0",
+      "domain": null,
+      "enabled": true,
+      "category": "app",
+      "ports": {
+        "app": 8097
+      },
+      "health": {
+        "path": "/health"
+      }
+    },
     "cloud-drive-mcp": {
       "name": "cloud-drive-mcp",
       "vm": "oci-A1-f_0",
@@ -618,6 +631,19 @@
       "category": "app",
       "ports": {
         "app": 8124
+      },
+      "health": {
+        "path": "/me/health"
+      }
+    },
+    "cloud-me-go-api": {
+      "name": "cloud-me-go-api",
+      "vm": "oci-E2-f_1",
+      "domain": null,
+      "enabled": true,
+      "category": "app",
+      "ports": {
+        "app": 8134
       },
       "health": {
         "path": "/me/health"
@@ -1221,6 +1247,19 @@
       "category": "sec",
       "ports": {
         "app": 4184
+      },
+      "health": {
+        "path": "/health"
+      }
+    },
+    "cloudy-ai-tokens-go-api": {
+      "name": "cloudy-ai-tokens-go-api",
+      "vm": "oci-A1-f_0",
+      "domain": null,
+      "enabled": true,
+      "category": "sec",
+      "ports": {
+        "app": 4188
       },
       "health": {
         "path": "/health"
@@ -1865,6 +1904,10 @@
       "dns": "c3-public-api.mesh.diegonmarcos.com"
     },
     {
+      "service": "c3-public-go-api",
+      "dns": "c3-public-go-api.mesh.diegonmarcos.com"
+    },
+    {
       "service": "cloud-drive-mcp",
       "dns": "drive-mcp.mesh.diegonmarcos.com"
     },
@@ -1908,6 +1951,10 @@
       "service": "cloud-me-api",
       "container": "app",
       "dns": "cloud-me-api.mesh.diegonmarcos.com"
+    },
+    {
+      "service": "cloud-me-go-api",
+      "dns": "cloud-me-go-api.mesh.diegonmarcos.com"
     },
     {
       "service": "cloud-services-mcp",
@@ -2215,6 +2262,10 @@
       "service": "cloudy-ai-tokens-api",
       "container": "app",
       "dns": "cloudy-ai-tokens-api.mesh.diegonmarcos.com"
+    },
+    {
+      "service": "cloudy-ai-tokens-go-api",
+      "dns": "cloudy-ai-tokens-go-api.mesh.diegonmarcos.com"
     },
     {
       "service": "crowdsec",
@@ -2680,6 +2731,7 @@
         "services": [
           "alerts-api",
           "cloud-me-api",
+          "cloud-me-go-api",
           "cloudy-drive-git-proxy-api",
           "cloudy-drive-git-proxy-go-api",
           "unbound-dns64",
@@ -2699,6 +2751,7 @@
           "jev-sidecar-go",
           "languagetool",
           "c3-public-api",
+          "c3-public-go-api",
           "cloud-drive-mcp",
           "cloud-infra-mcp",
           "cloud-mail-mcp",
@@ -2736,6 +2789,7 @@
           "disk-janitor",
           "auth-broker",
           "cloudy-ai-tokens-api",
+          "cloudy-ai-tokens-go-api",
           "crowdsec",
           "steel-browser",
           "zap",
@@ -2900,6 +2954,19 @@
           "path": "/pub/health"
         }
       },
+      "c3-public-go-api": {
+        "name": "c3-public-go-api",
+        "vm": "oci-A1-f_0",
+        "domain": null,
+        "enabled": true,
+        "category": "app",
+        "ports": {
+          "app": 8097
+        },
+        "health": {
+          "path": "/health"
+        }
+      },
       "cloud-drive-mcp": {
         "name": "cloud-drive-mcp",
         "vm": "oci-A1-f_0",
@@ -2954,6 +3021,19 @@
         "category": "app",
         "ports": {
           "app": 8124
+        },
+        "health": {
+          "path": "/me/health"
+        }
+      },
+      "cloud-me-go-api": {
+        "name": "cloud-me-go-api",
+        "vm": "oci-E2-f_1",
+        "domain": null,
+        "enabled": true,
+        "category": "app",
+        "ports": {
+          "app": 8134
         },
         "health": {
           "path": "/me/health"
@@ -3557,6 +3637,19 @@
         "category": "sec",
         "ports": {
           "app": 4184
+        },
+        "health": {
+          "path": "/health"
+        }
+      },
+      "cloudy-ai-tokens-go-api": {
+        "name": "cloudy-ai-tokens-go-api",
+        "vm": "oci-A1-f_0",
+        "domain": null,
+        "enabled": true,
+        "category": "sec",
+        "ports": {
+          "app": 4188
         },
         "health": {
           "path": "/health"

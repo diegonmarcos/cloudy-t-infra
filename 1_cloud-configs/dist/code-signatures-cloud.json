@@ -6,9 +6,9 @@
   },
   "repo": "cloud",
   "counts": {
-    "files": 1649,
+    "files": 1650,
     "by_lang": {
-      "sh": 1117,
+      "sh": 1118,
       "js": 176,
       "nix": 314,
       "py": 12,
@@ -17,7 +17,7 @@
     "by_role": {
       "hook": 402,
       "file": 91,
-      "shell": 567,
+      "shell": 568,
       "flake": 6,
       "script": 150,
       "module": 115,
@@ -21017,6 +21017,18 @@
       ]
     },
     {
+      "path": "9_others/test/test_hub_swappiness.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "r()"
+      ],
+      "imports": [],
+      "symbols": [
+        "r()"
+      ]
+    },
+    {
       "path": "9_others/test/test_layout_detection_pre_build.sh",
       "lang": "sh",
       "role": "shell",
@@ -23864,6 +23876,7 @@
         "pkgs",
         "lib",
         "ramMB",
+        "vmName",
         "..."
       ],
       "imports": [],
@@ -26500,6 +26513,7 @@
         "pkgs",
         "lib",
         "ramMB",
+        "vmName",
         "..."
       ],
       "imports": [],
@@ -28988,6 +29002,7 @@
         "pkgs",
         "lib",
         "ramMB",
+        "vmName",
         "..."
       ],
       "imports": [],
@@ -31480,6 +31495,7 @@
         "pkgs",
         "lib",
         "ramMB",
+        "vmName",
         "..."
       ],
       "imports": [],
@@ -33971,6 +33987,7 @@
         "pkgs",
         "lib",
         "ramMB",
+        "vmName",
         "..."
       ],
       "imports": [],

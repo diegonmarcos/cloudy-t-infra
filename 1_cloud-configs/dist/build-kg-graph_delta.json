@@ -33,15 +33,15 @@
   "_generated": "",
   "_source": "_cloud-data-consolidated.json via cloud-data-config-derive.ts/kg-delta",
   "counts": {
-    "nodes": 412,
-    "edges": 567,
+    "nodes": 421,
+    "edges": 579,
     "by_table": {
       "vm": 4,
-      "service": 103,
-      "container": 127,
+      "service": 106,
+      "container": 130,
       "domain": 44,
       "repo": 3,
-      "module": 103,
+      "module": 106,
       "package": 28
     }
   },
@@ -302,6 +302,32 @@
     },
     {
       "table": "service",
+      "id": "c3_public_go_api",
+      "key": "service:c3_public_go_api",
+      "properties": {
+        "name": "c3-public-go-api",
+        "category": "app",
+        "description": "Go port of c3-public-api (public API: analytics passthrough, Bearer-gated mail bridge with the delivery ledger, SuperApp config artifact, Profile > Connect with mailed one-time codes), shadow stage: runs next to the Node container on its own port, outside every request path (ticket #1882).",
+        "domain": null,
+        "port": 8097,
+        "vm": "oci-apps",
+        "folder": "infra-api_c3-public-go-api"
+      }
+    },
+    {
+      "table": "container",
+      "id": "c3_public_go_api",
+      "key": "container:c3_public_go_api",
+      "properties": {
+        "name": "c3-public-go-api",
+        "image": "ghcr.io/diegonmarcos/c3-public-go-api:latest",
+        "role": "app",
+        "port": 8097,
+        "public": false
+      }
+    },
+    {
+      "table": "service",
       "id": "cloud_drive_mcp",
       "key": "service:cloud_drive_mcp",
       "properties": {
@@ -428,6 +454,32 @@
         "role": "app",
         "port": 8124,
         "public": true
+      }
+    },
+    {
+      "table": "service",
+      "id": "cloud_me_go_api",
+      "key": "service:cloud_me_go_api",
+      "properties": {
+        "name": "cloud-me-go-api",
+        "category": "app",
+        "description": "Go port of cloud-me-api (read-only, authenticated read path to the owner's private cloud-me-* repos: git deploy-key sync, file gate, builtin fleet datasets, autocomplete rows), shadow stage: runs next to the Node container on its own port, outside every request path (ticket #1882). Authorization is the shared Go authz package (_shared/go/authz).",
+        "domain": null,
+        "port": 8134,
+        "vm": "oci-analytics",
+        "folder": "infra-api_cloud-me-go-api"
+      }
+    },
+    {
+      "table": "container",
+      "id": "cloud_me_go_api",
+      "key": "container:cloud_me_go_api",
+      "properties": {
+        "name": "cloud-me-go-api",
+        "image": "ghcr.io/diegonmarcos/cloud-me-go-api:latest",
+        "role": "app",
+        "port": 8134,
+        "public": false
       }
     },
     {
@@ -1818,6 +1870,32 @@
         "role": "app",
         "port": 4184,
         "public": true
+      }
+    },
+    {
+      "table": "service",
+      "id": "cloudy_ai_tokens_go_api",
+      "key": "service:cloudy_ai_tokens_go_api",
+      "properties": {
+        "name": "cloudy-ai-tokens-go-api",
+        "category": "sec",
+        "description": "Go port of cloudy-ai-tokens-api (the fleet token engine: AES-256-GCM sealed token values, HMAC lookup index, verifier and owner API, audit trail), shadow stage: own sqlite file, own port, outside every request path (ticket #1877). Parity harness drives the Python original with identical requests.",
+        "domain": null,
+        "port": 4188,
+        "vm": "oci-apps",
+        "folder": "infra-sec_cloudy-ai-tokens-go-api"
+      }
+    },
+    {
+      "table": "container",
+      "id": "cloudy_ai_tokens_go_api",
+      "key": "container:cloudy_ai_tokens_go_api",
+      "properties": {
+        "name": "cloudy-ai-tokens-go-api",
+        "image": "ghcr.io/diegonmarcos/cloudy-ai-tokens-go-api:latest",
+        "role": "app",
+        "port": 4188,
+        "public": false
       }
     },
     {
@@ -3524,6 +3602,17 @@
     },
     {
       "table": "module",
+      "id": "infra_api_c3_public_go_api",
+      "key": "module:infra_api_c3_public_go_api",
+      "properties": {
+        "name": "infra-api_c3-public-go-api",
+        "repo": "cloud",
+        "category": "app",
+        "service": "c3-public-go-api"
+      }
+    },
+    {
+      "table": "module",
       "id": "infra_api_cloud_drive_mcp",
       "key": "module:infra_api_cloud_drive_mcp",
       "properties": {
@@ -3575,6 +3664,17 @@
         "repo": "cloud",
         "category": "app",
         "service": "cloud-me-api"
+      }
+    },
+    {
+      "table": "module",
+      "id": "infra_api_cloud_me_go_api",
+      "key": "module:infra_api_cloud_me_go_api",
+      "properties": {
+        "name": "infra-api_cloud-me-go-api",
+        "repo": "cloud",
+        "category": "app",
+        "service": "cloud-me-go-api"
       }
     },
     {
@@ -4092,6 +4192,17 @@
         "repo": "cloud",
         "category": "sec",
         "service": "cloudy-ai-tokens-api"
+      }
+    },
+    {
+      "table": "module",
+      "id": "infra_sec_cloudy_ai_tokens_go_api",
+      "key": "module:infra_sec_cloudy_ai_tokens_go_api",
+      "properties": {
+        "name": "infra-sec_cloudy-ai-tokens-go-api",
+        "repo": "cloud",
+        "category": "sec",
+        "service": "cloudy-ai-tokens-go-api"
       }
     },
     {
@@ -5046,6 +5157,22 @@
     },
     {
       "table": "hosted_on",
+      "from": "service:c3_public_go_api",
+      "to": "vm:oci_apps",
+      "key": "service:c3_public_go_api->hosted_on->vm:oci_apps",
+      "properties": {}
+    },
+    {
+      "table": "runs_container",
+      "from": "service:c3_public_go_api",
+      "to": "container:c3_public_go_api",
+      "key": "service:c3_public_go_api->runs_container->container:c3_public_go_api",
+      "properties": {
+        "role": "app"
+      }
+    },
+    {
+      "table": "hosted_on",
       "from": "service:cloud_drive_mcp",
       "to": "vm:oci_apps",
       "key": "service:cloud_drive_mcp->hosted_on->vm:oci_apps",
@@ -5120,6 +5247,22 @@
       "from": "service:cloud_me_api",
       "to": "container:cloud_me_api",
       "key": "service:cloud_me_api->runs_container->container:cloud_me_api",
+      "properties": {
+        "role": "app"
+      }
+    },
+    {
+      "table": "hosted_on",
+      "from": "service:cloud_me_go_api",
+      "to": "vm:oci_analytics",
+      "key": "service:cloud_me_go_api->hosted_on->vm:oci_analytics",
+      "properties": {}
+    },
+    {
+      "table": "runs_container",
+      "from": "service:cloud_me_go_api",
+      "to": "container:cloud_me_go_api",
+      "key": "service:cloud_me_go_api->runs_container->container:cloud_me_go_api",
       "properties": {
         "role": "app"
       }
@@ -5967,6 +6110,22 @@
       "from": "service:cloudy_ai_tokens_api",
       "to": "container:cloudy_ai_tokens_api",
       "key": "service:cloudy_ai_tokens_api->runs_container->container:cloudy_ai_tokens_api",
+      "properties": {
+        "role": "app"
+      }
+    },
+    {
+      "table": "hosted_on",
+      "from": "service:cloudy_ai_tokens_go_api",
+      "to": "vm:oci_apps",
+      "key": "service:cloudy_ai_tokens_go_api->hosted_on->vm:oci_apps",
+      "properties": {}
+    },
+    {
+      "table": "runs_container",
+      "from": "service:cloudy_ai_tokens_go_api",
+      "to": "container:cloudy_ai_tokens_go_api",
+      "key": "service:cloudy_ai_tokens_go_api->runs_container->container:cloudy_ai_tokens_go_api",
       "properties": {
         "role": "app"
       }
@@ -7699,6 +7858,20 @@
     },
     {
       "table": "belongs_to_repo",
+      "from": "module:infra_api_c3_public_go_api",
+      "to": "repo:cloud",
+      "key": "module:infra_api_c3_public_go_api->belongs_to_repo->repo:cloud",
+      "properties": {}
+    },
+    {
+      "table": "implements",
+      "from": "module:infra_api_c3_public_go_api",
+      "to": "service:c3_public_go_api",
+      "key": "module:infra_api_c3_public_go_api->implements->service:c3_public_go_api",
+      "properties": {}
+    },
+    {
+      "table": "belongs_to_repo",
       "from": "module:infra_api_cloud_drive_mcp",
       "to": "repo:cloud",
       "key": "module:infra_api_cloud_drive_mcp->belongs_to_repo->repo:cloud",
@@ -7765,6 +7938,20 @@
       "from": "module:infra_api_cloud_me_api",
       "to": "service:cloud_me_api",
       "key": "module:infra_api_cloud_me_api->implements->service:cloud_me_api",
+      "properties": {}
+    },
+    {
+      "table": "belongs_to_repo",
+      "from": "module:infra_api_cloud_me_go_api",
+      "to": "repo:cloud",
+      "key": "module:infra_api_cloud_me_go_api->belongs_to_repo->repo:cloud",
+      "properties": {}
+    },
+    {
+      "table": "implements",
+      "from": "module:infra_api_cloud_me_go_api",
+      "to": "service:cloud_me_go_api",
+      "key": "module:infra_api_cloud_me_go_api->implements->service:cloud_me_go_api",
       "properties": {}
     },
     {
@@ -8423,6 +8610,20 @@
       "from": "module:infra_sec_cloudy_ai_tokens_api",
       "to": "service:cloudy_ai_tokens_api",
       "key": "module:infra_sec_cloudy_ai_tokens_api->implements->service:cloudy_ai_tokens_api",
+      "properties": {}
+    },
+    {
+      "table": "belongs_to_repo",
+      "from": "module:infra_sec_cloudy_ai_tokens_go_api",
+      "to": "repo:cloud",
+      "key": "module:infra_sec_cloudy_ai_tokens_go_api->belongs_to_repo->repo:cloud",
+      "properties": {}
+    },
+    {
+      "table": "implements",
+      "from": "module:infra_sec_cloudy_ai_tokens_go_api",
+      "to": "service:cloudy_ai_tokens_go_api",
+      "key": "module:infra_sec_cloudy_ai_tokens_go_api->implements->service:cloudy_ai_tokens_go_api",
       "properties": {}
     },
     {

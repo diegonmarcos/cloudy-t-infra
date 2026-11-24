@@ -122,12 +122,13 @@
       "services": [
         "alerts-api",
         "cloud-me-api",
+        "cloud-me-go-api",
         "cloudy-drive-git-proxy-api",
         "cloudy-drive-git-proxy-go-api",
         "unbound-dns64",
         "caddy-public"
       ],
-      "container_count": 6
+      "container_count": 7
     },
     "oci-A1-f_0": {
       "ip": "82.70.229.129",
@@ -167,6 +168,7 @@
         "jev-sidecar-go",
         "languagetool",
         "c3-public-api",
+        "c3-public-go-api",
         "cloud-drive-mcp",
         "cloud-infra-mcp",
         "cloud-mail-mcp",
@@ -204,6 +206,7 @@
         "disk-janitor",
         "auth-broker",
         "cloudy-ai-tokens-api",
+        "cloudy-ai-tokens-go-api",
         "crowdsec",
         "steel-browser",
         "zap",
@@ -243,7 +246,7 @@
         "send",
         "vaultwarden"
       ],
-      "container_count": 100
+      "container_count": 102
     },
     "gcp-E2-f_0": {
       "ip": "35.226.147.64",
@@ -1612,6 +1615,173 @@
         "auth": "mixed"
       }
     },
+    "c3-public-go-api": {
+      "category": "app",
+      "vm": "oci-A1-f_0",
+      "folder": "infra-api_c3-public-go-api",
+      "description": "Go port of c3-public-api (public API: analytics passthrough, Bearer-gated mail bridge with the delivery ledger, SuperApp config artifact, Profile > Connect with mailed one-time codes), shadow stage: runs next to the Node container on its own port, outside every request path (ticket #1882).",
+      "enabled": true,
+      "flake": "infra-api_c3-public-go-api",
+      "port": 8097,
+      "dns": "c3-public-go-api.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:8097",
+      "containers": {
+        "app": {
+          "container_name": "c3-public-go-api",
+          "image": "ghcr.io/diegonmarcos/c3-public-go-api:latest",
+          "port": 8097,
+          "port_env": "PORT",
+          "public": false,
+          "proxy": null,
+          "healthcheck": "/health",
+          "monitoring": null,
+          "volumes": [],
+          "env_file": false,
+          "depends_on": [],
+          "resources": null,
+          "read_only": true,
+          "protocol": "http"
+        }
+      },
+      "container_names": [
+        "c3-public-go-api"
+      ],
+      "all_ports": [
+        "8097"
+      ],
+      "all_dns": [],
+      "compose": {
+        "containers": [],
+        "ports": [],
+        "networks": []
+      },
+      "proxy": {
+        "app_hub": false
+      },
+      "declared_ports": {
+        "app": 8097
+      },
+      "health": {
+        "path": "/health"
+      },
+      "taxonomy": {
+        "group": "Infra Apps",
+        "category": "Ops-API-MCP"
+      },
+      "bind_host": "10.0.0.6",
+      "resources": {
+        "mem_limit": "96M",
+        "mem_reservation": "8M"
+      },
+      "mail": {
+        "_doc": "JSON-in -> SMTP-out: replicates the aa-sui_tools-http-to-smtp-proxy-api Rust binary contract so the CF Worker does not need any change. Delivery to Maddy:25 (MX-style, plain SMTP over WG); Maddy's dual-write relays every local delivery to Stalwart:2025, so no shadow leg here (2026-08-18: shadow removed — it duplicated every message).",
+        "primary": {
+          "service": "maddy",
+          "via": "smtp_mx"
+        },
+        "targets": {
+          "maddy": {
+            "service": "maddy",
+            "via": "smtp_mx"
+          },
+          "maddy-direct": {
+            "service": "maddy",
+            "via": "smtp_mx_direct"
+          },
+          "stalwart": {
+            "service": "stalwart",
+            "via": "smtp_shadow"
+          }
+        },
+        "_doc_targets": "#1811 parallel fan-out. The CF Worker picks one target per request with the X-Mail-Target header and calls this bridge once per store, in parallel: maddy-direct (maddy stores only, no Stalwart mirror) and stalwart (Stalwart SMTP ingest :2025). No header = maddy = the primary above (maddy:25, which still mirrors to Stalwart), so an older Worker keeps working unchanged. Never send one message to both maddy (mirroring) and stalwart: that duplicates it in Stalwart.",
+        "helo_domain": "c3-public-api.diegonmarcos.com",
+        "default_user_env": "SMTP_USER"
+      },
+      "profile_connect": {
+        "_doc": "Superapp Configs>Profile>Connect (#566). POST /profile/connect/start mails a one-time code to mail_to over the same maddy:25 delivery as /mail/http-to-smtp; POST /profile/connect/fetch {code} returns {schema, bundle} read AS IS from the read-only bind mount of cloud-vault E0_configs/<bundle_file>. Bearer (Caddy mkProtected + in-app X-Auth-User check) AND the mailed code are both required. #589: the bundle is plaintext in the vault (private repo); no age key, no sops on this VM — a sops-encrypted file on the mount is refused (bundle_unreadable), because it is exactly the file the phone cannot read (#585).",
+        "mail_to": "me@diegonmarcos.com",
+        "mail_from": "superapp-connect@diegonmarcos.com",
+        "code_ttl_s": 600,
+        "resend_cooldown_s": 60,
+        "max_attempts": 5,
+        "_doc_bundle": "The bundle dir on oci-analytics is deploy.host_sync.profile_bundle.host_dir (cloud-vault Shared/configs/: was configs/, then E0_configs/ until vault 6c0aab8 renamed the sections; cloud-infra host-sync-declaration.test.sh #7 checks every vault_dir/file against the vault checkout, so the next rename goes red in CI instead of on the ship): the ONE declaration compose.nix mounts read-only at bundle_mount and the engine fills. bundle_file and schema_file name the files inside that mount; test-profile-connect.ts F5 pins that host_sync ships exactly them.",
+        "bundle_mount": "/profile-bundle",
+        "bundle_file": "profile-secrets.json",
+        "schema_file": "schema.json"
+      },
+      "limits": {
+        "_doc_request_timeout_ms": "Caps nodemailer connectionTimeout + greetingTimeout + socketTimeout for the Maddy:25 delivery (warm completes <3s). 15000ms headroom retained from the removed Stalwart shadow leg (2026-08-18: shadow removed — Maddy's dual-write already relays every delivery to Stalwart:2025).",
+        "max_body_bytes": 1048576,
+        "max_ingest_lines": 5000,
+        "rate_per_ip_per_min": 60,
+        "rate_per_sid_per_min": 1000,
+        "request_timeout_ms": 15000,
+        "_doc_smtp_timeout_ms": "#1819: the SMTP session's own connection/greeting/socket timeouts, decoupled from the HTTP answer (request_timeout_ms). oci-mail under swap and CPU steal accepted messages after the 15 s answer deadline; the old shared timeout aborted the session, answered 500, and each Worker retry opened a new session, storing the mail 2-3 times. Now the session keeps running up to this long, the answer is 504 pending, and a retry joins it (shared/delivery-ledger.ts).",
+        "smtp_timeout_ms": 120000,
+        "_doc_dedupe_ttl_ms": "#1819: how long a delivered (target, Message-ID, rcpt) is remembered, so a late Worker retry is answered delivered without a second send. 30 min covers the Worker's inline try plus its background retries many times over.",
+        "dedupe_ttl_ms": 1800000
+      },
+      "backends": {
+        "matomo": {
+          "service": "matomo",
+          "rewrite_path": "/matomo.php",
+          "description": "Matomo Tracking API",
+          "methods": [
+            "GET",
+            "POST"
+          ]
+        },
+        "umami": {
+          "service": "umami",
+          "rewrite_path": "/api/send",
+          "description": "Umami /api/send",
+          "methods": [
+            "POST"
+          ]
+        },
+        "openobserve": {
+          "service": "openobserve",
+          "rewrite_path": "/openobserve/api/default/default/_json",
+          "description": "OpenObserve _json bulk ingest",
+          "methods": [
+            "POST"
+          ],
+          "auth_header_env": "OPENOBSERVE_AUTHORIZATION"
+        }
+      },
+      "tests": {
+        "unit": {
+          "cmd": "go test -count=1 ./...",
+          "cwd": "src/code"
+        },
+        "parity-compare": {
+          "cmd": "PARITY_REQUIRE=1 go test -count=1 -timeout 9m -tags parity -v -run TestParity ./parity/",
+          "cwd": "src/code",
+          "_doc": "Reference = the Node service (api/index.ts under tsx, npm ci in CI); the Go port; each with its own fake analytics backends and fake SMTP store; the same ordered request list (health/ready/HEAD, Fastify 404 shapes, CORS, rate limit with the exhausted-client allow-list, analytics passthrough incl. body parsing, the mail bridge: auth gate, body shapes, targets, dedupe, failure, pending/join, Profile > Connect code flow, SuperApp config) must give identical status, headers and raw bodies, and the fakes must have seen identical backend requests and SMTP messages."
+        },
+        "parity-mutation": {
+          "cmd": "o=$(mktemp); PARITY_MUTATE=1 PARITY_REQUIRE=1 go test -count=1 -timeout 9m -tags parity -run TestParity ./parity/ >\"$o\" 2>&1; grep -q 'requests differ' \"$o\"",
+          "cwd": "src/code",
+          "_doc": "Mutation proof: the Go port's rate limit is one lower; the harness must report differing requests."
+        }
+      },
+      "_doc_shadow": "Shadow stage (#1882). The live Node c3-public-api (container c3-public-api, oci-apps 10.0.0.6:8087) is untouched. No env_file (the vault mapping of OPENOBSERVE_AUTHORIZATION for this service name belongs to the switch-over: the openobserve passthrough carries the caller's Authorization until then) and no baked SuperApp artifact (the Node image gets build-cloud-superapp-<user>.json through a CI-resolved symlink; the Go image needs the service-shipped Dockerfile flavour for that, a switch-over prerequisite): /superapp/config answers 404 for every user until then, as the Node service does for an absent artifact. The profile bundle is mounted read-only from the same host dir the Node service uses. Binds the oci-apps WG IP on port 8097.",
+      "api": {
+        "has_api": true,
+        "has_web_ui": false,
+        "api_path": "/pub",
+        "api_url": null,
+        "healthcheck_paths": [
+          "/health"
+        ],
+        "type": "custom-rest",
+        "base_path": "/pub",
+        "endpoint_count": 5,
+        "display_name": "C3 Public API (Go, shadow)",
+        "description": "Same contract as c3-public-api: /health, /ready, /analytics/<slug>, /mail/http-to-smtp, /superapp/config/:user, /profile/connect/{start,fetch}.",
+        "auth": "mixed"
+      }
+    },
     "cloud-drive-mcp": {
       "category": "app",
       "vm": "oci-A1-f_0",
@@ -2632,6 +2802,232 @@
         "endpoint_count": 6,
         "display_name": "Cloud Me API",
         "description": "Authenticated read-only access to declared datasets and config files of the owner's private cloud-me-* repos. Deploy keys stay server-side; secret-looking files are never served.",
+        "auth": "mixed"
+      }
+    },
+    "cloud-me-go-api": {
+      "category": "app",
+      "vm": "oci-E2-f_1",
+      "folder": "infra-api_cloud-me-go-api",
+      "description": "Go port of cloud-me-api (read-only, authenticated read path to the owner's private cloud-me-* repos: git deploy-key sync, file gate, builtin fleet datasets, autocomplete rows), shadow stage: runs next to the Node container on its own port, outside every request path (ticket #1882). Authorization is the shared Go authz package (_shared/go/authz).",
+      "enabled": true,
+      "flake": "infra-api_cloud-me-go-api",
+      "port": 8134,
+      "dns": "cloud-me-go-api.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.4:8134",
+      "containers": {
+        "app": {
+          "container_name": "cloud-me-go-api",
+          "image": "ghcr.io/diegonmarcos/cloud-me-go-api:latest",
+          "port": 8134,
+          "port_env": "PORT",
+          "public": false,
+          "proxy": null,
+          "healthcheck": "/me/health",
+          "monitoring": null,
+          "volumes": [],
+          "env_file": false,
+          "depends_on": [],
+          "resources": null,
+          "read_only": true,
+          "protocol": "http"
+        }
+      },
+      "container_names": [
+        "cloud-me-go-api"
+      ],
+      "all_ports": [
+        "8134"
+      ],
+      "all_dns": [],
+      "compose": {
+        "containers": [],
+        "ports": [],
+        "networks": []
+      },
+      "proxy": {
+        "app_hub": false
+      },
+      "declared_ports": {
+        "app": 8134
+      },
+      "health": {
+        "path": "/me/health"
+      },
+      "taxonomy": {
+        "group": "Cloud Apps",
+        "category": "Me"
+      },
+      "bind_host": "10.0.0.4",
+      "resources": {
+        "mem_limit": "192M",
+        "mem_reservation": "16M"
+      },
+      "runtime": {
+        "_doc": "THE endpoint contract, declared once. The image-wrapper COPYs build.json to /app/build.json and code/contract.mjs reads this block, so GET /me/endpoints serves it verbatim.",
+        "base_path": "/me",
+        "endpoints": [
+          {
+            "method": "GET",
+            "path": "/me/health",
+            "auth": "none",
+            "description": "Liveness. The only pre-auth route. Returns {\"status\":\"ok\",\"service\":\"cloud-me-api\"} and nothing about the repos."
+          },
+          {
+            "method": "GET",
+            "path": "/me/endpoints",
+            "auth": "authelia",
+            "description": "This contract from build.json runtime, minus transport fields (ssh URLs, key env names, host key) and the filter regexes."
+          },
+          {
+            "method": "GET",
+            "path": "/me/repos",
+            "auth": "authelia",
+            "description": "The declared repos and their sync state: {repos:[{name,branch,commit,synced_at,ok}]}. A projection: no URL, key or path of the server is included."
+          },
+          {
+            "method": "GET",
+            "path": "/me/config/:name",
+            "auth": "authelia",
+            "description": "A declared dataset (runtime.datasets[name]) as JSON: the file at {repo,path} of the last sync, parsed and re-serialised. Unknown name -> 404 not_found; a dataset that has not synced yet -> 503 not_synced; a file that fails the secret filter -> 403 secret_filtered and the file is never sent."
+          },
+          {
+            "method": "GET",
+            "path": "/me/repos/:repo/file",
+            "auth": "authelia",
+            "description": "One config file of a declared repo (query `path`). Only runtime.files.allowed_ext, at most runtime.files.max_bytes, never a path matching runtime.files.deny_path, never content matching runtime.files.deny_content (403 secret_filtered). Errors {error,code}: 400 bad_path, 403 repo_not_declared/path_denied/secret_filtered, 404 not_found, 413 too_large, 503 not_synced."
+          },
+          {
+            "method": "GET",
+            "path": "/me/autocomplete",
+            "auth": "authelia",
+            "description": "#1103 The owner's Autocomplete rows {v:1,ids,addresses,urls,secrets:[{label,value}]} from runtime.autocomplete {repo,path}; only the four pages, string label/value, at most 500 rows a page. The one personal file served past the secret filter, so it is authenticated (Authelia bearer or session), no-store, and never reachable through /me/config or /me/repos/:repo/file. No file yet -> 200 with empty pages; repo not synced -> 503 not_synced."
+          }
+        ],
+        "autocomplete": {
+          "_doc": "#1103 the ONE personal file this service serves past the secret filter, at GET /me/autocomplete: a JSON object {ids,addresses,urls,secrets: [{label,value}]} in a declared private repo. Cloud Account pulls it (mesh first, then c3-pvt.diegonmarcos.com/cloud-me-api with the fleet bearer) and hands it to Cloud Keyboard's own store. Absent file = an empty document.",
+          "repo": "cloud-me_configs",
+          "path": "autocomplete.json"
+        },
+        "repos": {
+          "_doc": "The allow-list is DATA, here. Each repo is read with its OWN read-only deploy key (GitHub allows a deploy key on one repo only), delivered as a base64 sops env_file value named by key_env. cloud-me_vault is deliberately NOT declared: it holds credentials and the test asserts it is never served.",
+          "sync_interval_s": 300,
+          "git_timeout_ms": 60000,
+          "list": [
+            {
+              "name": "cloud-me-containers",
+              "ssh": "git@github.com:diegonmarcos/cloud-me-pvt-containers.git",
+              "branch": "main",
+              "key_env": "CME_KEY_CONTAINERS_B64"
+            },
+            {
+              "name": "cloud-me_configs",
+              "ssh": "git@github.com:diegonmarcos/cloud-me-pvt-configs.git",
+              "branch": "main",
+              "key_env": "CME_KEY_CONFIGS_B64"
+            },
+            {
+              "name": "cloud-me_cgc",
+              "ssh": "git@github.com:diegonmarcos/cloud-me-pvt-cgc.git",
+              "branch": "main",
+              "key_env": "CME_KEY_CGC_B64"
+            }
+          ],
+          "known_hosts": "github.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl"
+        },
+        "datasets": {
+          "_doc": "name -> {builtin} | {repo,path}. The c3-* front ends fetch /me/config/<site>. builtin = real fleet config generated from this repo's build.json files by src/gen-c3-datasets.mjs into src/code/data/ (shipped in the image, never hand-edited; the test fails when stale). No placeholder seed is read.",
+          "c3-mail": {
+            "builtin": "data/c3-mail.json"
+          },
+          "c3-security-network": {
+            "builtin": "data/c3-security-network.json"
+          },
+          "c3-dns-routing": {
+            "builtin": "data/c3-dns-routing.json"
+          },
+          "c3-observability": {
+            "builtin": "data/c3-observability.json"
+          },
+          "c3-mcp-apis": {
+            "builtin": "data/c3-mcp-apis.json"
+          }
+        },
+        "files": {
+          "_doc": "The no-secrets-in-responses guard. deny_path and deny_content are regular expressions (case-insensitive); a hit refuses the whole file, nothing is partially redacted. Every string leaving the service also passes redactSecrets() against the deploy keys it holds.",
+          "allowed_ext": [
+            ".json",
+            ".yaml",
+            ".yml",
+            ".md",
+            ".txt"
+          ],
+          "max_bytes": 262144,
+          "deny_path": "(^|/)(\\.git|\\.ssh|\\.gnupg|secrets?|vault|credentials?|creds?|tokens?|keys?)(/|\\.|$)|(secret|token|credential|creds|password|passwd|private|\\.env|id_rsa|id_ed25519|\\.pem|\\.key|\\.age|sops)",
+          "deny_content": "-----BEGIN [A-Z ]*PRIVATE KEY-----|\\bgh[pousr]_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,}|AKIA[0-9A-Z]{16}|AGE-SECRET-KEY-|\\bxox[abprs]-[A-Za-z0-9-]{10,}|\"[A-Za-z0-9_-]*(password|passwd|secret|token|api_?key|private_?key)[A-Za-z0-9_-]*\"\\s*:\\s*\"[^\"\\s]{6,}\"|^\\s*[A-Za-z0-9_-]*(password|passwd|secret|token|api_?key)[A-Za-z0-9_-]*\\s*[:=]\\s*['\"]?[^\\s'\"]{8,}|ENC\\[AES256_GCM"
+        },
+        "cors": {
+          "_doc": "Browser callers: the c3-* pages are static sites on another origin and send Authorization: Bearer, so the service answers the preflight and echoes ONLY a declared origin. No wildcard, and no credentials mode.",
+          "origins": [
+            "https://diegonmarcos.github.io",
+            "https://diegonmarcos.com",
+            "https://www.diegonmarcos.com"
+          ],
+          "origin_suffix": ".diegonmarcos.com"
+        },
+        "authelia": {
+          "jwks_url": "https://auth.diegonmarcos.com/jwks.json",
+          "issuer": "https://auth.diegonmarcos.com",
+          "required_scope": "authelia.bearer.authz",
+          "jwks_cache_ttl_s": 600,
+          "jwks_fetch_timeout_ms": 3000,
+          "session": {
+            "verify_url": "https://auth.diegonmarcos.com/api/authz/auth-request",
+            "public_url": "https://api.diegonmarcos.com",
+            "users": [
+              "me@diegonmarcos.com"
+            ],
+            "timeout_ms": 3000,
+            "_doc": "Same two credentials as git-proxy-api: an Authelia bearer (JWKS verified in-service) or a live Authelia session cookie asked of Authelia's auth-request endpoint; the user must be listed."
+          },
+          "_doc": "Same three values infra-sec_introspect-proxy validates on, so a token minted for any existing Authelia client works unchanged."
+        }
+      },
+      "tests": {
+        "unit": {
+          "cmd": "go test -count=1 ./...",
+          "cwd": "src/code"
+        },
+        "parity-compare": {
+          "cmd": "PARITY_REQUIRE=1 go test -count=1 -timeout 8m -tags parity -v -run TestParity ./parity/",
+          "cwd": "src/code",
+          "_doc": "Reference = the Node service index.mjs; the Go port; both clone the same local bare git repos and use the same stub JWKS/Authelia; the same ordered request list (every credential defect on every route, session path, dataset/file gate refusals, symlink escape, redaction, builtin datasets, /endpoints derivation, autocomplete with and without its file, CORS preflight) must give identical status, headers and raw bodies, in two fixture variants."
+        },
+        "parity-mutation": {
+          "cmd": "o=$(mktemp); PARITY_MUTATE=1 PARITY_REQUIRE=1 go test -count=1 -timeout 8m -tags parity -run TestParity ./parity/ >\"$o\" 2>&1; grep -q 'requests differ' \"$o\"",
+          "cwd": "src/code",
+          "_doc": "Mutation proof: the Go port is fed a skewed accepted issuer; the harness must report differing requests."
+        },
+        "ojson-shared": {
+          "cmd": "go test -count=1 ./...",
+          "cwd": "../_shared/go/ojson",
+          "_doc": "The shared order-preserving JSON package (_shared/go/ojson): JS JSON.stringify-compatible output and the byte-identical-copy guard for every service copy."
+        }
+      },
+      "_doc_shadow": "Shadow stage (#1882). The live Node cloud-me-api (container cloud-me-api, 10.0.0.4:8124) is untouched. No env_file: the vault mapping of the CME_KEY_*_B64 deploy keys for this service name is part of the switch-over, so it runs with ALLOW_NO_KEYS=1 (no repo syncs, /me/repos reports ok:false) until then; contract, authorization, CORS, builtin datasets and every refusal are live. Binds the oci-analytics WG IP only on port 8134; clones live on tmpfs.",
+      "api": {
+        "has_api": true,
+        "has_web_ui": false,
+        "api_path": "/me",
+        "api_url": null,
+        "healthcheck_paths": [
+          "/me/health"
+        ],
+        "type": "custom-rest",
+        "base_path": "/me",
+        "endpoint_count": 6,
+        "display_name": "Cloud Me API (Go, shadow)",
+        "description": "Same contract as cloud-me-api (runtime block pinned by test).",
         "auth": "mixed"
       }
     },
@@ -9379,6 +9775,99 @@
         "auth": "bearer"
       }
     },
+    "cloudy-ai-tokens-go-api": {
+      "category": "sec",
+      "vm": "oci-A1-f_0",
+      "folder": "infra-sec_cloudy-ai-tokens-go-api",
+      "description": "Go port of cloudy-ai-tokens-api (the fleet token engine: AES-256-GCM sealed token values, HMAC lookup index, verifier and owner API, audit trail), shadow stage: own sqlite file, own port, outside every request path (ticket #1877). Parity harness drives the Python original with identical requests.",
+      "enabled": true,
+      "flake": "infra-sec_cloudy-ai-tokens-go-api",
+      "port": 4188,
+      "dns": "cloudy-ai-tokens-go-api.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:4188",
+      "containers": {
+        "app": {
+          "container_name": "cloudy-ai-tokens-go-api",
+          "image": "ghcr.io/diegonmarcos/cloudy-ai-tokens-go-api:latest",
+          "port": 4188,
+          "port_env": null,
+          "public": false,
+          "proxy": null,
+          "healthcheck": "/health",
+          "monitoring": null,
+          "volumes": [
+            "tokens_go_data:/data"
+          ],
+          "env_file": false,
+          "depends_on": [],
+          "resources": null,
+          "read_only": true,
+          "protocol": "http"
+        }
+      },
+      "container_names": [
+        "cloudy-ai-tokens-go-api"
+      ],
+      "all_ports": [
+        "4188"
+      ],
+      "all_dns": [],
+      "compose": {
+        "containers": [],
+        "ports": [],
+        "networks": []
+      },
+      "proxy": {
+        "app_hub": false
+      },
+      "declared_ports": {
+        "app": 4188
+      },
+      "health": {
+        "path": "/health"
+      },
+      "taxonomy": {
+        "group": "Infra Apps",
+        "category": "Net-Routing & Security"
+      },
+      "bind_host": "10.0.0.6",
+      "resources": {
+        "mem_limit": "64M",
+        "mem_reservation": "8M"
+      },
+      "tests": {
+        "unit": {
+          "cmd": "go test -count=1 ./...",
+          "cwd": "src/code"
+        },
+        "parity-compare": {
+          "cmd": "PYREF=$(ls -d /opt/hostedtoolcache/Python/3.11*/x64/bin/python3 2>/dev/null | tail -1); ${PYREF:-python3} -m venv /tmp/tk-parity-venv && /tmp/tk-parity-venv/bin/pip install -q -r ../../../infra-sec_cloudy-ai-tokens-api/src/code/requirements.txt && PY_BIN=/tmp/tk-parity-venv/bin/python PY_APP_DIR=$PWD/../../../infra-sec_cloudy-ai-tokens-api/src/code PARITY_REQUIRE=1 go test -count=1 -timeout 15m -tags parity -v -run TestParity ./parity/",
+          "cwd": "src/code",
+          "_doc": "Reference = the Python service main.py (CPython 3.11, Flask 3.0.0) driven by parity/ref.py with a fake clock and a deterministic byte stream; the Go port gets the same. Synthetic fleet key, tokens, introspection upstream and sqlite fixtures; valid, expired, revoked, wrong-audience, tampered-ciphertext, missing and malformed inputs must give identical status, headers, bodies, sqlite rows and upstream calls; AES-256-GCM vectors and the HMAC index are checked both directions."
+        },
+        "parity-mutation": {
+          "cmd": "PYREF=$(ls -d /opt/hostedtoolcache/Python/3.11*/x64/bin/python3 2>/dev/null | tail -1); ${PYREF:-python3} -m venv /tmp/tk-parity-venv && /tmp/tk-parity-venv/bin/pip install -q -r ../../../infra-sec_cloudy-ai-tokens-api/src/code/requirements.txt && o=$(mktemp); PY_BIN=/tmp/tk-parity-venv/bin/python PY_APP_DIR=$PWD/../../../infra-sec_cloudy-ai-tokens-api/src/code PARITY_MUTATE=1 PARITY_REQUIRE=1 go test -count=1 -timeout 15m -tags parity -run TestParityCorpus ./parity/ >\"$o\" 2>&1; grep -q 'requests differ' \"$o\"",
+          "cwd": "src/code",
+          "_doc": "Mutation proof: the Go side is given a different admin client id; the harness must report differing requests."
+        }
+      },
+      "_doc_addressing": "No mesh name on purpose during the shadow stage: nothing dials this container, so it needs no Hickory row and no Caddy fallback-map entry.",
+      "api": {
+        "has_api": true,
+        "has_web_ui": false,
+        "api_path": "/",
+        "api_url": null,
+        "healthcheck_paths": [
+          "/health"
+        ],
+        "type": "custom-rest",
+        "base_path": "/",
+        "endpoint_count": 9,
+        "display_name": "Fleet Token Engine (Go, shadow)",
+        "description": "Same contract as cloudy-ai-tokens-api: POST /v1/verify for verifiers, the owner API under /v1/tokens and /v1/audit.",
+        "auth": "bearer"
+      }
+    },
     "crowdsec": {
       "category": "sec",
       "vm": "oci-A1-f_0",
@@ -9618,6 +10107,11 @@
         "unit": {
           "cmd": "go test -count=1 ./...",
           "cwd": "src/code"
+        },
+        "fleetauth-shared": {
+          "cmd": "go test -count=1 ./...",
+          "cwd": "../_shared/go/fleetauth",
+          "_doc": "The shared Go fleetauth package (_shared/go/fleetauth) and the byte-identical-copy guard for every service copy (this service keeps its copy in src/code/fleetauth; #1877)."
         },
         "shadow-compare": {
           "cmd": "PYREF=$(ls -d /opt/hostedtoolcache/Python/3.11*/x64/bin/python3 2>/dev/null | tail -1); ${PYREF:-python3} -m venv /tmp/ip-shadow-venv && /tmp/ip-shadow-venv/bin/pip install -q -r ../../../infra-sec_introspect-proxy/src/code/requirements.txt && PY_BIN=/tmp/ip-shadow-venv/bin/python PY_APP_DIR=$PWD/../../../infra-sec_introspect-proxy/src/code go test -count=1 -tags shadow -v -run TestShadowCompare ./shadow/",
@@ -18459,6 +18953,7 @@
         "containers": [
           "alerts-api",
           "cloud-me-api",
+          "cloud-me-go-api",
           "cloudy-drive-git-proxy-api",
           "cloudy-drive-git-proxy-go-api",
           "unbound-dns64",
@@ -18510,6 +19005,7 @@
           "jev-sidecar-go",
           "languagetool",
           "c3-public-api",
+          "c3-public-go-api",
           "cloud-drive-mcp",
           "cloud-infra-mcp",
           "cloud-mail-mcp",
@@ -18547,6 +19043,7 @@
           "disk-janitor",
           "auth-broker",
           "cloudy-ai-tokens-api",
+          "cloudy-ai-tokens-go-api",
           "crowdsec",
           "steel-browser",
           "zap",
@@ -19089,6 +19586,11 @@
         "vm": "oci-apps",
         "has_docker": true
       },
+      "c3-public-go-api": {
+        "dir": "infra-api_c3-public-go-api",
+        "vm": "oci-apps",
+        "has_docker": true
+      },
       "cloud-drive-mcp": {
         "dir": "infra-api_cloud-drive-mcp",
         "vm": "oci-apps",
@@ -19111,6 +19613,11 @@
       },
       "cloud-me-api": {
         "dir": "infra-api_cloud-me-api",
+        "vm": "oci-analytics",
+        "has_docker": true
+      },
+      "cloud-me-go-api": {
+        "dir": "infra-api_cloud-me-go-api",
         "vm": "oci-analytics",
         "has_docker": true
       },
@@ -19331,6 +19838,11 @@
       },
       "cloudy-ai-tokens-api": {
         "dir": "infra-sec_cloudy-ai-tokens-api",
+        "vm": "oci-apps",
+        "has_docker": true
+      },
+      "cloudy-ai-tokens-go-api": {
+        "dir": "infra-sec_cloudy-ai-tokens-go-api",
         "vm": "oci-apps",
         "has_docker": true
       },

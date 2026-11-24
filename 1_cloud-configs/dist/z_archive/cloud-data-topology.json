@@ -49,6 +49,7 @@
       "containers": [
         "alerts-api",
         "cloud-me-api",
+        "cloud-me-go-api",
         "cloudy-drive-git-proxy-api",
         "cloudy-drive-git-proxy-go-api",
         "unbound-dns64",
@@ -83,6 +84,7 @@
         "jev-sidecar-go",
         "languagetool",
         "c3-public-api",
+        "c3-public-go-api",
         "cloud-drive-mcp",
         "cloud-infra-mcp",
         "cloud-mail-mcp",
@@ -132,6 +134,7 @@
         "cloudy-auth-cloudflare-api",
         "cloudy-auth-email-api",
         "cloudy-ai-tokens-api",
+        "cloudy-ai-tokens-go-api",
         "crowdsec",
         "steel-browser",
         "steel-browser-auth",
@@ -1543,6 +1546,55 @@
       },
       "flake": "infra-api_c3-public-api"
     },
+    "c3-public-go-api": {
+      "category": "app",
+      "vm": "oci-A1-f_0",
+      "folder": "infra-api_c3-public-go-api",
+      "description": "Go port of c3-public-api (public API: analytics passthrough, Bearer-gated mail bridge with the delivery ledger, SuperApp config artifact, Profile > Connect with mailed one-time codes), shadow stage: runs next to the Node container on its own port, outside every request path (ticket #1882).",
+      "port": 8097,
+      "dns": "c3-public-go-api.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:8097",
+      "containers": {
+        "app": {
+          "container_name": "c3-public-go-api",
+          "image": "ghcr.io/diegonmarcos/c3-public-go-api:latest",
+          "port": 8097,
+          "port_env": "PORT",
+          "public": false,
+          "proxy": null,
+          "healthcheck": "/health",
+          "monitoring": null,
+          "volumes": [],
+          "env_file": false,
+          "depends_on": [],
+          "resources": null,
+          "read_only": true,
+          "protocol": "http"
+        }
+      },
+      "container_names": [
+        "c3-public-go-api"
+      ],
+      "all_ports": [
+        "8097"
+      ],
+      "all_dns": [],
+      "compose": {
+        "containers": [],
+        "ports": [],
+        "networks": []
+      },
+      "proxy": {
+        "app_hub": false
+      },
+      "declared_ports": {
+        "app": 8097
+      },
+      "health": {
+        "path": "/health"
+      },
+      "flake": "infra-api_c3-public-go-api"
+    },
     "cloud-drive-mcp": {
       "category": "app",
       "vm": "oci-A1-f_0",
@@ -1865,6 +1917,55 @@
         "endpoint_check": true
       },
       "flake": "infra-api_cloud-me-api"
+    },
+    "cloud-me-go-api": {
+      "category": "app",
+      "vm": "oci-E2-f_1",
+      "folder": "infra-api_cloud-me-go-api",
+      "description": "Go port of cloud-me-api (read-only, authenticated read path to the owner's private cloud-me-* repos: git deploy-key sync, file gate, builtin fleet datasets, autocomplete rows), shadow stage: runs next to the Node container on its own port, outside every request path (ticket #1882). Authorization is the shared Go authz package (_shared/go/authz).",
+      "port": 8134,
+      "dns": "cloud-me-go-api.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.4:8134",
+      "containers": {
+        "app": {
+          "container_name": "cloud-me-go-api",
+          "image": "ghcr.io/diegonmarcos/cloud-me-go-api:latest",
+          "port": 8134,
+          "port_env": "PORT",
+          "public": false,
+          "proxy": null,
+          "healthcheck": "/me/health",
+          "monitoring": null,
+          "volumes": [],
+          "env_file": false,
+          "depends_on": [],
+          "resources": null,
+          "read_only": true,
+          "protocol": "http"
+        }
+      },
+      "container_names": [
+        "cloud-me-go-api"
+      ],
+      "all_ports": [
+        "8134"
+      ],
+      "all_dns": [],
+      "compose": {
+        "containers": [],
+        "ports": [],
+        "networks": []
+      },
+      "proxy": {
+        "app_hub": false
+      },
+      "declared_ports": {
+        "app": 8134
+      },
+      "health": {
+        "path": "/me/health"
+      },
+      "flake": "infra-api_cloud-me-go-api"
     },
     "cloud-services-mcp": {
       "category": "obs",
@@ -5228,6 +5329,57 @@
         "endpoint_check": true
       },
       "flake": "infra-sec_cloudy-ai-tokens-api"
+    },
+    "cloudy-ai-tokens-go-api": {
+      "category": "sec",
+      "vm": "oci-A1-f_0",
+      "folder": "infra-sec_cloudy-ai-tokens-go-api",
+      "description": "Go port of cloudy-ai-tokens-api (the fleet token engine: AES-256-GCM sealed token values, HMAC lookup index, verifier and owner API, audit trail), shadow stage: own sqlite file, own port, outside every request path (ticket #1877). Parity harness drives the Python original with identical requests.",
+      "port": 4188,
+      "dns": "cloudy-ai-tokens-go-api.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:4188",
+      "containers": {
+        "app": {
+          "container_name": "cloudy-ai-tokens-go-api",
+          "image": "ghcr.io/diegonmarcos/cloudy-ai-tokens-go-api:latest",
+          "port": 4188,
+          "port_env": null,
+          "public": false,
+          "proxy": null,
+          "healthcheck": "/health",
+          "monitoring": null,
+          "volumes": [
+            "tokens_go_data:/data"
+          ],
+          "env_file": false,
+          "depends_on": [],
+          "resources": null,
+          "read_only": true,
+          "protocol": "http"
+        }
+      },
+      "container_names": [
+        "cloudy-ai-tokens-go-api"
+      ],
+      "all_ports": [
+        "4188"
+      ],
+      "all_dns": [],
+      "compose": {
+        "containers": [],
+        "ports": [],
+        "networks": []
+      },
+      "proxy": {
+        "app_hub": false
+      },
+      "declared_ports": {
+        "app": 4188
+      },
+      "health": {
+        "path": "/health"
+      },
+      "flake": "infra-sec_cloudy-ai-tokens-go-api"
     },
     "crowdsec": {
       "category": "sec",
