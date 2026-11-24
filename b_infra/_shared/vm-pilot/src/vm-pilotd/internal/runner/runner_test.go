@@ -9,14 +9,14 @@ import (
 func TestLoadAndDefaults(t *testing.T) {
 	p := filepath.Join(t.TempDir(), "c.json")
 	os.WriteFile(p, []byte(`{"vm":"oci-apps","shadow":true,"components":["journal-ntfy","shedder","petter","tier1"],
-	 "shedder":{"Warn":35,"Crit":50,"Page":65,"Need":3,"DockerGraceSecs":180,"Tier1":["caddy"]},
-	 "tier1":{"Services":["caddy"],"MaxRestarts":3,"ResetWindow":300}}`), 0o644)
+	 "shedder":{"warn":35,"crit":50,"page":65,"need":3,"docker_grace_secs":180,"tier1":["caddy"]},
+	 "tier1":{"services":["caddy"],"max_restarts":3,"reset_window_secs":300}}`), 0o644)
 	c, err := Load(p)
 	if err != nil {
 		t.Fatal(err)
 	}
 	if c.VM != "oci-apps" || !c.Shadow || len(c.Components) != 4 || c.Shedder.Crit != 50 || c.Shedder.IntervalSecs != 15 ||
-		c.DockerSock != "/var/run/docker.sock" || c.Procfs != "/proc" || c.Tier1.MaxRestarts != 3 || c.Shedder.Tier1[0] != "caddy" {
+		c.DockerSock != "/var/run/docker.sock" || c.Procfs != "/proc" || c.Tier1.MaxRestarts != 3 || c.Tier1.ResetWindow != 300 || c.Shedder.DockerGraceSecs != 180 || c.Shedder.Tier1[0] != "caddy" {
 		t.Fatalf("%+v", c)
 	}
 	if _, err := Load(filepath.Join(t.TempDir(), "missing")); err == nil {
@@ -48,5 +48,23 @@ func TestProcfsSamplers(t *testing.T) {
 	}
 	if p := DiskPct("/"); p < 0 || p > 100 {
 		t.Fatalf("DiskPct=%d", p)
+	}
+}
+
+// testdata/oci-apps.json is the output of agents/vm-pilotd.nix for oci-apps (nix-instantiate --eval
+// of the module's rendered config). Every key must be known to the runner and the values must land.
+func TestRenderedNixConfigLoads(t *testing.T) {
+	c, err := Load("testdata/oci-apps.json")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if c.VM != "oci-apps" || !c.Shadow || c.Shedder.Crit != 50 || c.Shedder.Need != 3 || c.Shedder.DockerGraceSecs != 180 ||
+		len(c.Tier1.Services) != 5 || c.Tier1.MaxRestarts != 3 || c.JournalNtfy.RateSeconds != 300 || c.JournalNtfy.ShellRateDir != "/tmp/journal-ntfy-rate" {
+		t.Fatalf("%+v", c)
+	}
+	bad := filepath.Join(t.TempDir(), "bad.json")
+	os.WriteFile(bad, []byte(`{"vm":"x","shedder":{"warnn":1}}`), 0o644)
+	if _, err := Load(bad); err == nil {
+		t.Fatal("an unknown key must be rejected")
 	}
 }

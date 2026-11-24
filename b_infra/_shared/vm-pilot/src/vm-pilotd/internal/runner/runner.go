@@ -5,6 +5,7 @@
 package runner
 
 import (
+	"bytes"
 	"context"
 	"encoding/json"
 	"fmt"
@@ -29,23 +30,35 @@ import (
 type Config struct {
 	VM         string   `json:"vm"`
 	Shadow     bool     `json:"shadow"`
-	Components []string `json:"components"` // journal-ntfy, shedder, petter
+	Components []string `json:"components"` // journal-ntfy, shedder, petter, tier1
 	Shedder    struct {
-		Warn, Crit, Page, Need, IntervalSecs, DockerGraceSecs int
-		Tier1                                                 []string
+		Warn            int      `json:"warn"`
+		Crit            int      `json:"crit"`
+		Page            int      `json:"page"`
+		Need            int      `json:"need"`
+		IntervalSecs    int      `json:"interval_secs"`
+		DockerGraceSecs int      `json:"docker_grace_secs"`
+		Tier1           []string `json:"tier1"`
 	} `json:"shedder"`
 	Petter struct {
-		DockerFailThreshold, LowMemPruneMB, DiskWarn, DiskHigh, DiskEmerg int
-		JournalFloorDays                                                  string
+		DockerFailThreshold int    `json:"docker_fail_threshold"`
+		LowMemPruneMB       int    `json:"low_mem_prune_mb"`
+		DiskWarn            int    `json:"disk_warn"`
+		DiskHigh            int    `json:"disk_high"`
+		DiskEmerg           int    `json:"disk_emerg"`
+		JournalFloorDays    string `json:"journal_floor_days"`
 	} `json:"petter"`
 	JournalNtfy struct {
-		WGBase, PublicBase string
-		RateSeconds        int
-		ShellRateDir       string
+		WGBase       string `json:"wg_base"`
+		PublicBase   string `json:"public_base"`
+		RateSeconds  int    `json:"rate_seconds"`
+		ShellRateDir string `json:"shell_rate_dir"`
 	} `json:"journal_ntfy"`
 	Tier1 struct {
-		Services                               []string
-		MaxRestarts, ResetWindow, IntervalSecs int
+		Services     []string `json:"services"`
+		MaxRestarts  int      `json:"max_restarts"`
+		ResetWindow  int      `json:"reset_window_secs"`
+		IntervalSecs int      `json:"interval_secs"`
 	} `json:"tier1"`
 	DockerSock string `json:"docker_sock"`
 	Procfs     string `json:"procfs"`
@@ -57,7 +70,11 @@ func Load(path string) (Config, error) {
 	if err != nil {
 		return c, err
 	}
-	if err := json.Unmarshal(b, &c); err != nil {
+	// Unknown keys are an error: the config is rendered by agents/vm-pilotd.nix and a renamed key
+	// must fail loudly in CI (TestRenderedNixConfigLoads), not silently fall back to zero values.
+	dec := json.NewDecoder(bytes.NewReader(b))
+	dec.DisallowUnknownFields()
+	if err := dec.Decode(&c); err != nil {
 		return c, err
 	}
 	if c.DockerSock == "" {

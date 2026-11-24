@@ -1,0 +1,42 @@
+{
+ "components": [
+  "journal-ntfy",
+  "shedder",
+  "tier1"
+ ],
+ "journal_ntfy": {
+  "public_base": "https://rss.diegonmarcos.com",
+  "rate_seconds": 300,
+  "shell_rate_dir": "/tmp/journal-ntfy-rate",
+  "wg_base": "http://10.0.0.6:8090"
+ },
+ "shadow": true,
+ "shedder": {
+  "crit": 50,
+  "docker_grace_secs": 180,
+  "interval_secs": 15,
+  "need": 3,
+  "page": 65,
+  "tier1": [
+   "ntfy",
+   "syslog-bridge",
+   "cloudy-c3-api",
+   "crowdsec",
+   "c3-public-api"
+  ],
+  "warn": 35
+ },
+ "tier1": {
+  "interval_secs": 30,
+  "max_restarts": 3,
+  "reset_window_secs": 300,
+  "services": [
+   "ntfy",
+   "syslog-bridge",
+   "cloudy-c3-api",
+   "crowdsec",
+   "c3-public-api"
+  ]
+ },
+ "vm": "oci-apps"
+}
