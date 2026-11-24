@@ -20,7 +20,7 @@ let
   userId = 1000;
 in {
   imports = [
-    (import ./resource-bouncer.nix { inherit config pkgs lib ramMB; })
+    (import ./resource-bouncer.nix { inherit config pkgs lib ramMB vmName; })
     (import ./watchdog.nix { inherit config pkgs lib ramMB vmName; })
     (import ./load-shedder.nix { inherit config pkgs lib ramMB vmName; })
     (import ./rescue-ssh.nix { inherit config pkgs lib rescuePort; })

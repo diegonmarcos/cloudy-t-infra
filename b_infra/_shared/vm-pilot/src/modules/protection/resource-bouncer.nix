@@ -5,7 +5,7 @@
 # Desktop equivalent: unix/aa_nixos-surface_host/src/modules/configuration_system-protection.nix
 # Imported by: system-protection.nix (orchestrator)
 #
-{ config, pkgs, lib, ramMB, ... }:
+{ config, pkgs, lib, ramMB, vmName ? null, ... }:
 
 let
   # Clamp helper: compute then enforce absolute min/max
@@ -23,7 +23,13 @@ let
   # drop. A 1GB box lives in that state permanently, so it gets the balanced
   # kernel default; bigger boxes keep real zram headroom and get the neutral
   # in-memory-swap value. Neither is above 100.
-  swappiness = if safeRamMB <= 2048 then 60 else 100;
+  #
+  # #1898 (2026-11-24): the gcp-proxy hub (944 MB, edge routing, auth plane) thrashed and stalled
+  # the edge ~90 s: page-in of caddy/authelia pages from swap behind 20% iowait. On the hub only,
+  # anon pages stay in RAM until reclaim of file cache is exhausted (swappiness 10). The other 1 GB
+  # boxes keep 60 (the oci-analytics 10 above was a stray hand edit with a different cost profile).
+  swappiness = if vmName == "gcp-proxy" then 10
+               else if safeRamMB <= 2048 then 60 else 100;
 
   # vfs_cache_pressure was a flat 200 ("drop dentry/inode slab twice as
   # readily") on the theory that a clean file page is free to drop. That
