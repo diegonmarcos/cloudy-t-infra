@@ -2845,15 +2845,18 @@
       "lang": "js",
       "role": "file",
       "exports": [
+        "hubsByHost",
         "derive",
-        "MCP_PORT"
+        "MCP_PORT",
+        "HUBS"
       ],
       "imports": [
         "node:fs",
         "node:url"
       ],
       "symbols": [
-        "derive(config, build)"
+        "hubsByHost(read)",
+        "derive(config, build, hubs = {})"
       ]
     },
     {
@@ -3040,6 +3043,8 @@
         "Route",
         "ROUTE_ORDER",
         "Peer",
+        "NOT_DECLARED",
+        "Up",
         "Deps",
         "TOOLS",
         "Last",
@@ -3060,8 +3065,8 @@
         "routeGaps(p: Peer)",
         "findPeer(peers: Peer[], q: string)",
         "toolPath(tool: string, a: Record<string, unknown> = {})",
-        "guard(p: Peer, d: Deps)",
-        "httpText(p: Peer, d: Deps, method: string, path: string, body?: string)",
+        "guard(p: Peer, d: Deps, url: string | undefined = p.mcp?.url)",
+        "httpText(p: Peer, d: Deps, method: string, path: string, body?: string, origin?: string)",
         "rpc(p: Peer, d: Deps, method: string, params?: unknown)",
         "peerTools(p: Peer, d: Deps)",
         "viaSshd(p: Peer, d: Deps, path: string)",
@@ -23036,6 +23041,7 @@
         "command",
         "environment",
         "HOME",
+        "PATH",
         "SSH_CONFIG",
         "DOCKER_SOCK",
         "EXECD_TOKEN_FILE",

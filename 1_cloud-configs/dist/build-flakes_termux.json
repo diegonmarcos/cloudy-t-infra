@@ -7142,7 +7142,9 @@
           "volumes": [
             "/opt/ssh-keys/c3-infra-api:/root/.ssh:ro",
             "/var/run/docker.sock:/var/run/docker.sock",
-            "/run/c3-execd:/run/c3-execd"
+            "/run/c3-execd:/run/c3-execd",
+            "/nix/store:/nix/store:ro",
+            "/home/ubuntu/.nix-profile/bin:/usr/local/nix-bin:ro"
           ],
           "env_file": false,
           "depends_on": [],
