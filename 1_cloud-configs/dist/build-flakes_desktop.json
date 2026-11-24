@@ -8649,8 +8649,9 @@
           "cwd": "src/code"
         },
         "shadow-compare": {
-          "cmd": "python3 -m venv /tmp/ip-shadow-venv && /tmp/ip-shadow-venv/bin/pip install -q -r ../../../infra-sec_introspect-proxy/src/code/requirements.txt && PY_BIN=/tmp/ip-shadow-venv/bin/python PY_APP_DIR=$PWD/../../../infra-sec_introspect-proxy/src/code go test -count=1 -tags shadow -v -run TestShadowCompare ./shadow/",
-          "cwd": "src/code"
+          "cmd": "PYREF=$(ls -d /opt/hostedtoolcache/Python/3.11*/x64/bin/python3 2>/dev/null | tail -1); ${PYREF:-python3} -m venv /tmp/ip-shadow-venv && /tmp/ip-shadow-venv/bin/pip install -q -r ../../../infra-sec_introspect-proxy/src/code/requirements.txt && PY_BIN=/tmp/ip-shadow-venv/bin/python PY_APP_DIR=$PWD/../../../infra-sec_introspect-proxy/src/code go test -count=1 -tags shadow -v -run TestShadowCompare ./shadow/",
+          "cwd": "src/code",
+          "_doc": "Reference = the Python service under gunicorn in a venv on CPython 3.11 when the runner has it (production image is python:3.11-slim); see shadow/harness_test.go."
         }
       },
       "_doc_addressing": "No mesh name on purpose during the shadow stage: nothing dials this container but itself (the comparison loop, at its bind address 10.0.0.1:4186), so it needs no Hickory row and no Caddy fallback-map entry; Caddy's forward_auth is untouched until the switch-over.",
