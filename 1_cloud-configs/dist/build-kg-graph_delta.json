@@ -33,15 +33,15 @@
   "_generated": "",
   "_source": "_cloud-data-consolidated.json via cloud-data-config-derive.ts/kg-delta",
   "counts": {
-    "nodes": 409,
-    "edges": 563,
+    "nodes": 412,
+    "edges": 567,
     "by_table": {
       "vm": 4,
-      "service": 102,
-      "container": 126,
+      "service": 103,
+      "container": 127,
       "domain": 44,
       "repo": 3,
-      "module": 102,
+      "module": 103,
       "package": 28
     }
   },
@@ -688,6 +688,32 @@
         "role": "app",
         "port": 8123,
         "public": true
+      }
+    },
+    {
+      "table": "service",
+      "id": "cloudy_drive_git_proxy_go_api",
+      "key": "service:cloudy_drive_git_proxy_go_api",
+      "properties": {
+        "name": "cloudy-drive-git-proxy-go-api",
+        "category": "app",
+        "description": "Go port of cloudy-drive-git-proxy-api (Authelia-fronted read path to GitHub: repos, tarball, git clone/fetch, commits/runs feeds, mesh release-asset mirror), shadow stage: runs next to the Node container on its own port, outside every request path (ticket #1882). Authorization is the shared Go authz package (_shared/go/authz).",
+        "domain": null,
+        "port": 8133,
+        "vm": "oci-analytics",
+        "folder": "infra-api_cloudy-drive-git-proxy-go-api"
+      }
+    },
+    {
+      "table": "container",
+      "id": "cloudy_drive_git_proxy_go_api",
+      "key": "container:cloudy_drive_git_proxy_go_api",
+      "properties": {
+        "name": "cloudy-drive-git-proxy-go-api",
+        "image": "ghcr.io/diegonmarcos/cloudy-drive-git-proxy-go-api:latest",
+        "role": "app",
+        "port": 8133,
+        "public": false
       }
     },
     {
@@ -3663,6 +3689,17 @@
     },
     {
       "table": "module",
+      "id": "infra_api_cloudy_drive_git_proxy_go_api",
+      "key": "module:infra_api_cloudy_drive_git_proxy_go_api",
+      "properties": {
+        "name": "infra-api_cloudy-drive-git-proxy-go-api",
+        "repo": "cloud",
+        "category": "app",
+        "service": "cloudy-drive-git-proxy-go-api"
+      }
+    },
+    {
+      "table": "module",
       "id": "infra_api_google_personal_mcp",
       "key": "module:infra_api_google_personal_mcp",
       "properties": {
@@ -5243,6 +5280,22 @@
       "from": "service:cloudy_drive_git_proxy_api",
       "to": "container:cloudy_drive_git_proxy_api",
       "key": "service:cloudy_drive_git_proxy_api->runs_container->container:cloudy_drive_git_proxy_api",
+      "properties": {
+        "role": "app"
+      }
+    },
+    {
+      "table": "hosted_on",
+      "from": "service:cloudy_drive_git_proxy_go_api",
+      "to": "vm:oci_analytics",
+      "key": "service:cloudy_drive_git_proxy_go_api->hosted_on->vm:oci_analytics",
+      "properties": {}
+    },
+    {
+      "table": "runs_container",
+      "from": "service:cloudy_drive_git_proxy_go_api",
+      "to": "container:cloudy_drive_git_proxy_go_api",
+      "key": "service:cloudy_drive_git_proxy_go_api->runs_container->container:cloudy_drive_git_proxy_go_api",
       "properties": {
         "role": "app"
       }
@@ -7852,6 +7905,20 @@
       "from": "module:infra_api_cloudy_drive_git_proxy_api",
       "to": "service:cloudy_drive_git_proxy_api",
       "key": "module:infra_api_cloudy_drive_git_proxy_api->implements->service:cloudy_drive_git_proxy_api",
+      "properties": {}
+    },
+    {
+      "table": "belongs_to_repo",
+      "from": "module:infra_api_cloudy_drive_git_proxy_go_api",
+      "to": "repo:cloud",
+      "key": "module:infra_api_cloudy_drive_git_proxy_go_api->belongs_to_repo->repo:cloud",
+      "properties": {}
+    },
+    {
+      "table": "implements",
+      "from": "module:infra_api_cloudy_drive_git_proxy_go_api",
+      "to": "service:cloudy_drive_git_proxy_go_api",
+      "key": "module:infra_api_cloudy_drive_git_proxy_go_api->implements->service:cloudy_drive_git_proxy_go_api",
       "properties": {}
     },
     {

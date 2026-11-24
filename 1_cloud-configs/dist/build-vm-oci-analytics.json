@@ -29,6 +29,15 @@
       "has_docker_build": true
     },
     {
+      "name": "cloudy-drive-git-proxy-go-api",
+      "dir": "infra-api_cloudy-drive-git-proxy-go-api",
+      "compose_path": "/opt/containers/cloudy-drive-git-proxy-go-api",
+      "images": [
+        "ghcr.io/diegonmarcos/cloudy-drive-git-proxy-go-api:latest"
+      ],
+      "has_docker_build": true
+    },
+    {
       "name": "unbound-dns64",
       "dir": "infra-net_unbound-dns64",
       "compose_path": "/opt/containers/unbound-dns64",

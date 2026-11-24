@@ -50,6 +50,7 @@
         "alerts-api",
         "cloud-me-api",
         "cloudy-drive-git-proxy-api",
+        "cloudy-drive-git-proxy-go-api",
         "unbound-dns64",
         "caddy-public"
       ],
@@ -2537,6 +2538,55 @@
         "endpoint_check": true
       },
       "flake": "infra-api_cloudy-drive-git-proxy-api"
+    },
+    "cloudy-drive-git-proxy-go-api": {
+      "category": "app",
+      "vm": "oci-E2-f_1",
+      "folder": "infra-api_cloudy-drive-git-proxy-go-api",
+      "description": "Go port of cloudy-drive-git-proxy-api (Authelia-fronted read path to GitHub: repos, tarball, git clone/fetch, commits/runs feeds, mesh release-asset mirror), shadow stage: runs next to the Node container on its own port, outside every request path (ticket #1882). Authorization is the shared Go authz package (_shared/go/authz).",
+      "port": 8133,
+      "dns": "cloudy-drive-git-proxy-go-api.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.4:8133",
+      "containers": {
+        "app": {
+          "container_name": "cloudy-drive-git-proxy-go-api",
+          "image": "ghcr.io/diegonmarcos/cloudy-drive-git-proxy-go-api:latest",
+          "port": 8133,
+          "port_env": "PORT",
+          "public": false,
+          "proxy": null,
+          "healthcheck": "/health",
+          "monitoring": null,
+          "volumes": [],
+          "env_file": false,
+          "depends_on": [],
+          "resources": null,
+          "read_only": true,
+          "protocol": "http"
+        }
+      },
+      "container_names": [
+        "cloudy-drive-git-proxy-go-api"
+      ],
+      "all_ports": [
+        "8133"
+      ],
+      "all_dns": [],
+      "compose": {
+        "containers": [],
+        "ports": [],
+        "networks": []
+      },
+      "proxy": {
+        "app_hub": false
+      },
+      "declared_ports": {
+        "app": 8133
+      },
+      "health": {
+        "path": "/health"
+      },
+      "flake": "infra-api_cloudy-drive-git-proxy-go-api"
     },
     "cloudy-mail-http-to-smtp-api": {
       "category": "app",

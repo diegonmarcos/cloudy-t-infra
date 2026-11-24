@@ -745,6 +745,19 @@
         "path": "/git/health"
       }
     },
+    "cloudy-drive-git-proxy-go-api": {
+      "name": "cloudy-drive-git-proxy-go-api",
+      "vm": "oci-E2-f_1",
+      "domain": null,
+      "enabled": true,
+      "category": "app",
+      "ports": {
+        "app": 8133
+      },
+      "health": {
+        "path": "/health"
+      }
+    },
     "cloudy-mail-http-to-smtp-api": {
       "name": "cloudy-mail-http-to-smtp-api",
       "vm": "gcp-E2-f_0",
@@ -1982,6 +1995,10 @@
       "dns": "cloudy-drive-git-proxy-api.mesh.diegonmarcos.com"
     },
     {
+      "service": "cloudy-drive-git-proxy-go-api",
+      "dns": "cloudy-drive-git-proxy-go-api.mesh.diegonmarcos.com"
+    },
+    {
       "service": "cloudy-mail-http-to-smtp-api",
       "dns": "cloudy-mail-http-to-smtp-api.mesh.diegonmarcos.com"
     },
@@ -2664,6 +2681,7 @@
           "alerts-api",
           "cloud-me-api",
           "cloudy-drive-git-proxy-api",
+          "cloudy-drive-git-proxy-go-api",
           "unbound-dns64",
           "caddy-public"
         ]
@@ -3061,6 +3079,19 @@
         },
         "health": {
           "path": "/git/health"
+        }
+      },
+      "cloudy-drive-git-proxy-go-api": {
+        "name": "cloudy-drive-git-proxy-go-api",
+        "vm": "oci-E2-f_1",
+        "domain": null,
+        "enabled": true,
+        "category": "app",
+        "ports": {
+          "app": 8133
+        },
+        "health": {
+          "path": "/health"
         }
       },
       "cloudy-mail-http-to-smtp-api": {

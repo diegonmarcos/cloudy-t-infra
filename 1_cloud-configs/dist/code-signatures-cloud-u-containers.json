@@ -6,25 +6,25 @@
   },
   "repo": "cloud-u-containers",
   "counts": {
-    "files": 2781,
+    "files": 2785,
     "by_lang": {
-      "sh": 204,
-      "js": 128,
-      "nix": 218,
+      "sh": 205,
+      "js": 129,
+      "nix": 220,
       "py": 532,
       "ts": 1324,
       "rust": 375
     },
     "by_role": {
-      "shell": 194,
-      "file": 362,
+      "shell": 195,
+      "file": 363,
       "nix-module": 20,
       "python": 515,
       "module": 826,
       "script": 10,
-      "flake": 100,
+      "flake": 101,
       "entrypoint": 73,
-      "compose": 98,
+      "compose": 99,
       "mcp-tool": 152,
       "workflow-dag": 7,
       "rust-module": 371,
@@ -398,6 +398,19 @@
         "node:path"
       ],
       "symbols": []
+    },
+    {
+      "path": "_shared/go/authz/parity/driver.mjs",
+      "lang": "js",
+      "role": "file",
+      "exports": [],
+      "imports": [
+        "node:fs",
+        "node:url"
+      ],
+      "symbols": [
+        "norm(d)"
+      ]
     },
     {
       "path": "_shared/jev-gate.nix",
@@ -13771,6 +13784,114 @@
         "safeJson(t)",
         "hash(s)",
         "waitFor(fn, ms)"
+      ]
+    },
+    {
+      "path": "infra-api_cloudy-drive-git-proxy-go-api/build.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "get_config()",
+        "get_config_array()",
+        "get_lifecycle()",
+        "detect_layout()",
+        "rewrite_compose_image_refs()",
+        "log()",
+        "log_warn()",
+        "log_error()",
+        "declared_container_names()",
+        "ssh_with_retry()",
+        "ssh_run_detached()",
+        "rsync_with_retry()",
+        "_ship_build_phase()"
+      ],
+      "imports": [],
+      "symbols": [
+        "get_config()",
+        "get_config_array()",
+        "get_lifecycle()",
+        "detect_layout()",
+        "rewrite_compose_image_refs()",
+        "log()",
+        "log_warn()",
+        "log_error()",
+        "declared_container_names()",
+        "ssh_with_retry()",
+        "ssh_run_detached()",
+        "rsync_with_retry()",
+        "_ship_build_phase()"
+      ]
+    },
+    {
+      "path": "infra-api_cloudy-drive-git-proxy-go-api/src/compose.nix",
+      "lang": "nix",
+      "role": "compose",
+      "exports": [
+        "buildJson",
+        "container"
+      ],
+      "imports": [],
+      "symbols": [
+        "app",
+        "bind",
+        "bin",
+        "services",
+        "cloudy-drive-git-proxy-go-api",
+        "image",
+        "container_name",
+        "network_mode",
+        "read_only",
+        "command",
+        "environment",
+        "PORT",
+        "BIND_HOST",
+        "TZ",
+        "ALLOW_NO_TOKEN",
+        "healthcheck",
+        "test",
+        "interval",
+        "timeout",
+        "retries",
+        "start_period"
+      ]
+    },
+    {
+      "path": "infra-api_cloudy-drive-git-proxy-go-api/src/flake.nix",
+      "lang": "nix",
+      "role": "flake",
+      "exports": [
+        "description",
+        "shadow",
+        "Type",
+        "#1882)\";",
+        "nixpkgs"
+      ],
+      "imports": [
+        "../../_shared/engine.nix",
+        "./compose.nix",
+        "../_shared/engine.nix",
+        "compose.nix"
+      ],
+      "symbols": [
+        "description",
+        "outputs",
+        "forAllSystems",
+        "buildJson",
+        "container",
+        "engine",
+        "nb",
+        "packages",
+        "pkgs",
+        "default",
+        "srcDir",
+        "templates",
+        "composeSpec",
+        "nativeBuild",
+        "cmd",
+        "binary",
+        "baseImage",
+        "apt",
+        "title"
       ]
     },
     {

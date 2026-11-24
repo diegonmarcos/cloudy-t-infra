@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 24944,
+    "files": 24948,
     "by_lang": {
       "sh": 832,
       "js": 599,
       "py": 268,
-      "kotlin": 14016,
+      "kotlin": 14020,
       "ts": 8382,
       "java": 656,
       "nix": 37,
@@ -25,7 +25,7 @@
       "python": 98,
       "module": 6478,
       "java": 655,
-      "kotlin": 14013,
+      "kotlin": 14017,
       "flake": 33,
       "rust-module": 154,
       "nix-module": 4,
@@ -36994,13 +36994,15 @@
       "exports": [
         "ok()",
         "bad()",
-        "check()"
+        "check()",
+        "baked()"
       ],
       "imports": [],
       "symbols": [
         "ok()",
         "bad()",
-        "check()"
+        "check()",
+        "baked()"
       ]
     },
     {
@@ -117284,7 +117286,6 @@
       ],
       "symbols": [
         "controller(ctx: Context, host: WifiHostConfig = WifiHostConfig()",
-        "asset(n: String)",
         "class WifiHub"
       ]
     },
@@ -296399,6 +296400,50 @@
       ]
     },
     {
+      "path": "ac_cloud-mail/core/data/src/main/kotlin/app/sterna/core/data/mail/CoreImap.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [],
+      "imports": [
+        "app.sterna.core.imap.ImapClient",
+        "app.sterna.core.imap.MailSecurity",
+        "app.sterna.core.imap.MailServerConfig",
+        "com.diegonmarcos.cloudlib.mailcore.MailCore",
+        "com.diegonmarcos.cloudlib.mailcore.MailCoreImapIo",
+        "kotlinx.serialization.json.Json",
+        "kotlinx.serialization.json.JsonArray",
+        "kotlinx.serialization.json.JsonPrimitive",
+        "kotlinx.serialization.json.buildJsonObject",
+        "kotlinx.serialization.json.jsonArray",
+        "kotlinx.serialization.json.jsonObject",
+        "kotlinx.serialization.json.jsonPrimitive",
+        "kotlinx.serialization.json.put",
+        "java.net.Socket",
+        "java.net.SocketTimeoutException",
+        "java.util.Base64"
+      ],
+      "symbols": [
+        "eligible(c: MailServerConfig, mailbox: String)",
+        "write(bytes: ByteArray)",
+        "read(timeoutMs: Int)",
+        "fetchSource( config: MailServerConfig, mailbox: String, uid: Long, open: (MailServerConfig)",
+        "class CoreImap",
+        "class SocketIo"
+      ]
+    },
+    {
+      "path": "ac_cloud-mail/core/data/src/main/kotlin/app/sterna/core/data/mail/CoreSearch.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [],
+      "imports": [
+        "app.sterna.core.jmap.model.Email"
+      ],
+      "symbols": [
+        "searchWithCoreFallback( hits: List<Email>, accountIds: List<String>, limit: Int, coreIds: suspend (String)"
+      ]
+    },
+    {
       "path": "ac_cloud-mail/core/data/src/main/kotlin/app/sterna/core/data/mail/CrossAccountMove.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -301779,8 +301824,57 @@
         "msg(html: String? = null, inline: Boolean = false, receipt: Boolean = false)",
         "theRequestCarriesEveryField()",
         "whatTheCoreDoesNotExpressStaysOnTheKotlinBuilder()",
+        "withDefaultSwitchesBuildYieldsTheKotlinBytes()",
         "withoutTheCoreTheKotlinBuilderAnswersUnchanged()",
         "class CoreComposeTest"
+      ]
+    },
+    {
+      "path": "ac_cloud-mail/core/data/src/test/kotlin/app/sterna/core/data/mail/CoreImapTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "CoreImapTest"
+      ],
+      "imports": [
+        "app.sterna.core.imap.MailSecurity",
+        "app.sterna.core.imap.MailServerConfig",
+        "com.diegonmarcos.cloudlib.mailcore.MailCore",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.net.ServerSocket",
+        "java.net.Socket"
+      ],
+      "symbols": [
+        "byDefaultTheCoreIsNeverTouchedAndNoSocketIsOpened()",
+        "whatTheCoreCannotDoStaysOnKotlin()",
+        "theSocketPipeMapsTimeoutToEmptyAndCloseToNull()",
+        "class CoreImapTest"
+      ]
+    },
+    {
+      "path": "ac_cloud-mail/core/data/src/test/kotlin/app/sterna/core/data/mail/CoreSearchFallbackTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "CoreSearchFallbackTest"
+      ],
+      "imports": [
+        "app.sterna.core.jmap.model.Email",
+        "kotlinx.coroutines.runBlocking",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "e(id: String)",
+        "theRoomIndexWinsAndTheCoreIsNotAsked()",
+        "anEmptyRoomAnswerAsksTheCorePerAccountAndLoadsItsRows()",
+        "theLimitCapsTheCoreAnswer()",
+        "aCoreThatIsOffOrFailsKeepsTheEmptyAnswer()",
+        "class CoreSearchFallbackTest"
       ]
     },
     {
@@ -307675,6 +307769,7 @@
         "verifyingHostname()",
         "connect(config: MailServerConfig, connectTimeoutMs: Int = 0)",
         "openSession(config: MailServerConfig, connectTimeoutMs: Int = 0)",
+        "openRawSocket(config: MailServerConfig, connectTimeoutMs: Int = 0)",
         "readGreeting()",
         "upgradeTls(host: String, port: Int)",
         "login(username: String, password: String)",
@@ -307710,8 +307805,7 @@
         "searchUids(search: ImapSearchCommand)",
         "allUids(cap: Int)",
         "newestUids(cap: Int)",
-        "uidSearchHeader(name: String, value: String, cap: Int = 2)",
-        "uidSearchCapped(key: String, cap: Int)"
+        "uidSearchHeader(name: String, value: String, cap: Int = 2)"
       ]
     },
     {

@@ -1640,6 +1640,16 @@
         "db_engine": null
       },
       {
+        "name": "cloudy-drive-git-proxy-go-api",
+        "service": "cloudy-drive-git-proxy-go-api",
+        "vm": "oci-E2-f_1",
+        "private_dns": "cloudy-drive-git-proxy-go-api:8133",
+        "port": 8133,
+        "protocol": "http",
+        "category": "app",
+        "db_engine": null
+      },
+      {
         "name": "cloud-builder-x",
         "service": "cloud-builder-x",
         "vm": "local",

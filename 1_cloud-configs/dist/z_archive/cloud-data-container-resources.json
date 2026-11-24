@@ -219,6 +219,15 @@
       ],
       "resources": null
     },
+    "cloudy-drive-git-proxy-go-api": {
+      "vm": "oci-analytics",
+      "vm_ram_gb": 1,
+      "vm_cpu": 1,
+      "containers": [
+        "cloudy-drive-git-proxy-go-api"
+      ],
+      "resources": null
+    },
     "cloudy-mail-http-to-smtp-api": {
       "vm": "gcp-proxy",
       "vm_ram_gb": 1,

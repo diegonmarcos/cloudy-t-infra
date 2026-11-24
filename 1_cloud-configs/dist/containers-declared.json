@@ -41,6 +41,7 @@
           "label": "Dev-Gits",
           "containers": [
             "cloudy-drive-git-proxy-api",
+            "cloudy-drive-git-proxy-go-api",
             "gitea"
           ]
         },
@@ -716,6 +717,27 @@
       "public_url": "api.diegonmarcos.com/git",
       "auth": "two_factor",
       "auth_type": "woauth"
+    },
+    {
+      "name": "cloudy-drive-git-proxy-go-api",
+      "kind": "container",
+      "service": "cloudy-drive-git-proxy-go-api",
+      "role": "app",
+      "dir": "infra-api_cloudy-drive-git-proxy-go-api",
+      "group": "Infra Apps",
+      "category": "Dev-Gits",
+      "description": "Go port of cloudy-drive-git-proxy-api (Authelia-fronted read path to GitHub: repos, tarball, git clone/fetch, commits/runs feeds, mesh release-asset mirror), shadow stage: runs next to the Node container on its own port, outside every request path (ticket #1882). Authorization is the shared Go authz package (_shared/go/authz).",
+      "image": "ghcr.io/diegonmarcos/cloudy-drive-git-proxy-go-api:latest",
+      "host": "oci-analytics",
+      "dns": "",
+      "port": 8133,
+      "public": false,
+      "protocol": "http",
+      "db_engine": "",
+      "legacy_category": "app",
+      "public_url": "",
+      "auth": "",
+      "auth_type": "mesh"
     },
     {
       "name": "cloudy-mail-http-to-smtp-api",

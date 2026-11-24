@@ -438,10 +438,11 @@
         "alerts-api",
         "cloud-me-api",
         "cloudy-drive-git-proxy-api",
+        "cloudy-drive-git-proxy-go-api",
         "unbound-dns64",
         "caddy-public"
       ],
-      "container_count": 5
+      "container_count": 6
     },
     "oci-A1-f_0": {
       "ip": "82.70.229.129",
@@ -4076,6 +4077,212 @@
         "endpoint_count": 9,
         "display_name": "Git Proxy API",
         "description": "Authelia-fronted read path to GitHub: list repos, stream a tarball, clone/fetch over smart HTTP, and read recent commits / workflow runs of declared repos (cached, to keep the Store's feeds off the anonymous quota). The GitHub credential stays server-side; the caller presents an Authelia bearer or an Authelia session cookie. Fleet APK release assets (Range-capable, sha256/source sidecars) are also mirrored for direct mesh callers without a credential (#837).",
+        "auth": "mixed"
+      }
+    },
+    "cloudy-drive-git-proxy-go-api": {
+      "category": "app",
+      "vm": "oci-E2-f_1",
+      "folder": "infra-api_cloudy-drive-git-proxy-go-api",
+      "description": "Go port of cloudy-drive-git-proxy-api (Authelia-fronted read path to GitHub: repos, tarball, git clone/fetch, commits/runs feeds, mesh release-asset mirror), shadow stage: runs next to the Node container on its own port, outside every request path (ticket #1882). Authorization is the shared Go authz package (_shared/go/authz).",
+      "enabled": true,
+      "flake": "infra-api_cloudy-drive-git-proxy-go-api",
+      "port": 8133,
+      "dns": "cloudy-drive-git-proxy-go-api.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.4:8133",
+      "containers": {
+        "app": {
+          "container_name": "cloudy-drive-git-proxy-go-api",
+          "image": "ghcr.io/diegonmarcos/cloudy-drive-git-proxy-go-api:latest",
+          "port": 8133,
+          "port_env": "PORT",
+          "public": false,
+          "proxy": null,
+          "healthcheck": "/health",
+          "monitoring": null,
+          "volumes": [],
+          "env_file": false,
+          "depends_on": [],
+          "resources": null,
+          "read_only": true,
+          "protocol": "http"
+        }
+      },
+      "container_names": [
+        "cloudy-drive-git-proxy-go-api"
+      ],
+      "all_ports": [
+        "8133"
+      ],
+      "all_dns": [],
+      "compose": {
+        "containers": [],
+        "ports": [],
+        "networks": []
+      },
+      "proxy": {
+        "app_hub": false
+      },
+      "declared_ports": {
+        "app": 8133
+      },
+      "health": {
+        "path": "/health"
+      },
+      "taxonomy": {
+        "group": "Infra Apps",
+        "category": "Dev-Gits"
+      },
+      "bind_host": "10.0.0.4",
+      "resources": {
+        "mem_limit": "64M",
+        "mem_reservation": "8M"
+      },
+      "runtime": {
+        "_doc": "THE endpoint contract, declared once, here. The image-wrapper generator COPYs build.json to /app/build.json, so code/contract.mjs reads this exact block at runtime and GET /git/endpoints serves it verbatim — there is no second copy to drift from. #646's client asserts against that response instead of hardcoding paths, which is the drift #371 was (client dialling 10.0.0.4 while the service deployed to 10.0.0.6).",
+        "base_path": "/git",
+        "endpoints": [
+          {
+            "method": "GET",
+            "path": "/git/health",
+            "auth": "none",
+            "description": "Liveness. The only pre-auth route. Returns {\"status\":\"ok\",\"service\":\"git-proxy-api\"} and nothing about GitHub — an unreachable service must look unreachable, never like a 200 with an error body (#568)."
+          },
+          {
+            "method": "GET",
+            "path": "/git/endpoints",
+            "auth": "authelia",
+            "description": "This contract, verbatim from build.json runtime. Machine-readable so a client can assert its own call list against ours."
+          },
+          {
+            "method": "GET",
+            "path": "/git/repos",
+            "auth": "authelia",
+            "description": "The repos the server-side GitHub credential can see. Returns {repos:[{full_name,owner,name,private,default_branch,updated_at,size_kb}]} — a projection, never the upstream body, so no upstream field can carry a credential through."
+          },
+          {
+            "method": "GET",
+            "path": "/git/repos/:owner/:repo/tarball",
+            "auth": "authelia",
+            "description": "Streamed gzip tarball of :ref (query `ref`, default the repo's default branch). Proxied straight from GitHub's codeload redirect to the caller — nothing is written to disk, which is deliberate: oci disks have sat at 87-97% and an unscoped prune has destroyed services twice (#353/#393)."
+          },
+          {
+            "method": "GET",
+            "path": "/git/clone/:owner/:repo/info/refs",
+            "auth": "authelia",
+            "description": "git smart-HTTP ref advertisement for `git clone https://api.diegonmarcos.com/git/clone/<owner>/<repo>` (query service=git-upload-pack; any other service is 403). Proxied to GitHub with the server-side credential, which never reaches the caller: a fresh phone clones a PRIVATE repository with a working origin and holds no GitHub token. A trailing .git on :repo is accepted."
+          },
+          {
+            "method": "POST",
+            "path": "/git/clone/:owner/:repo/git-upload-pack",
+            "auth": "authelia",
+            "description": "The upload-pack negotiation and pack stream for the clone above, streamed both ways, nothing staged on disk. There is no receive-pack route: this path can read, never push."
+          },
+          {
+            "method": "GET",
+            "path": "/git/repos/:owner/:repo/commits",
+            "auth": "authelia",
+            "description": "Recent commits of a repo in runtime.feeds.repos (query `per_page`, 1..feeds.max_per_page, default 5). Returns {repo,commits:[{sha,message,author,date,html_url}],cached_at} — a projection, not the upstream body. Undeclared repo -> 403 repo_not_declared; nothing is dialled for it. ADOPTION RULE: this route is a quota optimisation for PUBLIC data, never a dependency. The service is sheddable and the phone cannot assume it is up, so a client must treat any failure here (unreachable, 5xx, 504) as a cue to fall back to the direct public api.github.com call, and must surface that fallback's own error if it also fails — never render an empty list in place of an error."
+          },
+          {
+            "method": "GET",
+            "path": "/git/repos/:owner/:repo/runs",
+            "auth": "authelia",
+            "description": "Recent GitHub Actions workflow runs of a repo in runtime.feeds.repos (query `per_page`, same bounds). Returns {repo,runs:[{name,display_title,status,conclusion,created_at,html_url,path}],cached_at}. Read-only; there is no re-run or dispatch route. ADOPTION RULE: this route is a quota optimisation for PUBLIC data, never a dependency. The service is sheddable and the phone cannot assume it is up, so a client must treat any failure here (unreachable, 5xx, 504) as a cue to fall back to the direct public api.github.com call, and must surface that fallback's own error if it also fails — never render an empty list in place of an error."
+          },
+          {
+            "method": "GET",
+            "path": "/git/releases/:owner/:repo/:tag/assets/:name",
+            "auth": "mesh",
+            "description": "#837 mesh mirror leg for fleet APKs. Streams the named asset of release :tag of a repo in runtime.feeds.repos (same allow-list as commits/runs; undeclared -> 403 repo_not_declared, nothing dialled) from GitHub with the server-side credential. Range: a single `bytes=a-b` request header is forwarded and answered 206 with Content-Range (416 when unsatisfiable); Content-Length/Accept-Ranges/ETag pass through; bytes are streamed, never staged. The ship engine's sidecars are ordinary assets and pass through by name (<asset>.sha256, <asset>.source). Errors {error,code}: 400 bad_repo/bad_tag/bad_asset/bad_range, 403 repo_not_declared, 404 not_found (no such release or asset), 502 upstream_error, 504 upstream_timeout. AUTH `mesh`: a DIRECT wg0 dial (source in runtime.mesh.cidrs, no X-Forwarded-*/Forwarded/Via header) needs no credential, because the Store's downloader has none and the bytes are the fleet's own release assets; a request relayed by the public edge is judged exactly like an `authelia` route, so off-mesh access is unchanged (edge forward_auth + in-service check). Client: cloud-u-android MeshMirrorSource, third ApkSource after release and ghcr, dialling http://git-proxy-api.mesh.diegonmarcos.com:8123/releases/..."
+          }
+        ],
+        "feeds": {
+          "_doc": "The allow-list for the commits/runs routes is DATA, here, not code: the server refuses any owner/repo not listed, so a caller cannot spend the server-side credential's quota on arbitrary repositories. Seeded from the repos the superapp Store's GitHub commits and workflow-run panels declare (cloud-u-android aa_cloud-superapp build.json ui.sections stack_observability). Every successful upstream answer is cached in memory for cache_ttl_s, keyed by (repo, kind) and always fetched at max_per_page then sliced, so the whole fleet polling costs at most 2 x len(repos) upstream calls per TTL window, however many phones ask.",
+          "cache_ttl_s": 120,
+          "max_per_page": 50,
+          "repos": [
+            "diegonmarcos/cloudy-t-infra",
+            "diegonmarcos/cloud-infra-desktop",
+            "diegonmarcos/cloudy-u-android",
+            "diegonmarcos/cloudy-u-containers",
+            "diegonmarcos/cloudy-u-linux",
+            "diegonmarcos/diegonmarcos.github.io",
+            "diegonmarcos/front-assets-cdn",
+            "diegonmarcos/front-data"
+          ]
+        },
+        "upstream": {
+          "api_base": "https://api.github.com",
+          "git_base": "https://github.com",
+          "timeout_ms": 20000,
+          "_token_doc": "GITHUB_TOKEN arrives ONLY as a sops-decrypted env_file value (src/secrets.yaml -> dist/.secrets -> compose env_file). It is read once at startup, used ONLY in upstream.mjs#upstreamHeaders as an outbound Authorization header, and every response body this service emits is passed through redactSecrets() first. code/test-contract-and-authz.mjs mutation-proves both halves."
+        },
+        "authelia": {
+          "jwks_url": "https://auth.diegonmarcos.com/jwks.json",
+          "issuer": "https://auth.diegonmarcos.com",
+          "required_scope": "authelia.bearer.authz",
+          "jwks_cache_ttl_s": 600,
+          "jwks_fetch_timeout_ms": 3000,
+          "session": {
+            "verify_url": "https://auth.diegonmarcos.com/api/authz/auth-request",
+            "public_url": "https://api.diegonmarcos.com",
+            "users": [
+              "me@diegonmarcos.com"
+            ],
+            "timeout_ms": 3000,
+            "_doc": "The second credential every `authelia` route takes: an Authelia SESSION cookie, which is all cloud-drive's authelia_web sign-in ever yields (libs:auth's WebAuthDialog returns bearer=\"\" plus the cookie) — so until this existed the phone's fleet rung was a guaranteed 401 missing_authorization. Verified HERE, not trusted from the edge: the service asks Authelia's auth-request endpoint (reached over the mesh through the hub's auth vhost, the same path jwks_url takes) whether the cookie is a live session its access rules admit for https://api.diegonmarcos.com/git/<route>, and the Remote-User it answers with must be listed in `users`. auth-request, not forward-auth: forward-auth reads X-Forwarded-Host, which the hub's proxy rewrites to auth.*, so it would judge the portal's rule instead of this route's. A request that carries any Authorization header is judged as a bearer only; a cookie is consulted only when there is no Authorization at all."
+          },
+          "_doc": "Same three values infra-sec_introspect-proxy validates on, so a token minted for ANY existing Authelia client (cli, cloud-admin, claude-*) works here unchanged. Verified in-service as well as at the Caddy edge: the edge gate does not exist when the service is dialled directly over the mesh, and the tester has to be able to assert a refusal."
+        },
+        "mesh": {
+          "_doc": "#837 source ranges that count as a direct mesh dial for auth `mesh` routes. Mirrors infra-sec_caddy build.json wg_cidrs (config.json wireguard.subnet + subnet_v6); keep both families or IPv6-preferring peers miss the gate. The service binds only to oci-analytics' wg0 address (compose.nix BIND_HOST), so nothing off-mesh can open a socket here in the first place.",
+          "cidrs": [
+            "10.0.0.0/24",
+            "fd0c:1d00::/64"
+          ]
+        }
+      },
+      "tests": {
+        "unit": {
+          "cmd": "go test -count=1 ./...",
+          "cwd": "src/code"
+        },
+        "authz-shared": {
+          "cmd": "go test -count=1 ./... && PARITY_REQUIRE=1 go test -count=1 -tags parity -v ./parity/",
+          "cwd": "../_shared/go/authz",
+          "_doc": "The shared Go authz package (_shared/go/authz): unit contract (refusal status+body, scopes, session, mesh CIDR, real RS256/JWKS verification against a throwaway keypair incl. impostor-first JWKS, alg none, tamper, stale-key outage) plus byte-identical-copy guard for every service copy, plus decision parity against the Node authz.mjs/upstream.mjs of both services."
+        },
+        "authz-parity-mutation": {
+          "cmd": "o=$(mktemp); PARITY_MUTATE=1 PARITY_REQUIRE=1 go test -count=1 -tags parity -run TestParity ./parity/ >\"$o\" 2>&1; grep -q 'requests differ' \"$o\"",
+          "cwd": "../_shared/go/authz",
+          "_doc": "Mutation proof: the reference side gets a skewed corpus; the harness must report differing decisions."
+        },
+        "parity-compare": {
+          "cmd": "PARITY_REQUIRE=1 go test -count=1 -timeout 8m -tags parity -v -run TestParity ./parity/",
+          "cwd": "src/code",
+          "_doc": "Reference = the Node service index.mjs; the Go port; each against its own identical fake GitHub/Authelia/object store; the same ordered request list (auth refusals per credential defect on every route, feeds + cache, git smart-HTTP, session path, release assets with ranges, mesh gate) must give identical status, headers, bodies and identical upstream-visible behaviour."
+        },
+        "parity-mutation": {
+          "cmd": "o=$(mktemp); PARITY_MUTATE=1 PARITY_REQUIRE=1 go test -count=1 -timeout 8m -tags parity -run TestParity ./parity/ >\"$o\" 2>&1; grep -q 'requests differ' \"$o\"",
+          "cwd": "src/code",
+          "_doc": "Mutation proof: the Go port is fed a skewed accepted issuer; the harness must report differing requests."
+        }
+      },
+      "_doc_shadow": "Shadow stage (#1882). The live Node git-proxy (container cloudy-drive-git-proxy-api, 10.0.0.4:8123) is untouched. This container has no env_file: the vault mapping of GITHUB_TOKEN for this service name is part of the switch-over, so it runs with ALLOW_NO_TOKEN=1 and every upstream-dialling route answers 502 upstream_error until then; contract, authorization (bearer, session, mesh), validation and refusals are fully live. Binds the oci-analytics WG IP only on port 8133.",
+      "api": {
+        "has_api": true,
+        "has_web_ui": false,
+        "api_path": "/git",
+        "api_url": null,
+        "healthcheck_paths": [
+          "/health"
+        ],
+        "type": "custom-rest",
+        "base_path": "/git",
+        "endpoint_count": 9,
+        "display_name": "Git Proxy API (Go, shadow)",
+        "description": "Same contract as cloudy-drive-git-proxy-api (runtime block pinned by test).",
         "auth": "mixed"
       }
     },

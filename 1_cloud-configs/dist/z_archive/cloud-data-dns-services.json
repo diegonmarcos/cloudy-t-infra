@@ -93,6 +93,10 @@
       "ip": "10.0.0.1",
       "desc": "Git Proxy API — Authelia-fronted read path to GitHub so the phone holds NO GitHub credential (#647, route 3 of #646's fallback chain). The caller authenticates to US with the Authelia bearer it already has; this service holds the GitHub token server-side and streams the result back."
     },
+    "cloudy-drive-git-proxy-go-api": {
+      "ip": "10.0.0.1",
+      "desc": "Go port of cloudy-drive-git-proxy-api (Authelia-fronted read path to GitHub: repos, tarball, git clone/fetch, commits/runs feeds, mesh release-asset mirror), shadow stage: runs next to the Node container on its own port, outside every request path (ticket #1882). Authorization is the shared Go authz package (_shared/go/authz)."
+    },
     "cloudy-mail-http-to-smtp-api": {
       "ip": "10.0.0.1",
       "desc": "HTTP-to-SMTP bridge sidecar of Caddy on gcp-proxy. CF Worker POSTs JSON email payloads to this container (because GCP blocks outbound TCP/25); container speaks SMTP over WG to maddy:25 + stalwart:2025 on oci-mail. Public path: api.diegonmarcos.com/http-to-smtp-proxy-api/ [DECOMMISSIONED 2026-05-21]"

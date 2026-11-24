@@ -6,9 +6,9 @@
   "base": "https://rss.diegonmarcos.com/feed",
   "counts": {
     "declared": 22,
-    "logs": 126,
-    "apps": 43,
-    "total": 191
+    "logs": 127,
+    "apps": 44,
+    "total": 193
   },
   "channels": [
     {
@@ -449,6 +449,17 @@
       "source": "logs",
       "vm": "oci-analytics",
       "feed": "/feed/c/logs_cloudy-drive-git-proxy-api.atom",
+      "quiet": true
+    },
+    {
+      "id": "logs_cloudy-drive-git-proxy-go-api",
+      "topic": "logs_cloudy-drive-git-proxy-go-api",
+      "title": "cloudy-drive-git-proxy-go-api",
+      "path": "Cloud-Infra/Logs/oci-analytics/cloudy-drive-git-proxy-go-api",
+      "category": "logs",
+      "source": "logs",
+      "vm": "oci-analytics",
+      "feed": "/feed/c/logs_cloudy-drive-git-proxy-go-api.atom",
       "quiet": true
     },
     {
@@ -1683,6 +1694,16 @@
       "category": "apps",
       "source": "apps",
       "feed": "/feed/c/app_cloudy-drive-git-proxy-api.atom",
+      "quiet": true
+    },
+    {
+      "id": "app_cloudy-drive-git-proxy-go-api",
+      "topic": "app_cloudy-drive-git-proxy-go-api",
+      "title": "Go port of cloudy-drive-git-proxy-api (Authelia-fronted read path to GitHub: repos, tarball, git clone/fetch, commits/runs feeds, mesh release-asset mirror), shadow stage: runs next to the Node container on its own port, outside every request path (ticket #1882). Authorization is the shared Go authz package (_shared/go/authz).",
+      "path": "Cloud-Apps/app/cloudy-drive-git-proxy-go-api",
+      "category": "apps",
+      "source": "apps",
+      "feed": "/feed/c/app_cloudy-drive-git-proxy-go-api.atom",
       "quiet": true
     },
     {
