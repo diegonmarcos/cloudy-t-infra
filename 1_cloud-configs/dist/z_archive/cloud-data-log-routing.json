@@ -47,6 +47,11 @@
         "log_level": "info"
       },
       {
+        "container": "jev-sidecar-go",
+        "service": "jev-sidecar-go",
+        "log_level": "info"
+      },
+      {
         "container": "languagetool",
         "service": "languagetool",
         "log_level": "info"

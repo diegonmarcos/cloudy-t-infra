@@ -39,6 +39,15 @@
       ],
       "resources": null
     },
+    "jev-sidecar-go": {
+      "vm": "oci-apps",
+      "vm_ram_gb": 24,
+      "vm_cpu": 4,
+      "containers": [
+        "jev-sidecar-go"
+      ],
+      "resources": null
+    },
     "languagetool": {
       "vm": "oci-apps",
       "vm_ram_gb": 24,

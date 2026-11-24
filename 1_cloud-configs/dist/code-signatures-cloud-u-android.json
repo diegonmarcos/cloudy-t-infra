@@ -6,28 +6,28 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 24933,
+    "files": 24937,
     "by_lang": {
-      "sh": 830,
+      "sh": 832,
       "js": 599,
       "py": 268,
       "kotlin": 14011,
       "ts": 8382,
       "java": 656,
       "nix": 37,
-      "rust": 150
+      "rust": 152
     },
     "by_role": {
       "hook": 166,
       "file": 2270,
       "shell": 665,
-      "script": 350,
+      "script": 352,
       "python": 98,
       "module": 6478,
       "java": 655,
       "kotlin": 14008,
       "flake": 33,
-      "rust-module": 150,
+      "rust-module": 152,
       "nix-module": 4,
       "entrypoint": 3,
       "mcp-tool": 53
@@ -388,6 +388,18 @@
       "symbols": [
         "repo_is_private()",
         "verify_visibility()"
+      ]
+    },
+    {
+      "path": ".github/workflows/scripts/build-go-16k.sh",
+      "lang": "sh",
+      "role": "script",
+      "exports": [
+        "aligned()"
+      ],
+      "imports": [],
+      "symbols": [
+        "aligned()"
       ]
     },
     {
@@ -3756,6 +3768,18 @@
         "one(old, new)",
         "registry(s)",
         "relay(s)"
+      ]
+    },
+    {
+      "path": "1_cicd/src/scripts/build-go-16k.sh",
+      "lang": "sh",
+      "role": "script",
+      "exports": [
+        "aligned()"
+      ],
+      "imports": [],
+      "symbols": [
+        "aligned()"
       ]
     },
     {
@@ -93360,6 +93384,30 @@
       ]
     },
     {
+      "path": "ab_cloud-libs-shared/libs/mail-core-rs/src/compose.rs",
+      "lang": "rust",
+      "role": "rust-module",
+      "exports": [
+        "build",
+        "Attachment",
+        "Compose"
+      ],
+      "imports": [
+        "crate::reader::base64",
+        "serde::Deserialize"
+      ],
+      "symbols": [
+        "safe(s: &str)",
+        "word(s: &str)",
+        "list(v: &[String])",
+        "fold(b64: &str)",
+        "crlf(s: &str)",
+        "text_part(ct: &str, body: &str)",
+        "boundary(seed: &str, tag: &str, parts: &str)",
+        "build(c: &Compose)"
+      ]
+    },
+    {
       "path": "ab_cloud-libs-shared/libs/mail-core-rs/src/domain.rs",
       "lang": "rust",
       "role": "rust-module",
@@ -93881,6 +93929,22 @@
         "mb(id: &str, role: Option<&str>)",
         "the_filing_rule_is_a_pure_function_of_the_memberships()",
         "a_message_in_the_inbox_and_a_label_is_filed_once_and_a_move_refiles_it()"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/mail-core-rs/tests/compose_parity.rs",
+      "lang": "rust",
+      "role": "rust-module",
+      "exports": [],
+      "imports": [
+        "mail_core::compose::"
+      ],
+      "symbols": [
+        "sample(html: bool, att: bool)",
+        "read(c: &Compose)",
+        "plain_html_and_attachment_variants_read_back_the_same_facts()",
+        "header_injection_and_bcc_are_refused()",
+        "a_long_subject_is_split_in_valid_encoded_words()"
       ]
     },
     {
@@ -308622,6 +308686,7 @@
         "dir()",
         "collapse(s: String)",
         "everyFixtureReadsTheSameInTheKotlinEngine()",
+        "composeParity()",
         "class MimeParserParityFixturesTest"
       ]
     },

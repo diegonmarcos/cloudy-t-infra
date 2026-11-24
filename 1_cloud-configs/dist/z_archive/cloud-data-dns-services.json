@@ -21,6 +21,10 @@
       "ip": "10.0.0.1",
       "desc": "Jev decisions sidecar on oci-apps (#881) — `jev-gate serve`: POST /decide/<use> with {state, questions} on the WireGuard mesh for the sites that cannot carry a gate of their own (Dagu DAGs, journal-ntfy.sh, maddy post-hoc). One OPENROUTER_API_KEY, one answer cache, one daily USD cap and per-use hourly limits, one journal on stdout for the fleet's log-shipper (OpenObserve). Jev only suggests: every failure answers {ok:false, reason} and the caller keeps today's behaviour. Uses are declared in _shared/jev-gate/jev-gate.json, the same file the agent CLIs' gate reads. WG-only, never public."
     },
+    "jev-sidecar-go": {
+      "ip": "10.0.0.1",
+      "desc": "Go port of jev-gate (the Jev pre-flight gate: agent hooks, decide/outcome/precision and the sidecar `serve` with POST /decide/<use>, POST /outcome/<use>, GET /health, GET /precision), shadow stage: runs next to the Python jev-sidecar on its own port with no key, outcome journal and budget of its own, outside every request path (ticket #1879)"
+    },
     "languagetool": {
       "ip": "10.0.0.1",
       "desc": "LanguageTool grammar/spell-check HTTP API — rules-only, no n-grams, WG-only sidecar on oci-apps"

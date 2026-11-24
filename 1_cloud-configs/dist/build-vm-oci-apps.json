@@ -31,6 +31,15 @@
       "has_docker_build": true
     },
     {
+      "name": "jev-sidecar-go",
+      "dir": "infra-ai_jev-sidecar-go",
+      "compose_path": "/opt/containers/jev-sidecar-go",
+      "images": [
+        "ghcr.io/diegonmarcos/jev-sidecar-go:latest"
+      ],
+      "has_docker_build": true
+    },
+    {
       "name": "languagetool",
       "dir": "infra-ai_languagetool",
       "compose_path": "/opt/containers/languagetool",

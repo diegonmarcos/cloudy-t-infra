@@ -79,6 +79,7 @@
         "cloudy-ai-api",
         "cloudy-ai-embeddings-api",
         "jev-sidecar",
+        "jev-sidecar-go",
         "languagetool",
         "c3-public-api",
         "cloud-drive-mcp",
@@ -1324,6 +1325,55 @@
         "path": "/health"
       },
       "flake": "infra-ai_jev-sidecar"
+    },
+    "jev-sidecar-go": {
+      "category": "ai",
+      "vm": "oci-A1-f_0",
+      "folder": "infra-ai_jev-sidecar-go",
+      "description": "Go port of jev-gate (the Jev pre-flight gate: agent hooks, decide/outcome/precision and the sidecar `serve` with POST /decide/<use>, POST /outcome/<use>, GET /health, GET /precision), shadow stage: runs next to the Python jev-sidecar on its own port with no key, outcome journal and budget of its own, outside every request path (ticket #1879)",
+      "port": 3143,
+      "dns": "jev-sidecar-go.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:3143",
+      "containers": {
+        "app": {
+          "container_name": "jev-sidecar-go",
+          "image": "ghcr.io/diegonmarcos/jev-sidecar-go:latest",
+          "port": 3143,
+          "port_env": "PORT",
+          "public": false,
+          "proxy": null,
+          "healthcheck": "/health",
+          "monitoring": null,
+          "volumes": [],
+          "env_file": false,
+          "depends_on": [],
+          "resources": null,
+          "read_only": true,
+          "protocol": "http"
+        }
+      },
+      "container_names": [
+        "jev-sidecar-go"
+      ],
+      "all_ports": [
+        "3143"
+      ],
+      "all_dns": [],
+      "compose": {
+        "containers": [],
+        "ports": [],
+        "networks": []
+      },
+      "proxy": {
+        "app_hub": false
+      },
+      "declared_ports": {
+        "app": 3143
+      },
+      "health": {
+        "path": "/health"
+      },
+      "flake": "infra-ai_jev-sidecar-go"
     },
     "languagetool": {
       "category": "tools",

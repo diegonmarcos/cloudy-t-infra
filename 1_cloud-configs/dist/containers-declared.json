@@ -62,6 +62,7 @@
         {
           "label": "Ops-API-MCP",
           "containers": [
+            "jev-sidecar-go",
             "c3-public-api",
             "cloud-drive-mcp",
             "cloud-infra-mcp",
@@ -333,6 +334,27 @@
       "protocol": "http",
       "db_engine": "",
       "legacy_category": "tools",
+      "public_url": "",
+      "auth": "",
+      "auth_type": "mesh"
+    },
+    {
+      "name": "jev-sidecar-go",
+      "kind": "container",
+      "service": "jev-sidecar-go",
+      "role": "app",
+      "dir": "infra-ai_jev-sidecar-go",
+      "group": "Infra Apps",
+      "category": "Ops-API-MCP",
+      "description": "Go port of jev-gate (the Jev pre-flight gate: agent hooks, decide/outcome/precision and the sidecar `serve` with POST /decide/<use>, POST /outcome/<use>, GET /health, GET /precision), shadow stage: runs next to the Python jev-sidecar on its own port with no key, outcome journal and budget of its own, outside every request path (ticket #1879)",
+      "image": "ghcr.io/diegonmarcos/jev-sidecar-go:latest",
+      "host": "oci-apps",
+      "dns": "",
+      "port": 3143,
+      "public": false,
+      "protocol": "http",
+      "db_engine": "",
+      "legacy_category": "ai",
       "public_url": "",
       "auth": "",
       "auth_type": "mesh"

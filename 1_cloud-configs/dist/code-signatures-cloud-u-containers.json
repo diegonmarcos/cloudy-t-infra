@@ -6,28 +6,28 @@
   },
   "repo": "cloud-u-containers",
   "counts": {
-    "files": 2769,
+    "files": 2775,
     "by_lang": {
-      "sh": 200,
+      "sh": 202,
       "js": 128,
-      "nix": 214,
-      "py": 530,
+      "nix": 216,
+      "py": 531,
       "ts": 1324,
-      "rust": 373
+      "rust": 374
     },
     "by_role": {
-      "shell": 190,
+      "shell": 192,
       "file": 362,
       "nix-module": 20,
-      "python": 513,
+      "python": 514,
       "module": 826,
       "script": 10,
-      "flake": 98,
+      "flake": 99,
       "entrypoint": 73,
-      "compose": 96,
+      "compose": 97,
       "mcp-tool": 152,
       "workflow-dag": 7,
-      "rust-module": 369,
+      "rust-module": 370,
       "hook": 53
     }
   },
@@ -1821,6 +1821,116 @@
       "exports": [
         "description",
         "Type",
+        "nixpkgs"
+      ],
+      "imports": [
+        "../../_shared/engine.nix",
+        "./compose.nix",
+        "../_shared/engine.nix",
+        "compose.nix"
+      ],
+      "symbols": [
+        "description",
+        "outputs",
+        "forAllSystems",
+        "buildJson",
+        "container",
+        "engine",
+        "nb",
+        "packages",
+        "pkgs",
+        "default",
+        "srcDir",
+        "templates",
+        "composeSpec",
+        "nativeBuild",
+        "cmd",
+        "binary",
+        "baseImage",
+        "apt",
+        "title"
+      ]
+    },
+    {
+      "path": "infra-ai_jev-sidecar-go/build.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "get_config()",
+        "get_config_array()",
+        "get_lifecycle()",
+        "detect_layout()",
+        "rewrite_compose_image_refs()",
+        "log()",
+        "log_warn()",
+        "log_error()",
+        "declared_container_names()",
+        "ssh_with_retry()",
+        "ssh_run_detached()",
+        "rsync_with_retry()",
+        "_ship_build_phase()"
+      ],
+      "imports": [],
+      "symbols": [
+        "get_config()",
+        "get_config_array()",
+        "get_lifecycle()",
+        "detect_layout()",
+        "rewrite_compose_image_refs()",
+        "log()",
+        "log_warn()",
+        "log_error()",
+        "declared_container_names()",
+        "ssh_with_retry()",
+        "ssh_run_detached()",
+        "rsync_with_retry()",
+        "_ship_build_phase()"
+      ]
+    },
+    {
+      "path": "infra-ai_jev-sidecar-go/src/compose.nix",
+      "lang": "nix",
+      "role": "compose",
+      "exports": [
+        "buildJson",
+        "container"
+      ],
+      "imports": [],
+      "symbols": [
+        "app",
+        "bind",
+        "bin",
+        "services",
+        "jev-sidecar-go",
+        "image",
+        "container_name",
+        "network_mode",
+        "read_only",
+        "command",
+        "tmpfs",
+        "environment",
+        "PORT",
+        "TZ",
+        "HOME",
+        "JEV_GATE_BIND",
+        "JEV_GATE_PORT",
+        "healthcheck",
+        "test",
+        "interval",
+        "timeout",
+        "retries",
+        "start_period"
+      ]
+    },
+    {
+      "path": "infra-ai_jev-sidecar-go/src/flake.nix",
+      "lang": "nix",
+      "role": "flake",
+      "exports": [
+        "description",
+        "shadow",
+        "Type",
+        "#1879)\";",
         "nixpkgs"
       ],
       "imports": [
@@ -64264,6 +64374,7 @@
         "environment",
         "IMAPSQL_DB",
         "RULES_PATH",
+        "DELIVER_ENGINE",
         "STARTUP_DELAY",
         "POLL_INTERVAL",
         "BACKUP_MIN_INTERVAL",
@@ -64368,6 +64479,70 @@
         "folders_holding_copy(conn: &Connection, inbox_id: i64, user_id: i64, msg_id: i64)",
         "list_mailboxes(conn: &Connection, user_id: i64)",
         "cleanup_stale_mailboxes(\n    conn: &mut Connection,\n    user_id: i64,\n    inbox_id: i64,\n    valid: &std::collections::HashSet<String>,\n)"
+      ]
+    },
+    {
+      "path": "user-comm_tools-maddy/src/crate/src/deliver.rs",
+      "lang": "rust",
+      "role": "rust-module",
+      "exports": [
+        "header_block",
+        "get_header_awk",
+        "b64_getline",
+        "qp_decode",
+        "decode_2047",
+        "addr_from_header",
+        "evaluate",
+        "run",
+        "main",
+        "Outcome",
+        "EvalError",
+        "Ctx"
+      ],
+      "imports": [
+        "it",
+        "regex::bytes::Regex",
+        "regex::Regex",
+        "serde_json::Value",
+        "std::io::",
+        "super::",
+        "serde_json::json"
+      ],
+      "symbols": [
+        "header_block(input: &[u8])",
+        "lower(b: &[u8])",
+        "get_header_awk(headers: &[u8], name: &str)",
+        "trim_start_blank(b: &[u8])",
+        "b64_val(c: u8)",
+        "b64_getline(data: &[u8])",
+        "hex_val(c: u8)",
+        "qp_decode(data: &[u8])",
+        "decode_2047(input: &[u8])",
+        "addr_from_header(hdr: &[u8], sender: &[u8])",
+        "lossy(b: &[u8])",
+        "lc(s: &str)",
+        "get_hdr_jq(headers: &str, name: &str)",
+        "lc_value(v: &Value)",
+        "any_value(p: &Value, f: impl Fn(&str)",
+        "atom_match(p: &Value, c: &Ctx)",
+        "match_when(w: &Value, c: &Ctx)",
+        "iterate(v: &Value)",
+        "join_item(v: &Value)",
+        "evaluate(rules_doc: &Value, ctx: &Ctx, env_strategy: Option<&str>)",
+        "run(\n    account: &str,\n    sender: &str,\n    rules_path: &str,\n    stdin: &[u8],\n    env_strategy: Option<&str>,\n)",
+        "main(args: &[String])",
+        "ctx(from: &str)",
+        "header_block_is_awk_paragraph_mode()",
+        "awk_get_header_last_wins_and_folds()",
+        "base64_follows_gnu_decoder_and_getline()",
+        "quoted_printable_words()",
+        "rfc2047_words_are_decoded_in_place_without_joining()",
+        "from_address_forms()",
+        "evaluate_unified_and_split()",
+        "evaluate_combinators_and_unknown_predicates()",
+        "first_header_wins_in_jq_predicates()",
+        "jq_errors_become_exit_5_cases()",
+        "schema_pin_is_silent_exit_zero()"
       ]
     },
     {
@@ -64567,6 +64742,18 @@
       ]
     },
     {
+      "path": "user-comm_tools-maddy/src/mail-sieve-subset-delivery-shadow.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "run_new()"
+      ],
+      "imports": [],
+      "symbols": [
+        "run_new()"
+      ]
+    },
+    {
       "path": "user-comm_tools-maddy/src/mail-sieve-subset-delivery-time.sh",
       "lang": "sh",
       "role": "shell",
@@ -64628,6 +64815,37 @@
         "_resync_msgs_count()",
         "cmd_reseed_inbox_archive()",
         "cmd_all()"
+      ]
+    },
+    {
+      "path": "user-comm_tools-maddy/src/test-deliver-parity.py",
+      "lang": "py",
+      "role": "python",
+      "exports": [
+        "b64(s)",
+        "msg(headers, body=\"body text\\n\", crlf=False, lead=\"\")",
+        "doc(rules, **extra)",
+        "r(i, when, folder=None, flags=None, axis=None, priority=None)",
+        "run_shell(rules_path, env_strategy, message)",
+        "run_rust(binary, rules_path, env_strategy, message)",
+        "main()"
+      ],
+      "imports": [
+        "itertools",
+        "json",
+        "os",
+        "subprocess",
+        "sys",
+        "tempfile"
+      ],
+      "symbols": [
+        "b64(s)",
+        "msg(headers, body=\"body text\\n\", crlf=False, lead=\"\")",
+        "doc(rules, **extra)",
+        "r(i, when, folder=None, flags=None, axis=None, priority=None)",
+        "run_shell(rules_path, env_strategy, message)",
+        "run_rust(binary, rules_path, env_strategy, message)",
+        "main()"
       ]
     },
     {

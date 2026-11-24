@@ -973,6 +973,18 @@
       ]
     },
     {
+      "name": "jev-sidecar-go",
+      "category": "ai",
+      "vm": "oci-A1-f_0",
+      "description": "Go port of jev-gate (the Jev pre-flight gate: agent hooks, decide/outcome/precision and the sidecar `serve` with POST /decide/<use>, POST /outcome/<use>, GET /health, GET /precision), shadow stage: runs next to the Python jev-sidecar on its own port with no key, outcome journal and budget of its own, outside every request path (ticket #1879)",
+      "domain": "—",
+      "ports": [],
+      "networks": [],
+      "containers": [
+        "jev-sidecar-go"
+      ]
+    },
+    {
       "name": "languagetool",
       "category": "tools",
       "vm": "oci-A1-f_0",

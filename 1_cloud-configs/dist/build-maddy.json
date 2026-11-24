@@ -195,6 +195,30 @@
         ]
       }
     },
+    "jev-sidecar-go": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 3143
+      },
+      "vm": "oci-apps",
+      "healthcheck": "/health",
+      "description": "Go port of jev-gate (the Jev pre-flight gate: agent hooks, decide/outcome/precision and the sidecar `serve` with POST /decide/<use>, POST /outcome/<use>, GET /health, GET /precision), shadow stage: runs next to the Python jev-sidecar on its own port with no key, outcome journal and budget of its own, outside every request path (ticket #1879)",
+      "api": {
+        "has_api": true,
+        "has_web_ui": false,
+        "api_path": "/",
+        "api_url": null,
+        "healthcheck_paths": [
+          "/health"
+        ],
+        "type": "custom-rest",
+        "base_path": "/",
+        "endpoint_count": 4,
+        "display_name": "Jev gate sidecar (Go, shadow)",
+        "description": "Same contract as jev-sidecar: POST /decide/<use>, POST /outcome/<use>, GET /health, GET /precision.",
+        "auth": "none"
+      }
+    },
     "languagetool": {
       "ip": "10.0.0.6",
       "ports": {
@@ -2457,6 +2481,10 @@
     },
     "sorter-jev": {
       "cmd": "cargo test --manifest-path src/crate/Cargo.toml"
+    },
+    "deliver-parity": {
+      "cmd": "cargo build --release --manifest-path src/crate/Cargo.toml && python3 src/test-deliver-parity.py src/crate/target/release/maddy-sorter",
+      "_doc": "#1883: the Rust `maddy-sorter deliver` must answer exactly like the shell classifier mail-sieve-subset-delivery-time.sh (jq + awk) on every generated rules x message x MAIL_SIEVE_STRATEGY combination: same stdout bytes, same exit status. The shell script is the unmodified reference; the harness exits 2 when a tool is missing or the corpus is too weak, it never skips."
     }
   }
 }

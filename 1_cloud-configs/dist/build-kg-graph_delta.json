@@ -33,15 +33,15 @@
   "_generated": "",
   "_source": "_cloud-data-consolidated.json via cloud-data-config-derive.ts/kg-delta",
   "counts": {
-    "nodes": 403,
-    "edges": 555,
+    "nodes": 406,
+    "edges": 559,
     "by_table": {
       "vm": 4,
-      "service": 100,
-      "container": 124,
+      "service": 101,
+      "container": 125,
       "domain": 44,
       "repo": 3,
-      "module": 100,
+      "module": 101,
       "package": 28
     }
   },
@@ -219,6 +219,32 @@
         "image": "ghcr.io/diegonmarcos/jev-sidecar:latest",
         "role": "app",
         "port": 3110,
+        "public": false
+      }
+    },
+    {
+      "table": "service",
+      "id": "jev_sidecar_go",
+      "key": "service:jev_sidecar_go",
+      "properties": {
+        "name": "jev-sidecar-go",
+        "category": "ai",
+        "description": "Go port of jev-gate (the Jev pre-flight gate: agent hooks, decide/outcome/precision and the sidecar `serve` with POST /decide/<use>, POST /outcome/<use>, GET /health, GET /precision), shadow stage: runs next to the Python jev-sidecar on its own port with no key, outcome journal and budget of its own, outside every request path (ticket #1879)",
+        "domain": null,
+        "port": 3143,
+        "vm": "oci-apps",
+        "folder": "infra-ai_jev-sidecar-go"
+      }
+    },
+    {
+      "table": "container",
+      "id": "jev_sidecar_go",
+      "key": "container:jev_sidecar_go",
+      "properties": {
+        "name": "jev-sidecar-go",
+        "image": "ghcr.io/diegonmarcos/jev-sidecar-go:latest",
+        "role": "app",
+        "port": 3143,
         "public": false
       }
     },
@@ -3413,6 +3439,17 @@
     },
     {
       "table": "module",
+      "id": "infra_ai_jev_sidecar_go",
+      "key": "module:infra_ai_jev_sidecar_go",
+      "properties": {
+        "name": "infra-ai_jev-sidecar-go",
+        "repo": "cloud",
+        "category": "ai",
+        "service": "jev-sidecar-go"
+      }
+    },
+    {
+      "table": "module",
       "id": "infra_ai_languagetool",
       "key": "module:infra_ai_languagetool",
       "properties": {
@@ -4881,6 +4918,22 @@
       "from": "service:jev_sidecar",
       "to": "container:jev_sidecar",
       "key": "service:jev_sidecar->runs_container->container:jev_sidecar",
+      "properties": {
+        "role": "app"
+      }
+    },
+    {
+      "table": "hosted_on",
+      "from": "service:jev_sidecar_go",
+      "to": "vm:oci_apps",
+      "key": "service:jev_sidecar_go->hosted_on->vm:oci_apps",
+      "properties": {}
+    },
+    {
+      "table": "runs_container",
+      "from": "service:jev_sidecar_go",
+      "to": "container:jev_sidecar_go",
+      "key": "service:jev_sidecar_go->runs_container->container:jev_sidecar_go",
       "properties": {
         "role": "app"
       }
@@ -7494,6 +7547,20 @@
       "from": "module:infra_ai_jev_sidecar",
       "to": "service:jev_sidecar",
       "key": "module:infra_ai_jev_sidecar->implements->service:jev_sidecar",
+      "properties": {}
+    },
+    {
+      "table": "belongs_to_repo",
+      "from": "module:infra_ai_jev_sidecar_go",
+      "to": "repo:cloud",
+      "key": "module:infra_ai_jev_sidecar_go->belongs_to_repo->repo:cloud",
+      "properties": {}
+    },
+    {
+      "table": "implements",
+      "from": "module:infra_ai_jev_sidecar_go",
+      "to": "service:jev_sidecar_go",
+      "key": "module:infra_ai_jev_sidecar_go->implements->service:jev_sidecar_go",
       "properties": {}
     },
     {

@@ -478,6 +478,7 @@
         "cloudy-ai-api",
         "cloudy-ai-embeddings-api",
         "jev-sidecar",
+        "jev-sidecar-go",
         "languagetool",
         "c3-public-api",
         "cloud-drive-mcp",
@@ -555,7 +556,7 @@
         "send",
         "vaultwarden"
       ],
-      "container_count": 98
+      "container_count": 99
     },
     "gcp-E2-f_0": {
       "ip": "35.226.147.64",
@@ -1043,6 +1044,97 @@
         "healthcheck_paths": [
           "/health"
         ]
+      }
+    },
+    "jev-sidecar-go": {
+      "category": "ai",
+      "vm": "oci-A1-f_0",
+      "folder": "infra-ai_jev-sidecar-go",
+      "description": "Go port of jev-gate (the Jev pre-flight gate: agent hooks, decide/outcome/precision and the sidecar `serve` with POST /decide/<use>, POST /outcome/<use>, GET /health, GET /precision), shadow stage: runs next to the Python jev-sidecar on its own port with no key, outcome journal and budget of its own, outside every request path (ticket #1879)",
+      "enabled": true,
+      "flake": "infra-ai_jev-sidecar-go",
+      "port": 3143,
+      "dns": "jev-sidecar-go.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:3143",
+      "containers": {
+        "app": {
+          "container_name": "jev-sidecar-go",
+          "image": "ghcr.io/diegonmarcos/jev-sidecar-go:latest",
+          "port": 3143,
+          "port_env": "PORT",
+          "public": false,
+          "proxy": null,
+          "healthcheck": "/health",
+          "monitoring": null,
+          "volumes": [],
+          "env_file": false,
+          "depends_on": [],
+          "resources": null,
+          "read_only": true,
+          "protocol": "http"
+        }
+      },
+      "container_names": [
+        "jev-sidecar-go"
+      ],
+      "all_ports": [
+        "3143"
+      ],
+      "all_dns": [],
+      "compose": {
+        "containers": [],
+        "ports": [],
+        "networks": []
+      },
+      "proxy": {
+        "app_hub": false
+      },
+      "declared_ports": {
+        "app": 3143
+      },
+      "health": {
+        "path": "/health"
+      },
+      "taxonomy": {
+        "group": "Infra Apps",
+        "category": "Ops-API-MCP"
+      },
+      "bind_host": "10.0.0.6",
+      "resources": {
+        "mem_limit": "64M",
+        "mem_reservation": "8M"
+      },
+      "tests": {
+        "unit": {
+          "cmd": "go test -count=1 ./...",
+          "cwd": "src/code"
+        },
+        "parity-compare": {
+          "cmd": "PARITY_REQUIRE=1 go test -count=1 -timeout 9m -tags parity -v -run 'TestParity' ./parity/",
+          "cwd": "src/code",
+          "_doc": "Reference = _shared/jev-gate/jev_gate.py (python3). Every scenario (claude/goose hooks incl. the never-auto-approve list, redaction, budget, impact and route_context against a mock code-graph MCP, goose-prompt, decide/outcome/precision, the sidecar HTTP surface) runs through both with the same stdin, environment, mock Decisions server and mock MCP server; stdout, the journal lines (key order included), the requests the mocks saw, the ledger, the caches and the goose context file must be identical."
+        },
+        "parity-mutation": {
+          "cmd": "o=$(mktemp); PARITY_MUTATE=1 PARITY_REQUIRE=1 go test -count=1 -timeout 9m -tags parity -run 'TestParity$' ./parity/ >\"$o\" 2>&1; grep -q 'scenarios differ' \"$o\"",
+          "cwd": "src/code",
+          "_doc": "Mutation proof: the mock Decisions server skews its noul answers for the Go run only; the harness must report differing scenarios (the grep passes only then, not on a build error)."
+        }
+      },
+      "_doc_shadow": "Shadow stage (#1879). The live Python jev-sidecar (port 3110, OPENROUTER_API_KEY, volume jev-sidecar-data) and every in-image jev-gate (claude, goose, hermes) are untouched; hermes keeps the Python module as its plugin shim (select_tools and route_context stay in jev_gate.py). The config is embedded in the binary (a unit test keeps it identical to _shared/jev-gate/jev-gate.json). Known dialect notes: \\\\s and \\\\S follow Python's Unicode whitespace; \\\\b and \\\\w stay ASCII (a non-ASCII letter before a secret prefix counts as a boundary, so Go redacts slightly more, never less).",
+      "api": {
+        "has_api": true,
+        "has_web_ui": false,
+        "api_path": "/",
+        "api_url": null,
+        "healthcheck_paths": [
+          "/health"
+        ],
+        "type": "custom-rest",
+        "base_path": "/",
+        "endpoint_count": 4,
+        "display_name": "Jev gate sidecar (Go, shadow)",
+        "description": "Same contract as jev-sidecar: POST /decide/<use>, POST /outcome/<use>, GET /health, GET /precision.",
+        "auth": "none"
       }
     },
     "languagetool": {
@@ -11813,6 +11905,10 @@
         },
         "sorter-jev": {
           "cmd": "cargo test --manifest-path src/crate/Cargo.toml"
+        },
+        "deliver-parity": {
+          "cmd": "cargo build --release --manifest-path src/crate/Cargo.toml && python3 src/test-deliver-parity.py src/crate/target/release/maddy-sorter",
+          "_doc": "#1883: the Rust `maddy-sorter deliver` must answer exactly like the shell classifier mail-sieve-subset-delivery-time.sh (jq + awk) on every generated rules x message x MAIL_SIEVE_STRATEGY combination: same stdout bytes, same exit status. The shell script is the unmodified reference; the harness exits 2 when a tool is missing or the corpus is too weak, it never skips."
         }
       },
       "api": {

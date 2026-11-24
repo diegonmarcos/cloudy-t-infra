@@ -6,9 +6,9 @@
   "base": "https://rss.diegonmarcos.com/feed",
   "counts": {
     "declared": 22,
-    "logs": 124,
+    "logs": 125,
     "apps": 42,
-    "total": 188
+    "total": 189
   },
   "channels": [
     {
@@ -251,6 +251,17 @@
       "source": "logs",
       "vm": "oci-apps",
       "feed": "/feed/c/logs_jev-sidecar.atom",
+      "quiet": true
+    },
+    {
+      "id": "logs_jev-sidecar-go",
+      "topic": "logs_jev-sidecar-go",
+      "title": "jev-sidecar-go",
+      "path": "Cloud-Infra/Logs/oci-apps/jev-sidecar-go",
+      "category": "logs",
+      "source": "logs",
+      "vm": "oci-apps",
+      "feed": "/feed/c/logs_jev-sidecar-go.atom",
       "quiet": true
     },
     {
