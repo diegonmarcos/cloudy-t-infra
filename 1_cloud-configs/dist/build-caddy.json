@@ -116,6 +116,32 @@
       "window": "1m",
       "key": "{remote_host}",
       "zone": "jmap"
+    },
+    "_doc_auth_rate_limit": "#1896. Authenticated traffic gets its own, larger allowance; anonymous stays strict per IP. The three zones above stay per IP for requests WITHOUT a credential. A request the edge gate (_shared/edge-auth.nix) sees carrying a credential (fleet Bearer, X-Fleet-Authorization, Authelia session cookie, broker cookie, Cloudflare Access JWT) skips them and: if the auth service refuses it, the refusal is counted in denied_rate_limit (strict, per IP, so a fake token buys nothing); if it passes, it is counted after forward_auth in auth_rate_limit (auth_mcp_rate_limit on the MCP hosts and on paths matching its path_regexp), keyed on the identity headers the auth service copied back (never on the credential, which never appears in a key or a log line). backstop_rate_limit is a high per-IP ceiling on every request. Remove auth_rate_limit to switch it all off (the render is then byte-identical to the pre-#1896 one). Guard: infra-sec_caddy/src/test/test-authed-rate-limit.sh.",
+    "auth_rate_limit": {
+      "events": 1000,
+      "window": "1m",
+      "key": "{http.request.header.X-Auth-Subject}|{http.request.header.X-Auth-User}|{http.request.header.Remote-User}|{http.request.header.X-Auth-Request-Email}",
+      "zone": "authed"
+    },
+    "auth_mcp_rate_limit": {
+      "events": 6000,
+      "window": "1m",
+      "key": "{http.request.header.X-Auth-Subject}|{http.request.header.X-Auth-User}|{http.request.header.Remote-User}|{http.request.header.X-Auth-Request-Email}",
+      "zone": "authed_mcp",
+      "path_regexp": "^/[^/]+-mcp(/|$)"
+    },
+    "denied_rate_limit": {
+      "events": 100,
+      "window": "1m",
+      "key": "{remote_host}",
+      "zone": "denied"
+    },
+    "backstop_rate_limit": {
+      "events": 6000,
+      "window": "1m",
+      "key": "{remote_host}",
+      "zone": "backstop"
     }
   },
   "auth": {

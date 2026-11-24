@@ -6,9 +6,9 @@
   },
   "repo": "cloud-u-containers",
   "counts": {
-    "files": 2746,
+    "files": 2748,
     "by_lang": {
-      "sh": 192,
+      "sh": 194,
       "js": 128,
       "nix": 206,
       "py": 528,
@@ -16,7 +16,7 @@
       "rust": 373
     },
     "by_role": {
-      "shell": 182,
+      "shell": 184,
       "file": 362,
       "nix-module": 20,
       "python": 511,
@@ -289,6 +289,11 @@
         "cfHeader",
         "msNot",
         "msBlock",
+        "rlOn",
+        "rlLines",
+        "rlDeny",
+        "rlSessionNot",
+        "rlBlock",
         "mk",
         "entries",
         "openHosts",
@@ -309,9 +314,7 @@
         "snippets",
         "isOpen",
         "gateKind",
-        "name",
-        "gate",
-        "gateOff"
+        "name"
       ]
     },
     {
@@ -23821,6 +23824,17 @@
         "wgCidrs",
         "ss",
         "securityHeaders",
+        "rlAuth",
+        "rlOn",
+        "rlNeed",
+        "rlAuthMcp",
+        "rlBackstop",
+        "rlDenied",
+        "rlLines",
+        "rlZone",
+        "rlAuthedRoute",
+        "rlMcpHosts",
+        "rlAuthedBlock",
         "mkRateLimiting",
         "rateLimiting",
         "rateLimitingMcp",
@@ -23841,18 +23855,7 @@
         "auth",
         "autheliaUpstream",
         "introspectUpstream",
-        "authelia",
-        "bearer",
-        "ea",
-        "edgeAuth",
-        "mo",
-        "cfg",
-        "meshGuard",
-        "fb",
-        "fbHosts",
-        "fbByHost",
-        "fbUnique",
-        "fbMapLines"
+        "authelia"
       ]
     },
     {
@@ -23970,6 +23973,32 @@
       "imports": [],
       "symbols": [
         "probe()"
+      ]
+    },
+    {
+      "path": "infra-sec_caddy/src/test/test-authed-rate-limit.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "render()"
+      ],
+      "imports": [],
+      "symbols": [
+        "render()"
+      ]
+    },
+    {
+      "path": "infra-sec_caddy/src/test/test-caddy-validate-plugins.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "fail()",
+        "validate()"
+      ],
+      "imports": [],
+      "symbols": [
+        "fail()",
+        "validate()"
       ]
     },
     {

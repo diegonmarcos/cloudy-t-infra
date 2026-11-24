@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 24918,
+    "files": 24926,
     "by_lang": {
-      "sh": 829,
+      "sh": 830,
       "js": 599,
       "py": 268,
-      "kotlin": 13998,
+      "kotlin": 14005,
       "ts": 8382,
       "java": 656,
       "nix": 37,
@@ -20,12 +20,12 @@
     "by_role": {
       "hook": 166,
       "file": 2270,
-      "shell": 664,
+      "shell": 665,
       "script": 350,
       "python": 98,
       "module": 6478,
       "java": 655,
-      "kotlin": 13995,
+      "kotlin": 14002,
       "flake": 33,
       "rust-module": 149,
       "nix-module": 4,
@@ -14605,6 +14605,7 @@
         "ShadeState(d: BadgeCardData.Data, expanded: Boolean, tag: String)",
         "mediaActionOf(id: String)",
         "MediaHubLine(id: String)",
+        "IdleMediaRow(id: String, m: com.diegonmarcos.superapp.media.IdleMediaBadge.Model, hostView: android.view.View)",
         "CollapseChevron(id: String, expanded: Boolean, onClick: ()",
         "CollapsedBadgeCard(d: BadgeCardData.Data, accent: Color, icon: Int, flip: ()",
         "ActionRow(d: BadgeCardData.Data, accent: Color, hostView: android.view.View)",
@@ -15368,51 +15369,6 @@
       ]
     },
     {
-      "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/launcher/IndexTiles.kt",
-      "lang": "kotlin",
-      "role": "kotlin",
-      "exports": [
-        "IndexTiles",
-        "IndexTileGrid"
-      ],
-      "imports": [
-        "androidx.compose.foundation.background",
-        "androidx.compose.foundation.clickable",
-        "androidx.compose.foundation.layout.Arrangement",
-        "androidx.compose.foundation.layout.Column",
-        "androidx.compose.foundation.layout.Row",
-        "androidx.compose.foundation.layout.Spacer",
-        "androidx.compose.foundation.layout.fillMaxWidth",
-        "androidx.compose.foundation.layout.height",
-        "androidx.compose.foundation.layout.padding",
-        "androidx.compose.foundation.layout.size",
-        "androidx.compose.foundation.shape.RoundedCornerShape",
-        "androidx.compose.material3.Icon",
-        "androidx.compose.material3.Text",
-        "androidx.compose.runtime.Composable",
-        "androidx.compose.ui.Alignment",
-        "androidx.compose.ui.Modifier",
-        "androidx.compose.ui.draw.clip",
-        "androidx.compose.ui.platform.LocalContext",
-        "androidx.compose.ui.platform.testTag",
-        "androidx.compose.ui.res.painterResource",
-        "androidx.compose.ui.text.style.TextAlign",
-        "androidx.compose.ui.text.style.TextOverflow",
-        "androidx.compose.ui.unit.dp",
-        "androidx.compose.ui.unit.sp",
-        "com.diegonmarcos.superapp.settings.GridColumns",
-        "com.diegonmarcos.superapp.uikit.LocalKitPalette"
-      ],
-      "symbols": [
-        "rowSizes(count: Int, cols: Int)",
-        "IndexTileGrid(cols: Int, cells: List<IndexTiles.Cell>, modifier: Modifier = Modifier)",
-        "IndexTileCard(cell: IndexTiles.Cell, cols: Int, modifier: Modifier)",
-        "class as",
-        "class IndexTiles",
-        "class Cell"
-      ]
-    },
-    {
       "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/launcher/LauncherNavController.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -15620,8 +15576,6 @@
         "clear()",
         "tileSepTag(id: String)",
         "TileDivider(tag: String, iconCentreY: Dp, edgeShift: Dp, modifier: Modifier = Modifier, double: Boolean = false)",
-        "TileGroupHeader(text: String, modifier: Modifier = Modifier, compact: Boolean = false)",
-        "TileSubgroupHeader(text: String, modifier: Modifier = Modifier, compact: Boolean = false)",
         "tileTag(id: String)",
         "tileIconTag(id: String)",
         "CompactTile(tileId: String, label: String, @DrawableRes iconRes: Int, onClick: ()",
@@ -17111,6 +17065,34 @@
       ]
     },
     {
+      "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/media/IdleMediaBadge.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "IdleMediaBadge"
+      ],
+      "imports": [
+        "android.content.Context",
+        "android.content.Intent",
+        "android.graphics.Bitmap",
+        "android.provider.Settings",
+        "com.diegonmarcos.superapp.network.BtLinks"
+      ],
+      "symbols": [
+        "pickBuds(links: List<BtLinks.Link>)",
+        "budsOf(links: List<BtLinks.Link>, lastName: String?)",
+        "model(last: LastMediaSession.Last?, links: List<BtLinks.Link>, lastBudsName: String? = null)",
+        "budsLine(b: Buds)",
+        "label(b: Button)",
+        "read(ctx: Context)",
+        "run(ctx: Context, m: Model, b: Button)",
+        "class IdleMediaBadge",
+        "class Button",
+        "class Buds",
+        "class Model"
+      ]
+    },
+    {
       "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/media/LastMediaSession.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -17135,6 +17117,9 @@
         "p(ctx: Context)",
         "positionAt(position: Long, updatedAt: Long, speed: Float, playing: Boolean, nowElapsed: Long)",
         "save(ctx: Context, c: MediaController)",
+        "write(ctx: Context, pkg: String, title: String, artist: String, pos: Long, dur: Long, art: Bitmap?, nowMs: Long)",
+        "budsName(ctx: Context)",
+        "rememberBuds(ctx: Context, name: String)",
         "load(ctx: Context)",
         "resume(ctx: Context, active: MediaController? = null)",
         "artFile(ctx: Context)",
@@ -19913,6 +19898,7 @@
       "symbols": [
         "read(ctx: Context, b: BadgeDeclaration.Badge)",
         "data(headline: String, sub: String, progress: Float?, lines: List<Line>)",
+        "idleMedia(ctx: Context, d: Data)",
         "mediaArt(ctx: Context, n: Notification?)",
         "iconToBitmap(ctx: Context, icon: android.graphics.drawable.Icon)",
         "styledLines(cs: CharSequence)",
@@ -28623,6 +28609,26 @@
       ]
     },
     {
+      "path": "aa_cloud-superapp/app/src/test/java/com/diegonmarcos/superapp/launcher/MediaBadgePlayingParityTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "MediaBadgePlayingParityTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.notificationcenter.BadgeCardData",
+        "com.diegonmarcos.superapp.notificationcenter.BadgeDeclaration",
+        "com.diegonmarcos.superapp.notificationcenter.BadgeServices",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "class MediaBadgePlayingParityTest"
+      ]
+    },
+    {
       "path": "aa_cloud-superapp/app/src/test/java/com/diegonmarcos/superapp/launcher/MyHealthCardScreenTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -30286,6 +30292,32 @@
         "load(ctx: Context)",
         "resume(\")",
         "class HeldMediaSourceTest"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/test/java/com/diegonmarcos/superapp/media/IdleMediaBadgeTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "IdleMediaBadgeTest"
+      ],
+      "imports": [
+        "android.app.Application",
+        "android.graphics.Bitmap",
+        "androidx.test.core.app.ApplicationProvider",
+        "com.diegonmarcos.superapp.network.BtLinks",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNotNull",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "org.junit.runner.RunWith",
+        "org.robolectric.RobolectricTestRunner",
+        "org.robolectric.annotation.Config"
+      ],
+      "symbols": [
+        "class IdleMediaBadgeTest"
       ]
     },
     {
@@ -46691,6 +46723,7 @@
         "androidx.compose.foundation.layout.Column",
         "androidx.compose.foundation.layout.Row",
         "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.foundation.layout.height",
         "androidx.compose.foundation.layout.padding",
         "androidx.compose.foundation.layout.size",
         "androidx.compose.foundation.layout.width",
@@ -46714,8 +46747,7 @@
         "androidx.compose.ui.draw.clip",
         "androidx.compose.ui.graphics.ImageBitmap",
         "androidx.compose.ui.graphics.asImageBitmap",
-        "androidx.compose.ui.platform.LocalContext",
-        "androidx.compose.ui.platform.testTag"
+        "androidx.compose.ui.platform.LocalConfiguration"
       ],
       "symbols": [
         "pageOf(sourceId: String)",
@@ -48418,7 +48450,7 @@
         "java.io.File"
       ],
       "symbols": [
-        "theThreeSourceSubpagesAreCloudyAndroidTorrentInOrder()",
+        "theSourceSubpagesAreCloudyPhoneGamesTorrentInOrder()",
         "cloudyShowsOnlyTheFleetAndEveryOtherSourceIsPhone()",
         "cloudyAndAndroidResultsInstallAndTorrentResultsDownload()",
         "everyDeclaredAndroidSourceOfTheInstallMapLandsOnAPageThatHasASearcher()",
@@ -109558,6 +109590,76 @@
       ]
     },
     {
+      "path": "ab_cloud-libs-shared/libs/tile-grid/src/main/java/com/diegonmarcos/superapp/launcher/TileGrid.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "IndexTiles",
+        "IndexTileGrid",
+        "TileGroupHeader",
+        "TileSubgroupHeader",
+        "TileSizing"
+      ],
+      "imports": [
+        "androidx.compose.foundation.background",
+        "androidx.compose.foundation.clickable",
+        "androidx.compose.foundation.layout.Arrangement",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.Row",
+        "androidx.compose.foundation.layout.Spacer",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.foundation.layout.height",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.foundation.layout.size",
+        "androidx.compose.foundation.shape.RoundedCornerShape",
+        "androidx.compose.material3.Icon",
+        "androidx.compose.material3.Text",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.ui.Alignment",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.draw.clip",
+        "androidx.compose.ui.platform.LocalContext",
+        "androidx.compose.ui.platform.testTag",
+        "androidx.compose.ui.res.painterResource",
+        "androidx.compose.ui.text.style.TextAlign",
+        "androidx.compose.ui.text.style.TextOverflow",
+        "androidx.compose.ui.unit.dp",
+        "androidx.compose.ui.unit.sp",
+        "com.diegonmarcos.superapp.uikit.LocalKitPalette",
+        "androidx.compose.ui.text.font.FontWeight"
+      ],
+      "symbols": [
+        "rowSizes(count: Int, cols: Int)",
+        "IndexTileGrid(cols: Int, cells: List<IndexTiles.Cell>, modifier: Modifier = Modifier)",
+        "IndexTileCard(cell: IndexTiles.Cell, cols: Int, modifier: Modifier)",
+        "TileGroupHeader(text: String, modifier: Modifier = Modifier, compact: Boolean = false)",
+        "TileSubgroupHeader(text: String, modifier: Modifier = Modifier, compact: Boolean = false)",
+        "cellPx(availablePx: Int, cols: Int)",
+        "iconPx(wantPx: Int, cellPx: Int, chromePx: Int, floorPx: Int)",
+        "labelSp(cols: Int)",
+        "cellPadDp(cols: Int)",
+        "class as",
+        "class IndexTiles",
+        "class Cell",
+        "class TileSizing"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/tile-grid/src/test/java/com/diegonmarcos/superapp/launcher/TileSizingParityTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "TileSizingParityTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "class TileSizingParityTest"
+      ]
+    },
+    {
       "path": "ab_cloud-libs-shared/libs/torrent/src/main/java/com/diegonmarcos/superapp/torrent/ArchiveSeeds.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -135569,6 +135671,9 @@
       ],
       "symbols": [
         "unit(name: String)",
+        "allPages()",
+        "hierarchyIn(sections: String)",
+        "hnode(o: JSONObject)",
         "resolve(tab: String)",
         "redirectsIn(sections: String)",
         "modesOf(tab: String)",
@@ -135602,7 +135707,8 @@
         "class Transfer",
         "class Meter",
         "class Mode",
-        "class as"
+        "class as",
+        "class HNode"
       ]
     },
     {
@@ -136180,7 +136286,6 @@
       "lang": "kotlin",
       "role": "kotlin",
       "exports": [
-        "AiMode",
         "CalcAi",
         "SheetTools"
       ],
@@ -136215,7 +136320,6 @@
         "java.io.File"
       ],
       "symbols": [
-        "AiMode(@Suppress(\"UNUSED_PARAMETER\")",
         "chat(ctx: Context)",
         "build(ctx: Context)",
         "all(ctx: Context)",
@@ -136435,6 +136539,7 @@
         "TopRow(state: CalcState)",
         "TabContent(tabId: String)",
         "ModeIcons(modes: List<Declarations.Mode>, selectedId: String, pageIcon: String, separatorBefore: String?, onSelect: (String)",
+        "homeGroup(id: String)",
         "searchHit(i: Int)",
         "matrixCell(row: String, col: String)",
         "pickerItem(name: String)",
@@ -136854,6 +136959,38 @@
       ]
     },
     {
+      "path": "ac_cloud-calc/app/src/main/java/com/diegonmarcos/cloudcalc/ui/HomeScreen.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "HomeMode"
+      ],
+      "imports": [
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.fillMaxSize",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.foundation.rememberScrollState",
+        "androidx.compose.foundation.verticalScroll",
+        "androidx.compose.material3.MaterialTheme",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.platform.testTag",
+        "androidx.compose.ui.unit.dp",
+        "com.diegonmarcos.cloudcalc.Declarations",
+        "com.diegonmarcos.superapp.launcher.IndexTileGrid",
+        "com.diegonmarcos.superapp.launcher.IndexTiles",
+        "com.diegonmarcos.superapp.launcher.TileGroupHeader",
+        "com.diegonmarcos.superapp.launcher.TileSubgroupHeader",
+        "com.diegonmarcos.superapp.uikit.CloudKitTheme",
+        "com.diegonmarcos.superapp.uikit.KitPalette"
+      ],
+      "symbols": [
+        "HomeMode()",
+        "open(state: CalcState, page: String)",
+        "HomeNode(node: Declarations.HNode, depth: Int, onOpen: (String)"
+      ]
+    },
+    {
       "path": "ac_cloud-calc/app/src/main/java/com/diegonmarcos/cloudcalc/ui/IconCatalog.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -136863,6 +137000,7 @@
       "imports": [
         "androidx.compose.material.icons.Icons",
         "androidx.compose.material.icons.filled.Apps",
+        "androidx.compose.material.icons.filled.Home",
         "androidx.compose.material.icons.filled.Bedtime",
         "androidx.compose.material.icons.filled.Bluetooth",
         "androidx.compose.material.icons.filled.BluetoothSearching",
@@ -136899,8 +137037,7 @@
         "androidx.compose.material.icons.filled.QuestionAnswer",
         "androidx.compose.material.icons.filled.Settings",
         "androidx.compose.material.icons.filled.Security",
-        "androidx.compose.material.icons.filled.Info",
-        "androidx.compose.material.icons.filled.Speed"
+        "androidx.compose.material.icons.filled.Info"
       ],
       "symbols": [
         "vector(name: String)",
@@ -138287,6 +138424,7 @@
       "symbols": [
         "undoc(o: Any?)",
         "spec(id: String)",
+        "walk(n: Declarations.HNode, section: String?, out: MutableList<Pair<String, String>>)",
         "class DeclarationsTest"
       ]
     },
@@ -422754,14 +422892,8 @@
       "exports": [
         "run"
       ],
-      "imports": [
-        "jni::objects::",
-        "jni::JavaVM"
-      ],
+      "imports": [],
       "symbols": [
-        "installed_packages(pkgs: Vec<String>)",
-        "probe(pkgs: &[String])",
-        "probe(_pkgs: &[String])",
         "run()"
       ]
     },
@@ -422800,20 +422932,6 @@
       ]
     },
     {
-      "path": "ac_cloud-media-center/test/test-media-center-games.sh",
-      "lang": "sh",
-      "role": "shell",
-      "exports": [
-        "check()",
-        "mutate()"
-      ],
-      "imports": [],
-      "symbols": [
-        "check()",
-        "mutate()"
-      ]
-    },
-    {
       "path": "ac_cloud-media-center/test/test-media-center-legal.sh",
       "lang": "sh",
       "role": "shell",
@@ -422828,6 +422946,20 @@
         "guard()",
         "check()",
         "plant()",
+        "mutate()"
+      ]
+    },
+    {
+      "path": "ac_cloud-media-center/test/test-media-center-no-games.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "check()",
+        "mutate()"
+      ],
+      "imports": [],
+      "symbols": [
+        "check()",
         "mutate()"
       ]
     },
@@ -422906,40 +423038,6 @@
         "libRows()",
         "bootProfile(doc)",
         "boot()"
-      ]
-    },
-    {
-      "path": "ac_cloud-media-center/web/assets/games.js",
-      "lang": "js",
-      "role": "module",
-      "exports": [],
-      "imports": [],
-      "symbols": [
-        "esc(s)",
-        "norm(s)",
-        "isPkg(s)",
-        "isHttps(s)",
-        "parseCatalogue(text)",
-        "openIntent(pkg)",
-        "storeIntent(pkg)",
-        "listingIntent(g)",
-        "installIntent(g, storeInstalled)",
-        "storeAction(g, installed)",
-        "matches(q, g)",
-        "rowHtml(g, installed)",
-        "renderGames(cat, st)",
-        "installedCount(cat, installed)",
-        "store()",
-        "cached()",
-        "loadCatalogue()",
-        "invoke(cmd, args, rt)",
-        "detectInstalled(cat, rt)",
-        "openUrl(url)",
-        "tryUrls(urls)",
-        "boot()",
-        "status()",
-        "draw()",
-        "refresh()"
       ]
     },
     {
@@ -555212,6 +555310,41 @@
       ]
     },
     {
+      "path": "ac_cloud-store/app/src/main/assets/games/games.js",
+      "lang": "js",
+      "role": "module",
+      "exports": [],
+      "imports": [],
+      "symbols": [
+        "esc(s)",
+        "norm(s)",
+        "isPkg(s)",
+        "isHttps(s)",
+        "parseCatalogue(text)",
+        "openIntent(pkg)",
+        "storeIntent(pkg)",
+        "listingIntent(g)",
+        "installIntent(g, storeInstalled)",
+        "storeAction(g, installed)",
+        "matches(q, g)",
+        "rowHtml(g, installed)",
+        "renderGames(cat, st)",
+        "installedCount(cat, installed)",
+        "store()",
+        "cached()",
+        "loadCatalogue()",
+        "wire()",
+        "invoke(cmd, args, rt)",
+        "detectInstalled(cat, rt)",
+        "openUrl(url)",
+        "tryUrls(urls)",
+        "boot()",
+        "status()",
+        "draw()",
+        "refresh()"
+      ]
+    },
+    {
       "path": "ac_cloud-store/app/src/main/java/com/diegonmarcos/cloudstore/AccessPage.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -555454,6 +555587,47 @@
         "DeviceApisPage(model: DeviceAccess.Doc? = null, expandAll: Boolean = false)",
         "DeviceIpcPage(model: DeviceAccess.Doc? = null, expandAll: Boolean = false)",
         "class DeviceAccessTags"
+      ]
+    },
+    {
+      "path": "ac_cloud-store/app/src/main/java/com/diegonmarcos/cloudstore/GamesPage.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "GamesPage"
+      ],
+      "imports": [
+        "android.annotation.SuppressLint",
+        "android.content.Context",
+        "android.content.Intent",
+        "android.net.Uri",
+        "android.webkit.WebResourceRequest",
+        "android.webkit.WebView",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.platform.testTag",
+        "androidx.compose.ui.viewinterop.AndroidView",
+        "androidx.webkit.WebMessageCompat",
+        "androidx.webkit.WebViewCompat",
+        "androidx.webkit.WebViewFeature",
+        "com.diegonmarcos.cloudlib.web.CloudWeb",
+        "com.diegonmarcos.cloudlib.web.CloudWebClient",
+        "com.diegonmarcos.cloudlib.web.WebProfile",
+        "org.json.JSONArray",
+        "org.json.JSONObject"
+      ],
+      "symbols": [
+        "handle(ctx: Context, data: String)",
+        "installed(ctx: Context, pkgs: JSONArray)",
+        "intentFor(url: String)",
+        "open(ctx: Context, url: String)",
+        "shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest)",
+        "onRecovered(dead: WebView, fresh: WebView?)",
+        "bridge(wv: WebView)",
+        "webView(c: Context)",
+        "Pane(modifier: Modifier)",
+        "class GamesPage",
+        "class Client"
       ]
     },
     {
@@ -556073,6 +556247,38 @@
         "anUnattendedPassNeverOpensTheDialogEvenOnScreen()",
         "anyBackgroundSessionWaitsOnTheNotification()",
         "class ConfirmSurfaceTest"
+      ]
+    },
+    {
+      "path": "ac_cloud-store/app/src/test/java/com/diegonmarcos/cloudstore/GamesPageTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "GamesPageTest"
+      ],
+      "imports": [
+        "android.app.Application",
+        "android.content.Intent",
+        "org.json.JSONArray",
+        "org.json.JSONObject",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertNotNull",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "org.junit.runner.RunWith",
+        "org.robolectric.RobolectricTestRunner",
+        "org.robolectric.RuntimeEnvironment",
+        "org.robolectric.Shadows.shadowOf",
+        "org.robolectric.annotation.Config"
+      ],
+      "symbols": [
+        "call(op: String, args: JSONObject)",
+        "theReplyCarriesTheRequestId()",
+        "installedPackagesAnswersOnlyLaunchablePackages()",
+        "anUnknownOpOrABadRequestIsAnErrorNeverAThrow()",
+        "openUrlTakesHttpsAndIntentUrlsOnly()",
+        "class GamesPageTest"
       ]
     },
     {
@@ -556991,6 +557197,20 @@
     },
     {
       "path": "ac_cloud-store/test/test-store-configs-pages.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "check()",
+        "mutate()"
+      ],
+      "imports": [],
+      "symbols": [
+        "check()",
+        "mutate()"
+      ]
+    },
+    {
+      "path": "ac_cloud-store/test/test-store-games.sh",
       "lang": "sh",
       "role": "shell",
       "exports": [
