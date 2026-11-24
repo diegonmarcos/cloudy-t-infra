@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-containers",
   "counts": {
-    "files": 2741,
+    "files": 2742,
     "by_lang": {
       "sh": 191,
       "js": 128,
       "nix": 204,
-      "py": 527,
+      "py": 528,
       "ts": 1318,
       "rust": 373
     },
@@ -19,7 +19,7 @@
       "shell": 181,
       "file": 361,
       "nix-module": 20,
-      "python": 510,
+      "python": 511,
       "module": 822,
       "script": 10,
       "flake": 93,
@@ -24440,7 +24440,9 @@
         "mcp_oauth_auth(token)",
         "fleet_token_auth(token)",
         "auth()",
-        "health()"
+        "health()",
+        "class UnknownKidError",
+        "class _BoundedRefetchJWKClient"
       ],
       "imports": [
         "flask",
@@ -24456,7 +24458,9 @@
         "_engine_ask(token, host, adopt=None)",
         "fleet_token_auth(token)",
         "auth()",
-        "health()"
+        "health()",
+        "class UnknownKidError",
+        "class _BoundedRefetchJWKClient"
       ]
     },
     {
@@ -24529,6 +24533,43 @@
         "baseImage",
         "apt",
         "title"
+      ]
+    },
+    {
+      "path": "infra-sec_introspect-proxy/src/test/test_jwks_unknown_kid.py",
+      "lang": "py",
+      "role": "python",
+      "exports": [
+        "jwks(monkeypatch)",
+        "call(kid)",
+        "test_kid_missing_from_fetched_jwks_is_401(jwks, kid)",
+        "test_known_kid_still_200(jwks)",
+        "test_real_fetch_failure_stays_503(jwks, status, use)",
+        "test_unknown_kid_refetch_is_bounded(jwks, monkeypatch)",
+        "class FakeJWKS"
+      ],
+      "imports": [
+        "cryptography.hazmat.primitives.asymmetric",
+        "base64",
+        "http.server",
+        "os",
+        "sys",
+        "threading",
+        "time",
+        "jwt",
+        "pytest",
+        "main"
+      ],
+      "symbols": [
+        "_b64(n)",
+        "_doc(use=\"sig\")",
+        "jwks(monkeypatch)",
+        "call(kid)",
+        "test_kid_missing_from_fetched_jwks_is_401(jwks, kid)",
+        "test_known_kid_still_200(jwks)",
+        "test_real_fetch_failure_stays_503(jwks, status, use)",
+        "test_unknown_kid_refetch_is_bounded(jwks, monkeypatch)",
+        "class FakeJWKS"
       ]
     },
     {
