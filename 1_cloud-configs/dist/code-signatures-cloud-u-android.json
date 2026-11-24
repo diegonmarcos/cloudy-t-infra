@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 24937,
+    "files": 24939,
     "by_lang": {
       "sh": 832,
       "js": 599,
       "py": 268,
-      "kotlin": 14011,
+      "kotlin": 14013,
       "ts": 8382,
       "java": 656,
       "nix": 37,
@@ -25,7 +25,7 @@
       "python": 98,
       "module": 6478,
       "java": 655,
-      "kotlin": 14008,
+      "kotlin": 14010,
       "flake": 33,
       "rust-module": 152,
       "nix-module": 4,
@@ -99649,6 +99649,35 @@
       ]
     },
     {
+      "path": "ab_cloud-libs-shared/libs/net-wg/src/main/java/com/diegonmarcos/superapp/netwg/MeshEngine.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "MeshEngineSelector",
+        "MeshEngine",
+        "FirestackMeshEngine"
+      ],
+      "imports": [
+        "java.io.File"
+      ],
+      "symbols": [
+        "select(requested: String?, firestackAvailable: Boolean)",
+        "readFlag(filesDir: File?)",
+        "choose(filesDir: File?, firestackAvailable: ()",
+        "turnOn(ifName: String, tunFd: Int, settings: String)",
+        "turnOff(handle: Int)",
+        "socketV4(handle: Int)",
+        "socketV6(handle: Int)",
+        "config(handle: Int)",
+        "version()",
+        "call(name: String, vararg a: Any?)",
+        "load()",
+        "class MeshEngineSelector",
+        "class MeshEngine",
+        "class FirestackMeshEngine"
+      ]
+    },
+    {
       "path": "ab_cloud-libs-shared/libs/net-wg/src/main/java/com/diegonmarcos/superapp/netwg/MeshRelay.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -99831,6 +99860,9 @@
         "android.os.ParcelFileDescriptor",
         "android.system.OsConstants",
         "android.util.Log",
+        "com.diegonmarcos.superapp.netwg.FirestackMeshEngine",
+        "com.diegonmarcos.superapp.netwg.MeshEngine",
+        "com.diegonmarcos.superapp.netwg.MeshEngineSelector",
         "com.wireguard.android.backend.BackendException.Reason",
         "com.wireguard.android.backend.Tunnel.State",
         "com.wireguard.android.util.SharedLibraryLoader",
@@ -99855,6 +99887,11 @@
         "GoBackend(final Context context)",
         "setAlwaysOnCallback(final AlwaysOnCallback cb)",
         "protectSocket(final java.net.Socket socket)",
+        "engineTurnOn(final String ifName, final int tunFd, final String settings)",
+        "engineTurnOff(final int handle)",
+        "engineSocketV4(final int handle)",
+        "engineSocketV6(final int handle)",
+        "engineVersion()",
         "getRunningTunnelNames()",
         "getState(final Tunnel tunnel)",
         "getStatisticsRaw(final Tunnel tunnel)",
@@ -99927,6 +99964,26 @@
         "close()",
         "class HappyEyeballsTest",
         "class Conn"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/net-wg/src/test/java/com/diegonmarcos/superapp/netwg/MeshEngineSelectorTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "MeshEngineSelectorTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNull",
+        "org.junit.Test",
+        "java.io.File"
+      ],
+      "symbols": [
+        "dirWith(text: String?)",
+        "class MeshEngineSelectorTest",
+        "class makes"
       ]
     },
     {
