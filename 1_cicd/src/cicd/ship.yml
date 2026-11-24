@@ -79,8 +79,11 @@ jobs:
       #   ship             -> a deploy was required; gate demands success of both legs
       #   nothing-to-ship  -> detect positively proved nothing deployable changed; skip is correct
       #   empty            -> a containers-push diffed to zero deployable changes; NOT a proven no-op
+      #   held             -> only auth-plane dirs changed and the #1886 hold kept them out; NOT green
       #   (absent)         -> the path-relevance gate skipped the matrix step; a declared no-op
       verdict: ${{ steps.matrix.outputs.verdict || steps.paths.outputs.verdict }}
+      # Auth-plane dirs the #1886 hold took out of this Ship (space-separated, may be empty).
+      held: ${{ steps.matrix.outputs.held }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -230,6 +233,16 @@ jobs:
             else
               CHANGED_DIRS=""; VM_FILTER="$INPUT_VM"
             fi
+            # #1886: services=all is a fan-out, so it never carries the auth
+            # plane (1_cicd/src/ship-auth-plane.json); name those dirs to ship
+            # them. "All" is spelled out as the registry (filtered to the VM
+            # when one is given) so the hold can take them out of it.
+            if [ "$INPUT_SERVICES" = "all" ]; then
+              ALL_DIRS=$(jq -r --arg vm "$VM_FILTER" '.services | to_entries[] | select($vm == "" or .value.vm == $vm) | .value.dir' "$GHA_CONFIG" | sort -u | tr '\n' ' ')
+              CHANGED_DIRS=$(SHIP_CANDIDATES="$ALL_DIRS" SHIP_DIRECT="" bash 1_cicd/src/scripts/cloud-ship-guard-auth-plane.sh auto)
+            else
+              CHANGED_DIRS=$(SHIP_CANDIDATES="$CHANGED_DIRS" bash 1_cicd/src/scripts/cloud-ship-guard-auth-plane.sh explicit)
+            fi
           else
             # Pathspec NOTE: `a_solutions/*/src/` (with trailing slash) is
             # interpreted by git as a directory pathspec that DOES NOT recurse
@@ -319,6 +332,9 @@ jobs:
             # the build if the committed dist/ is not that render.
             CHANGED_DIRS=$(printf '%s\n' "$SUB_CHANGED" | grep -E '^[^/]+/(src/|dist/|build\.json$)' \
               | awk -F/ '{print $1}' | sort -u | tr '\n' ' ' || true)
+            # Dirs whose OWN files changed: the only way an auth-plane service
+            # ships without being named (cloud-ship-guard-auth-plane.sh, #1886).
+            DIRECT_DIRS="$CHANGED_DIRS"
 
             # A service can consume ANOTHER service's src file through a symlink
             # (tools-maddy/src/mail-rules-general.json -> tools-stalwart's). git
@@ -361,7 +377,8 @@ jobs:
               echo "::notice::src-symlink consumer ship:$SRC_CONSUMERS"
             fi
 
-            # A change under _shared/ ships its engine consumers (derived from src/flake.nix by the script).
+            # A change under _shared/ ships its consumers: every engine consumer for the engine and
+            # what it reads, only the declared readers for a data file, nothing for tests/docs (#1886).
             ENGINE_CONSUMERS=$(printf '%s\n' "$SUB_CHANGED" | bash 1_cicd/src/scripts/cloud-ship-detect-engine-consumers.sh || true)
             CHANGED_DIRS=$(printf '%s %s\n' "$CHANGED_DIRS" "$ENGINE_CONSUMERS" | tr ' ' '\n' | grep -v '^$' | sort -u | tr '\n' ' ')
 
@@ -414,10 +431,26 @@ jobs:
               fi
             fi
 
+            # #1886: hold the auth plane out of every fan-out. It stays only when
+            # its own directory changed in a small push; otherwise it waits for
+            # an explicit, approved workflow_dispatch naming it.
+            HELD_FILE="$RUNNER_TEMP/auth-plane-held"
+            CHANGED_DIRS=$(SHIP_CANDIDATES="$CHANGED_DIRS" SHIP_DIRECT="$DIRECT_DIRS" SHIP_HELD_OUT="$HELD_FILE" \
+              bash 1_cicd/src/scripts/cloud-ship-guard-auth-plane.sh auto)
+            HELD=$(cat "$HELD_FILE" 2>/dev/null || true)
+            echo "held=$HELD" >> "$GITHUB_OUTPUT"
+
             VM_FILTER=""
             if [ -z "$CHANGED_DIRS" ]; then
               echo 'matrix={"include":[]}' >> "$GITHUB_OUTPUT"
               echo "has_vms=false" >> "$GITHUB_OUTPUT"
+              # Only auth-plane services changed and all were held: not a
+              # detection miss and not a no-op. verdict=held fails the gate
+              # with the exact dispatch that ships them once approved.
+              if [ -n "$HELD" ]; then
+                echo "verdict=held" >> "$GITHUB_OUTPUT"
+                exit 0
+              fi
               # #401 (#176, third recurrence): why is this a SKIP, and is that
               # skip proven? On repository_dispatch a container push that diffs
               # to zero deployable changes is not a proven no-op — it is either a
@@ -1340,6 +1373,9 @@ jobs:
   #   verdict=nothing-to-ship -> skip was proven correct; run is green by
   #                               declaration, not by omission
   #   verdict=empty            -> containers-push found nothing deployable; FAIL
+  #   verdict=held             -> only auth-plane services changed and the
+  #                               #1886 hold kept them out; FAIL, naming the
+  #                               explicit Ship that deploys them once approved
   #   detect not success       -> no reliable verdict at all; FAIL
   deploy-gate:
     name: Deploy gate
@@ -1359,8 +1395,10 @@ jobs:
           BUILD_RESULT: ${{ needs.build.result }}
           DEPLOY_RESULT: ${{ needs.deploy.result }}
           MATRIX: ${{ needs.detect.outputs.matrix }}
+          HELD: ${{ needs.detect.outputs.held }}
         run: |
           set -eu
+          [ -z "$HELD" ] || echo "::warning::auth plane held out of this Ship (#1886): $HELD -- ships only by an approved workflow_dispatch services=$(printf '%s' "$HELD" | tr ' ' ',')"
           # 1. No reliable detection verdict -> the run cannot be green.
           if [ "$DETECT_RESULT" != "success" ]; then
             echo "::error::detect ended '$DETECT_RESULT' (verdict='$VERDICT') — there is no basis on which a Ship run may conclude success. Investigate the detect job itself."
@@ -1388,6 +1426,9 @@ jobs:
             echo "::error::detect required a ship (verdict='$VERDICT', has_vms='$HAS_VMS') but Build ended '$BUILD_RESULT' and Deploy ended '$DEPLOY_RESULT'. The run is NOT green. Services in scope:"
             printf '%s' "$MATRIX" 2>/dev/null \
               | jq -r '(.include // [])[] | "  \(.vm): \(.changed_dirs)"' 2>/dev/null || true
+            if [ "$VERDICT" = "held" ]; then
+              echo "::error::verdict='held': every changed service is auth plane ($HELD) and was held out of the automatic Ship (#1886). Nothing was deployed. Ship it with an approved workflow_dispatch: services=$(printf '%s' "$HELD" | tr ' ' ',')."
+            fi
             if [ "$VERDICT" = "empty" ]; then
               echo "::error::verdict='empty': the containers-push diff resolved to no deployable service. Either the change is genuinely not a container service, or detection missed it — investigate before assuming success."
             fi

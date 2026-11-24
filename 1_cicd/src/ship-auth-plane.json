@@ -1,0 +1,11 @@
+{
+  "_doc": "#1886. The auth plane: the service dirs whose redeploy takes the gated edge down (authelia + authelia-redis + postlite-authelia live in infra-sec_authelia). A Ship never selects them by fan-out. They ship only when (a) a workflow_dispatch names them in `services`, or (b) their OWN directory changed in a push whose selected set is at most fanout_max services. Anything else that would select them (a _shared/ change, a src symlink, a regenerated build-*.json, services=all, a big multi-service push) holds them and says so; the run goes red only when the hold leaves nothing else to ship. Read by 1_cicd/src/scripts/cloud-ship-guard-auth-plane.sh; tested by 9_others/test/test_ship_guard_auth_plane.sh.",
+  "services": [
+    "infra-sec_authelia",
+    "infra-sec_introspect-proxy",
+    "infra-sec_introspect-proxy-go",
+    "infra-sec_mcp-oauth",
+    "infra-sec_caddy"
+  ],
+  "fanout_max": 3
+}

@@ -79,8 +79,8 @@
     "port": 7680
   },
   "protection": {
-    "_doc": "Per-VM overrides for the protection stack; merged over native.protection defaults (config.json). Proxy/mesh hub: caddy+introspect-proxy+authelia+hickory+wg-tunnel are tier-1 (survive graduated shed until last resort). Slightly higher PSI thresholds — this VM idles low and a brief spike is normal.",
-    "tier1_services": ["caddy", "introspect-proxy", "authelia", "hickory-dns", "wireguard-mesh-ws-tunnel"],
+    "_doc": "Per-VM overrides for the protection stack; merged over native.protection defaults (config.json). Proxy/mesh hub: caddy+introspect-proxy+authelia+authelia-redis+hickory+wg-tunnel are tier-1 (survive graduated shed until last resort). authelia-redis is tier-1 because authelia exits without it (#1886: shed or stopped redis left authelia dead 02:50-03:10Z). Slightly higher PSI thresholds — this VM idles low and a brief spike is normal.",
+    "tier1_services": ["caddy", "introspect-proxy", "authelia", "authelia-redis", "hickory-dns", "wireguard-mesh-ws-tunnel"],
     "mem_psi_warn": 35,
     "mem_psi_crit": 55,
     "mem_psi_page": 70

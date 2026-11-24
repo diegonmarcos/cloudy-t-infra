@@ -248,7 +248,28 @@ echo "[ghcr] $_me: had no working ghcr.io credential — mirrored root'"'"'s (VM
     # checked, and in `f | tr` the shell reports tr's status, not f's.
     _cnames="$(declared_container_names "$SERVICE_DIR/build.json")" || return 1
     _cnames="$(printf '%s' "$_cnames" | tr '\n' ' ')"
-    [ -n "$_cnames" ] && EVICT_NAMED="for c in $_cnames; do docker rm -f \"\$c\" 2>/dev/null || true; done"
+    # #1886: evict only the names THIS compose recreates. infra-sec_authelia
+    # declares postlite-authelia (containers.postlite) but its compose renders
+    # only authelia + authelia-redis; infra-db_postlite's compose is the one that
+    # creates postlite-authelia. Evicting every declared name removed it on each
+    # authelia deploy and `up` never brought it back (Ship 45308011308, Deploy ->
+    # gcp-proxy: "liveness: MISSING postlite-authelia"). A declared name the
+    # compose does not create is left alone and must already be running; if it
+    # is not, FOREIGN_GATE fails the deploy BEFORE `down`, while the old
+    # containers still serve. An unparseable compose (no container_name found)
+    # keeps the old evict-everything behaviour rather than guessing.
+    _composed="$(grep -oE '"?container_name"?[[:space:]]*:[[:space:]]*"?[A-Za-z0-9_.-]+' "$COMPOSE_FILE" 2>/dev/null \
+        | sed -E 's/.*:[[:space:]]*"?//' | sort -u | tr '\n' ' ' || true)"
+    _evict="$_cnames"; _foreign=""
+    if [ -n "$_composed" ]; then
+        _evict=""
+        for _n in $_cnames; do
+            case " $_composed " in *" $_n "*) _evict="$_evict $_n" ;; *) _foreign="$_foreign $_n" ;; esac
+        done
+    fi
+    [ -n "${_evict// /}" ] && EVICT_NAMED="for c in $_evict; do docker rm -f \"\$c\" 2>/dev/null || true; done"
+    FOREIGN_GATE=""
+    [ -n "$_foreign" ] && FOREIGN_GATE="for c in$_foreign; do [ \"\$(docker inspect -f {{.State.Running}} \"\$c\" 2>/dev/null)\" = true ] || { echo \"[compose] ERROR: \$c is declared by this service but its compose does not create it, and it is not running: refusing to stop the running containers. Deploy the service whose compose renders \$c first (#1886).\" >&2; exit 1; }; done"
 
     # EVICT_NAMED only knows the names we declare NOW, so it cannot see the one
     # container that matters after a rename: the predecessor, still running
@@ -389,6 +410,8 @@ if ! docker compose $COMPOSE_FILE_FLAG $ENV_FILE_FLAG pull; then
 fi
 PULL_GATE
             fi
+            # #1886: a declared container this compose does not create must be live before `down`.
+            [ -n "$FOREIGN_GATE" ] && printf '%s\n' "$FOREIGN_GATE"
             # Before `down`: record which addresses our own containers listen on.
             [ -n "$EVICT_SOCKET_PRE" ] && printf '%s\n' "$EVICT_SOCKET_PRE"
             echo 'docker compose $COMPOSE_FILE_FLAG $ENV_FILE_FLAG down --remove-orphans 2>/dev/null || true'
@@ -448,9 +471,9 @@ PULL_GATE
             # doesn't re-hit the failing pull.
             _STD_UP_FLAGS="${COMPOSE_UP_FLAGS/--pull always/--pull missing}"
             PULL_GATE="docker compose $CF \$ENV_FILE_FLAG pull || { for _img in \$(docker compose $CF \$ENV_FILE_FLAG config --images 2>/dev/null); do docker image inspect \"\$_img\" >/dev/null 2>&1 || { echo \"ERROR: \$_img neither pullable nor cached — refusing teardown\" >&2; exit 1; }; done; }"
-            PAYLOAD="cd \"$DEPLOY_PATH\" && $ENV_FILE_PROBE; $GATED_PROBE; ${LEGACY_COMPOSE_CLEANUP:+$LEGACY_COMPOSE_CLEANUP; }$PULL_GATE; ${EVICT_SOCKET_PRE:+$EVICT_SOCKET_PRE; }docker compose $CF \$ENV_FILE_FLAG down --remove-orphans 2>/dev/null; ${EVICT_NAMED:+$EVICT_NAMED; }${EVICT_PORTS:+$EVICT_PORTS; }${EVICT_SOCKET:+$EVICT_SOCKET; }docker compose $CF \$ENV_FILE_FLAG up -d $_STD_UP_FLAGS"
+            PAYLOAD="cd \"$DEPLOY_PATH\" && $ENV_FILE_PROBE; $GATED_PROBE; ${FOREIGN_GATE:+$FOREIGN_GATE; }${LEGACY_COMPOSE_CLEANUP:+$LEGACY_COMPOSE_CLEANUP; }$PULL_GATE; ${EVICT_SOCKET_PRE:+$EVICT_SOCKET_PRE; }docker compose $CF \$ENV_FILE_FLAG down --remove-orphans 2>/dev/null; ${EVICT_NAMED:+$EVICT_NAMED; }${EVICT_PORTS:+$EVICT_PORTS; }${EVICT_SOCKET:+$EVICT_SOCKET; }docker compose $CF \$ENV_FILE_FLAG up -d $_STD_UP_FLAGS"
         else
-            PAYLOAD="cd \"$DEPLOY_PATH\" && $ENV_FILE_PROBE; $GATED_PROBE; ${LEGACY_COMPOSE_CLEANUP:+$LEGACY_COMPOSE_CLEANUP; }${EVICT_SOCKET_PRE:+$EVICT_SOCKET_PRE; }docker compose $CF \$ENV_FILE_FLAG down --remove-orphans 2>/dev/null; ${EVICT_NAMED:+$EVICT_NAMED; }${EVICT_PORTS:+$EVICT_PORTS; }${EVICT_SOCKET:+$EVICT_SOCKET; }docker compose $CF \$ENV_FILE_FLAG up -d $COMPOSE_UP_FLAGS"
+            PAYLOAD="cd \"$DEPLOY_PATH\" && $ENV_FILE_PROBE; $GATED_PROBE; ${FOREIGN_GATE:+$FOREIGN_GATE; }${LEGACY_COMPOSE_CLEANUP:+$LEGACY_COMPOSE_CLEANUP; }${EVICT_SOCKET_PRE:+$EVICT_SOCKET_PRE; }docker compose $CF \$ENV_FILE_FLAG down --remove-orphans 2>/dev/null; ${EVICT_NAMED:+$EVICT_NAMED; }${EVICT_PORTS:+$EVICT_PORTS; }${EVICT_SOCKET:+$EVICT_SOCKET; }docker compose $CF \$ENV_FILE_FLAG up -d $COMPOSE_UP_FLAGS"
         fi
         # Detached + poll, NOT one long-held ssh: the pull/extract can run for
         # minutes with an almost-idle ssh channel, which is exactly when the
