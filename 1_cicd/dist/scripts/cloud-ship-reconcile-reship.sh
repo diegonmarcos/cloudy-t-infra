@@ -79,6 +79,27 @@ HELD="$(printf '%s\n' "$FINDINGS" | awk -F'\t' '{print $3}' | sort | uniq -c \
         | awk -v sel="$CLASSES" '{ split(sel, k, " "); keep=0; for (i in k) if ($2==k[i]) keep=1; if (!keep) print "  " $2 ": " $1 " finding(s) — reported, not re-shipped" }')"
 [ -n "$HELD" ] && note "$HELD"
 
+# #1886: the auth plane never ships from a reconcile. A reconcile dispatch
+# names services explicitly, which the Ship guard treats as an operator ask,
+# so the hold has to be applied here. Drift on those dirs is reported for an
+# approved Ship; it is never auto-deployed (a joint authelia redeploy took the
+# gated edge down twice on 2026-11-24).
+AUTH_POLICY="${SHIP_AUTH_PLANE_POLICY:-$REPO_ROOT/1_cicd/src/ship-auth-plane.json}"
+if [ ! -f "$AUTH_POLICY" ]; then
+  note "::error::$AUTH_POLICY not found — refusing to re-ship without the auth-plane hold"
+  exit 0
+fi
+AUTH_DIRS="$(jq -r '(.services // [])[]' "$AUTH_POLICY")"
+if [ -z "$AUTH_DIRS" ]; then
+  note "::error::$AUTH_POLICY lists no services — refusing to re-ship without the auth-plane hold"
+  exit 0
+fi
+AUTH_HELD="$(printf '%s\n' "$SELECTED" | grep -Fxf <(printf '%s\n' "$AUTH_DIRS") || true)"
+if [ -n "$AUTH_HELD" ]; then
+  note "::warning::auth plane drifted but held out of the reconcile (#1886); ship it only by an approved Ship: $(printf '%s\n' "$AUTH_HELD" | paste -sd, -)"
+  SELECTED="$(printf '%s\n' "$SELECTED" | grep -vFxf <(printf '%s\n' "$AUTH_DIRS") || true)"
+fi
+
 if [ -z "$SELECTED" ]; then
   note "no findings in re-shippable classes ($CLASSES) — nothing to dispatch"
   exit 0
