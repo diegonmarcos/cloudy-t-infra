@@ -6,9 +6,9 @@
   },
   "repo": "cloud",
   "counts": {
-    "files": 1636,
+    "files": 1637,
     "by_lang": {
-      "sh": 1114,
+      "sh": 1115,
       "js": 176,
       "nix": 304,
       "py": 12,
@@ -17,7 +17,7 @@
     "by_role": {
       "hook": 402,
       "file": 91,
-      "shell": 564,
+      "shell": 565,
       "flake": 6,
       "script": 150,
       "module": 115,
@@ -21254,6 +21254,22 @@
       "symbols": [
         "ok()",
         "bad()"
+      ]
+    },
+    {
+      "path": "9_others/test/test_reconcile_holds_auth_plane.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "run()",
+        "check()"
+      ],
+      "imports": [
+        "cloud-ship-reconcile-reship.sh"
+      ],
+      "symbols": [
+        "run()",
+        "check()"
       ]
     },
     {
