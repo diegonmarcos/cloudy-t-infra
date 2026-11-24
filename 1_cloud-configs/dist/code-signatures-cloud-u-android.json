@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 24907,
+    "files": 24918,
     "by_lang": {
       "sh": 829,
       "js": 599,
       "py": 268,
-      "kotlin": 13987,
+      "kotlin": 13998,
       "ts": 8382,
       "java": 656,
       "nix": 37,
@@ -25,7 +25,7 @@
       "python": 98,
       "module": 6478,
       "java": 655,
-      "kotlin": 13984,
+      "kotlin": 13995,
       "flake": 33,
       "rust-module": 149,
       "nix-module": 4,
@@ -22541,10 +22541,11 @@
         "android.provider.OpenableColumns",
         "android.widget.Toast",
         "androidx.activity.ComponentActivity",
-        "androidx.activity.compose.setContent",
+        "androidx.compose.ui.platform.ComposeView",
         "androidx.compose.foundation.layout.Column",
         "androidx.compose.material3.AlertDialog",
-        "androidx.compose.material3.MaterialTheme",
+        "com.diegonmarcos.superapp.ui.LauncherPalette",
+        "com.diegonmarcos.superapp.uikit.CloudKitTheme",
         "androidx.compose.material3.Text",
         "androidx.compose.material3.TextButton",
         "androidx.compose.runtime.Composable",
@@ -59288,6 +59289,7 @@
         "class Clip",
         "class Row",
         "class AudioTake",
+        "class delegates",
         "class Cymatics",
         "class Spectrum"
       ]
@@ -62840,6 +62842,72 @@
       "symbols": [
         "GridImageLayout( modifier: Modifier = Modifier, thumbnails: List<Int>, divider: Dp = 2.dp, onClick: ((List<Int>)",
         "ImageDrawLayout( modifier: Modifier = Modifier, itemCount: Int, divider: Dp, content: @Composable ()"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/cymatics/src/main/java/com/diegonmarcos/cloudlib/cymatics/Cymatics.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "Cymatics"
+      ],
+      "imports": [
+        "kotlin.math.PI",
+        "kotlin.math.abs",
+        "kotlin.math.cos",
+        "kotlin.math.ln",
+        "kotlin.math.sin"
+      ],
+      "symbols": [
+        "semitonesAboveA0(freq: Double)",
+        "modeIndex(freq: Double)",
+        "modeOf(freq: Double)",
+        "amplitude(n: Int, m: Int, x: Double, y: Double)",
+        "pattern(freq: Double, size: Int, t: Double = 0.0)",
+        "blend(freqs: List<Pair<Double, Double>>, size: Int, t: Double = 0.0)",
+        "nodes(pattern: FloatArray, threshold: Float = 0.08f)",
+        "class Cymatics"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/cymatics/src/main/java/com/diegonmarcos/cloudlib/cymatics/CymaticsPlate.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "CymaticsPlate"
+      ],
+      "imports": [
+        "androidx.compose.foundation.Canvas",
+        "androidx.compose.foundation.background",
+        "androidx.compose.foundation.shape.RoundedCornerShape",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.geometry.Offset",
+        "androidx.compose.ui.geometry.Size",
+        "androidx.compose.ui.graphics.Color",
+        "androidx.compose.ui.unit.dp"
+      ],
+      "symbols": [
+        "CymaticsPlate(pattern: FloatArray, grid: Int, modifier: Modifier = Modifier)"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/cymatics/src/test/java/com/diegonmarcos/cloudlib/cymatics/CymaticsParityTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "CymaticsParityTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "bits(p: FloatArray, i: Int)",
+        "fnv(p: FloatArray)",
+        "check(p: FloatArray, hash: ULong, a: String, b: String, c: String)",
+        "class CymaticsParityTest"
       ]
     },
     {
@@ -111390,6 +111458,7 @@
       "symbols": [
         "asset(abis: List<String>)",
         "defaultLabel(id: String)",
+        "tabOwnedIds(extras: List<FleetConfigsTab> = FleetConfigsExtensions.all()",
         "withDefaults(declared: List<GeneralSection>)",
         "decode(b64: String)",
         "parse(json: String)",
@@ -112577,6 +112646,42 @@
         "theme_names_the_ui_mode()",
         "update_state_follows_the_published_build()",
         "class GeneralStateTest"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/ui-nav-bars/src/test/kotlin/com/diegonmarcos/superapp/fleetconfigs/GeneralTabOwnedTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "GeneralTabOwnedTest"
+      ],
+      "imports": [
+        "org.json.JSONObject",
+        "org.junit.After",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Before",
+        "org.junit.Test",
+        "org.junit.runner.RunWith",
+        "org.robolectric.RobolectricTestRunner",
+        "org.robolectric.annotation.Config",
+        "java.io.File"
+      ],
+      "symbols": [
+        "clean()",
+        "reset()",
+        "root()",
+        "pagesSrc()",
+        "allTabIds()",
+        "general_section_ids_never_intersect_tab_ids_for_every_app()",
+        "a_declaration_naming_a_tab_is_filtered_by_rule_not_by_name()",
+        "update_is_first_and_every_other_section_remains()",
+        "general_perms_rows_all_live_in_the_perms_tab()",
+        "PermsSection(\")",
+        "FleetPermsPage(\")",
+        "FleetGeneralPage(\")",
+        "AnchorGrid(\")",
+        "class GeneralTabOwnedTest"
       ]
     },
     {
@@ -136045,6 +136150,32 @@
       ]
     },
     {
+      "path": "ac_cloud-calc/app/src/main/java/com/diegonmarcos/cloudcalc/sound/CymaticsMap.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "CymaticsMap"
+      ],
+      "imports": [
+        "com.diegonmarcos.cloudlib.cymatics.Cymatics",
+        "kotlin.math.abs",
+        "kotlin.math.exp",
+        "kotlin.math.ln",
+        "kotlin.math.pow"
+      ],
+      "symbols": [
+        "modes()",
+        "amplitude(levelDb: Double)",
+        "partials(spectrumDb: DoubleArray, sampleRate: Int, count: Int = 3, minHz: Double = 20.0, floor: Double = 0.1)",
+        "drive(spectrumDb: DoubleArray, sampleRate: Int, levelDb: Double, count: Int = 3)",
+        "field(drive: Drive, size: Int)",
+        "update(target: Drive)",
+        "class CymaticsMap",
+        "class Drive",
+        "class Smoother"
+      ]
+    },
+    {
       "path": "ac_cloud-calc/app/src/main/java/com/diegonmarcos/cloudcalc/ui/AiScreens.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -137134,7 +137265,9 @@
         "androidx.compose.foundation.Canvas",
         "androidx.compose.foundation.layout.Arrangement",
         "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.Box",
         "androidx.compose.foundation.layout.Row",
+        "androidx.compose.foundation.layout.aspectRatio",
         "androidx.compose.foundation.layout.fillMaxSize",
         "androidx.compose.foundation.layout.fillMaxWidth",
         "androidx.compose.foundation.layout.height",
@@ -137149,6 +137282,7 @@
         "androidx.compose.runtime.mutableStateOf",
         "androidx.compose.runtime.remember",
         "androidx.compose.runtime.setValue",
+        "androidx.compose.ui.Alignment",
         "androidx.compose.ui.Modifier",
         "androidx.compose.ui.geometry.Offset",
         "androidx.compose.ui.platform.LocalContext",
@@ -137160,13 +137294,16 @@
         "com.diegonmarcos.cloudcalc.audio.SoundDecl",
         "com.diegonmarcos.cloudcalc.audio.SoundFlow",
         "com.diegonmarcos.cloudcalc.audio.SoundStore",
+        "com.diegonmarcos.cloudcalc.sound.CymaticsMap",
+        "com.diegonmarcos.cloudlib.cymatics.CymaticsPlate",
         "kotlinx.coroutines.Dispatchers",
         "kotlinx.coroutines.withContext",
         "kotlin.math.max"
       ],
       "symbols": [
         "MeterMode(mode: Declarations.Mode)",
-        "MeterLive(mode: Declarations.Mode, meter: Declarations.Meter)"
+        "MeterLive(mode: Declarations.Mode, meter: Declarations.Meter)",
+        "MeterCymatics(r: SoundFlow.Reading?, sampleRate: Int)"
       ]
     },
     {
@@ -138562,6 +138699,30 @@
         "sheetPage()",
         "class SheetShellTest",
         "class NoEngine"
+      ]
+    },
+    {
+      "path": "ac_cloud-calc/app/src/test/java/com/diegonmarcos/cloudcalc/sound/CymaticsMapTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "CymaticsMapTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.cloudcalc.sound.CymaticsMap.Drive",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNotEquals",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "kotlin.math.PI",
+        "kotlin.math.sin"
+      ],
+      "symbols": [
+        "tone(vararg hzAmp: Pair<Double, Double>)",
+        "driveOf(pcm: ShortArray, size: Int = n)",
+        "run()",
+        "class CymaticsMapTest"
       ]
     },
     {
@@ -146347,6 +146508,8 @@
         "cymaticsIsDeterministicPerFrequency()",
         "cymaticsIsSymmetric()",
         "cymaticsChangesWithFrequency()",
+        "cymaticsFieldIsByteIdenticalAfterTheMoveToTheSharedLib()",
+        "fnv(p: FloatArray)",
         "cymaticsOfSeveralFrequenciesBlendsThem()",
         "spectrumFindsTheDominantFrequencies()",
         "loopClockRepeatsTheRegionAndKeepsTheWholeLoopByDefault()",
@@ -645436,6 +645599,102 @@
       ]
     },
     {
+      "path": "ac_cloud-wiki/app/src/main/java/com/diegonmarcos/cloudwiki/HomeIndex.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "HomeIndex",
+        "Body",
+        "Planetary",
+        "PlanetCamera"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.graphview.GEdge",
+        "com.diegonmarcos.superapp.graphview.GNode",
+        "kotlin.math.PI",
+        "kotlin.math.cos",
+        "kotlin.math.hypot",
+        "kotlin.math.max",
+        "kotlin.math.sin"
+      ],
+      "symbols": [
+        "rows(tree: WikiTree)",
+        "sorted(rows: List<Row>, column: Column?, ascending: Boolean = true)",
+        "size(chars: Int)",
+        "graphNodes(tree: WikiTree)",
+        "graphEdges(tree: WikiTree)",
+        "bodyRadius(level: Int)",
+        "orbitRadius(level: Int, count: Int)",
+        "layout(tree: WikiTree, t: Double = 0.0)",
+        "place(ids: List<String>, level: Int, parent: String?, cx: Double, cy: Double, cz: Double)",
+        "ring(cx: Double, cy: Double, cz: Double, r: Double, level: Int, steps: Int = 48)",
+        "extent(bodies: List<Body>)",
+        "project(x: Double, y: Double, z: Double)",
+        "sorted(bodies: List<Body>)",
+        "pick(bodies: List<Body>, px: Double, py: Double, slop: Double = 10.0)",
+        "class HomeIndex",
+        "class Mode",
+        "class Row",
+        "class Column",
+        "class Body",
+        "class Planetary",
+        "class PlanetCamera"
+      ]
+    },
+    {
+      "path": "ac_cloud-wiki/app/src/main/java/com/diegonmarcos/cloudwiki/LibraryTree.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "TreeNode",
+        "WikiTree",
+        "LibraryTree",
+        "MenuState",
+        "WikiMenu"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.bottomnav.ChromeScrollState",
+        "com.diegonmarcos.superapp.bottomnav.NavGroup",
+        "com.diegonmarcos.superapp.bottomnav.NavPage",
+        "com.diegonmarcos.superapp.bottomnav.NavSection"
+      ],
+      "symbols": [
+        "node(id: String?)",
+        "kids(id: String)",
+        "ancestors(id: String)",
+        "parentPath(id: String)",
+        "descendants(id: String)",
+        "withHome(section: NavSection, label: String)",
+        "build(section: NavSection, data: WikiData?, chronos: ChronosTree? = null, home: Boolean = true)",
+        "add(n: TreeNode)",
+        "setKids(at: Int, kids: List<String>)",
+        "sim(p: ChronosPage, level: Int, parent: String, group: String)",
+        "dataPage(pg: WikiPage, level: Int, parent: String, group: String)",
+        "page(p: NavPage, level: Int, parent: String?, group: String)",
+        "words(text: String)",
+        "presence(open: Boolean, @Suppress(\"UNUSED_PARAMETER\")",
+        "width(screenWidth: Float)",
+        "toggle(state: MenuState, id: String)",
+        "expandAll(tree: WikiTree)",
+        "expandLevels(tree: WikiTree, levels: Int)",
+        "collapseAll()",
+        "collapseLevels(tree: WikiTree, expanded: Set<String>, levels: Int)",
+        "toggleFilter(state: MenuState, group: String)",
+        "match(label: String, query: String)",
+        "rows(tree: WikiTree, state: MenuState)",
+        "walk(n: TreeNode)",
+        "reveal(tree: WikiTree, state: MenuState, pageId: String?)",
+        "class TreeNode",
+        "class Kind",
+        "class WikiTree",
+        "class LibraryTree",
+        "class MenuState",
+        "class WikiMenu",
+        "class Presence",
+        "class Row"
+      ]
+    },
+    {
       "path": "ac_cloud-wiki/app/src/main/java/com/diegonmarcos/cloudwiki/MainActivity.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -645544,6 +645803,70 @@
         "SourceChip(label: String, tag: String, onClick: ()",
         "class ChronosWebClient",
         "class HeldView"
+      ]
+    },
+    {
+      "path": "ac_cloud-wiki/app/src/main/java/com/diegonmarcos/cloudwiki/ui/HomePage.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "HomeTags",
+        "HomePage"
+      ],
+      "imports": [
+        "androidx.compose.foundation.Canvas",
+        "androidx.compose.foundation.background",
+        "androidx.compose.foundation.border",
+        "androidx.compose.foundation.shape.RoundedCornerShape",
+        "androidx.compose.ui.draw.clip",
+        "androidx.compose.foundation.clickable",
+        "androidx.compose.foundation.gestures.detectTapGestures",
+        "androidx.compose.foundation.gestures.detectTransformGestures",
+        "androidx.compose.foundation.horizontalScroll",
+        "androidx.compose.foundation.layout.Box",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.Row",
+        "androidx.compose.foundation.layout.fillMaxHeight",
+        "androidx.compose.foundation.layout.fillMaxSize",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.foundation.layout.height",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.foundation.layout.width",
+        "androidx.compose.foundation.lazy.LazyColumn",
+        "androidx.compose.foundation.lazy.items",
+        "androidx.compose.foundation.rememberScrollState",
+        "androidx.compose.material3.Text",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.LaunchedEffect",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableDoubleStateOf",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.remember",
+        "androidx.compose.runtime.rememberUpdatedState",
+        "androidx.compose.runtime.saveable.rememberSaveable",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.runtime.withFrameNanos",
+        "androidx.compose.ui.Alignment",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.geometry.Offset",
+        "androidx.compose.ui.graphics.Path",
+        "androidx.compose.ui.graphics.drawscope.Stroke",
+        "androidx.compose.ui.input.pointer.pointerInput",
+        "androidx.compose.ui.layout.onSizeChanged",
+        "androidx.compose.ui.platform.testTag"
+      ],
+      "symbols": [
+        "row(id: String)",
+        "column(c: HomeIndex.Column)",
+        "HomePage(data: WikiData?, wiki: NavSection, nav: WikiNav, onTopic: (String)",
+        "IndexList(tree: WikiTree, open: (TreeNode)",
+        "kindLabel(k: TreeNode.Kind)",
+        "IndexTable(tree: WikiTree, open: (TreeNode)",
+        "IndexGraph(tree: WikiTree, open: (TreeNode)",
+        "IndexPlanet(tree: WikiTree, open: (TreeNode)",
+        "cam()",
+        "ViewChip(text: String, on: Boolean, onClick: ()",
+        "class HomeTags"
       ]
     },
     {
@@ -645694,23 +646017,97 @@
         "com.diegonmarcos.cloudwiki.Chronos",
         "com.diegonmarcos.cloudwiki.ChronosRepo",
         "com.diegonmarcos.cloudwiki.Decl",
+        "com.diegonmarcos.cloudwiki.LibraryTree",
+        "com.diegonmarcos.cloudwiki.MenuState",
+        "com.diegonmarcos.cloudwiki.WikiMenu",
         "com.diegonmarcos.cloudwiki.withChronos",
         "com.diegonmarcos.cloudwiki.R",
         "com.diegonmarcos.cloudwiki.WikiStart",
         "com.diegonmarcos.cloudwiki.WikiStore",
+        "com.diegonmarcos.superapp.bottomnav.LocalNavModeStore",
+        "com.diegonmarcos.superapp.bottomnav.NavUiDecl",
+        "com.diegonmarcos.superapp.bottomnav.SecondRowMode",
+        "com.diegonmarcos.superapp.bottomnav.currentNavUi",
+        "com.diegonmarcos.superapp.bottomnav.effective",
         "com.diegonmarcos.superapp.bottomnav.rememberAccountLauncher",
+        "com.diegonmarcos.superapp.bottomnav.rememberNavModePrefs",
         "com.diegonmarcos.superapp.fleetconfigs.FleetConfigsEntries",
         "com.diegonmarcos.superapp.fleetconfigs.FleetConfigsPage",
-        "com.diegonmarcos.superapp.navbartop1.NavBarTopFirstRowScaffold",
-        "com.diegonmarcos.superapp.navbartop1.titleHierarchy",
-        "com.diegonmarcos.superapp.navbartop2.NavSectionLayout",
-        "com.diegonmarcos.superapp.themebg.themeBackground"
+        "com.diegonmarcos.superapp.navbartop1.NavBarTopFirstRowScaffold"
       ],
       "symbols": [
         "chip(tag: String)",
         "result(id: String)",
         "WikiShell(start: WikiStart = WikiStart()",
         "class Tags"
+      ]
+    },
+    {
+      "path": "ac_cloud-wiki/app/src/main/java/com/diegonmarcos/cloudwiki/ui/WikiSideMenu.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "MenuTags",
+        "WikiSideLayout"
+      ],
+      "imports": [
+        "androidx.compose.animation.AnimatedVisibility",
+        "androidx.compose.animation.core.AnimationState",
+        "androidx.compose.animation.core.animateDecay",
+        "androidx.compose.animation.fadeIn",
+        "androidx.compose.animation.fadeOut",
+        "androidx.compose.animation.rememberSplineBasedDecay",
+        "androidx.compose.animation.slideInHorizontally",
+        "androidx.compose.animation.slideOutHorizontally",
+        "androidx.compose.foundation.layout.ExperimentalLayoutApi",
+        "androidx.compose.foundation.layout.FlowRow",
+        "androidx.compose.foundation.background",
+        "androidx.compose.foundation.border",
+        "androidx.compose.foundation.clickable",
+        "androidx.compose.foundation.gestures.Orientation",
+        "androidx.compose.foundation.gestures.detectTapGestures",
+        "androidx.compose.foundation.gestures.draggable",
+        "androidx.compose.foundation.gestures.rememberDraggableState",
+        "androidx.compose.foundation.layout.Arrangement",
+        "androidx.compose.foundation.layout.Box",
+        "androidx.compose.foundation.layout.BoxWithConstraints",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.Row",
+        "androidx.compose.foundation.layout.fillMaxHeight",
+        "androidx.compose.foundation.layout.fillMaxSize",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.foundation.layout.height",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.foundation.layout.size",
+        "androidx.compose.foundation.layout.width",
+        "androidx.compose.foundation.lazy.LazyColumn",
+        "androidx.compose.foundation.lazy.LazyListState",
+        "androidx.compose.foundation.lazy.items",
+        "androidx.compose.foundation.lazy.rememberLazyListState",
+        "androidx.compose.foundation.shape.RoundedCornerShape",
+        "androidx.compose.foundation.text.BasicTextField",
+        "androidx.compose.material3.Icon",
+        "androidx.compose.material3.Text",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.DisposableEffect",
+        "androidx.compose.runtime.LaunchedEffect"
+      ],
+      "symbols": [
+        "filter(group: String)",
+        "expand(levels: Int)",
+        "collapse(levels: Int)",
+        "row(id: String)",
+        "rail(id: String)",
+        "WikiSideLayout( tree: WikiTree, selectedId: String, selectedTab: String?, menu: MenuState, onMenu: (MenuState)",
+        "Rail(tree: WikiTree, selectedId: String, onToggle: ()",
+        "Panel( tree: WikiTree, selectedId: String, selectedTab: String?, menu: MenuState, onMenu: (MenuState)",
+        "levelLabel(n: Int)",
+        "BarGroup(label: String, chips: @Composable ()",
+        "BarChip(label: String, on: Boolean, tag: String, onClick: ()",
+        "SearchField(query: String, onQuery: (String)",
+        "MenuRow(r: WikiMenu.Row, selected: Boolean, onToggle: ()",
+        "ownScroll(list: LazyListState)",
+        "class MenuTags"
       ]
     },
     {
@@ -645894,6 +646291,48 @@
         "anEmptyGraphIsFine()",
         "aTapFindsTheNodeUnderIt()",
         "class GraphLayoutTest"
+      ]
+    },
+    {
+      "path": "ac_cloud-wiki/app/src/test/java/com/diegonmarcos/cloudwiki/LibraryTreeTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "LibraryTreeTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.bottomnav.ChromeScrollState",
+        "com.diegonmarcos.superapp.bottomnav.NavDecl",
+        "com.diegonmarcos.superapp.bottomnav.NavSection",
+        "com.diegonmarcos.superapp.bottomnav.SideMenuPresence",
+        "com.diegonmarcos.superapp.bottomnav.sideMenuPresence",
+        "org.json.JSONObject",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNotEquals",
+        "org.junit.Assert.assertNotNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.io.File",
+        "kotlin.math.abs",
+        "kotlin.math.sqrt"
+      ],
+      "symbols": [
+        "ids(a: org.json.JSONArray, key: String? = null)",
+        "theMenuIgnoresThePageScroll()",
+        "theShellDrawsTheWikisOwnMenuWithItsOwnScroll()",
+        "theMenuTakesThreeQuartersOfTheWidth()",
+        "homeIsTheFirstParentAtTheLevelOfTheOthers()",
+        "theFilterHidesModernOrArcanumAndKeepsHomeAndProjects()",
+        "expandAndCollapseByLevel()",
+        "shown(e: Set<String>)",
+        "searchKeepsTheAncestorsAndMarksTheMatches()",
+        "everyRowOfThePreviousMenuIsStillReachable()",
+        "homeIndexesTheWholeLibrary()",
+        "tableRowsAreTheTreesNodes()",
+        "theGraphLinksEveryParentAndChild()",
+        "thePlanetaryLayoutPlacesEveryNodeOnItsParentsOrbit()",
+        "class LibraryTreeTest"
       ]
     },
     {

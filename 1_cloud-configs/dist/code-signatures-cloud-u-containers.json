@@ -6,18 +6,18 @@
   },
   "repo": "cloud-u-containers",
   "counts": {
-    "files": 2745,
+    "files": 2746,
     "by_lang": {
       "sh": 192,
       "js": 128,
       "nix": 206,
       "py": 528,
-      "ts": 1318,
+      "ts": 1319,
       "rust": 373
     },
     "by_role": {
       "shell": 182,
-      "file": 361,
+      "file": 362,
       "nix-module": 20,
       "python": 511,
       "module": 822,
@@ -2921,6 +2921,9 @@
         "peerTools",
         "callPeer",
         "health",
+        "classifyMeshError",
+        "meshPeerOf",
+        "runOnPhone",
         "Route",
         "ROUTE_ORDER",
         "Peer",
@@ -2929,7 +2932,12 @@
         "Last",
         "lastOf",
         "Served",
-        "Health"
+        "Health",
+        "PhoneRoute",
+        "PhoneServed",
+        "BEARER_REFUSED",
+        "MeshFailure",
+        "RouteIn"
       ],
       "imports": [],
       "symbols": [
@@ -2946,6 +2954,9 @@
         "viaSshd(p: Peer, d: Deps, path: string)",
         "callPeer(p: Peer, tool: string, args: Record<string, unknown>, d: Deps, only?: Route)",
         "health(peers: Peer[], d: Deps)",
+        "classifyMeshError(msg: string)",
+        "meshPeerOf(peers: Peer[], alias: string)",
+        "runOnPhone(i: RouteIn)",
         "class routes"
       ]
     },
@@ -3841,6 +3852,8 @@
         "zod",
         "../peers/device.js",
         "../peers/registry.js",
+        "../peers/mesh-route.js",
+        "./mesh-peers.js",
         "../peers/core.js"
       ],
       "symbols": [
@@ -5776,6 +5789,18 @@
       "imports": [
         "node:assert/strict",
         "./mcp/tools/phone-api-core.ts"
+      ],
+      "symbols": []
+    },
+    {
+      "path": "infra-api_cloud-infra-mcp/src/code/test-phone-route.mts",
+      "lang": "ts",
+      "role": "file",
+      "exports": [],
+      "imports": [
+        "node:assert/strict",
+        "node:fs",
+        "./mcp/peers/mesh-route.ts"
       ],
       "symbols": []
     },

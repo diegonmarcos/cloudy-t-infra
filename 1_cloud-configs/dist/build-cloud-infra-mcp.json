@@ -2418,6 +2418,10 @@
       "cmd": "node --experimental-strip-types test-mesh-route.mts",
       "cwd": "src/code"
     },
+    "phone-route": {
+      "cmd": "node --experimental-strip-types test-phone-route.mts",
+      "cwd": "src/code"
+    },
     "oom-priority": {
       "cmd": "node ../_shared/test-oom-priority.mjs"
     },
