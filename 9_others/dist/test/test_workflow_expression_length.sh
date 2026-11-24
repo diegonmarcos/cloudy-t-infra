@@ -11,6 +11,7 @@
 # ║   Manual edits will be overwritten on next build.                ║
 # ║                                                                  ║
 # ╚══════════════════════════════════════════════════════════════════╝
+
 # GitHub refuses to parse a workflow when any string that carries a ${{ }}
 # expression is 21000 chars or longer ("Exceeded max expression length"):
 # the run is never created, push-triggered or dispatched. Ship broke this way

@@ -73,13 +73,24 @@ step_docker_package() {
     # eval error still surfaces in full rather than being masked by retries.
     _nix_attempts="${NIX_BUILD_ATTEMPTS:-3}"
     _nix_backoff="${NIX_BUILD_BACKOFF:-45}"
+    # #1886: nix refuses an unsandboxed build when its placeholder home
+    # /homeless-shelter exists ("please remove it to assure purity"). The
+    # builder runs sandbox=false, and `nix develop` exports HOME=/homeless-shelter,
+    # so anything in the devShell that writes to ~ leaves it behind; every
+    # home-manager Ship failed this way from 2026-11-24 04:18Z. Remove it before
+    # each attempt and hand the real HOME to the inner build.
+    _hm_home="${HOME:-/root}"
     _nix_try=0
     while : ; do
         _nix_try=$(( _nix_try + 1 ))
+        if [ -e /homeless-shelter ]; then
+            log "nix build: removing stray /homeless-shelter (unsandboxed purity check)"
+            rm -rf /homeless-shelter 2>/dev/null || true
+        fi
         [ "$_nix_try" -gt 1 ] && log "nix build: retry $_nix_try/$_nix_attempts"
         if [ -d "$DEPS_FLAKE" ] && command -v nix >/dev/null 2>&1; then
             [ "$_nix_try" -eq 1 ] && log "Using deps devShell from $DEPS_FLAKE"
-            nix develop "$DEPS_FLAKE#" --command bash -c "cd '$DIST_DIR' && $NIX_BUILD_CMD" >"$NIX_TMP" 2>&1
+            nix develop "$DEPS_FLAKE#" --command bash -c "export HOME='$_hm_home'; rm -rf /homeless-shelter 2>/dev/null; cd '$DIST_DIR' && $NIX_BUILD_CMD" >"$NIX_TMP" 2>&1
             NIX_RC=$?
         else
             eval "$NIX_BUILD_CMD" >"$NIX_TMP" 2>&1
