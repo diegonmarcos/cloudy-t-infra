@@ -6,9 +6,9 @@
   },
   "repo": "cloud",
   "counts": {
-    "files": 1629,
+    "files": 1635,
     "by_lang": {
-      "sh": 1107,
+      "sh": 1113,
       "js": 176,
       "nix": 304,
       "py": 12,
@@ -17,9 +17,9 @@
     "by_role": {
       "hook": 402,
       "file": 91,
-      "shell": 559,
+      "shell": 563,
       "flake": 6,
-      "script": 148,
+      "script": 150,
       "module": 115,
       "python": 9,
       "engine": 1,
@@ -1208,6 +1208,26 @@
         "_changed_keys()",
         "_changed_entries()",
         "_binds_block()"
+      ]
+    },
+    {
+      "path": ".github/workflows/scripts/cloud-ship-detect-engine-consumers.sh",
+      "lang": "sh",
+      "role": "script",
+      "exports": [
+        "_refs()",
+        "_in_engine()",
+        "engine_consumers()",
+        "_ere()",
+        "direct_consumers()"
+      ],
+      "imports": [],
+      "symbols": [
+        "_refs()",
+        "_in_engine()",
+        "engine_consumers()",
+        "_ere()",
+        "direct_consumers()"
       ]
     },
     {
@@ -17217,6 +17237,26 @@
       ]
     },
     {
+      "path": "1_cicd/src/scripts/cloud-ship-detect-engine-consumers.sh",
+      "lang": "sh",
+      "role": "script",
+      "exports": [
+        "_refs()",
+        "_in_engine()",
+        "engine_consumers()",
+        "_ere()",
+        "direct_consumers()"
+      ],
+      "imports": [],
+      "symbols": [
+        "_refs()",
+        "_in_engine()",
+        "engine_consumers()",
+        "_ere()",
+        "direct_consumers()"
+      ]
+    },
+    {
       "path": "1_cicd/src/scripts/cloud-ship-disk-headroom.sh",
       "lang": "sh",
       "role": "script",
@@ -20182,6 +20222,20 @@
       ]
     },
     {
+      "path": "9_others/test/test_compose_foreign_container_gate.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "check()",
+        "run()"
+      ],
+      "imports": [],
+      "symbols": [
+        "check()",
+        "run()"
+      ]
+    },
+    {
       "path": "9_others/test/test_compose_no_build_on_vm.sh",
       "lang": "sh",
       "role": "shell",
@@ -20345,13 +20399,17 @@
       "exports": [
         "build_fixture()",
         "resolve()",
-        "check()"
+        "check()",
+        "run_suite()",
+        "mutate()"
       ],
       "imports": [],
       "symbols": [
         "build_fixture()",
         "resolve()",
-        "check()"
+        "check()",
+        "run_suite()",
+        "mutate()"
       ]
     },
     {
@@ -21433,6 +21491,24 @@
       ]
     },
     {
+      "path": "9_others/test/test_ship_guard_auth_plane.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "run()",
+        "check()",
+        "run_suite()",
+        "mutate()"
+      ],
+      "imports": [],
+      "symbols": [
+        "run()",
+        "check()",
+        "run_suite()",
+        "mutate()"
+      ]
+    },
+    {
       "path": "9_others/test/test_ship_latest_monotonic.sh",
       "lang": "sh",
       "role": "shell",
@@ -21753,6 +21829,22 @@
       ]
     },
     {
+      "path": "9_others/test/test_tier1_watchdog_compose_restart.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "check()",
+        "drive()"
+      ],
+      "imports": [
+        "$WORK/fn.sh"
+      ],
+      "symbols": [
+        "check()",
+        "drive()"
+      ]
+    },
+    {
       "path": "9_others/test/test_unjam_covers_wg_group.sh",
       "lang": "sh",
       "role": "shell",
@@ -21780,6 +21872,18 @@
       "symbols": [
         "ck()",
         "line_of()"
+      ]
+    },
+    {
+      "path": "9_others/test/test_workflow_expression_length.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "check()"
+      ],
+      "imports": [],
+      "symbols": [
+        "check()"
       ]
     },
     {
@@ -23855,14 +23959,14 @@
         "_prio",
         "_sev",
         "_event",
-        "now",
-        "gap",
-        "_compose_dir",
-        "Description",
-        "After",
-        "Requires",
-        "Type",
-        "ExecStart"
+        "_c",
+        "_proj",
+        "_cfg",
+        "_args",
+        "IFS",
+        "_deps",
+        "_d",
+        "now"
       ]
     },
     {
@@ -26379,14 +26483,14 @@
         "_prio",
         "_sev",
         "_event",
-        "now",
-        "gap",
-        "_compose_dir",
-        "Description",
-        "After",
-        "Requires",
-        "Type",
-        "ExecStart"
+        "_c",
+        "_proj",
+        "_cfg",
+        "_args",
+        "IFS",
+        "_deps",
+        "_d",
+        "now"
       ]
     },
     {
@@ -28755,14 +28859,14 @@
         "_prio",
         "_sev",
         "_event",
-        "now",
-        "gap",
-        "_compose_dir",
-        "Description",
-        "After",
-        "Requires",
-        "Type",
-        "ExecStart"
+        "_c",
+        "_proj",
+        "_cfg",
+        "_args",
+        "IFS",
+        "_deps",
+        "_d",
+        "now"
       ]
     },
     {
@@ -31135,14 +31239,14 @@
         "_prio",
         "_sev",
         "_event",
-        "now",
-        "gap",
-        "_compose_dir",
-        "Description",
-        "After",
-        "Requires",
-        "Type",
-        "ExecStart"
+        "_c",
+        "_proj",
+        "_cfg",
+        "_args",
+        "IFS",
+        "_deps",
+        "_d",
+        "now"
       ]
     },
     {
@@ -33514,14 +33618,14 @@
         "_prio",
         "_sev",
         "_event",
-        "now",
-        "gap",
-        "_compose_dir",
-        "Description",
-        "After",
-        "Requires",
-        "Type",
-        "ExecStart"
+        "_c",
+        "_proj",
+        "_cfg",
+        "_args",
+        "IFS",
+        "_deps",
+        "_d",
+        "now"
       ]
     },
     {
