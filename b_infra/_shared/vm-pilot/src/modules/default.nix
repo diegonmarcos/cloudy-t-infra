@@ -81,6 +81,8 @@ in {
 
     # ── Agents (new in vm-pilot)
     ./agents/journal-ntfy.nix
+    # Go host daemon, SHADOW stage (#1876): records decisions next to the shell units, acts on nothing
+    (import ./agents/vm-pilotd.nix { inherit vmName; })
     ./agents/data-publisher.nix
     ./agents/evidence-collector.nix
     ./agents/log-shipper.nix

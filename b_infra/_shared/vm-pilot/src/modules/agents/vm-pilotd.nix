@@ -28,7 +28,7 @@ let
   ntfyBase     = consolidated.native.monitoring.ntfy_base or "https://rss.diegonmarcos.com";
 
   # Source-tree id of vm-pilotd the release was built from (git rev-parse HEAD:<dir>).
-  releaseTag = "vm-pilotd-SOURCE_TREE_PIN";
+  releaseTag = "vm-pilotd-2d70aa3333ce";
 
   tier1 = cfg "tier1_services" [];
 
