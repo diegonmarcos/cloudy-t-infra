@@ -97,6 +97,11 @@
         "log_level": "info"
       },
       {
+        "container": "cloudy-all-go-mcp",
+        "service": "cloudy-all-go-mcp",
+        "log_level": "info"
+      },
+      {
         "container": "cloudy-all-mcp",
         "service": "cloudy-all-mcp",
         "log_level": "info"
@@ -202,6 +207,31 @@
         "log_level": "info"
       },
       {
+        "container": "ntfy-go-rss-gateway",
+        "service": "ntfy-go",
+        "log_level": "info"
+      },
+      {
+        "container": "ntfy-go-topic-scanner",
+        "service": "ntfy-go",
+        "log_level": "info"
+      },
+      {
+        "container": "ntfy-go-notify-broker",
+        "service": "ntfy-go",
+        "log_level": "info"
+      },
+      {
+        "container": "ntfy-go-github-rss",
+        "service": "ntfy-go",
+        "log_level": "info"
+      },
+      {
+        "container": "ntfy-go-syslog-bridge",
+        "service": "ntfy-go",
+        "log_level": "info"
+      },
+      {
         "container": "openobserve",
         "service": "openobserve",
         "log_level": "info"
@@ -224,6 +254,11 @@
       {
         "container": "agents-tmp-reaper",
         "service": "agents-tmp-reaper",
+        "log_level": "info"
+      },
+      {
+        "container": "c3-execd",
+        "service": "c3-execd",
         "log_level": "info"
       },
       {
@@ -419,6 +454,11 @@
       {
         "container": "capital-stack-news-gdelt-api",
         "service": "capital-stack-news-gdelt-api",
+        "log_level": "info"
+      },
+      {
+        "container": "capital-stack-news-gdelt-go-api",
+        "service": "capital-stack-news-gdelt-go-api",
         "log_level": "info"
       },
       {

@@ -131,6 +131,18 @@
             "public_url": "https://api.diegonmarcos.com/c3-services-api"
           },
           {
+            "id": "cloudy-all-go-mcp",
+            "name": "cloudy-all-go-mcp",
+            "vm": "oci-A1-f_0",
+            "category": "obs",
+            "subgroup": "Observability",
+            "port": 3140,
+            "private_ip": "10.0.0.6",
+            "private_url": "https://cloudy-all-go-mcp.mesh.diegonmarcos.com",
+            "public_url": null,
+            "mcp": true
+          },
+          {
             "id": "cloudy-all-mcp",
             "name": "cloudy-all-mcp",
             "vm": "oci-A1-f_0",
@@ -339,6 +351,17 @@
             "private_ip": "10.0.0.6",
             "private_url": "https://ntfy.mesh.diegonmarcos.com",
             "public_url": "https://rss.diegonmarcos.com"
+          },
+          {
+            "id": "ntfy-go",
+            "name": "ntfy-go",
+            "vm": "oci-A1-f_0",
+            "category": "obs",
+            "subgroup": "Observability",
+            "port": 8191,
+            "private_ip": "10.0.0.6",
+            "private_url": "https://ntfy-go.mesh.diegonmarcos.com",
+            "public_url": null
           },
           {
             "id": "openobserve",
@@ -4745,6 +4768,18 @@
           "private_ip": "10.0.0.6",
           "private_url": "https://cloud-vault-mcp.mesh.diegonmarcos.com",
           "public_url": "https://mcp.diegonmarcos.com",
+          "mcp": true
+        },
+        {
+          "id": "cloudy-all-go-mcp",
+          "name": "cloudy-all-go-mcp",
+          "vm": "oci-A1-f_0",
+          "category": "obs",
+          "subgroup": "Observability",
+          "port": 3140,
+          "private_ip": "10.0.0.6",
+          "private_url": "https://cloudy-all-go-mcp.mesh.diegonmarcos.com",
+          "public_url": null,
           "mcp": true
         },
         {

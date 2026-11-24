@@ -89,6 +89,7 @@
         "cloud-superapp-mcp",
         "cloud-vault-mcp",
         "cloudy-all-api",
+        "cloudy-all-go-mcp",
         "cloudy-all-mcp",
         "cloudy-apps-communication-mcp",
         "cloudy-apps-drive-mcp",
@@ -110,11 +111,17 @@
         "syslog-bridge",
         "capital-stack-news-rss-api",
         "capital-stack-news-github-rss-api",
+        "ntfy-go-rss-gateway",
+        "ntfy-go-topic-scanner",
+        "ntfy-go-notify-broker",
+        "ntfy-go-github-rss",
+        "ntfy-go-syslog-bridge",
         "openobserve",
         "umami",
         "umami-db",
         "umami-setup",
         "agents-tmp-reaper",
+        "c3-execd",
         "c3bot-relay",
         "c3bot-relay-go",
         "disk-janitor",
@@ -154,6 +161,7 @@
         "photoprism_rclone",
         "playlist-syncer",
         "capital-stack-news-gdelt-api",
+        "capital-stack-news-gdelt-go-api",
         "calendar-radicale",
         "cloud-notes-sync",
         "cloud-notes-web",
@@ -2072,6 +2080,55 @@
       },
       "flake": "infra-api_cloudy-all-api"
     },
+    "cloudy-all-go-mcp": {
+      "category": "obs",
+      "vm": "oci-A1-f_0",
+      "folder": "infra-api_cloudy-all-go-mcp",
+      "description": "Go port of cloudy-all-mcp (fleet MCP router: list_servers, list_tools, call over stateless Streamable HTTP, mesh-first with public bearer fallback, 60 s tool cache), shadow stage: runs next to the TypeScript container on its own port and container, outside every request path (ticket #1874)",
+      "port": 3140,
+      "dns": "cloudy-all-go-mcp.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:3140",
+      "containers": {
+        "app": {
+          "container_name": "cloudy-all-go-mcp",
+          "image": "ghcr.io/diegonmarcos/cloudy-all-go-mcp:latest",
+          "port": 3140,
+          "port_env": "PORT",
+          "public": false,
+          "proxy": null,
+          "healthcheck": "/health",
+          "monitoring": null,
+          "volumes": [],
+          "env_file": false,
+          "depends_on": [],
+          "resources": null,
+          "read_only": true,
+          "protocol": "http"
+        }
+      },
+      "container_names": [
+        "cloudy-all-go-mcp"
+      ],
+      "all_ports": [
+        "3140"
+      ],
+      "all_dns": [],
+      "compose": {
+        "containers": [],
+        "ports": [],
+        "networks": []
+      },
+      "proxy": {
+        "app_hub": false
+      },
+      "declared_ports": {
+        "app": 3140
+      },
+      "health": {
+        "path": "/health"
+      },
+      "flake": "infra-api_cloudy-all-go-mcp"
+    },
     "cloudy-all-mcp": {
       "category": "obs",
       "vm": "oci-A1-f_0",
@@ -3912,6 +3969,125 @@
       },
       "flake": "infra-obs_ntfy"
     },
+    "ntfy-go": {
+      "category": "obs",
+      "vm": "oci-A1-f_0",
+      "folder": "infra-obs_ntfy-go",
+      "description": "Go port of the six ntfy Python sidecars (syslog-bridge, rss-gateway, github-rss, notify-broker, digest, topic-scanner) as ONE static binary, shadow stage: runs next to the Python sidecars on its own ports and containers, every sender in dry-run, outside every request path (ticket #1878)",
+      "port": 8191,
+      "dns": "ntfy-go.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:8191",
+      "containers": {
+        "app": {
+          "container_name": "ntfy-go-rss-gateway",
+          "image": "ghcr.io/diegonmarcos/ntfy-go:latest",
+          "port": 8191,
+          "port_env": "LISTEN",
+          "public": false,
+          "proxy": null,
+          "healthcheck": "/feed/health",
+          "monitoring": null,
+          "volumes": [],
+          "env_file": false,
+          "depends_on": [],
+          "resources": null,
+          "read_only": true,
+          "protocol": "http"
+        },
+        "topic-scanner": {
+          "container_name": "ntfy-go-topic-scanner",
+          "image": "ghcr.io/diegonmarcos/ntfy-go:latest",
+          "port": 8192,
+          "port_env": "LISTEN",
+          "public": false,
+          "proxy": null,
+          "healthcheck": "/health",
+          "monitoring": null,
+          "volumes": [],
+          "env_file": false,
+          "depends_on": [],
+          "resources": null,
+          "read_only": true,
+          "protocol": "http"
+        },
+        "notify-broker": {
+          "container_name": "ntfy-go-notify-broker",
+          "image": "ghcr.io/diegonmarcos/ntfy-go:latest",
+          "port": 8193,
+          "port_env": "LISTEN",
+          "public": false,
+          "proxy": null,
+          "healthcheck": "/health",
+          "monitoring": null,
+          "volumes": [],
+          "env_file": false,
+          "depends_on": [],
+          "resources": null,
+          "read_only": true,
+          "protocol": "http"
+        },
+        "github-rss": {
+          "container_name": "ntfy-go-github-rss",
+          "image": "ghcr.io/diegonmarcos/ntfy-go:latest",
+          "port": null,
+          "port_env": null,
+          "public": false,
+          "proxy": null,
+          "healthcheck": null,
+          "monitoring": null,
+          "volumes": [],
+          "env_file": false,
+          "depends_on": [],
+          "resources": null,
+          "read_only": true
+        },
+        "syslog-bridge": {
+          "container_name": "ntfy-go-syslog-bridge",
+          "image": "ghcr.io/diegonmarcos/ntfy-go:latest",
+          "port": null,
+          "port_env": null,
+          "public": false,
+          "proxy": null,
+          "healthcheck": null,
+          "monitoring": null,
+          "volumes": [],
+          "env_file": false,
+          "depends_on": [],
+          "resources": null,
+          "read_only": true
+        }
+      },
+      "container_names": [
+        "ntfy-go-rss-gateway",
+        "ntfy-go-topic-scanner",
+        "ntfy-go-notify-broker",
+        "ntfy-go-github-rss",
+        "ntfy-go-syslog-bridge"
+      ],
+      "all_ports": [
+        "8191",
+        "8192",
+        "8193"
+      ],
+      "all_dns": [],
+      "compose": {
+        "containers": [],
+        "ports": [],
+        "networks": []
+      },
+      "proxy": {
+        "app_hub": false
+      },
+      "declared_ports": {
+        "rss_gateway": 8191,
+        "topic_scanner": 8192,
+        "notify_broker": 8193
+      },
+      "health": {
+        "path": "/feed/health"
+      },
+      "flake": "infra-obs_ntfy-go"
+    },
     "openobserve": {
       "category": "tools",
       "vm": "oci-A1-f_0",
@@ -4184,6 +4360,58 @@
         "networks": []
       },
       "flake": "infra-ops_agents-tmp-reaper"
+    },
+    "c3-execd": {
+      "category": "ops",
+      "vm": "oci-A1-f_0",
+      "folder": "infra-ops_c3-execd",
+      "description": "Go sidecar for cloud-infra-mcp / cloudy-c3-api / superapp-mcp: loopback exec with timeouts, pooled native SSH (x/crypto/ssh), policy-gated Docker unix-socket client and an audit log. Shadow stage: runs beside the Node helpers (shared/libs/exec.ts, ssh.ts), nothing calls it until switch-over (ticket #1875)",
+      "port": 4187,
+      "dns": "c3-execd.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:4187",
+      "containers": {
+        "app": {
+          "container_name": "c3-execd",
+          "image": "ghcr.io/diegonmarcos/c3-execd:latest",
+          "port": 4187,
+          "port_env": null,
+          "public": false,
+          "proxy": null,
+          "healthcheck": "/health",
+          "monitoring": null,
+          "volumes": [
+            "/opt/ssh-keys/c3-infra-api:/root/.ssh:ro",
+            "/var/run/docker.sock:/var/run/docker.sock"
+          ],
+          "env_file": false,
+          "depends_on": [],
+          "resources": null,
+          "read_only": true,
+          "protocol": "http"
+        }
+      },
+      "container_names": [
+        "c3-execd"
+      ],
+      "all_ports": [
+        "4187"
+      ],
+      "all_dns": [],
+      "compose": {
+        "containers": [],
+        "ports": [],
+        "networks": []
+      },
+      "proxy": {
+        "app_hub": false
+      },
+      "declared_ports": {
+        "app": 4187
+      },
+      "health": {
+        "path": "/health"
+      },
+      "flake": "infra-ops_c3-execd"
     },
     "c3bot-relay": {
       "category": "sec",
@@ -7151,6 +7379,55 @@
         "path": "/health"
       },
       "flake": "user-news_capital-stack-news-gdelt-api"
+    },
+    "capital-stack-news-gdelt-go-api": {
+      "category": "tools",
+      "vm": "oci-A1-f_0",
+      "folder": "user-news_capital-stack-news-gdelt-go-api",
+      "description": "Go port of capital-stack-news-gdelt-api (GDELT news aggregator: fetch worker + SQLite cache + read API /news/articles /timeline /tone /topics), shadow stage: runs next to the Node container on its own port and its own cache, outside every request path (ticket #1882)",
+      "port": 3142,
+      "dns": "capital-stack-news-gdelt-go-api.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:3142",
+      "containers": {
+        "app": {
+          "container_name": "capital-stack-news-gdelt-go-api",
+          "image": "ghcr.io/diegonmarcos/capital-stack-news-gdelt-go-api:latest",
+          "port": 3142,
+          "port_env": "PORT",
+          "public": false,
+          "proxy": null,
+          "healthcheck": "/health",
+          "monitoring": null,
+          "volumes": [],
+          "env_file": false,
+          "depends_on": [],
+          "resources": null,
+          "read_only": true,
+          "protocol": "http"
+        }
+      },
+      "container_names": [
+        "capital-stack-news-gdelt-go-api"
+      ],
+      "all_ports": [
+        "3142"
+      ],
+      "all_dns": [],
+      "compose": {
+        "containers": [],
+        "ports": [],
+        "networks": []
+      },
+      "proxy": {
+        "app_hub": false
+      },
+      "declared_ports": {
+        "app": 3142
+      },
+      "health": {
+        "path": "/health"
+      },
+      "flake": "user-news_capital-stack-news-gdelt-go-api"
     },
     "calendar-radicale": {
       "category": "app",

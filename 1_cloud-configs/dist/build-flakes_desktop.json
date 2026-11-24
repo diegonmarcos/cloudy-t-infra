@@ -488,6 +488,7 @@
         "cloud-superapp-mcp",
         "cloud-vault-mcp",
         "cloudy-all-api",
+        "cloudy-all-go-mcp",
         "cloudy-all-mcp",
         "cloudy-apps-communication-mcp",
         "cloudy-apps-drive-mcp",
@@ -506,9 +507,11 @@
         "dbgate",
         "matomo",
         "ntfy",
+        "ntfy-go",
         "openobserve",
         "umami",
         "agents-tmp-reaper",
+        "c3-execd",
         "c3bot-relay",
         "c3bot-relay-go",
         "disk-janitor",
@@ -538,6 +541,7 @@
         "photoprism",
         "playlist-syncer",
         "capital-stack-news-gdelt-api",
+        "capital-stack-news-gdelt-go-api",
         "calendar-radicale",
         "cloud-notes-sync",
         "cloud-notes-web",
@@ -551,7 +555,7 @@
         "send",
         "vaultwarden"
       ],
-      "container_count": 90
+      "container_count": 98
     },
     "gcp-E2-f_0": {
       "ip": "35.226.147.64",
@@ -2915,6 +2919,110 @@
         "auth": "bearer"
       }
     },
+    "cloudy-all-go-mcp": {
+      "category": "obs",
+      "vm": "oci-A1-f_0",
+      "folder": "infra-api_cloudy-all-go-mcp",
+      "description": "Go port of cloudy-all-mcp (fleet MCP router: list_servers, list_tools, call over stateless Streamable HTTP, mesh-first with public bearer fallback, 60 s tool cache), shadow stage: runs next to the TypeScript container on its own port and container, outside every request path (ticket #1874)",
+      "enabled": true,
+      "flake": "infra-api_cloudy-all-go-mcp",
+      "port": 3140,
+      "dns": "cloudy-all-go-mcp.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:3140",
+      "containers": {
+        "app": {
+          "container_name": "cloudy-all-go-mcp",
+          "image": "ghcr.io/diegonmarcos/cloudy-all-go-mcp:latest",
+          "port": 3140,
+          "port_env": "PORT",
+          "public": false,
+          "proxy": null,
+          "healthcheck": "/health",
+          "monitoring": null,
+          "volumes": [],
+          "env_file": false,
+          "depends_on": [],
+          "resources": null,
+          "read_only": true,
+          "protocol": "http"
+        }
+      },
+      "container_names": [
+        "cloudy-all-go-mcp"
+      ],
+      "all_ports": [
+        "3140"
+      ],
+      "all_dns": [],
+      "compose": {
+        "containers": [],
+        "ports": [],
+        "networks": []
+      },
+      "proxy": {
+        "app_hub": false
+      },
+      "declared_ports": {
+        "app": 3140
+      },
+      "health": {
+        "path": "/health"
+      },
+      "taxonomy": {
+        "group": "Infra Apps",
+        "category": "Ops-API-MCP"
+      },
+      "bind_host": "10.0.0.6",
+      "resources": {
+        "mem_limit": "64M",
+        "mem_reservation": "8M"
+      },
+      "tests": {
+        "unit": {
+          "cmd": "go test -count=1 ./...",
+          "cwd": "src/code"
+        },
+        "parity-compare": {
+          "cmd": "PARITY_REQUIRE=1 go test -count=1 -tags parity -v -run TestParity ./parity/",
+          "cwd": "src/code",
+          "_doc": "Reference = the TypeScript router (infra-api_cloudy-all-mcp/src/code, node type stripping) run next to the Go router in front of one fake child MCP; the same 40 requests go to both and the normalised responses must be identical. See parity/parity_test.go."
+        },
+        "parity-mutation": {
+          "cmd": "o=$(mktemp); PARITY_MUTATE=1 PARITY_REQUIRE=1 go test -count=1 -tags parity -run TestParity ./parity/ >\"$o\" 2>&1; grep -q 'steps differ' \"$o\"",
+          "cwd": "src/code",
+          "_doc": "Mutation proof: the Go router is made to change one tool description; the parity harness must go red (the grep passes only if it reported differing steps, not on a build error)."
+        }
+      },
+      "_doc_shadow": "Shadow stage (#1874). The live TypeScript router (container cloudy-all-mcp, port 3112) is untouched. This container has no env_file and no secret, so it reaches the child MCPs over their mesh endpoints only; nothing outside the host dials it. Switch-over (the real secret, mesh name cloudy-all-mcp, Caddy route) is a separate step after the live comparison; the TypeScript image stays declared for one release as the rollback.",
+      "api": {
+        "has_api": true,
+        "has_web_ui": false,
+        "api_path": "/",
+        "api_url": null,
+        "healthcheck_paths": [
+          "/health"
+        ],
+        "type": "custom-rest",
+        "base_path": "/",
+        "endpoint_count": 2,
+        "display_name": "Cloudy All MCP (Go, shadow)",
+        "description": "Same contract as cloudy-all-mcp: stateless Streamable HTTP POST /mcp with tools list_servers, list_tools, call; GET /health.",
+        "auth": "none"
+      },
+      "mcp": {
+        "has_mcp": true,
+        "mcp_url": null,
+        "transport": "streamable-http",
+        "endpoint_path": "/mcp",
+        "tools_count": 3,
+        "resources_count": 0,
+        "prompts_count": 0,
+        "display_name": "Cloudy All MCP (Go, shadow)",
+        "description": "Fleet MCP router (3 tools), Go port.",
+        "auth": "none",
+        "sdk": "github.com/modelcontextprotocol/go-sdk@v1.8.0"
+      }
+    },
     "cloudy-all-mcp": {
       "category": "obs",
       "vm": "oci-A1-f_0",
@@ -3601,6 +3709,10 @@
         },
         "fleet-data": {
           "cmd": "node test-fleet-data.ts",
+          "cwd": "src"
+        },
+        "execd-shadow": {
+          "cmd": "node test-execd-shadow.ts",
           "cwd": "src"
         }
       },
@@ -6412,6 +6524,165 @@
         "auth": "bearer"
       }
     },
+    "ntfy-go": {
+      "category": "obs",
+      "vm": "oci-A1-f_0",
+      "folder": "infra-obs_ntfy-go",
+      "description": "Go port of the six ntfy Python sidecars (syslog-bridge, rss-gateway, github-rss, notify-broker, digest, topic-scanner) as ONE static binary, shadow stage: runs next to the Python sidecars on its own ports and containers, every sender in dry-run, outside every request path (ticket #1878)",
+      "enabled": true,
+      "flake": "infra-obs_ntfy-go",
+      "port": 8191,
+      "dns": "ntfy-go.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:8191",
+      "containers": {
+        "app": {
+          "container_name": "ntfy-go-rss-gateway",
+          "image": "ghcr.io/diegonmarcos/ntfy-go:latest",
+          "port": 8191,
+          "port_env": "LISTEN",
+          "public": false,
+          "proxy": null,
+          "healthcheck": "/feed/health",
+          "monitoring": null,
+          "volumes": [],
+          "env_file": false,
+          "depends_on": [],
+          "resources": null,
+          "read_only": true,
+          "protocol": "http"
+        },
+        "topic-scanner": {
+          "container_name": "ntfy-go-topic-scanner",
+          "image": "ghcr.io/diegonmarcos/ntfy-go:latest",
+          "port": 8192,
+          "port_env": "LISTEN",
+          "public": false,
+          "proxy": null,
+          "healthcheck": "/health",
+          "monitoring": null,
+          "volumes": [],
+          "env_file": false,
+          "depends_on": [],
+          "resources": null,
+          "read_only": true,
+          "protocol": "http"
+        },
+        "notify-broker": {
+          "container_name": "ntfy-go-notify-broker",
+          "image": "ghcr.io/diegonmarcos/ntfy-go:latest",
+          "port": 8193,
+          "port_env": "LISTEN",
+          "public": false,
+          "proxy": null,
+          "healthcheck": "/health",
+          "monitoring": null,
+          "volumes": [],
+          "env_file": false,
+          "depends_on": [],
+          "resources": null,
+          "read_only": true,
+          "protocol": "http"
+        },
+        "github-rss": {
+          "container_name": "ntfy-go-github-rss",
+          "image": "ghcr.io/diegonmarcos/ntfy-go:latest",
+          "port": null,
+          "port_env": null,
+          "public": false,
+          "proxy": null,
+          "healthcheck": null,
+          "monitoring": null,
+          "volumes": [],
+          "env_file": false,
+          "depends_on": [],
+          "resources": null,
+          "read_only": true
+        },
+        "syslog-bridge": {
+          "container_name": "ntfy-go-syslog-bridge",
+          "image": "ghcr.io/diegonmarcos/ntfy-go:latest",
+          "port": null,
+          "port_env": null,
+          "public": false,
+          "proxy": null,
+          "healthcheck": null,
+          "monitoring": null,
+          "volumes": [],
+          "env_file": false,
+          "depends_on": [],
+          "resources": null,
+          "read_only": true
+        }
+      },
+      "container_names": [
+        "ntfy-go-rss-gateway",
+        "ntfy-go-topic-scanner",
+        "ntfy-go-notify-broker",
+        "ntfy-go-github-rss",
+        "ntfy-go-syslog-bridge"
+      ],
+      "all_ports": [
+        "8191",
+        "8192",
+        "8193"
+      ],
+      "all_dns": [],
+      "compose": {
+        "containers": [],
+        "ports": [],
+        "networks": []
+      },
+      "proxy": {
+        "app_hub": false
+      },
+      "declared_ports": {
+        "rss_gateway": 8191,
+        "topic_scanner": 8192,
+        "notify_broker": 8193
+      },
+      "health": {
+        "path": "/feed/health"
+      },
+      "taxonomy": {
+        "group": "Infra Apps",
+        "category": "Ops-API-MCP"
+      },
+      "bind_host": "10.0.0.6",
+      "resources": {
+        "mem_limit": "48M",
+        "mem_reservation": "8M"
+      },
+      "tests": {
+        "unit": {
+          "cmd": "go test -count=1 ./...",
+          "cwd": "src/code"
+        },
+        "parity-compare": {
+          "cmd": "PARITY_REQUIRE=1 go test -count=1 -tags parity -v -run TestParity ./parity/",
+          "cwd": "src/code",
+          "_doc": "Reference = the original Python sidecars (infra-obs_ntfy/src/code, unmodified) driven through parity/ref.py. Broker decide() over 12000 generated event steps on four policies, digest summarize()/read_history(), the topic scanner, the GitHub Atom parser and classifier, the syslog alert parser and the whole RSS gateway HTTP surface must be identical. See parity/parity_test.go."
+        }
+      },
+      "_doc_shadow": "Shadow stage (#1878). The live Python sidecars (containers syslog-bridge, rss-gateway, github-rss of the ntfy service) are untouched. These containers run the Go binary with NTFY_DRY_RUN=1: every sender logs what it WOULD publish and never reaches a ntfy topic, so no notification is duplicated. rss-gateway and topic-scanner only READ (ntfy poll, cache.db) on their own ports. The broker keeps its state on a tmpfs, never in the live notify state file. Switch-over (real publishing, public route for the gateway) is a separate step after the shadow has run clean next to the Python sidecars.",
+      "_doc_addressing": "No mesh name, no Caddy route and no client wiring on purpose during the shadow stage: only the containers themselves and operators on the mesh dial the bind addresses (10.0.0.6:8191 gateway, :8192 scanner, :8193 broker), so no Hickory row and no Caddy fallback-map entry are needed.",
+      "api": {
+        "has_api": true,
+        "has_web_ui": false,
+        "api_path": "/",
+        "api_url": null,
+        "healthcheck_paths": [
+          "/feed/health",
+          "/health",
+          "/health"
+        ],
+        "type": "custom-rest",
+        "base_path": "/",
+        "endpoint_count": 7,
+        "display_name": "ntfy sidecars (Go, shadow)",
+        "description": "Same contracts as the Python sidecars: rss-gateway /feed/*, topic-scanner / and /health, notify-broker /event /ack /health. Shadow stage: dry-run senders.",
+        "auth": "none"
+      }
+    },
     "openobserve": {
       "category": "tools",
       "vm": "oci-A1-f_0",
@@ -6759,6 +7030,90 @@
         "api_path": null,
         "api_url": null,
         "healthcheck_paths": []
+      }
+    },
+    "c3-execd": {
+      "category": "ops",
+      "vm": "oci-A1-f_0",
+      "folder": "infra-ops_c3-execd",
+      "description": "Go sidecar for cloud-infra-mcp / cloudy-c3-api / superapp-mcp: loopback exec with timeouts, pooled native SSH (x/crypto/ssh), policy-gated Docker unix-socket client and an audit log. Shadow stage: runs beside the Node helpers (shared/libs/exec.ts, ssh.ts), nothing calls it until switch-over (ticket #1875)",
+      "enabled": true,
+      "flake": "infra-ops_c3-execd",
+      "port": 4187,
+      "dns": "c3-execd.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:4187",
+      "containers": {
+        "app": {
+          "container_name": "c3-execd",
+          "image": "ghcr.io/diegonmarcos/c3-execd:latest",
+          "port": 4187,
+          "port_env": null,
+          "public": false,
+          "proxy": null,
+          "healthcheck": "/health",
+          "monitoring": null,
+          "volumes": [
+            "/opt/ssh-keys/c3-infra-api:/root/.ssh:ro",
+            "/var/run/docker.sock:/var/run/docker.sock"
+          ],
+          "env_file": false,
+          "depends_on": [],
+          "resources": null,
+          "read_only": true,
+          "protocol": "http"
+        }
+      },
+      "container_names": [
+        "c3-execd"
+      ],
+      "all_ports": [
+        "4187"
+      ],
+      "all_dns": [],
+      "compose": {
+        "containers": [],
+        "ports": [],
+        "networks": []
+      },
+      "proxy": {
+        "app_hub": false
+      },
+      "declared_ports": {
+        "app": 4187
+      },
+      "health": {
+        "path": "/health"
+      },
+      "taxonomy": {
+        "group": "Infra Apps",
+        "category": "Net-Routing & Security"
+      },
+      "bind_host": "127.0.0.1",
+      "resources": {
+        "mem_limit": "64M",
+        "mem_reservation": "8M"
+      },
+      "tests": {
+        "unit": {
+          "cmd": "go test -count=1 -race ./...",
+          "cwd": "src/code"
+        }
+      },
+      "_doc_addressing": "Loopback only (127.0.0.1:4187, network_mode host on oci-apps beside cloudy-c3-api): no mesh name, no Caddy route, no Hickory row. Shadow stage: the Node tools still use spawnSync/ssh; the TS shadow hook (shared/libs/execd-shadow.ts, off unless C3_EXECD_URL is set) replays read-only calls here and logs match/mismatch.",
+      "api": {
+        "has_api": true,
+        "has_web_ui": false,
+        "api_path": "/",
+        "api_url": null,
+        "healthcheck_paths": [
+          "/health"
+        ],
+        "type": "custom-rest",
+        "base_path": "/",
+        "endpoint_count": 4,
+        "display_name": "c3-execd (Go exec/ssh/docker sidecar, shadow)",
+        "description": "POST /v1/exec, /v1/ssh, /v1/docker, GET /health on loopback; allowlisted commands, pooled ssh sessions, allowlisted docker engine calls, audit line per call.",
+        "auth": "none"
       }
     },
     "c3bot-relay": {
@@ -12603,6 +12958,97 @@
         "api_path": null,
         "api_url": null,
         "healthcheck_paths": []
+      }
+    },
+    "capital-stack-news-gdelt-go-api": {
+      "category": "tools",
+      "vm": "oci-A1-f_0",
+      "folder": "user-news_capital-stack-news-gdelt-go-api",
+      "description": "Go port of capital-stack-news-gdelt-api (GDELT news aggregator: fetch worker + SQLite cache + read API /news/articles /timeline /tone /topics), shadow stage: runs next to the Node container on its own port and its own cache, outside every request path (ticket #1882)",
+      "enabled": true,
+      "flake": "user-news_capital-stack-news-gdelt-go-api",
+      "port": 3142,
+      "dns": "capital-stack-news-gdelt-go-api.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:3142",
+      "containers": {
+        "app": {
+          "container_name": "capital-stack-news-gdelt-go-api",
+          "image": "ghcr.io/diegonmarcos/capital-stack-news-gdelt-go-api:latest",
+          "port": 3142,
+          "port_env": "PORT",
+          "public": false,
+          "proxy": null,
+          "healthcheck": "/health",
+          "monitoring": null,
+          "volumes": [],
+          "env_file": false,
+          "depends_on": [],
+          "resources": null,
+          "read_only": true,
+          "protocol": "http"
+        }
+      },
+      "container_names": [
+        "capital-stack-news-gdelt-go-api"
+      ],
+      "all_ports": [
+        "3142"
+      ],
+      "all_dns": [],
+      "compose": {
+        "containers": [],
+        "ports": [],
+        "networks": []
+      },
+      "proxy": {
+        "app_hub": false
+      },
+      "declared_ports": {
+        "app": 3142
+      },
+      "health": {
+        "path": "/health"
+      },
+      "taxonomy": {
+        "group": "Cloud Apps",
+        "category": "Inboxes"
+      },
+      "bind_host": "10.0.0.6",
+      "resources": {
+        "mem_limit": "128M",
+        "mem_reservation": "8M"
+      },
+      "tests": {
+        "unit": {
+          "cmd": "go test -count=1 ./...",
+          "cwd": "src/code"
+        },
+        "parity-compare": {
+          "cmd": "PARITY_REQUIRE=1 go test -count=1 -timeout 8m -tags parity -v -run TestParity ./parity/",
+          "cwd": "src/code",
+          "_doc": "Reference = the Node service (user-news_capital-stack-news-gdelt-api/src/code/server.ts under node 22 with better-sqlite3) and the Go port, both fed by one fake GDELT upstream; 26 requests (limit clamps, on-demand fetch, total and partial upstream failure, 404 envelope, OPTIONS, POST) must give identical status, CORS headers and raw bodies."
+        },
+        "parity-mutation": {
+          "cmd": "o=$(mktemp); PARITY_MUTATE=1 PARITY_REQUIRE=1 go test -count=1 -timeout 8m -tags parity -run TestParity ./parity/ >\"$o\" 2>&1; grep -q 'requests differ' \"$o\"",
+          "cwd": "src/code",
+          "_doc": "Mutation proof: the Go port is fed a skewed upstream; the harness must report differing requests (the grep passes only then, not on a build error)."
+        }
+      },
+      "_doc_shadow": "Shadow stage (#1882). The live Node news-gdelt (container capital-stack-news-gdelt-api, port 3019, volume news-gdelt_news_gdelt_cache) is untouched. This container has no env_file and no secret, caches on its own tmpfs and binds the oci-apps WG IP only. Two quirks of the Node service are reproduced on purpose for parity and listed for a follow-up: the freshness check reads row.fetchedAt (the column is fetched_at) so every on-demand request refetches upstream, and /news/topics therefore omits lastFetch for cached topics. Switch-over (Caddy route, mesh name) is a separate step after the live comparison.",
+      "api": {
+        "has_api": true,
+        "has_web_ui": false,
+        "api_path": "/news",
+        "api_url": null,
+        "healthcheck_paths": [
+          "/health"
+        ],
+        "type": "custom-rest",
+        "base_path": "/news",
+        "endpoint_count": 5,
+        "display_name": "GDELT News Aggregator (Go, shadow)",
+        "description": "Same contract as capital-stack-news-gdelt-api: GET /health, /news/articles, /news/timeline, /news/tone, /news/topics.",
+        "auth": "none"
       }
     },
     "calendar-radicale": {

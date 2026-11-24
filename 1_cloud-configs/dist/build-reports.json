@@ -658,6 +658,19 @@
         "path": "/c3-services-api/health"
       }
     },
+    "cloudy-all-go-mcp": {
+      "name": "cloudy-all-go-mcp",
+      "vm": "oci-A1-f_0",
+      "domain": null,
+      "enabled": true,
+      "category": "obs",
+      "ports": {
+        "app": 3140
+      },
+      "health": {
+        "path": "/health"
+      }
+    },
     "cloudy-all-mcp": {
       "name": "cloudy-all-mcp",
       "vm": "oci-A1-f_0",
@@ -1013,6 +1026,21 @@
         "path": "/"
       }
     },
+    "ntfy-go": {
+      "name": "ntfy-go",
+      "vm": "oci-A1-f_0",
+      "domain": null,
+      "enabled": true,
+      "category": "obs",
+      "ports": {
+        "rss_gateway": 8191,
+        "topic_scanner": 8192,
+        "notify_broker": 8193
+      },
+      "health": {
+        "path": "/feed/health"
+      }
+    },
     "openobserve": {
       "name": "openobserve",
       "vm": "oci-A1-f_0",
@@ -1055,6 +1083,19 @@
       "category": "tools",
       "ports": null,
       "health": null
+    },
+    "c3-execd": {
+      "name": "c3-execd",
+      "vm": "oci-A1-f_0",
+      "domain": null,
+      "enabled": true,
+      "category": "ops",
+      "ports": {
+        "app": 4187
+      },
+      "health": {
+        "path": "/health"
+      }
     },
     "c3bot-relay": {
       "name": "c3bot-relay",
@@ -1546,6 +1587,19 @@
         "path": "/health"
       }
     },
+    "capital-stack-news-gdelt-go-api": {
+      "name": "capital-stack-news-gdelt-go-api",
+      "vm": "oci-A1-f_0",
+      "domain": null,
+      "enabled": true,
+      "category": "tools",
+      "ports": {
+        "app": 3142
+      },
+      "health": {
+        "path": "/health"
+      }
+    },
     "calendar-radicale": {
       "name": "calendar-radicale",
       "vm": "oci-A1-f_0",
@@ -1849,6 +1903,10 @@
       "dns": "cloudy-all-api.mesh.diegonmarcos.com"
     },
     {
+      "service": "cloudy-all-go-mcp",
+      "dns": "cloudy-all-go-mcp.mesh.diegonmarcos.com"
+    },
+    {
       "service": "cloudy-all-mcp",
       "dns": "cloudy-all-mcp.mesh.diegonmarcos.com"
     },
@@ -2018,6 +2076,10 @@
       "dns": "ntfy.mesh.diegonmarcos.com"
     },
     {
+      "service": "ntfy-go",
+      "dns": "ntfy-go.mesh.diegonmarcos.com"
+    },
+    {
       "service": "openobserve",
       "dns": "openobserve.mesh.diegonmarcos.com"
     },
@@ -2044,6 +2106,10 @@
       "service": "umami",
       "container": "setup",
       "dns": "umami-setup.mesh.diegonmarcos.com"
+    },
+    {
+      "service": "c3-execd",
+      "dns": "c3-execd.mesh.diegonmarcos.com"
     },
     {
       "service": "c3bot-relay",
@@ -2350,6 +2416,10 @@
       "dns": "capital-stack-news-gdelt-api.mesh.diegonmarcos.com"
     },
     {
+      "service": "capital-stack-news-gdelt-go-api",
+      "dns": "capital-stack-news-gdelt-go-api.mesh.diegonmarcos.com"
+    },
+    {
       "service": "calendar-radicale",
       "dns": "calendar.mesh.diegonmarcos.com"
     },
@@ -2584,6 +2654,7 @@
           "cloud-superapp-mcp",
           "cloud-vault-mcp",
           "cloudy-all-api",
+          "cloudy-all-go-mcp",
           "cloudy-all-mcp",
           "cloudy-apps-communication-mcp",
           "cloudy-apps-drive-mcp",
@@ -2602,9 +2673,11 @@
           "dbgate",
           "matomo",
           "ntfy",
+          "ntfy-go",
           "openobserve",
           "umami",
           "agents-tmp-reaper",
+          "c3-execd",
           "c3bot-relay",
           "c3bot-relay-go",
           "disk-janitor",
@@ -2634,6 +2707,7 @@
           "photoprism",
           "playlist-syncer",
           "capital-stack-news-gdelt-api",
+          "capital-stack-news-gdelt-go-api",
           "calendar-radicale",
           "cloud-notes-sync",
           "cloud-notes-web",
@@ -2864,6 +2938,19 @@
         },
         "health": {
           "path": "/c3-services-api/health"
+        }
+      },
+      "cloudy-all-go-mcp": {
+        "name": "cloudy-all-go-mcp",
+        "vm": "oci-A1-f_0",
+        "domain": null,
+        "enabled": true,
+        "category": "obs",
+        "ports": {
+          "app": 3140
+        },
+        "health": {
+          "path": "/health"
         }
       },
       "cloudy-all-mcp": {
@@ -3221,6 +3308,21 @@
           "path": "/"
         }
       },
+      "ntfy-go": {
+        "name": "ntfy-go",
+        "vm": "oci-A1-f_0",
+        "domain": null,
+        "enabled": true,
+        "category": "obs",
+        "ports": {
+          "rss_gateway": 8191,
+          "topic_scanner": 8192,
+          "notify_broker": 8193
+        },
+        "health": {
+          "path": "/feed/health"
+        }
+      },
       "openobserve": {
         "name": "openobserve",
         "vm": "oci-A1-f_0",
@@ -3263,6 +3365,19 @@
         "category": "tools",
         "ports": null,
         "health": null
+      },
+      "c3-execd": {
+        "name": "c3-execd",
+        "vm": "oci-A1-f_0",
+        "domain": null,
+        "enabled": true,
+        "category": "ops",
+        "ports": {
+          "app": 4187
+        },
+        "health": {
+          "path": "/health"
+        }
       },
       "c3bot-relay": {
         "name": "c3bot-relay",
@@ -3749,6 +3864,19 @@
         "category": "tools",
         "ports": {
           "app": 3019
+        },
+        "health": {
+          "path": "/health"
+        }
+      },
+      "capital-stack-news-gdelt-go-api": {
+        "name": "capital-stack-news-gdelt-go-api",
+        "vm": "oci-A1-f_0",
+        "domain": null,
+        "enabled": true,
+        "category": "tools",
+        "ports": {
+          "app": 3142
         },
         "health": {
           "path": "/health"

@@ -65,6 +65,10 @@
       "ip": "10.0.0.1",
       "desc": "C3 Services REST API — service API gateway Fastify API"
     },
+    "cloudy-all-go-mcp": {
+      "ip": "10.0.0.1",
+      "desc": "Go port of cloudy-all-mcp (fleet MCP router: list_servers, list_tools, call over stateless Streamable HTTP, mesh-first with public bearer fallback, 60 s tool cache), shadow stage: runs next to the TypeScript container on its own port and container, outside every request path (ticket #1874)"
+    },
     "cloudy-all-mcp": {
       "ip": "10.0.0.1",
       "desc": "Fleet MCP router: list_servers, list_tools(server), call(server, tool, args)"
@@ -149,6 +153,10 @@
       "ip": "10.0.0.1",
       "desc": "Push notification server"
     },
+    "ntfy-go": {
+      "ip": "10.0.0.1",
+      "desc": "Go port of the six ntfy Python sidecars (syslog-bridge, rss-gateway, github-rss, notify-broker, digest, topic-scanner) as ONE static binary, shadow stage: runs next to the Python sidecars on its own ports and containers, every sender in dry-run, outside every request path (ticket #1878)"
+    },
     "openobserve": {
       "ip": "10.0.0.1",
       "desc": "OpenObserve - single-binary observability platform (logs + traces + metrics + RUM). Replaces LGTM stack."
@@ -164,6 +172,10 @@
     "umami-setup": {
       "ip": "10.0.0.1",
       "desc": "Umami Analytics - lightweight privacy-focused web analytics"
+    },
+    "c3-execd": {
+      "ip": "10.0.0.1",
+      "desc": "Go sidecar for cloud-infra-mcp / cloudy-c3-api / superapp-mcp: loopback exec with timeouts, pooled native SSH (x/crypto/ssh), policy-gated Docker unix-socket client and an audit log. Shadow stage: runs beside the Node helpers (shared/libs/exec.ts, ssh.ts), nothing calls it until switch-over (ticket #1875)"
     },
     "c3bot-relay": {
       "ip": "10.0.0.1",
@@ -320,6 +332,10 @@
     "capital-stack-news-gdelt-api": {
       "ip": "10.0.0.1",
       "desc": "GDELT News Aggregator — Fastify API with SQLite cache"
+    },
+    "capital-stack-news-gdelt-go-api": {
+      "ip": "10.0.0.1",
+      "desc": "Go port of capital-stack-news-gdelt-api (GDELT news aggregator: fetch worker + SQLite cache + read API /news/articles /timeline /tone /topics), shadow stage: runs next to the Node container on its own port and its own cache, outside every request path (ticket #1882)"
     },
     "calendar": {
       "ip": "10.0.0.1",

@@ -104,6 +104,18 @@
       ]
     },
     {
+      "name": "c3-execd",
+      "category": "ops",
+      "vm": "oci-A1-f_0",
+      "description": "Go sidecar for cloud-infra-mcp / cloudy-c3-api / superapp-mcp: loopback exec with timeouts, pooled native SSH (x/crypto/ssh), policy-gated Docker unix-socket client and an audit log. Shadow stage: runs beside the Node helpers (shared/libs/exec.ts, ssh.ts), nothing calls it until switch-over (ticket #1875)",
+      "domain": "—",
+      "ports": [],
+      "networks": [],
+      "containers": [
+        "c3-execd"
+      ]
+    },
+    {
       "name": "c3-public-api",
       "category": "obs",
       "vm": "oci-A1-f_0",
@@ -221,6 +233,18 @@
       "networks": [],
       "containers": [
         "capital-stack-news-gdelt-api"
+      ]
+    },
+    {
+      "name": "capital-stack-news-gdelt-go-api",
+      "category": "tools",
+      "vm": "oci-A1-f_0",
+      "description": "Go port of capital-stack-news-gdelt-api (GDELT news aggregator: fetch worker + SQLite cache + read API /news/articles /timeline /tone /topics), shadow stage: runs next to the Node container on its own port and its own cache, outside every request path (ticket #1882)",
+      "domain": "—",
+      "ports": [],
+      "networks": [],
+      "containers": [
+        "capital-stack-news-gdelt-go-api"
       ]
     },
     {
@@ -524,6 +548,18 @@
       "networks": [],
       "containers": [
         "cloudy-all-api"
+      ]
+    },
+    {
+      "name": "cloudy-all-go-mcp",
+      "category": "obs",
+      "vm": "oci-A1-f_0",
+      "description": "Go port of cloudy-all-mcp (fleet MCP router: list_servers, list_tools, call over stateless Streamable HTTP, mesh-first with public bearer fallback, 60 s tool cache), shadow stage: runs next to the TypeScript container on its own port and container, outside every request path (ticket #1874)",
+      "domain": "—",
+      "ports": [],
+      "networks": [],
+      "containers": [
+        "cloudy-all-go-mcp"
       ]
     },
     {
@@ -1048,6 +1084,22 @@
       ]
     },
     {
+      "name": "ntfy-go",
+      "category": "obs",
+      "vm": "oci-A1-f_0",
+      "description": "Go port of the six ntfy Python sidecars (syslog-bridge, rss-gateway, github-rss, notify-broker, digest, topic-scanner) as ONE static binary, shadow stage: runs next to the Python sidecars on its own ports and containers, every sender in dry-run, outside every request path (ticket #1878)",
+      "domain": "—",
+      "ports": [],
+      "networks": [],
+      "containers": [
+        "ntfy-go-rss-gateway",
+        "ntfy-go-topic-scanner",
+        "ntfy-go-notify-broker",
+        "ntfy-go-github-rss",
+        "ntfy-go-syslog-bridge"
+      ]
+    },
+    {
       "name": "openclaw",
       "category": "agi",
       "vm": "oci-A1-f_0",
@@ -1421,6 +1473,18 @@
       "networks": [],
       "containers": [
         "capital-stack-news-gdelt-api"
+      ]
+    },
+    {
+      "name": "capital-stack-news-gdelt-go-api",
+      "category": "tools",
+      "vm": "oci-A1-f_0",
+      "description": "Go port of capital-stack-news-gdelt-api (GDELT news aggregator: fetch worker + SQLite cache + read API /news/articles /timeline /tone /topics), shadow stage: runs next to the Node container on its own port and its own cache, outside every request path (ticket #1882)",
+      "domain": "—",
+      "ports": [],
+      "networks": [],
+      "containers": [
+        "capital-stack-news-gdelt-go-api"
       ]
     },
     {

@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 24929,
+    "files": 24933,
     "by_lang": {
       "sh": 830,
       "js": 599,
       "py": 268,
-      "kotlin": 14007,
+      "kotlin": 14011,
       "ts": 8382,
       "java": 656,
       "nix": 37,
@@ -25,7 +25,7 @@
       "python": 98,
       "module": 6478,
       "java": 655,
-      "kotlin": 14004,
+      "kotlin": 14008,
       "flake": 33,
       "rust-module": 150,
       "nix-module": 4,
@@ -39040,6 +39040,26 @@
       ]
     },
     {
+      "path": "ab_cloud-libs-shared/libs/account/src/main/java/com/diegonmarcos/superapp/profile/DeliveryImport.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "DeliveryImport"
+      ],
+      "imports": [
+        "android.content.Context",
+        "com.diegonmarcos.superapp.fleetendpoints.AppCredentialsContract",
+        "com.diegonmarcos.superapp.settings.AccountVault",
+        "org.json.JSONObject"
+      ],
+      "symbols": [
+        "import(delivery: JSONObject?, held: (String)",
+        "land(ctx: Context, bundle: JSONObject)",
+        "class DeliveryImport",
+        "class Outcome"
+      ]
+    },
+    {
       "path": "ab_cloud-libs-shared/libs/account/src/main/java/com/diegonmarcos/superapp/profile/DeviceProfile.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -46031,6 +46051,25 @@
       ]
     },
     {
+      "path": "ab_cloud-libs-shared/libs/appstore/src/main/java/com/diegonmarcos/superapp/appstore/StoreHandoffExternal.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "StoreHandoffExternal"
+      ],
+      "imports": [
+        "android.content.Context",
+        "com.diegonmarcos.superapp.updater.UpdateProgress",
+        "com.diegonmarcos.superapp.updater.install.StoreHandoff"
+      ],
+      "symbols": [
+        "register()",
+        "acceptable(pkg: String, directRungs: Int)",
+        "install(ctx: Context, pkg: String)",
+        "class StoreHandoffExternal"
+      ]
+    },
+    {
       "path": "ab_cloud-libs-shared/libs/appstore/src/main/java/com/diegonmarcos/superapp/appstore/StoreImport.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -47939,6 +47978,7 @@
         "repo(rel: String)",
         "theStoreDeclaresBothInstallPermissionsAndTheHandoffReceiver()",
         "oneInstallerOfRecordEveryOtherAppHandsOff()",
+        "aNonFleetPackageIsInstalledByTheStoreThroughTheExternalLadder()",
         "everyInstallPathReachesTheOneChoke()",
         "anAppInstalledElsewherePromptsOnceToTransferOwnership()",
         "targetSdkFloorPerAndroidVersion()",
@@ -55065,6 +55105,7 @@
         "decode(raw: String?)",
         "run(wv: WebView, js: String, done: (JSONObject?)",
         "reader(wv: WebView, css: String, done: (JSONObject?)",
+        "readerHtml(css: String, title: String, paragraphs: List<String>)",
         "find(wv: WebView, q: String, done: (Int)",
         "print(wv: WebView)",
         "jobName(title: String?, url: String?)",
@@ -114117,6 +114158,8 @@
         "kotlinx.coroutines.withContext"
       ],
       "symbols": [
+        "install(ctx: Context, pkg: String)",
+        "handlerFor(fleetApp: Fleet.App?, hasExternal: Boolean)",
         "intent(selfPkg: String, pkg: String)",
         "action(route: SilentReadiness.Route, foreground: Boolean)",
         "handOff(ctx: Context, pkg: String)",
@@ -114127,6 +114170,8 @@
         "doWork()",
         "class HandedToStore",
         "class StoreHandoff",
+        "class ExternalInstaller",
+        "class Handler",
         "class Action",
         "class StoreHandoffWorker"
       ]
@@ -116967,6 +117012,7 @@
         "java.util.Locale"
       ],
       "symbols": [
+        "idle()",
         "plan()",
         "event(s: String)",
         "attach()",
@@ -117005,8 +117051,7 @@
         "class PingRun",
         "class TraceRun",
         "class PortRun",
-        "class LanRun",
-        "class DeviceCaps"
+        "class LanRun"
       ]
     },
     {
@@ -117018,6 +117063,7 @@
       ],
       "imports": [
         "android.content.Context",
+        "com.diegonmarcos.superapp.fleetdata.FleetData",
         "com.diegonmarcos.superapp.fleetdata.FleetPack"
       ],
       "symbols": [
@@ -121056,6 +121102,45 @@
         "body()",
         "CredentialRow(\")",
         "class CredentialRevealWiringTest"
+      ]
+    },
+    {
+      "path": "ac_cloud-account/app/src/test/java/com/diegonmarcos/cloudaccount/DeliveryImportTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "DeliveryImportTest"
+      ],
+      "imports": [
+        "android.content.Context",
+        "androidx.test.core.app.ApplicationProvider",
+        "com.diegonmarcos.superapp.profile.AccountStore",
+        "com.diegonmarcos.superapp.profile.AppCredentialsStore",
+        "com.diegonmarcos.superapp.profile.DeliveryImport",
+        "com.diegonmarcos.superapp.profile.DeliveryImport.Outcome",
+        "com.diegonmarcos.superapp.settings.AccountVault",
+        "com.diegonmarcos.superapp.settings.BundleCrypto",
+        "com.diegonmarcos.superapp.settings.ConfigsPrefs",
+        "org.json.JSONObject",
+        "org.junit.After",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Before",
+        "org.junit.Test",
+        "org.junit.runner.RunWith",
+        "org.robolectric.RobolectricTestRunner",
+        "java.io.File"
+      ],
+      "symbols": [
+        "delivery(vararg kv: Pair<String, Any>)",
+        "file(i: String, v: String)",
+        "run(d: JSONObject?, f: Fake)",
+        "setUp()",
+        "tearDown()",
+        "sealed(v: String, pass: String)",
+        "class DeliveryImportTest",
+        "class Fake"
       ]
     },
     {
@@ -125165,6 +125250,30 @@
       ]
     },
     {
+      "path": "ac_cloud-browser/app/src/test/java/com/diegonmarcos/cloudbrowser/BrowserCoreWiredUiTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "BrowserCoreWiredUiTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.cloudlib.browsercore.BrowserCore",
+        "com.diegonmarcos.superapp.browser.BrowserTrackers",
+        "org.json.JSONArray",
+        "org.json.JSONObject",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.io.File"
+      ],
+      "symbols": [
+        "src(name: String)",
+        "order(sort: String)",
+        "class BrowserCoreWiredUiTest"
+      ]
+    },
+    {
       "path": "ac_cloud-browser/app/src/test/java/com/diegonmarcos/cloudbrowser/BrowserDevToolsTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -127010,6 +127119,7 @@
         "dump()",
         "shot()",
         "tap()",
+        "tap_scroll()",
         "open_url()",
         "black_check()"
       ],
@@ -127020,6 +127130,7 @@
         "dump()",
         "shot()",
         "tap()",
+        "tap_scroll()",
         "open_url()",
         "black_check()"
       ]
@@ -558082,11 +558193,16 @@
         "NotebookStore"
       ],
       "imports": [
+        "android.content.Context",
+        "com.diegonmarcos.superapp.fleetdata.FleetData",
+        "kotlinx.coroutines.flow.Flow",
         "org.json.JSONArray",
         "org.json.JSONObject",
         "kotlin.math.ln"
       ],
       "symbols": [
+        "observe(ctx: Context)",
+        "current(ctx: Context)",
         "parse(text: String)",
         "embed(texts: List<String>)",
         "rerank(query: String, docs: List<String>)",
@@ -558194,15 +558310,22 @@
         "Personas"
       ],
       "imports": [
+        "android.content.Context",
+        "com.diegonmarcos.superapp.fleetdata.FleetData",
+        "kotlinx.coroutines.flow.Flow",
         "org.json.JSONObject"
       ],
       "symbols": [
+        "parseServed(text: String)",
+        "observe(ctx: Context)",
+        "read(ctx: Context)",
         "parse(text: String)",
         "list(k: String)",
         "system(p: Persona, all: List<Persona>)",
         "preferredModel(p: Persona, listed: List<String>)",
         "class Persona",
-        "class Personas"
+        "class Personas",
+        "class Served"
       ]
     },
     {
@@ -558234,8 +558357,11 @@
         "java.io.File"
       ],
       "symbols": [
+        "current(ctx: Context)",
         "personas(ctx: Context)",
         "defaultId(ctx: Context)",
+        "observe(ctx: Context)",
+        "adopt(s: Personas.Served)",
         "chat(ctx: Context, persona: String? = null)",
         "media(app: Context, cfg: AiConfig)",
         "store(app: Context)",
@@ -559404,6 +559530,7 @@
         "declaredGeneratorsAreSummaryFaqNotes()",
         "htmlBecomesText()",
         "notebooksSurviveTheStore()",
+        "theDefaultConfigHoldsTheServedGroundingAndRefusal()",
         "class NotebookTest"
       ]
     },
@@ -559471,6 +559598,7 @@
         "specialistPromptsAreTheirOwn()",
         "preferredModelIsTheFirstListedOne()",
         "defaultPersonaExists()",
+        "theDefaultRouterIsTheServedOne()",
         "class PersonasTest"
       ]
     },

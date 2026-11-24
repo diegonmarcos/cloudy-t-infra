@@ -1620,6 +1620,16 @@
         "db_engine": null
       },
       {
+        "name": "cloudy-all-go-mcp",
+        "service": "cloudy-all-go-mcp",
+        "vm": "oci-A1-f_0",
+        "private_dns": "cloudy-all-go-mcp:3140",
+        "port": 3140,
+        "protocol": "http",
+        "category": "obs",
+        "db_engine": null
+      },
+      {
         "name": "cloud-builder-x",
         "service": "cloud-builder-x",
         "vm": "local",
@@ -1840,6 +1850,56 @@
         "db_engine": null
       },
       {
+        "name": "ntfy-go-rss-gateway",
+        "service": "ntfy-go",
+        "vm": "oci-A1-f_0",
+        "private_dns": "ntfy-go-rss-gateway:8191",
+        "port": 8191,
+        "protocol": "http",
+        "category": "obs",
+        "db_engine": null
+      },
+      {
+        "name": "ntfy-go-topic-scanner",
+        "service": "ntfy-go",
+        "vm": "oci-A1-f_0",
+        "private_dns": "ntfy-go-topic-scanner:8192",
+        "port": 8192,
+        "protocol": "http",
+        "category": "obs",
+        "db_engine": null
+      },
+      {
+        "name": "ntfy-go-notify-broker",
+        "service": "ntfy-go",
+        "vm": "oci-A1-f_0",
+        "private_dns": "ntfy-go-notify-broker:8193",
+        "port": 8193,
+        "protocol": "http",
+        "category": "obs",
+        "db_engine": null
+      },
+      {
+        "name": "ntfy-go-github-rss",
+        "service": "ntfy-go",
+        "vm": "oci-A1-f_0",
+        "private_dns": "ntfy-go-github-rss",
+        "port": null,
+        "protocol": "tcp",
+        "category": "obs",
+        "db_engine": null
+      },
+      {
+        "name": "ntfy-go-syslog-bridge",
+        "service": "ntfy-go",
+        "vm": "oci-A1-f_0",
+        "private_dns": "ntfy-go-syslog-bridge",
+        "port": null,
+        "protocol": "tcp",
+        "category": "obs",
+        "db_engine": null
+      },
+      {
         "name": "reports",
         "service": "reports",
         "vm": "local",
@@ -1877,6 +1937,16 @@
         "port": null,
         "protocol": "none",
         "category": "tools",
+        "db_engine": null
+      },
+      {
+        "name": "c3-execd",
+        "service": "c3-execd",
+        "vm": "oci-A1-f_0",
+        "private_dns": "c3-execd:4187",
+        "port": 4187,
+        "protocol": "http",
+        "category": "ops",
         "db_engine": null
       },
       {
@@ -2245,6 +2315,16 @@
         "vm": "oci-A1-f_0",
         "private_dns": "capital-stack-news-gdelt-api:3019",
         "port": 3019,
+        "protocol": "http",
+        "category": "tools",
+        "db_engine": null
+      },
+      {
+        "name": "capital-stack-news-gdelt-go-api",
+        "service": "capital-stack-news-gdelt-go-api",
+        "vm": "oci-A1-f_0",
+        "private_dns": "capital-stack-news-gdelt-go-api:3142",
+        "port": 3142,
         "protocol": "http",
         "category": "tools",
         "db_engine": null

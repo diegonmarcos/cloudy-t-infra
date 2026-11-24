@@ -131,6 +131,11 @@
       "vm": "oci-apps",
       "has_docker": true
     },
+    "cloudy-all-go-mcp": {
+      "dir": "infra-api_cloudy-all-go-mcp",
+      "vm": "oci-apps",
+      "has_docker": true
+    },
     "cloudy-all-mcp": {
       "dir": "infra-api_cloudy-all-mcp",
       "vm": "oci-apps",
@@ -256,6 +261,11 @@
       "vm": "oci-apps",
       "has_docker": true
     },
+    "ntfy-go": {
+      "dir": "infra-obs_ntfy-go",
+      "vm": "oci-apps",
+      "has_docker": true
+    },
     "openobserve": {
       "dir": "infra-obs_openobserve",
       "vm": "oci-apps",
@@ -268,6 +278,11 @@
     },
     "agents-tmp-reaper": {
       "dir": "infra-ops_agents-tmp-reaper",
+      "vm": "oci-apps",
+      "has_docker": true
+    },
+    "c3-execd": {
+      "dir": "infra-ops_c3-execd",
       "vm": "oci-apps",
       "has_docker": true
     },
@@ -453,6 +468,11 @@
     },
     "capital-stack-news-gdelt-api": {
       "dir": "user-news_capital-stack-news-gdelt-api",
+      "vm": "oci-apps",
+      "has_docker": true
+    },
+    "capital-stack-news-gdelt-go-api": {
+      "dir": "user-news_capital-stack-news-gdelt-go-api",
       "vm": "oci-apps",
       "has_docker": true
     },

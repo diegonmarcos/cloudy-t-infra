@@ -150,6 +150,15 @@
       ],
       "resources": null
     },
+    "cloudy-all-go-mcp": {
+      "vm": "oci-apps",
+      "vm_ram_gb": 24,
+      "vm_cpu": 4,
+      "containers": [
+        "cloudy-all-go-mcp"
+      ],
+      "resources": null
+    },
     "cloudy-all-mcp": {
       "vm": "oci-apps",
       "vm_ram_gb": 24,
@@ -465,6 +474,19 @@
         }
       }
     },
+    "ntfy-go": {
+      "vm": "oci-apps",
+      "vm_ram_gb": 24,
+      "vm_cpu": 4,
+      "containers": [
+        "ntfy-go-rss-gateway",
+        "ntfy-go-topic-scanner",
+        "ntfy-go-notify-broker",
+        "ntfy-go-github-rss",
+        "ntfy-go-syslog-bridge"
+      ],
+      "resources": null
+    },
     "openobserve": {
       "vm": "oci-apps",
       "vm_ram_gb": 24,
@@ -504,6 +526,15 @@
       "vm_cpu": 4,
       "containers": [
         "agents-tmp-reaper"
+      ],
+      "resources": null
+    },
+    "c3-execd": {
+      "vm": "oci-apps",
+      "vm_ram_gb": 24,
+      "vm_cpu": 4,
+      "containers": [
+        "c3-execd"
       ],
       "resources": null
     },
@@ -945,6 +976,15 @@
       "vm_cpu": 4,
       "containers": [
         "capital-stack-news-gdelt-api"
+      ],
+      "resources": null
+    },
+    "capital-stack-news-gdelt-go-api": {
+      "vm": "oci-apps",
+      "vm_ram_gb": 24,
+      "vm_cpu": 4,
+      "containers": [
+        "capital-stack-news-gdelt-go-api"
       ],
       "resources": null
     },

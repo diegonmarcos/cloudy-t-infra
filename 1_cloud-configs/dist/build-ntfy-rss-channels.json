@@ -6,9 +6,9 @@
   "base": "https://rss.diegonmarcos.com/feed",
   "counts": {
     "declared": 22,
-    "logs": 116,
+    "logs": 124,
     "apps": 42,
-    "total": 180
+    "total": 188
   },
   "channels": [
     {
@@ -375,6 +375,17 @@
       "quiet": true
     },
     {
+      "id": "logs_cloudy-all-go-mcp",
+      "topic": "logs_cloudy-all-go-mcp",
+      "title": "cloudy-all-go-mcp",
+      "path": "Cloud-Infra/Logs/oci-apps/cloudy-all-go-mcp",
+      "category": "logs",
+      "source": "logs",
+      "vm": "oci-apps",
+      "feed": "/feed/c/logs_cloudy-all-go-mcp.atom",
+      "quiet": true
+    },
+    {
       "id": "logs_cloudy-all-mcp",
       "topic": "logs_cloudy-all-mcp",
       "title": "cloudy-all-mcp",
@@ -694,6 +705,61 @@
       "quiet": true
     },
     {
+      "id": "logs_ntfy-go-rss-gateway",
+      "topic": "logs_ntfy-go-rss-gateway",
+      "title": "ntfy-go-rss-gateway",
+      "path": "Cloud-Infra/Logs/oci-apps/ntfy-go-rss-gateway",
+      "category": "logs",
+      "source": "logs",
+      "vm": "oci-apps",
+      "feed": "/feed/c/logs_ntfy-go-rss-gateway.atom",
+      "quiet": true
+    },
+    {
+      "id": "logs_ntfy-go-topic-scanner",
+      "topic": "logs_ntfy-go-topic-scanner",
+      "title": "ntfy-go-topic-scanner",
+      "path": "Cloud-Infra/Logs/oci-apps/ntfy-go-topic-scanner",
+      "category": "logs",
+      "source": "logs",
+      "vm": "oci-apps",
+      "feed": "/feed/c/logs_ntfy-go-topic-scanner.atom",
+      "quiet": true
+    },
+    {
+      "id": "logs_ntfy-go-notify-broker",
+      "topic": "logs_ntfy-go-notify-broker",
+      "title": "ntfy-go-notify-broker",
+      "path": "Cloud-Infra/Logs/oci-apps/ntfy-go-notify-broker",
+      "category": "logs",
+      "source": "logs",
+      "vm": "oci-apps",
+      "feed": "/feed/c/logs_ntfy-go-notify-broker.atom",
+      "quiet": true
+    },
+    {
+      "id": "logs_ntfy-go-github-rss",
+      "topic": "logs_ntfy-go-github-rss",
+      "title": "ntfy-go-github-rss",
+      "path": "Cloud-Infra/Logs/oci-apps/ntfy-go-github-rss",
+      "category": "logs",
+      "source": "logs",
+      "vm": "oci-apps",
+      "feed": "/feed/c/logs_ntfy-go-github-rss.atom",
+      "quiet": true
+    },
+    {
+      "id": "logs_ntfy-go-syslog-bridge",
+      "topic": "logs_ntfy-go-syslog-bridge",
+      "title": "ntfy-go-syslog-bridge",
+      "path": "Cloud-Infra/Logs/oci-apps/ntfy-go-syslog-bridge",
+      "category": "logs",
+      "source": "logs",
+      "vm": "oci-apps",
+      "feed": "/feed/c/logs_ntfy-go-syslog-bridge.atom",
+      "quiet": true
+    },
+    {
       "id": "logs_openobserve",
       "topic": "logs_openobserve",
       "title": "openobserve",
@@ -757,6 +823,17 @@
       "source": "logs",
       "vm": "oci-apps",
       "feed": "/feed/c/logs_agents-tmp-reaper.atom",
+      "quiet": true
+    },
+    {
+      "id": "logs_c3-execd",
+      "topic": "logs_c3-execd",
+      "title": "c3-execd",
+      "path": "Cloud-Infra/Logs/oci-apps/c3-execd",
+      "category": "logs",
+      "source": "logs",
+      "vm": "oci-apps",
+      "feed": "/feed/c/logs_c3-execd.atom",
       "quiet": true
     },
     {
@@ -1318,6 +1395,17 @@
       "source": "logs",
       "vm": "oci-apps",
       "feed": "/feed/c/logs_capital-stack-news-gdelt-api.atom",
+      "quiet": true
+    },
+    {
+      "id": "logs_capital-stack-news-gdelt-go-api",
+      "topic": "logs_capital-stack-news-gdelt-go-api",
+      "title": "capital-stack-news-gdelt-go-api",
+      "path": "Cloud-Infra/Logs/oci-apps/capital-stack-news-gdelt-go-api",
+      "category": "logs",
+      "source": "logs",
+      "vm": "oci-apps",
+      "feed": "/feed/c/logs_capital-stack-news-gdelt-go-api.atom",
       "quiet": true
     },
     {

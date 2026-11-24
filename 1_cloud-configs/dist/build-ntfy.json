@@ -456,6 +456,43 @@
         "auth": "bearer"
       }
     },
+    "cloudy-all-go-mcp": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 3140
+      },
+      "vm": "oci-apps",
+      "healthcheck": "/health",
+      "description": "Go port of cloudy-all-mcp (fleet MCP router: list_servers, list_tools, call over stateless Streamable HTTP, mesh-first with public bearer fallback, 60 s tool cache), shadow stage: runs next to the TypeScript container on its own port and container, outside every request path (ticket #1874)",
+      "api": {
+        "has_api": true,
+        "has_web_ui": false,
+        "api_path": "/",
+        "api_url": null,
+        "healthcheck_paths": [
+          "/health"
+        ],
+        "type": "custom-rest",
+        "base_path": "/",
+        "endpoint_count": 2,
+        "display_name": "Cloudy All MCP (Go, shadow)",
+        "description": "Same contract as cloudy-all-mcp: stateless Streamable HTTP POST /mcp with tools list_servers, list_tools, call; GET /health.",
+        "auth": "none"
+      },
+      "mcp": {
+        "has_mcp": true,
+        "mcp_url": null,
+        "transport": "streamable-http",
+        "endpoint_path": "/mcp",
+        "tools_count": 3,
+        "resources_count": 0,
+        "prompts_count": 0,
+        "display_name": "Cloudy All MCP (Go, shadow)",
+        "description": "Fleet MCP router (3 tools), Go port.",
+        "auth": "none",
+        "sdk": "github.com/modelcontextprotocol/go-sdk@v1.8.0"
+      }
+    },
     "cloudy-all-mcp": {
       "ip": "10.0.0.6",
       "ports": {
@@ -998,6 +1035,37 @@
         "auth": "bearer"
       }
     },
+    "ntfy-go": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "rss_gateway": 8191,
+        "topic_scanner": 8192,
+        "notify_broker": 8193,
+        "app": 8191,
+        "topic-scanner": 8192,
+        "notify-broker": 8193
+      },
+      "vm": "oci-apps",
+      "healthcheck": "/feed/health",
+      "description": "Go port of the six ntfy Python sidecars (syslog-bridge, rss-gateway, github-rss, notify-broker, digest, topic-scanner) as ONE static binary, shadow stage: runs next to the Python sidecars on its own ports and containers, every sender in dry-run, outside every request path (ticket #1878)",
+      "api": {
+        "has_api": true,
+        "has_web_ui": false,
+        "api_path": "/",
+        "api_url": null,
+        "healthcheck_paths": [
+          "/feed/health",
+          "/health",
+          "/health"
+        ],
+        "type": "custom-rest",
+        "base_path": "/",
+        "endpoint_count": 7,
+        "display_name": "ntfy sidecars (Go, shadow)",
+        "description": "Same contracts as the Python sidecars: rss-gateway /feed/*, topic-scanner / and /health, notify-broker /event /ack /health. Shadow stage: dry-run senders.",
+        "auth": "none"
+      }
+    },
     "openobserve": {
       "ip": "10.0.0.6",
       "ports": {
@@ -1054,6 +1122,30 @@
         "api_path": null,
         "api_url": null,
         "healthcheck_paths": []
+      }
+    },
+    "c3-execd": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 4187
+      },
+      "vm": "oci-apps",
+      "healthcheck": "/health",
+      "description": "Go sidecar for cloud-infra-mcp / cloudy-c3-api / superapp-mcp: loopback exec with timeouts, pooled native SSH (x/crypto/ssh), policy-gated Docker unix-socket client and an audit log. Shadow stage: runs beside the Node helpers (shared/libs/exec.ts, ssh.ts), nothing calls it until switch-over (ticket #1875)",
+      "api": {
+        "has_api": true,
+        "has_web_ui": false,
+        "api_path": "/",
+        "api_url": null,
+        "healthcheck_paths": [
+          "/health"
+        ],
+        "type": "custom-rest",
+        "base_path": "/",
+        "endpoint_count": 4,
+        "display_name": "c3-execd (Go exec/ssh/docker sidecar, shadow)",
+        "description": "POST /v1/exec, /v1/ssh, /v1/docker, GET /health on loopback; allowlisted commands, pooled ssh sessions, allowlisted docker engine calls, audit line per call.",
+        "auth": "none"
       }
     },
     "c3bot-relay": {
@@ -1998,6 +2090,30 @@
         "api_path": null,
         "api_url": null,
         "healthcheck_paths": []
+      }
+    },
+    "capital-stack-news-gdelt-go-api": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 3142
+      },
+      "vm": "oci-apps",
+      "healthcheck": "/health",
+      "description": "Go port of capital-stack-news-gdelt-api (GDELT news aggregator: fetch worker + SQLite cache + read API /news/articles /timeline /tone /topics), shadow stage: runs next to the Node container on its own port and its own cache, outside every request path (ticket #1882)",
+      "api": {
+        "has_api": true,
+        "has_web_ui": false,
+        "api_path": "/news",
+        "api_url": null,
+        "healthcheck_paths": [
+          "/health"
+        ],
+        "type": "custom-rest",
+        "base_path": "/news",
+        "endpoint_count": 5,
+        "display_name": "GDELT News Aggregator (Go, shadow)",
+        "description": "Same contract as capital-stack-news-gdelt-api: GET /health, /news/articles, /news/timeline, /news/tone, /news/topics.",
+        "auth": "none"
       }
     },
     "calendar-radicale": {

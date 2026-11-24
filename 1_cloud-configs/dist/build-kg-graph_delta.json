@@ -33,15 +33,15 @@
   "_generated": "",
   "_source": "_cloud-data-consolidated.json via cloud-data-config-derive.ts/kg-delta",
   "counts": {
-    "nodes": 387,
-    "edges": 535,
+    "nodes": 403,
+    "edges": 555,
     "by_table": {
       "vm": 4,
-      "service": 96,
-      "container": 116,
+      "service": 100,
+      "container": 124,
       "domain": 44,
       "repo": 3,
-      "module": 96,
+      "module": 100,
       "package": 28
     }
   },
@@ -506,6 +506,32 @@
         "role": "app",
         "port": 8082,
         "public": true
+      }
+    },
+    {
+      "table": "service",
+      "id": "cloudy_all_go_mcp",
+      "key": "service:cloudy_all_go_mcp",
+      "properties": {
+        "name": "cloudy-all-go-mcp",
+        "category": "obs",
+        "description": "Go port of cloudy-all-mcp (fleet MCP router: list_servers, list_tools, call over stateless Streamable HTTP, mesh-first with public bearer fallback, 60 s tool cache), shadow stage: runs next to the TypeScript container on its own port and container, outside every request path (ticket #1874)",
+        "domain": null,
+        "port": 3140,
+        "vm": "oci-apps",
+        "folder": "infra-api_cloudy-all-go-mcp"
+      }
+    },
+    {
+      "table": "container",
+      "id": "cloudy_all_go_mcp",
+      "key": "container:cloudy_all_go_mcp",
+      "properties": {
+        "name": "cloudy-all-go-mcp",
+        "image": "ghcr.io/diegonmarcos/cloudy-all-go-mcp:latest",
+        "role": "app",
+        "port": 3140,
+        "public": false
       }
     },
     {
@@ -1222,6 +1248,80 @@
     },
     {
       "table": "service",
+      "id": "ntfy_go",
+      "key": "service:ntfy_go",
+      "properties": {
+        "name": "ntfy-go",
+        "category": "obs",
+        "description": "Go port of the six ntfy Python sidecars (syslog-bridge, rss-gateway, github-rss, notify-broker, digest, topic-scanner) as ONE static binary, shadow stage: runs next to the Python sidecars on its own ports and containers, every sender in dry-run, outside every request path (ticket #1878)",
+        "domain": null,
+        "port": 8191,
+        "vm": "oci-apps",
+        "folder": "infra-obs_ntfy-go"
+      }
+    },
+    {
+      "table": "container",
+      "id": "ntfy_go_rss_gateway",
+      "key": "container:ntfy_go_rss_gateway",
+      "properties": {
+        "name": "ntfy-go-rss-gateway",
+        "image": "ghcr.io/diegonmarcos/ntfy-go:latest",
+        "role": "app",
+        "port": 8191,
+        "public": false
+      }
+    },
+    {
+      "table": "container",
+      "id": "ntfy_go_topic_scanner",
+      "key": "container:ntfy_go_topic_scanner",
+      "properties": {
+        "name": "ntfy-go-topic-scanner",
+        "image": "ghcr.io/diegonmarcos/ntfy-go:latest",
+        "role": "topic-scanner",
+        "port": 8192,
+        "public": false
+      }
+    },
+    {
+      "table": "container",
+      "id": "ntfy_go_notify_broker",
+      "key": "container:ntfy_go_notify_broker",
+      "properties": {
+        "name": "ntfy-go-notify-broker",
+        "image": "ghcr.io/diegonmarcos/ntfy-go:latest",
+        "role": "notify-broker",
+        "port": 8193,
+        "public": false
+      }
+    },
+    {
+      "table": "container",
+      "id": "ntfy_go_github_rss",
+      "key": "container:ntfy_go_github_rss",
+      "properties": {
+        "name": "ntfy-go-github-rss",
+        "image": "ghcr.io/diegonmarcos/ntfy-go:latest",
+        "role": "github-rss",
+        "port": null,
+        "public": false
+      }
+    },
+    {
+      "table": "container",
+      "id": "ntfy_go_syslog_bridge",
+      "key": "container:ntfy_go_syslog_bridge",
+      "properties": {
+        "name": "ntfy-go-syslog-bridge",
+        "image": "ghcr.io/diegonmarcos/ntfy-go:latest",
+        "role": "syslog-bridge",
+        "port": null,
+        "public": false
+      }
+    },
+    {
+      "table": "service",
       "id": "openobserve",
       "key": "service:openobserve",
       "properties": {
@@ -1345,6 +1445,32 @@
         "image": null,
         "role": "app",
         "port": null,
+        "public": false
+      }
+    },
+    {
+      "table": "service",
+      "id": "c3_execd",
+      "key": "service:c3_execd",
+      "properties": {
+        "name": "c3-execd",
+        "category": "ops",
+        "description": "Go sidecar for cloud-infra-mcp / cloudy-c3-api / superapp-mcp: loopback exec with timeouts, pooled native SSH (x/crypto/ssh), policy-gated Docker unix-socket client and an audit log. Shadow stage: runs beside the Node helpers (shared/libs/exec.ts, ssh.ts), nothing calls it until switch-over (ticket #1875)",
+        "domain": null,
+        "port": 4187,
+        "vm": "oci-apps",
+        "folder": "infra-ops_c3-execd"
+      }
+    },
+    {
+      "table": "container",
+      "id": "c3_execd",
+      "key": "container:c3_execd",
+      "properties": {
+        "name": "c3-execd",
+        "image": "ghcr.io/diegonmarcos/c3-execd:latest",
+        "role": "app",
+        "port": 4187,
         "public": false
       }
     },
@@ -2508,6 +2634,32 @@
     },
     {
       "table": "service",
+      "id": "capital_stack_news_gdelt_go_api",
+      "key": "service:capital_stack_news_gdelt_go_api",
+      "properties": {
+        "name": "capital-stack-news-gdelt-go-api",
+        "category": "tools",
+        "description": "Go port of capital-stack-news-gdelt-api (GDELT news aggregator: fetch worker + SQLite cache + read API /news/articles /timeline /tone /topics), shadow stage: runs next to the Node container on its own port and its own cache, outside every request path (ticket #1882)",
+        "domain": null,
+        "port": 3142,
+        "vm": "oci-apps",
+        "folder": "user-news_capital-stack-news-gdelt-go-api"
+      }
+    },
+    {
+      "table": "container",
+      "id": "capital_stack_news_gdelt_go_api",
+      "key": "container:capital_stack_news_gdelt_go_api",
+      "properties": {
+        "name": "capital-stack-news-gdelt-go-api",
+        "image": "ghcr.io/diegonmarcos/capital-stack-news-gdelt-go-api:latest",
+        "role": "app",
+        "port": 3142,
+        "public": false
+      }
+    },
+    {
+      "table": "service",
       "id": "calendar_radicale",
       "key": "service:calendar_radicale",
       "properties": {
@@ -3382,6 +3534,17 @@
     },
     {
       "table": "module",
+      "id": "infra_api_cloudy_all_go_mcp",
+      "key": "module:infra_api_cloudy_all_go_mcp",
+      "properties": {
+        "name": "infra-api_cloudy-all-go-mcp",
+        "repo": "cloud",
+        "category": "obs",
+        "service": "cloudy-all-go-mcp"
+      }
+    },
+    {
+      "table": "module",
       "id": "infra_api_cloudy_all_mcp",
       "key": "module:infra_api_cloudy_all_mcp",
       "properties": {
@@ -3668,6 +3831,17 @@
     },
     {
       "table": "module",
+      "id": "infra_obs_ntfy_go",
+      "key": "module:infra_obs_ntfy_go",
+      "properties": {
+        "name": "infra-obs_ntfy-go",
+        "repo": "cloud",
+        "category": "obs",
+        "service": "ntfy-go"
+      }
+    },
+    {
+      "table": "module",
       "id": "infra_obs_openobserve",
       "key": "module:infra_obs_openobserve",
       "properties": {
@@ -3708,6 +3882,17 @@
         "repo": "cloud",
         "category": "tools",
         "service": "agents-tmp-reaper"
+      }
+    },
+    {
+      "table": "module",
+      "id": "infra_ops_c3_execd",
+      "key": "module:infra_ops_c3_execd",
+      "properties": {
+        "name": "infra-ops_c3-execd",
+        "repo": "cloud",
+        "category": "ops",
+        "service": "c3-execd"
       }
     },
     {
@@ -4137,6 +4322,17 @@
         "repo": "cloud",
         "category": "tools",
         "service": "capital-stack-news-gdelt-api"
+      }
+    },
+    {
+      "table": "module",
+      "id": "user_news_capital_stack_news_gdelt_go_api",
+      "key": "module:user_news_capital_stack_news_gdelt_go_api",
+      "properties": {
+        "name": "user-news_capital-stack-news-gdelt-go-api",
+        "repo": "cloud",
+        "category": "tools",
+        "service": "capital-stack-news-gdelt-go-api"
       }
     },
     {
@@ -4867,6 +5063,22 @@
     },
     {
       "table": "hosted_on",
+      "from": "service:cloudy_all_go_mcp",
+      "to": "vm:oci_apps",
+      "key": "service:cloudy_all_go_mcp->hosted_on->vm:oci_apps",
+      "properties": {}
+    },
+    {
+      "table": "runs_container",
+      "from": "service:cloudy_all_go_mcp",
+      "to": "container:cloudy_all_go_mcp",
+      "key": "service:cloudy_all_go_mcp->runs_container->container:cloudy_all_go_mcp",
+      "properties": {
+        "role": "app"
+      }
+    },
+    {
+      "table": "hosted_on",
       "from": "service:cloudy_all_mcp",
       "to": "vm:oci_apps",
       "key": "service:cloudy_all_mcp->hosted_on->vm:oci_apps",
@@ -5275,6 +5487,58 @@
     },
     {
       "table": "hosted_on",
+      "from": "service:ntfy_go",
+      "to": "vm:oci_apps",
+      "key": "service:ntfy_go->hosted_on->vm:oci_apps",
+      "properties": {}
+    },
+    {
+      "table": "runs_container",
+      "from": "service:ntfy_go",
+      "to": "container:ntfy_go_rss_gateway",
+      "key": "service:ntfy_go->runs_container->container:ntfy_go_rss_gateway",
+      "properties": {
+        "role": "app"
+      }
+    },
+    {
+      "table": "runs_container",
+      "from": "service:ntfy_go",
+      "to": "container:ntfy_go_topic_scanner",
+      "key": "service:ntfy_go->runs_container->container:ntfy_go_topic_scanner",
+      "properties": {
+        "role": "topic-scanner"
+      }
+    },
+    {
+      "table": "runs_container",
+      "from": "service:ntfy_go",
+      "to": "container:ntfy_go_notify_broker",
+      "key": "service:ntfy_go->runs_container->container:ntfy_go_notify_broker",
+      "properties": {
+        "role": "notify-broker"
+      }
+    },
+    {
+      "table": "runs_container",
+      "from": "service:ntfy_go",
+      "to": "container:ntfy_go_github_rss",
+      "key": "service:ntfy_go->runs_container->container:ntfy_go_github_rss",
+      "properties": {
+        "role": "github-rss"
+      }
+    },
+    {
+      "table": "runs_container",
+      "from": "service:ntfy_go",
+      "to": "container:ntfy_go_syslog_bridge",
+      "key": "service:ntfy_go->runs_container->container:ntfy_go_syslog_bridge",
+      "properties": {
+        "role": "syslog-bridge"
+      }
+    },
+    {
+      "table": "hosted_on",
       "from": "service:openobserve",
       "to": "vm:oci_apps",
       "key": "service:openobserve->hosted_on->vm:oci_apps",
@@ -5344,6 +5608,22 @@
       "from": "service:agents_tmp_reaper",
       "to": "container:agents_tmp_reaper",
       "key": "service:agents_tmp_reaper->runs_container->container:agents_tmp_reaper",
+      "properties": {
+        "role": "app"
+      }
+    },
+    {
+      "table": "hosted_on",
+      "from": "service:c3_execd",
+      "to": "vm:oci_apps",
+      "key": "service:c3_execd->hosted_on->vm:oci_apps",
+      "properties": {}
+    },
+    {
+      "table": "runs_container",
+      "from": "service:c3_execd",
+      "to": "container:c3_execd",
+      "key": "service:c3_execd->runs_container->container:c3_execd",
       "properties": {
         "role": "app"
       }
@@ -6080,6 +6360,22 @@
       "from": "service:capital_stack_news_gdelt_api",
       "to": "container:capital_stack_news_gdelt_api",
       "key": "service:capital_stack_news_gdelt_api->runs_container->container:capital_stack_news_gdelt_api",
+      "properties": {
+        "role": "app"
+      }
+    },
+    {
+      "table": "hosted_on",
+      "from": "service:capital_stack_news_gdelt_go_api",
+      "to": "vm:oci_apps",
+      "key": "service:capital_stack_news_gdelt_go_api->hosted_on->vm:oci_apps",
+      "properties": {}
+    },
+    {
+      "table": "runs_container",
+      "from": "service:capital_stack_news_gdelt_go_api",
+      "to": "container:capital_stack_news_gdelt_go_api",
+      "key": "service:capital_stack_news_gdelt_go_api->runs_container->container:capital_stack_news_gdelt_go_api",
       "properties": {
         "role": "app"
       }
@@ -7356,6 +7652,20 @@
     },
     {
       "table": "belongs_to_repo",
+      "from": "module:infra_api_cloudy_all_go_mcp",
+      "to": "repo:cloud",
+      "key": "module:infra_api_cloudy_all_go_mcp->belongs_to_repo->repo:cloud",
+      "properties": {}
+    },
+    {
+      "table": "implements",
+      "from": "module:infra_api_cloudy_all_go_mcp",
+      "to": "service:cloudy_all_go_mcp",
+      "key": "module:infra_api_cloudy_all_go_mcp->implements->service:cloudy_all_go_mcp",
+      "properties": {}
+    },
+    {
+      "table": "belongs_to_repo",
       "from": "module:infra_api_cloudy_all_mcp",
       "to": "repo:cloud",
       "key": "module:infra_api_cloudy_all_mcp->belongs_to_repo->repo:cloud",
@@ -7720,6 +8030,20 @@
     },
     {
       "table": "belongs_to_repo",
+      "from": "module:infra_obs_ntfy_go",
+      "to": "repo:cloud",
+      "key": "module:infra_obs_ntfy_go->belongs_to_repo->repo:cloud",
+      "properties": {}
+    },
+    {
+      "table": "implements",
+      "from": "module:infra_obs_ntfy_go",
+      "to": "service:ntfy_go",
+      "key": "module:infra_obs_ntfy_go->implements->service:ntfy_go",
+      "properties": {}
+    },
+    {
+      "table": "belongs_to_repo",
       "from": "module:infra_obs_openobserve",
       "to": "repo:cloud",
       "key": "module:infra_obs_openobserve->belongs_to_repo->repo:cloud",
@@ -7772,6 +8096,20 @@
       "from": "module:infra_ops_agents_tmp_reaper",
       "to": "service:agents_tmp_reaper",
       "key": "module:infra_ops_agents_tmp_reaper->implements->service:agents_tmp_reaper",
+      "properties": {}
+    },
+    {
+      "table": "belongs_to_repo",
+      "from": "module:infra_ops_c3_execd",
+      "to": "repo:cloud",
+      "key": "module:infra_ops_c3_execd->belongs_to_repo->repo:cloud",
+      "properties": {}
+    },
+    {
+      "table": "implements",
+      "from": "module:infra_ops_c3_execd",
+      "to": "service:c3_execd",
+      "key": "module:infra_ops_c3_execd->implements->service:c3_execd",
       "properties": {}
     },
     {
@@ -8318,6 +8656,20 @@
       "from": "module:user_news_capital_stack_news_gdelt_api",
       "to": "service:capital_stack_news_gdelt_api",
       "key": "module:user_news_capital_stack_news_gdelt_api->implements->service:capital_stack_news_gdelt_api",
+      "properties": {}
+    },
+    {
+      "table": "belongs_to_repo",
+      "from": "module:user_news_capital_stack_news_gdelt_go_api",
+      "to": "repo:cloud",
+      "key": "module:user_news_capital_stack_news_gdelt_go_api->belongs_to_repo->repo:cloud",
+      "properties": {}
+    },
+    {
+      "table": "implements",
+      "from": "module:user_news_capital_stack_news_gdelt_go_api",
+      "to": "service:capital_stack_news_gdelt_go_api",
+      "key": "module:user_news_capital_stack_news_gdelt_go_api->implements->service:capital_stack_news_gdelt_go_api",
       "properties": {}
     },
     {

@@ -6,26 +6,26 @@
   },
   "repo": "cloud-u-containers",
   "counts": {
-    "files": 2750,
+    "files": 2769,
     "by_lang": {
-      "sh": 196,
+      "sh": 200,
       "js": 128,
-      "nix": 206,
-      "py": 528,
-      "ts": 1319,
+      "nix": 214,
+      "py": 530,
+      "ts": 1324,
       "rust": 373
     },
     "by_role": {
-      "shell": 186,
+      "shell": 190,
       "file": 362,
       "nix-module": 20,
-      "python": 511,
-      "module": 822,
+      "python": 513,
+      "module": 826,
       "script": 10,
-      "flake": 94,
+      "flake": 98,
       "entrypoint": 73,
-      "compose": 92,
-      "mcp-tool": 151,
+      "compose": 96,
+      "mcp-tool": 152,
       "workflow-dag": 7,
       "rust-module": 369,
       "hook": 53
@@ -3881,7 +3881,9 @@
         "phoneBase",
         "appName",
         "logsPath",
+        "legacyLogsPath",
         "phoneGet",
+        "phoneLogsGet",
         "MESH_SUFFIX",
         "LOG_METHODS",
         "LogMethod",
@@ -3897,7 +3899,9 @@
         "phoneBase(env: PhoneEnv)",
         "appName(s: unknown)",
         "logsPath(p: LogsParams)",
-        "phoneGet(path: string, env: PhoneEnv, fetchImpl: FetchLike = fetch as unknown as FetchLike, timeoutMs = 15_000)"
+        "legacyLogsPath(p: LogsParams)",
+        "phoneGet(path: string, env: PhoneEnv, fetchImpl: FetchLike = fetch as unknown as FetchLike, timeoutMs = 15_000)",
+        "phoneLogsGet(p: LogsParams, env: PhoneEnv, fetchImpl: FetchLike = fetch as unknown as FetchLike, timeoutMs = 15_000)"
       ]
     },
     {
@@ -4868,6 +4872,26 @@
       ]
     },
     {
+      "path": "infra-api_cloud-infra-mcp/src/code/shared/libs/execd-shadow.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "isShadowSafe",
+        "shadowDiff",
+        "shadowLine",
+        "shadowSsh",
+        "ShadowResult",
+        "shadowStats"
+      ],
+      "imports": [],
+      "symbols": [
+        "isShadowSafe(command: string)",
+        "shadowDiff(command: string, legacy: ShadowResult, sidecar: ShadowResult)",
+        "shadowLine(alias: string, command: string, diffs: string[])",
+        "shadowSsh(\n  alias: string,\n  command: string,\n  timeoutMs: number,\n  legacy: ShadowResult,\n  opts: { url?: string; token?: string; fetch?: Fetch; log?: (l: string)"
+      ]
+    },
+    {
       "path": "infra-api_cloud-infra-mcp/src/code/shared/libs/files.ts",
       "lang": "ts",
       "role": "module",
@@ -5495,7 +5519,8 @@
         "./config.js",
         "./audit.js",
         "./shell-quote.js",
-        "./ssh-argv.js"
+        "./ssh-argv.js",
+        "./execd-shadow.js"
       ],
       "symbols": [
         "sshExec(\n  vmNameOrAlias: string,\n  command: string,\n  timeout?: number,\n  _noRetry = false,\n  connectTimeout = 10,\n)",
@@ -9246,6 +9271,113 @@
       ]
     },
     {
+      "path": "infra-api_cloudy-all-go-mcp/build.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "get_config()",
+        "get_config_array()",
+        "get_lifecycle()",
+        "detect_layout()",
+        "rewrite_compose_image_refs()",
+        "log()",
+        "log_warn()",
+        "log_error()",
+        "declared_container_names()",
+        "ssh_with_retry()",
+        "ssh_run_detached()",
+        "rsync_with_retry()",
+        "_ship_build_phase()"
+      ],
+      "imports": [],
+      "symbols": [
+        "get_config()",
+        "get_config_array()",
+        "get_lifecycle()",
+        "detect_layout()",
+        "rewrite_compose_image_refs()",
+        "log()",
+        "log_warn()",
+        "log_error()",
+        "declared_container_names()",
+        "ssh_with_retry()",
+        "ssh_run_detached()",
+        "rsync_with_retry()",
+        "_ship_build_phase()"
+      ]
+    },
+    {
+      "path": "infra-api_cloudy-all-go-mcp/src/compose.nix",
+      "lang": "nix",
+      "role": "compose",
+      "exports": [
+        "buildJson",
+        "container"
+      ],
+      "imports": [],
+      "symbols": [
+        "app",
+        "bind",
+        "bin",
+        "services",
+        "cloudy-all-go-mcp",
+        "image",
+        "container_name",
+        "network_mode",
+        "read_only",
+        "command",
+        "environment",
+        "PORT",
+        "MCP_HTTP_HOST",
+        "TZ",
+        "healthcheck",
+        "test",
+        "interval",
+        "timeout",
+        "retries",
+        "start_period"
+      ]
+    },
+    {
+      "path": "infra-api_cloudy-all-go-mcp/src/flake.nix",
+      "lang": "nix",
+      "role": "flake",
+      "exports": [
+        "description",
+        "shadow",
+        "Type",
+        "#1874)\";",
+        "nixpkgs"
+      ],
+      "imports": [
+        "../../_shared/engine.nix",
+        "./compose.nix",
+        "../_shared/engine.nix",
+        "compose.nix"
+      ],
+      "symbols": [
+        "description",
+        "outputs",
+        "forAllSystems",
+        "buildJson",
+        "container",
+        "engine",
+        "nb",
+        "packages",
+        "pkgs",
+        "default",
+        "srcDir",
+        "templates",
+        "composeSpec",
+        "nativeBuild",
+        "cmd",
+        "binary",
+        "baseImage",
+        "apt",
+        "title"
+      ]
+    },
+    {
       "path": "infra-api_cloudy-all-mcp/build.sh",
       "lang": "sh",
       "role": "shell",
@@ -12243,6 +12375,26 @@
       ]
     },
     {
+      "path": "infra-api_cloudy-c3-api/src/code/shared/libs/execd-shadow.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "isShadowSafe",
+        "shadowDiff",
+        "shadowLine",
+        "shadowSsh",
+        "ShadowResult",
+        "shadowStats"
+      ],
+      "imports": [],
+      "symbols": [
+        "isShadowSafe(command: string)",
+        "shadowDiff(command: string, legacy: ShadowResult, sidecar: ShadowResult)",
+        "shadowLine(alias: string, command: string, diffs: string[])",
+        "shadowSsh(\n  alias: string,\n  command: string,\n  timeoutMs: number,\n  legacy: ShadowResult,\n  opts: { url?: string; token?: string; fetch?: Fetch; log?: (l: string)"
+      ]
+    },
+    {
       "path": "infra-api_cloudy-c3-api/src/code/shared/libs/files.ts",
       "lang": "ts",
       "role": "module",
@@ -12870,7 +13022,8 @@
         "./config.js",
         "./audit.js",
         "./shell-quote.js",
-        "./ssh-argv.js"
+        "./ssh-argv.js",
+        "./execd-shadow.js"
       ],
       "symbols": [
         "sshExec(\n  vmNameOrAlias: string,\n  command: string,\n  timeout?: number,\n  _noRetry = false,\n  connectTimeout = 10,\n)",
@@ -13156,6 +13309,17 @@
       "symbols": [
         "findPhotoprismBuildJson()"
       ]
+    },
+    {
+      "path": "infra-api_cloudy-c3-api/src/test-execd-shadow.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [],
+      "imports": [
+        "node:assert/strict",
+        "./code/shared/libs/execd-shadow.ts"
+      ],
+      "symbols": []
     },
     {
       "path": "infra-api_cloudy-c3-api/src/test-fleet-data.ts",
@@ -18804,6 +18968,153 @@
       ]
     },
     {
+      "path": "infra-obs_ntfy-go/build.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "get_config()",
+        "get_config_array()",
+        "get_lifecycle()",
+        "detect_layout()",
+        "rewrite_compose_image_refs()",
+        "log()",
+        "log_warn()",
+        "log_error()",
+        "declared_container_names()",
+        "ssh_with_retry()",
+        "ssh_run_detached()",
+        "rsync_with_retry()",
+        "_ship_build_phase()"
+      ],
+      "imports": [],
+      "symbols": [
+        "get_config()",
+        "get_config_array()",
+        "get_lifecycle()",
+        "detect_layout()",
+        "rewrite_compose_image_refs()",
+        "log()",
+        "log_warn()",
+        "log_error()",
+        "declared_container_names()",
+        "ssh_with_retry()",
+        "ssh_run_detached()",
+        "rsync_with_retry()",
+        "_ship_build_phase()"
+      ]
+    },
+    {
+      "path": "infra-obs_ntfy-go/src/code/parity/ref.py",
+      "lang": "py",
+      "role": "python",
+      "exports": [
+        "load(fname, name)",
+        "main()"
+      ],
+      "imports": [
+        "importlib.util",
+        "sys",
+        "json",
+        "os"
+      ],
+      "symbols": [
+        "load(fname, name)",
+        "main()"
+      ]
+    },
+    {
+      "path": "infra-obs_ntfy-go/src/compose.nix",
+      "lang": "nix",
+      "role": "compose",
+      "exports": [
+        "buildJson",
+        "container",
+        "services"
+      ],
+      "imports": [],
+      "symbols": [
+        "bin",
+        "image",
+        "bind",
+        "ntfy",
+        "assets",
+        "mem",
+        "common",
+        "network_mode",
+        "read_only",
+        "cap_drop",
+        "security_opt",
+        "probe",
+        "test",
+        "interval",
+        "timeout",
+        "retries",
+        "start_period",
+        "state",
+        "services",
+        "rss-gateway",
+        "container_name",
+        "command",
+        "environment",
+        "TZ",
+        "LISTEN",
+        "NTFY_URL",
+        "volumes",
+        "healthcheck",
+        "topic-scanner",
+        "user",
+        "NTFY_DB",
+        "notify-broker",
+        "tmpfs",
+        "NTFY_DRY_RUN",
+        "NOTIFY_POLICY_PATH",
+        "NOTIFY_STATE_PATH",
+        "github-rss",
+        "SEEN_FILE",
+        "syslog-bridge",
+        "SYSLOG_FILE"
+      ]
+    },
+    {
+      "path": "infra-obs_ntfy-go/src/flake.nix",
+      "lang": "nix",
+      "role": "flake",
+      "exports": [
+        "description",
+        "shadow",
+        "Type",
+        "#1878)\";",
+        "nixpkgs"
+      ],
+      "imports": [
+        "../../_shared/engine.nix",
+        "./compose.nix",
+        "../_shared/engine.nix",
+        "compose.nix"
+      ],
+      "symbols": [
+        "description",
+        "outputs",
+        "forAllSystems",
+        "buildJson",
+        "container",
+        "engine",
+        "nb",
+        "packages",
+        "pkgs",
+        "default",
+        "srcDir",
+        "templates",
+        "composeSpec",
+        "nativeBuild",
+        "cmd",
+        "binary",
+        "baseImage",
+        "apt",
+        "title"
+      ]
+    },
+    {
       "path": "infra-obs_ntfy/build.sh",
       "lang": "sh",
       "role": "shell",
@@ -22546,6 +22857,118 @@
       ]
     },
     {
+      "path": "infra-ops_c3-execd/build.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "get_config()",
+        "get_config_array()",
+        "get_lifecycle()",
+        "detect_layout()",
+        "rewrite_compose_image_refs()",
+        "log()",
+        "log_warn()",
+        "log_error()",
+        "declared_container_names()",
+        "ssh_with_retry()",
+        "ssh_run_detached()",
+        "rsync_with_retry()",
+        "_ship_build_phase()"
+      ],
+      "imports": [],
+      "symbols": [
+        "get_config()",
+        "get_config_array()",
+        "get_lifecycle()",
+        "detect_layout()",
+        "rewrite_compose_image_refs()",
+        "log()",
+        "log_warn()",
+        "log_error()",
+        "declared_container_names()",
+        "ssh_with_retry()",
+        "ssh_run_detached()",
+        "rsync_with_retry()",
+        "_ship_build_phase()"
+      ]
+    },
+    {
+      "path": "infra-ops_c3-execd/src/compose.nix",
+      "lang": "nix",
+      "role": "compose",
+      "exports": [
+        "buildJson",
+        "container"
+      ],
+      "imports": [],
+      "symbols": [
+        "app",
+        "bind",
+        "bin",
+        "services",
+        "c3-execd",
+        "image",
+        "container_name",
+        "network_mode",
+        "read_only",
+        "user",
+        "cap_drop",
+        "security_opt",
+        "command",
+        "environment",
+        "HOME",
+        "SSH_CONFIG",
+        "DOCKER_SOCK",
+        "volumes",
+        "healthcheck",
+        "test",
+        "interval",
+        "timeout",
+        "retries",
+        "start_period"
+      ]
+    },
+    {
+      "path": "infra-ops_c3-execd/src/flake.nix",
+      "lang": "nix",
+      "role": "flake",
+      "exports": [
+        "description",
+        "pooled",
+        "shadow",
+        "Type",
+        "#1875)\";",
+        "nixpkgs"
+      ],
+      "imports": [
+        "../../_shared/engine.nix",
+        "./compose.nix",
+        "../_shared/engine.nix",
+        "compose.nix"
+      ],
+      "symbols": [
+        "description",
+        "outputs",
+        "forAllSystems",
+        "buildJson",
+        "container",
+        "engine",
+        "nb",
+        "packages",
+        "pkgs",
+        "default",
+        "srcDir",
+        "templates",
+        "composeSpec",
+        "nativeBuild",
+        "cmd",
+        "binary",
+        "baseImage",
+        "apt",
+        "title"
+      ]
+    },
+    {
       "path": "infra-ops_c3bot-relay-go/build.sh",
       "lang": "sh",
       "role": "shell",
@@ -24655,6 +25078,7 @@
         "mcp_oauth_auth(token)",
         "fleet_token_auth(token)",
         "auth()",
+        "shadow_stats()",
         "health()",
         "class UnknownKidError",
         "class _BoundedRefetchJWKClient"
@@ -24664,7 +25088,8 @@
         "jwt",
         "os",
         "time",
-        "logging"
+        "logging",
+        "threading"
       ],
       "symbols": [
         "get_jwks_client()",
@@ -24673,6 +25098,10 @@
         "_engine_ask(token, host, adopt=None)",
         "fleet_token_auth(token)",
         "auth()",
+        "_shadow_bump(name)",
+        "_shadow_compare(fwd, status, body, hdrs, tag)",
+        "_shadow_mirror(resp)",
+        "shadow_stats()",
         "health()",
         "class UnknownKidError",
         "class _BoundedRefetchJWKClient"
@@ -24705,6 +25134,7 @@
         "PORT",
         "TOKENS_VERIFY_URL",
         "TOKENS_CACHE_TTL",
+        "SHADOW_MIRROR_URL",
         "healthcheck",
         "test",
         "interval",
@@ -24785,6 +25215,45 @@
         "test_real_fetch_failure_stays_503(jwks, status, use)",
         "test_unknown_kid_refetch_is_bounded(jwks, monkeypatch)",
         "class FakeJWKS"
+      ]
+    },
+    {
+      "path": "infra-sec_introspect-proxy/src/test/test_shadow_mirror.py",
+      "lang": "py",
+      "role": "python",
+      "exports": [
+        "go(monkeypatch)",
+        "test_off_by_default_is_inert(monkeypatch)",
+        "test_match_is_counted_and_headers_replayed(go)",
+        "test_status_mismatch_is_counted_and_live_answer_unchanged(go, caplog)",
+        "test_body_mismatch_detected(go)",
+        "test_identity_header_mismatch_detected(go)",
+        "test_dead_mirror_never_breaks_live_path(monkeypatch)",
+        "test_stats_endpoint(go)",
+        "class FakeGo"
+      ],
+      "imports": [
+        "http.server",
+        "logging",
+        "os",
+        "sys",
+        "threading",
+        "time",
+        "pytest",
+        "main"
+      ],
+      "symbols": [
+        "go(monkeypatch)",
+        "_call(tok=SECRET_TOKEN)",
+        "_wait(key, n=1)",
+        "test_off_by_default_is_inert(monkeypatch)",
+        "test_match_is_counted_and_headers_replayed(go)",
+        "test_status_mismatch_is_counted_and_live_answer_unchanged(go, caplog)",
+        "test_body_mismatch_detected(go)",
+        "test_identity_header_mismatch_detected(go)",
+        "test_dead_mirror_never_breaks_live_path(monkeypatch)",
+        "test_stats_endpoint(go)",
+        "class FakeGo"
       ]
     },
     {
@@ -26263,6 +26732,26 @@
       ]
     },
     {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/shared/libs/execd-shadow.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "isShadowSafe",
+        "shadowDiff",
+        "shadowLine",
+        "shadowSsh",
+        "ShadowResult",
+        "shadowStats"
+      ],
+      "imports": [],
+      "symbols": [
+        "isShadowSafe(command: string)",
+        "shadowDiff(command: string, legacy: ShadowResult, sidecar: ShadowResult)",
+        "shadowLine(alias: string, command: string, diffs: string[])",
+        "shadowSsh(\n  alias: string,\n  command: string,\n  timeoutMs: number,\n  legacy: ShadowResult,\n  opts: { url?: string; token?: string; fetch?: Fetch; log?: (l: string)"
+      ]
+    },
+    {
       "path": "user-ai_cloud-cgc-pub-mcp/src/code/shared/libs/files.ts",
       "lang": "ts",
       "role": "module",
@@ -26890,7 +27379,8 @@
         "./config.js",
         "./audit.js",
         "./shell-quote.js",
-        "./ssh-argv.js"
+        "./ssh-argv.js",
+        "./execd-shadow.js"
       ],
       "symbols": [
         "sshExec(\n  vmNameOrAlias: string,\n  command: string,\n  timeout?: number,\n  _noRetry = false,\n  connectTimeout = 10,\n)",
@@ -27956,6 +28446,26 @@
       ]
     },
     {
+      "path": "user-ai_cloud-cgc-pub-mcp/src/code/tools/shared/libs/execd-shadow.ts",
+      "lang": "ts",
+      "role": "mcp-tool",
+      "exports": [
+        "isShadowSafe",
+        "shadowDiff",
+        "shadowLine",
+        "shadowSsh",
+        "ShadowResult",
+        "shadowStats"
+      ],
+      "imports": [],
+      "symbols": [
+        "isShadowSafe(command: string)",
+        "shadowDiff(command: string, legacy: ShadowResult, sidecar: ShadowResult)",
+        "shadowLine(alias: string, command: string, diffs: string[])",
+        "shadowSsh(\n  alias: string,\n  command: string,\n  timeoutMs: number,\n  legacy: ShadowResult,\n  opts: { url?: string; token?: string; fetch?: Fetch; log?: (l: string)"
+      ]
+    },
+    {
       "path": "user-ai_cloud-cgc-pub-mcp/src/code/tools/shared/libs/files.ts",
       "lang": "ts",
       "role": "mcp-tool",
@@ -28583,7 +29093,8 @@
         "./config.js",
         "./audit.js",
         "./shell-quote.js",
-        "./ssh-argv.js"
+        "./ssh-argv.js",
+        "./execd-shadow.js"
       ],
       "symbols": [
         "sshExec(\n  vmNameOrAlias: string,\n  command: string,\n  timeout?: number,\n  _noRetry = false,\n  connectTimeout = 10,\n)",
@@ -68692,6 +69203,117 @@
       "exports": [
         "description",
         "own",
+        "nixpkgs"
+      ],
+      "imports": [
+        "../../_shared/engine.nix",
+        "./compose.nix",
+        "../_shared/engine.nix",
+        "compose.nix"
+      ],
+      "symbols": [
+        "description",
+        "outputs",
+        "forAllSystems",
+        "buildJson",
+        "container",
+        "engine",
+        "nb",
+        "packages",
+        "pkgs",
+        "default",
+        "srcDir",
+        "templates",
+        "composeSpec",
+        "nativeBuild",
+        "cmd",
+        "binary",
+        "baseImage",
+        "apt",
+        "title"
+      ]
+    },
+    {
+      "path": "user-news_capital-stack-news-gdelt-go-api/build.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "get_config()",
+        "get_config_array()",
+        "get_lifecycle()",
+        "detect_layout()",
+        "rewrite_compose_image_refs()",
+        "log()",
+        "log_warn()",
+        "log_error()",
+        "declared_container_names()",
+        "ssh_with_retry()",
+        "ssh_run_detached()",
+        "rsync_with_retry()",
+        "_ship_build_phase()"
+      ],
+      "imports": [],
+      "symbols": [
+        "get_config()",
+        "get_config_array()",
+        "get_lifecycle()",
+        "detect_layout()",
+        "rewrite_compose_image_refs()",
+        "log()",
+        "log_warn()",
+        "log_error()",
+        "declared_container_names()",
+        "ssh_with_retry()",
+        "ssh_run_detached()",
+        "rsync_with_retry()",
+        "_ship_build_phase()"
+      ]
+    },
+    {
+      "path": "user-news_capital-stack-news-gdelt-go-api/src/compose.nix",
+      "lang": "nix",
+      "role": "compose",
+      "exports": [
+        "buildJson",
+        "container"
+      ],
+      "imports": [],
+      "symbols": [
+        "app",
+        "bind",
+        "bin",
+        "services",
+        "capital-stack-news-gdelt-go-api",
+        "image",
+        "container_name",
+        "network_mode",
+        "read_only",
+        "command",
+        "tmpfs",
+        "environment",
+        "PORT",
+        "TZ",
+        "MCP_HTTP_HOST",
+        "CACHE_DIR",
+        "FETCH_INTERVAL",
+        "BASE_PATH",
+        "healthcheck",
+        "test",
+        "interval",
+        "timeout",
+        "retries",
+        "start_period"
+      ]
+    },
+    {
+      "path": "user-news_capital-stack-news-gdelt-go-api/src/flake.nix",
+      "lang": "nix",
+      "role": "flake",
+      "exports": [
+        "description",
+        "shadow",
+        "Type",
+        "#1882)\";",
         "nixpkgs"
       ],
       "imports": [

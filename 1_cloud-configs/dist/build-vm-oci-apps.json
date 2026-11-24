@@ -121,6 +121,15 @@
       "has_docker_build": true
     },
     {
+      "name": "cloudy-all-go-mcp",
+      "dir": "infra-api_cloudy-all-go-mcp",
+      "compose_path": "/opt/containers/cloudy-all-go-mcp",
+      "images": [
+        "ghcr.io/diegonmarcos/cloudy-all-go-mcp:latest"
+      ],
+      "has_docker_build": true
+    },
+    {
       "name": "cloudy-all-mcp",
       "dir": "infra-api_cloudy-all-mcp",
       "compose_path": "/opt/containers/cloudy-all-mcp",
@@ -276,6 +285,19 @@
       "has_docker_build": true
     },
     {
+      "name": "ntfy-go",
+      "dir": "infra-obs_ntfy-go",
+      "compose_path": "/opt/containers/ntfy-go",
+      "images": [
+        "ghcr.io/diegonmarcos/ntfy-go:latest",
+        "ghcr.io/diegonmarcos/ntfy-go:latest",
+        "ghcr.io/diegonmarcos/ntfy-go:latest",
+        "ghcr.io/diegonmarcos/ntfy-go:latest",
+        "ghcr.io/diegonmarcos/ntfy-go:latest"
+      ],
+      "has_docker_build": true
+    },
+    {
       "name": "openobserve",
       "dir": "infra-obs_openobserve",
       "compose_path": "/opt/containers/openobserve",
@@ -300,6 +322,15 @@
       "dir": "infra-ops_agents-tmp-reaper",
       "compose_path": "/opt/containers/agents-tmp-reaper",
       "images": [],
+      "has_docker_build": true
+    },
+    {
+      "name": "c3-execd",
+      "dir": "infra-ops_c3-execd",
+      "compose_path": "/opt/containers/c3-execd",
+      "images": [
+        "ghcr.io/diegonmarcos/c3-execd:latest"
+      ],
       "has_docker_build": true
     },
     {
@@ -568,6 +599,15 @@
       "compose_path": "/opt/containers/capital-stack-news-gdelt-api",
       "images": [
         "ghcr.io/diegonmarcos/capital-stack-news-gdelt-api:latest"
+      ],
+      "has_docker_build": true
+    },
+    {
+      "name": "capital-stack-news-gdelt-go-api",
+      "dir": "user-news_capital-stack-news-gdelt-go-api",
+      "compose_path": "/opt/containers/capital-stack-news-gdelt-go-api",
+      "images": [
+        "ghcr.io/diegonmarcos/capital-stack-news-gdelt-go-api:latest"
       ],
       "has_docker_build": true
     },
