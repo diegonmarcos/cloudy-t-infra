@@ -6,9 +6,9 @@
   },
   "repo": "cloud-u-containers",
   "counts": {
-    "files": 2749,
+    "files": 2750,
     "by_lang": {
-      "sh": 195,
+      "sh": 196,
       "js": 128,
       "nix": 206,
       "py": 528,
@@ -16,7 +16,7 @@
       "rust": 373
     },
     "by_role": {
-      "shell": 185,
+      "shell": 186,
       "file": 362,
       "nix-module": 20,
       "python": 511,
@@ -24081,6 +24081,28 @@
         "render()",
         "validate()",
         "start()"
+      ]
+    },
+    {
+      "path": "infra-sec_caddy/src/test/test-two-caddy-chain.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "cleanup()",
+        "fail()",
+        "evidence()",
+        "run()",
+        "get()",
+        "wait_for()"
+      ],
+      "imports": [],
+      "symbols": [
+        "cleanup()",
+        "fail()",
+        "evidence()",
+        "run()",
+        "get()",
+        "wait_for()"
       ]
     },
     {

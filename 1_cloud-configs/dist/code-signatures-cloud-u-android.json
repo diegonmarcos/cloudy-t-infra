@@ -6,16 +6,16 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 24926,
+    "files": 24929,
     "by_lang": {
       "sh": 830,
       "js": 599,
       "py": 268,
-      "kotlin": 14005,
+      "kotlin": 14007,
       "ts": 8382,
       "java": 656,
       "nix": 37,
-      "rust": 149
+      "rust": 150
     },
     "by_role": {
       "hook": 166,
@@ -25,9 +25,9 @@
       "python": 98,
       "module": 6478,
       "java": 655,
-      "kotlin": 14002,
+      "kotlin": 14004,
       "flake": 33,
-      "rust-module": 149,
+      "rust-module": 150,
       "nix-module": 4,
       "entrypoint": 3,
       "mcp-tool": 53
@@ -15521,66 +15521,19 @@
       "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/launcher/LauncherTiles.kt",
       "lang": "kotlin",
       "role": "kotlin",
-      "exports": [
-        "TileMetrics"
-      ],
+      "exports": [],
       "imports": [
         "androidx.annotation.DrawableRes",
-        "androidx.compose.animation.core.animateFloatAsState",
-        "androidx.compose.foundation.background",
-        "androidx.compose.foundation.LocalIndication",
-        "androidx.compose.foundation.clickable",
-        "androidx.compose.foundation.interaction.MutableInteractionSource",
-        "androidx.compose.foundation.interaction.collectIsPressedAsState",
-        "androidx.compose.foundation.layout.Column",
-        "androidx.compose.foundation.layout.Box",
-        "androidx.compose.foundation.layout.Arrangement",
-        "androidx.compose.foundation.layout.fillMaxWidth",
-        "androidx.compose.foundation.layout.fillMaxSize",
-        "androidx.compose.foundation.layout.height",
-        "androidx.compose.foundation.layout.offset",
-        "androidx.compose.foundation.layout.padding",
-        "androidx.compose.foundation.layout.size",
-        "androidx.compose.foundation.layout.wrapContentHeight",
-        "androidx.compose.foundation.shape.RoundedCornerShape",
         "androidx.compose.material3.Icon",
-        "androidx.compose.material3.Text",
         "androidx.compose.runtime.Composable",
-        "androidx.compose.runtime.getValue",
-        "androidx.compose.runtime.remember",
-        "androidx.compose.ui.Alignment",
         "androidx.compose.ui.Modifier",
-        "androidx.compose.ui.draw.clip",
-        "androidx.compose.ui.draw.scale",
-        "androidx.compose.ui.layout.onSizeChanged",
-        "androidx.compose.ui.platform.LocalContext",
-        "androidx.compose.ui.platform.LocalView",
-        "androidx.compose.ui.platform.testTag",
         "androidx.compose.ui.res.painterResource",
-        "androidx.compose.ui.semantics.clearAndSetSemantics",
-        "androidx.compose.ui.semantics.testTag",
-        "androidx.compose.ui.text.style.TextAlign",
-        "androidx.compose.ui.text.style.TextOverflow",
-        "androidx.compose.ui.unit.Dp",
         "androidx.compose.ui.unit.dp",
-        "androidx.compose.ui.unit.sp",
-        "com.diegonmarcos.superapp.extinstall.extInstallRing"
+        "com.diegonmarcos.superapp.extinstall.extInstallRing",
+        "com.diegonmarcos.superapp.ui.Haptics"
       ],
       "symbols": [
-        "tileIconDp(widthPx: Int, density: Float, cols: Int, pageDp: Int, chromeDp: Int)",
-        "tile(id: String, w: Int, h: Int, density: Float)",
-        "icon(id: String, w: Int, h: Int, density: Float)",
-        "latest()",
-        "largestIconDp()",
-        "count()",
-        "clear()",
-        "tileSepTag(id: String)",
-        "TileDivider(tag: String, iconCentreY: Dp, edgeShift: Dp, modifier: Modifier = Modifier, double: Boolean = false)",
-        "tileTag(id: String)",
-        "tileIconTag(id: String)",
-        "CompactTile(tileId: String, label: String, @DrawableRes iconRes: Int, onClick: ()",
-        "class TileMetrics",
-        "class Sample"
+        "CompactTile(tileId: String, label: String, @DrawableRes iconRes: Int, onClick: ()"
       ]
     },
     {
@@ -93641,6 +93594,7 @@
       "role": "rust-module",
       "exports": [
         "parse",
+        "attachments",
         "sanitize_css",
         "sanitize",
         "text_fragment",
@@ -93661,6 +93615,7 @@
       ],
       "symbols": [
         "parse(raw: &[u8])",
+        "attachments(raw: &[u8])",
         "inline_cids(html: &str, cids: &HashMap<String, (String, &[u8])",
         "base64(b: &[u8])",
         "sanitizer()",
@@ -93698,8 +93653,7 @@
         "plain_text_quotes_collapse_like_gmail()",
         "a_marketing_email_is_sanitised_but_keeps_its_look()",
         "a_newsletter_whose_layout_lives_in_a_style_block_keeps_it_scoped()",
-        "hostile_css_is_stripped()",
-        "the_document_is_gmail_like_and_fits_the_width()"
+        "hostile_css_is_stripped()"
       ]
     },
     {
@@ -93886,6 +93840,23 @@
         "mb(id: &str, role: Option<&str>)",
         "the_filing_rule_is_a_pure_function_of_the_memberships()",
         "a_message_in_the_inbox_and_a_label_is_filed_once_and_a_move_refiles_it()"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/mail-core-rs/tests/parity_fixtures.rs",
+      "lang": "rust",
+      "role": "rust-module",
+      "exports": [],
+      "imports": [
+        "std::fs",
+        "std::path::PathBuf"
+      ],
+      "symbols": [
+        "dir()",
+        "collapse(s: &str)",
+        "check(only_ext: Option<&str>)",
+        "every_fixture_reads_the_same_in_the_rust_core()",
+        "a_wrong_expectation_is_caught()"
       ]
     },
     {
@@ -109591,6 +109562,81 @@
       "symbols": [
         "spread(c: Color)",
         "class ThemeBackgroundTest"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/tile-grid/src/main/java/com/diegonmarcos/superapp/launcher/CompactTile.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "tileIconDp",
+        "TILE_ICON_MAX_DP",
+        "TileMetrics",
+        "SEP_HEIGHT",
+        "tileSepTag",
+        "TileDivider",
+        "tileTag",
+        "tileIconTag",
+        "TILE_PLATE",
+        "TILE_ICON",
+        "CHIP_TILE_HEIGHT",
+        "CHIP_GAP",
+        "CompactTileCore"
+      ],
+      "imports": [
+        "android.view.HapticFeedbackConstants",
+        "android.view.View",
+        "androidx.compose.animation.core.animateFloatAsState",
+        "androidx.compose.foundation.background",
+        "androidx.compose.foundation.LocalIndication",
+        "androidx.compose.foundation.clickable",
+        "androidx.compose.foundation.interaction.MutableInteractionSource",
+        "androidx.compose.foundation.interaction.collectIsPressedAsState",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.Box",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.foundation.layout.height",
+        "androidx.compose.foundation.layout.offset",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.foundation.layout.size",
+        "androidx.compose.foundation.layout.wrapContentHeight",
+        "androidx.compose.foundation.shape.RoundedCornerShape",
+        "androidx.compose.material3.Text",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.remember",
+        "androidx.compose.ui.Alignment",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.draw.clip",
+        "androidx.compose.ui.draw.scale",
+        "androidx.compose.ui.graphics.Color",
+        "androidx.compose.ui.layout.onSizeChanged",
+        "androidx.compose.ui.platform.LocalView",
+        "androidx.compose.ui.platform.testTag",
+        "androidx.compose.ui.semantics.clearAndSetSemantics",
+        "androidx.compose.ui.semantics.testTag",
+        "androidx.compose.ui.text.style.TextAlign",
+        "androidx.compose.ui.text.style.TextOverflow",
+        "androidx.compose.ui.unit.Dp",
+        "androidx.compose.ui.unit.dp",
+        "androidx.compose.ui.unit.sp",
+        "com.diegonmarcos.superapp.uikit.LocalKitPalette"
+      ],
+      "symbols": [
+        "tileIconDp(widthPx: Int, density: Float, cols: Int, pageDp: Int, chromeDp: Int)",
+        "tile(id: String, w: Int, h: Int, density: Float)",
+        "icon(id: String, w: Int, h: Int, density: Float)",
+        "latest()",
+        "largestIconDp()",
+        "count()",
+        "clear()",
+        "tileSepTag(id: String)",
+        "TileDivider(tag: String, iconCentreY: Dp, edgeShift: Dp, modifier: Modifier = Modifier, double: Boolean = false)",
+        "tileTag(id: String)",
+        "tileIconTag(id: String)",
+        "CompactTileCore( tileId: String, label: String, onClick: ()",
+        "class TileMetrics",
+        "class Sample"
       ]
     },
     {
@@ -136970,19 +137016,25 @@
         "HomeMode"
       ],
       "imports": [
+        "androidx.compose.foundation.layout.Box",
         "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.Arrangement",
+        "androidx.compose.foundation.layout.Row",
+        "androidx.compose.foundation.layout.Spacer",
+        "androidx.compose.foundation.layout.fillMaxWidth",
         "androidx.compose.foundation.layout.fillMaxSize",
         "androidx.compose.foundation.layout.padding",
         "androidx.compose.foundation.rememberScrollState",
         "androidx.compose.foundation.verticalScroll",
+        "androidx.compose.material3.Icon",
         "androidx.compose.material3.MaterialTheme",
         "androidx.compose.runtime.Composable",
         "androidx.compose.ui.Modifier",
         "androidx.compose.ui.platform.testTag",
         "androidx.compose.ui.unit.dp",
         "com.diegonmarcos.cloudcalc.Declarations",
-        "com.diegonmarcos.superapp.launcher.IndexTileGrid",
-        "com.diegonmarcos.superapp.launcher.IndexTiles",
+        "com.diegonmarcos.superapp.launcher.CHIP_GAP",
+        "com.diegonmarcos.superapp.launcher.CompactTileCore",
         "com.diegonmarcos.superapp.launcher.TileGroupHeader",
         "com.diegonmarcos.superapp.launcher.TileSubgroupHeader",
         "com.diegonmarcos.superapp.uikit.CloudKitTheme",
@@ -138792,6 +138844,7 @@
       "imports": [
         "android.content.ComponentName",
         "androidx.activity.ComponentActivity",
+        "androidx.compose.ui.test.assertCountEquals",
         "androidx.compose.ui.test.assertTextContains",
         "androidx.compose.ui.test.getBoundsInRoot",
         "androidx.compose.ui.test.junit4.createAndroidComposeRule",
@@ -138814,6 +138867,7 @@
         "com.diegonmarcos.superapp.bottomnav.BottomNavTags",
         "com.diegonmarcos.superapp.bottomnav.PageTabsTags",
         "com.diegonmarcos.superapp.navbartop1.TopFirstRowTags",
+        "java.io.File",
         "org.junit.Assert.assertEquals",
         "org.junit.Assert.assertTrue",
         "org.junit.Rule",
@@ -138839,6 +138893,7 @@
         "fetchRates()",
         "launch()",
         "openConfigsFromTopBar()",
+        "CompactTileCore(\")",
         "sheetPage()",
         "class SheetShellTest",
         "class NoEngine"
@@ -308437,6 +308492,26 @@
         "rawUtf8(name: String)",
         "listing(nameToken: String)",
         "class MailboxNameTest"
+      ]
+    },
+    {
+      "path": "ac_cloud-mail/core/imap/src/test/kotlin/app/sterna/core/imap/MimeParserParityFixturesTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "MimeParserParityFixturesTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.io.File"
+      ],
+      "symbols": [
+        "dir()",
+        "collapse(s: String)",
+        "everyFixtureReadsTheSameInTheKotlinEngine()",
+        "class MimeParserParityFixturesTest"
       ]
     },
     {
