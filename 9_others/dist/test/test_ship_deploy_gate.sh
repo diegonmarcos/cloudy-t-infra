@@ -80,7 +80,7 @@ python3 -c 'import yaml,sys; sys.stdout.write(yaml.safe_load(open(sys.argv[1]))[
 # So assert the agreement rather than assume it: every env key the step declares
 # must be one this test knows how to supply. When someone extends the gate
 # again, this fails FIRST, by name, instead of poisoning everything below it.
-KNOWN_ENV=' DETECT_RESULT VERDICT HAS_VMS BUILD_RESULT DEPLOY_RESULT MATRIX '
+KNOWN_ENV=' DETECT_RESULT VERDICT HAS_VMS BUILD_RESULT DEPLOY_RESULT MATRIX HELD '
 UNSUPPLIED=''
 for k in $(python3 -c 'import yaml,sys; print(" ".join(sorted(yaml.safe_load(open(sys.argv[1]))["jobs"]["deploy-gate"]["steps"][0].get("env",{}))))' "$YML"); do
   case "$KNOWN_ENV" in *" $k "*) ;; *) UNSUPPLIED="$UNSUPPLIED $k" ;; esac
@@ -96,10 +96,11 @@ MATRIX='{"include":[{"vm":"oci-apps","changed_dirs":"user-ai_my-ai_claude-api"}]
 
 # Positional, so every case states the whole run-shape it is describing rather
 # than inheriting half of it from an earlier export.
-#   run_gate <detect_result> <verdict> <has_vms> <build_result> <deploy_result>
+#   run_gate <detect_result> <verdict> <has_vms> <build_result> <deploy_result> [held]
+# held (#1886) is the auth-plane dirs detect held out; empty unless a case names it.
 run_gate() {
   env DETECT_RESULT="$1" VERDICT="$2" HAS_VMS="$3" BUILD_RESULT="$4" \
-      DEPLOY_RESULT="$5" MATRIX="$MATRIX" sh "$GATE" >"$GATE.out" 2>&1
+      DEPLOY_RESULT="$5" MATRIX="$MATRIX" HELD="${6:-}" sh "$GATE" >"$GATE.out" 2>&1
 }
 
 # ── A deploy WAS required (verdict=ship) ──
@@ -139,6 +140,17 @@ ck "gate FAILS on verdict=empty" "$rc" "1"
 # matches twice and a count of 1 would be wrong.
 ck "gate explains what verdict=empty means" \
    "$(grep -c "the containers-push diff resolved to no deployable service" "$GATE.out" || true)" "1"
+
+# #1886: every changed service was auth plane and the fan-out hold kept it out.
+# Nothing deployed, so the run is red, and it must name the approved dispatch.
+run_gate success held false skipped skipped infra-sec_caddy && rc=0 || rc=$?
+ck "gate FAILS on verdict=held" "$rc" "1"
+ck "gate names the explicit dispatch for a held auth plane" \
+   "$(grep -c "services=infra-sec_caddy" "$GATE.out" || true)" "2"
+# A shipped run that also held something stays green, with the hold as a warning.
+run_gate success ship true success success infra-sec_authelia && rc=0 || rc=$?
+ck "a run that shipped and held the auth plane is green" "$rc" "0"
+ck "...and warns about the hold" "$(grep -c "auth plane held out of this Ship" "$GATE.out" || true)" "1"
 
 # ── Green BY DECLARATION, not by omission — the other half of #401 ──
 # Untested until 2026-09-17: the gate's whole purpose is telling these two
