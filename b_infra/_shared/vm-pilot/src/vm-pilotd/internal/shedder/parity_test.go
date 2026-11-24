@@ -177,8 +177,8 @@ func TestShedderParityMutantsCaught(t *testing.T) {
 		"grace-ignored": func(s string) string {
 			return strings.Replace(s, `-lt "$DOCKER_START_GRACE"`, `-lt 0`, 1)
 		},
-		"page-uses-crit-threshold": func(s string) string {
-			return strings.Replace(s, `elif [ "$MEM_I" -ge "$MEM_PSI_PAGE" ]`, `elif [ "$MEM_I" -ge "$MEM_PSI_CRIT" ]`, 1)
+		"page-boundary-exclusive": func(s string) string {
+			return strings.Replace(s, `elif [ "$MEM_I" -ge "$MEM_PSI_PAGE" ]`, `elif [ "$MEM_I" -gt "$MEM_PSI_PAGE" ]`, 1)
 		},
 	} {
 		caught := false
