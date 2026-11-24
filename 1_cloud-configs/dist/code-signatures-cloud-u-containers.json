@@ -6,9 +6,9 @@
   },
   "repo": "cloud-u-containers",
   "counts": {
-    "files": 2740,
+    "files": 2741,
     "by_lang": {
-      "sh": 190,
+      "sh": 191,
       "js": 128,
       "nix": 204,
       "py": 527,
@@ -16,7 +16,7 @@
       "rust": 373
     },
     "by_role": {
-      "shell": 180,
+      "shell": 181,
       "file": 361,
       "nix-module": 20,
       "python": 510,
@@ -1206,6 +1206,18 @@
         "ok()",
         "new_repo()",
         "run()"
+      ]
+    },
+    {
+      "path": ".github/guards/jwks-pin-guard.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "check()"
+      ],
+      "imports": [],
+      "symbols": [
+        "check()"
       ]
     },
     {
