@@ -183,6 +183,66 @@ assert_declared_containers_live() {
     log "Declared containers live: $names"
 }
 
+# ── Ticket #1872: the container that is RUNNING must carry the source just built ──
+# Run 45338386904 deployed green with the old image: the build's push had failed
+# unnoticed, the VM pulled the unchanged :latest, the container was healthy, and
+# every other check here (healthy, live, ports answering) is blind to which
+# image it is. Ask the image: its src-hash label must equal the source hash
+# (or, for an unlabelled legacy image, it must not predate the last source
+# commit) — the same predicate step_docker's skip path uses (image_stale_reason).
+#
+# Pure, so the tester can drive it without a VM:
+#   $1     repos this service builds (whitespace separated, no tag/digest)
+#   $2     source hash the build computed
+#   $3     epoch of the last source commit (empty = unknown)
+#   stdin  "<container>|<image ref>|<src-hash label>|<image created RFC3339>"
+#   stdout "STALE <container> <why>" per finding
+#   rc     1 iff any container running one of those repos is stale
+_deployed_image_verdict() {
+    local repos="$1" want="$2" srcep="$3" bad=0 name ref label created repo why
+    while IFS='|' read -r name ref label created; do
+        [ -n "$name" ] || continue
+        repo="${ref%%@*}"
+        case "${repo##*/}" in *:*) repo="${repo%:*}" ;; esac
+        case " $repos " in *" $repo "*) ;; *) continue ;; esac
+        case "$label" in "<no value>") label="" ;; esac
+        if why="$(image_stale_reason "$label" "$want" "$(image_iso_epoch "$created")" "$srcep")"; then
+            echo "STALE ${name#/} $why"; bad=1
+        fi
+    done
+    return "$bad"
+}
+
+assert_deployed_image_carries_source() {
+    case "${DOCKER_IMAGE:-}" in ""|null) return 0 ;; esac
+    command -v image_stale_reason >/dev/null 2>&1 || { log_warn "provenance: image_stale_reason missing (engine drift) — skipping the image check"; return 0; }
+    local bj="$SERVICE_DIR/build.json" names full repos want probe out verdict rc=0
+    names="$(declared_container_names "$bj")" || return 1
+    names="$(printf '%s' "$names" | tr '\n' ' ')"
+    [ -n "${names// /}" ] || return 0
+    full="${DOCKER_REGISTRY:+$DOCKER_REGISTRY/}$DOCKER_IMAGE"
+    repos="$full ${full}-binaries"
+    want="$(docker_src_hash "${DOCKER_ARCH:-amd64}")"
+    probe='for n in '"$names"'; do
+  r=$(docker inspect -f "{{.Config.Image}}|{{.Image}}" "$n" 2>/dev/null) || continue
+  m=$(docker image inspect -f "{{index .Config.Labels \"'"$IMAGE_SRC_HASH_LABEL"'\"}}|{{.Created}}" "${r#*|}" 2>/dev/null) || continue
+  echo "$n|${r%%|*}|$m"
+done
+echo __provenance_probed__'
+    out="$(printf '%s\n' "$probe" | base64 -w0 | { read -r b; ssh_with_retry "$DEPLOY_HOST" "echo $b | base64 -d | bash" 2>/dev/null; } || true)"
+    case "$out" in
+        *__provenance_probed__*) ;;
+        *) log_error "provenance: $DEPLOY_HOST did not answer the running-image probe — refusing to call the deploy verified"; return 1 ;;
+    esac
+    verdict="$(printf '%s\n' "$out" | grep -v '^__provenance_probed__$' | _deployed_image_verdict "$repos" "$want" "$(service_src_commit_epoch)")" || rc=$?
+    [ -n "$verdict" ] && printf '%s\n' "$verdict" | while read -r l; do log "  provenance: $l"; done
+    if [ "$rc" -ne 0 ]; then
+        log_error "provenance: a running container is NOT built from the source this ship built (ticket #1872) — the push/pull delivered an older image; failing the ship."
+        return 1
+    fi
+    log "Running image carries the built source ($want)"
+}
+
 step_health() {
     CURRENT_STEP="health"
     [ -z "$DEPLOY_HOST" ] && { log "No deploy.host -- skipping health"; return 0; }
@@ -273,6 +333,7 @@ EOF
             # "All healthy" above is over what `compose ps` LISTS, and it does
             # not list a created container (#560). Ask about the declared ones.
             assert_declared_containers_live || return 1
+            assert_deployed_image_carries_source || return 1
             # Repair before asserting: on "iptables": false hosts the compose up
             # that just ran is itself what broke the published-port mapping, so
             # asserting first would only report a breakage we can fix here.

@@ -113,6 +113,63 @@ materialize_out_of_context_symlinks() {
     done
 }
 
+# ── Image provenance (ticket #1872) ────────────────────────────────────
+# Run 45338386904 went green while the fleet kept the OLD image: ghcr.io was
+# unreachable from the builder (i/o timeout), buildx failed, the classic
+# fallback's `docker push` calls all returned "unauthenticated", and nothing
+# looked at their exit codes (the function runs under `|| return 1`, which
+# switches `set -e` off for its whole body). The step logged "Pushed", wrote
+# .docker-src-hash, the deploy rsynced that hash to the VM, and every later
+# Ship then took the "src unchanged — skipping build" path against a registry
+# image that never carried the new source.
+#
+# Three defences, all keyed on what the IMAGE says about itself:
+#   1. every build stamps the image with the source hash and source commit;
+#   2. a push that fails fails the step (no "Pushed", no hash file);
+#   3. the skip path and the post-deploy guard compare the registry/running
+#      image against the source (image_stale_reason).
+IMAGE_SRC_HASH_LABEL="io.cloud.src-hash"
+IMAGE_REVISION_LABEL="org.opencontainers.image.revision"
+
+# docker_src_hash <arch> — the cache key step_docker has always used: every
+# file under src/ (minus runtime-only ones) + build.json's docker block + arch.
+# One definition so the build, the skip check and the deploy guard cannot drift.
+docker_src_hash() {
+    local _arch="$1" _block _h
+    _block=$( { command -v node >/dev/null 2>&1 && node -e "const s=v=>Array.isArray(v)?'['+v.map(s).join(',')+']':(v&&typeof v==='object')?'{'+Object.keys(v).sort().map(k=>JSON.stringify(k)+':'+s(v[k])).join(',')+'}':JSON.stringify(v);const c=require('$CONFIG');process.stdout.write(s(c.docker||{}))"; } 2>/dev/null \
+        || python3 -c "import json; print(json.dumps(json.load(open('$CONFIG')).get('docker',{}),sort_keys=True,separators=(',',':'),ensure_ascii=False),end='')" 2>/dev/null || true )
+    _h=$( { find "$SRC_DIR" -type f -not -path '*/node_modules/*' -not -path '*/.git/*' -not -name 'secrets.yaml' -not -name 'compose.nix' -exec sha256sum {} \; 2>/dev/null | sort; printf 'build.json:docker %s\n' "$_block" | sha256sum; } | sha256sum | cut -c1-16)
+    printf '%s-%s' "$_h" "$_arch"
+}
+
+# image_stale_reason <label-hash> <built-hash> <image-created-epoch> <src-commit-epoch>
+# Pure. rc 0 = the image does NOT carry the source (reason on stdout), rc 1 = fresh/unknown.
+#   labelled image  -> its src-hash label must equal the source hash;
+#   legacy image    -> (no label) it must not predate the last commit touching the source.
+image_stale_reason() {
+    local label="$1" want="$2" created="$3" srcep="$4"
+    if [ -n "$label" ]; then
+        [ "$label" = "$want" ] && return 1
+        echo "image $IMAGE_SRC_HASH_LABEL=$label but the source hashes to $want"; return 0
+    fi
+    case "$created$srcep" in *[!0-9]*|"") return 1 ;; esac
+    [ -n "$created" ] && [ -n "$srcep" ] || return 1
+    if [ $((created + 60)) -lt "$srcep" ]; then
+        echo "unlabelled image created at epoch $created predates the last source commit (epoch $srcep)"; return 0
+    fi
+    return 1
+}
+
+# Epoch of the newest commit touching this service's image inputs under src/, or empty
+# (shallow clone / no git) so image_stale_reason falls back to "fresh".
+service_src_commit_epoch() {
+    [ "$(git -C "$SERVICE_DIR" rev-parse --is-shallow-repository 2>/dev/null)" = "false" ] || return 0
+    git -C "$SERVICE_DIR" log -1 --format=%ct -- src ':!*compose.nix' ':!*secrets.yaml' ':!*node_modules*' 2>/dev/null || true
+}
+
+# image_iso_epoch <RFC3339> -> epoch seconds (empty when unparsable)
+image_iso_epoch() { date -d "$1" +%s 2>/dev/null || true; }
+
 step_docker() {
     # jq returns the literal "null" for missing paths; treat both as empty.
     case "${DOCKER_IMAGE:-}" in
@@ -220,10 +277,7 @@ step_docker() {
     # runtime-only edit still does not churn an ~80-min arm64 rebuild. Canonical
     # JSON (sorted keys, no whitespace, raw unicode) so node and the python
     # fallback hash identically.
-    _docker_block=$( { command -v node >/dev/null 2>&1 && node -e "const s=v=>Array.isArray(v)?'['+v.map(s).join(',')+']':(v&&typeof v==='object')?'{'+Object.keys(v).sort().map(k=>JSON.stringify(k)+':'+s(v[k])).join(',')+'}':JSON.stringify(v);const c=require('$CONFIG');process.stdout.write(s(c.docker||{}))"; } 2>/dev/null \
-        || python3 -c "import json; print(json.dumps(json.load(open('$CONFIG')).get('docker',{}),sort_keys=True,separators=(',',':'),ensure_ascii=False),end='')" 2>/dev/null || true )
-    LOCAL_HASH=$( { find "$SRC_DIR" -type f -not -path '*/node_modules/*' -not -path '*/.git/*' -not -name 'secrets.yaml' -not -name 'compose.nix' -exec sha256sum {} \; 2>/dev/null | sort; printf 'build.json:docker %s\n' "$_docker_block" | sha256sum; } | sha256sum | cut -c1-16)
-    LOCAL_HASH="${LOCAL_HASH}-${ARCH}"
+    LOCAL_HASH="$(docker_src_hash "$ARCH")"
     if [ -n "$DEPLOY_HOST" ] && [ -n "$DEPLOY_PATH" ]; then
         REMOTE_HASH=$(ssh $SSH_OPTS "$DEPLOY_HOST" "cat $DEPLOY_PATH/.docker-src-hash 2>/dev/null" 2>/dev/null || true)
         if [ "$LOCAL_HASH" = "$REMOTE_HASH" ]; then
@@ -271,6 +325,23 @@ step_docker() {
             if [ -n "$_remote_archs" ] && echo ",$_remote_archs," | grep -q ",$ARCH,"; then
                 _binaries_arch_match=1
             fi
+            # The hash on the VM only says "a previous run believed it shipped
+            # this source". Ask the registry image itself (ticket #1872): a push
+            # that failed behind a green run left exactly this state.
+            if [ "$_binaries_arch_match" = 1 ]; then
+                _chk_plat="linux/${ARCH%%,*}"
+                if docker pull -q --platform "$_chk_plat" "$BINARIES_IMG" >/dev/null 2>&1; then
+                    _chk_label="$(docker image inspect --format "{{index .Config.Labels \"$IMAGE_SRC_HASH_LABEL\"}}" "$BINARIES_IMG" 2>/dev/null || true)"
+                    case "$_chk_label" in "<no value>") _chk_label="" ;; esac
+                    _chk_created="$(image_iso_epoch "$(docker image inspect --format '{{.Created}}' "$BINARIES_IMG" 2>/dev/null || true)")"
+                    if _chk_why="$(image_stale_reason "$_chk_label" "$LOCAL_HASH" "$_chk_created" "$(service_src_commit_epoch)")"; then
+                        log_warn "Docker src hash matches the VM marker but $BINARIES_IMG is STALE: $_chk_why — rebuilding"
+                        _binaries_arch_match=0
+                    fi
+                else
+                    log_warn "could not pull $BINARIES_IMG to verify it carries the source — trusting the src-hash marker"
+                fi
+            fi
             if [ "$_binaries_arch_match" = 1 ]; then
                 log "Docker src unchanged ($LOCAL_HASH), $BINARIES_IMG covers arch=$ARCH — skipping build"
                 # Public visibility is a DEPLOY precondition, not a build
@@ -286,7 +357,7 @@ step_docker() {
                 fi
                 return 0
             else
-                log "Docker src unchanged ($LOCAL_HASH) but $BINARIES_IMG missing or no arch=$ARCH variant (remote_archs=${_remote_archs:-none}) — forcing rebuild"
+                log "Docker src unchanged ($LOCAL_HASH) but $BINARIES_IMG missing, stale or no arch=$ARCH variant (remote_archs=${_remote_archs:-none}) — forcing rebuild"
             fi
         else
             [ -n "$REMOTE_HASH" ] && log "Docker src changed ($REMOTE_HASH -> $LOCAL_HASH)"
@@ -762,6 +833,16 @@ NEOF
     fi
     log "Reproducible tag: ${GIT_SHA12:-<none — sha-tagging disabled>}"
 
+    # Provenance labels, stamped on every image this step builds (all paths).
+    _SRC_REV="$(git -C "${SERVICE_DIR:-.}" rev-parse HEAD 2>/dev/null || true)"
+    [ -n "$_SRC_REV" ] || _SRC_REV="${GITHUB_SHA:-}"
+    declare -a LABEL_ARGS_ARR=(--label "$IMAGE_SRC_HASH_LABEL=$LOCAL_HASH")
+    LABEL_ARGS_STR="--label $IMAGE_SRC_HASH_LABEL=$LOCAL_HASH"
+    if [ -n "$_SRC_REV" ]; then
+        LABEL_ARGS_ARR+=(--label "$IMAGE_REVISION_LABEL=$_SRC_REV")
+        LABEL_ARGS_STR="$LABEL_ARGS_STR --label $IMAGE_REVISION_LABEL=$_SRC_REV"
+    fi
+
     # ── BuildKit availability (registry cache needs the buildx plugin) ────
     # Neither builder image has shipped `docker buildx` historically (see the
     # `local)` case below — 2026-07-29 regression, google-workspace-mcp) so
@@ -895,7 +976,7 @@ NEOF
                 # documented way to recover the pushed digest without a
                 # second registry round-trip.
                 _META="$(mktemp)"
-                if docker buildx build \
+                if ( set -o pipefail; docker buildx build \
                     --builder "$_BUILDX_BUILDER" \
                     --platform "$PLATFORM" \
                     --pull \
@@ -907,9 +988,10 @@ NEOF
                     "${_EXTRA_TAGS[@]}" \
                     --file "$DOCKERFILE_PATH" \
                     "${BUILD_ARGS_ARR[@]}" \
+                    "${LABEL_ARGS_ARR[@]}" \
                     --push \
                     --metadata-file "$_META" \
-                    "$BUILD_CONTEXT/" 2>&1 | while IFS= read -r line; do printf "[docker-buildx] %s\n" "$line"; done
+                    "$BUILD_CONTEXT/" 2>&1 | while IFS= read -r line; do printf "[docker-buildx] %s\n" "$line"; done )
                 then
                     _PUSHED_DIGEST="$(jq -r '."containerimage.digest" // empty' "$_META" 2>/dev/null || true)"
                     log "buildx registry-cache build+push OK${_PUSHED_DIGEST:+ (digest: $_PUSHED_DIGEST)}"
@@ -944,17 +1026,30 @@ NEOF
                     --tag "$FULL_IMAGE:$_ptag" \
                     --file "$DOCKERFILE_PATH" \
                     "${BUILD_ARGS_ARR[@]}" \
+                    "${LABEL_ARGS_ARR[@]}" \
                     "$BUILD_CONTEXT/" 2>&1 | while IFS= read -r line; do printf "[docker] %s\n" "$line"; done
                 _build_rc=${PIPESTATUS[0]}
                 [ "$_build_rc" -ne 0 ] && return 1
                 docker tag "$FULL_IMAGE:$_ptag" "$BINARIES_IMAGE:$_btag"
                 [ -n "$GIT_SHA12" ] && { docker tag "$FULL_IMAGE:$_ptag" "$FULL_IMAGE:$GIT_SHA12"; docker tag "$FULL_IMAGE:$_ptag" "$BINARIES_IMAGE:$GIT_SHA12"; }
                 _PUSHLOG="$(mktemp)"
+                # Every push is CHECKED (ticket #1872). This function runs under
+                # `|| return 1`, so `set -e` is off here and an unchecked push
+                # that fails (ghcr "unauthenticated", i/o timeout) used to fall
+                # through to "Pushed" + the src-hash marker.
                 docker push "$FULL_IMAGE:$_ptag" 2>&1 | while IFS= read -r line; do printf "[docker] %s\n" "$line"; done
+                _push_rc=${PIPESTATUS[0]}
+                [ "$_push_rc" -eq 0 ] || { log_error "docker push $FULL_IMAGE:$_ptag failed (exit $_push_rc) — nothing was published"; rm -f "$_PUSHLOG"; return 1; }
                 docker push "$BINARIES_IMAGE:$_btag" 2>&1 | tee "$_PUSHLOG" | while IFS= read -r line; do printf "[docker] %s\n" "$line"; done
+                _push_rc=${PIPESTATUS[0]}
+                [ "$_push_rc" -eq 0 ] || { log_error "docker push $BINARIES_IMAGE:$_btag failed (exit $_push_rc) — nothing was published"; rm -f "$_PUSHLOG"; return 1; }
                 if [ -n "$GIT_SHA12" ]; then
                     docker push "$FULL_IMAGE:$GIT_SHA12" 2>&1 | while IFS= read -r line; do printf "[docker] %s\n" "$line"; done
+                    _push_rc=${PIPESTATUS[0]}
+                    [ "$_push_rc" -eq 0 ] || { log_error "docker push $FULL_IMAGE:$GIT_SHA12 failed (exit $_push_rc)"; rm -f "$_PUSHLOG"; return 1; }
                     docker push "$BINARIES_IMAGE:$GIT_SHA12" 2>&1 | while IFS= read -r line; do printf "[docker] %s\n" "$line"; done
+                    _push_rc=${PIPESTATUS[0]}
+                    [ "$_push_rc" -eq 0 ] || { log_error "docker push $BINARIES_IMAGE:$GIT_SHA12 failed (exit $_push_rc)"; rm -f "$_PUSHLOG"; return 1; }
                 fi
                 _PUSHED_DIGEST="$(grep -oE 'sha256:[0-9a-f]{64}' "$_PUSHLOG" 2>/dev/null | tail -1)"
                 rm -f "$_PUSHLOG"
@@ -1228,7 +1323,7 @@ docker run --rm \
         echo "[ghcr] login ok (cwd=\$(pwd))" && \
         (docker pull $FULL_IMAGE:latest 2>/dev/null || true) && \
         (docker pull $BINARIES_IMAGE:latest 2>/dev/null || true) && \
-        DOCKER_BUILDKIT=1 docker build --platform $PLATFORM --pull --cache-from $FULL_IMAGE:latest --cache-from $BINARIES_IMAGE:latest --progress=plain -t $FULL_IMAGE:$_ptag -f $DOCKERFILE $BUILD_ARGS_STR . && \
+        DOCKER_BUILDKIT=1 docker build --platform $PLATFORM --pull --cache-from $FULL_IMAGE:latest --cache-from $BINARIES_IMAGE:latest --progress=plain -t $FULL_IMAGE:$_ptag -f $DOCKERFILE $BUILD_ARGS_STR $LABEL_ARGS_STR . && \
         docker tag $FULL_IMAGE:$_ptag $BINARIES_IMAGE:$_btag && \
         $_REMOTE_SHA_TAG_CMD
         docker push $FULL_IMAGE:$_ptag && \
