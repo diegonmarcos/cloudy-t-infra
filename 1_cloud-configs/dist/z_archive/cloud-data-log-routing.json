@@ -387,6 +387,11 @@
         "log_level": "info"
       },
       {
+        "container": "mattermost-bots-go",
+        "service": "chat-mattermost-go",
+        "log_level": "info"
+      },
+      {
         "container": "cloud-webmail",
         "service": "cloud-webmail",
         "log_level": "info"

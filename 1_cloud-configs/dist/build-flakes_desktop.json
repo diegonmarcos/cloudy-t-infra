@@ -530,6 +530,7 @@
         "hermes-agent",
         "openclaw",
         "chat-mattermost",
+        "chat-mattermost-go",
         "cloud-webmail",
         "matrix-continuwuity",
         "matrix-element",
@@ -556,7 +557,7 @@
         "send",
         "vaultwarden"
       ],
-      "container_count": 99
+      "container_count": 100
     },
     "gcp-E2-f_0": {
       "ip": "35.226.147.64",
@@ -11238,6 +11239,93 @@
         "auth": "bearer"
       }
     },
+    "chat-mattermost-go": {
+      "category": "app",
+      "vm": "oci-A1-f_0",
+      "folder": "user-comm_chat-mattermost-go",
+      "description": "Go port of the Mattermost ntfy bridge and C3 command bot (ntfy-bridge.py in chat-mattermost: bootstrap, ntfy to channel bridge, /c3 slash command, C3 bot over websocket), shadow stage: follows the ntfy stream and serves the /c3 handler read-only on its own port, holds no Mattermost credential and posts nothing, outside every request path (ticket #1880)",
+      "enabled": true,
+      "flake": "user-comm_chat-mattermost-go",
+      "port": 8897,
+      "dns": "chat-mattermost-go.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:8897",
+      "containers": {
+        "app": {
+          "container_name": "mattermost-bots-go",
+          "image": "ghcr.io/diegonmarcos/chat-mattermost-go:latest",
+          "port": 8897,
+          "port_env": "C3_PORT",
+          "public": false,
+          "proxy": null,
+          "healthcheck": "/health",
+          "monitoring": null,
+          "volumes": [],
+          "env_file": false,
+          "depends_on": [],
+          "resources": null,
+          "read_only": true,
+          "protocol": "http"
+        }
+      },
+      "container_names": [
+        "mattermost-bots-go"
+      ],
+      "all_ports": [
+        "8897"
+      ],
+      "all_dns": [],
+      "compose": {
+        "containers": [],
+        "ports": [],
+        "networks": []
+      },
+      "proxy": {
+        "app_hub": false
+      },
+      "declared_ports": {
+        "c3_shadow": 8897
+      },
+      "health": {
+        "path": "/health"
+      },
+      "taxonomy": {
+        "group": "Cloud Apps",
+        "category": "Inboxes"
+      },
+      "bind_host": "10.0.0.6",
+      "resources": {
+        "mem_limit": "48M",
+        "mem_reservation": "8M"
+      },
+      "tests": {
+        "unit": {
+          "cmd": "go test -count=1 ./...",
+          "cwd": "src/code"
+        },
+        "parity-compare": {
+          "cmd": "PARITY_REQUIRE=1 go test -count=1 -tags parity -v -run TestParity ./parity/",
+          "cwd": "src/code",
+          "_doc": "Reference = the original ntfy-bridge.py (user-comm_chat-mattermost/src/code, unmodified, CPython 3.11) driven through parity/ref.py against identical servers: the whole bootstrap request transcript against a stateful fake Mattermost (fresh and established scenarios), the /c3 slash and button handler over HTTP, the ntfy stream bridge and the pure helpers must be identical. See parity/parity_test.go."
+        }
+      },
+      "_doc_shadow": "Shadow stage (#1880). The live Python bridge (container mattermost-bots of chat-mattermost) is untouched. This container has no env_file and no secret: MM_BRIDGE_SHADOW=1 makes it skip every Mattermost call (no login, no channel, category, webhook, bot or icon write), refuse every non-GET C3 API call locally (so the /c3 handler on its own port cannot wake, sleep, reset, start, stop or restart anything) and turn the webhook post into a counted local no-op. It follows the same ntfy topics, so its logs show every message the live bridge also bridges. Switch-over (credentials, Mattermost bootstrap, the slash command URL pointed at this container) is a separate step after the shadow has run clean.",
+      "_doc_addressing": "No mesh name, no Caddy route and no client wiring on purpose during the shadow stage: only the container itself and operators on the mesh dial 10.0.0.6:8897.",
+      "api": {
+        "has_api": true,
+        "has_web_ui": false,
+        "api_path": "/",
+        "api_url": null,
+        "healthcheck_paths": [
+          "/health"
+        ],
+        "type": "custom-rest",
+        "base_path": "/",
+        "endpoint_count": 3,
+        "display_name": "Mattermost bridge (Go, shadow)",
+        "description": "Same slash contract as the Python bridge: POST /c3 (form) and POST /c3/action (JSON button callbacks), plus GET /health. Shadow stage: read-only C3 calls, dry-run webhook.",
+        "auth": "none"
+      }
+    },
     "cloud-webmail": {
       "category": "app",
       "vm": "oci-A1-f_0",
@@ -11909,6 +11997,10 @@
         "deliver-parity": {
           "cmd": "cargo build --release --manifest-path src/crate/Cargo.toml && python3 src/test-deliver-parity.py src/crate/target/release/maddy-sorter",
           "_doc": "#1883: the Rust `maddy-sorter deliver` must answer exactly like the shell classifier mail-sieve-subset-delivery-time.sh (jq + awk) on every generated rules x message x MAIL_SIEVE_STRATEGY combination: same stdout bytes, same exit status. The shell script is the unmodified reference; the harness exits 2 when a tool is missing or the corpus is too weak, it never skips."
+        },
+        "integrity-parity": {
+          "cmd": "cargo build --release --manifest-path src/crate/Cargo.toml && bash src/test-integrity-parity.sh src/crate/target/release/maddy-sorter",
+          "_doc": "#1883: `maddy-sorter integrity-check` (read-only, rusqlite) must print the same report as the shell `mail-sieve-subset-post-hoc integrity-check` (sqlite3 CLI + sort/comm/awk) on clean, broken and empty databases, and must not modify the database."
         }
       },
       "api": {

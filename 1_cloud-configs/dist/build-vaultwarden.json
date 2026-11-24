@@ -1661,6 +1661,31 @@
         "auth": "bearer"
       }
     },
+    "chat-mattermost-go": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "c3_shadow": 8897,
+        "app": 8897
+      },
+      "vm": "oci-apps",
+      "healthcheck": "/health",
+      "description": "Go port of the Mattermost ntfy bridge and C3 command bot (ntfy-bridge.py in chat-mattermost: bootstrap, ntfy to channel bridge, /c3 slash command, C3 bot over websocket), shadow stage: follows the ntfy stream and serves the /c3 handler read-only on its own port, holds no Mattermost credential and posts nothing, outside every request path (ticket #1880)",
+      "api": {
+        "has_api": true,
+        "has_web_ui": false,
+        "api_path": "/",
+        "api_url": null,
+        "healthcheck_paths": [
+          "/health"
+        ],
+        "type": "custom-rest",
+        "base_path": "/",
+        "endpoint_count": 3,
+        "display_name": "Mattermost bridge (Go, shadow)",
+        "description": "Same slash contract as the Python bridge: POST /c3 (form) and POST /c3/action (JSON button callbacks), plus GET /health. Shadow stage: read-only C3 calls, dry-run webhook.",
+        "auth": "none"
+      }
+    },
     "cloud-webmail": {
       "ip": "10.0.0.6",
       "ports": {

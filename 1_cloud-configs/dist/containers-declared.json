@@ -155,6 +155,7 @@
           "containers": [
             "mattermost",
             "mattermost-bots",
+            "mattermost-bots-go",
             "cloud-webmail",
             "mail-puller",
             "continuwuity",
@@ -2185,6 +2186,27 @@
       "public_url": "chat.diegonmarcos.com",
       "auth": "two_factor",
       "auth_type": "woauth"
+    },
+    {
+      "name": "mattermost-bots-go",
+      "kind": "container",
+      "service": "chat-mattermost-go",
+      "role": "app",
+      "dir": "user-comm_chat-mattermost-go",
+      "group": "Cloud Apps",
+      "category": "Inboxes",
+      "description": "Go port of the Mattermost ntfy bridge and C3 command bot (ntfy-bridge.py in chat-mattermost: bootstrap, ntfy to channel bridge, /c3 slash command, C3 bot over websocket), shadow stage: follows the ntfy stream and serves the /c3 handler read-only on its own port, holds no Mattermost credential and posts nothing, outside every request path (ticket #1880)",
+      "image": "ghcr.io/diegonmarcos/chat-mattermost-go:latest",
+      "host": "oci-apps",
+      "dns": "",
+      "port": 8897,
+      "public": false,
+      "protocol": "http",
+      "db_engine": "",
+      "legacy_category": "app",
+      "public_url": "",
+      "auth": "",
+      "auth_type": "mesh"
     },
     {
       "name": "cloud-webmail",

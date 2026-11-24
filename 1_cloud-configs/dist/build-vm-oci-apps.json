@@ -501,6 +501,15 @@
       "has_docker_build": true
     },
     {
+      "name": "chat-mattermost-go",
+      "dir": "user-comm_chat-mattermost-go",
+      "compose_path": "/opt/containers/chat-mattermost-go",
+      "images": [
+        "ghcr.io/diegonmarcos/chat-mattermost-go:latest"
+      ],
+      "has_docker_build": true
+    },
+    {
       "name": "cloud-webmail",
       "dir": "user-comm_cloud-webmail",
       "compose_path": "/opt/containers/cloud-webmail",

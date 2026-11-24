@@ -6,9 +6,9 @@
   "base": "https://rss.diegonmarcos.com/feed",
   "counts": {
     "declared": 22,
-    "logs": 125,
-    "apps": 42,
-    "total": 189
+    "logs": 126,
+    "apps": 43,
+    "total": 191
   },
   "channels": [
     {
@@ -1222,6 +1222,17 @@
       "quiet": true
     },
     {
+      "id": "logs_mattermost-bots-go",
+      "topic": "logs_mattermost-bots-go",
+      "title": "mattermost-bots-go",
+      "path": "Cloud-Infra/Logs/oci-apps/mattermost-bots-go",
+      "category": "logs",
+      "source": "logs",
+      "vm": "oci-apps",
+      "feed": "/feed/c/logs_mattermost-bots-go.atom",
+      "quiet": true
+    },
+    {
       "id": "logs_cloud-webmail",
       "topic": "logs_cloud-webmail",
       "title": "cloud-webmail",
@@ -1772,6 +1783,16 @@
       "category": "apps",
       "source": "apps",
       "feed": "/feed/c/app_chat-mattermost.atom",
+      "quiet": true
+    },
+    {
+      "id": "app_chat-mattermost-go",
+      "topic": "app_chat-mattermost-go",
+      "title": "Go port of the Mattermost ntfy bridge and C3 command bot (ntfy-bridge.py in chat-mattermost: bootstrap, ntfy to channel bridge, /c3 slash command, C3 bot over websocket), shadow stage: follows the ntfy stream and serves the /c3 handler read-only on its own port, holds no Mattermost credential and posts nothing, outside every request path (ticket #1880)",
+      "path": "Cloud-Apps/app/chat-mattermost-go",
+      "category": "apps",
+      "source": "apps",
+      "feed": "/feed/c/app_chat-mattermost-go.atom",
       "quiet": true
     },
     {

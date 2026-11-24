@@ -262,6 +262,18 @@
       ]
     },
     {
+      "name": "chat-mattermost-go",
+      "category": "app",
+      "vm": "oci-A1-f_0",
+      "description": "Go port of the Mattermost ntfy bridge and C3 command bot (ntfy-bridge.py in chat-mattermost: bootstrap, ntfy to channel bridge, /c3 slash command, C3 bot over websocket), shadow stage: follows the ntfy stream and serves the /c3 handler read-only on its own port, holds no Mattermost credential and posts nothing, outside every request path (ticket #1880)",
+      "domain": "—",
+      "ports": [],
+      "networks": [],
+      "containers": [
+        "mattermost-bots-go"
+      ]
+    },
+    {
       "name": "cloud-builder-x",
       "category": "tools",
       "vm": "local",
@@ -2001,6 +2013,18 @@
         "mattermost",
         "mattermost-postgres",
         "mattermost-bots"
+      ]
+    },
+    {
+      "name": "chat-mattermost-go",
+      "category": "app",
+      "vm": "oci-A1-f_0",
+      "description": "Go port of the Mattermost ntfy bridge and C3 command bot (ntfy-bridge.py in chat-mattermost: bootstrap, ntfy to channel bridge, /c3 slash command, C3 bot over websocket), shadow stage: follows the ntfy stream and serves the /c3 handler read-only on its own port, holds no Mattermost credential and posts nothing, outside every request path (ticket #1880)",
+      "domain": "—",
+      "ports": [],
+      "networks": [],
+      "containers": [
+        "mattermost-bots-go"
       ]
     },
     {

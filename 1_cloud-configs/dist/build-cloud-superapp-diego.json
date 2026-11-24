@@ -2240,6 +2240,16 @@
         "db_engine": null
       },
       {
+        "name": "mattermost-bots-go",
+        "service": "chat-mattermost-go",
+        "vm": "oci-A1-f_0",
+        "private_dns": "mattermost-bots-go:8897",
+        "port": 8897,
+        "protocol": "http",
+        "category": "app",
+        "db_engine": null
+      },
+      {
         "name": "cloud-webmail",
         "service": "cloud-webmail",
         "vm": "oci-A1-f_0",

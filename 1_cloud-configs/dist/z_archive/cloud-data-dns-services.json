@@ -281,6 +281,10 @@
       "ip": "10.0.0.1",
       "desc": "Mattermost team chat (TE 11.x ESR) with ntfy bridge and C3 command bot"
     },
+    "chat-mattermost-go": {
+      "ip": "10.0.0.1",
+      "desc": "Go port of the Mattermost ntfy bridge and C3 command bot (ntfy-bridge.py in chat-mattermost: bootstrap, ntfy to channel bridge, /c3 slash command, C3 bot over websocket), shadow stage: follows the ntfy stream and serves the /c3 handler read-only on its own port, holds no Mattermost credential and posts nothing, outside every request path (ticket #1880)"
+    },
     "webmail": {
       "ip": "10.0.0.1",
       "desc": "Cloud Webmail — Stalwart-native JMAP webmail with multi-account/multi-server (webmail.diegonmarcos.com); OUR build of bulwarkmail/webmail 1.9.2. Replaces SnappyMail."

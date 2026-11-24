@@ -1420,6 +1420,19 @@
         "path": "/api/v4/system/ping"
       }
     },
+    "chat-mattermost-go": {
+      "name": "chat-mattermost-go",
+      "vm": "oci-A1-f_0",
+      "domain": null,
+      "enabled": true,
+      "category": "app",
+      "ports": {
+        "c3_shadow": 8897
+      },
+      "health": {
+        "path": "/health"
+      }
+    },
     "cloud-webmail": {
       "name": "cloud-webmail",
       "vm": "oci-A1-f_0",
@@ -2317,6 +2330,10 @@
       "dns": "mattermost-bots.mesh.diegonmarcos.com"
     },
     {
+      "service": "chat-mattermost-go",
+      "dns": "chat-mattermost-go.mesh.diegonmarcos.com"
+    },
+    {
       "service": "cloud-webmail",
       "dns": "webmail.mesh.diegonmarcos.com"
     },
@@ -2713,6 +2730,7 @@
           "hermes-agent",
           "openclaw",
           "chat-mattermost",
+          "chat-mattermost-go",
           "cloud-webmail",
           "matrix-continuwuity",
           "matrix-element",
@@ -3718,6 +3736,19 @@
         },
         "health": {
           "path": "/api/v4/system/ping"
+        }
+      },
+      "chat-mattermost-go": {
+        "name": "chat-mattermost-go",
+        "vm": "oci-A1-f_0",
+        "domain": null,
+        "enabled": true,
+        "category": "app",
+        "ports": {
+          "c3_shadow": 8897
+        },
+        "health": {
+          "path": "/health"
         }
       },
       "cloud-webmail": {

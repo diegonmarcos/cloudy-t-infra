@@ -6,28 +6,28 @@
   },
   "repo": "cloud-u-containers",
   "counts": {
-    "files": 2775,
+    "files": 2781,
     "by_lang": {
-      "sh": 202,
+      "sh": 204,
       "js": 128,
-      "nix": 216,
-      "py": 531,
+      "nix": 218,
+      "py": 532,
       "ts": 1324,
-      "rust": 374
+      "rust": 375
     },
     "by_role": {
-      "shell": 192,
+      "shell": 194,
       "file": 362,
       "nix-module": 20,
-      "python": 514,
+      "python": 515,
       "module": 826,
       "script": 10,
-      "flake": 99,
+      "flake": 100,
       "entrypoint": 73,
-      "compose": 97,
+      "compose": 98,
       "mcp-tool": 152,
       "workflow-dag": 7,
-      "rust-module": 370,
+      "rust-module": 371,
       "hook": 53
     }
   },
@@ -47281,6 +47281,141 @@
       "symbols": []
     },
     {
+      "path": "user-comm_chat-mattermost-go/build.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "get_config()",
+        "get_config_array()",
+        "get_lifecycle()",
+        "detect_layout()",
+        "rewrite_compose_image_refs()",
+        "log()",
+        "log_warn()",
+        "log_error()",
+        "declared_container_names()",
+        "ssh_with_retry()",
+        "ssh_run_detached()",
+        "rsync_with_retry()",
+        "_ship_build_phase()"
+      ],
+      "imports": [],
+      "symbols": [
+        "get_config()",
+        "get_config_array()",
+        "get_lifecycle()",
+        "detect_layout()",
+        "rewrite_compose_image_refs()",
+        "log()",
+        "log_warn()",
+        "log_error()",
+        "declared_container_names()",
+        "ssh_with_retry()",
+        "ssh_run_detached()",
+        "rsync_with_retry()",
+        "_ship_build_phase()"
+      ]
+    },
+    {
+      "path": "user-comm_chat-mattermost-go/src/code/parity/ref.py",
+      "lang": "py",
+      "role": "python",
+      "exports": [
+        "load(env)",
+        "main()"
+      ],
+      "imports": [
+        "importlib.util",
+        "json",
+        "os",
+        "sys"
+      ],
+      "symbols": [
+        "load(env)",
+        "main()"
+      ]
+    },
+    {
+      "path": "user-comm_chat-mattermost-go/src/compose.nix",
+      "lang": "nix",
+      "role": "compose",
+      "exports": [
+        "buildJson",
+        "container"
+      ],
+      "imports": [],
+      "symbols": [
+        "bin",
+        "bind",
+        "port",
+        "live",
+        "ntfyB",
+        "topics",
+        "services",
+        "mattermost-bots-go",
+        "image",
+        "container_name",
+        "network_mode",
+        "read_only",
+        "cap_drop",
+        "security_opt",
+        "command",
+        "environment",
+        "TZ",
+        "MM_BRIDGE_SHADOW",
+        "NTFY_URL",
+        "TOPICS",
+        "C3_API_URL",
+        "C3_BIND_IP",
+        "C3_PORT",
+        "healthcheck",
+        "test",
+        "interval",
+        "timeout",
+        "retries",
+        "start_period"
+      ]
+    },
+    {
+      "path": "user-comm_chat-mattermost-go/src/flake.nix",
+      "lang": "nix",
+      "role": "flake",
+      "exports": [
+        "description",
+        "shadow",
+        "Type",
+        "#1880)\";",
+        "nixpkgs"
+      ],
+      "imports": [
+        "../../_shared/engine.nix",
+        "./compose.nix",
+        "../_shared/engine.nix",
+        "compose.nix"
+      ],
+      "symbols": [
+        "description",
+        "outputs",
+        "forAllSystems",
+        "buildJson",
+        "container",
+        "engine",
+        "nb",
+        "packages",
+        "pkgs",
+        "default",
+        "srcDir",
+        "templates",
+        "composeSpec",
+        "nativeBuild",
+        "cmd",
+        "binary",
+        "baseImage",
+        "apt",
+        "title"
+      ]
+    },
+    {
       "path": "user-comm_chat-mattermost/build.sh",
       "lang": "sh",
       "role": "shell",
@@ -64582,6 +64717,24 @@
       ]
     },
     {
+      "path": "user-comm_tools-maddy/src/crate/src/integrity.rs",
+      "lang": "rust",
+      "role": "rust-module",
+      "exports": [
+        "main"
+      ],
+      "imports": [
+        "rusqlite::",
+        "std::collections::BTreeSet"
+      ],
+      "symbols": [
+        "log(msg: &str)",
+        "count_where_body_key_in(conn: &Connection, keys: &BTreeSet<String>)",
+        "run(db: &str, blob_dir: &str)",
+        "main(_args: &[String])"
+      ]
+    },
+    {
       "path": "user-comm_tools-maddy/src/crate/src/jev.rs",
       "lang": "rust",
       "role": "rust-module",
@@ -64847,6 +65000,18 @@
         "run_shell(rules_path, env_strategy, message)",
         "run_rust(binary, rules_path, env_strategy, message)",
         "main()"
+      ]
+    },
+    {
+      "path": "user-comm_tools-maddy/src/test-integrity-parity.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "mk()"
+      ],
+      "imports": [],
+      "symbols": [
+        "mk()"
       ]
     },
     {

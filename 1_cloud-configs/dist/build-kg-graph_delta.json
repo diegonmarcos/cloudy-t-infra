@@ -33,15 +33,15 @@
   "_generated": "",
   "_source": "_cloud-data-consolidated.json via cloud-data-config-derive.ts/kg-delta",
   "counts": {
-    "nodes": 406,
-    "edges": 559,
+    "nodes": 409,
+    "edges": 563,
     "by_table": {
       "vm": 4,
-      "service": 101,
-      "container": 125,
+      "service": 102,
+      "container": 126,
       "domain": 44,
       "repo": 3,
-      "module": 101,
+      "module": 102,
       "package": 28
     }
   },
@@ -2260,6 +2260,32 @@
     },
     {
       "table": "service",
+      "id": "chat_mattermost_go",
+      "key": "service:chat_mattermost_go",
+      "properties": {
+        "name": "chat-mattermost-go",
+        "category": "app",
+        "description": "Go port of the Mattermost ntfy bridge and C3 command bot (ntfy-bridge.py in chat-mattermost: bootstrap, ntfy to channel bridge, /c3 slash command, C3 bot over websocket), shadow stage: follows the ntfy stream and serves the /c3 handler read-only on its own port, holds no Mattermost credential and posts nothing, outside every request path (ticket #1880)",
+        "domain": null,
+        "port": 8897,
+        "vm": "oci-apps",
+        "folder": "user-comm_chat-mattermost-go"
+      }
+    },
+    {
+      "table": "container",
+      "id": "mattermost_bots_go",
+      "key": "container:mattermost_bots_go",
+      "properties": {
+        "name": "mattermost-bots-go",
+        "image": "ghcr.io/diegonmarcos/chat-mattermost-go:latest",
+        "role": "app",
+        "port": 8897,
+        "public": false
+      }
+    },
+    {
+      "table": "service",
       "id": "cloud_webmail",
       "key": "service:cloud_webmail",
       "properties": {
@@ -4205,6 +4231,17 @@
         "repo": "cloud",
         "category": "app",
         "service": "chat-mattermost"
+      }
+    },
+    {
+      "table": "module",
+      "id": "user_comm_chat_mattermost_go",
+      "key": "module:user_comm_chat_mattermost_go",
+      "properties": {
+        "name": "user-comm_chat-mattermost-go",
+        "repo": "cloud",
+        "category": "app",
+        "service": "chat-mattermost-go"
       }
     },
     {
@@ -6164,6 +6201,22 @@
       "key": "service:chat_mattermost->runs_container->container:mattermost_bots",
       "properties": {
         "role": "bots"
+      }
+    },
+    {
+      "table": "hosted_on",
+      "from": "service:chat_mattermost_go",
+      "to": "vm:oci_apps",
+      "key": "service:chat_mattermost_go->hosted_on->vm:oci_apps",
+      "properties": {}
+    },
+    {
+      "table": "runs_container",
+      "from": "service:chat_mattermost_go",
+      "to": "container:mattermost_bots_go",
+      "key": "service:chat_mattermost_go->runs_container->container:mattermost_bots_go",
+      "properties": {
+        "role": "app"
       }
     },
     {
@@ -8527,6 +8580,20 @@
       "from": "module:user_comm_chat_mattermost",
       "to": "service:chat_mattermost",
       "key": "module:user_comm_chat_mattermost->implements->service:chat_mattermost",
+      "properties": {}
+    },
+    {
+      "table": "belongs_to_repo",
+      "from": "module:user_comm_chat_mattermost_go",
+      "to": "repo:cloud",
+      "key": "module:user_comm_chat_mattermost_go->belongs_to_repo->repo:cloud",
+      "properties": {}
+    },
+    {
+      "table": "implements",
+      "from": "module:user_comm_chat_mattermost_go",
+      "to": "service:chat_mattermost_go",
+      "key": "module:user_comm_chat_mattermost_go->implements->service:chat_mattermost_go",
       "properties": {}
     },
     {

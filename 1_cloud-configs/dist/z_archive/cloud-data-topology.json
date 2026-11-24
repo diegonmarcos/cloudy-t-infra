@@ -147,6 +147,7 @@
         "mattermost",
         "mattermost-postgres",
         "mattermost-bots",
+        "mattermost-bots-go",
         "cloud-webmail",
         "continuwuity",
         "matrix-element",
@@ -6145,6 +6146,55 @@
         ]
       },
       "flake": "user-comm_chat-mattermost"
+    },
+    "chat-mattermost-go": {
+      "category": "app",
+      "vm": "oci-A1-f_0",
+      "folder": "user-comm_chat-mattermost-go",
+      "description": "Go port of the Mattermost ntfy bridge and C3 command bot (ntfy-bridge.py in chat-mattermost: bootstrap, ntfy to channel bridge, /c3 slash command, C3 bot over websocket), shadow stage: follows the ntfy stream and serves the /c3 handler read-only on its own port, holds no Mattermost credential and posts nothing, outside every request path (ticket #1880)",
+      "port": 8897,
+      "dns": "chat-mattermost-go.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:8897",
+      "containers": {
+        "app": {
+          "container_name": "mattermost-bots-go",
+          "image": "ghcr.io/diegonmarcos/chat-mattermost-go:latest",
+          "port": 8897,
+          "port_env": "C3_PORT",
+          "public": false,
+          "proxy": null,
+          "healthcheck": "/health",
+          "monitoring": null,
+          "volumes": [],
+          "env_file": false,
+          "depends_on": [],
+          "resources": null,
+          "read_only": true,
+          "protocol": "http"
+        }
+      },
+      "container_names": [
+        "mattermost-bots-go"
+      ],
+      "all_ports": [
+        "8897"
+      ],
+      "all_dns": [],
+      "compose": {
+        "containers": [],
+        "ports": [],
+        "networks": []
+      },
+      "proxy": {
+        "app_hub": false
+      },
+      "declared_ports": {
+        "c3_shadow": 8897
+      },
+      "health": {
+        "path": "/health"
+      },
+      "flake": "user-comm_chat-mattermost-go"
     },
     "cloud-webmail": {
       "category": "app",
