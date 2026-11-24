@@ -21,6 +21,7 @@ import (
 	"vm-pilotd/internal/psi"
 	"vm-pilotd/internal/sdnotify"
 	"vm-pilotd/internal/shedder"
+	"vm-pilotd/internal/tier1"
 )
 
 // Config is /etc/vm-pilotd.json, rendered by the Nix module from the same consolidated
@@ -42,6 +43,10 @@ type Config struct {
 		RateSeconds        int
 		ShellRateDir       string
 	} `json:"journal_ntfy"`
+	Tier1 struct {
+		Services                               []string
+		MaxRestarts, ResetWindow, IntervalSecs int
+	} `json:"tier1"`
 	DockerSock string `json:"docker_sock"`
 	Procfs     string `json:"procfs"`
 }
@@ -263,3 +268,31 @@ func Watchdog(ctx context.Context) func() {
 }
 
 func Ready(vm string) { sdnotify.Send(fmt.Sprintf("READY=1\nSTATUS=vm-pilotd %s", vm)) }
+
+// RunTier1 ticks the tier-1 watchdog core. Shadow only: restarts are recorded, never performed.
+func RunTier1(ctx context.Context, c Config, log Logger, wd func()) {
+	d := dockerapi.New(c.DockerSock)
+	iv := c.Tier1.IntervalSecs
+	if iv == 0 {
+		iv = 30
+	}
+	cfg := tier1.Config{Services: c.Tier1.Services, MaxRestarts: c.Tier1.MaxRestarts, ResetWindow: c.Tier1.ResetWindow}
+	var st tier1.State
+	t := time.NewTicker(time.Duration(iv) * time.Second)
+	defer t.Stop()
+	for {
+		in := tier1.Input{Running: map[string]bool{}, DockerActive: d.Ping(ctx), Now: time.Now().Unix()}
+		for _, s := range cfg.Services {
+			in.Running[s] = in.DockerActive && d.Running(ctx, s)
+		}
+		if ev := st.Step(cfg, in); len(ev) > 0 {
+			log("SHADOW tier1 docker=%v: %s", in.DockerActive, strings.Join(ev, "; "))
+		}
+		wd()
+		select {
+		case <-ctx.Done():
+			return
+		case <-t.C:
+		}
+	}
+}

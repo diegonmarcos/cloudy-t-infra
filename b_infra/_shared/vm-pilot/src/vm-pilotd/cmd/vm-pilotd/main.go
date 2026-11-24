@@ -56,6 +56,10 @@ func main() {
 			cc := c
 			cc.Shadow = true
 			run(func() { runner.RunPetter(ctx, cc, logf, wd) })
+		case "tier1":
+			cc := c
+			cc.Shadow = true
+			run(func() { runner.RunTier1(ctx, cc, logf, wd) })
 		default:
 			logf("unknown component %q ignored", comp)
 		}

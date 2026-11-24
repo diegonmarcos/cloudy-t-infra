@@ -106,3 +106,17 @@ func urlEscape(s string) string {
 	}
 	return b.String()
 }
+
+// Running is `docker inspect --format '{{.State.Running}}' name` | grep -q true, without the CLI.
+func (c *Client) Running(ctx context.Context, name string) bool {
+	st, b, err := c.do(ctx, "GET", "/containers/"+name+"/json", 5*time.Second)
+	if err != nil || st != 200 {
+		return false
+	}
+	var v struct {
+		State struct {
+			Running bool `json:"Running"`
+		} `json:"State"`
+	}
+	return json.Unmarshal(b, &v) == nil && v.State.Running
+}
