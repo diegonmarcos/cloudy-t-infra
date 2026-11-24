@@ -29,6 +29,8 @@ in {
     (import ./disk-ballast.nix { inherit config pkgs lib; })
     # Phase 2: tier-1 app cgroup reservations + circuit-breaker auto-restart
     (import ./tier1-apps.nix { inherit config pkgs lib vmName; })
+    # #1886: one-shot per boot that brings the declared (non tier-1) containers back
+    (import ./boot-start-declared.nix { inherit config pkgs lib vmName; })
     (import ../dashboard/dashboard.nix { inherit vmName; })
     (import ../agents/health-agent.nix { inherit config pkgs lib vmName; })
     # my-webserver + my-watchdog: the two jobs vm-pilot used to implement
