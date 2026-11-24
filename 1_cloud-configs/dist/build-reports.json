@@ -1069,6 +1069,19 @@
         "path": "/health"
       }
     },
+    "c3bot-relay-go": {
+      "name": "c3bot-relay-go",
+      "vm": "oci-A1-f_0",
+      "domain": null,
+      "enabled": true,
+      "category": "sec",
+      "ports": {
+        "app": 3129
+      },
+      "health": {
+        "path": "/health"
+      }
+    },
     "disk-janitor": {
       "name": "disk-janitor",
       "vm": "oci-A1-f_0",
@@ -2042,6 +2055,10 @@
       "dns": "c3bot-relay.mesh.diegonmarcos.com"
     },
     {
+      "service": "c3bot-relay-go",
+      "dns": "c3bot-relay-go.mesh.diegonmarcos.com"
+    },
+    {
       "service": "auth-broker",
       "dns": "auth-broker.mesh.diegonmarcos.com"
     },
@@ -2589,6 +2606,7 @@
           "umami",
           "agents-tmp-reaper",
           "c3bot-relay",
+          "c3bot-relay-go",
           "disk-janitor",
           "auth-broker",
           "cloudy-ai-tokens-api",
@@ -3254,6 +3272,19 @@
         "category": "sec",
         "ports": {
           "app": 3119
+        },
+        "health": {
+          "path": "/health"
+        }
+      },
+      "c3bot-relay-go": {
+        "name": "c3bot-relay-go",
+        "vm": "oci-A1-f_0",
+        "domain": null,
+        "enabled": true,
+        "category": "sec",
+        "ports": {
+          "app": 3129
         },
         "health": {
           "path": "/health"

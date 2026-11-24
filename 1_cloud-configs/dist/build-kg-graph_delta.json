@@ -33,15 +33,15 @@
   "_generated": "",
   "_source": "_cloud-data-consolidated.json via cloud-data-config-derive.ts/kg-delta",
   "counts": {
-    "nodes": 384,
-    "edges": 531,
+    "nodes": 387,
+    "edges": 535,
     "by_table": {
       "vm": 4,
-      "service": 95,
-      "container": 115,
+      "service": 96,
+      "container": 116,
       "domain": 44,
       "repo": 3,
-      "module": 95,
+      "module": 96,
       "package": 28
     }
   },
@@ -1372,6 +1372,32 @@
         "role": "app",
         "port": 3119,
         "public": true
+      }
+    },
+    {
+      "table": "service",
+      "id": "c3bot_relay_go",
+      "key": "service:c3bot_relay_go",
+      "properties": {
+        "name": "c3bot-relay-go",
+        "category": "sec",
+        "description": "Go port of c3bot-relay (Telegram <-> c3 relay: WebSocket /ws, SSE /events, long-poll /poll, POST /send, /claim lease, webhook + getUpdates failover), shadow stage: runs next to the Node container on its own port, own container and own state, with ephemeral secrets and no Telegram access, outside every request path (ticket #1873)",
+        "domain": null,
+        "port": 3129,
+        "vm": "oci-apps",
+        "folder": "infra-ops_c3bot-relay-go"
+      }
+    },
+    {
+      "table": "container",
+      "id": "c3bot_relay_go",
+      "key": "container:c3bot_relay_go",
+      "properties": {
+        "name": "c3bot-relay-go",
+        "image": "ghcr.io/diegonmarcos/c3bot-relay-go:latest",
+        "role": "app",
+        "port": 3129,
+        "public": false
       }
     },
     {
@@ -3697,6 +3723,17 @@
     },
     {
       "table": "module",
+      "id": "infra_ops_c3bot_relay_go",
+      "key": "module:infra_ops_c3bot_relay_go",
+      "properties": {
+        "name": "infra-ops_c3bot-relay-go",
+        "repo": "cloud",
+        "category": "sec",
+        "service": "c3bot-relay-go"
+      }
+    },
+    {
+      "table": "module",
       "id": "infra_ops_disk_janitor",
       "key": "module:infra_ops_disk_janitor",
       "properties": {
@@ -5323,6 +5360,22 @@
       "from": "service:c3bot_relay",
       "to": "container:c3bot_relay",
       "key": "service:c3bot_relay->runs_container->container:c3bot_relay",
+      "properties": {
+        "role": "app"
+      }
+    },
+    {
+      "table": "hosted_on",
+      "from": "service:c3bot_relay_go",
+      "to": "vm:oci_apps",
+      "key": "service:c3bot_relay_go->hosted_on->vm:oci_apps",
+      "properties": {}
+    },
+    {
+      "table": "runs_container",
+      "from": "service:c3bot_relay_go",
+      "to": "container:c3bot_relay_go",
+      "key": "service:c3bot_relay_go->runs_container->container:c3bot_relay_go",
       "properties": {
         "role": "app"
       }
@@ -7733,6 +7786,20 @@
       "from": "module:infra_ops_c3bot_relay",
       "to": "service:c3bot_relay",
       "key": "module:infra_ops_c3bot_relay->implements->service:c3bot_relay",
+      "properties": {}
+    },
+    {
+      "table": "belongs_to_repo",
+      "from": "module:infra_ops_c3bot_relay_go",
+      "to": "repo:cloud",
+      "key": "module:infra_ops_c3bot_relay_go->belongs_to_repo->repo:cloud",
+      "properties": {}
+    },
+    {
+      "table": "implements",
+      "from": "module:infra_ops_c3bot_relay_go",
+      "to": "service:c3bot_relay_go",
+      "key": "module:infra_ops_c3bot_relay_go->implements->service:c3bot_relay_go",
       "properties": {}
     },
     {

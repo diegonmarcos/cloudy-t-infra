@@ -78,6 +78,7 @@
             "google-personal-mcp",
             "google-workspace-mcp",
             "c3bot-relay",
+            "c3bot-relay-go",
             "cloud-cgc-pub-mcp",
             "cloud-cgc-pvt-mcp"
           ]
@@ -1335,6 +1336,27 @@
       "public_url": "mcp.diegonmarcos.com/c3bot-relay",
       "auth": "",
       "auth_type": "open"
+    },
+    {
+      "name": "c3bot-relay-go",
+      "kind": "container",
+      "service": "c3bot-relay-go",
+      "role": "app",
+      "dir": "infra-ops_c3bot-relay-go",
+      "group": "Infra Apps",
+      "category": "Ops-API-MCP",
+      "description": "Go port of c3bot-relay (Telegram <-> c3 relay: WebSocket /ws, SSE /events, long-poll /poll, POST /send, /claim lease, webhook + getUpdates failover), shadow stage: runs next to the Node container on its own port, own container and own state, with ephemeral secrets and no Telegram access, outside every request path (ticket #1873)",
+      "image": "ghcr.io/diegonmarcos/c3bot-relay-go:latest",
+      "host": "oci-apps",
+      "dns": "",
+      "port": 3129,
+      "public": false,
+      "protocol": "http",
+      "db_engine": "",
+      "legacy_category": "sec",
+      "public_url": "",
+      "auth": "",
+      "auth_type": "mesh"
     },
     {
       "name": "disk-janitor",

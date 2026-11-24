@@ -116,6 +116,7 @@
         "umami-setup",
         "agents-tmp-reaper",
         "c3bot-relay",
+        "c3bot-relay-go",
         "disk-janitor",
         "cloudy-auth-google-api",
         "cloudy-auth-github-api",
@@ -4262,6 +4263,61 @@
         "endpoint_check": true
       },
       "flake": "infra-ops_c3bot-relay"
+    },
+    "c3bot-relay-go": {
+      "category": "sec",
+      "vm": "oci-A1-f_0",
+      "folder": "infra-ops_c3bot-relay-go",
+      "description": "Go port of c3bot-relay (Telegram <-> c3 relay: WebSocket /ws, SSE /events, long-poll /poll, POST /send, /claim lease, webhook + getUpdates failover), shadow stage: runs next to the Node container on its own port, own container and own state, with ephemeral secrets and no Telegram access, outside every request path (ticket #1873)",
+      "port": 3129,
+      "dns": "c3bot-relay-go.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:3129",
+      "containers": {
+        "app": {
+          "container_name": "c3bot-relay-go",
+          "image": "ghcr.io/diegonmarcos/c3bot-relay-go:latest",
+          "port": 3129,
+          "port_env": "PORT",
+          "public": false,
+          "proxy": null,
+          "healthcheck": "/health",
+          "monitoring": null,
+          "volumes": [],
+          "env_file": false,
+          "depends_on": [],
+          "resources": null,
+          "read_only": true,
+          "protocol": "http",
+          "limits": {
+            "buffer_size": 500,
+            "max_clients": 32,
+            "poll_max_wait_s": 50,
+            "allowed_from": "6431508617"
+          }
+        }
+      },
+      "container_names": [
+        "c3bot-relay-go"
+      ],
+      "all_ports": [
+        "3129"
+      ],
+      "all_dns": [],
+      "compose": {
+        "containers": [],
+        "ports": [],
+        "networks": []
+      },
+      "proxy": {
+        "app_hub": false
+      },
+      "declared_ports": {
+        "app": 3129
+      },
+      "health": {
+        "path": "/health"
+      },
+      "flake": "infra-ops_c3bot-relay-go"
     },
     "disk-janitor": {
       "category": "tools",

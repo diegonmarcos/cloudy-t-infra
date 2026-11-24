@@ -1056,6 +1056,30 @@
         "auth": "bearer"
       }
     },
+    "c3bot-relay-go": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "app": 3129
+      },
+      "vm": "oci-apps",
+      "healthcheck": "/health",
+      "description": "Go port of c3bot-relay (Telegram <-> c3 relay: WebSocket /ws, SSE /events, long-poll /poll, POST /send, /claim lease, webhook + getUpdates failover), shadow stage: runs next to the Node container on its own port, own container and own state, with ephemeral secrets and no Telegram access, outside every request path (ticket #1873)",
+      "api": {
+        "has_api": true,
+        "has_web_ui": false,
+        "api_path": "/",
+        "api_url": null,
+        "healthcheck_paths": [
+          "/health"
+        ],
+        "type": "custom-rest",
+        "base_path": "/",
+        "endpoint_count": 8,
+        "display_name": "c3bot Telegram relay (Go, shadow)",
+        "description": "Same contract as c3bot-relay: WS /ws, SSE /events, long-poll /poll, POST /send, /claim and /release lease, POST /webhook, GET /health. Shadow stage: ephemeral bearer, no Telegram.",
+        "auth": "bearer"
+      }
+    },
     "disk-janitor": {
       "ip": "10.0.0.6",
       "ports": {},

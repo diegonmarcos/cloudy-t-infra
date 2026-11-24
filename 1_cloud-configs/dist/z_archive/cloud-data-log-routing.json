@@ -232,6 +232,11 @@
         "log_level": "info"
       },
       {
+        "container": "c3bot-relay-go",
+        "service": "c3bot-relay-go",
+        "log_level": "info"
+      },
+      {
         "container": "disk-janitor",
         "service": "disk-janitor",
         "log_level": "info"

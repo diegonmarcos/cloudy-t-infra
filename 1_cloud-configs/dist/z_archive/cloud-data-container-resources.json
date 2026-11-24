@@ -520,6 +520,15 @@
         "pids_limit": 128
       }
     },
+    "c3bot-relay-go": {
+      "vm": "oci-apps",
+      "vm_ram_gb": 24,
+      "vm_cpu": 4,
+      "containers": [
+        "c3bot-relay-go"
+      ],
+      "resources": null
+    },
     "disk-janitor": {
       "vm": "oci-apps",
       "vm_ram_gb": 24,

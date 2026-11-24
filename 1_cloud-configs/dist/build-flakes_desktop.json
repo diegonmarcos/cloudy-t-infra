@@ -510,6 +510,7 @@
         "umami",
         "agents-tmp-reaper",
         "c3bot-relay",
+        "c3bot-relay-go",
         "disk-janitor",
         "auth-broker",
         "cloudy-ai-tokens-api",
@@ -550,7 +551,7 @@
         "send",
         "vaultwarden"
       ],
-      "container_count": 89
+      "container_count": 90
     },
     "gcp-E2-f_0": {
       "ip": "35.226.147.64",
@@ -6857,6 +6858,99 @@
         "base_path": "/c3bot-relay",
         "display_name": "c3bot Telegram relay",
         "description": "Telegram <-> c3 relay: WS /ws, SSE /events, long-poll /poll, POST /send.",
+        "auth": "bearer"
+      }
+    },
+    "c3bot-relay-go": {
+      "category": "sec",
+      "vm": "oci-A1-f_0",
+      "folder": "infra-ops_c3bot-relay-go",
+      "description": "Go port of c3bot-relay (Telegram <-> c3 relay: WebSocket /ws, SSE /events, long-poll /poll, POST /send, /claim lease, webhook + getUpdates failover), shadow stage: runs next to the Node container on its own port, own container and own state, with ephemeral secrets and no Telegram access, outside every request path (ticket #1873)",
+      "enabled": true,
+      "flake": "infra-ops_c3bot-relay-go",
+      "port": 3129,
+      "dns": "c3bot-relay-go.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.6:3129",
+      "containers": {
+        "app": {
+          "container_name": "c3bot-relay-go",
+          "image": "ghcr.io/diegonmarcos/c3bot-relay-go:latest",
+          "port": 3129,
+          "port_env": "PORT",
+          "public": false,
+          "proxy": null,
+          "healthcheck": "/health",
+          "monitoring": null,
+          "volumes": [],
+          "env_file": false,
+          "depends_on": [],
+          "resources": null,
+          "read_only": true,
+          "protocol": "http",
+          "limits": {
+            "buffer_size": 500,
+            "max_clients": 32,
+            "poll_max_wait_s": 50,
+            "allowed_from": "6431508617"
+          }
+        }
+      },
+      "container_names": [
+        "c3bot-relay-go"
+      ],
+      "all_ports": [
+        "3129"
+      ],
+      "all_dns": [],
+      "compose": {
+        "containers": [],
+        "ports": [],
+        "networks": []
+      },
+      "proxy": {
+        "app_hub": false
+      },
+      "declared_ports": {
+        "app": 3129
+      },
+      "health": {
+        "path": "/health"
+      },
+      "taxonomy": {
+        "group": "Infra Apps",
+        "category": "Ops-API-MCP"
+      },
+      "bind_host": "10.0.0.6",
+      "resources": {
+        "mem_limit": "64M",
+        "mem_reservation": "8M"
+      },
+      "tests": {
+        "unit": {
+          "cmd": "go test -count=1 ./...",
+          "cwd": "src/code"
+        },
+        "parity-compare": {
+          "cmd": "PARITY_REQUIRE=1 go test -count=1 -tags parity -v -run TestParity ./parity/",
+          "cwd": "src/code",
+          "_doc": "Reference = the Node relay (infra-ops_c3bot-relay/src/code/server.js) run under node with its own throwaway token and a fake Telegram API; the same request sequences go to both and the transcripts must be identical. See parity/parity_test.go."
+        }
+      },
+      "_doc_shadow": "Shadow stage (#1873). The live Node relay (container c3bot-relay, port 3119, its own vault secrets) is untouched. This container has NO env_file and mounts no secret: SHADOW_EPHEMERAL=1 makes the process generate a random bearer and webhook secret at start and ignore any bot token, so it cannot read or acknowledge the live queue, cannot post to Telegram and cannot claim a lease on the live relay; nothing outside the process can call its API. It logs a periodic `shadow-selfcheck PASS|FAIL` of its own contract. State lives on a tmpfs (/state, uid 65532): the Ship's generated Dockerfile cannot pre-create a writable volume dir for the nonroot user, and the persistence logic is covered by the Go tests and the parity run.",
+      "_doc_addressing": "No mesh name, no Caddy route and no client wiring on purpose during the shadow stage: only the container itself dials its bind address (10.0.0.6:3129, oci-apps WG IP), so it needs no Hickory row and no Caddy fallback-map entry. Switch-over (real secrets, mesh name, route) is a separate step after the shadow has run clean.",
+      "api": {
+        "has_api": true,
+        "has_web_ui": false,
+        "api_path": "/",
+        "api_url": null,
+        "healthcheck_paths": [
+          "/health"
+        ],
+        "type": "custom-rest",
+        "base_path": "/",
+        "endpoint_count": 8,
+        "display_name": "c3bot Telegram relay (Go, shadow)",
+        "description": "Same contract as c3bot-relay: WS /ws, SSE /events, long-poll /poll, POST /send, /claim and /release lease, POST /webhook, GET /health. Shadow stage: ephemeral bearer, no Telegram.",
         "auth": "bearer"
       }
     },

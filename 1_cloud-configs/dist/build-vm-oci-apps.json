@@ -312,6 +312,15 @@
       "has_docker_build": true
     },
     {
+      "name": "c3bot-relay-go",
+      "dir": "infra-ops_c3bot-relay-go",
+      "compose_path": "/opt/containers/c3bot-relay-go",
+      "images": [
+        "ghcr.io/diegonmarcos/c3bot-relay-go:latest"
+      ],
+      "has_docker_build": true
+    },
+    {
       "name": "disk-janitor",
       "dir": "infra-ops_disk-janitor",
       "compose_path": "/opt/containers/disk-janitor",

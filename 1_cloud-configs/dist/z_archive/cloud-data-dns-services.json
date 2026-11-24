@@ -169,6 +169,10 @@
       "ip": "10.0.0.1",
       "desc": "c3bot-relay (#1579): Telegram <-> c3 relay on the c3-bot (Bot A, ONE token). Primary ingestion is webhook mode via the public c3-pub route /c3bot-webhook (secret_token checked). While the webhook is unhealthy the relay calls deleteWebhook and polls Bot A with getUpdates, then setWebhook again when the route recovers (never both at once, so no 409). Deduped by chat+message_id+date. Inbound events fan out over WebSocket (/ws), SSE (/events, Last-Event-ID resume) and long-poll (/poll, cursor). Outbound via POST /send or a WS send frame, sent as Bot A. Zero npm dependencies. API bearer-gated, mesh-only; only the webhook path is public."
     },
+    "c3bot-relay-go": {
+      "ip": "10.0.0.1",
+      "desc": "Go port of c3bot-relay (Telegram <-> c3 relay: WebSocket /ws, SSE /events, long-poll /poll, POST /send, /claim lease, webhook + getUpdates failover), shadow stage: runs next to the Node container on its own port, own container and own state, with ephemeral secrets and no Telegram access, outside every request path (ticket #1873)"
+    },
     "auth-broker": {
       "ip": "10.0.0.1",
       "desc": "Identity broker for the multi-SSO sign-in: GitHub (device flow + web), Google (web code flow + PKCE) and Cloudflare One (Access JWT) and Email code (one-time code), owner only (#1066, #1083, #1118)"

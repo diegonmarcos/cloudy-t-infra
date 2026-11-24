@@ -6,9 +6,9 @@
   "base": "https://rss.diegonmarcos.com/feed",
   "counts": {
     "declared": 22,
-    "logs": 115,
+    "logs": 116,
     "apps": 42,
-    "total": 179
+    "total": 180
   },
   "channels": [
     {
@@ -768,6 +768,17 @@
       "source": "logs",
       "vm": "oci-apps",
       "feed": "/feed/c/logs_c3bot-relay.atom",
+      "quiet": true
+    },
+    {
+      "id": "logs_c3bot-relay-go",
+      "topic": "logs_c3bot-relay-go",
+      "title": "c3bot-relay-go",
+      "path": "Cloud-Infra/Logs/oci-apps/c3bot-relay-go",
+      "category": "logs",
+      "source": "logs",
+      "vm": "oci-apps",
+      "feed": "/feed/c/logs_c3bot-relay-go.atom",
       "quiet": true
     },
     {

@@ -128,6 +128,18 @@
       ]
     },
     {
+      "name": "c3bot-relay-go",
+      "category": "sec",
+      "vm": "oci-A1-f_0",
+      "description": "Go port of c3bot-relay (Telegram <-> c3 relay: WebSocket /ws, SSE /events, long-poll /poll, POST /send, /claim lease, webhook + getUpdates failover), shadow stage: runs next to the Node container on its own port, own container and own state, with ephemeral secrets and no Telegram access, outside every request path (ticket #1873)",
+      "domain": "—",
+      "ports": [],
+      "networks": [],
+      "containers": [
+        "c3bot-relay-go"
+      ]
+    },
+    {
       "name": "caddy",
       "category": "sec",
       "vm": "gcp-E2-f_0",
@@ -1349,6 +1361,18 @@
       "networks": [],
       "containers": [
         "c3bot-relay"
+      ]
+    },
+    {
+      "name": "c3bot-relay-go",
+      "category": "sec",
+      "vm": "oci-A1-f_0",
+      "description": "Go port of c3bot-relay (Telegram <-> c3 relay: WebSocket /ws, SSE /events, long-poll /poll, POST /send, /claim lease, webhook + getUpdates failover), shadow stage: runs next to the Node container on its own port, own container and own state, with ephemeral secrets and no Telegram access, outside every request path (ticket #1873)",
+      "domain": "—",
+      "ports": [],
+      "networks": [],
+      "containers": [
+        "c3bot-relay-go"
       ]
     },
     {
