@@ -1,0 +1,67 @@
+# ╔══════════════════════════════════════════════════════════════════╗
+# ║                                                                  ║
+# ║   GENERATED FILE — DO NOT EDIT                                   ║
+# ║                                                                  ║
+# ║   Source : 1_cicd/src/cicd/vm-pilotd-test.yml
+# ║   Engine : 1_cicd/src/scripts/cloud-ship-repo-workflow-engine.sh
+# ║   Rebuild: ./9_others/build.sh
+# ║                                                                  ║
+# ║   Manual edits will be overwritten on next build.                ║
+# ║                                                                  ║
+# ╚══════════════════════════════════════════════════════════════════╝
+
+name: vm-pilotd-test
+
+# Go host daemon vm-pilotd (ticket #1876): vet, tests (including the parity harnesses that
+# execute the real shell daemons: journal-ntfy.sh, load-shedder.nix main loop,
+# watchdog-petter.sh, each with mutation checks), and a static cross-compile for both fleet
+# architectures. Builds run here, never on the VMs. The binaries are uploaded as an artifact
+# for the shadow roll-out.
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'b_infra/_shared/vm-pilot/src/vm-pilotd/**'
+      - 'b_infra/_shared/vm-pilot/src/modules/scripts/journal-ntfy.sh'
+      - 'b_infra/_shared/vm-pilot/src/modules/protection/load-shedder.nix'
+      - 'b_infra/_shared/vm-pilot/src/modules/protection/watchdog-petter.sh'
+      - '.github/workflows/vm-pilotd-test.yml'
+  pull_request:
+    paths:
+      - 'b_infra/_shared/vm-pilot/src/vm-pilotd/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: b_infra/_shared/vm-pilot/src/vm-pilotd
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: false
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.24'
+          cache: false
+      - name: vet
+        run: go vet ./...
+      - name: tests (parity harnesses run the real shell sources)
+        run: go test -count=1 -race -v ./...
+      - name: static binaries (linux amd64 + arm64)
+        run: |
+          mkdir -p ../../../../../out
+          for a in amd64 arm64; do
+            CGO_ENABLED=0 GOOS=linux GOARCH=$a go build -trimpath -ldflags='-s -w' -o ../../../../../out/vm-pilotd-linux-$a ./cmd/vm-pilotd
+          done
+          ls -l ../../../../../out
+          file ../../../../../out/* || true
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vm-pilotd
+          path: out/
+          retention-days: 14
