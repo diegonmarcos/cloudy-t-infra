@@ -7820,7 +7820,12 @@
           "_doc_wg_bind_ip": "Caddy's wg0 IP on gcp-proxy (10.0.0.1) — every public *.diegonmarcos.com site block dual-binds to (0.0.0.0, wg_bind_ip). Caddy lives on gcp-proxy (the public-facing VM); reverse-proxy upstreams to internal services traverse the wg0 mesh (10.0.0.x). Engine resolveVmIpForCaddy() still prefers wg-public IPs (10.1.0.x) when both endpoints are peers — gcp-proxy is a wg-public peer (10.1.0.2) so mail-side upstreams keep using wg-public transit.",
           "wg_bind_ip": "10.0.0.1",
           "_doc_wg_cidrs": "Source CIDRs that count as \"on the mesh\" for every wg_only / bearer gate caddyfile.nix emits (@wg, @not_wg). Mirrors config.json wireguard.subnet + wireguard.subnet_v6. The wg0 mesh went dual-stack on 2026-07-26 but this gate stayed IPv4-only, so any client resolving the AAAA record (fd0c:1d00::1 — Hickory serves both, and clients prefer IPv6) arrived from fd0c:1d00::/64, missed the matcher and got 403. Keep both families listed or mesh-only routes break for IPv6-capable peers. Space-separated: Caddy remote_ip takes a CIDR list.",
-          "wg_cidrs": "10.0.0.0/24 fd0c:1d00::/64"
+          "wg_cidrs": "10.0.0.0/24 fd0c:1d00::/64",
+          "_doc_front_edge": "#1897: the public front edge (caddy-public on oci-analytics) as the hub sees it over wg-public: config.json wireguard_public peer oci-analytics wg_ip/32 + wg_ipv6/128, nothing wider. Only this source may (a) prefix a PROXY v2 header on the hub's :443 layer4 (the front edge's raw-TLS passthrough tier carries the real client address that way) and (b) set X-Forwarded-For (trusted_proxies, for the hops the front edge terminates and re-proxies: c3-pvt, auth, WKD). Every other peer, mesh peers included, is keyed on its own connection address; a PROXY header or X-Forwarded-For from anyone else is ignored. remote_ip gates never read it (client_ip only feeds rate-limit keys and the access log).",
+          "front_edge": [
+            "10.1.0.1/32",
+            "fd0c:1d01::1/128"
+          ]
         },
         "on_demand_tls": {
           "ask_bind": "127.0.0.1:2020",
@@ -7842,7 +7847,7 @@
           "rate_limit": {
             "events": 100,
             "window": "1m",
-            "key": "{remote_host}",
+            "key": "{client_ip}",
             "zone": "global"
           },
           "bot_blocker": {
@@ -7893,13 +7898,13 @@
           "mcp_rate_limit": {
             "events": 600,
             "window": "1m",
-            "key": "{remote_host}",
+            "key": "{client_ip}",
             "zone": "mcp"
           },
           "jmap_rate_limit": {
             "events": 600,
             "window": "1m",
-            "key": "{remote_host}",
+            "key": "{client_ip}",
             "zone": "jmap"
           },
           "_doc_auth_rate_limit": "#1896. Authenticated traffic gets its own, larger allowance; anonymous stays strict per IP. The three zones above stay per IP for requests WITHOUT a credential. A request the edge gate (_shared/edge-auth.nix) sees carrying a credential (fleet Bearer, X-Fleet-Authorization, Authelia session cookie, broker cookie, Cloudflare Access JWT) skips them and: if the auth service refuses it, the refusal is counted in denied_rate_limit (strict, per IP, so a fake token buys nothing); if it passes, it is counted after forward_auth in auth_rate_limit (auth_mcp_rate_limit on the MCP hosts and on paths matching its path_regexp), keyed on the identity headers the auth service copied back (never on the credential, which never appears in a key or a log line). backstop_rate_limit is a high per-IP ceiling on every request. Remove auth_rate_limit to switch it all off (the render is then byte-identical to the pre-#1896 one). Guard: infra-sec_caddy/src/test/test-authed-rate-limit.sh.",
@@ -7919,13 +7924,13 @@
           "denied_rate_limit": {
             "events": 100,
             "window": "1m",
-            "key": "{remote_host}",
+            "key": "{client_ip}",
             "zone": "denied"
           },
           "backstop_rate_limit": {
             "events": 6000,
             "window": "1m",
-            "key": "{remote_host}",
+            "key": "{client_ip}",
             "zone": "backstop"
           }
         },

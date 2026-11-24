@@ -28622,7 +28622,11 @@
         "org.junit.Assert.assertEquals",
         "org.junit.Assert.assertNull",
         "org.junit.Assert.assertTrue",
-        "org.junit.Test"
+        "android.app.Application",
+        "org.junit.Test",
+        "org.junit.runner.RunWith",
+        "org.robolectric.RobolectricTestRunner",
+        "org.robolectric.annotation.Config"
       ],
       "symbols": [
         "class MediaBadgePlayingParityTest"
@@ -138794,6 +138798,7 @@
         "androidx.compose.ui.test.onAllNodesWithTag",
         "androidx.compose.ui.test.onNodeWithTag",
         "androidx.compose.ui.test.performClick",
+        "androidx.compose.ui.test.performScrollTo",
         "androidx.compose.ui.test.performTouchInput",
         "androidx.compose.ui.test.longClick",
         "com.diegonmarcos.cloudcalc.sheet.Area",

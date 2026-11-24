@@ -6,9 +6,9 @@
   },
   "repo": "cloud-u-containers",
   "counts": {
-    "files": 2748,
+    "files": 2749,
     "by_lang": {
-      "sh": 194,
+      "sh": 195,
       "js": 128,
       "nix": 206,
       "py": 528,
@@ -16,7 +16,7 @@
       "rust": 373
     },
     "by_role": {
-      "shell": 184,
+      "shell": 185,
       "file": 362,
       "nix-module": 20,
       "python": 511,
@@ -23655,6 +23655,7 @@
         "subst",
         "stripTrail",
         "privateUpstream",
+        "xffHub",
         "fwd",
         "xreal",
         "ss",
@@ -23689,8 +23690,7 @@
         "publicSnis",
         "sniSlug",
         "allMuxSnis",
-        "mkMailL4Route",
-        "l4Section"
+        "mkMailL4Route"
       ]
     },
     {
@@ -23822,6 +23822,7 @@
         "wgBindIp",
         "publicBindLine",
         "wgCidrs",
+        "frontEdge",
         "ss",
         "securityHeaders",
         "rlAuth",
@@ -23854,8 +23855,7 @@
         "secMcp",
         "auth",
         "autheliaUpstream",
-        "introspectUpstream",
-        "authelia"
+        "introspectUpstream"
       ]
     },
     {
@@ -24063,6 +24063,24 @@
         "req()",
         "chk()",
         "check_allow()"
+      ]
+    },
+    {
+      "path": "infra-sec_caddy/src/test/test-real-client-ip.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "fail()",
+        "render()",
+        "validate()",
+        "start()"
+      ],
+      "imports": [],
+      "symbols": [
+        "fail()",
+        "render()",
+        "validate()",
+        "start()"
       ]
     },
     {
