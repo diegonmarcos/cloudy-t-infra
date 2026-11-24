@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 24887,
+    "files": 24907,
     "by_lang": {
-      "sh": 828,
+      "sh": 829,
       "js": 599,
-      "py": 264,
-      "kotlin": 13972,
+      "py": 268,
+      "kotlin": 13987,
       "ts": 8382,
       "java": 656,
       "nix": 37,
@@ -21,11 +21,11 @@
       "hook": 166,
       "file": 2270,
       "shell": 664,
-      "script": 347,
-      "python": 96,
+      "script": 350,
+      "python": 98,
       "module": 6478,
       "java": 655,
-      "kotlin": 13969,
+      "kotlin": 13984,
       "flake": 33,
       "rust-module": 149,
       "nix-module": 4,
@@ -2279,6 +2279,36 @@
       ],
       "symbols": [
         "main()"
+      ]
+    },
+    {
+      "path": ".github/workflows/scripts/cloud-android-share-sheet-guard.py",
+      "lang": "py",
+      "role": "script",
+      "exports": [
+        "read(root, rel)",
+        "nodes(text, tag)",
+        "filters(body)",
+        "attr(attrs, name)",
+        "activity(text, name)",
+        "send_filters(fs)",
+        "check_share(text, name, label_ref, mimes, who, exported=True)",
+        "check(root)"
+      ],
+      "imports": [
+        "os",
+        "re",
+        "sys"
+      ],
+      "symbols": [
+        "read(root, rel)",
+        "nodes(text, tag)",
+        "filters(body)",
+        "attr(attrs, name)",
+        "activity(text, name)",
+        "send_filters(fs)",
+        "check_share(text, name, label_ref, mimes, who, exported=True)",
+        "check(root)"
       ]
     },
     {
@@ -5620,6 +5650,36 @@
       ]
     },
     {
+      "path": "1_cicd/src/scripts/cloud-android-share-sheet-guard.py",
+      "lang": "py",
+      "role": "script",
+      "exports": [
+        "read(root, rel)",
+        "nodes(text, tag)",
+        "filters(body)",
+        "attr(attrs, name)",
+        "activity(text, name)",
+        "send_filters(fs)",
+        "check_share(text, name, label_ref, mimes, who, exported=True)",
+        "check(root)"
+      ],
+      "imports": [
+        "os",
+        "re",
+        "sys"
+      ],
+      "symbols": [
+        "read(root, rel)",
+        "nodes(text, tag)",
+        "filters(body)",
+        "attr(attrs, name)",
+        "activity(text, name)",
+        "send_filters(fs)",
+        "check_share(text, name, label_ref, mimes, who, exported=True)",
+        "check(root)"
+      ]
+    },
+    {
       "path": "1_cicd/src/scripts/cloud-android-ship-lib.sh",
       "lang": "sh",
       "role": "script",
@@ -8199,6 +8259,22 @@
       ]
     },
     {
+      "path": "1_cicd/src/scripts/test/share-sheet-guard.test.sh",
+      "lang": "sh",
+      "role": "script",
+      "exports": [
+        "mk()",
+        "expect()",
+        "mut()"
+      ],
+      "imports": [],
+      "symbols": [
+        "mk()",
+        "expect()",
+        "mut()"
+      ]
+    },
+    {
       "path": "1_cicd/src/scripts/test/sign-in-owner-guard.test.sh",
       "lang": "sh",
       "role": "script",
@@ -9744,7 +9820,7 @@
         "expandedIconDp(ctx: Context, cols: Int)",
         "FolderSheetFrame(label: String, onDismiss: ()",
         "FolderSheetCard(label: String, content: @Composable ()",
-        "ExpandedAppTile( tag: String, label: String, icon: Drawable?, installed: Boolean, cols: Int, iconDp: Dp, desc: String?, modifier: Modifier = Modifier, onClick: ()",
+        "ExpandedAppTile( tag: String, label: String, icon: Drawable?, installed: Boolean, cols: Int, iconDp: Dp, desc: String?, modifier: Modifier = Modifier, starPkg: String? = null, onClick: ()",
         "PhoneFolderSheet(open: OpenFolder, onDismiss: ()",
         "class OpenFolder",
         "class AllAppsSection",
@@ -9786,6 +9862,58 @@
         "class PhoneSmartFolders",
         "class Rule",
         "class SmartFolder"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/apps/Quickmarks.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "Quickmarks"
+      ],
+      "imports": [
+        "android.content.Context",
+        "androidx.compose.foundation.layout.Box",
+        "androidx.compose.foundation.layout.offset",
+        "androidx.compose.foundation.layout.size",
+        "androidx.compose.material3.Text",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.mutableIntStateOf",
+        "androidx.compose.ui.Alignment",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.graphics.Color",
+        "androidx.compose.ui.platform.LocalContext",
+        "androidx.compose.ui.platform.testTag",
+        "androidx.compose.ui.unit.Dp",
+        "androidx.compose.ui.unit.dp",
+        "androidx.compose.ui.unit.sp",
+        "org.json.JSONArray",
+        "org.json.JSONObject",
+        "java.io.File"
+      ],
+      "symbols": [
+        "curatedPkgs(groups: List<SuitePhoneAppsFragment.Group>)",
+        "isQuickmark(curated: Set<String>, st: State, pkg: String)",
+        "label(isQuickmark: Boolean)",
+        "toggle(curated: Set<String>, st: State, pkg: String, group: String, label: String)",
+        "norm(s: String)",
+        "groupFor(folderLabel: String?, groups: List<SuitePhoneAppsFragment.Group>)",
+        "apply(groups: List<SuitePhoneAppsFragment.Group>, st: State)",
+        "serialize(st: State)",
+        "parse(json: String?)",
+        "file(ctx: Context)",
+        "load(ctx: Context)",
+        "save(ctx: Context, st: State)",
+        "isQuickmark(ctx: Context, pkg: String)",
+        "toggle(ctx: Context, pkg: String, label: String)",
+        "folderLabelOf(ctx: Context, pkg: String)",
+        "starred(pkg: String)",
+        "StarBadge(pkg: String, size: Dp, content: @Composable ()",
+        "isPin(pkg: String)",
+        "class Quickmarks",
+        "class Add",
+        "class State",
+        "class PinnedKey"
       ]
     },
     {
@@ -22376,6 +22504,78 @@
       ]
     },
     {
+      "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/share/PeerShare.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "PeerShare"
+      ],
+      "imports": [],
+      "symbols": [
+        "items(action: String?, streams: List<String>, text: String?)",
+        "isLink(text: String)",
+        "pick(reachable: List<String>)",
+        "line(name: String, ok: Boolean)",
+        "class PeerShare",
+        "class Item",
+        "class File",
+        "class Text",
+        "class Link",
+        "class Pick",
+        "class Auto",
+        "class Ask",
+        "class None"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/share/ShareToPeerActivity.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ShareToPeerActivity"
+      ],
+      "imports": [
+        "android.content.Intent",
+        "android.net.Uri",
+        "android.os.Bundle",
+        "android.provider.OpenableColumns",
+        "android.widget.Toast",
+        "androidx.activity.ComponentActivity",
+        "androidx.activity.compose.setContent",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.material3.AlertDialog",
+        "androidx.compose.material3.MaterialTheme",
+        "androidx.compose.material3.Text",
+        "androidx.compose.material3.TextButton",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.ui.res.stringResource",
+        "com.diegonmarcos.superapp.R",
+        "com.diegonmarcos.superapp.kdeconnect.KdeConnectConfig",
+        "com.diegonmarcos.superapp.kdeconnect.KdeConnectManager",
+        "com.diegonmarcos.superapp.kdeconnect.KdeDevicePrefs",
+        "com.diegonmarcos.superapp.kdeconnect.KdePeers",
+        "com.diegonmarcos.superapp.kdeconnect.SharePlugin",
+        "kotlinx.coroutines.async",
+        "kotlinx.coroutines.awaitAll",
+        "kotlinx.coroutines.runBlocking"
+      ],
+      "symbols": [
+        "streams()",
+        "onCreate(savedInstanceState: Bundle?)",
+        "name(u: Uri)",
+        "send(id: String, items: List<PeerShare.Item>, uris: List<Uri>)",
+        "Dialog()",
+        "class ShareToPeerActivity",
+        "class Stage",
+        "class Choose",
+        "class None",
+        "class Result"
+      ]
+    },
+    {
       "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/shell/Collapsible.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -25332,6 +25532,31 @@
         "leavesAnUnclaimedLabelAlone()",
         "theDataLabelStillBucketsBySectionKey()",
         "class PhoneFolderDisplayLabelTest"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/test/java/com/diegonmarcos/superapp/apps/QuickmarksTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "QuickmarksTest"
+      ],
+      "imports": [
+        "android.app.Application",
+        "androidx.test.core.app.ApplicationProvider",
+        "com.diegonmarcos.superapp.launcher.AppLongPressMenu",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "org.junit.runner.RunWith",
+        "org.robolectric.RobolectricTestRunner",
+        "org.robolectric.annotation.Config"
+      ],
+      "symbols": [
+        "e(p: String)",
+        "rows()",
+        "class QuickmarksTest"
       ]
     },
     {
@@ -32804,6 +33029,28 @@
         "tile(id: String)",
         "snap(name: String)",
         "class PresetsModesScreenTest"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/test/java/com/diegonmarcos/superapp/share/PeerShareTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "PeerShareTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "everyStreamIsAFileInOrder()",
+        "textIsALinkOnlyWhenItIsOneUrl()",
+        "nothingOrForeignActionIsEmpty()",
+        "peerIsAutoPickedWhenExactlyOneIsReachable()",
+        "resultLines()",
+        "class PeerShareTest"
       ]
     },
     {
@@ -95349,6 +95596,27 @@
       ]
     },
     {
+      "path": "ab_cloud-libs-shared/libs/maps/src/main/java/com/diegonmarcos/cloudnav/maps/takeout/Gazetteer.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "Gazetteer"
+      ],
+      "imports": [
+        "com.diegonmarcos.cloudnav.maps.TimelineBuilder",
+        "java.io.Reader",
+        "kotlin.math.cos",
+        "kotlin.math.floor"
+      ],
+      "symbols": [
+        "key(la: Int, lo: Int)",
+        "nearest(lat: Double, lon: Double, maxM: Double = MAX_M)",
+        "parse(reader: Reader)",
+        "class Gazetteer",
+        "class Entry"
+      ]
+    },
+    {
       "path": "ab_cloud-libs-shared/libs/maps/src/main/java/com/diegonmarcos/cloudnav/maps/takeout/TakeoutAndroid.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -95441,6 +95709,8 @@
         "close()",
         "read()",
         "read(b: ByteArray, off: Int, len: Int)",
+        "accepts(name: String)",
+        "isXml(r: java.io.BufferedReader)",
         "run(source: TakeoutSource, sql: SqlExec, importId: Long, zone: ZoneId = ZoneId.systemDefault()",
         "tick(force: Boolean = false)",
         "class TakeoutEntry",
@@ -95502,6 +95772,27 @@
         "class JsonOut",
         "class Tracker",
         "class Node"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/maps/src/main/java/com/diegonmarcos/cloudnav/maps/takeout/TakeoutKml.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "TakeoutKml"
+      ],
+      "imports": [
+        "java.io.Reader",
+        "java.time.OffsetDateTime"
+      ],
+      "symbols": [
+        "parse(reader: Reader, sink: TakeoutSink, onProgress: (Long)",
+        "text(s: String)",
+        "point(tok: String)",
+        "offsetMin(t: String?)",
+        "label(name: String?)",
+        "placemark(body: String, sink: TakeoutSink)",
+        "class TakeoutKml"
       ]
     },
     {
@@ -95574,8 +95865,12 @@
         "mode(type: String?)",
         "cityCountry(address: String?)",
         "nightOf(a: Long, b: Long, zone: ZoneId)",
-        "visitSegments(v: VisitRow, zone: ZoneId)",
+        "visitSegments(v: VisitRow, zone: ZoneId, geo: Gazetteer? = null)",
         "activitySegment(a: ActivityRow)",
+        "add(a: Long, b: Long)",
+        "free(a: Long, b: Long)",
+        "cut(s: TlSegment, cover: Cover)",
+        "layerKml(segs: List<TlSegment>)",
         "pathPoints(json: String)",
         "pt(o: JSONObject)",
         "preferTracked(imported: List<Fix>, trackedTs: LongArray, windowMs: Long = 15 * 60_000L)",
@@ -95587,6 +95882,7 @@
         "class TakeoutDerive",
         "class VisitRow",
         "class ActivityRow",
+        "class Cover",
         "class Acc",
         "class TakeoutRebuild"
       ]
@@ -225905,6 +226201,99 @@
       ]
     },
     {
+      "path": "ac_cloud-drive/app/src/main/java/com/diegonmarcos/clouddrive/share/ShareImport.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ShareImport"
+      ],
+      "imports": [],
+      "symbols": [
+        "plan(action: String?, streams: List<String>, text: String?)",
+        "safeName(raw: String?)",
+        "textName(subject: String?, text: String)",
+        "uniqueName(name: String, taken: Set<String>)",
+        "openTarget(mime: String?, name: String?)",
+        "canRename(itemCount: Int)",
+        "finalName(original: String, rename: String?)",
+        "resultLine(name: String, ok: Boolean)",
+        "initialTree(last: String?)",
+        "docIdToPath(docId: String, primaryRoot: String)",
+        "class ShareImport",
+        "class Item",
+        "class Stream",
+        "class Text",
+        "class OpenTarget"
+      ]
+    },
+    {
+      "path": "ac_cloud-drive/app/src/main/java/com/diegonmarcos/clouddrive/share/ShareOpenActivity.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ShareOpenActivity"
+      ],
+      "imports": [
+        "android.content.Intent",
+        "android.net.Uri",
+        "android.os.Bundle",
+        "android.widget.Toast",
+        "androidx.activity.ComponentActivity",
+        "com.diegonmarcos.clouddrive.MainActivity",
+        "com.diegonmarcos.clouddrive.PdfReaderActivity",
+        "com.diegonmarcos.clouddrive.R",
+        "com.diegonmarcos.clouddrive.editor.EditorHook",
+        "com.diegonmarcos.clouddrive.editor.ExternalOpen"
+      ],
+      "symbols": [
+        "onCreate(savedInstanceState: Bundle?)",
+        "class ShareOpenActivity"
+      ]
+    },
+    {
+      "path": "ac_cloud-drive/app/src/main/java/com/diegonmarcos/clouddrive/share/ShareReceiverActivity.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ShareReceiverActivity"
+      ],
+      "imports": [
+        "android.content.Intent",
+        "android.net.Uri",
+        "android.os.Bundle",
+        "android.provider.DocumentsContract",
+        "android.provider.OpenableColumns",
+        "android.widget.Toast",
+        "androidx.activity.ComponentActivity",
+        "androidx.activity.compose.setContent",
+        "androidx.activity.result.contract.ActivityResultContracts",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.material3.AlertDialog",
+        "androidx.compose.material3.MaterialTheme",
+        "androidx.compose.material3.OutlinedTextField",
+        "androidx.compose.material3.Text",
+        "androidx.compose.material3.TextButton",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.ui.res.stringResource",
+        "com.diegonmarcos.clouddrive.MainActivity",
+        "com.diegonmarcos.clouddrive.R",
+        "com.diegonmarcos.clouddrive.usb.UsbDriveActivity",
+        "java.io.File"
+      ],
+      "symbols": [
+        "onCreate(savedInstanceState: Bundle?)",
+        "askName(tree: Uri)",
+        "streams()",
+        "displayName(uri: Uri)",
+        "importInto(tree: Uri, rename: String?)",
+        "create(name: String, mime: String, write: (java.io.OutputStream)",
+        "Dialogs()",
+        "class ShareReceiverActivity"
+      ]
+    },
+    {
       "path": "ac_cloud-drive/app/src/main/java/com/diegonmarcos/clouddrive/SharedStore.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -231861,6 +232250,32 @@
         "aFreshPhoneWithoutStorageNamesEveryRepositoryAndRetries()",
         "aQueuedSeedSaysWhatItWaitsFor()",
         "class SeedReportTest"
+      ]
+    },
+    {
+      "path": "ac_cloud-drive/app/src/test/java/com/diegonmarcos/clouddrive/share/ShareImportTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ShareImportTest",
+        "ShareImportSaveToTest",
+        "ShareOpenWithTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertNull",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "streamsWinThenTextThenNothing()",
+        "namesAreSafeAndUnique()",
+        "treeIdsBecomePaths()",
+        "renameOnlyForOneItem()",
+        "lastFolderAndResultLines()",
+        "pdfGoesToTheReaderEverythingElseToTheEditor()",
+        "class ShareImportTest",
+        "class ShareImportSaveToTest",
+        "class ShareOpenWithTest"
       ]
     },
     {
@@ -425903,7 +426318,6 @@
       "imports": [
         "android.content.Context",
         "com.diegonmarcos.cloudnav.maps.MapsDb",
-        "com.diegonmarcos.cloudnav.maps.TimelineSync",
         "org.json.JSONArray",
         "org.json.JSONObject",
         "java.time.ZoneId"
@@ -425913,10 +426327,12 @@
         "citiesJson(l: List<CityTotal>)",
         "worldJson(l: List<CountryTotal>)",
         "rows(stats: List<DayStats>, trips: TripsResult, places: List<PlaceTotal>, cities: List<CityTotal>, countries: List<CountryTotal>)",
+        "keyOf(kind: String)",
         "persist(app: Context, nowMs: Long, stats: List<DayStats>, trips: TripsResult, places: List<PlaceTotal>, cities: List<CityTotal>, countries: List<CountryTotal>)",
         "windowStart(app: Context, today: java.time.LocalDate, zone: ZoneId = ZoneId.systemDefault()",
         "windowDates(first: java.time.LocalDate, today: java.time.LocalDate)",
-        "explore(backend: DigestBackend, store: List<com.diegonmarcos.cloudnav.maps.TlSegment>, first: java.time.LocalDate, today: java.time.LocalDate, nowMs: Long, zone: ZoneId, corrections: List<Correction>, memory: List<Remembered>, home: String?)",
+        "explore(backend: DigestBackend, store: List<com.diegonmarcos.cloudnav.maps.TlSegment>, first: java.time.LocalDate, today: java.time.LocalDate, nowMs: Long, zone: ZoneId, corrections: List<Correction>, memory: List<Remembered>, home: String?, cancelled: ()",
+        "fold(r: CacheResult, rankDates: List<java.time.LocalDate>, home: String?)",
         "explore(app: Context, store: List<com.diegonmarcos.cloudnav.maps.TlSegment>, first: java.time.LocalDate, today: java.time.LocalDate, nowMs: Long, zone: ZoneId)",
         "rebuild(app: Context, nowMs: Long, zone: ZoneId = ZoneId.systemDefault()",
         "class AggregatesStore",
@@ -425993,15 +426409,23 @@
       "symbols": [
         "palette()",
         "importFrom(uri: android.net.Uri)",
+        "repo()",
+        "withSnapshot(s: ExploredSnapshot)",
+        "onViewCreated(view: android.view.View, savedInstanceState: android.os.Bundle?)",
         "onResume()",
+        "ingestLater()",
+        "loadCounts()",
+        "changed()",
         "Content()",
         "correct(c: Correction)",
         "load(date: LocalDate)",
         "compute(app: android.content.Context, date: LocalDate, today: LocalDate)",
+        "nameLater(app: android.content.Context, date: LocalDate, day: List<DaySeg>)",
         "background(what: String, work: (android.content.Context)",
         "dataActions()",
         "stepsTotal(app: android.content.Context, store: List<com.diegonmarcos.cloudnav.maps.TlSegment>, date: LocalDate, a: Long, b: Long)",
-        "class DayFragment"
+        "class DayFragment",
+        "class DayData"
       ]
     },
     {
@@ -426103,6 +426527,8 @@
         "DayTags",
         "DayUi",
         "DayActions",
+        "DayHeader",
+        "InsightsData",
         "DayFormat",
         "DayScreen"
       ],
@@ -426158,6 +426584,9 @@
         "missing(i: Int)",
         "menu(i: Int)",
         "digestOf(d: LocalDate)",
+        "fields(b: DayBar, sleep: DaySleep?)",
+        "has(s: DayStats)",
+        "week(stats: List<DayStats>)",
         "modeLabel(m: Mode)",
         "modeColor(m: Mode)",
         "dateLabel(d: LocalDate, today: LocalDate)",
@@ -426167,7 +426596,7 @@
         "DayTabView(ui: DayUi, a: DayActions, zone: ZoneId)",
         "DayCalendar(ui: DayUi, zone: ZoneId)",
         "DatePicker(ui: DayUi, a: DayActions)",
-        "SummaryBar(b: DayBar, onMap: ()",
+        "SummaryBar(b: DayBar, sleep: DaySleep?, onMap: ()",
         "SummaryRow(ui: DayUi)",
         "RouteMap(model: RouteModel, onPin: (Int)",
         "Glyph(res: Int, bg: Color, desc: String, modifier: Modifier = Modifier)",
@@ -426185,8 +426614,7 @@
         "class DayTab",
         "class DayTags",
         "class DayUi",
-        "class DayActions",
-        "class DayFormat"
+        "class DayActions"
       ]
     },
     {
@@ -426197,6 +426625,8 @@
         "SegState",
         "Block",
         "Daylight",
+        "DaySleep",
+        "DayLight",
         "DaySegments"
       ],
       "imports": [
@@ -426228,6 +426658,8 @@
         "utcHour(date: LocalDate, lat: Double, lon: Double, rise: Boolean)",
         "daylight(date: LocalDate, lat: Double?, lon: Double?, zone: ZoneId)",
         "at(rise: Boolean)",
+        "sleepOf(stats: DayStats?, day: List<DaySeg>, geo: com.diegonmarcos.cloudnav.maps.takeout.Gazetteer?, deviceZone: ZoneId)",
+        "dayLight(date: LocalDate, sleep: DaySleep?, day: List<DaySeg>, deviceZone: ZoneId)",
         "brightness(ms: Long, d: Daylight)",
         "ramp(v: Long, a: Long)",
         "skyArgb(f: Float)",
@@ -426237,6 +426669,8 @@
         "class SegState",
         "class Block",
         "class Daylight",
+        "class DaySleep",
+        "class DayLight",
         "class DaySegments"
       ]
     },
@@ -426783,6 +427217,71 @@
       ]
     },
     {
+      "path": "ac_cloud-nav/app/src/main/java/com/diegonmarcos/cloudnav/tracker/ExploredRepository.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ExploredInputs",
+        "ExploredSnapshot",
+        "ExploredRepository",
+        "MapsDbExploredInputs",
+        "NavGazetteer",
+        "LatestOnly",
+        "DayLoad"
+      ],
+      "imports": [
+        "android.content.Context",
+        "com.diegonmarcos.cloudnav.maps.MapsDb",
+        "com.diegonmarcos.cloudnav.maps.TimelineSync",
+        "com.diegonmarcos.cloudnav.maps.TlSegment",
+        "com.diegonmarcos.cloudnav.maps.takeout.Gazetteer",
+        "kotlinx.coroutines.CoroutineScope",
+        "kotlinx.coroutines.Deferred",
+        "kotlinx.coroutines.Job",
+        "kotlinx.coroutines.SupervisorJob",
+        "kotlinx.coroutines.async",
+        "kotlinx.coroutines.asCoroutineDispatcher",
+        "kotlinx.coroutines.flow.MutableStateFlow",
+        "kotlinx.coroutines.flow.StateFlow",
+        "kotlinx.coroutines.launch",
+        "kotlinx.coroutines.runBlocking",
+        "kotlinx.coroutines.withContext",
+        "java.time.LocalDate",
+        "java.time.ZoneId",
+        "java.util.concurrent.Executors",
+        "java.util.concurrent.atomic.AtomicLong",
+        "kotlin.coroutines.CoroutineContext"
+      ],
+      "symbols": [
+        "windowStart(today: LocalDate, zone: ZoneId)",
+        "segments(fromMs: Long, toMs: Long)",
+        "corrections()",
+        "memory()",
+        "home()",
+        "persist(nowMs: Long, rows: Map<String, String>)",
+        "current()",
+        "invalidate()",
+        "isFresh(s: ExploredSnapshot?, zone: ZoneId, today: LocalDate)",
+        "open(zone: ZoneId, today: LocalDate)",
+        "refresh(zone: ZoneId, today: LocalDate)",
+        "cancel()",
+        "rebuild(zone: ZoneId, nowMs: Long)",
+        "seed(zone: ZoneId, today: LocalDate)",
+        "build(zone: ZoneId, today: LocalDate, g: Long, cancelled: ()",
+        "get(ctx: Context)",
+        "launch(scope: CoroutineScope, context: CoroutineContext, work: suspend ()",
+        "day(read: (Long, Long)",
+        "class ExploredInputs",
+        "class ExploredSnapshot",
+        "class ExploredRepository",
+        "class MapsDbExploredInputs",
+        "class NavGazetteer",
+        "class LatestOnly",
+        "class DayLoad",
+        "class Result"
+      ]
+    },
+    {
       "path": "ac_cloud-nav/app/src/main/java/com/diegonmarcos/cloudnav/tracker/ExploredStore.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -426936,6 +427435,7 @@
         "steps(fromMs: Long, toMs: Long)",
         "relocate(stop: TlStop, nowMs: Long)",
         "install(ctx: Context)",
+        "warm(ctx: Context)",
         "migrateEngine(ctx: Context, nowMs: Long = System.currentTimeMillis()",
         "tick(ctx: Context, now: Long, zone: ZoneId = ZoneId.systemDefault()",
         "class NavTimelineExtra"
@@ -428460,6 +428960,90 @@
       ]
     },
     {
+      "path": "ac_cloud-nav/app/src/test/java/com/diegonmarcos/cloudnav/tracker/ExploredRepositoryTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ExploredRepositoryTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.cloudnav.maps.TlKind",
+        "com.diegonmarcos.cloudnav.maps.TlSegment",
+        "kotlinx.coroutines.Dispatchers",
+        "kotlinx.coroutines.flow.first",
+        "kotlinx.coroutines.runBlocking",
+        "kotlinx.coroutines.withTimeout",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertNotNull",
+        "org.junit.Assert.assertSame",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.time.LocalDate",
+        "java.time.ZoneId",
+        "java.util.concurrent.CountDownLatch",
+        "java.util.concurrent.TimeUnit"
+      ],
+      "symbols": [
+        "at(i: Int, h: Double)",
+        "store()",
+        "load()",
+        "put(rows: Map<LocalDate, String>)",
+        "remove(dates: Collection<LocalDate>)",
+        "clear()",
+        "windowStart(today: LocalDate, zone: ZoneId)",
+        "segments(fromMs: Long, toMs: Long)",
+        "corrections()",
+        "memory()",
+        "home()",
+        "persist(nowMs: Long, rows: Map<String, String>)",
+        "class ExploredRepositoryTest",
+        "class CountingBackend",
+        "class Inputs"
+      ]
+    },
+    {
+      "path": "ac_cloud-nav/app/src/test/java/com/diegonmarcos/cloudnav/tracker/KmlImportExploredTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "MemSql",
+        "KmlImportExploredTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.cloudnav.maps.TlKind",
+        "com.diegonmarcos.cloudnav.maps.TlSegment",
+        "com.diegonmarcos.cloudnav.maps.takeout.FileSource",
+        "com.diegonmarcos.cloudnav.maps.takeout.Gazetteer",
+        "com.diegonmarcos.cloudnav.maps.takeout.ImportSummary",
+        "com.diegonmarcos.cloudnav.maps.takeout.SqlExec",
+        "com.diegonmarcos.cloudnav.maps.takeout.TakeoutImporter",
+        "com.diegonmarcos.cloudnav.maps.takeout.TakeoutRebuild",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertNotNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.io.ByteArrayInputStream",
+        "java.time.Instant",
+        "java.time.LocalDate",
+        "java.time.OffsetDateTime",
+        "java.time.ZoneId",
+        "java.util.Locale"
+      ],
+      "symbols": [
+        "exec(sql: String, args: List<Any?>)",
+        "rows(sql: String, args: List<Any?>)",
+        "begin()",
+        "commit()",
+        "rollback()",
+        "segments()",
+        "res(p: String)",
+        "sleepDay(city: String)",
+        "class MemSql",
+        "class KmlImportExploredTest",
+        "class Imported"
+      ]
+    },
+    {
       "path": "ac_cloud-nav/app/src/test/java/com/diegonmarcos/cloudnav/tracker/ModeInferenceTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -428798,6 +429382,51 @@
         "JAVA_HOME",
         "GRADLE_OPTS",
         "shellHook"
+      ]
+    },
+    {
+      "path": "ac_cloud-nav/test/gen-gazetteer.py",
+      "lang": "py",
+      "role": "python",
+      "exports": [
+        "main(cities, info, out)"
+      ],
+      "imports": [
+        "sys"
+      ],
+      "symbols": [
+        "main(cities, info, out)"
+      ]
+    },
+    {
+      "path": "ac_cloud-nav/test/gen-kml-fixture.py",
+      "lang": "py",
+      "role": "python",
+      "exports": [
+        "t(d)",
+        "desc(a, b)",
+        "c(p)",
+        "visit(name, a, b, p)",
+        "path(a, b, pts)",
+        "mid(p, q)",
+        "at(day, h, m=0, tz=CET)",
+        "home_day(d, home=\"HOME\", work=\"WORK\")",
+        "main(out)"
+      ],
+      "imports": [
+        "datetime",
+        "os"
+      ],
+      "symbols": [
+        "t(d)",
+        "desc(a, b)",
+        "c(p)",
+        "visit(name, a, b, p)",
+        "path(a, b, pts)",
+        "mid(p, q)",
+        "at(day, h, m=0, tz=CET)",
+        "home_day(d, home=\"HOME\", work=\"WORK\")",
+        "main(out)"
       ]
     },
     {
@@ -489666,6 +490295,7 @@
         "onNewIntent(intent: Intent)",
         "captureViewIntent(intent: Intent?)",
         "openInFileView(intent: Intent?)",
+        "openUriInFileView(uri: android.net.Uri, type: String?)",
         "setupNativeNav()",
         "load()",
         "persistWebConsoleErrors()",
@@ -489781,7 +490411,9 @@
       "role": "kotlin",
       "exports": [
         "OpenRoute",
-        "OpenRouter"
+        "OpenRouter",
+        "ShareRoute",
+        "ShareRouter"
       ],
       "imports": [],
       "symbols": [
@@ -489793,8 +490425,13 @@
         "canWriteBack(action: String?, scheme: String?, flags: Int)",
         "humanSize(bytes: Long)",
         "hexPreview(b: ByteArray, max: Int = 512)",
+        "route(action: String?, streamCount: Int, text: String?)",
+        "streamRoute(mime: String?, name: String?)",
+        "noteName(subject: String?, text: String)",
         "class OpenRoute",
-        "class OpenRouter"
+        "class OpenRouter",
+        "class ShareRoute",
+        "class ShareRouter"
       ]
     },
     {
@@ -489889,6 +490526,7 @@
         "isTextOpen(mime: String?, name: String?)",
         "offerNote(name: String, content: String)",
         "capture(ctx: Context, intent: Intent?)",
+        "captureShare(ctx: Context, i: Intent)",
         "hasExternalStorageAccess()",
         "guardedFile(call: PluginCall, path: String)",
         "readFile(call: PluginCall)",
@@ -489899,7 +490537,8 @@
         "saveOpenFile(call: PluginCall)",
         "openSettings(call: PluginCall)",
         "class ExternalFilePlugin",
-        "class PendingOpen"
+        "class PendingOpen",
+        "class ShareResult"
       ]
     },
     {
@@ -490484,6 +491123,28 @@
         "editOnAWritableContentUriSavesBack()",
         "sizeAndHexPreview()",
         "class OpenRouterTest"
+      ]
+    },
+    {
+      "path": "ac_cloud-notes/packages/frontend/apps/android/App/app/src/test/java/app/cloudnotes/pro/ShareRouterTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ShareRouterTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "actionsAreTheAndroidOnes()",
+        "plainTextWithoutAStreamBecomesANewNote()",
+        "streamsWinOverTheCaption()",
+        "emptyOrForeignSharesAreNothing()",
+        "eachStreamFollowsTheViewTable()",
+        "noteNameIsSafeAndBounded()",
+        "class ShareRouterTest"
       ]
     },
     {

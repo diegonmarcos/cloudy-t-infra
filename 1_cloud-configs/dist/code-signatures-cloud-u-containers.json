@@ -3860,6 +3860,8 @@
       "lang": "ts",
       "role": "mcp-tool",
       "exports": [
+        "phoneToken",
+        "defaultPhoneUrl",
         "phoneBase",
         "appName",
         "logsPath",
@@ -3874,6 +3876,8 @@
       ],
       "imports": [],
       "symbols": [
+        "phoneToken(env: PhoneEnv)",
+        "defaultPhoneUrl(peers: Array<{ id: string; kind: string; mcp?: { url?: string } }>, prefer = \"samsung-a37\")",
         "phoneBase(env: PhoneEnv)",
         "appName(s: unknown)",
         "logsPath(p: LogsParams)",
@@ -3890,7 +3894,8 @@
       "imports": [
         "@modelcontextprotocol/sdk/server/mcp.js",
         "zod",
-        "./phone-api-core.js"
+        "./phone-api-core.js",
+        "./mesh-peers.js"
       ],
       "symbols": [
         "registerPhoneApiTools(server: McpServer, env: NodeJS.ProcessEnv = process.env)"
