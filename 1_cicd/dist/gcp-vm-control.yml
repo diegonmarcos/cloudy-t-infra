@@ -1,0 +1,66 @@
+# ╔══════════════════════════════════════════════════════════════════╗
+# ║                                                                  ║
+# ║   GENERATED FILE — DO NOT EDIT                                   ║
+# ║                                                                  ║
+# ║   Source : 1_cicd/src/cicd/gcp-vm-control.yml
+# ║   Engine : 1_cicd/src/scripts/cloud-ship-repo-workflow-engine.sh
+# ║   Rebuild: ./9_others/build.sh
+# ║                                                                  ║
+# ║   Manual edits will be overwritten on next build.                ║
+# ║                                                                  ║
+# ╚══════════════════════════════════════════════════════════════════╝
+
+# Out-of-band control of a GCP VM when the mesh path (and therefore cloud-infra-mcp) is down (#1898).
+# Actions: describe (state), serial (last serial console lines), reset (hard reset, then wait for RUNNING).
+# Only the declared fleet instances are accepted. Nothing secret is printed.
+name: gcp-vm-control
+
+on:
+  workflow_dispatch:
+    inputs:
+      instance:
+        description: "Instance name"
+        required: true
+        type: choice
+        options: [gcp-proxy]
+      action:
+        description: "describe | serial | reset"
+        required: true
+        type: choice
+        options: [describe, serial, reset]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: gcp-vm-control-${{ inputs.instance }}
+  cancel-in-progress: false
+
+jobs:
+  control:
+    runs-on: ubuntu-latest
+    env:
+      PROJECT: diegonmarcos-infra-prod
+      ZONE: us-central1-a
+      INSTANCE: ${{ inputs.instance }}
+    steps:
+      - name: Authenticate GCP
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+          create_credentials_file: true
+      - uses: google-github-actions/setup-gcloud@v2
+      - name: Describe
+        run: gcloud compute instances describe "$INSTANCE" --project "$PROJECT" --zone "$ZONE" --format='value(status,lastStartTimestamp,machineType.basename())'
+      - name: Serial console (last 120 lines)
+        if: inputs.action == 'serial' || inputs.action == 'reset'
+        run: gcloud compute instances get-serial-port-output "$INSTANCE" --project "$PROJECT" --zone "$ZONE" 2>/dev/null | tail -n 120 || true
+      - name: Reset
+        if: inputs.action == 'reset'
+        run: |
+          set -eu
+          gcloud compute instances reset "$INSTANCE" --project "$PROJECT" --zone "$ZONE"
+          for i in $(seq 1 30); do
+            s="$(gcloud compute instances describe "$INSTANCE" --project "$PROJECT" --zone "$ZONE" --format='value(status)')"
+            echo "status=$s"; [ "$s" = RUNNING ] && break; sleep 10
+          done
