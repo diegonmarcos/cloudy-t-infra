@@ -101,9 +101,9 @@
       },
       "cpu": "2",
       "memory": "2Gi",
-      "min_instances": 1,
+      "min_instances": 0,
       "max_instances": 1,
-      "cpu_throttling": false,
+      "cpu_throttling": true,
       "startup_cpu_boost": true,
       "execution_environment": "EXECUTION_ENVIRONMENT_GEN2",
       "session_affinity": true,
@@ -129,7 +129,7 @@
         "public_url": "Cloud Run URL (run.app)",
         "auth": "oauth2-proxy (Google provider, one allowed email)"
       },
-      "notes": "Live today with the four env values set as plain env vars; adopting it = terraform import, then managed=true moves them to Secret Manager refs. min 1 always-on 2 vCPU/2 GiB is outside the free tier."
+      "notes": "Live today with the four env values set as plain env vars; adopting it = terraform import, then managed=true moves them to Secret Manager refs. Declared min 0 + CPU throttling on (scale to zero, free tier); the live revision stays min 1 / throttling off until the adopt apply. Secret values come from the vault via cloud_run_secret_sources; the owner loads agy-oauth-client-id, agy-oauth-client-secret (rotated) and agy-allowed-email, then import + managed=true."
     },
     {
       "name": "capital-stack-finterminal-api",
