@@ -344,7 +344,11 @@ jobs:
               | awk -F/ '{print $1}' | sort -u | tr '\n' ' ' || true)
             # Dirs whose OWN files changed: the only way an auth-plane service
             # ships without being named (cloud-ship-guard-auth-plane.sh, #1886).
-            DIRECT_DIRS="$CHANGED_DIRS"
+            # A render commit (dist/ only, e.g. e50ae365 after d43368f4) is NOT a
+            # change of the service itself: only src/ and build.json count, so a
+            # render never auto-ships the auth plane to the hub (#1898).
+            DIRECT_DIRS=$(printf '%s\n' "$SUB_CHANGED" | grep -E '^[^/]+/(src/|build\.json$)' \
+              | awk -F/ '{print $1}' | sort -u | tr '\n' ' ' || true)
 
             # A service can consume ANOTHER service's src file through a symlink
             # (tools-maddy/src/mail-rules-general.json -> tools-stalwart's). git

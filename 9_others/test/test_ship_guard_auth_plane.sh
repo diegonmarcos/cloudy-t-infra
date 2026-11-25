@@ -70,6 +70,20 @@ SHIP="$REPO_ROOT/1_cicd/src/cicd/ship.yml"
 grep -q 'verdict=held' "$SHIP" || { echo "::error::ship.yml lost verdict=held"; exit 1; }
 echo "  ok   ship.yml runs the guard (push path + services=all) and emits verdict=held"
 
+# #1898: a render commit (dist/ only) must not count as the service's OWN change.
+# DIRECT_DIRS in ship.yml is derived from src/ and build.json only.
+grep -qF '(src/|build\.json$)' "$SHIP" \
+  || { echo "::error::ship.yml DIRECT_DIRS is not limited to src/ and build.json (render commits would auto-ship the hub auth plane)"; exit 1; }
+DLINE=$(grep -n 'DIRECT_DIRS=\$(' "$SHIP" | head -1 | cut -d: -f1)
+[ -n "$DLINE" ] && ! sed -n "${DLINE},$((DLINE+1))p" "$SHIP" | grep -q 'dist/' \
+  || { echo "::error::DIRECT_DIRS counts dist/ again"; exit 1; }
+# Mutation: putting dist/ back into DIRECT_DIRS must be caught by the check above.
+MS="$WORK/ship-mut.yml"
+sed -E "${DLINE}s#\(src/\|build#(src/|dist/|build#" "$SHIP" > "$MS"
+cmp -s "$MS" "$SHIP" && { echo "::error::mutation dist-counts-as-direct did not change ship.yml"; exit 1; }
+sed -n "${DLINE},$((DLINE+1))p" "$MS" | grep -q 'dist/' || { echo "::error::mutation dist-counts-as-direct survived"; exit 1; }
+echo "  ok   render commits (dist/ only) never count as an own-directory change; mutation caught"
+
 mutate() {
   local m="$WORK/$1.sh"
   sed -E "$2" "$GUARD" > "$m"
