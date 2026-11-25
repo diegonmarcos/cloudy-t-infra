@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 24953,
+    "files": 24956,
     "by_lang": {
-      "sh": 833,
+      "sh": 834,
       "js": 599,
-      "py": 268,
-      "kotlin": 14024,
+      "py": 269,
+      "kotlin": 14025,
       "ts": 8382,
       "java": 656,
       "nix": 37,
@@ -20,12 +20,12 @@
     "by_role": {
       "hook": 166,
       "file": 2270,
-      "shell": 666,
+      "shell": 667,
       "script": 352,
-      "python": 98,
+      "python": 99,
       "module": 6478,
       "java": 655,
-      "kotlin": 14021,
+      "kotlin": 14022,
       "flake": 33,
       "rust-module": 154,
       "nix-module": 4,
@@ -10046,6 +10046,7 @@
         "SuitePhonePage(epoch: Int, refresh: ()",
         "resolve(pkg: String)",
         "curated(entry: Entry)",
+        "openAllAppsFolder(id: String)",
         "usageSection(title: String, apps: List<AppInfo>, note: String? = null)",
         "TileStrip(tag: String, content: LazyListScope.()",
         "AppTile(app: AppInfo)",
@@ -420692,7 +420693,15 @@
       "imports": [],
       "symbols": [
         "resolve(section: String, page: String?)",
-        "class LegacyRoutes"
+        "load(ctx: android.content.Context)",
+        "install(t: Renamed)",
+        "renamed(at: Pair<String, String?>, table: Renamed)",
+        "parse(o: org.json.JSONObject?)",
+        "map(k: String)",
+        "fromAsset(ctx: android.content.Context)",
+        "resolveLegacy(section: String, page: String?)",
+        "class LegacyRoutes",
+        "class Renamed"
       ]
     },
     {
@@ -420728,6 +420737,7 @@
       ],
       "symbols": [
         "caches(pageId: String)",
+        "cachedSections()",
         "parse(o: JSONObject?)",
         "decide(fetchedAt: Long?, now: Long, ttlMs: Long)",
         "normalize(url: String)",
@@ -420765,8 +420775,7 @@
         "class LnktreeCacheStore",
         "class LnktreePage",
         "class LnktreePages",
-        "class PrefetchPlanner",
-        "class RefScan"
+        "class PrefetchPlanner"
       ]
     },
     {
@@ -421831,6 +421840,8 @@
         "java.io.File"
       ],
       "symbols": [
+        "renamed()",
+        "installRenamed()",
         "text(rel: String)",
         "class BuroLlcTestData"
       ]
@@ -422543,6 +422554,34 @@
       ]
     },
     {
+      "path": "ac_cloud-me/app/src/test/java/com/diegonmarcos/cloudme/NavReorgTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "NavReorgTest"
+      ],
+      "imports": [
+        "android.app.Application",
+        "org.json.JSONArray",
+        "org.json.JSONObject",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNotNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "org.junit.runner.RunWith",
+        "org.robolectric.RobolectricTestRunner",
+        "org.robolectric.annotation.Config"
+      ],
+      "symbols": [
+        "arr(a: JSONArray)",
+        "ids(pages: List<Page>)",
+        "leafOf(section: String, page: String?)",
+        "groups(s: String)",
+        "class NavReorgTest"
+      ]
+    },
+    {
       "path": "ac_cloud-me/app/src/test/java/com/diegonmarcos/cloudme/ProfileRecordTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -422562,6 +422601,7 @@
       ],
       "symbols": [
         "schema(id: String)",
+        "flat(a: org.json.JSONArray)",
         "class ProfileRecordTest"
       ]
     },
@@ -422590,6 +422630,7 @@
         "strings(a: JSONArray?)",
         "node(roots: List<RepoNode>, label: String)",
         "labels(o: JSONObject)",
+        "pageIds(o: JSONObject)",
         "class RepoTreeTest"
       ]
     },
@@ -422967,14 +423008,16 @@
         "wake()",
         "launcher()",
         "open_page()",
-        "shot()"
+        "shot()",
+        "walk_tab()"
       ],
       "imports": [],
       "symbols": [
         "wake()",
         "launcher()",
         "open_page()",
-        "shot()"
+        "shot()",
+        "walk_tab()"
       ]
     },
     {
@@ -423011,6 +423054,31 @@
         "up()",
         "shoot()",
         "detail()"
+      ]
+    },
+    {
+      "path": "ac_cloud-me/test/nav-tree-dump.py",
+      "lang": "py",
+      "role": "python",
+      "exports": [
+        "leaves(o, path=\"\")",
+        "walk(o)",
+        "node(p)",
+        "collect(section, pages, chain, out)",
+        "main()"
+      ],
+      "imports": [
+        "hashlib",
+        "json",
+        "os",
+        "sys"
+      ],
+      "symbols": [
+        "leaves(o, path=\"\")",
+        "walk(o)",
+        "node(p)",
+        "collect(section, pages, chain, out)",
+        "main()"
       ]
     },
     {
@@ -423210,6 +423278,28 @@
         "bad()",
         "check()",
         "stage()",
+        "mutant()"
+      ]
+    },
+    {
+      "path": "ac_cloud-me/test/test-nav-reorg.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "ok()",
+        "bad()",
+        "check_tree()",
+        "expect_green()",
+        "only()",
+        "mutant()"
+      ],
+      "imports": [],
+      "symbols": [
+        "ok()",
+        "bad()",
+        "check_tree()",
+        "expect_green()",
+        "only()",
         "mutant()"
       ]
     },
