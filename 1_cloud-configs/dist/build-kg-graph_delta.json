@@ -1359,7 +1359,7 @@
         "category": "obs",
         "description": "Go port of the six ntfy Python sidecars (syslog-bridge, rss-gateway, github-rss, notify-broker, digest, topic-scanner) as ONE static binary, shadow stage: runs next to the Python sidecars on its own ports and containers, every sender in dry-run, outside every request path (ticket #1878)",
         "domain": null,
-        "port": 8191,
+        "port": 8091,
         "vm": "oci-apps",
         "folder": "infra-obs_ntfy-go"
       }
@@ -1372,7 +1372,7 @@
         "name": "ntfy-go-rss-gateway",
         "image": "ghcr.io/diegonmarcos/ntfy-go:latest",
         "role": "app",
-        "port": 8191,
+        "port": 8091,
         "public": false
       }
     },

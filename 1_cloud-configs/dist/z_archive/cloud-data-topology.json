@@ -4161,7 +4161,8 @@
       },
       "declared_ports": {
         "app": 8090,
-        "rss_gateway": 8091
+        "rss_gateway": 8091,
+        "rss_gateway_legacy_host": 8092
       },
       "health": {
         "path": "/"
@@ -4181,14 +4182,14 @@
       "vm": "oci-A1-f_0",
       "folder": "infra-obs_ntfy-go",
       "description": "Go port of the six ntfy Python sidecars (syslog-bridge, rss-gateway, github-rss, notify-broker, digest, topic-scanner) as ONE static binary, shadow stage: runs next to the Python sidecars on its own ports and containers, every sender in dry-run, outside every request path (ticket #1878)",
-      "port": 8191,
+      "port": 8091,
       "dns": "ntfy-go.mesh.diegonmarcos.com",
-      "upstream": "10.0.0.6:8191",
+      "upstream": "10.0.0.6:8091",
       "containers": {
         "app": {
           "container_name": "ntfy-go-rss-gateway",
           "image": "ghcr.io/diegonmarcos/ntfy-go:latest",
-          "port": 8191,
+          "port": 8091,
           "port_env": "LISTEN",
           "public": false,
           "proxy": null,
@@ -4272,7 +4273,7 @@
         "ntfy-go-syslog-bridge"
       ],
       "all_ports": [
-        "8191",
+        "8091",
         "8192",
         "8193"
       ],
@@ -4286,7 +4287,7 @@
         "app_hub": false
       },
       "declared_ports": {
-        "rss_gateway": 8191,
+        "rss_gateway": 8091,
         "topic_scanner": 8192,
         "notify_broker": 8193
       },

@@ -1072,7 +1072,8 @@
       "category": "tools",
       "ports": {
         "app": 8090,
-        "rss_gateway": 8091
+        "rss_gateway": 8091,
+        "rss_gateway_legacy_host": 8092
       },
       "health": {
         "path": "/"
@@ -1085,7 +1086,7 @@
       "enabled": true,
       "category": "obs",
       "ports": {
-        "rss_gateway": 8191,
+        "rss_gateway": 8091,
         "topic_scanner": 8192,
         "notify_broker": 8193
       },
@@ -3495,7 +3496,8 @@
         "category": "tools",
         "ports": {
           "app": 8090,
-          "rss_gateway": 8091
+          "rss_gateway": 8091,
+          "rss_gateway_legacy_host": 8092
         },
         "health": {
           "path": "/"
@@ -3508,7 +3510,7 @@
         "enabled": true,
         "category": "obs",
         "ports": {
-          "rss_gateway": 8191,
+          "rss_gateway": 8091,
           "topic_scanner": 8192,
           "notify_broker": 8193
         },

@@ -18951,7 +18951,8 @@
         "md5(p)",
         "put(path, parent, existing_id=None, name=None)",
         "rm(fid)",
-        "sync_dir(local, remote_id, stats, jobs)",
+        "list_task(t)",
+        "sync_tree(local, remote_id, stats, ex)",
         "run_job(j)",
         "cmd_repo(name, zpath, tdir, sha, mout)",
         "cmd_manifest(d, out)"
@@ -18971,7 +18972,8 @@
         "md5(p)",
         "put(path, parent, existing_id=None, name=None)",
         "rm(fid)",
-        "sync_dir(local, remote_id, stats, jobs)",
+        "list_task(t)",
+        "sync_tree(local, remote_id, stats, ex)",
         "run_job(j)",
         "cmd_repo(name, zpath, tdir, sha, mout)",
         "cmd_manifest(d, out)"

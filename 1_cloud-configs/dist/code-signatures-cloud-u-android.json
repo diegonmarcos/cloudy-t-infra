@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 25015,
+    "files": 25025,
     "by_lang": {
-      "sh": 844,
+      "sh": 850,
       "js": 599,
-      "py": 273,
-      "kotlin": 14070,
+      "py": 274,
+      "kotlin": 14073,
       "ts": 8382,
       "java": 656,
       "nix": 37,
@@ -20,12 +20,12 @@
     "by_role": {
       "hook": 166,
       "file": 2270,
-      "shell": 675,
-      "script": 355,
+      "shell": 680,
+      "script": 357,
       "python": 102,
       "module": 6478,
       "java": 655,
-      "kotlin": 14067,
+      "kotlin": 14070,
       "flake": 33,
       "rust-module": 154,
       "nix-module": 4,
@@ -642,6 +642,7 @@
         "build_jsons(root)",
         "endpoints(rows, where, problems)",
         "consolidate(root)",
+        "out_path(root)",
         "dump(doc)",
         "main(argv)"
       ],
@@ -655,6 +656,7 @@
         "build_jsons(root)",
         "endpoints(rows, where, problems)",
         "consolidate(root)",
+        "out_path(root)",
         "dump(doc)",
         "main(argv)"
       ]
@@ -938,6 +940,16 @@
         "scan(root, cfg)",
         "main(argv)"
       ]
+    },
+    {
+      "path": ".github/workflows/scripts/cloud-android-draw-text-guard.py",
+      "lang": "py",
+      "role": "script",
+      "exports": [],
+      "imports": [
+        "os"
+      ],
+      "symbols": []
     },
     {
       "path": ".github/workflows/scripts/cloud-android-engine-contract-guard.py",
@@ -4022,6 +4034,7 @@
         "build_jsons(root)",
         "endpoints(rows, where, problems)",
         "consolidate(root)",
+        "out_path(root)",
         "dump(doc)",
         "main(argv)"
       ],
@@ -4035,6 +4048,7 @@
         "build_jsons(root)",
         "endpoints(rows, where, problems)",
         "consolidate(root)",
+        "out_path(root)",
         "dump(doc)",
         "main(argv)"
       ]
@@ -7557,6 +7571,22 @@
       ]
     },
     {
+      "path": "1_cicd/src/scripts/test/fleet-private-materialise.test.sh",
+      "lang": "sh",
+      "role": "script",
+      "exports": [
+        "ok()",
+        "fail()",
+        "uncovered()"
+      ],
+      "imports": [],
+      "symbols": [
+        "ok()",
+        "fail()",
+        "uncovered()"
+      ]
+    },
+    {
       "path": "1_cicd/src/scripts/test/fleet-setup-guard.test.sh",
       "lang": "sh",
       "role": "script",
@@ -10414,6 +10444,7 @@
         "android.provider.Settings",
         "android.provider.Telephony",
         "android.telecom.TelecomManager",
+        "com.diegonmarcos.superapp.fleetdata.FleetData",
         "com.diegonmarcos.superapp.shellclient.ShellClient",
         "com.diegonmarcos.superapp.shellclient.ShellResult",
         "java.io.File"
@@ -10430,7 +10461,7 @@
         "exec(cmd: String)",
         "packages(ctx: Context)",
         "roles(ctx: Context, cfg: BgConfig)",
-        "essential(ctx: Context, cfg: BgConfig = config(ctx)",
+        "essential(ctx: Context, cfg: BgConfig)",
         "components(ctx: Context, pkg: String)",
         "isEnabled(ctx: Context, pkg: String, comp: String)",
         "engine(ctx: Context, shell: BgShell? = shell(ctx)",
@@ -10647,6 +10678,7 @@
         "androidx.core.content.ContextCompat",
         "com.diegonmarcos.superapp.R",
         "com.diegonmarcos.superapp.adbside.AdbSide",
+        "com.diegonmarcos.superapp.fleetdata.FleetData",
         "com.diegonmarcos.superapp.settings.LauncherModes",
         "com.diegonmarcos.superapp.settings.LauncherSettingsPrefs",
         "com.diegonmarcos.superapp.settings.LauncherThemes",
@@ -12789,10 +12821,12 @@
         "kotlin.math.roundToInt"
       ],
       "symbols": [
+        "dewCategory(maxDewC: Double)",
         "feelsLike(tC: Double, humidityPct: Double?, windMs: Double?)",
         "dewPoint(tC: Double, humidityPct: Double?)",
         "n(v: Double?, f: String = \"%.0f\")",
         "pair(a: String?, b: String?)",
+        "notificationText(rows: List<Row>)",
         "rows(snap: DayRepo.Snapshot?)",
         "hm(ms: Long?)",
         "class WeatherRows",
@@ -13821,7 +13855,8 @@
         "com.diegonmarcos.superapp.notificationcenter.NotifyGroups",
         "com.diegonmarcos.superapp.notificationcenter.PhoneNotificationListenerService",
         "com.diegonmarcos.superapp.R",
-        "com.diegonmarcos.superapp.media.LastMediaSession"
+        "com.diegonmarcos.superapp.media.LastMediaSession",
+        "com.diegonmarcos.superapp.media.MediaLaunchers"
       ],
       "symbols": [
         "watch()",
@@ -13833,6 +13868,8 @@
         "listenerEnabled()",
         "activeController()",
         "transport(target: String)",
+        "playLast()",
+        "launcherActions(lastPkg: String?)",
         "persistent()",
         "showWhenIdle()",
         "repost()",
@@ -17236,6 +17273,27 @@
         "class State",
         "class Action",
         "class Route"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/media/MediaLaunchers.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "MediaLaunchers"
+      ],
+      "imports": [
+        "androidx.annotation.DrawableRes",
+        "com.diegonmarcos.superapp.R"
+      ],
+      "symbols": [
+        "resolve(e: Entry, installed: (String)",
+        "visible(installed: (String)",
+        "lastPlayer(persisted: String?, sessions: List<Pair<String, Boolean>>)",
+        "compact(count: Int)",
+        "class MediaLaunchers",
+        "class Kind",
+        "class Entry"
       ]
     },
     {
@@ -21369,7 +21427,7 @@
         "fetchToday(loc: WeatherLocation.Fix)",
         "coords(lat: Double, lon: Double)",
         "placeName(loc: WeatherLocation.Fix)",
-        "build(state: WeatherFace.State)",
+        "build(state: WeatherFace.State, snap: com.diegonmarcos.superapp.daytimelines.DayRepo.Snapshot? = null)",
         "actionPi(a: WeatherFace.Action?)",
         "ensureChannel()",
         "class WeatherBadgeService",
@@ -25574,6 +25632,24 @@
       "symbols": [
         "declaredPkgs()",
         "class FleetIdentityPageTest"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/test/java/com/diegonmarcos/superapp/apps/FleetPrivateFixtures.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "FleetPrivateFixtures"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.appstore.PhoneAppActions",
+        "org.json.JSONObject",
+        "java.io.File"
+      ],
+      "symbols": [
+        "file(name: String)",
+        "installSources()",
+        "class FleetPrivateFixtures"
       ]
     },
     {
@@ -30678,6 +30754,26 @@
       ]
     },
     {
+      "path": "aa_cloud-superapp/app/src/test/java/com/diegonmarcos/superapp/media/MediaLaunchersTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "MediaLaunchersTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "ids(installed: (String)",
+        "ok(vis: (Boolean)",
+        "class MediaLaunchersTest"
+      ]
+    },
+    {
       "path": "aa_cloud-superapp/app/src/test/java/com/diegonmarcos/superapp/media/MusicBadgeLayoutTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -35077,6 +35173,20 @@
       ]
     },
     {
+      "path": "aa_cloud-superapp/test/test-bg-policy-private-served.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "check()",
+        "mutant()"
+      ],
+      "imports": [],
+      "symbols": [
+        "check()",
+        "mutant()"
+      ]
+    },
+    {
       "path": "aa_cloud-superapp/test/test-bg-policy.sh",
       "lang": "sh",
       "role": "shell",
@@ -37349,6 +37459,20 @@
         "ok()",
         "bad()",
         "strip()"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/test/test-super-saving-private-served.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "check()",
+        "mutant()"
+      ],
+      "imports": [],
+      "symbols": [
+        "check()",
+        "mutant()"
       ]
     },
     {
@@ -44523,6 +44647,7 @@
       ],
       "imports": [
         "android.content.Context",
+        "com.diegonmarcos.superapp.fleetdata.FleetData",
         "org.json.JSONArray",
         "org.json.JSONObject"
       ],
@@ -45071,6 +45196,7 @@
         "FeedViewer"
       ],
       "imports": [
+        "com.diegonmarcos.superapp.fleetdata.FleetData",
         "android.content.Context",
         "android.content.Intent",
         "android.net.Uri",
@@ -45498,6 +45624,7 @@
         "PhoneAppActions"
       ],
       "imports": [
+        "com.diegonmarcos.superapp.fleetdata.FleetData",
         "android.content.Context",
         "android.content.Intent",
         "android.content.pm.ApplicationInfo",
@@ -45507,6 +45634,7 @@
         "org.json.JSONObject"
       ],
       "symbols": [
+        "sourcesOrNull(ctx: Context)",
         "sources(ctx: Context)",
         "resolver(sources: JSONObject)",
         "forMissing(ctx: Context, app: SourceResolver.External, fleetApp: Fleet.App?, sources: JSONObject, cfg: SourceResolver.Config)",
@@ -559691,6 +559819,48 @@
       "symbols": [
         "check()",
         "mutate()"
+      ]
+    },
+    {
+      "path": "ac_cloud-store/test/test-apps-mcp-api-private-served.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "check()",
+        "mutant()"
+      ],
+      "imports": [],
+      "symbols": [
+        "check()",
+        "mutant()"
+      ]
+    },
+    {
+      "path": "ac_cloud-store/test/test-appstore-feeds-private-served.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "check()",
+        "mutant()"
+      ],
+      "imports": [],
+      "symbols": [
+        "check()",
+        "mutant()"
+      ]
+    },
+    {
+      "path": "ac_cloud-store/test/test-appstore-install-sources-private-served.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "check()",
+        "mutant()"
+      ],
+      "imports": [],
+      "symbols": [
+        "check()",
+        "mutant()"
       ]
     },
     {

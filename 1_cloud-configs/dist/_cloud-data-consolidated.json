@@ -7157,7 +7157,8 @@
       },
       "declared_ports": {
         "app": 8090,
-        "rss_gateway": 8091
+        "rss_gateway": 8091,
+        "rss_gateway_legacy_host": 8092
       },
       "health": {
         "path": "/"
@@ -7409,14 +7410,14 @@
       "description": "Go port of the six ntfy Python sidecars (syslog-bridge, rss-gateway, github-rss, notify-broker, digest, topic-scanner) as ONE static binary, shadow stage: runs next to the Python sidecars on its own ports and containers, every sender in dry-run, outside every request path (ticket #1878)",
       "enabled": true,
       "flake": "infra-obs_ntfy-go",
-      "port": 8191,
+      "port": 8091,
       "dns": "ntfy-go.mesh.diegonmarcos.com",
-      "upstream": "10.0.0.6:8191",
+      "upstream": "10.0.0.6:8091",
       "containers": {
         "app": {
           "container_name": "ntfy-go-rss-gateway",
           "image": "ghcr.io/diegonmarcos/ntfy-go:latest",
-          "port": 8191,
+          "port": 8091,
           "port_env": "LISTEN",
           "public": false,
           "proxy": null,
@@ -7500,7 +7501,7 @@
         "ntfy-go-syslog-bridge"
       ],
       "all_ports": [
-        "8191",
+        "8091",
         "8192",
         "8193"
       ],
@@ -7514,7 +7515,7 @@
         "app_hub": false
       },
       "declared_ports": {
-        "rss_gateway": 8191,
+        "rss_gateway": 8091,
         "topic_scanner": 8192,
         "notify_broker": 8193
       },
@@ -7541,6 +7542,7 @@
           "_doc": "Reference = the original Python sidecars (infra-obs_ntfy/src/code, unmodified) driven through parity/ref.py. Broker decide() over 12000 generated event steps on four policies, digest summarize()/read_history(), the topic scanner, the GitHub Atom parser and classifier, the syslog alert parser and the whole RSS gateway HTTP surface must be identical. See parity/parity_test.go."
         }
       },
+      "_doc_cutover": "#1878 2026-11-25: rss-gateway cut over. The Go gateway listens on 10.0.0.6:8091 (the Caddy /feed upstream, unchanged); the Python gateway container stays declared in infra-obs_ntfy and republishes on :8092 for rollback (stop ntfy-go-rss-gateway, start capital-stack-news-rss-api with host port 8091 by reverting this change). Parity: every route (health, profiles.json, channels.json, 5 profile atoms, 15 channel atoms, 404s, trailing slash, query strings) byte-identical live. Senders stay dry-run: only the read-only gateway took over.",
       "_doc_shadow": "Shadow stage (#1878). The live Python sidecars (containers syslog-bridge, rss-gateway, github-rss of the ntfy service) are untouched. These containers run the Go binary with NTFY_DRY_RUN=1: every sender logs what it WOULD publish and never reaches a ntfy topic, so no notification is duplicated. rss-gateway and topic-scanner only READ (ntfy poll, cache.db) on their own ports. The broker keeps its state on a tmpfs, never in the live notify state file. Switch-over (real publishing, public route for the gateway) is a separate step after the shadow has run clean next to the Python sidecars.",
       "_doc_addressing": "No mesh name, no Caddy route and no client wiring on purpose during the shadow stage: only the containers themselves and operators on the mesh dial the bind addresses (10.0.0.6:8191 gateway, :8192 scanner, :8193 broker), so no Hickory row and no Caddy fallback-map entry are needed.",
       "api": {
@@ -19635,7 +19637,8 @@
           ],
           "mem_psi_warn": 35,
           "mem_psi_crit": 55,
-          "mem_psi_page": 70
+          "mem_psi_page": 70,
+          "vm_pilotd_shadow": false
         }
       },
       "gcp-gpu-embed": {
