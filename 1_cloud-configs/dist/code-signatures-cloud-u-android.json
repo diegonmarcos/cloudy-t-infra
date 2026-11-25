@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 25002,
+    "files": 25005,
     "by_lang": {
-      "sh": 840,
+      "sh": 841,
       "js": 599,
       "py": 270,
-      "kotlin": 14064,
+      "kotlin": 14066,
       "ts": 8382,
       "java": 656,
       "nix": 37,
@@ -20,12 +20,12 @@
     "by_role": {
       "hook": 166,
       "file": 2270,
-      "shell": 672,
+      "shell": 673,
       "script": 353,
       "python": 100,
       "module": 6478,
       "java": 655,
-      "kotlin": 14061,
+      "kotlin": 14063,
       "flake": 33,
       "rust-module": 154,
       "nix-module": 4,
@@ -25809,6 +25809,23 @@
       ]
     },
     {
+      "path": "aa_cloud-superapp/app/src/test/java/com/diegonmarcos/superapp/apps/ServedFixtures.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ServedFixtures"
+      ],
+      "imports": [
+        "android.content.Context",
+        "java.io.File"
+      ],
+      "symbols": [
+        "seed(ctx: Context, vararg datasets: String)",
+        "text(dataset: String)",
+        "class ServedFixtures"
+      ]
+    },
+    {
       "path": "aa_cloud-superapp/app/src/test/java/com/diegonmarcos/superapp/apps/StoreAutoTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -44508,6 +44525,7 @@
         "AppsMesh"
       ],
       "imports": [
+        "com.diegonmarcos.superapp.fleetdata.FleetData",
         "android.content.ClipData",
         "android.content.ClipboardManager",
         "android.content.Context",
@@ -44546,8 +44564,7 @@
         "androidx.compose.ui.unit.sp",
         "androidx.fragment.app.Fragment",
         "com.diegonmarcos.superapp.devtools.FleetPeers",
-        "com.diegonmarcos.superapp.devtools.FleetToken",
-        "com.diegonmarcos.superapp.uikit.KitSearchBar"
+        "com.diegonmarcos.superapp.devtools.FleetToken"
       ],
       "symbols": [
         "of(scope: String, type: String? = null)",
@@ -45070,6 +45087,7 @@
         "FleetActions"
       ],
       "imports": [
+        "com.diegonmarcos.superapp.fleetdata.FleetData",
         "android.content.Context",
         "org.json.JSONArray",
         "org.json.JSONObject"
@@ -46230,6 +46248,7 @@
         "StoreControls"
       ],
       "imports": [
+        "com.diegonmarcos.superapp.fleetdata.FleetData",
         "android.content.Context",
         "org.json.JSONObject"
       ],
@@ -48183,6 +48202,7 @@
         "servedFilesCarryASchemaVersionAndAreInTheManifest()",
         "theBundledSafeDefaultIsWhatIsServed()",
         "theReadersGoThroughFleetDataNotAssets()",
+        "controlsAndFleetActionsAreServedToo()",
         "class AppstoreServedDatasetsTest"
       ]
     },
@@ -121704,6 +121724,20 @@
         "JAVA_HOME",
         "GRADLE_OPTS",
         "shellHook"
+      ]
+    },
+    {
+      "path": "ac_c3-morpheus/test/test-probes-served.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "check()",
+        "mutant()"
+      ],
+      "imports": [],
+      "symbols": [
+        "check()",
+        "mutant()"
       ]
     },
     {
@@ -560056,6 +560090,7 @@
         "sources(o: JSONObject)",
         "groups(text: String, only: List<String> = emptyList()",
         "kgGroups(buckets: List<AiMcpBucket>, tabs: List<AiKgTab>)",
+        "seed(ctx: Context, dataset: String)",
         "asset(ctx: Context, name: String)",
         "readPages(ctx: Context)",
         "observePages(ctx: Context)",
@@ -561152,6 +561187,26 @@
         "mimeTypesComeFromTheProviderThenTheExtension()",
         "class AttachTest",
         "class Host"
+      ]
+    },
+    {
+      "path": "ac_cloud-superintel/app/src/test/java/com/diegonmarcos/cloudsuperintel/ColdStartSeedTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ColdStartSeedTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.io.File"
+      ],
+      "symbols": [
+        "seed(n: String)",
+        "seedIsByteIdenticalToTheServedDataset()",
+        "seedPagesParseAndEveryRowsPageHasGroups()",
+        "class ColdStartSeedTest"
       ]
     },
     {

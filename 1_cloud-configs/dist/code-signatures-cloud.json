@@ -6,9 +6,9 @@
   },
   "repo": "cloud",
   "counts": {
-    "files": 1651,
+    "files": 1652,
     "by_lang": {
-      "sh": 1119,
+      "sh": 1120,
       "js": 176,
       "nix": 314,
       "py": 12,
@@ -17,7 +17,7 @@
     "by_role": {
       "hook": 402,
       "file": 91,
-      "shell": 569,
+      "shell": 570,
       "flake": 6,
       "script": 150,
       "module": 115,
@@ -1864,7 +1864,8 @@
         "new_client(var)",
         "now()",
         "cmd_new(clients_path, key_path, out_path)",
-        "cmd_add(clients_path, in_path, out_path)"
+        "cmd_add(clients_path, in_path, out_path)",
+        "cmd_rotate(clients_path, in_path, out_path, cid)"
       ],
       "imports": [
         "base64"
@@ -1874,7 +1875,8 @@
         "new_client(var)",
         "now()",
         "cmd_new(clients_path, key_path, out_path)",
-        "cmd_add(clients_path, in_path, out_path)"
+        "cmd_add(clients_path, in_path, out_path)",
+        "cmd_rotate(clients_path, in_path, out_path, cid)"
       ]
     },
     {
@@ -17890,7 +17892,8 @@
         "new_client(var)",
         "now()",
         "cmd_new(clients_path, key_path, out_path)",
-        "cmd_add(clients_path, in_path, out_path)"
+        "cmd_add(clients_path, in_path, out_path)",
+        "cmd_rotate(clients_path, in_path, out_path, cid)"
       ],
       "imports": [
         "base64"
@@ -17900,7 +17903,8 @@
         "new_client(var)",
         "now()",
         "cmd_new(clients_path, key_path, out_path)",
-        "cmd_add(clients_path, in_path, out_path)"
+        "cmd_add(clients_path, in_path, out_path)",
+        "cmd_rotate(clients_path, in_path, out_path, cid)"
       ]
     },
     {
@@ -20011,6 +20015,18 @@
       "symbols": [
         "check()",
         "mutate()"
+      ]
+    },
+    {
+      "path": "9_others/test/sso-oidc-bundle-rotate.test.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "check()"
+      ],
+      "imports": [],
+      "symbols": [
+        "check()"
       ]
     },
     {
