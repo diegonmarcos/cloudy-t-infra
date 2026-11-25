@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 25047,
+    "files": 25062,
     "by_lang": {
-      "sh": 856,
+      "sh": 857,
       "js": 600,
       "py": 274,
-      "kotlin": 14088,
+      "kotlin": 14102,
       "ts": 8382,
       "java": 656,
       "nix": 37,
@@ -20,12 +20,12 @@
     "by_role": {
       "hook": 166,
       "file": 2270,
-      "shell": 686,
+      "shell": 687,
       "script": 357,
       "python": 102,
       "module": 6479,
       "java": 655,
-      "kotlin": 14085,
+      "kotlin": 14099,
       "flake": 33,
       "rust-module": 154,
       "nix-module": 4,
@@ -9444,8 +9444,6 @@
         "tearDown()",
         "a_webAppsEmbedRenders()",
         "b_webAppsEmbedRendersAtNight()",
-        "c_linktreeRenders()",
-        "e_linktreeFixtureRenders()",
         "html(body: String, head: String = \"\")",
         "fixtures()",
         "page(h: String, status: Int = 200)",
@@ -18127,6 +18125,7 @@
         "setAlwaysOn(on: Boolean)",
         "setLockdown(on: Boolean)",
         "supervisorNote()",
+        "dnsServers()",
         "consentIntent()",
         "requireEngine()",
         "bringUp()",
@@ -18147,8 +18146,7 @@
         "excludedApps()",
         "setExcludedApps(v: List<String>)",
         "installedApps()",
-        "addPeer()",
-        "removePeer(index: Int)"
+        "addPeer()"
       ]
     },
     {
@@ -18175,7 +18173,7 @@
         "com.diegonmarcos.superapp.R"
       ],
       "symbols": [
-        "MeshControlsPage(store: MeshStore, modifier: Modifier = Modifier, embedded: Boolean = false)",
+        "MeshControlsPage(store: MeshStore, modifier: Modifier = Modifier, embedded: Boolean = false, sub: MeshDecl.Subpage? = null)",
         "remember0(f: ()",
         "ControlRow(store: MeshStore, c: MeshDecl.Control, seeds: Map<String, String>)",
         "class private"
@@ -18196,7 +18194,10 @@
       ],
       "symbols": [
         "control(id: String)",
+        "shows(id: String)",
+        "subpage(id: String?)",
         "tab(id: String?)",
+        "resolve(id: String)",
         "tabOf(pageId: String)",
         "page(id: String?)",
         "parse(json: String)",
@@ -18206,6 +18207,7 @@
         "class Control",
         "class Page",
         "class Section",
+        "class Subpage",
         "class Tab",
         "class Decl"
       ]
@@ -18227,6 +18229,19 @@
         "dp(step: Int)",
         "sp(t: Float)",
         "class MeshDensity"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/network/mesh/MeshEndpoint.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "MeshEndpoint"
+      ],
+      "imports": [],
+      "symbols": [
+        "inUse(endpoint: String, path: String)",
+        "class MeshEndpoint"
       ]
     },
     {
@@ -18406,6 +18421,7 @@
         "setAlwaysOn(on: Boolean)",
         "setLockdown(on: Boolean)",
         "supervisorNote()",
+        "dnsServers()",
         "connect()",
         "disconnect()",
         "reconnect()",
@@ -18430,8 +18446,7 @@
         "dnsChoices()",
         "provider()",
         "matchesCloudPreset()",
-        "applyCloudPreset()",
-        "setProviderCustom()"
+        "applyCloudPreset()"
       ]
     },
     {
@@ -18527,7 +18542,7 @@
         "MeshLightsRow(store: MeshStore, s: MeshSnapshot, tag: String)",
         "MeshTableRow(store: MeshStore, tag: String)",
         "MeshPeersRow(store: MeshStore, s: MeshSnapshot, tag: String)",
-        "peerFields(p: PeerLive, s: MeshSnapshot)",
+        "peerFields(p: PeerLive, s: MeshSnapshot, path: String = \"\")",
         "MeshProfilerRow(store: MeshStore, tag: String)",
         "MeshStatusLogRow(store: MeshStore, tag: String)",
         "class LightLine"
@@ -18599,9 +18614,10 @@
         "com.google.zxing.qrcode.decoder.ErrorCorrectionLevel"
       ],
       "symbols": [
-        "MeshProfilesPage(store: MeshStore, modifier: Modifier = Modifier, embedded: Boolean = false)",
+        "MeshProfilesPage(store: MeshStore, modifier: Modifier = Modifier, embedded: Boolean = false, sub: MeshDecl.Subpage? = null)",
+        "on(id: String)",
         "CloudflareBlock(store: MeshStore)",
-        "ProfileRow(store: MeshStore, profile: WireGuardProfiles.Profile)",
+        "ProfileRow(store: MeshStore, profile: WireGuardProfiles.Profile, sub: MeshDecl.Subpage? = null)",
         "DiffPanel(store: MeshStore, id: String, stored: String?)",
         "qrPayload(text: String)",
         "MeshQr(text: String, modifier: Modifier = Modifier)"
@@ -18663,9 +18679,11 @@
       "symbols": [
         "redact(text: String)",
         "markdown(plain: String)",
+        "pick(dump: String, titles: List<String>)",
+        "routeLines(peers: List<PeerCfg>, nat64Marker: String)",
+        "kv(k: String, v: String)",
         "build( s: MeshSnapshot?, dnsPreset: String, provider: String, transport: TransportView?, probes: List<ProbeLine>, reach: List<MeshReach.Result>, journal: List<LogEvent>, nowMs: Long, tz: TimeZone = TimeZone.getDefault()",
         "line(t: String = \"\")",
-        "kv(k: String, v: String)",
         "class MeshReport"
       ]
     },
@@ -18720,6 +18738,11 @@
         "androidx.compose.foundation.verticalScroll",
         "androidx.compose.foundation.rememberScrollState",
         "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.Row",
+        "androidx.compose.foundation.layout.Arrangement",
+        "androidx.compose.ui.Alignment",
+        "androidx.compose.ui.res.stringResource",
+        "com.diegonmarcos.superapp.R",
         "androidx.compose.foundation.layout.fillMaxSize",
         "androidx.compose.foundation.layout.fillMaxWidth",
         "androidx.compose.foundation.layout.padding",
@@ -18744,7 +18767,8 @@
       ],
       "symbols": [
         "MeshScreen(store: MeshStore, modifier: Modifier = Modifier, ticker: Boolean = true)",
-        "MeshSection(id: String, store: MeshStore)",
+        "MeshSubpage(sp: MeshDecl.Subpage, store: MeshStore)",
+        "MeshSection(id: String, store: MeshStore, sub: MeshDecl.Subpage? = null)",
         "MeshNotice(store: MeshStore)",
         "MeshTicker(store: MeshStore)"
       ]
@@ -18772,7 +18796,7 @@
         "com.diegonmarcos.superapp.R"
       ],
       "symbols": [
-        "MeshStatusPage(store: MeshStore, modifier: Modifier = Modifier, embedded: Boolean = false)",
+        "MeshStatusPage(store: MeshStore, modifier: Modifier = Modifier, embedded: Boolean = false, sub: MeshDecl.Subpage? = null)",
         "StatusRow(id: String, store: MeshStore, s: MeshSnapshot)",
         "VpnControls(store: MeshStore, s: MeshSnapshot, tag: String)",
         "probeVerdict(ok: Boolean?)",
@@ -18802,6 +18826,10 @@
         "java.util.concurrent.Executors"
       ],
       "symbols": [
+        "subOf(tabId: String)",
+        "open(target: String)",
+        "stampMs(stamp: String)",
+        "sectionText(id: String)",
         "poll()",
         "logChanges(snap: MeshSnapshot)",
         "note(kind: String, text: String)",
@@ -18896,6 +18924,8 @@
         "page(id: String)",
         "tab(id: String)",
         "control(id: String)",
+        "sub(id: String)",
+        "stamp(id: String)",
         "row(id: String)",
         "peer(i: Int)",
         "declLabel(kind: String, id: String, fallback: String)",
@@ -19981,6 +20011,7 @@
         "paste()",
         "openVpnSettings()",
         "openAccount()",
+        "openConfigsDns()",
         "openCustomTab(url: String)",
         "importConf()",
         "exportConf()",
@@ -31317,6 +31348,7 @@
         "setAlwaysOn(on: Boolean)",
         "setLockdown(on: Boolean)",
         "supervisorNote()",
+        "dnsServers()",
         "connect()",
         "disconnect()",
         "reconnect()",
@@ -31340,8 +31372,7 @@
         "setDnsPreset(id: String)",
         "dnsChoices()",
         "provider()",
-        "matchesCloudPreset()",
-        "applyCloudPreset()"
+        "matchesCloudPreset()"
       ]
     },
     {
@@ -31400,6 +31431,7 @@
       "symbols": [
         "showStore(port: FakePort = FakePort(up = true)",
         "open(store: MeshStore, id: String)",
+        "openSub(store: MeshStore, tab: String, sub: String)",
         "onAllNodesWithTextCount(t: String)",
         "class MeshPageComposeTest"
       ]
@@ -31614,6 +31646,29 @@
         "class MeshStoreTest",
         "class controls",
         "class FakeIo"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/test/java/com/diegonmarcos/superapp/network/mesh/MeshSubpages1928Test.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "MeshSubpages1928Test"
+      ],
+      "imports": [
+        "android.app.Application",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "org.junit.runner.RunWith",
+        "org.robolectric.RobolectricTestRunner",
+        "org.robolectric.annotation.Config"
+      ],
+      "symbols": [
+        "controlProblems(previous: List<String>, subs: List<MeshDecl.Subpage>)",
+        "rowProblems(previous: List<String>, sections: List<MeshDecl.Section>, subs: List<MeshDecl.Subpage>)",
+        "rawStatus()",
+        "class MeshSubpages1928Test"
       ]
     },
     {
@@ -74836,6 +74891,269 @@
         "class StepsToday",
         "class Perm",
         "class Result"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/json-canvas/src/main/kotlin/com/diegonmarcos/superapp/jsoncanvas/CanvasColors.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "CanvasColors"
+      ],
+      "imports": [],
+      "symbols": [
+        "valid(c: String)",
+        "resolve(c: String?)",
+        "class CanvasColors"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/json-canvas/src/main/kotlin/com/diegonmarcos/superapp/jsoncanvas/CanvasGeometry.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "Pt",
+        "Bounds",
+        "ViewTransform",
+        "EdgeCurve",
+        "CanvasGeometry"
+      ],
+      "imports": [
+        "kotlin.math.abs",
+        "kotlin.math.max",
+        "kotlin.math.min",
+        "kotlin.math.sqrt"
+      ],
+      "symbols": [
+        "toScreen(p: Pt)",
+        "toWorld(sx: Double, sy: Double)",
+        "at(t: Double)",
+        "unit(a: Pt, b: Pt)",
+        "bounds(c: Canvas)",
+        "fit(b: Bounds?, viewW: Double, viewH: Double, padding: Double = 24.0, maxFit: Double = 1.5)",
+        "zoom(t: ViewTransform, factor: Double, fx: Double, fy: Double)",
+        "pan(t: ViewTransform, dx: Double, dy: Double)",
+        "drawOrder(c: Canvas)",
+        "hitTest(c: Canvas, wx: Double, wy: Double)",
+        "inside(n: CanvasNode)",
+        "anchor(n: CanvasNode, s: Side)",
+        "dir(s: Side)",
+        "autoSide(from: CanvasNode, to: CanvasNode)",
+        "curve(c: Canvas, e: CanvasEdge)",
+        "class Pt",
+        "class Bounds",
+        "class ViewTransform",
+        "class EdgeCurve",
+        "class CanvasGeometry"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/json-canvas/src/main/kotlin/com/diegonmarcos/superapp/jsoncanvas/CanvasModel.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "Side",
+        "EndShape",
+        "CanvasNode",
+        "CanvasEdge",
+        "Canvas",
+        "CanvasError",
+        "CanvasResult"
+      ],
+      "imports": [],
+      "symbols": [
+        "of(s: String?)",
+        "node(id: String)",
+        "class Side",
+        "class EndShape",
+        "class CanvasNode",
+        "class Text",
+        "class File",
+        "class Link",
+        "class Group",
+        "class CanvasEdge",
+        "class Canvas",
+        "class CanvasError",
+        "class Syntax",
+        "class NotAnObject",
+        "class BadField",
+        "class UnknownNodeType",
+        "class DuplicateId",
+        "class DanglingEdge",
+        "class CanvasResult",
+        "class Ok",
+        "class Err"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/json-canvas/src/main/kotlin/com/diegonmarcos/superapp/jsoncanvas/CanvasParser.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "CanvasParser"
+      ],
+      "imports": [],
+      "symbols": [
+        "parse(text: String)",
+        "list(o: Map<String, Any?>, k: String, where: String)",
+        "str(o: Map<String, Any?>, k: String, where: String, required: Boolean)",
+        "num(o: Map<String, Any?>, k: String, where: String)",
+        "color(o: Map<String, Any?>, where: String)",
+        "node(o: Map<String, Any?>, where: String)",
+        "side(o: Map<String, Any?>, k: String, where: String)",
+        "end(o: Map<String, Any?>, k: String, where: String, default: EndShape)",
+        "edge(o: Map<String, Any?>, where: String)",
+        "class CanvasParser",
+        "class Fail"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/json-canvas/src/main/kotlin/com/diegonmarcos/superapp/jsoncanvas/CanvasView.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "CanvasLabels",
+        "CanvasTags",
+        "JsonCanvasView"
+      ],
+      "imports": [
+        "androidx.compose.foundation.Canvas",
+        "androidx.compose.foundation.gestures.detectTapGestures",
+        "androidx.compose.foundation.gestures.detectTransformGestures",
+        "androidx.compose.foundation.layout.Box",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.fillMaxSize",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.foundation.rememberScrollState",
+        "androidx.compose.foundation.verticalScroll",
+        "androidx.compose.material3.Button",
+        "androidx.compose.material3.ExperimentalMaterial3Api",
+        "androidx.compose.material3.FilledTonalButton",
+        "androidx.compose.material3.MaterialTheme",
+        "androidx.compose.material3.ModalBottomSheet",
+        "androidx.compose.material3.Text",
+        "androidx.compose.material3.TextButton",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.remember",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.ui.Alignment",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.draw.clipToBounds",
+        "androidx.compose.ui.geometry.CornerRadius",
+        "androidx.compose.ui.geometry.Offset",
+        "androidx.compose.ui.geometry.Size",
+        "androidx.compose.ui.graphics.Color",
+        "androidx.compose.ui.graphics.Path",
+        "androidx.compose.ui.graphics.drawscope.DrawScope",
+        "androidx.compose.ui.graphics.drawscope.Stroke",
+        "androidx.compose.ui.input.pointer.pointerInput",
+        "androidx.compose.ui.layout.onSizeChanged",
+        "androidx.compose.ui.platform.testTag",
+        "androidx.compose.ui.text.TextLayoutResult",
+        "androidx.compose.ui.text.TextMeasurer",
+        "androidx.compose.ui.text.TextStyle",
+        "androidx.compose.ui.text.drawText",
+        "androidx.compose.ui.text.font.FontWeight"
+      ],
+      "symbols": [
+        "col(c: String?, fallback: Color)",
+        "JsonCanvasView(canvas: Canvas, modifier: Modifier = Modifier, labels: CanvasLabels = CanvasLabels()",
+        "drawNode(n: CanvasNode, t: ViewTransform, m: TextMeasurer, style: TextStyle, fg: Color, surface: Color)",
+        "drawEdge(c: Canvas, e: CanvasEdge, t: ViewTransform, m: TextMeasurer, fg: Color)",
+        "o(p: Pt)",
+        "arrow(at: Pt, dir: Pt)",
+        "class CanvasLabels",
+        "class CanvasTags"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/json-canvas/src/main/kotlin/com/diegonmarcos/superapp/jsoncanvas/JsonMini.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "JsonSyntaxException",
+        "JsonMini"
+      ],
+      "imports": [],
+      "symbols": [
+        "parse(text: String)",
+        "err(m: String)",
+        "ws()",
+        "value(depth: Int)",
+        "lit(w: String, v: Any?)",
+        "num()",
+        "str()",
+        "arr(depth: Int)",
+        "obj(depth: Int)",
+        "class JsonSyntaxException",
+        "class JsonMini",
+        "class Reader"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/json-canvas/src/main/kotlin/com/diegonmarcos/superapp/jsoncanvas/MarkdownLite.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "Span",
+        "MdBlock",
+        "MarkdownLite"
+      ],
+      "imports": [],
+      "symbols": [
+        "parse(text: String)",
+        "flush()",
+        "inline(s: String)",
+        "class Span",
+        "class MdBlock",
+        "class Heading",
+        "class Para",
+        "class Item",
+        "class Quote",
+        "class Code",
+        "class Rule",
+        "class MarkdownLite"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/json-canvas/src/main/kotlin/com/diegonmarcos/superapp/jsoncanvas/MarkdownLiteView.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "spansToAnnotated",
+        "MarkdownLiteView"
+      ],
+      "imports": [
+        "androidx.compose.foundation.background",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.material3.HorizontalDivider",
+        "androidx.compose.material3.MaterialTheme",
+        "androidx.compose.material3.Text",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.graphics.Color",
+        "androidx.compose.ui.text.AnnotatedString",
+        "androidx.compose.ui.text.LinkAnnotation",
+        "androidx.compose.ui.text.SpanStyle",
+        "androidx.compose.ui.text.TextLinkStyles",
+        "androidx.compose.ui.text.buildAnnotatedString",
+        "androidx.compose.ui.text.font.FontFamily",
+        "androidx.compose.ui.text.font.FontStyle",
+        "androidx.compose.ui.text.font.FontWeight",
+        "androidx.compose.ui.text.style.TextDecoration",
+        "androidx.compose.ui.text.withLink",
+        "androidx.compose.ui.text.withStyle",
+        "androidx.compose.ui.unit.dp",
+        "androidx.compose.ui.unit.sp"
+      ],
+      "symbols": [
+        "spansToAnnotated(spans: List<Span>, base: Color = Color.Unspecified)",
+        "MarkdownLiteView(text: String, modifier: Modifier = Modifier, color: Color = Color.Unspecified)"
       ]
     },
     {
@@ -423585,6 +423903,113 @@
       ]
     },
     {
+      "path": "ac_cloud-me/app/src/main/java/com/diegonmarcos/cloudme/RepoViewerScreen.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "RepoViewerTags",
+        "RepoViewMemory",
+        "RepoFetch",
+        "RepoViewerDecl",
+        "RepoViewerScreen"
+      ],
+      "imports": [
+        "android.content.Context",
+        "android.content.Intent",
+        "android.net.Uri",
+        "android.webkit.WebView",
+        "android.webkit.WebViewClient",
+        "androidx.compose.foundation.layout.Arrangement",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.Row",
+        "androidx.compose.foundation.layout.fillMaxSize",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.foundation.rememberScrollState",
+        "androidx.compose.foundation.verticalScroll",
+        "androidx.compose.material3.Button",
+        "androidx.compose.material3.CircularProgressIndicator",
+        "androidx.compose.material3.FilterChip",
+        "androidx.compose.material3.MaterialTheme",
+        "androidx.compose.material3.Text",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableIntStateOf",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.produceState",
+        "androidx.compose.runtime.remember",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.platform.LocalContext",
+        "androidx.compose.ui.platform.testTag",
+        "androidx.compose.ui.res.stringResource",
+        "androidx.compose.ui.unit.dp",
+        "androidx.compose.ui.viewinterop.AndroidView",
+        "com.diegonmarcos.cloudlib.gitsync.GitCredentialStore",
+        "com.diegonmarcos.cloudlib.gitui.GitConnect",
+        "com.diegonmarcos.cloudlib.gitui.GitConnectRules",
+        "com.diegonmarcos.cloudlib.gitui.GitConnectSpec",
+        "com.diegonmarcos.superapp.accountui.AccountUiHost",
+        "com.diegonmarcos.superapp.jsoncanvas.CanvasLabels",
+        "com.diegonmarcos.superapp.jsoncanvas.CanvasParser",
+        "com.diegonmarcos.superapp.jsoncanvas.CanvasResult",
+        "com.diegonmarcos.superapp.jsoncanvas.JsonCanvasView"
+      ],
+      "symbols": [
+        "chip(id: String)",
+        "get(ctx: Context, ref: RepoViews.Ref)",
+        "put(ctx: Context, ref: RepoViews.Ref, view: String)",
+        "get(url: String, token: String?, accept: String)",
+        "spec(ref: RepoViews.Ref)",
+        "token(ctx: Context, ref: RepoViews.Ref)",
+        "fetch(ctx: Context, ref: RepoViews.Ref, file: String)",
+        "of(block: JSONObject)",
+        "RepoViewerScreen(block: JSONObject, ref: RepoViews.Ref, views: List<String>, modifier: Modifier = Modifier, pageId: String = block.optString(\"url\")",
+        "viewLabel(id: String)",
+        "RepoFileView(ctx: Context, ref: RepoViews.Ref, view: String, modifier: Modifier)",
+        "canvasLabels()",
+        "open(ctx: Context, url: String)",
+        "HtmlView(html: String, ref: RepoViews.Ref, modifier: Modifier)",
+        "shouldOverrideUrlLoading(view: WebView?, request: android.webkit.WebResourceRequest?)",
+        "FailureView(f: RepoViews.Failure?, file: String, modifier: Modifier, parseError: String? = null, onRetry: ()",
+        "class RepoViewerTags",
+        "class RepoViewMemory",
+        "class RepoFetch",
+        "class Result",
+        "class Ok",
+        "class Fail",
+        "class Reply",
+        "class RepoViewerDecl"
+      ]
+    },
+    {
+      "path": "ac_cloud-me/app/src/main/java/com/diegonmarcos/cloudme/RepoViews.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "RepoViews"
+      ],
+      "imports": [],
+      "symbols": [
+        "path(file: String)",
+        "rawUrl(file: String)",
+        "apiUrl(file: String)",
+        "baseUrl()",
+        "githubBlobUrl(file: String)",
+        "githubUrl()",
+        "parse(url: String)",
+        "declared(views: List<String>)",
+        "initial(remembered: String?)",
+        "fileOf(view: String)",
+        "kind(f: Failure)",
+        "class RepoViews",
+        "class View",
+        "class Ref",
+        "class Failure",
+        "class Kind"
+      ]
+    },
+    {
       "path": "ac_cloud-me/app/src/main/java/com/diegonmarcos/cloudme/SecretsScreen.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -424543,6 +424968,38 @@
       ]
     },
     {
+      "path": "ac_cloud-me/app/src/test/java/com/diegonmarcos/cloudme/JsonCanvasTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "JsonCanvasTest"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.jsoncanvas.Canvas",
+        "com.diegonmarcos.superapp.jsoncanvas.CanvasColors",
+        "com.diegonmarcos.superapp.jsoncanvas.CanvasEdge",
+        "com.diegonmarcos.superapp.jsoncanvas.CanvasError",
+        "com.diegonmarcos.superapp.jsoncanvas.CanvasGeometry",
+        "com.diegonmarcos.superapp.jsoncanvas.CanvasNode",
+        "com.diegonmarcos.superapp.jsoncanvas.CanvasParser",
+        "com.diegonmarcos.superapp.jsoncanvas.CanvasResult",
+        "com.diegonmarcos.superapp.jsoncanvas.EndShape",
+        "com.diegonmarcos.superapp.jsoncanvas.MarkdownLite",
+        "com.diegonmarcos.superapp.jsoncanvas.MdBlock",
+        "com.diegonmarcos.superapp.jsoncanvas.Side",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertNotNull",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "ok(text: String)",
+        "err(text: String)",
+        "class JsonCanvasTest"
+      ]
+    },
+    {
       "path": "ac_cloud-me/app/src/test/java/com/diegonmarcos/cloudme/LedgerModelTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -425047,6 +425504,33 @@
         "labels(o: JSONObject)",
         "pageIds(o: JSONObject)",
         "class RepoTreeTest"
+      ]
+    },
+    {
+      "path": "ac_cloud-me/app/src/test/java/com/diegonmarcos/cloudme/RepoViewsTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "RepoViewsTest"
+      ],
+      "imports": [
+        "android.app.Application",
+        "org.json.JSONArray",
+        "org.json.JSONObject",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertNotNull",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "org.junit.runner.RunWith",
+        "org.robolectric.RobolectricTestRunner",
+        "org.robolectric.annotation.Config"
+      ],
+      "symbols": [
+        "leaves(o: JSONObject, path: List<String>, out: MutableList<List<String>>)",
+        "projBlocks()",
+        "f(status: Int?, auth: Boolean)",
+        "class RepoViewsTest"
       ]
     },
     {
@@ -425852,6 +426336,24 @@
     },
     {
       "path": "ac_cloud-me/test/test-proj-emoji.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "ok()",
+        "bad()",
+        "check()",
+        "mut()"
+      ],
+      "imports": [],
+      "symbols": [
+        "ok()",
+        "bad()",
+        "check()",
+        "mut()"
+      ]
+    },
+    {
+      "path": "ac_cloud-me/test/test-proj-repo-views-1932.sh",
       "lang": "sh",
       "role": "shell",
       "exports": [

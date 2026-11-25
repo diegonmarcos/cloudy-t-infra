@@ -6,10 +6,10 @@
   },
   "repo": "cloud-u-containers",
   "counts": {
-    "files": 2808,
+    "files": 2826,
     "by_lang": {
-      "sh": 210,
-      "js": 129,
+      "sh": 226,
+      "js": 131,
       "nix": 230,
       "py": 536,
       "ts": 1328,
@@ -17,7 +17,8 @@
     },
     "by_role": {
       "shell": 200,
-      "file": 363,
+      "hook": 69,
+      "file": 365,
       "nix-module": 20,
       "python": 518,
       "module": 830,
@@ -27,8 +28,7 @@
       "compose": 104,
       "mcp-tool": 152,
       "workflow-dag": 8,
-      "rust-module": 371,
-      "hook": 53
+      "rust-module": 371
     }
   },
   "files": [
@@ -132,6 +132,155 @@
         "rfire()",
         "wts()",
         "dprep()"
+      ]
+    },
+    {
+      "path": "_dotfiles/apps/src/claude/hooks/c3/_backlog.sh",
+      "lang": "sh",
+      "role": "hook",
+      "exports": [
+        "backlog_repo()"
+      ],
+      "imports": [],
+      "symbols": [
+        "backlog_repo()"
+      ]
+    },
+    {
+      "path": "_dotfiles/apps/src/claude/hooks/c3/_lib.sh",
+      "lang": "sh",
+      "role": "hook",
+      "exports": [
+        "block()"
+      ],
+      "imports": [],
+      "symbols": [
+        "block()"
+      ]
+    },
+    {
+      "path": "_dotfiles/apps/src/claude/hooks/c3/ai-usage-beacon.sh",
+      "lang": "sh",
+      "role": "hook",
+      "exports": [
+        "TM()",
+        "alive()",
+        "cli_up()",
+        "poster()",
+        "statusline()",
+        "start_cli()",
+        "tick()",
+        "loop()",
+        "start()"
+      ],
+      "imports": [],
+      "symbols": [
+        "TM()",
+        "alive()",
+        "cli_up()",
+        "poster()",
+        "statusline()",
+        "start_cli()",
+        "tick()",
+        "loop()",
+        "start()"
+      ]
+    },
+    {
+      "path": "_dotfiles/apps/src/claude/hooks/c3/ai-usage-post.sh",
+      "lang": "sh",
+      "role": "hook",
+      "exports": [
+        "num()",
+        "int()",
+        "safe()",
+        "send()"
+      ],
+      "imports": [],
+      "symbols": [
+        "num()",
+        "int()",
+        "safe()",
+        "send()"
+      ]
+    },
+    {
+      "path": "_dotfiles/apps/src/claude/hooks/c3/no-mass-delete.sh",
+      "lang": "sh",
+      "role": "hook",
+      "exports": [
+        "wipe()",
+        "msg()"
+      ],
+      "imports": [],
+      "symbols": [
+        "wipe()",
+        "msg()"
+      ]
+    },
+    {
+      "path": "_dotfiles/apps/src/claude/hooks/c3/relay-inbox.sh",
+      "lang": "sh",
+      "role": "hook",
+      "exports": [
+        "rq()",
+        "cloud_msg()",
+        "out()"
+      ],
+      "imports": [],
+      "symbols": [
+        "rq()",
+        "cloud_msg()",
+        "out()"
+      ]
+    },
+    {
+      "path": "_dotfiles/apps/src/claude/hooks/c3/tests/relay-inbox.sh",
+      "lang": "sh",
+      "role": "hook",
+      "exports": [
+        "run()",
+        "sent()",
+        "ck()"
+      ],
+      "imports": [],
+      "symbols": [
+        "run()",
+        "sent()",
+        "ck()"
+      ]
+    },
+    {
+      "path": "_dotfiles/apps/src/claude/hooks/c3/tests/run.sh",
+      "lang": "sh",
+      "role": "hook",
+      "exports": [
+        "t()",
+        "g()",
+        "gj()"
+      ],
+      "imports": [
+        "$0/_backlog.sh"
+      ],
+      "symbols": [
+        "t()",
+        "g()",
+        "gj()"
+      ]
+    },
+    {
+      "path": "_dotfiles/apps/src/claude/mcp-connect.mjs",
+      "lang": "js",
+      "role": "file",
+      "exports": [],
+      "imports": [
+        "node:child_process",
+        "node:path"
+      ],
+      "symbols": [
+        "meshReachable(url)",
+        "bearer()",
+        "send(msg)"
       ]
     },
     {
@@ -1223,6 +1372,155 @@
         "ok()",
         "new_repo()",
         "run()"
+      ]
+    },
+    {
+      "path": ".claude/hooks/c3/_backlog.sh",
+      "lang": "sh",
+      "role": "hook",
+      "exports": [
+        "backlog_repo()"
+      ],
+      "imports": [],
+      "symbols": [
+        "backlog_repo()"
+      ]
+    },
+    {
+      "path": ".claude/hooks/c3/_lib.sh",
+      "lang": "sh",
+      "role": "hook",
+      "exports": [
+        "block()"
+      ],
+      "imports": [],
+      "symbols": [
+        "block()"
+      ]
+    },
+    {
+      "path": ".claude/hooks/c3/ai-usage-beacon.sh",
+      "lang": "sh",
+      "role": "hook",
+      "exports": [
+        "TM()",
+        "alive()",
+        "cli_up()",
+        "poster()",
+        "statusline()",
+        "start_cli()",
+        "tick()",
+        "loop()",
+        "start()"
+      ],
+      "imports": [],
+      "symbols": [
+        "TM()",
+        "alive()",
+        "cli_up()",
+        "poster()",
+        "statusline()",
+        "start_cli()",
+        "tick()",
+        "loop()",
+        "start()"
+      ]
+    },
+    {
+      "path": ".claude/hooks/c3/ai-usage-post.sh",
+      "lang": "sh",
+      "role": "hook",
+      "exports": [
+        "num()",
+        "int()",
+        "safe()",
+        "send()"
+      ],
+      "imports": [],
+      "symbols": [
+        "num()",
+        "int()",
+        "safe()",
+        "send()"
+      ]
+    },
+    {
+      "path": ".claude/hooks/c3/no-mass-delete.sh",
+      "lang": "sh",
+      "role": "hook",
+      "exports": [
+        "wipe()",
+        "msg()"
+      ],
+      "imports": [],
+      "symbols": [
+        "wipe()",
+        "msg()"
+      ]
+    },
+    {
+      "path": ".claude/hooks/c3/relay-inbox.sh",
+      "lang": "sh",
+      "role": "hook",
+      "exports": [
+        "rq()",
+        "cloud_msg()",
+        "out()"
+      ],
+      "imports": [],
+      "symbols": [
+        "rq()",
+        "cloud_msg()",
+        "out()"
+      ]
+    },
+    {
+      "path": ".claude/hooks/c3/tests/relay-inbox.sh",
+      "lang": "sh",
+      "role": "hook",
+      "exports": [
+        "run()",
+        "sent()",
+        "ck()"
+      ],
+      "imports": [],
+      "symbols": [
+        "run()",
+        "sent()",
+        "ck()"
+      ]
+    },
+    {
+      "path": ".claude/hooks/c3/tests/run.sh",
+      "lang": "sh",
+      "role": "hook",
+      "exports": [
+        "t()",
+        "g()",
+        "gj()"
+      ],
+      "imports": [
+        "$0/_backlog.sh"
+      ],
+      "symbols": [
+        "t()",
+        "g()",
+        "gj()"
+      ]
+    },
+    {
+      "path": ".claude/mcp-connect.mjs",
+      "lang": "js",
+      "role": "file",
+      "exports": [],
+      "imports": [
+        "node:child_process",
+        "node:path"
+      ],
+      "symbols": [
+        "meshReachable(url)",
+        "bearer()",
+        "send(msg)"
       ]
     },
     {

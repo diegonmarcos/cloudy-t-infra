@@ -6,9 +6,9 @@
   },
   "repo": "cloud",
   "counts": {
-    "files": 1652,
+    "files": 1655,
     "by_lang": {
-      "sh": 1120,
+      "sh": 1123,
       "js": 176,
       "nix": 314,
       "py": 12,
@@ -17,7 +17,7 @@
     "by_role": {
       "hook": 402,
       "file": 91,
-      "shell": 570,
+      "shell": 573,
       "flake": 6,
       "script": 150,
       "module": 115,
@@ -21091,6 +21091,18 @@
       ]
     },
     {
+      "path": "9_others/test/test_lowmem_pkgmgr_quiesced.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "chk()"
+      ],
+      "imports": [],
+      "symbols": [
+        "chk()"
+      ]
+    },
+    {
       "path": "9_others/test/test_mail_filter_views_partition.sh",
       "lang": "sh",
       "role": "shell",
@@ -21980,6 +21992,20 @@
       ]
     },
     {
+      "path": "9_others/test/test_tier1_watchdog_no_docker_requires.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "unit()",
+        "dep_lines()"
+      ],
+      "imports": [],
+      "symbols": [
+        "unit()",
+        "dep_lines()"
+      ]
+    },
+    {
       "path": "9_others/test/test_unjam_covers_wg_group.sh",
       "lang": "sh",
       "role": "shell",
@@ -21993,6 +22019,18 @@
         "pass()",
         "fail()",
         "resolve_holders()"
+      ]
+    },
+    {
+      "path": "9_others/test/test_vm_pilot_dist_byte_equal.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "cmp_tree()"
+      ],
+      "imports": [],
+      "symbols": [
+        "cmp_tree()"
       ]
     },
     {
@@ -22864,6 +22902,8 @@
         "source",
         "wgPublicPeers",
         "isWgPublicMember",
+        "lowMemVm",
+        "packageManagerQuiesce",
         "imports",
         "interfaceName",
         "meshKey",
@@ -24052,6 +24092,7 @@
       "role": "nix-module",
       "exports": [
         "extraBlacklist",
+        "quiesce",
         "config",
         "pkgs",
         "lib",
@@ -24063,11 +24104,13 @@
         "ubuntuBloatBlacklist",
         "blacklist",
         "blacklistBash",
+        "quiesceBash",
         "allActivations",
         "LOG",
         "SUDO",
         "DISABLED",
-        "BLACKLIST"
+        "BLACKLIST",
+        "QUIESCE"
       ]
     },
     {
@@ -25501,6 +25544,8 @@
         "source",
         "wgPublicPeers",
         "isWgPublicMember",
+        "lowMemVm",
+        "packageManagerQuiesce",
         "imports",
         "interfaceName",
         "meshKey",
@@ -26689,6 +26734,7 @@
       "role": "nix-module",
       "exports": [
         "extraBlacklist",
+        "quiesce",
         "config",
         "pkgs",
         "lib",
@@ -26700,11 +26746,13 @@
         "ubuntuBloatBlacklist",
         "blacklist",
         "blacklistBash",
+        "quiesceBash",
         "allActivations",
         "LOG",
         "SUDO",
         "DISABLED",
-        "BLACKLIST"
+        "BLACKLIST",
+        "QUIESCE"
       ]
     },
     {
@@ -27990,6 +28038,8 @@
         "source",
         "wgPublicPeers",
         "isWgPublicMember",
+        "lowMemVm",
+        "packageManagerQuiesce",
         "imports",
         "interfaceName",
         "meshKey",
@@ -29178,6 +29228,7 @@
       "role": "nix-module",
       "exports": [
         "extraBlacklist",
+        "quiesce",
         "config",
         "pkgs",
         "lib",
@@ -29189,11 +29240,13 @@
         "ubuntuBloatBlacklist",
         "blacklist",
         "blacklistBash",
+        "quiesceBash",
         "allActivations",
         "LOG",
         "SUDO",
         "DISABLED",
-        "BLACKLIST"
+        "BLACKLIST",
+        "QUIESCE"
       ]
     },
     {
@@ -30483,6 +30536,8 @@
         "source",
         "wgPublicPeers",
         "isWgPublicMember",
+        "lowMemVm",
+        "packageManagerQuiesce",
         "imports",
         "interfaceName",
         "meshKey",
@@ -31671,6 +31726,7 @@
       "role": "nix-module",
       "exports": [
         "extraBlacklist",
+        "quiesce",
         "config",
         "pkgs",
         "lib",
@@ -31682,11 +31738,13 @@
         "ubuntuBloatBlacklist",
         "blacklist",
         "blacklistBash",
+        "quiesceBash",
         "allActivations",
         "LOG",
         "SUDO",
         "DISABLED",
-        "BLACKLIST"
+        "BLACKLIST",
+        "QUIESCE"
       ]
     },
     {
@@ -32975,6 +33033,8 @@
         "source",
         "wgPublicPeers",
         "isWgPublicMember",
+        "lowMemVm",
+        "packageManagerQuiesce",
         "imports",
         "interfaceName",
         "meshKey",
@@ -34163,6 +34223,7 @@
       "role": "nix-module",
       "exports": [
         "extraBlacklist",
+        "quiesce",
         "config",
         "pkgs",
         "lib",
@@ -34174,11 +34235,13 @@
         "ubuntuBloatBlacklist",
         "blacklist",
         "blacklistBash",
+        "quiesceBash",
         "allActivations",
         "LOG",
         "SUDO",
         "DISABLED",
-        "BLACKLIST"
+        "BLACKLIST",
+        "QUIESCE"
       ]
     },
     {
