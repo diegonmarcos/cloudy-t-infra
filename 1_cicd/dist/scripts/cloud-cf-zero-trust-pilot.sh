@@ -290,7 +290,7 @@ do_drift() {
     # The Cloudflare-managed WARP enrolment app (type "warp", created by Cloudflare itself the first time device
     # enrolment is configured; not creatable as code on the free plan) is excluded from the app count and asserted
     # separately below, so a server-only SELF_HOSTED app still trips the guard.
-    live="$(cf "/accounts/$ACCT/$path" | jq 'if (.result|type)=="array" then [.result[] | select((.type // "") != "warp")] | length else 0 end')"
+    live="$(cf "/accounts/$ACCT/$path" | jq --arg t "$typ" 'if (.result|type)!="array" then 0 elif $t=="cloudflare_zero_trust_access_application" then [.result[] | select((.type // "") != "warp")] | length else (.result|length) end')"
     held="$(grep -c "^$typ\." state.txt || true)"
     echo "  live $typ=$live state=$held"
     if [ "$live" != "$held" ]; then echo "DRIFT: $typ has $live live object(s) but terraform holds $held (server-only objects are not in code)"; DRIFT=1; fi
