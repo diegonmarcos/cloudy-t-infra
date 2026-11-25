@@ -1,0 +1,101 @@
+# ╔══════════════════════════════════════════════════════════════════╗
+# ║                                                                  ║
+# ║   GENERATED FILE — DO NOT EDIT                                   ║
+# ║                                                                  ║
+# ║   Source : 1_cicd/src/cicd/sops-gen-sshkey.yml
+# ║   Engine : 1_cicd/src/scripts/cloud-ship-repo-workflow-engine.sh
+# ║   Rebuild: ./9_others/build.sh
+# ║                                                                  ║
+# ║   Manual edits will be overwritten on next build.                ║
+# ║                                                                  ║
+# ╚══════════════════════════════════════════════════════════════════╝
+
+name: "Sops gen sshkey (new ed25519 key generated in CI, stored base64 in a vault secrets file, artifact)"
+
+# Generates ONE ed25519 key pair inside the job, stores the base64 of the PRIVATE half under the given key of a vault
+# secrets file (value on stdin to `sops set`, masked, never printed) together with its _credentials entry, and hands
+# the re-encrypted file back as a one-day artifact. The PUBLIC half is written to the job summary and to a second
+# artifact so the caller can register it as a read-only deploy key. The vault is read with the read-only deploy key and
+# this workflow never pushes anywhere; the caller commits result.enc to the vault.
+on:
+  workflow_dispatch:
+    inputs:
+      file:
+        description: "vault-relative path of the sops file, e.g. Linux-Containers/<svc>/src/secrets.yaml"
+        required: true
+        type: string
+      key:
+        description: "top-level key to set, e.g. FLEET_DATA_SSH_KEY_B64"
+        required: true
+        type: string
+      comment:
+        description: "ssh key comment (identifies the deploy key)"
+        required: true
+        type: string
+      note:
+        description: "what the credential is for (documentation, goes into the _credentials entry)"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  gen:
+    runs-on: ubuntu-latest
+    env:
+      SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
+      VAULT_DEPLOY_KEY: ${{ secrets.VAULT_DEPLOY_KEY }}
+    steps:
+      - name: Install sops
+        run: |
+          set -eu
+          curl -fsSL -o /tmp/sops https://github.com/getsops/sops/releases/download/v3.11.0/sops-v3.11.0.linux.amd64
+          sudo install -m 0755 /tmp/sops /usr/local/bin/sops
+          sops --version; sops set --help 2>&1 | grep -q value-stdin
+      - name: Read the vault file (read-only deploy key)
+        run: |
+          set -eu
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          umask 077
+          printf '%s\n' "$VAULT_DEPLOY_KEY" > ~/.ssh/vault_deploy
+          ssh-keyscan github.com 2>/dev/null >> ~/.ssh/known_hosts
+          export GIT_SSH_COMMAND="ssh -i $HOME/.ssh/vault_deploy -o IdentitiesOnly=yes -o StrictHostKeyChecking=accept-new"
+          git clone --depth 1 --filter=blob:none --sparse git@github.com:diegonmarcos/cloud-me-pvt-vault.git "$RUNNER_TEMP/vault"
+          git -C "$RUNNER_TEMP/vault" sparse-checkout set Linux-Containers
+      - name: Generate the key and set it
+        env:
+          T_FILE: ${{ inputs.file }}
+          T_KEY: ${{ inputs.key }}
+          T_COMMENT: ${{ inputs.comment }}
+          T_NOTE: ${{ inputs.note }}
+        run: |
+          set -eu
+          case "$T_FILE$T_KEY$T_COMMENT" in *[!A-Za-z0-9_./-]*|*..*) echo "::error::refusing odd input"; exit 1;; esac
+          case "$T_FILE" in Linux-Containers/*/src/secrets*.yaml) ;; *) echo "::error::file must be Linux-Containers/<svc>/src/secrets*.yaml"; exit 1;; esac
+          case "$T_NOTE" in *'"'*|*'\'*) echo "::error::note must not contain quotes or backslashes"; exit 1;; esac
+          mkdir -p ~/.config/sops/age && umask 077 && printf '%s\n' "$SOPS_AGE_KEY" > ~/.config/sops/age/keys.txt
+          export SOPS_AGE_KEY_FILE=~/.config/sops/age/keys.txt
+          F="$RUNNER_TEMP/vault/$T_FILE"
+          K="$RUNNER_TEMP/gen"; mkdir -p "$K" out
+          ssh-keygen -q -t ed25519 -N '' -C "$T_COMMENT" -f "$K/k"
+          ssh-keygen -y -f "$K/k" >/dev/null
+          VAL="$(base64 -w0 "$K/k")"
+          echo "::add-mask::$VAL"
+          printf '%s' "$VAL" | python3 -c 'import json,sys; print(json.dumps(sys.stdin.read()))' | sops set --value-stdin "$F" "[\"$T_KEY\"]"
+          ENTRY="$(VAL="$VAL" T_NOTE="$T_NOTE" T_KEY="$T_KEY" python3 -c 'import json,os; print(json.dumps({"type": "token", "token": os.environ["VAL"], "note": os.environ["T_NOTE"] + " (generated in CI by sops-gen-sshkey for " + os.environ["T_KEY"] + ")"}))')"
+          printf '%s' "$ENTRY" | sops set --value-stdin "$F" "[\"_credentials\"][\"$T_KEY\"]"
+          unset ENTRY
+          grep -q '^sops:' "$F"
+          if grep -qF "$VAL" "$F"; then echo "::error::plaintext leaked into the encrypted file"; exit 1; fi
+          [ "$(sops -d --extract "[\"$T_KEY\"]" "$F")" = "$VAL" ] || { echo "::error::stored value mismatch"; exit 1; }
+          cp "$F" out/result.enc
+          cp "$K/k.pub" out/pub.txt
+          { echo "public key (register as read-only deploy key):"; echo '```'; cat "$K/k.pub"; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+          shred -u "$K/k" 2>/dev/null || rm -f "$K/k"
+          echo "set $T_KEY in $T_FILE"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sops-gen-sshkey-result
+          path: out/
+          retention-days: 1
