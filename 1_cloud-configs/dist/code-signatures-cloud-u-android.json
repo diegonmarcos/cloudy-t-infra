@@ -423009,6 +423009,7 @@
         "launcher()",
         "open_page()",
         "shot()",
+        "on_screen()",
         "walk_tab()"
       ],
       "imports": [],
@@ -423017,6 +423018,7 @@
         "launcher()",
         "open_page()",
         "shot()",
+        "on_screen()",
         "walk_tab()"
       ]
     },
@@ -558487,6 +558489,10 @@
         "android.net.Uri",
         "com.diegonmarcos.superapp.ai.AiKgTab",
         "com.diegonmarcos.superapp.ai.AiMcpBucket",
+        "com.diegonmarcos.superapp.fleetdata.FleetData",
+        "kotlinx.coroutines.flow.Flow",
+        "kotlinx.coroutines.flow.map",
+        "kotlinx.coroutines.flow.merge",
         "org.json.JSONObject"
       ],
       "symbols": [
@@ -558495,6 +558501,9 @@
         "groups(text: String, only: List<String> = emptyList()",
         "kgGroups(buckets: List<AiMcpBucket>, tabs: List<AiKgTab>)",
         "asset(ctx: Context, name: String)",
+        "readPages(ctx: Context)",
+        "observePages(ctx: Context)",
+        "observeRows(ctx: Context)",
         "get(key: String)",
         "account(ctx: Context, authority: String, method: String)",
         "class AiRow",
@@ -559075,6 +559084,7 @@
         "androidx.compose.runtime.mutableIntStateOf",
         "androidx.compose.runtime.mutableStateMapOf",
         "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.produceState",
         "androidx.compose.runtime.remember",
         "androidx.compose.runtime.setValue",
         "androidx.compose.ui.Modifier",
@@ -559092,8 +559102,7 @@
         "com.diegonmarcos.cloudsuperintel.PrivateSource",
         "com.diegonmarcos.cloudsuperintel.R",
         "com.diegonmarcos.superapp.notificationcenter.AiUsageModel",
-        "com.diegonmarcos.superapp.uikit.CloudKitTheme",
-        "com.diegonmarcos.superapp.uikit.KitPalette"
+        "com.diegonmarcos.superapp.uikit.CloudKitTheme"
       ],
       "symbols": [
         "AiPage(spec: AiPageSpec)",
@@ -559476,7 +559485,8 @@
       "lang": "kotlin",
       "role": "kotlin",
       "exports": [
-        "AiPagesTest"
+        "AiPagesTest",
+        "AiServedDatasetsTest"
       ],
       "imports": [
         "org.junit.Assert.assertEquals",
@@ -559495,7 +559505,13 @@
         "mcpPageNamesTheRebrandAndTheC3Merge()",
         "dotfilesHaveTheFourSectionsForBothSettingsFilesAndNoValues()",
         "pluginsPageHasTheC3InfraSkillRulesAndAgents()",
-        "class AiPagesTest"
+        "read(p: String)",
+        "noAssetIsLeftInTheApk()",
+        "theServedFilesParseAndCarryASchemaVersion()",
+        "theManifestListsThem()",
+        "theReaderIsTheServedOneAndNotServedIsEmpty()",
+        "class AiPagesTest",
+        "class AiServedDatasetsTest"
       ]
     },
     {
