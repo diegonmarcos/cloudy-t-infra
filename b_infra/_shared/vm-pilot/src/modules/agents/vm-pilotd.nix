@@ -32,6 +32,11 @@ let
 
   tier1 = cfg "tier1_services" [];
 
+  # #1898: per-VM switch. The 944 MB hub (gcp-proxy) sets vm_pilotd_shadow=false: the shadow acts
+  # on nothing, but it polls dockerd (inspect per tier-1 service every 30 s, containers/json every
+  # 15 s) and holds up to 32 MB while the box thrashes; the shell units stay in charge either way.
+  shadowEnabled = cfg "vm_pilotd_shadow" true;
+
   conf = {
     vm = vmName;
     shadow = true;
@@ -121,6 +126,12 @@ in
     done
     [ -z "$SUDO" ] && echo "[vm-pilotd] no sudo - skipping" && exit 0
 
+    ${lib.optionalString (!shadowEnabled) ''
+    # #1898: disabled on this VM - stop and disable the shadow, never install it.
+    timeout 15 $SUDO systemctl disable --now vm-pilotd.service 2>/dev/null || true
+    echo "[vm-pilotd] shadow stage disabled for this VM (vm_pilotd_shadow=false)"
+    exit 0
+    ''}
     SRC="$HOME/.local/share/vm-pilotd"
     if ! timeout 150 $SUDO sh "$SRC/fetch-vm-pilotd.sh" ${releaseTag}; then
       echo "[vm-pilotd] binary not installed - shadow stage skipped (shell units unaffected)"
