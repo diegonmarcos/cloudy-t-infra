@@ -245,6 +245,10 @@
       "ip": "10.0.0.1",
       "desc": "MCP OAuth 2.1 authorization server for mcp.diegonmarcos.com (option 31.1, approved 2026-10-28): RFC 8414/9728 discovery, RFC 7591 DCR, /authorize behind Authelia, PKCE S256 /token, opaque tokens introspected by introspect-proxy"
     },
+    "mcp-oauth-go": {
+      "ip": "10.0.0.1",
+      "desc": "Go port of mcp-oauth (MCP OAuth 2.1 authorization server: RFC 8414/9728 discovery, RFC 7591 registration, PKCE S256 authorization code with signed consent form, refresh rotation, RFC 7662 introspection), shadow stage: own sqlite file, own port, outside every request path (ticket #1877). Parity harness drives the Python original with identical requests."
+    },
     "steel-browser": {
       "ip": "10.0.0.1",
       "desc": "Steel Browser — owner-authorized ethical-hacking/security-testing headless browser (own services only). Private mesh, token-gated via a Caddy bearer sidecar, declared target allowlist enforced in the c3 MCP layer. Apache-2.0."

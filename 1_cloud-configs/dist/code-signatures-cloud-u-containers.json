@@ -6,25 +6,25 @@
   },
   "repo": "cloud-u-containers",
   "counts": {
-    "files": 2795,
+    "files": 2799,
     "by_lang": {
-      "sh": 208,
+      "sh": 209,
       "js": 129,
-      "nix": 226,
-      "py": 533,
+      "nix": 228,
+      "py": 534,
       "ts": 1324,
       "rust": 375
     },
     "by_role": {
-      "shell": 198,
+      "shell": 199,
       "file": 363,
       "nix-module": 20,
-      "python": 516,
+      "python": 517,
       "module": 826,
       "script": 10,
-      "flake": 104,
+      "flake": 105,
       "entrypoint": 73,
-      "compose": 102,
+      "compose": 103,
       "mcp-tool": 152,
       "workflow-dag": 7,
       "rust-module": 371,
@@ -25919,6 +25919,142 @@
         "class FakeEngine",
         "class _Key",
         "class _Jwks"
+      ]
+    },
+    {
+      "path": "infra-sec_mcp-oauth-go/build.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "get_config()",
+        "get_config_array()",
+        "get_lifecycle()",
+        "detect_layout()",
+        "rewrite_compose_image_refs()",
+        "log()",
+        "log_warn()",
+        "log_error()",
+        "declared_container_names()",
+        "ssh_with_retry()",
+        "ssh_run_detached()",
+        "rsync_with_retry()",
+        "_ship_build_phase()"
+      ],
+      "imports": [],
+      "symbols": [
+        "get_config()",
+        "get_config_array()",
+        "get_lifecycle()",
+        "detect_layout()",
+        "rewrite_compose_image_refs()",
+        "log()",
+        "log_warn()",
+        "log_error()",
+        "declared_container_names()",
+        "ssh_with_retry()",
+        "ssh_run_detached()",
+        "rsync_with_retry()",
+        "_ship_build_phase()"
+      ]
+    },
+    {
+      "path": "infra-sec_mcp-oauth-go/src/code/parity/ref.py",
+      "lang": "py",
+      "role": "python",
+      "exports": [
+        "load(clockfile, seed)",
+        "serve(port, clockfile, seed)",
+        "class Stream"
+      ],
+      "imports": [
+        "base64",
+        "hashlib",
+        "importlib.util",
+        "os",
+        "sys",
+        "types"
+      ],
+      "symbols": [
+        "load(clockfile, seed)",
+        "serve(port, clockfile, seed)",
+        "class Stream"
+      ]
+    },
+    {
+      "path": "infra-sec_mcp-oauth-go/src/compose.nix",
+      "lang": "nix",
+      "role": "compose",
+      "exports": [
+        "buildJson",
+        "container"
+      ],
+      "imports": [],
+      "symbols": [
+        "app",
+        "bind",
+        "bin",
+        "services",
+        "mcp-oauth-go",
+        "image",
+        "container_name",
+        "network_mode",
+        "user",
+        "read_only",
+        "command",
+        "env_file",
+        "environment",
+        "ISSUER",
+        "AUTHORIZE_BASE",
+        "DB_PATH",
+        "ALLOWED_USERS",
+        "volumes",
+        "healthcheck",
+        "test",
+        "interval",
+        "timeout",
+        "retries",
+        "start_period",
+        "memswap_limit",
+        "mcp_oauth_go_data"
+      ]
+    },
+    {
+      "path": "infra-sec_mcp-oauth-go/src/flake.nix",
+      "lang": "nix",
+      "role": "flake",
+      "exports": [
+        "description",
+        "shadow",
+        "Type",
+        "#1877)\";",
+        "nixpkgs"
+      ],
+      "imports": [
+        "../../_shared/engine.nix",
+        "./compose.nix",
+        "../_shared/engine.nix",
+        "compose.nix"
+      ],
+      "symbols": [
+        "description",
+        "outputs",
+        "forAllSystems",
+        "buildJson",
+        "container",
+        "engine",
+        "nb",
+        "packages",
+        "pkgs",
+        "default",
+        "srcDir",
+        "templates",
+        "composeSpec",
+        "nativeBuild",
+        "cmd",
+        "binary",
+        "baseImage",
+        "apt",
+        "title"
       ]
     },
     {

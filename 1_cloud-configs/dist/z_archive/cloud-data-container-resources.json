@@ -720,6 +720,15 @@
       ],
       "resources": null
     },
+    "mcp-oauth-go": {
+      "vm": "gcp-proxy",
+      "vm_ram_gb": 1,
+      "vm_cpu": 2,
+      "containers": [
+        "mcp-oauth-go"
+      ],
+      "resources": null
+    },
     "steel-browser": {
       "vm": "oci-apps",
       "vm_ram_gb": 24,

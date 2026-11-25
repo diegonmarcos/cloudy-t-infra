@@ -335,9 +335,10 @@
         "caddy",
         "introspect-proxy",
         "introspect-proxy-go",
-        "mcp-oauth"
+        "mcp-oauth",
+        "mcp-oauth-go"
       ],
-      "container_count": 10
+      "container_count": 11
     },
     "gcp-L4-e_0": {
       "ip": "34.66.107.117",
@@ -10227,6 +10228,99 @@
         "auth": "oauth2"
       }
     },
+    "mcp-oauth-go": {
+      "category": "sec",
+      "vm": "gcp-E2-f_0",
+      "folder": "infra-sec_mcp-oauth-go",
+      "description": "Go port of mcp-oauth (MCP OAuth 2.1 authorization server: RFC 8414/9728 discovery, RFC 7591 registration, PKCE S256 authorization code with signed consent form, refresh rotation, RFC 7662 introspection), shadow stage: own sqlite file, own port, outside every request path (ticket #1877). Parity harness drives the Python original with identical requests.",
+      "enabled": true,
+      "flake": "infra-sec_mcp-oauth-go",
+      "port": 4189,
+      "dns": "mcp-oauth-go.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.1:4189",
+      "containers": {
+        "app": {
+          "container_name": "mcp-oauth-go",
+          "image": "ghcr.io/diegonmarcos/mcp-oauth-go:latest",
+          "port": 4189,
+          "port_env": null,
+          "public": false,
+          "proxy": null,
+          "healthcheck": "/health",
+          "monitoring": null,
+          "volumes": [
+            "mcp_oauth_go_data:/data"
+          ],
+          "env_file": false,
+          "depends_on": [],
+          "resources": null,
+          "read_only": true,
+          "protocol": "http"
+        }
+      },
+      "container_names": [
+        "mcp-oauth-go"
+      ],
+      "all_ports": [
+        "4189"
+      ],
+      "all_dns": [],
+      "compose": {
+        "containers": [],
+        "ports": [],
+        "networks": []
+      },
+      "proxy": {
+        "app_hub": false
+      },
+      "declared_ports": {
+        "app": 4189
+      },
+      "health": {
+        "path": "/health"
+      },
+      "taxonomy": {
+        "group": "Infra Apps",
+        "category": "Net-Routing & Security"
+      },
+      "bind_host": "10.0.0.1",
+      "resources": {
+        "mem_limit": "64M",
+        "mem_reservation": "8M"
+      },
+      "tests": {
+        "unit": {
+          "cmd": "go test -count=1 ./...",
+          "cwd": "src/code"
+        },
+        "parity-compare": {
+          "cmd": "PYREF=$(ls -d /opt/hostedtoolcache/Python/3.11*/x64/bin/python3 2>/dev/null | tail -1); ${PYREF:-python3} -m venv /tmp/mo-parity-venv && /tmp/mo-parity-venv/bin/pip install -q -r ../../../infra-sec_mcp-oauth/src/code/requirements.txt && PY_BIN=/tmp/mo-parity-venv/bin/python PY_APP_DIR=$PWD/../../../infra-sec_mcp-oauth/src/code PARITY_REQUIRE=1 go test -count=1 -timeout 15m -tags parity -v -run TestParity ./parity/",
+          "cwd": "src/code",
+          "_doc": "Reference = the Python service main.py (CPython 3.11, Flask) driven by parity/ref.py with a fake clock and a deterministic byte stream; the Go port gets the same. Discovery, registration (redirect rules incl. urlsplit quirks), the signed consent form, PKCE, code single use, refresh rotation, client secrets (post and basic), introspection to the second, revocation, registry eviction, garbage collection; the sqlite file written by Python is served by both."
+        },
+        "parity-mutation": {
+          "cmd": "PYREF=$(ls -d /opt/hostedtoolcache/Python/3.11*/x64/bin/python3 2>/dev/null | tail -1); ${PYREF:-python3} -m venv /tmp/mo-parity-venv && /tmp/mo-parity-venv/bin/pip install -q -r ../../../infra-sec_mcp-oauth/src/code/requirements.txt && o=$(mktemp); PY_BIN=/tmp/mo-parity-venv/bin/python PY_APP_DIR=$PWD/../../../infra-sec_mcp-oauth/src/code PARITY_MUTATE=1 PARITY_REQUIRE=1 go test -count=1 -timeout 15m -tags parity -run TestParityCorpus ./parity/ >\"$o\" 2>&1; grep -q 'requests differ' \"$o\"",
+          "cwd": "src/code",
+          "_doc": "Mutation proof: the Go side signs consent forms with another secret; the harness must report differing requests."
+        }
+      },
+      "_doc_addressing": "No mesh name on purpose during the shadow stage: nothing dials this container, so it needs no Hickory row and no Caddy fallback-map entry.",
+      "api": {
+        "has_api": true,
+        "has_web_ui": false,
+        "api_path": "/",
+        "api_url": null,
+        "healthcheck_paths": [
+          "/health"
+        ],
+        "type": "custom-rest",
+        "base_path": "/",
+        "endpoint_count": 9,
+        "display_name": "MCP OAuth Authorization Server (Go, shadow)",
+        "description": "Same contract as mcp-oauth: discovery, /register, /authorize, /token, /revoke, mesh-only /introspect.",
+        "auth": "oauth2"
+      }
+    },
     "steel-browser": {
       "category": "sec",
       "vm": "oci-A1-f_0",
@@ -19361,7 +19455,8 @@
           "caddy",
           "introspect-proxy",
           "introspect-proxy-go",
-          "mcp-oauth"
+          "mcp-oauth",
+          "mcp-oauth-go"
         ],
         "method": "gcloud",
         "gha": {
@@ -19863,6 +19958,11 @@
       },
       "mcp-oauth": {
         "dir": "infra-sec_mcp-oauth",
+        "vm": "gcp-proxy",
+        "has_docker": true
+      },
+      "mcp-oauth-go": {
+        "dir": "infra-sec_mcp-oauth-go",
         "vm": "gcp-proxy",
         "has_docker": true
       },

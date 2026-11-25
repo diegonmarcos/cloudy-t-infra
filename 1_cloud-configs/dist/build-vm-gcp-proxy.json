@@ -90,6 +90,15 @@
         "ghcr.io/diegonmarcos/mcp-oauth:latest"
       ],
       "has_docker_build": true
+    },
+    {
+      "name": "mcp-oauth-go",
+      "dir": "infra-sec_mcp-oauth-go",
+      "compose_path": "/opt/containers/mcp-oauth-go",
+      "images": [
+        "ghcr.io/diegonmarcos/mcp-oauth-go:latest"
+      ],
+      "has_docker_build": true
     }
   ],
   "ssh_containers": [],

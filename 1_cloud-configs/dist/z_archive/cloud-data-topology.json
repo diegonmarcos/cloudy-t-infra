@@ -222,7 +222,8 @@
         "caddy",
         "introspect-proxy",
         "introspect-proxy-go",
-        "mcp-oauth"
+        "mcp-oauth",
+        "mcp-oauth-go"
       ],
       "ports": [],
       "networks": [],
@@ -5614,6 +5615,57 @@
         "path": "/health"
       },
       "flake": "infra-sec_mcp-oauth"
+    },
+    "mcp-oauth-go": {
+      "category": "sec",
+      "vm": "gcp-E2-f_0",
+      "folder": "infra-sec_mcp-oauth-go",
+      "description": "Go port of mcp-oauth (MCP OAuth 2.1 authorization server: RFC 8414/9728 discovery, RFC 7591 registration, PKCE S256 authorization code with signed consent form, refresh rotation, RFC 7662 introspection), shadow stage: own sqlite file, own port, outside every request path (ticket #1877). Parity harness drives the Python original with identical requests.",
+      "port": 4189,
+      "dns": "mcp-oauth-go.mesh.diegonmarcos.com",
+      "upstream": "10.0.0.1:4189",
+      "containers": {
+        "app": {
+          "container_name": "mcp-oauth-go",
+          "image": "ghcr.io/diegonmarcos/mcp-oauth-go:latest",
+          "port": 4189,
+          "port_env": null,
+          "public": false,
+          "proxy": null,
+          "healthcheck": "/health",
+          "monitoring": null,
+          "volumes": [
+            "mcp_oauth_go_data:/data"
+          ],
+          "env_file": false,
+          "depends_on": [],
+          "resources": null,
+          "read_only": true,
+          "protocol": "http"
+        }
+      },
+      "container_names": [
+        "mcp-oauth-go"
+      ],
+      "all_ports": [
+        "4189"
+      ],
+      "all_dns": [],
+      "compose": {
+        "containers": [],
+        "ports": [],
+        "networks": []
+      },
+      "proxy": {
+        "app_hub": false
+      },
+      "declared_ports": {
+        "app": 4189
+      },
+      "health": {
+        "path": "/health"
+      },
+      "flake": "infra-sec_mcp-oauth-go"
     },
     "steel-browser": {
       "category": "sec",

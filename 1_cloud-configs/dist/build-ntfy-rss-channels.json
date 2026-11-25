@@ -6,9 +6,9 @@
   "base": "https://rss.diegonmarcos.com/feed",
   "counts": {
     "declared": 22,
-    "logs": 130,
+    "logs": 131,
     "apps": 46,
-    "total": 198
+    "total": 199
   },
   "channels": [
     {
@@ -1087,6 +1087,17 @@
       "source": "logs",
       "vm": "gcp-proxy",
       "feed": "/feed/c/logs_mcp-oauth.atom",
+      "quiet": true
+    },
+    {
+      "id": "logs_mcp-oauth-go",
+      "topic": "logs_mcp-oauth-go",
+      "title": "mcp-oauth-go",
+      "path": "Cloud-Infra/Logs/gcp-proxy/mcp-oauth-go",
+      "category": "logs",
+      "source": "logs",
+      "vm": "gcp-proxy",
+      "feed": "/feed/c/logs_mcp-oauth-go.atom",
       "quiet": true
     },
     {

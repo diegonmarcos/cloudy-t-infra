@@ -33,15 +33,15 @@
   "_generated": "",
   "_source": "_cloud-data-consolidated.json via cloud-data-config-derive.ts/kg-delta",
   "counts": {
-    "nodes": 421,
-    "edges": 579,
+    "nodes": 424,
+    "edges": 583,
     "by_table": {
       "vm": 4,
-      "service": 106,
-      "container": 130,
+      "service": 107,
+      "container": 131,
       "domain": 44,
       "repo": 3,
-      "module": 106,
+      "module": 107,
       "package": 28
     }
   },
@@ -2000,6 +2000,32 @@
         "role": "app",
         "port": 4183,
         "public": true
+      }
+    },
+    {
+      "table": "service",
+      "id": "mcp_oauth_go",
+      "key": "service:mcp_oauth_go",
+      "properties": {
+        "name": "mcp-oauth-go",
+        "category": "sec",
+        "description": "Go port of mcp-oauth (MCP OAuth 2.1 authorization server: RFC 8414/9728 discovery, RFC 7591 registration, PKCE S256 authorization code with signed consent form, refresh rotation, RFC 7662 introspection), shadow stage: own sqlite file, own port, outside every request path (ticket #1877). Parity harness drives the Python original with identical requests.",
+        "domain": null,
+        "port": 4189,
+        "vm": "gcp-proxy",
+        "folder": "infra-sec_mcp-oauth-go"
+      }
+    },
+    {
+      "table": "container",
+      "id": "mcp_oauth_go",
+      "key": "container:mcp_oauth_go",
+      "properties": {
+        "name": "mcp-oauth-go",
+        "image": "ghcr.io/diegonmarcos/mcp-oauth-go:latest",
+        "role": "app",
+        "port": 4189,
+        "public": false
       }
     },
     {
@@ -4251,6 +4277,17 @@
     },
     {
       "table": "module",
+      "id": "infra_sec_mcp_oauth_go",
+      "key": "module:infra_sec_mcp_oauth_go",
+      "properties": {
+        "name": "infra-sec_mcp-oauth-go",
+        "repo": "cloud",
+        "category": "sec",
+        "service": "mcp-oauth-go"
+      }
+    },
+    {
+      "table": "module",
       "id": "infra_sec_steel_browser",
       "key": "module:infra_sec_steel_browser",
       "properties": {
@@ -6190,6 +6227,22 @@
       "from": "service:mcp_oauth",
       "to": "container:mcp_oauth",
       "key": "service:mcp_oauth->runs_container->container:mcp_oauth",
+      "properties": {
+        "role": "app"
+      }
+    },
+    {
+      "table": "hosted_on",
+      "from": "service:mcp_oauth_go",
+      "to": "vm:gcp_proxy",
+      "key": "service:mcp_oauth_go->hosted_on->vm:gcp_proxy",
+      "properties": {}
+    },
+    {
+      "table": "runs_container",
+      "from": "service:mcp_oauth_go",
+      "to": "container:mcp_oauth_go",
+      "key": "service:mcp_oauth_go->runs_container->container:mcp_oauth_go",
       "properties": {
         "role": "app"
       }
@@ -8680,6 +8733,20 @@
       "from": "module:infra_sec_mcp_oauth",
       "to": "service:mcp_oauth",
       "key": "module:infra_sec_mcp_oauth->implements->service:mcp_oauth",
+      "properties": {}
+    },
+    {
+      "table": "belongs_to_repo",
+      "from": "module:infra_sec_mcp_oauth_go",
+      "to": "repo:cloud",
+      "key": "module:infra_sec_mcp_oauth_go->belongs_to_repo->repo:cloud",
+      "properties": {}
+    },
+    {
+      "table": "implements",
+      "from": "module:infra_sec_mcp_oauth_go",
+      "to": "service:mcp_oauth_go",
+      "key": "module:infra_sec_mcp_oauth_go->implements->service:mcp_oauth_go",
       "properties": {}
     },
     {
