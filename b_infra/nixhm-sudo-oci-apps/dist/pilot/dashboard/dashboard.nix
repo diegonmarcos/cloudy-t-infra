@@ -2,7 +2,7 @@
 # ║                                                                  ║
 # ║   GENERATED FILE — DO NOT EDIT                                   ║
 # ║                                                                  ║
-# ║   Source : cloud-infra/b_infra/nixhm-sudo-oci-apps/src/pilot/dashboard/dashboard.nix
+# ║   Source : cloudy-t-infra/b_infra/nixhm-sudo-oci-apps/src/pilot/dashboard/dashboard.nix
 # ║   Engine : 1_cicd/src/scripts/cloud-ship-nix-homemanager-engine.sh
 # ║   Rebuild: ./9_others/build.sh
 # ║                                                                  ║
@@ -74,6 +74,12 @@ in {
     [Unit]
     Description=ttyd terminal — tmux monitoring (${vmName})
     After=network.target
+    # Give up after 20 failed starts in 10 min instead of looping forever:
+    # with Restart=always + RestartSec=5 the default limit (5 in 10s) never
+    # trips, so a permanent fault (2026-10-13: :7681 held by the distro
+    # ttyd.service) restart-looped every ~7s, ~500 restarts/hour.
+    StartLimitIntervalSec=600
+    StartLimitBurst=20
 
     [Service]
     Type=simple
@@ -142,11 +148,38 @@ in {
     $SUDO ln -sfn /opt/health /opt/pilot/html/health
     $SUDO ln -sfn /opt/pilot/data /opt/pilot/html/pilot/data
 
-    # Deploy systemd units
-    $SUDO cp -f "$SRC_SP/dashboard-ttyd.service" /etc/systemd/system/dashboard-ttyd.service
-    $SUDO cp -f "$SRC_VP/dashboard-httpd.service" /etc/systemd/system/dashboard-httpd.service
-    $SUDO systemctl daemon-reload
-    $SUDO systemctl enable dashboard-ttyd.service dashboard-httpd.service 2>/dev/null || true
+    # The distro `ttyd` apt package (installed by hand on some VMs before the
+    # nix ttyd took over) ships an enabled ttyd.service that binds the SAME
+    # port 7681 (Debian default /etc/default/ttyd: -i lo -p 7681 -O login).
+    # It starts first at boot, so dashboard-ttyd failed to bind and
+    # crash-looped (oci-mail, 2026-10-13). Nothing uses the distro unit —
+    # stop and mask it once; is-enabled reports "masked" afterwards, so later
+    # activations skip this block (no extra daemon-reload).
+    if [ -f /usr/lib/systemd/system/ttyd.service ] || [ -f /lib/systemd/system/ttyd.service ]; then
+      if [ "$($SUDO systemctl is-enabled ttyd.service 2>/dev/null)" != "masked" ]; then
+        echo "[dashboard] masking distro ttyd.service (holds :${toString ttydPort})"
+        $SUDO systemctl stop ttyd.service 2>/dev/null || true
+        $SUDO systemctl mask ttyd.service 2>/dev/null || true
+      fi
+    fi
+
+    # Deploy systemd units. Reload only when a unit actually changed: every
+    # daemon-reload costs 10-20s of PID1 time on the 1 GB VMs, and one HM
+    # activation used to fire ~40 of them back to back.
+    _dash_changed=0
+    for _pair in "$SRC_SP/dashboard-ttyd.service:/etc/systemd/system/dashboard-ttyd.service" \
+                 "$SRC_VP/dashboard-httpd.service:/etc/systemd/system/dashboard-httpd.service"; do
+      _src="''${_pair%%:*}"; _dst="''${_pair#*:}"
+      if ! $SUDO ${pkgs.diffutils}/bin/cmp -s "$_src" "$_dst"; then
+        $SUDO cp -f "$_src" "$_dst"
+        _dash_changed=1
+      fi
+    done
+    if [ "$_dash_changed" = 1 ]; then
+      $SUDO systemctl daemon-reload
+    fi
+    $SUDO systemctl reset-failed dashboard-ttyd.service 2>/dev/null || true
+    $SUDO systemctl enable --no-reload dashboard-ttyd.service dashboard-httpd.service 2>/dev/null || true
     $SUDO systemctl restart dashboard-ttyd.service 2>/dev/null || true
     $SUDO systemctl restart dashboard-httpd.service 2>/dev/null || true
 

@@ -7,7 +7,10 @@
 #      (nix manages packages, no physical firmware, no in-place OS upgrades)
 #
 # Runs AFTER all other activations — always has the last word.
-{ extraBlacklist ? [] }:
+# quiesce: units that must not run at all on this VM (low-memory class, #1898): disabled,
+# stopped, and masked when the unit exists, so neither a timer nor a D-Bus/socket activation
+# can start them. extraBlacklist keeps the old disable-only behaviour.
+{ extraBlacklist ? [], quiesce ? [] }:
 
 { config, pkgs, lib, ... }:
 
@@ -41,6 +44,8 @@ let
   blacklist = dockerBlacklist ++ ubuntuBloatBlacklist ++ extraBlacklist;
 
   blacklistBash = lib.concatMapStringsSep " " (u: ''"${u}"'') blacklist;
+
+  quiesceBash = lib.concatMapStringsSep " " (u: ''"${u}"'') quiesce;
 
   allActivations = [
     "installContainerInit"
@@ -78,6 +83,19 @@ in {
         $SUDO systemctl disable "$unit" 2>/dev/null
         DISABLED=$((DISABLED + 1))
         echo "$LOG DISABLED: $unit"
+      fi
+    done
+    # quiesce list (low-memory VMs): disable, stop, mask. Absent units are skipped so no
+    # dangling /dev/null symlink is created on a distro that does not ship them. Every
+    # systemctl is timeout-capped: activation must never block on a thrashing box.
+    QUIESCE=(${quiesceBash})
+    for unit in "''${QUIESCE[@]}"; do
+      if timeout 10 $SUDO systemctl cat "$unit" >/dev/null 2>&1; then
+        timeout 10 $SUDO systemctl disable "$unit" >/dev/null 2>&1 || true
+        timeout 20 $SUDO systemctl stop --no-block "$unit" >/dev/null 2>&1 || true
+        timeout 10 $SUDO systemctl mask "$unit" >/dev/null 2>&1 || true
+        DISABLED=$((DISABLED + 1))
+        echo "$LOG QUIESCED: $unit"
       fi
     done
     $SUDO systemctl daemon-reload

@@ -212,8 +212,15 @@ lib.mkIf hasTier1 {
   home.file.".local/share/system-protection/tier1-watchdog.service".text = ''
     [Unit]
     Description=Tier-1 app watchdog — restart critical containers with circuit breaker
+    # Ordering only, NO Requires=/Wants=/BindsTo= on docker.service (#1898). The watchdog's
+    # whole job includes the window where docker is down: the script skips a cycle while
+    # docker.service is inactive and restarts tier-1 once docker is back. With Requires=,
+    # (a) the load-shedder's `systemctl stop docker` stopped the watchdog with it, and
+    # (b) any start of the watchdog while docker could not start (a thrashing 944 MB hub)
+    # failed with "Dependency failed ... result 'dependency'" (2026-11-25 14:20:55Z and
+    # 20:12:01Z, run 45687530592), leaving tier-1 with no auto-recovery. Wants= would pull
+    # docker back up against a deliberate shed, so it is not used either.
     After=docker.service multi-user.target
-    Requires=docker.service
     [Service]
     Type=simple
     ExecStart=/opt/scripts/tier1-watchdog.sh

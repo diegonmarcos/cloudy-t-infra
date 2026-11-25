@@ -2,7 +2,7 @@
 # ║                                                                  ║
 # ║   GENERATED FILE — DO NOT EDIT                                   ║
 # ║                                                                  ║
-# ║   Source : cloud-infra/b_infra/nixhm-sudo-oci-analytics/src/pilot/protection/layer2-identity.nix
+# ║   Source : cloudy-t-infra/b_infra/nixhm-sudo-oci-analytics/src/pilot/protection/layer2-identity.nix
 # ║   Engine : 1_cicd/src/scripts/cloud-ship-nix-homemanager-engine.sh
 # ║   Rebuild: ./9_others/build.sh
 # ║                                                                  ║
@@ -250,6 +250,7 @@ in {
     KERNEL_COUNT=0
     ESSENTIAL_COUNT=0
     WORKLOAD_COUNT=0
+    SELFSLICE_COUNT=0
 
     # awk MUST be an absolute store path: HM activation runs with a stripped PATH
     # that excludes /usr/bin (gawk is not in HM's default activation PATH set,
@@ -259,6 +260,26 @@ in {
                   --no-legend --no-pager --plain 2>/dev/null | ${pkgs.gawk}/bin/awk '{print $1}'); do
 
       svc_base="''${svc%.service}"
+
+      # ── A unit that declares its OWN Slice= is authoritative ───────────
+      # This loop used to classify EVERY active service, so a unit that had
+      # deliberately placed itself in connectivity.slice got silently demoted
+      # to workload.slice by our own drop-in. That put the LOAD SHEDDER — the
+      # daemon whose unit comments read "never starved, OOM-immune" — inside
+      # the very capped slice it exists to police, and did the same to
+      # rescue-ssh, the emergency way back in. It also overrode systemd's
+      # native Slice=user-%i.slice on user@/user-runtime-dir@.
+      # Only 4 of 66 active units on oci-analytics declare a Slice, so this
+      # exemption is narrow: honour it, and delete any stale drop-in we wrote
+      # on an earlier activation so the fix is self-healing.
+      _frag=$($SUDO systemctl show -p FragmentPath --value "$svc" 2>/dev/null)
+      if [ -n "$_frag" ] && [ -f "$_frag" ] && \
+         ${pkgs.gnugrep}/bin/grep -qE '^[[:space:]]*Slice=' "$_frag"; then
+        $SUDO rm -f "/etc/systemd/system/''${svc}.d/slice-assignment.conf"
+        $SUDO rmdir "/etc/systemd/system/''${svc}.d" 2>/dev/null || true
+        SELFSLICE_COUNT=$((SELFSLICE_COUNT + 1))
+        continue
+      fi
 
       # Determine target slice
       if matches_list "$svc_base" "$SRC/kernel-services.list"; then
@@ -282,7 +303,7 @@ in {
 
     echo "[layer2-identity] user-${toString userId}.slice CPU=${toString userCpuQuota}% MemHigh=${toString userMemHighMB}M MemMax=${toString userMemMaxMB}M"
     echo "[layer2-identity] user-0.slice CPU=${toString rootCpuQuota}% MemHigh=${toString rootMemHighMB}M MemMax=${toString rootMemMaxMB}M"
-    echo "[layer2-identity] system slices: kernel=$KERNEL_COUNT (no cap) | os-essentials=$ESSENTIAL_COUNT (${toString osEssentialsCpuQuota}%) | workload=$WORKLOAD_COUNT (${toString workloadCpuQuota}%)"
+    echo "[layer2-identity] system slices: kernel=$KERNEL_COUNT (no cap) | os-essentials=$ESSENTIAL_COUNT (${toString osEssentialsCpuQuota}%) | workload=$WORKLOAD_COUNT (${toString workloadCpuQuota}%) | self-declared=$SELFSLICE_COUNT (left alone)"
     ) || echo "[layer2-identity] FAILED — activation continues"
   '';
 }

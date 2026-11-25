@@ -189,8 +189,8 @@ ${lib.optionalString (isWgPublicPeer && wgPublicSubnet != null) ''
     for _p in \
       /app/_cloud-data-consolidated.json \
       /opt/containers/cloud-data/_cloud-data-consolidated.json \
-      "$HOME/git/cloud-infra/1_cloud-configs/dist/_cloud-data-consolidated.json" \
-      "$HOME/git/cloud-infra/cloud-data/_cloud-data-consolidated.json"; do
+      "$HOME/git/cloud-t-infra/1_cloud-configs/dist/_cloud-data-consolidated.json" \
+      "$HOME/git/cloud-t-infra/cloud-data/_cloud-data-consolidated.json"; do
       [ -f "$_p" ] && FW_JSON="$_p" && break
     done
     if [ -n "$FW_JSON" ] && [ -f "$FW_JSON" ] && command -v jq >/dev/null 2>&1; then

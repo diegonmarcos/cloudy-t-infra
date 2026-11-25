@@ -2,8 +2,8 @@
 # ║                                                                  ║
 # ║   GENERATED FILE — DO NOT EDIT                                   ║
 # ║                                                                  ║
-# ║   Source : nixhm-sudo-oci-apps/src/pilot/agents/log-shipper.nix
-# ║   Engine : 1_cicd/src/scripts/cloud-ship-repo-workflow-engine.sh
+# ║   Source : cloudy-t-infra/b_infra/nixhm-sudo-oci-apps/src/pilot/agents/log-shipper.nix
+# ║   Engine : 1_cicd/src/scripts/cloud-ship-nix-homemanager-engine.sh
 # ║   Rebuild: ./9_others/build.sh
 # ║                                                                  ║
 # ║   Manual edits will be overwritten on next build.                ║
@@ -30,6 +30,14 @@
     source = ../scripts/log-shipper.conf.tpl;
   };
 
+  # Parser without Time_Key/Time_Format: docker's own `time` is the RFC3339 stamp the
+  # bundled `json` parser cannot read. Loaded via a second parsers_file line.
+  home.file.".local/share/vm-pilot/parsers-local.conf".text = ''
+    [PARSER]
+        Name   json_notime
+        Format json
+  '';
+
   home.file.".local/share/vm-pilot/log-shipper.service".text = ''
     [Unit]
     Description=Fluent Bit — stream journald + docker container logs to OpenObserve
@@ -52,6 +60,10 @@
     # it back clean. Same self-healing blip pattern as the fd cap below.
     MemorySwapMax=0
     CPUQuota=10%
+    # Whatever it logs, it may not flood the journal (and so syslog): 20 lines
+    # per 30 s, the rest are dropped and counted by journald.
+    LogRateLimitIntervalSec=30s
+    LogRateLimitBurst=20
     # ── fd / task self-limit (2026-06-19 fd-leak incident) ───────────────
     # The `tail` input opens one fd + inotify watch per matched container log
     # and leaks them on container churn / log rotation (known upstream tail
@@ -138,6 +150,7 @@
     ' "$CONF_TPL" | $SUDO $TEE "$CONF_OUT_TMP" >/dev/null
 
     $SUDO $MKDIR -p /opt/fluent-bit /var/lib/fluent-bit
+    $SUDO $CP -f "$SRC/parsers-local.conf" /opt/fluent-bit/parsers-local.conf
     $SUDO $MV "$CONF_OUT_TMP" /opt/fluent-bit/log-shipper.conf
     $SUDO $CHMOD 0600 /opt/fluent-bit/log-shipper.conf
     $SUDO $CHOWN root:root /opt/fluent-bit/log-shipper.conf

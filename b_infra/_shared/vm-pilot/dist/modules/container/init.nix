@@ -46,6 +46,29 @@ let
     else {};
   hmConfig = hmBuildJson.hm or {};
 
+  # ── Boot autostart gate — data-driven, never hand-flipped ────────────
+  # Docker is disabled from systemd auto-start and every compose service is
+  # generated with restart:"no" (a_solutions/_shared/docker.nix), on the stated
+  # premise that container-init owns the lifecycle. But container-init was
+  # script-only, so in practice NOTHING owned it: a reboot left the VM with
+  # zero containers until a human ran the script or CI happened to re-ship.
+  # oci-apps rebooted 2026-08-30 22:11 and vaultwarden stayed down 4 days.
+  #
+  # The original "no boot unit" call was about boot OOM on the 1GB E2 Micros,
+  # which is a real constraint — cmd_boot pulls images and starts services
+  # sequentially, and three of the four VMs have 1GB of RAM. So gate on the
+  # declared spec rather than blanket-enabling: >=2GB gets the boot unit,
+  # micros keep the manual-start behaviour they were tuned for. Today that is
+  # oci-apps (24GB) only; a resized VM picks it up from cloud-data with no
+  # edit here.
+  # isInt guard: ram_gb is null for VMs cloud-data has not fully described
+  # (vast-ollama today), and `null >= 2` is an eval ERROR, not false — which
+  # would fail the whole home-manager generation for that VM rather than just
+  # this option. Unknown size ⇒ 0 ⇒ manual start, the conservative branch.
+  ramGbRaw = vmData.specs.ram_gb or 0;
+  ramGb = if builtins.isInt ramGbRaw then ramGbRaw else 0;
+  bootAutostart = ramGb >= 2;
+
   containerInitJson = builtins.toJSON {
     vm_alias = vmName;
     vm_id = vmData.instance_id or "";
@@ -108,10 +131,19 @@ in {
   # youki registered but NOT default (2026-07-03): the whole fleet runs runc in
   # production; youki 0.4.1 + systemd cgroup driver fails `create` on Ubuntu
   # (verified on oci-mail). Opt in per-container until youki is proven.
+  #
+  # max-concurrent-downloads: dockerd pulls 3 layers in parallel by default.
+  # On the 1 GB VMs that is enough memory pressure to kill dockerd mid-pull
+  # (2026-11-18 oci-analytics, ship run 44315729287: "Cannot connect to the
+  # Docker daemon" on pull attempt 2, SSH unresponsive ~30 min). VMs with a
+  # declared ram_gb <= 1 pull one layer at a time. Unknown size (ramGb = 0)
+  # keeps the dockerd default. Live-reloadable key (daemon.nix reloads).
   docker.daemon.settings = {
     runtimes = {
       youki = { path = youkiBin; };
     };
+  } // lib.optionalAttrs (ramGb > 0 && ramGb <= 1) {
+    "max-concurrent-downloads" = 1;
   };
 
   # ── Docker unit file — NO [Install], container-init starts it ───────
@@ -153,8 +185,32 @@ in {
     KillMode=process
   '';
 
-  # No systemd service — container-init.sh is run manually or via dtk/cron, not at boot.
-  # Docker is also manual-start only. This avoids boot OOM on E2 Micros.
+  # ── container-init.service — boot sequence, installed only on VMs with RAM ──
+  # Always staged; the activation block below installs + enables it only when
+  # bootAutostart (see the gate above). ExecStart is the `boot` verb, i.e. the
+  # sequence the script already defines (dockerd-up → hm-update → cloud-data
+  # sync → containers-up → health → report) — not a second, parallel notion of
+  # what "start this VM" means. Docker has no [Install] of its own by design,
+  # so this unit is what transitively brings the daemon up too.
+  # TimeoutStartSec=30min: observed full runs on oci-apps take ~335s, and it
+  # starts ~49 services sequentially with a START_DELAY between each.
+  home.file.".local/share/container-init/container-init.service".text = ''
+    [Unit]
+    Description=Container Init — Docker daemon + declared containers (boot sequence)
+    After=network-online.target
+    Wants=network-online.target
+
+    [Service]
+    Type=oneshot
+    RemainAfterExit=yes
+    ExecStart=/opt/scripts/container-init.sh boot
+    TimeoutStartSec=30min
+    StandardOutput=journal
+    StandardError=journal
+
+    [Install]
+    WantedBy=multi-user.target
+  '';
 
   # ── Activation: deploy to system locations ──────────────────────────
   home.activation.installContainerInit = lib.hm.dag.entryAfter ["linkGeneration"] ''
@@ -195,18 +251,36 @@ in {
       echo "[container-init] docker.service deployed"
     fi
 
-    # Remove stale container-init.service if it exists (no longer systemd-managed)
+    ${if bootAutostart then ''
+    # Boot autostart ON (declared RAM ${toString ramGb}GB >= 2) — install + enable.
+    INIT_UNIT="$SRC/container-init.service"
+    INIT_DEST="/etc/systemd/system/container-init.service"
+    INEW=$(cat "$INIT_UNIT")
+    IOLD=$($SUDO cat "$INIT_DEST" 2>/dev/null || true)
+    if [ "$INEW" != "$IOLD" ]; then
+      echo "$INEW" | $SUDO tee "$INIT_DEST" > /dev/null
+      echo "[container-init] container-init.service deployed"
+    fi
+    $SUDO systemctl daemon-reload
+    # enable only — never `start`: ExecStart is the full boot sequence and
+    # starting it mid-activation would recreate every running container.
+    $SUDO systemctl enable container-init.service 2>/dev/null || true
+    '' else ''
+    # Boot autostart OFF (declared RAM ${toString ramGb}GB < 2) — E2 Micros
+    # cannot afford the boot sequence; keep manual start via dtk/cron.
     if [ -f /etc/systemd/system/container-init.service ]; then
       $SUDO systemctl disable container-init.service 2>/dev/null || true
       $SUDO rm -f /etc/systemd/system/container-init.service
       echo "[container-init] removed stale systemd service"
     fi
-
-    # Disable docker from systemd auto-start (container-init.sh starts it manually)
-    $SUDO systemctl disable docker.service 2>/dev/null || true
     $SUDO systemctl daemon-reload
+    ''}
 
-    echo "[container-init] deployed: script-only (no systemd service, manual start via dtk/cron)"
+    # Docker itself stays disabled from systemd auto-start either way —
+    # container-init.sh (dockerd-up) is the only thing that starts it.
+    $SUDO systemctl disable docker.service 2>/dev/null || true
+
+    echo "[container-init] deployed: boot-autostart=${if bootAutostart then "on" else "off"} (ram=${toString ramGb}GB)"
     ) || echo "[container-init] FAILED — see errors above, activation continues"
   '';
 }

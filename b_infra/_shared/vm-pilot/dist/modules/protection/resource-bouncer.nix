@@ -17,7 +17,7 @@
 # Desktop equivalent: unix/aa_nixos-surface_host/src/modules/configuration_system-protection.nix
 # Imported by: system-protection.nix (orchestrator)
 #
-{ config, pkgs, lib, ramMB, ... }:
+{ config, pkgs, lib, ramMB, vmName ? null, ... }:
 
 let
   # Clamp helper: compute then enforce absolute min/max
@@ -35,14 +35,38 @@ let
   # drop. A 1GB box lives in that state permanently, so it gets the balanced
   # kernel default; bigger boxes keep real zram headroom and get the neutral
   # in-memory-swap value. Neither is above 100.
-  swappiness = if safeRamMB <= 2048 then 60 else 100;
+  #
+  # #1898 (2026-11-24): the gcp-proxy hub (944 MB, edge routing, auth plane) thrashed and stalled
+  # the edge ~90 s: page-in of caddy/authelia pages from swap behind 20% iowait. On the hub only,
+  # anon pages stay in RAM until reclaim of file cache is exhausted (swappiness 10). The other 1 GB
+  # boxes keep 60 (the oci-analytics 10 above was a stray hand edit with a different cost profile).
+  swappiness = if vmName == "gcp-proxy" then 10
+               else if safeRamMB <= 2048 then 60 else 100;
+
+  # vfs_cache_pressure was a flat 200 ("drop dentry/inode slab twice as
+  # readily") on the theory that a clean file page is free to drop. That
+  # theory holds only when re-reading it is cheap. On these free-tier VMs the
+  # boot disk is slow NETWORK storage (GCP PD-standard is HDD-backed: measured
+  # r_await 262ms/op on gcp-proxy 2026-09-02, %util 96% at just 81 reads/s), so
+  # a dropped CODE page refaults at a quarter-second and io-PSI pins at 92%
+  # "full" — the whole box stalls on the disk. On a small box that behaviour is
+  # a death spiral (caddy took 1412 major-faults/s re-reading its own binary).
+  # So small boxes now RETAIN cache (50); big boxes with faster/ample setups
+  # keep the aggressive reclaim. This is the surgical knob for file-refault
+  # thrash and does not touch the swappiness/zram tiering above.
+  vfsCachePressure = if safeRamMB <= 2048 then 50 else 200;
 
   minFreeKB = if safeRamMB <= 1024 then 65536
               else if safeRamMB <= 8192 then 131072
               else 262144;
 
-  # zram: 50% of RAM, min 256MB, max 16GB
-  zramSizeMB = clamp 256 16384 (safeRamMB / 2);
+  # zram: 50% of RAM, min 256MB, max 16GB. VMs with a DECLARED ram_gb <= 1
+  # (oci-mail, oci-analytics, gcp-proxy) get 75%: 2026-11-18 oci-mail ran
+  # its 512MB zram at 2.6:1 with IO-PSI some ~61% from file refaults, so a
+  # bigger compressed tier leaves more real RAM for page cache. Unknown size
+  # (ramMB = 0) keeps 50%. Swappiness is NOT changed (see above).
+  lowRam = ramMB > 0 && ramMB <= 1024;
+  zramSizeMB = clamp 256 16384 (if lowRam then safeRamMB * 3 / 4 else safeRamMB / 2);
   zramSizeBytes = toString (zramSizeMB * 1024 * 1024);
 
   # Docker memory cap: RAM minus OS overhead, min 256MB, max 32GB
@@ -74,7 +98,7 @@ in {
     # decompressed individually anyway - and those 7 extra pages are part of
     # what fills zram in the first place. Disk swap stays last by priority
     # (zram 100, file 10).
-    vm.vfs_cache_pressure = 200
+    vm.vfs_cache_pressure = ${toString vfsCachePressure}
     vm.page-cluster = 0
     vm.dirty_ratio = 10
     vm.dirty_background_ratio = 5
@@ -98,15 +122,62 @@ in {
     kernel.pid_max = 262144
   '';
 
+  # ── Journald → volatile (RAM) ─────────────────────────────────────────
+  # journald's persistent store lives on the same slow network disk. Worse,
+  # the my-watchdog dashboard runs `journalctl` continuously to render itself,
+  # so the panel's own reads re-fetch+decompress archived journals off the HDD
+  # (measured ~2MB/s READ from journald on gcp-proxy 2026-09-02) — pure disk
+  # churn that competes with everything else at 262ms/op. Storage=volatile
+  # keeps the journal in /run (tmpfs/RAM): writes and the panel's reads never
+  # touch the disk. RuntimeMaxUse bounds the RAM it may take on these small
+  # boxes; Compress=no because compressing an in-RAM ring only burns CPU. The
+  # trade is logs do not survive reboot — acceptable on a box whose failure
+  # mode is disk-IO starvation, and recent logs stay in RAM for the panel.
+  home.file.".local/share/system-protection/journald-volatile.conf".text = ''
+    [Journal]
+    Storage=volatile
+    RuntimeMaxUse=${if safeRamMB <= 2048 then "40M" else "128M"}
+    # Hard disk cap, independent of Storage=: if a VM is ever flipped back to
+    # persistent (or a stray /var/log/journal reappears) it can never take more
+    # than 500M of the root disk.
+    SystemMaxUse=500M
+    Compress=no
+    ForwardToSyslog=no
+  '';
+
   # ── Zram ──────────────────────────────────────────────────────────────
   home.file.".local/share/system-protection/zram-setup.sh" = {
     executable = true;
     text = ''
       #!/bin/bash
       set -euo pipefail
+      # BusyBox from the nix profile shadows util-linux/kmod/coreutils on some
+      # VMs (its modprobe cannot load .ko.zst, its dd rejects status=progress),
+      # which left oci-apps with no swap at all (#1641). Pin the GNU tools.
+      export PATH=/usr/sbin:/usr/bin:/sbin:/bin:$PATH
       modprobe zram num_devices=1 2>/dev/null || true
-      if swapon --show=NAME,TYPE 2>/dev/null | grep -q zram; then
-        echo "[zram] Already active, skipping"; exit 0
+      WANT=${zramSizeBytes}
+      # Sum of zram devices already swapping. A live resize must not swapoff
+      # a loaded zram on a box under memory pressure, so a shortfall is made
+      # up by hot-adding one more zram device at the same priority; the next
+      # boot creates zram0 at the full size again.
+      HAVE=0
+      for d in $(swapon --show=NAME --noheadings 2>/dev/null | grep zram || true); do
+        HAVE=$(( HAVE + $(cat /sys/block/$(basename "$d")/disksize 2>/dev/null || echo 0) ))
+      done
+      if [ "$HAVE" -gt 0 ]; then
+        DELTA=$(( WANT - HAVE ))
+        if [ "$DELTA" -lt $(( 64 * 1024 * 1024 )) ]; then
+          echo "[zram] Already active ($(( HAVE / 1048576 ))MB), skipping"; exit 0
+        fi
+        ID=$(cat /sys/class/zram-control/hot_add)
+        echo zstd > /sys/block/zram$ID/comp_algorithm 2>/dev/null || \
+          echo lz4 > /sys/block/zram$ID/comp_algorithm 2>/dev/null || true
+        echo $DELTA > /sys/block/zram$ID/disksize
+        mkswap /dev/zram$ID
+        swapon -p 100 /dev/zram$ID
+        echo "[zram] Grew $(( HAVE / 1048576 ))MB → ${toString zramSizeMB}MB (added zram$ID)"
+        exit 0
       fi
       if [ -e /sys/block/zram0/reset ]; then
         echo 1 > /sys/block/zram0/reset 2>/dev/null || true
@@ -184,6 +255,17 @@ in {
 
     $SUDO sysctl --system > /dev/null 2>&1 || true
 
+    # Journald → volatile (RAM). Only restart journald if the drop-in actually
+    # changed, so re-activation is not a per-generation journal bounce.
+    $SUDO mkdir -p /etc/systemd/journald.conf.d
+    if ! $SUDO cmp -s "$SRC/journald-volatile.conf" /etc/systemd/journald.conf.d/99-volatile.conf 2>/dev/null; then
+      $SUDO cp -f "$SRC/journald-volatile.conf" /etc/systemd/journald.conf.d/99-volatile.conf
+      $SUDO chmod 644 /etc/systemd/journald.conf.d/99-volatile.conf
+      $SUDO systemctl restart systemd-journald 2>/dev/null || true
+      # Reclaim the on-disk journal once it is RAM-backed (idempotent).
+      $SUDO rm -rf /var/log/journal 2>/dev/null || true
+    fi
+
     # Read back rather than assume. A single bad key aborts the whole file, and
     # a swappiness that never took is invisible until the box is already
     # swapping to disk — which is the failure this whole module exists to stop.
@@ -209,6 +291,10 @@ in {
 
     # Services
     $SUDO mkdir -p /opt/scripts
+    # A changed script (e.g. a new size) must re-run: `systemctl start` is a
+    # no-op on an active RemainAfterExit oneshot.
+    ZRAM_CHANGED=0
+    $SUDO cmp -s "$SRC/zram-setup.sh" /opt/scripts/zram-setup.sh 2>/dev/null || ZRAM_CHANGED=1
     $SUDO cp -f "$SRC/zram-setup.sh" /opt/scripts/zram-setup.sh
     $SUDO chmod +x /opt/scripts/zram-setup.sh
     $SUDO cp -f "$SRC/zram-setup.service" /etc/systemd/system/zram-setup.service
@@ -222,7 +308,11 @@ in {
 
     $SUDO systemctl daemon-reload
     $SUDO systemctl enable zram-setup.service 2>/dev/null || true
-    $SUDO systemctl start zram-setup.service 2>/dev/null || true
+    if [ "$ZRAM_CHANGED" = 1 ]; then
+      $SUDO systemctl restart zram-setup.service 2>/dev/null || true
+    else
+      $SUDO systemctl start zram-setup.service 2>/dev/null || true
+    fi
 
     echo "[resource-bouncer] deployed: mem=${toString (minFreeKB / 1024)}MB-reserve zram=${toString zramSizeMB}MB docker-cap=${toString dockerMaxMB}MB"
     ) || echo "[resource-bouncer] FAILED — activation continues"

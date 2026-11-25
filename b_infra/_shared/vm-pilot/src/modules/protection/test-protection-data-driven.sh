@@ -85,11 +85,13 @@ in {
     && has ''TIER1_SERVICES="${lib.concatStringsSep " " (effT1 "oci-mail")}"'' lsText;
   ls_warn_override = has "MEM_PSI_WARN=30" lsText;   # per-VM override wins over default 35
   ls_page_default  = has "MEM_PSI_PAGE=65" lsText;
-  # ── §3B tier1 slice reserved memory (gcp-proxy: 5 svc × 48MB = 240M) ────
+  # ── §3B tier1 slice reserved memory (gcp-proxy: N svc × 48MB; N read from the data) ────
+  # Read from the consolidated data, never a literal: the literal (5 svc, 240M) went stale when
+  # authelia-redis joined the hub's tier-1 (#1886) and kept this tester red on main (#1898).
   t1_gcp_on        = t1raw.condition;               # gcp-proxy has tier1 → module active
   t1_empty_off     = emptyVm != null && ! t1emptyRaw.condition;  # empty tier1 → mkIf false
-  t1_slice_reserve = has "MemoryMin=240M" (t1.home.file.".local/share/system-protection/tier1.slice".text);
-  t1_caddy_list    = has ''TIER1="caddy introspect-proxy authelia hickory-dns wireguard-mesh-ws-tunnel"''
+  t1_slice_reserve = has "MemoryMin=${toString (48 * builtins.length (effT1 "gcp-proxy"))}M" (t1.home.file.".local/share/system-protection/tier1.slice".text);
+  t1_caddy_list    = has ''TIER1="${lib.concatStringsSep " " (effT1 "gcp-proxy")}"''
                        (t1.home.file.".local/share/system-protection/tier1-watchdog.sh".text);
   # ── P2 fd thresholds + P3 wg-stale (defaults) ───────────────────────────
   ha_fd_warn       = has "FD_WARN_PCT=70" haText;

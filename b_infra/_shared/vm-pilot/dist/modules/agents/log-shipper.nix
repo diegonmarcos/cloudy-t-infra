@@ -30,6 +30,14 @@
     source = ../scripts/log-shipper.conf.tpl;
   };
 
+  # Parser without Time_Key/Time_Format: docker's own `time` is the RFC3339 stamp the
+  # bundled `json` parser cannot read. Loaded via a second parsers_file line.
+  home.file.".local/share/vm-pilot/parsers-local.conf".text = ''
+    [PARSER]
+        Name   json_notime
+        Format json
+  '';
+
   home.file.".local/share/vm-pilot/log-shipper.service".text = ''
     [Unit]
     Description=Fluent Bit — stream journald + docker container logs to OpenObserve
@@ -42,7 +50,20 @@
     Restart=always
     RestartSec=15
     MemoryMax=64M
+    # MemoryMax alone is a trap on a box with swap: when the cgroup hits the
+    # cap the kernel SWAPS the process out instead of killing it, so a leak
+    # grows unbounded in zram while RSS reads a tidy 12M. Measured 2026-09-02
+    # on gcp-proxy: fluent-bit RSS 11M, VmSwap 450M — half the host's RAM
+    # gone into its compressed swap, every other daemon refaulting its code
+    # pages off a 262ms/op disk (authelia alone: 118 GB of reads). Deny swap
+    # so the cap means what it says: leak -> OOM-kill -> Restart=always brings
+    # it back clean. Same self-healing blip pattern as the fd cap below.
+    MemorySwapMax=0
     CPUQuota=10%
+    # Whatever it logs, it may not flood the journal (and so syslog): 20 lines
+    # per 30 s, the rest are dropped and counted by journald.
+    LogRateLimitIntervalSec=30s
+    LogRateLimitBurst=20
     # ── fd / task self-limit (2026-06-19 fd-leak incident) ───────────────
     # The `tail` input opens one fd + inotify watch per matched container log
     # and leaks them on container churn / log rotation (known upstream tail
@@ -129,6 +150,7 @@
     ' "$CONF_TPL" | $SUDO $TEE "$CONF_OUT_TMP" >/dev/null
 
     $SUDO $MKDIR -p /opt/fluent-bit /var/lib/fluent-bit
+    $SUDO $CP -f "$SRC/parsers-local.conf" /opt/fluent-bit/parsers-local.conf
     $SUDO $MV "$CONF_OUT_TMP" /opt/fluent-bit/log-shipper.conf
     $SUDO $CHMOD 0600 /opt/fluent-bit/log-shipper.conf
     $SUDO $CHOWN root:root /opt/fluent-bit/log-shipper.conf

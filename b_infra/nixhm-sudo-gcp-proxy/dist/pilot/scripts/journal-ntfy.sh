@@ -4,7 +4,7 @@
 # ║                                                                  ║
 # ║   GENERATED FILE — DO NOT EDIT                                   ║
 # ║                                                                  ║
-# ║   Source : cloud-infra/b_infra/nixhm-sudo-gcp-proxy/src/pilot/scripts/journal-ntfy.sh
+# ║   Source : cloudy-t-infra/b_infra/nixhm-sudo-gcp-proxy/src/pilot/scripts/journal-ntfy.sh
 # ║   Engine : 1_cicd/src/scripts/cloud-ship-nix-homemanager-engine.sh
 # ║   Rebuild: ./9_others/build.sh
 # ║                                                                  ║

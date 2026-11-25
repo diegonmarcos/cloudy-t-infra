@@ -4,7 +4,7 @@
 # ║                                                                  ║
 # ║   GENERATED FILE — DO NOT EDIT                                   ║
 # ║                                                                  ║
-# ║   Source : cloud-infra/b_infra/nixhm-sudo-oci-analytics/src/pilot/protection/watchdog-petter.sh
+# ║   Source : cloudy-t-infra/b_infra/nixhm-sudo-oci-analytics/src/pilot/protection/watchdog-petter.sh
 # ║   Engine : 1_cicd/src/scripts/cloud-ship-nix-homemanager-engine.sh
 # ║   Rebuild: ./9_others/build.sh
 # ║                                                                  ║
@@ -229,9 +229,9 @@ $ctr"
   # Low memory prune (threshold data-driven: LOW_MEM_PRUNE_MB)
   MEM_AVAIL=$(awk '/MemAvailable/ {print int($2/1024)}' /proc/meminfo 2>/dev/null || echo 9999)
   if [ "$MEM_AVAIL" -lt "$LOW_MEM_PRUNE_MB" ]; then
-    pre_action_report "DOCKER_PRUNE" "Low memory: ${MEM_AVAIL}MB available (<${LOW_MEM_PRUNE_MB}MB threshold)" "docker system prune"
+    pre_action_report "DOCKER_PRUNE" "Low memory: ${MEM_AVAIL}MB available (<${LOW_MEM_PRUNE_MB}MB threshold)" "scoped container+dangling-image prune"
     ntfy 4 "Low memory" "${MEM_AVAIL}MB available" "warning,brain"
-    curl -sf --max-time 30 --unix-socket /var/run/docker.sock -X POST "http://localhost/containers/prune" >/dev/null 2>&1 || true
+    curl -sf --max-time 30 --unix-socket /var/run/docker.sock -X POST "http://localhost/containers/prune?filters=%7B%22label%21%22%3A%7B%22com.docker.compose.project%22%3Atrue%7D%7D" >/dev/null 2>&1 || true
     curl -sf --max-time 30 --unix-socket /var/run/docker.sock -X POST "http://localhost/images/prune" >/dev/null 2>&1 || true
   fi
 
@@ -242,7 +242,14 @@ $ctr"
   # Tiers:
   #   WARN  (≥80%): prune containers + dangling images
   #   HIGH  (≥85%): + images + buildkit cache
-  #   EMERG (≥90%): + release ballast + volumes prune + journal vacuum
+  #   EMERG (≥90%): + release ballast + journal vacuum
+  # Every /containers/prune carries label!=com.docker.compose.project and there
+  # is NO /volumes/prune: the same rule as disk-watchdog (watchdog.nix) and
+  # infra/prune-maintenance.nix. #353 measured this script's unfiltered prune as
+  # the September umami/matomo killer on oci-analytics — load-shedder stops the
+  # non-tier1 containers, then an unscoped prune deletes them. The unit is
+  # currently disabled by watchdog.nix's activation, but the script still ships
+  # to /opt/scripts, so re-enabling it must not resurrect the hole.
   # Also truncate any container json log >50MB to keep them bounded even
   # before the daemon-config max-size=10m takes effect (containers started
   # before that policy keep their old log file).
@@ -260,21 +267,23 @@ $ctr"
     pre_action_report "DISK_EMERG" "Disk usage ${DISK_PCT}% (≥${DISK_EMERG}%)" "ballast+prune-aggressive"
     ntfy 5 "DISK EMERG" "${DISK_PCT}% used — releasing ballast + aggressive prune" "rotating_light,floppy_disk"
     rm -f /var/disk-reserve/ballast.bin 2>/dev/null || true
-    curl -sf --max-time 30 --unix-socket /var/run/docker.sock -X POST "http://localhost/containers/prune" >/dev/null 2>&1 || true
+    curl -sf --max-time 30 --unix-socket /var/run/docker.sock -X POST "http://localhost/containers/prune?filters=%7B%22label%21%22%3A%7B%22com.docker.compose.project%22%3Atrue%7D%7D" >/dev/null 2>&1 || true
     curl -sf --max-time 30 --unix-socket /var/run/docker.sock -X POST "http://localhost/images/prune?filters=%7B%22dangling%22%3A%7B%22true%22%3Atrue%7D%7D" >/dev/null 2>&1 || true
     curl -sf --max-time 30 --unix-socket /var/run/docker.sock -X POST "http://localhost/build/prune?all=true" >/dev/null 2>&1 || true
-    curl -sf --max-time 30 --unix-socket /var/run/docker.sock -X POST "http://localhost/volumes/prune" >/dev/null 2>&1 || true
-    journalctl --vacuum-size=50M >/dev/null 2>&1 || true
+    # #413: never below the declared retention floor (JOURNAL_FLOOR_DAYS, set
+    # by watchdog.nix from native.protection.journal_retention_floor_days). No
+    # default: unset means undeclared, and an undeclared floor must not vacuum.
+    [ -n "${JOURNAL_FLOOR_DAYS:-}" ] && journalctl --vacuum-time="${JOURNAL_FLOOR_DAYS}d" >/dev/null 2>&1 || true
   elif [ "$DISK_PCT" -ge "$DISK_HIGH" ]; then
     pre_action_report "DISK_HIGH" "Disk usage ${DISK_PCT}% (≥${DISK_HIGH}%)" "prune+buildcache"
     ntfy 4 "Disk high" "${DISK_PCT}% used — pruning images+buildcache" "warning,floppy_disk"
-    curl -sf --max-time 30 --unix-socket /var/run/docker.sock -X POST "http://localhost/containers/prune" >/dev/null 2>&1 || true
+    curl -sf --max-time 30 --unix-socket /var/run/docker.sock -X POST "http://localhost/containers/prune?filters=%7B%22label%21%22%3A%7B%22com.docker.compose.project%22%3Atrue%7D%7D" >/dev/null 2>&1 || true
     curl -sf --max-time 30 --unix-socket /var/run/docker.sock -X POST "http://localhost/images/prune" >/dev/null 2>&1 || true
     curl -sf --max-time 30 --unix-socket /var/run/docker.sock -X POST "http://localhost/build/prune?all=true" >/dev/null 2>&1 || true
   elif [ "$DISK_PCT" -ge "$DISK_WARN" ]; then
     pre_action_report "DISK_WARN" "Disk usage ${DISK_PCT}% (≥${DISK_WARN}%)" "prune-containers+dangling"
     ntfy 3 "Disk warn" "${DISK_PCT}% used — pruning containers+dangling images" "warning,floppy_disk"
-    curl -sf --max-time 30 --unix-socket /var/run/docker.sock -X POST "http://localhost/containers/prune" >/dev/null 2>&1 || true
+    curl -sf --max-time 30 --unix-socket /var/run/docker.sock -X POST "http://localhost/containers/prune?filters=%7B%22label%21%22%3A%7B%22com.docker.compose.project%22%3Atrue%7D%7D" >/dev/null 2>&1 || true
     curl -sf --max-time 30 --unix-socket /var/run/docker.sock -X POST "http://localhost/images/prune?filters=%7B%22dangling%22%3A%7B%22true%22%3Atrue%7D%7D" >/dev/null 2>&1 || true
   fi
 

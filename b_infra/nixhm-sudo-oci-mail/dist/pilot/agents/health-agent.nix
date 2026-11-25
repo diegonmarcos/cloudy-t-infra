@@ -2,7 +2,7 @@
 # ║                                                                  ║
 # ║   GENERATED FILE — DO NOT EDIT                                   ║
 # ║                                                                  ║
-# ║   Source : cloud-infra/b_infra/nixhm-sudo-oci-mail/src/pilot/agents/health-agent.nix
+# ║   Source : cloudy-t-infra/b_infra/nixhm-sudo-oci-mail/src/pilot/agents/health-agent.nix
 # ║   Engine : 1_cicd/src/scripts/cloud-ship-nix-homemanager-engine.sh
 # ║   Rebuild: ./9_others/build.sh
 # ║                                                                  ║
@@ -30,6 +30,8 @@ let
   fdWarnPct  = prot "fd_warn_pct"   70;
   fdCritPct  = prot "fd_crit_pct"   90;
   wgStaleSec = prot "wg_stale_secs" 180;
+  # P6: logind session-leak self-heal threshold (dead sessions, see script).
+  logindLeakRestart = prot "logind_leak_restart" 200;
   ntfyBase   = consolidated.native.monitoring.ntfy_base or "https://rss.diegonmarcos.com";
   ntfyTopic  = prot "ntfy_topic"    "health_resources";
 in
@@ -130,6 +132,41 @@ in
         fi
       fi
 
+      # P6: logind session leak. oci-mail, 2026-10-01 → 10-13: logind stopped
+      # seeing the JobRemoved signal for one session scope (session 42282 sat in
+      # "opening" with a SCOPE_JOB that no longer existed), and from then on no
+      # closed SSH session was ever garbage-collected. ~70 health/MCP SSH logins
+      # an hour filled the 8192-session cap (uptime: "8192 users") in five
+      # days; past the cap PAM can no longer register sessions at all, so
+      # every SSH command (deploys included) ran inside ssh.service's cgroup.
+      # Dead = a session record whose session-N.scope cgroup is gone. A
+      # restart makes logind re-read /run/systemd/sessions and GC those; live
+      # sessions are kept. Rate-limited to one restart per 6h.
+      LOGIND_LEAK_RESTART=${toString logindLeakRestart}
+      SESS_TOTAL=0; SESS_DEAD=0; LOGIND_HEALED=false
+      if [ -d /run/systemd/sessions ]; then
+        SESS_ALL=$(ls /run/systemd/sessions 2>/dev/null | grep -E '^[0-9]+$' | sort || true)
+        SESS_LIVE=$(ls -d /sys/fs/cgroup/user.slice/user-*.slice/session-*.scope 2>/dev/null \
+                      | sed 's|.*/session-||; s|\.scope$||' | sort || true)
+        SESS_TOTAL=$(printf '%s\n' "$SESS_ALL" | grep -c . || true)
+        SESS_DEAD=$(comm -23 <(printf '%s\n' "$SESS_ALL") <(printf '%s\n' "$SESS_LIVE") | grep -c . || true)
+        STAMP=/run/health-agent.logind-heal
+        if [ "$(id -u)" = 0 ] && [ "''${SESS_DEAD:-0}" -ge "$LOGIND_LEAK_RESTART" ] \
+           && { [ ! -f "$STAMP" ] || [ -n "$(find "$STAMP" -mmin +360 2>/dev/null)" ]; }; then
+          touch "$STAMP" 2>/dev/null || true
+          if timeout 20 systemctl restart systemd-logind 2>/dev/null; then
+            LOGIND_HEALED=true
+          fi
+          for _ntfy in $NTFY_URLS; do
+            curl -sf --max-time 5 -X POST "$_ntfy" \
+              -H "Title: [$VM] logind session leak — restarted systemd-logind" -H "Priority: 4" \
+              -H "Tags: warning,$VM,logind" \
+              -d "source=health-agent severity=warn host=$VM service=systemd-logind | ''${SESS_DEAD} of ''${SESS_TOTAL} logind sessions had no live scope (threshold ''${LOGIND_LEAK_RESTART}); restart ok=$LOGIND_HEALED. Recurrence means logind is missing PID1 job signals again — check for daemon-reload storms." \
+              >/dev/null 2>&1 && break || true
+          done
+        fi
+      fi
+
       # Docker containers via awk (POSIX, no subshell issues)
       TMPF=$(mktemp)
       docker ps -a --format '{{.Names}}|{{.Status}}' > "$TMPF" 2>/dev/null || true
@@ -166,6 +203,7 @@ in
         "wg_peers": $WG_PEERS_JSON,
         "mem_psi": $MEM_PSI,
         "fd": $FD_JSON,
+        "logind": {"sessions": ''${SESS_TOTAL:-0}, "dead_sessions": ''${SESS_DEAD:-0}, "healed": $LOGIND_HEALED},
         "protection": {"load_shedder": "$SHED", "deploy_failed": $SHED_FAILED},
         "containers_running": $CTR_RUNNING,
         "containers_total": $CTR_TOTAL,

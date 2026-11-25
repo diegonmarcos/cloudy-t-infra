@@ -2,7 +2,7 @@
 # ║                                                                  ║
 # ║   GENERATED FILE — DO NOT EDIT                                   ║
 # ║                                                                  ║
-# ║   Source : cloud-infra/b_infra/nixhm-sudo-oci-mail/src/pilot/default.nix
+# ║   Source : cloudy-t-infra/b_infra/nixhm-sudo-oci-mail/src/pilot/default.nix
 # ║   Engine : 1_cicd/src/scripts/cloud-ship-nix-homemanager-engine.sh
 # ║   Rebuild: ./9_others/build.sh
 # ║                                                                  ║
@@ -46,12 +46,26 @@ let
   # consolidated.native.wireguard_public.peers[].name. No hardcoded VM lists.
   wgPublicPeers = consolidated.native.wireguard_public.peers or [];
   isWgPublicMember = lib.any (p: p.name == vmName) wgPublicPeers;
+
+  # Low-memory class (ram_gb <= 1, same cut as the zram sizing): the Fedora package-manager
+  # timers and PackageKit are memory competitors with no function on a declaratively managed
+  # box (packages come from nix). 2026-11-25 20:30Z a dnf5 metadata refresh ran on the 944 MB
+  # hub while containers were starting (#1898). Quiesced = disabled + stopped + masked.
+  lowMemVm = (vmData.specs.ram_gb or 99) <= 1;
+  packageManagerQuiesce = [
+    "dnf-makecache.timer" "dnf-makecache.service"
+    "dnf5-makecache.timer" "dnf5-makecache.service"
+    "dnf-automatic.timer" "dnf-automatic-download.timer"
+    "dnf-automatic-install.timer" "dnf-automatic-notifyonly.timer"
+    "dnf5-automatic.timer"
+    "packagekit.service" "packagekit-offline-update.service"
+  ];
 in {
   imports = [
     # ── Protection (system-protection orchestrator imports: resource-bouncer,
     #    watchdog, rescue-ssh, scheduler, layer2-identity, dashboard, health-agent)
     (import ./protection/system-protection.nix { inherit config pkgs lib; inherit vmName; })
-    (import ./protection/systemd-control.nix {})
+    (import ./protection/systemd-control.nix { quiesce = lib.optionals lowMemVm packageManagerQuiesce; })
     # Cleanup stranded systemd units from migrations (data:
     # nixhm-sudo-<vm>/build.json .obsolete_systemd_units[]). No-op when
     # the array is empty or absent — safe on every VM.
@@ -84,7 +98,7 @@ in {
     # ── Infra
     ./infra/shell-path.nix
     ./infra/system-cleanup.nix
-    ./infra/prune-maintenance.nix
+    (import ./infra/prune-maintenance.nix { inherit vmName; })
 
     # ── Packages
     ./packages/node-npm-deps.nix
@@ -93,6 +107,8 @@ in {
 
     # ── Agents (new in vm-pilot)
     ./agents/journal-ntfy.nix
+    # Go host daemon, SHADOW stage (#1876): records decisions next to the shell units, acts on nothing
+    (import ./agents/vm-pilotd.nix { inherit vmName; })
     ./agents/data-publisher.nix
     ./agents/evidence-collector.nix
     ./agents/log-shipper.nix

@@ -2,7 +2,7 @@
 # ║                                                                  ║
 # ║   GENERATED FILE — DO NOT EDIT                                   ║
 # ║                                                                  ║
-# ║   Source : cloud-infra/b_infra/nixhm-sudo-gcp-proxy/src/pilot/protection/system-protection.nix
+# ║   Source : cloudy-t-infra/b_infra/nixhm-sudo-gcp-proxy/src/pilot/protection/system-protection.nix
 # ║   Engine : 1_cicd/src/scripts/cloud-ship-nix-homemanager-engine.sh
 # ║   Rebuild: ./9_others/build.sh
 # ║                                                                  ║
@@ -32,7 +32,7 @@ let
   userId = 1000;
 in {
   imports = [
-    (import ./resource-bouncer.nix { inherit config pkgs lib ramMB; })
+    (import ./resource-bouncer.nix { inherit config pkgs lib ramMB vmName; })
     (import ./watchdog.nix { inherit config pkgs lib ramMB vmName; })
     (import ./load-shedder.nix { inherit config pkgs lib ramMB vmName; })
     (import ./rescue-ssh.nix { inherit config pkgs lib rescuePort; })
@@ -41,11 +41,13 @@ in {
     (import ./disk-ballast.nix { inherit config pkgs lib; })
     # Phase 2: tier-1 app cgroup reservations + circuit-breaker auto-restart
     (import ./tier1-apps.nix { inherit config pkgs lib vmName; })
+    # #1886: one-shot per boot that brings the declared (non tier-1) containers back
+    (import ./boot-start-declared.nix { inherit config pkgs lib vmName; })
     (import ../dashboard/dashboard.nix { inherit vmName; })
     (import ../agents/health-agent.nix { inherit config pkgs lib vmName; })
     # my-webserver + my-watchdog: the two jobs vm-pilot used to implement
     # itself, now their own products in cloud-u-linux. vm-pilot deploys them.
-    (import ../agents/my-stack.nix { inherit vmName; })
+    (import ../agents/my-stack.nix { inherit vmName ramMB; })
     # guardrails.nix disabled (POSIX sh bug)
     # no-build-guard.nix imported by default.nix directly
   ];

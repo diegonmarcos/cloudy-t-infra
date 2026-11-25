@@ -2,7 +2,7 @@
 # ║                                                                  ║
 # ║   GENERATED FILE — DO NOT EDIT                                   ║
 # ║                                                                  ║
-# ║   Source : cloud-infra/b_infra/nixhm-sudo-oci-apps/src/pilot/packages/node-npm-deps.nix
+# ║   Source : cloudy-t-infra/b_infra/nixhm-sudo-oci-apps/src/pilot/packages/node-npm-deps.nix
 # ║   Engine : 1_cicd/src/scripts/cloud-ship-nix-homemanager-engine.sh
 # ║   Rebuild: ./9_others/build.sh
 # ║                                                                  ║
@@ -113,8 +113,8 @@ in {
   home.activation.mcpNodeModulesSymlinks = lib.hm.dag.entryAfter ["sharedNodeModules"] ''
     SHARED="$HOME/.node_modules/node_modules"
     MCP_DIRS="
-      $HOME/git/cloud-infra/a_solutions/infra-api_c3-specs-docs-mcp/src
-      $HOME/git/cloud-infra/a_solutions/infra-api_cloud-vault-mcp/src
+      $HOME/git/cloud-t-infra/a_solutions/infra-api_c3-specs-docs-mcp/src
+      $HOME/git/cloud-t-infra/a_solutions/infra-api_cloud-vault-mcp/src
     "
     for dir in $MCP_DIRS; do
       [ -d "$dir" ] || continue

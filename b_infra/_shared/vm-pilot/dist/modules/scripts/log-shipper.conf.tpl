@@ -24,14 +24,24 @@
 [SERVICE]
     flush         5
     daemon        off
-    log_level     info
+    # error, not info: with OpenObserve down every flush logs a retry line, and
+    # the parser warnings below logged one per record -- ~170M/day into syslog
+    # (2026-10-14). Only real errors are worth a log line.
+    log_level     error
     parsers_file  {PARSERS_FILE}
+    parsers_file  /opt/fluent-bit/parsers-local.conf
+    # retry backoff: wait 10s..60s between attempts instead of hammering
+    scheduler.base 10
+    scheduler.cap  60
     storage.path  /var/lib/fluent-bit/storage
     storage.sync  normal
     storage.backlog.mem_limit 4M
 
 [INPUT]
     Name             systemd
+    # journald input had NO cap while tail did. Unbounded here is the leak path
+    # measured 2026-09-02 (450 MB swapped). Pause instead of eating the host.
+    Mem_Buf_Limit    8MB
     Tag              host.{HOSTNAME}
     DB               /var/lib/fluent-bit/journald.db
     Read_From_Tail   On
@@ -54,7 +64,9 @@
     Name   parser
     Match  docker.*
     Key_Name log
-    Parser   json
+    # json_notime (parsers-local.conf): the bundled `json` parser has a Time_Format
+    # that rejects docker's RFC3339 stamps and warned on every single record.
+    Parser   json_notime
     Reserve_Data On
     Preserve_Key On
 
@@ -70,6 +82,10 @@
     http_User        {ZO_USER}
     http_Passwd      {ZO_PASS}
     Retry_Limit      3
+    # Buffer cap per output: with filesystem storage this bounds the on-disk
+    # backlog; with the default memory storage it is the same ceiling in RAM.
+    storage.total_limit_size 64M
+    net.connect_timeout 5
     net.keepalive    on
     net.keepalive_idle_timeout 15
     net.keepalive_max_recycle  100
@@ -86,6 +102,10 @@
     http_User        {ZO_USER}
     http_Passwd      {ZO_PASS}
     Retry_Limit      3
+    # Buffer cap per output: with filesystem storage this bounds the on-disk
+    # backlog; with the default memory storage it is the same ceiling in RAM.
+    storage.total_limit_size 64M
+    net.connect_timeout 5
     net.keepalive    on
     net.keepalive_idle_timeout 15
     net.keepalive_max_recycle  100

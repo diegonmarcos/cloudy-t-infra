@@ -184,14 +184,30 @@ _service_up() {
   # Pull + run (no build — images are pre-built on GHCR)
   # Configs images extract compose under compose/ (2026-07-03 layout) —
   # support both the legacy top-level and the compose/ subdir location.
-  _cdir="$_dir"
-  [ ! -f "$_cdir/docker-compose.yml" ] && [ -f "$_dir/compose/docker-compose.yml" ] && _cdir="$_dir/compose"
-  if [ -f "$_cdir/docker-compose.yml" ]; then
+  #
+  # ALWAYS run from $_dir with `--project-directory .` — never `cd compose/`.
+  # Compose resolves BOTH the project name and every `env_file:` against the
+  # project directory, so cd-ing into compose/ broke two things at once:
+  #   1. env_file: [".secrets"] resolved to compose/.secrets and the service
+  #      aborted with "env file ... not found". 41 of the 67 compose/-layout
+  #      services on oci-apps keep .secrets at the service root — the majority.
+  #   2. the project name became the literal string "compose" for EVERY
+  #      service, so named volumes were created as compose_<vol> instead of
+  #      <service>_<vol> — i.e. the service came up on a fresh empty volume
+  #      while its real data sat in the project-named one. oci-apps still
+  #      carries 10 orphaned compose_* volumes from this.
+  # This is the same invocation the ship engine uses, which is why ship-
+  # deployed services land on the right volumes and container-init's did not
+  # (1_cicd/src/scripts/cloud-ship-container-step-deploy-compose.sh).
+  _crel="docker-compose.yml"
+  [ ! -f "$_dir/$_crel" ] && [ -f "$_dir/compose/docker-compose.yml" ] && _crel="compose/docker-compose.yml"
+  if [ -f "$_dir/$_crel" ]; then
+    _cf="-f $_crel --project-directory ."
     _env=""
-    [ -f "$_cdir/.secrets" ] && _env="--env-file .secrets"
+    [ -f "$_dir/.secrets" ] && _env="--env-file .secrets"
     # Pre-hook (e.g. init.sh for secret substitution)
     [ -f "$_dir/init.sh" ] && (cd "$_dir" && sh init.sh) 2>&1 | while read -r _l; do log "  [$_svc] $_l"; done
-    if (cd "$_cdir" && docker compose $_env pull --quiet 2>/dev/null; docker compose $_env up -d --no-build --force-recreate) >/dev/null 2>&1; then
+    if (cd "$_dir" && docker compose $_cf $_env pull --quiet 2>/dev/null; docker compose $_cf $_env up -d --no-build --force-recreate) >/dev/null 2>&1; then
       _s=$(( $(date +%s) - _start ))
       log "  [$_svc] ok (${_s}s)"
       return 0
@@ -210,12 +226,15 @@ _service_up() {
 _service_down() {
   _dir="$1"
   _svc=$(basename "$_dir")
-  _cdir="$_dir"
-  [ ! -f "$_cdir/docker-compose.yml" ] && [ -f "$_dir/compose/docker-compose.yml" ] && _cdir="$_dir/compose"
-  if [ -f "$_cdir/docker-compose.yml" ]; then
+  # Same project-directory rule as _service_up — a `down` run from compose/
+  # targets project "compose" and so leaves the real containers running.
+  _crel="docker-compose.yml"
+  [ ! -f "$_dir/$_crel" ] && [ -f "$_dir/compose/docker-compose.yml" ] && _crel="compose/docker-compose.yml"
+  if [ -f "$_dir/$_crel" ]; then
+    _cf="-f $_crel --project-directory ."
     _env=""
-    [ -f "$_cdir/.secrets" ] && _env="--env-file .secrets"
-    (cd "$_cdir" && docker compose $_env down) 2>&1 | while read -r _l; do log "  [$_svc] $_l"; done
+    [ -f "$_dir/.secrets" ] && _env="--env-file .secrets"
+    (cd "$_dir" && docker compose $_cf $_env down) 2>&1 | while read -r _l; do log "  [$_svc] $_l"; done
     log "  [$_svc] stopped"
   fi
 }

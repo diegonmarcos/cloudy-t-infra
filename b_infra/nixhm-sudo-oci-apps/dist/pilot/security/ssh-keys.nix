@@ -2,7 +2,7 @@
 # ║                                                                  ║
 # ║   GENERATED FILE — DO NOT EDIT                                   ║
 # ║                                                                  ║
-# ║   Source : cloud-infra/b_infra/nixhm-sudo-oci-apps/src/pilot/security/ssh-keys.nix
+# ║   Source : cloudy-t-infra/b_infra/nixhm-sudo-oci-apps/src/pilot/security/ssh-keys.nix
 # ║   Engine : 1_cicd/src/scripts/cloud-ship-nix-homemanager-engine.sh
 # ║   Rebuild: ./9_others/build.sh
 # ║                                                                  ║
@@ -35,6 +35,21 @@ let
   containerTargets = lib.concatStringsSep " " (map (c:
     "${c.name}:${toString c.uid}:${c.ssh_dir}:${lib.concatStringsSep "," c.keys}"
   ) sshContainers);
+  # Per-container extra Host blocks (build.json ssh.extra_hosts, resolved to
+  # mesh addresses by the derive). Prepended to that container's config only.
+  extraHostBlock = e: ''
+Host ${e.host}
+    HostName ${e.hostname}
+    User ${e.user}
+    Port ${toString e.port}
+    IdentityFile ${e.identity_file}
+    IdentitiesOnly yes
+
+'';
+  extraHostsCase = lib.concatMapStrings (c:
+    lib.optionalString ((c.extra_hosts or []) != [])
+      "      ${lib.escapeShellArg c.name}) printf '%s' ${lib.escapeShellArg (lib.concatMapStrings extraHostBlock c.extra_hosts)} ;;\n"
+  ) sshContainers;
 in
 {
   home.activation.sshKeys = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
@@ -126,6 +141,12 @@ Host *
     # Container SSH config: same hosts but no ControlMaster (read-only mount)
     CONTAINER_CONFIG=$(printf '%s' "$NEW_CONFIG" | grep -v 'ControlMaster\|ControlPath\|ControlPersist')
 
+    extra_hosts_for() {
+      case "$1" in
+${extraHostsCase}      *) : ;;
+      esac
+    }
+
     echo "$SK_LOG ── Container SSH key deployment (/opt/ssh-keys/) ──"
 
     for entry in $CONTAINER_SSH_TARGETS; do
@@ -141,7 +162,7 @@ Host *
       $SUDO mkdir -p "$TARGET_DIR"
 
       # Write container SSH config (no ControlMaster)
-      printf '%s' "$CONTAINER_CONFIG" | $SUDO tee "$TARGET_DIR/config" >/dev/null
+      { extra_hosts_for "$CNAME"; printf '%s' "$CONTAINER_CONFIG"; } | $SUDO tee "$TARGET_DIR/config" >/dev/null
 
       # Copy each key
       IFS=',' read -ra KEY_LIST <<< "$KEYS"

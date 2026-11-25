@@ -120,7 +120,7 @@
   # Auto-update git submodules in all repos on activation.
   # Ensures cloud-data submodule is always fresh.
   home.activation.gitSubmoduleUpdate = lib.hm.dag.entryAfter ["linkGeneration"] ''
-    for repo in "$HOME/git/cloud-infra" "$HOME/git/front" "$HOME/git/cloud-infra-desktop"; do
+    for repo in "$HOME/git/cloud-t-infra" "$HOME/git/front-diegonmarcos" "$HOME/git/cloud-infra-desktop"; do
       [ -d "$repo/.git" ] || continue
       [ -f "$repo/.gitmodules" ] || continue
       printf "[git-submodules] Updating submodules in %s\n" "$repo"

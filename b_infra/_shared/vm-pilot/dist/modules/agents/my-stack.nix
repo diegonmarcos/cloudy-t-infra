@@ -37,10 +37,15 @@
 # against musl so one artifact per architecture runs on the Ubuntu, Fedora and
 # NixOS boxes alike. Compiling Rust on these VMs is what no-build-guard.nix
 # exists to prevent.
-{ vmName }:
+{ vmName, ramMB ? 0 }:
 { config, pkgs, lib, ... }:
 
 let
+  # On a 1 GB / 1-OCPU burstable VM the sampler's 2 s loop alone was ~13% of
+  # the CPU (oci-mail, 2026-11-19, steal 44-74%, mail timing out). Cap it
+  # there: a slower snapshot costs nothing, a starved mail stack costs mail.
+  # ramMB = 0 (unknown) and bigger boxes get no cap.
+  cpuQuotaLine = if ramMB > 0 && ramMB <= 1536 then "CPUQuota=8%" else "";
   # 2026-08-27: my-webserver and my-watchdog moved to cloud-u-linux in the d*
   # split, so their rolling releases are published there now.
   repo = "diegonmarcos/cloudy-u-linux";
@@ -108,7 +113,12 @@ let
       fi
     }
 
-    get my-watchdog-latest  "my-watchdog-$suffix"  my-watchdog
+    # The watchdog is published as c3-watchdog since the rename; the
+    # my-watchdog-latest release froze on 2026-09-03 and never got another
+    # build, so fetching it kept every VM on an old sampler (no small-box
+    # docker cadence, 2026-11-19). The binary keeps its installed name
+    # (my-watchdog), its --no-tray flag and its /run/my-watchdog output.
+    get c3-watchdog-latest  "c3-watchdog-$suffix"  my-watchdog
     get my-webserver-latest "my-webserver-$suffix" my-webserver
   '';
 in
@@ -133,6 +143,7 @@ in
     Nice=10
     IOSchedulingClass=idle
     MemoryMax=96M
+    ${cpuQuotaLine}
 
     [Install]
     WantedBy=default.target
@@ -247,6 +258,7 @@ RestartSec=5
 Nice=10
 IOSchedulingClass=idle
 MemoryMax=96M
+${cpuQuotaLine}
 
 [Install]
 WantedBy=multi-user.target
@@ -257,7 +269,27 @@ WATCHDOG_UNIT
       $SUDO install -m644 "$UNIT_TMP" /etc/systemd/system/my-watchdog.service
       rm -f "$UNIT_TMP"
       $SUDO systemctl daemon-reload
-      systemctl --user disable --now my-watchdog.service 2>/dev/null || true
+      # RETIRE THE USER COPY — host systemctl by path, user bus by path.
+      # HM activation runs on a strict PATH with no systemctl in it (`$SUDO
+      # systemctl` only works because sudo's secure_path adds /usr/bin), so
+      # the bare `systemctl --user disable --now` this used to be died with
+      # "command not found" on every ship — read off the oci-analytics
+      # activation log 2026-10-02 — and its `2>/dev/null || true` hid it.
+      # The ship also runs this as `sudo -u <user>`, which strips
+      # XDG_RUNTIME_DIR, so the bus is addressed by its well-known path too.
+      # oci-analytics (the 1/8-OCPU public edge) ran BOTH samplers for a
+      # month: measured 2026-10-01 the user copy at ~8.6% of a vCPU and the
+      # root copy at ~16%, together the whole burst baseline before a single
+      # container ran. No bus socket = no user manager = nothing to retire.
+      SYSTEMCTL=""
+      for p in /usr/bin/systemctl /bin/systemctl /run/current-system/sw/bin/systemctl; do
+        [ -x "$p" ] && SYSTEMCTL="$p" && break
+      done
+      _ubus="''${XDG_RUNTIME_DIR:-/run/user/$(id -u)}"
+      if [ -n "$SYSTEMCTL" ] && [ -S "$_ubus/bus" ]; then
+        XDG_RUNTIME_DIR="$_ubus" "$SYSTEMCTL" --user disable --now my-watchdog.service \
+          || echo "[my-stack] WARN: could not retire the user my-watchdog — two samplers may be running" >&2
+      fi
       if [ -x "$HOME/.local/bin/my-watchdog" ]; then
         if $SUDO systemctl enable --now my-watchdog.service 2>/dev/null; then
           echo "[my-stack] my-watchdog running as root"

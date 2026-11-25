@@ -2,7 +2,7 @@
 # ║                                                                  ║
 # ║   GENERATED FILE — DO NOT EDIT                                   ║
 # ║                                                                  ║
-# ║   Source : cloud-infra/b_infra/nixhm-sudo-oci-apps/src/pilot/agents/my-stack.nix
+# ║   Source : cloudy-t-infra/b_infra/nixhm-sudo-oci-apps/src/pilot/agents/my-stack.nix
 # ║   Engine : 1_cicd/src/scripts/cloud-ship-nix-homemanager-engine.sh
 # ║   Rebuild: ./9_others/build.sh
 # ║                                                                  ║
@@ -37,10 +37,15 @@
 # against musl so one artifact per architecture runs on the Ubuntu, Fedora and
 # NixOS boxes alike. Compiling Rust on these VMs is what no-build-guard.nix
 # exists to prevent.
-{ vmName }:
+{ vmName, ramMB ? 0 }:
 { config, pkgs, lib, ... }:
 
 let
+  # On a 1 GB / 1-OCPU burstable VM the sampler's 2 s loop alone was ~13% of
+  # the CPU (oci-mail, 2026-11-19, steal 44-74%, mail timing out). Cap it
+  # there: a slower snapshot costs nothing, a starved mail stack costs mail.
+  # ramMB = 0 (unknown) and bigger boxes get no cap.
+  cpuQuotaLine = if ramMB > 0 && ramMB <= 1536 then "CPUQuota=8%" else "";
   # 2026-08-27: my-webserver and my-watchdog moved to cloud-u-linux in the d*
   # split, so their rolling releases are published there now.
   repo = "diegonmarcos/cloudy-u-linux";
@@ -108,7 +113,12 @@ let
       fi
     }
 
-    get my-watchdog-latest  "my-watchdog-$suffix"  my-watchdog
+    # The watchdog is published as c3-watchdog since the rename; the
+    # my-watchdog-latest release froze on 2026-09-03 and never got another
+    # build, so fetching it kept every VM on an old sampler (no small-box
+    # docker cadence, 2026-11-19). The binary keeps its installed name
+    # (my-watchdog), its --no-tray flag and its /run/my-watchdog output.
+    get c3-watchdog-latest  "c3-watchdog-$suffix"  my-watchdog
     get my-webserver-latest "my-webserver-$suffix" my-webserver
   '';
 in
@@ -133,6 +143,7 @@ in
     Nice=10
     IOSchedulingClass=idle
     MemoryMax=96M
+    ${cpuQuotaLine}
 
     [Install]
     WantedBy=default.target
@@ -196,6 +207,101 @@ in
       install -m644 "$SRC/$u" "$UNITS/$u"
     done
 
+    # THE BINARIES COME DOWN FIRST, for the same reason.
+    #
+    # The fetch also sat after that `exit 0`, so a server with no user session
+    # never pulled a new build: gcp-proxy was still running an 08-29 sampler
+    # today. It is idempotent and a no-op when the hub already pushed them.
+    ${fetchScript} || true
+
+    # THE ROOT SAMPLER GOES IN FIRST — it is a SYSTEM unit and needs no
+    # user session. It used to sit after the `exit 0` below, which every
+    # server with no user D-Bus session takes, so the deploy went green on
+    # four VMs and installed nothing at all.
+    # ── my-watchdog AS ROOT ────────────────────────────────────────────
+    # /proc/<pid>/io is readable only for your own processes, so a sampler
+    # running as the user shows a dash in every per-process IO column for
+    # root's daemons and the kernel's threads — which, on a box whose disk
+    # is pinned at 100%, is exactly the set doing the IO. Root reads all of
+    # it. The unit is a SYSTEM unit installed with sudo; it publishes under
+    # /run/my-watchdog (RuntimeDirectory), which my-watchdog-tui and
+    # my-webserver look at first, and the directory is root:<user's group>
+    # 0770 with UMask=0007 so the user can still append kill requests to the
+    # mailbox while nobody else on the box can. The user unit is retired.
+    #
+    # The unit text is written to a TEMP file, not into $SRC: that directory
+    # is home-manager's own symlink tree. And the heredoc ends at column
+    # zero — an indented terminator does not close it, which silently ate
+    # the rest of this block on the first attempt and installed nothing.
+    SUDO=""
+    for p in /usr/bin/sudo /run/wrappers/bin/sudo /usr/local/bin/sudo; do
+      [ -x "$p" ] && SUDO="$p" && break
+    done
+    if [ -n "$SUDO" ] && $SUDO -n true 2>/dev/null; then
+      UNIT_TMP="$(mktemp)"
+      cat > "$UNIT_TMP" <<'WATCHDOG_UNIT'
+[Unit]
+Description=my-watchdog — machine sampler as root
+After=network.target
+
+[Service]
+Type=simple
+User=root
+ExecStart=@HOME@/.local/bin/my-watchdog --no-tray
+Environment=XDG_RUNTIME_DIR=/run/my-watchdog
+RuntimeDirectory=my-watchdog
+RuntimeDirectoryMode=0770
+RuntimeDirectoryPreserve=yes
+UMask=0007
+Restart=always
+RestartSec=5
+Nice=10
+IOSchedulingClass=idle
+MemoryMax=96M
+${cpuQuotaLine}
+
+[Install]
+WantedBy=multi-user.target
+WATCHDOG_UNIT
+      # Group and path are this user's, so the panel and my-webserver — which
+      # run as the user — can read what root publishes.
+      sed -i "s|@HOME@|$HOME|; s|^User=root$|User=root\nGroup=$(id -gn)|" "$UNIT_TMP"
+      $SUDO install -m644 "$UNIT_TMP" /etc/systemd/system/my-watchdog.service
+      rm -f "$UNIT_TMP"
+      $SUDO systemctl daemon-reload
+      # RETIRE THE USER COPY — host systemctl by path, user bus by path.
+      # HM activation runs on a strict PATH with no systemctl in it (`$SUDO
+      # systemctl` only works because sudo's secure_path adds /usr/bin), so
+      # the bare `systemctl --user disable --now` this used to be died with
+      # "command not found" on every ship — read off the oci-analytics
+      # activation log 2026-10-02 — and its `2>/dev/null || true` hid it.
+      # The ship also runs this as `sudo -u <user>`, which strips
+      # XDG_RUNTIME_DIR, so the bus is addressed by its well-known path too.
+      # oci-analytics (the 1/8-OCPU public edge) ran BOTH samplers for a
+      # month: measured 2026-10-01 the user copy at ~8.6% of a vCPU and the
+      # root copy at ~16%, together the whole burst baseline before a single
+      # container ran. No bus socket = no user manager = nothing to retire.
+      SYSTEMCTL=""
+      for p in /usr/bin/systemctl /bin/systemctl /run/current-system/sw/bin/systemctl; do
+        [ -x "$p" ] && SYSTEMCTL="$p" && break
+      done
+      _ubus="''${XDG_RUNTIME_DIR:-/run/user/$(id -u)}"
+      if [ -n "$SYSTEMCTL" ] && [ -S "$_ubus/bus" ]; then
+        XDG_RUNTIME_DIR="$_ubus" "$SYSTEMCTL" --user disable --now my-watchdog.service \
+          || echo "[my-stack] WARN: could not retire the user my-watchdog — two samplers may be running" >&2
+      fi
+      if [ -x "$HOME/.local/bin/my-watchdog" ]; then
+        if $SUDO systemctl enable --now my-watchdog.service 2>/dev/null; then
+          echo "[my-stack] my-watchdog running as root"
+        else
+          echo "[my-stack] could not start system my-watchdog"
+        fi
+      else
+        $SUDO systemctl enable my-watchdog.service 2>/dev/null || true
+        echo "[my-stack] my-watchdog binary not present yet — system unit enabled, not started"
+      fi
+    fi
+
     # A VM with no user D-Bus session has no `systemctl --user` to talk to, and
     # that is a normal state on a box nobody has logged into. Installing the
     # units and stopping there is the right outcome: they start on the next
@@ -207,11 +313,9 @@ in
 
     systemctl --user daemon-reload
 
-    # Try to fetch before enabling, so the first start has something to run.
-    # If the hub pushed the binaries already this is a no-op.
-    ${fetchScript} || true
-
     for u in my-watchdog.service my-webserver.service; do
+      # The sampler is a system unit now where sudo allows; skip the user copy there.
+      [ "$u" = my-watchdog.service ] && [ -f /etc/systemd/system/my-watchdog.service ] && continue
       bin="$HOME/.local/bin/''${u%.service}"
       if [ -x "$bin" ]; then
         systemctl --user enable --now "$u" 2>/dev/null || \

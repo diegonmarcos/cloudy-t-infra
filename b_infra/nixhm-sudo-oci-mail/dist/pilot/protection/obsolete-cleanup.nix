@@ -2,7 +2,7 @@
 # ║                                                                  ║
 # ║   GENERATED FILE — DO NOT EDIT                                   ║
 # ║                                                                  ║
-# ║   Source : cloud-infra/b_infra/nixhm-sudo-oci-mail/src/pilot/protection/obsolete-cleanup.nix
+# ║   Source : cloudy-t-infra/b_infra/nixhm-sudo-oci-mail/src/pilot/protection/obsolete-cleanup.nix
 # ║   Engine : 1_cicd/src/scripts/cloud-ship-nix-homemanager-engine.sh
 # ║   Rebuild: ./9_others/build.sh
 # ║                                                                  ║
@@ -17,8 +17,16 @@
 # but stays on disk and keeps restart-looping forever).
 #
 # Data source (per-VM):
-#   ${nixhm-sudo-<vm>}/build.json . obsolete_systemd_units[]
+#   b_infra/nixhm-sudo-<vm>/build.json . protection.obsolete_systemd_units[]
 #     [{ unit: "<name>.service", _why: "<rationale>" }, ...]
+#   emitted by 9_others into _cloud-data-consolidated.json
+#   _home_manager.vms.<vm>.protection — the same channel tier1-apps,
+#   load-shedder and health-agent read, and the only one that exists inside
+#   the shipped flake (dist/pilot). The old top-level build.json path below
+#   is kept as a fallback, but it resolves OUTSIDE the flake source in the
+#   dist build, so on its own it was a silent no-op — and the smtp-proxy
+#   entry it held was dropped from build.json on 2026-05-08 (edc03c3b),
+#   leaving the dead unit restart-looping to 610k restarts by 2026-10-13.
 #
 # Activation (idempotent — safe to re-run):
 #   1. systemctl stop <unit>      (no-op if already stopped)
@@ -42,7 +50,10 @@ let
     if builtins.pathExists buildJsonPath
     then builtins.fromJSON (builtins.readFile buildJsonPath)
     else {};
-  obsolete = buildJson.obsolete_systemd_units or [];
+  consolidated = builtins.fromJSON (builtins.readFile ../_cloud-data-consolidated.json);
+  protVm = (consolidated._home_manager.vms.${vmName} or {}).protection or {};
+  obsolete = (protVm.obsolete_systemd_units or [])
+          ++ (buildJson.obsolete_systemd_units or []);
   unitNames = map (entry: entry.unit) obsolete;
 in
 lib.mkIf (obsolete != []) {
@@ -65,6 +76,7 @@ lib.mkIf (obsolete != []) {
               $SUDO systemctl disable "$unit" 2>/dev/null || true
               $SUDO systemctl mask "$unit"    2>/dev/null || true
               $SUDO rm -f "$unit_path" "$want_path"
+              $SUDO rmdir "$unit_path.d" 2>/dev/null || true
               _changed=1
           fi
       done

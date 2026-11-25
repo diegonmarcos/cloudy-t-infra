@@ -87,8 +87,14 @@ DefaultEnvironment=PATH=$NIX_PATHS:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr
     # Ensure nix multi-call symlinks exist (HM activate needs nix-build etc.)
     NIX_BIN="/nix/var/nix/profiles/default/bin"
     if [ -x "$NIX_BIN/nix" ]; then
+      # if/then, not `[ ! -e ] && ln`: when every link already exists that
+      # list returns 1, it was the subshell's last command, and every
+      # converged activation printed "[shell-path] FAILED" with no error
+      # above it (2026-11-18, oci-analytics run 44419144605).
       for cmd in nix-build nix-instantiate nix-env nix-store nix-channel; do
-        [ ! -e "$NIX_BIN/$cmd" ] && $SUDO ln -sf nix "$NIX_BIN/$cmd" && echo "[shell-path] created $NIX_BIN/$cmd -> nix"
+        if [ ! -e "$NIX_BIN/$cmd" ]; then
+          $SUDO ln -sf nix "$NIX_BIN/$cmd" && echo "[shell-path] created $NIX_BIN/$cmd -> nix"
+        fi
       done
     fi
 

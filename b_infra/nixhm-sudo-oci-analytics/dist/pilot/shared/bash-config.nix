@@ -2,7 +2,7 @@
 # ║                                                                  ║
 # ║   GENERATED FILE — DO NOT EDIT                                   ║
 # ║                                                                  ║
-# ║   Source : cloud-infra/b_infra/nixhm-sudo-oci-analytics/src/pilot/shared/bash-config.nix
+# ║   Source : cloudy-t-infra/b_infra/nixhm-sudo-oci-analytics/src/pilot/shared/bash-config.nix
 # ║   Engine : 1_cicd/src/scripts/cloud-ship-nix-homemanager-engine.sh
 # ║   Rebuild: ./9_others/build.sh
 # ║                                                                  ║
@@ -53,7 +53,7 @@ in {
       _nix_block() {
         echo -e "\033[1;31m[BLOCKED]\033[0m \"$1\" is disabled on this VM."
         echo '  This environment is managed declaratively with Nix Home Manager.'
-        echo '  Flake: git/cloud-infra/b_infra/'
+        echo '  Flake: git/cloud-t-infra/b_infra/'
         echo '  To add packages: edit the .nix file, then deploy with:'
         echo '    ./build.sh switch'
         echo '  Do NOT install packages imperatively.'

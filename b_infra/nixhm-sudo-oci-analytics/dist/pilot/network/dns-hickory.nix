@@ -25,6 +25,16 @@
 #   Tier 2: Cloudflare (1.1.1.1, 1.0.0.1) — fallback
 #   Tier 3: Google (8.8.8.8) — last resort
 # Docker daemon.json DNS is owned by container-init.nix
+#
+# #1797 mesh routing domain (resolved hosts with wg0 only, add-only):
+#   On gcp-proxy the GCE drop-in also sets DNS=169.254.169.254, which
+#   resolved picks as current server; it answers NXDOMAIN for
+#   *.mesh.diegonmarcos.com and resolved never asks Hickory. The unit
+#   hickory-mesh-dns.service gives the wg0 LINK its own DNS (primary) and
+#   the routing-only domain ~mesh.diegonmarcos.com, so mesh names always go
+#   to Hickory over wg0 while every other name keeps the GCE resolver.
+#   BindsTo/WantedBy the wg0 device unit: link settings vanish with wg0,
+#   and the unit is re-run each time wg0 comes back. GCE config untouched.
 { config, lib, pkgs, ... }:
 
 let
@@ -34,6 +44,28 @@ let
   };
   primaryDns = cloudData.dns.primary;
   fallbackDns = cloudData.dns.fallback;
+  meshDomain = cloudData.dns.mesh_domain or "mesh.diegonmarcos.com";
+  meshIface = "wg0";
+  meshUnitName = "hickory-mesh-dns.service";
+  meshDevUnit = "sys-subsystem-net-devices-${meshIface}.device";
+  # __RESOLVECTL__ is replaced at activation time with the host's resolvectl.
+  meshUnit = ''
+    # Managed by home-manager (vm-pilot dns-hickory.nix) — do not edit
+    [Unit]
+    Description=Route ~${meshDomain} to Hickory (${primaryDns}) on ${meshIface} (#1797)
+    BindsTo=${meshDevUnit}
+    After=${meshDevUnit} wg-quick@${meshIface}.service systemd-resolved.service
+    Wants=systemd-resolved.service
+
+    [Service]
+    Type=oneshot
+    RemainAfterExit=yes
+    ExecStart=__RESOLVECTL__ dns ${meshIface} ${primaryDns}
+    ExecStart=__RESOLVECTL__ domain ${meshIface} ~${meshDomain}
+
+    [Install]
+    WantedBy=${meshDevUnit} wg-quick@${meshIface}.service
+  '';
 in {
   home.activation.configureHickoryDns = lib.hm.dag.entryAfter ["linkGeneration"] ''
     (
@@ -106,5 +138,49 @@ DNSEOF
       $SUDO rm -f /etc/systemd/resolved.conf.d/hickory.conf
     fi
     ) || echo "[hickory-dns] FAILED — see errors above"
+  '';
+
+  # #1797: per-link routing domain on wg0 (see header). Separate entry so the
+  # global drop-in logic above is unchanged.
+  home.activation.configureHickoryMeshDomain = lib.hm.dag.entryAfter ["configureHickoryDns"] ''
+    (
+    SUDO=""
+    for p in /usr/bin/sudo /run/wrappers/bin/sudo /usr/local/bin/sudo; do
+      [ -x "$p" ] && SUDO="$p" && break
+    done
+    [ -z "$SUDO" ] && echo "[hickory-mesh] no sudo — skipping" && exit 0
+    SYSTEMCTL=""
+    for p in /run/current-system/sw/bin/systemctl /usr/bin/systemctl /bin/systemctl; do
+      [ -x "$p" ] && SYSTEMCTL="$p" && break
+    done
+    RESOLVECTL=""
+    for p in /run/current-system/sw/bin/resolvectl /usr/bin/resolvectl /bin/resolvectl; do
+      [ -x "$p" ] && RESOLVECTL="$p" && break
+    done
+    if [ -z "$SYSTEMCTL" ] || [ -z "$RESOLVECTL" ] \
+       || ! $SYSTEMCTL is-active --quiet systemd-resolved 2>/dev/null; then
+      echo "[hickory-mesh] systemd-resolved not active — no ${meshIface} routing domain"
+      exit 0
+    fi
+    UNIT=/etc/systemd/system/${meshUnitName}
+    TEMPLATE=${lib.escapeShellArg meshUnit}
+    WANT=$(printf '%s' "$TEMPLATE" | sed "s|__RESOLVECTL__|$RESOLVECTL|g")
+    if [ -f "$UNIT" ] && [ "$(cat "$UNIT")" = "$WANT" ]; then
+      echo "[hickory-mesh] ${meshUnitName} already current"
+    else
+      printf '%s\n' "$WANT" | $SUDO tee "$UNIT" > /dev/null
+      $SUDO "$SYSTEMCTL" daemon-reload
+      echo "[hickory-mesh] ${meshUnitName} written"
+    fi
+    $SUDO "$SYSTEMCTL" enable ${meshUnitName} > /dev/null 2>&1 || true
+    if [ -e /sys/class/net/${meshIface} ]; then
+      # (re)apply now; a no-op when the link already carries these settings
+      $SUDO "$SYSTEMCTL" restart ${meshUnitName} \
+        && echo "[hickory-mesh] ${meshIface}: DNS ${primaryDns}, domain ~${meshDomain}" \
+        || echo "[hickory-mesh] ${meshUnitName} failed to start"
+    else
+      echo "[hickory-mesh] ${meshIface} absent — unit will run when it comes up"
+    fi
+    ) || echo "[hickory-mesh] FAILED — see errors above"
   '';
 }

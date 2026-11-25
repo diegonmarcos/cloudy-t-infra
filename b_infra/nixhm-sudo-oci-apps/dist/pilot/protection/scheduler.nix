@@ -2,7 +2,7 @@
 # ║                                                                  ║
 # ║   GENERATED FILE — DO NOT EDIT                                   ║
 # ║                                                                  ║
-# ║   Source : cloud-infra/b_infra/nixhm-sudo-oci-apps/src/pilot/protection/scheduler.nix
+# ║   Source : cloudy-t-infra/b_infra/nixhm-sudo-oci-apps/src/pilot/protection/scheduler.nix
 # ║   Engine : 1_cicd/src/scripts/cloud-ship-nix-homemanager-engine.sh
 # ║   Rebuild: ./9_others/build.sh
 # ║                                                                  ║
@@ -119,12 +119,13 @@ in {
       [ -f "$_w" ] && $SUDO rm -f "$_w" && echo "[scheduler] removed stale wrapper: $_w"
     done
 
-    # Remove stale guardrails docker wrapper from nix profile (ionice/nice/docker-real — guardrails.nix disabled)
-    _hm_user=$(id -un 2>/dev/null || echo diego)
-    _nix_docker="/home/$_hm_user/.nix-profile/bin/docker"
-    if [ -f "$_nix_docker" ] && head -2 "$_nix_docker" 2>/dev/null | grep -q 'docker-real'; then
-      rm -f "$_nix_docker" && echo "[scheduler] removed stale guardrails docker wrapper from nix-profile"
-    fi
+    # Stale docker-real wrapper in the nix profile: DELIBERATELY not removed
+    # here. ~/.nix-profile/bin is a symlink into the read-only nix store merged
+    # directory, so `rm -f` silently no-ops and printed a misleading "removed"
+    # success. The real fix for a stale docker-real wrapper is a fresh
+    # `home-manager switch`, which rewrites the profile. The /usr/local/bin
+    # loop above is the only writable wrapper location and is the one that
+    # matters.
 
     ${deployScript}
 

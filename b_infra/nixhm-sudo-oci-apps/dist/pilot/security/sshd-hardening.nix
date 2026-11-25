@@ -2,7 +2,7 @@
 # ║                                                                  ║
 # ║   GENERATED FILE — DO NOT EDIT                                   ║
 # ║                                                                  ║
-# ║   Source : cloud-infra/b_infra/nixhm-sudo-oci-apps/src/pilot/security/sshd-hardening.nix
+# ║   Source : cloudy-t-infra/b_infra/nixhm-sudo-oci-apps/src/pilot/security/sshd-hardening.nix
 # ║   Engine : 1_cicd/src/scripts/cloud-ship-nix-homemanager-engine.sh
 # ║   Rebuild: ./9_others/build.sh
 # ║                                                                  ║
@@ -145,6 +145,13 @@ iptables -A INPUT -i lo -j ACCEPT
 iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
 iptables -A INPUT -s 10.0.0.0/24 -j ACCEPT
 iptables -A INPUT -p udp --dport 51820 -j ACCEPT
+# Local container -> host (#1821, owner-approved 2026-11-19). Bridge-network
+# containers reach the host's own wg0/wg-public addresses (host-network
+# services, the host resolver) via docker0 / br-*; only this VM's containers
+# send on those interfaces. Without it Stalwart on oci-apps could not reach its
+# event webhook (10.0.0.6:3103) or the host DNS, so SPF/DMARC lookups timed out.
+iptables -A INPUT -i docker0 -j ACCEPT
+iptables -A INPUT -i br+ -j ACCEPT
 
 # wg-public mesh (data-driven from consolidated.native.wireguard_public)
 ${wgPublicRules}
