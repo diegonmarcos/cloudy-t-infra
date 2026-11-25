@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 25005,
+    "files": 25015,
     "by_lang": {
-      "sh": 841,
+      "sh": 844,
       "js": 599,
-      "py": 270,
-      "kotlin": 14066,
+      "py": 273,
+      "kotlin": 14070,
       "ts": 8382,
       "java": 656,
       "nix": 37,
@@ -20,12 +20,12 @@
     "by_role": {
       "hook": 166,
       "file": 2270,
-      "shell": 673,
-      "script": 353,
-      "python": 100,
+      "shell": 675,
+      "script": 355,
+      "python": 102,
       "module": 6478,
       "java": 655,
-      "kotlin": 14063,
+      "kotlin": 14067,
       "flake": 33,
       "rust-module": 154,
       "nix-module": 4,
@@ -4320,6 +4320,16 @@
       ]
     },
     {
+      "path": "1_cicd/src/scripts/cloud-android-draw-text-guard.py",
+      "lang": "py",
+      "role": "script",
+      "exports": [],
+      "imports": [
+        "os"
+      ],
+      "symbols": []
+    },
+    {
       "path": "1_cicd/src/scripts/cloud-android-engine-contract-guard.py",
       "lang": "py",
       "role": "script",
@@ -7340,6 +7350,18 @@
         "expect_red()",
         "expect_green()",
         "probe_red()"
+      ]
+    },
+    {
+      "path": "1_cicd/src/scripts/test/draw-text-guard.test.sh",
+      "lang": "sh",
+      "role": "script",
+      "exports": [
+        "chk()"
+      ],
+      "imports": [],
+      "symbols": [
+        "chk()"
       ]
     },
     {
@@ -12763,10 +12785,12 @@
         "java.time.format.DateTimeFormatter",
         "java.util.Locale",
         "kotlin.math.exp",
+        "kotlin.math.ln",
         "kotlin.math.roundToInt"
       ],
       "symbols": [
         "feelsLike(tC: Double, humidityPct: Double?, windMs: Double?)",
+        "dewPoint(tC: Double, humidityPct: Double?)",
         "n(v: Double?, f: String = \"%.0f\")",
         "pair(a: String?, b: String?)",
         "rows(snap: DayRepo.Snapshot?)",
@@ -73490,6 +73514,7 @@
         "androidx.compose.ui.unit.sp"
       ],
       "symbols": [
+        "labelOrigin(node: Offset, radius: Float, width: Float, height: Float)",
         "toScreen(wx: Float, wy: Float, center: Offset, pan: Offset, scale: Float)",
         "toWorld(p: Offset, center: Offset, pan: Offset, scale: Float)",
         "fit(layout: ForceLayout, w: Float, h: Float, margin: Float = 24f)",
@@ -113397,6 +113422,26 @@
       ]
     },
     {
+      "path": "ab_cloud-libs-shared/libs/ui-kit/src/commonMain/kotlin/com/diegonmarcos/superapp/uikit/SafeDrawText.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "safeTextOrigin",
+        "safeDrawText"
+      ],
+      "imports": [
+        "androidx.compose.ui.geometry.Offset",
+        "androidx.compose.ui.graphics.drawscope.DrawScope",
+        "androidx.compose.ui.text.TextMeasurer",
+        "androidx.compose.ui.text.TextStyle",
+        "androidx.compose.ui.text.drawText"
+      ],
+      "symbols": [
+        "safeTextOrigin(topLeft: Offset, width: Float, height: Float)",
+        "safeDrawText( measurer: TextMeasurer, text: String, topLeft: Offset, style: TextStyle = TextStyle.Default, maxLines: Int = Int.MAX_VALUE, softWrap: Boolean = true, )"
+      ]
+    },
+    {
       "path": "ab_cloud-libs-shared/libs/ui-kit/src/main/kotlin/com/diegonmarcos/superapp/uikit/KitDates.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -139008,7 +139053,7 @@
         "androidx.compose.ui.platform.LocalDensity",
         "androidx.compose.ui.platform.testTag",
         "androidx.compose.ui.text.TextStyle",
-        "androidx.compose.ui.text.drawText",
+        "com.diegonmarcos.superapp.uikit.safeDrawText",
         "androidx.compose.ui.text.rememberTextMeasurer",
         "androidx.compose.ui.unit.dp",
         "androidx.compose.ui.unit.sp",
@@ -140849,6 +140894,29 @@
         "ok(tex: String)",
         "why(tex: String)",
         "class PlotTest"
+      ]
+    },
+    {
+      "path": "ac_cloud-calc/app/src/test/java/com/diegonmarcos/cloudcalc/SafeDrawTextTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "SafeDrawTextTest"
+      ],
+      "imports": [
+        "androidx.compose.ui.geometry.Offset",
+        "com.diegonmarcos.superapp.uikit.safeTextOrigin",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertNull",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "insideStaysPut()",
+        "negativeClampsToZero()",
+        "pastRightEdgeSkipped()",
+        "pastBottomEdgeSkipped()",
+        "nanAndEmptyCanvasSkipped()",
+        "class SafeDrawTextTest"
       ]
     },
     {
@@ -422594,6 +422662,7 @@
       "lang": "kotlin",
       "role": "kotlin",
       "exports": [
+        "ProjBanners",
         "ProjHomeTags",
         "ProjHomeScreen"
       ],
@@ -422603,6 +422672,8 @@
         "androidx.compose.foundation.layout.Column",
         "androidx.compose.foundation.layout.PaddingValues",
         "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.foundation.layout.height",
+        "androidx.compose.runtime.remember",
         "androidx.compose.foundation.layout.padding",
         "androidx.compose.foundation.layout.size",
         "androidx.compose.foundation.lazy.grid.GridCells",
@@ -422623,9 +422694,13 @@
         "androidx.compose.ui.unit.dp"
       ],
       "symbols": [
+        "urls(ctx: android.content.Context)",
+        "BannerImage(url: String, tag: String)",
+        "banner(id: String)",
         "header(id: String)",
         "tile(id: String)",
         "ProjHomeScreen(modifier: Modifier = Modifier)",
+        "class ProjBanners",
         "class ProjHomeTags"
       ]
     },
@@ -424152,6 +424227,32 @@
       ]
     },
     {
+      "path": "ac_cloud-me/app/src/test/java/com/diegonmarcos/cloudme/ProjEmojiTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ProjEmojiTest"
+      ],
+      "imports": [
+        "android.app.Application",
+        "org.json.JSONArray",
+        "org.json.JSONObject",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "org.junit.runner.RunWith",
+        "org.robolectric.RobolectricTestRunner",
+        "org.robolectric.annotation.Config"
+      ],
+      "symbols": [
+        "obj(p: String)",
+        "section(id: String)",
+        "flat(o: JSONObject)",
+        "class ProjEmojiTest"
+      ]
+    },
+    {
       "path": "ac_cloud-me/app/src/test/java/com/diegonmarcos/cloudme/RepoTreeTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -424356,6 +424457,34 @@
         "page_file(e)",
         "main()"
       ]
+    },
+    {
+      "path": "ac_cloud-me/data/regen-proj-emoji.py",
+      "lang": "py",
+      "role": "python",
+      "exports": [
+        "sot_root()",
+        "derive(areas_json)",
+        "main()"
+      ],
+      "imports": [
+        "json"
+      ],
+      "symbols": [
+        "sot_root()",
+        "derive(areas_json)",
+        "main()"
+      ]
+    },
+    {
+      "path": "ac_cloud-me/data/regen-repos-tree.py",
+      "lang": "py",
+      "role": "python",
+      "exports": [],
+      "imports": [
+        "os"
+      ],
+      "symbols": []
     },
     {
       "path": "ac_cloud-me/data/regen-roadmap-tree.py",
@@ -424937,6 +425066,24 @@
       "symbols": [
         "check()",
         "plant()"
+      ]
+    },
+    {
+      "path": "ac_cloud-me/test/test-proj-emoji.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "ok()",
+        "bad()",
+        "check()",
+        "mut()"
+      ],
+      "imports": [],
+      "symbols": [
+        "ok()",
+        "bad()",
+        "check()",
+        "mut()"
       ]
     },
     {
@@ -560697,6 +560844,7 @@
       ],
       "symbols": [
         "AiPage(spec: AiPageSpec)",
+        "NotServedPage()",
         "KitHost(content: @Composable ()",
         "Rule()",
         "Header(text: String)",
@@ -562100,6 +562248,20 @@
         "check()",
         "ok()",
         "bad()",
+        "mutant()"
+      ]
+    },
+    {
+      "path": "ac_cloud-superintel/test/test-superintel-private-served.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "check()",
+        "mutant()"
+      ],
+      "imports": [],
+      "symbols": [
+        "check()",
         "mutant()"
       ]
     },
@@ -648972,6 +649134,27 @@
         "hubs()",
         "navMode()",
         "class Data"
+      ]
+    },
+    {
+      "path": "ac_cloud-wiki/app/src/test/java/com/diegonmarcos/cloudwiki/GraphLabelOriginTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "GraphLabelOriginTest"
+      ],
+      "imports": [
+        "androidx.compose.ui.geometry.Offset",
+        "com.diegonmarcos.superapp.graphview.GraphCamera",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertNull",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "aLabelInsideTheCanvasIsDrawnBesideItsNode()",
+        "aLabelPastTheRightOrBottomEdgeIsSkipped()",
+        "aLabelLeftOrAboveTheCanvasIsClampedAndNonFiniteOrEmptyCanvasIsSkipped()",
+        "class GraphLabelOriginTest"
       ]
     },
     {

@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-containers",
   "counts": {
-    "files": 2803,
+    "files": 2804,
     "by_lang": {
       "sh": 210,
       "js": 129,
       "nix": 230,
-      "py": 535,
+      "py": 536,
       "ts": 1324,
       "rust": 375
     },
@@ -26,7 +26,7 @@
       "entrypoint": 73,
       "compose": 104,
       "mcp-tool": 152,
-      "workflow-dag": 7,
+      "workflow-dag": 8,
       "rust-module": 371,
       "hook": 53
     }
@@ -18937,6 +18937,44 @@
       "imports": [],
       "symbols": [
         "check_url()"
+      ]
+    },
+    {
+      "path": "infra-obs_dagu/src/dags/lib/git-drive-backup.py",
+      "lang": "py",
+      "role": "workflow-dag",
+      "exports": [
+        "svc()",
+        "retry(fn, n=6)",
+        "children(pid)",
+        "folder(parent, name)",
+        "md5(p)",
+        "put(path, parent, existing_id=None, name=None)",
+        "rm(fid)",
+        "sync_dir(local, remote_id, stats, jobs)",
+        "run_job(j)",
+        "cmd_repo(name, zpath, tdir, sha, mout)",
+        "cmd_manifest(d, out)"
+      ],
+      "imports": [
+        "concurrent.futures",
+        "google.oauth2",
+        "googleapiclient.discovery",
+        "googleapiclient.http",
+        "hashlib"
+      ],
+      "symbols": [
+        "svc()",
+        "retry(fn, n=6)",
+        "children(pid)",
+        "folder(parent, name)",
+        "md5(p)",
+        "put(path, parent, existing_id=None, name=None)",
+        "rm(fid)",
+        "sync_dir(local, remote_id, stats, jobs)",
+        "run_job(j)",
+        "cmd_repo(name, zpath, tdir, sha, mout)",
+        "cmd_manifest(d, out)"
       ]
     },
     {
