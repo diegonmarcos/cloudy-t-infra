@@ -33,15 +33,15 @@
   "_generated": "",
   "_source": "_cloud-data-consolidated.json via cloud-data-config-derive.ts/kg-delta",
   "counts": {
-    "nodes": 424,
-    "edges": 583,
+    "nodes": 430,
+    "edges": 590,
     "by_table": {
       "vm": 4,
-      "service": 107,
-      "container": 131,
+      "service": 108,
+      "container": 135,
       "domain": 44,
       "repo": 3,
-      "module": 107,
+      "module": 108,
       "package": 28
     }
   },
@@ -1715,6 +1715,68 @@
         "image": "ghcr.io/diegonmarcos/auth-broker-binaries:latest",
         "role": "email",
         "port": 4183,
+        "public": false
+      }
+    },
+    {
+      "table": "service",
+      "id": "auth_broker_go",
+      "key": "service:auth_broker_go",
+      "properties": {
+        "name": "auth-broker-go",
+        "category": "sec",
+        "description": "Go port of auth-broker (fleet sign-in: GitHub device flow, Google and GitHub web flow with PKCE S256 and a single-use browser-bound state, Cloudflare One / Access JWT verification, email one-time code, the shared HMAC-signed session cookie), shadow stage: one container per provider on its own port, reading the Python service's build.json, outside every request path (ticket #1877). Parity harness drives the Python original with identical requests against stub providers.",
+        "domain": null,
+        "port": null,
+        "vm": "oci-apps",
+        "folder": "infra-sec_auth-broker-go"
+      }
+    },
+    {
+      "table": "container",
+      "id": "cloudy_auth_google_go_api",
+      "key": "container:cloudy_auth_google_go_api",
+      "properties": {
+        "name": "cloudy-auth-google-go-api",
+        "image": "ghcr.io/diegonmarcos/auth-broker-go:latest",
+        "role": "google",
+        "port": 4280,
+        "public": false
+      }
+    },
+    {
+      "table": "container",
+      "id": "cloudy_auth_github_go_api",
+      "key": "container:cloudy_auth_github_go_api",
+      "properties": {
+        "name": "cloudy-auth-github-go-api",
+        "image": "ghcr.io/diegonmarcos/auth-broker-go:latest",
+        "role": "github",
+        "port": 4281,
+        "public": false
+      }
+    },
+    {
+      "table": "container",
+      "id": "cloudy_auth_cloudflare_go_api",
+      "key": "container:cloudy_auth_cloudflare_go_api",
+      "properties": {
+        "name": "cloudy-auth-cloudflare-go-api",
+        "image": "ghcr.io/diegonmarcos/auth-broker-go:latest",
+        "role": "cloudflare",
+        "port": 4282,
+        "public": false
+      }
+    },
+    {
+      "table": "container",
+      "id": "cloudy_auth_email_go_api",
+      "key": "container:cloudy_auth_email_go_api",
+      "properties": {
+        "name": "cloudy-auth-email-go-api",
+        "image": "ghcr.io/diegonmarcos/auth-broker-go:latest",
+        "role": "email",
+        "port": 4283,
         "public": false
       }
     },
@@ -4167,6 +4229,17 @@
     },
     {
       "table": "module",
+      "id": "infra_sec_auth_broker_go",
+      "key": "module:infra_sec_auth_broker_go",
+      "properties": {
+        "name": "infra-sec_auth-broker-go",
+        "repo": "cloud",
+        "category": "sec",
+        "service": "auth-broker-go"
+      }
+    },
+    {
+      "table": "module",
       "id": "infra_sec_authelia",
       "key": "module:infra_sec_authelia",
       "properties": {
@@ -6038,6 +6111,49 @@
       "from": "service:auth_broker",
       "to": "container:cloudy_auth_email_api",
       "key": "service:auth_broker->runs_container->container:cloudy_auth_email_api",
+      "properties": {
+        "role": "email"
+      }
+    },
+    {
+      "table": "hosted_on",
+      "from": "service:auth_broker_go",
+      "to": "vm:oci_apps",
+      "key": "service:auth_broker_go->hosted_on->vm:oci_apps",
+      "properties": {}
+    },
+    {
+      "table": "runs_container",
+      "from": "service:auth_broker_go",
+      "to": "container:cloudy_auth_google_go_api",
+      "key": "service:auth_broker_go->runs_container->container:cloudy_auth_google_go_api",
+      "properties": {
+        "role": "google"
+      }
+    },
+    {
+      "table": "runs_container",
+      "from": "service:auth_broker_go",
+      "to": "container:cloudy_auth_github_go_api",
+      "key": "service:auth_broker_go->runs_container->container:cloudy_auth_github_go_api",
+      "properties": {
+        "role": "github"
+      }
+    },
+    {
+      "table": "runs_container",
+      "from": "service:auth_broker_go",
+      "to": "container:cloudy_auth_cloudflare_go_api",
+      "key": "service:auth_broker_go->runs_container->container:cloudy_auth_cloudflare_go_api",
+      "properties": {
+        "role": "cloudflare"
+      }
+    },
+    {
+      "table": "runs_container",
+      "from": "service:auth_broker_go",
+      "to": "container:cloudy_auth_email_go_api",
+      "key": "service:auth_broker_go->runs_container->container:cloudy_auth_email_go_api",
       "properties": {
         "role": "email"
       }
@@ -8593,6 +8709,20 @@
       "from": "module:infra_sec_auth_broker",
       "to": "service:auth_broker",
       "key": "module:infra_sec_auth_broker->implements->service:auth_broker",
+      "properties": {}
+    },
+    {
+      "table": "belongs_to_repo",
+      "from": "module:infra_sec_auth_broker_go",
+      "to": "repo:cloud",
+      "key": "module:infra_sec_auth_broker_go->belongs_to_repo->repo:cloud",
+      "properties": {}
+    },
+    {
+      "table": "implements",
+      "from": "module:infra_sec_auth_broker_go",
+      "to": "service:auth_broker_go",
+      "key": "module:infra_sec_auth_broker_go->implements->service:auth_broker_go",
       "properties": {}
     },
     {

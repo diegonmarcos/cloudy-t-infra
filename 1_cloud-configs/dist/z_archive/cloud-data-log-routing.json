@@ -317,6 +317,26 @@
         "log_level": "info"
       },
       {
+        "container": "cloudy-auth-google-go-api",
+        "service": "auth-broker-go",
+        "log_level": "info"
+      },
+      {
+        "container": "cloudy-auth-github-go-api",
+        "service": "auth-broker-go",
+        "log_level": "info"
+      },
+      {
+        "container": "cloudy-auth-cloudflare-go-api",
+        "service": "auth-broker-go",
+        "log_level": "info"
+      },
+      {
+        "container": "cloudy-auth-email-go-api",
+        "service": "auth-broker-go",
+        "log_level": "info"
+      },
+      {
         "container": "cloudy-ai-tokens-api",
         "service": "cloudy-ai-tokens-api",
         "log_level": "info"

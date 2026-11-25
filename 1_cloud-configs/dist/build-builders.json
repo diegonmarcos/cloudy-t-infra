@@ -328,6 +328,11 @@
         "vm": "oci-apps",
         "has_docker": true
       },
+      "auth-broker-go": {
+        "dir": "infra-sec_auth-broker-go",
+        "vm": "oci-apps",
+        "has_docker": true
+      },
       "authelia": {
         "dir": "infra-sec_authelia",
         "vm": "gcp-proxy",

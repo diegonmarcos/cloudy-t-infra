@@ -6,25 +6,25 @@
   },
   "repo": "cloud-u-containers",
   "counts": {
-    "files": 2799,
+    "files": 2803,
     "by_lang": {
-      "sh": 209,
+      "sh": 210,
       "js": 129,
-      "nix": 228,
-      "py": 534,
+      "nix": 230,
+      "py": 535,
       "ts": 1324,
       "rust": 375
     },
     "by_role": {
-      "shell": 199,
+      "shell": 200,
       "file": 363,
       "nix-module": 20,
-      "python": 517,
+      "python": 518,
       "module": 826,
       "script": 10,
-      "flake": 105,
+      "flake": 106,
       "entrypoint": 73,
-      "compose": 103,
+      "compose": 104,
       "mcp-tool": 152,
       "workflow-dag": 7,
       "rust-module": 371,
@@ -24014,6 +24014,148 @@
       "symbols": [
         "run()",
         "fail()"
+      ]
+    },
+    {
+      "path": "infra-sec_auth-broker-go/build.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "get_config()",
+        "get_config_array()",
+        "get_lifecycle()",
+        "detect_layout()",
+        "rewrite_compose_image_refs()",
+        "log()",
+        "log_warn()",
+        "log_error()",
+        "declared_container_names()",
+        "ssh_with_retry()",
+        "ssh_run_detached()",
+        "rsync_with_retry()",
+        "_ship_build_phase()"
+      ],
+      "imports": [],
+      "symbols": [
+        "get_config()",
+        "get_config_array()",
+        "get_lifecycle()",
+        "detect_layout()",
+        "rewrite_compose_image_refs()",
+        "log()",
+        "log_warn()",
+        "log_error()",
+        "declared_container_names()",
+        "ssh_with_retry()",
+        "ssh_run_detached()",
+        "rsync_with_retry()",
+        "_ship_build_phase()"
+      ]
+    },
+    {
+      "path": "infra-sec_auth-broker-go/src/code/parity/ref.py",
+      "lang": "py",
+      "role": "python",
+      "exports": [
+        "load(clockfile, seed)",
+        "build(mod)",
+        "serve(port, clockfile, seed)",
+        "check()",
+        "class Stream"
+      ],
+      "imports": [
+        "base64",
+        "hashlib",
+        "importlib.util",
+        "json",
+        "os",
+        "sys",
+        "types"
+      ],
+      "symbols": [
+        "load(clockfile, seed)",
+        "build(mod)",
+        "serve(port, clockfile, seed)",
+        "check()",
+        "class Stream"
+      ]
+    },
+    {
+      "path": "infra-sec_auth-broker-go/src/compose.nix",
+      "lang": "nix",
+      "role": "compose",
+      "exports": [
+        "buildJson",
+        "container"
+      ],
+      "imports": [],
+      "symbols": [
+        "bin",
+        "mk",
+        "c",
+        "bind",
+        "image",
+        "container_name",
+        "network_mode",
+        "read_only",
+        "command",
+        "env_file",
+        "environment",
+        "BROKER_PROVIDER",
+        "PORT",
+        "BIND_HOST",
+        "BROKER_CONFIG",
+        "volumes",
+        "healthcheck",
+        "test",
+        "interval",
+        "limits",
+        "reservations",
+        "logging",
+        "services",
+        "auth-broker-go-google",
+        "auth-broker-go-github",
+        "auth-broker-go-cloudflare",
+        "auth-broker-go-email"
+      ]
+    },
+    {
+      "path": "infra-sec_auth-broker-go/src/flake.nix",
+      "lang": "nix",
+      "role": "flake",
+      "exports": [
+        "description",
+        "shadow",
+        "Type",
+        "#1877)\";",
+        "nixpkgs"
+      ],
+      "imports": [
+        "../../_shared/engine.nix",
+        "./compose.nix",
+        "../_shared/engine.nix",
+        "compose.nix"
+      ],
+      "symbols": [
+        "description",
+        "outputs",
+        "forAllSystems",
+        "buildJson",
+        "container",
+        "engine",
+        "nb",
+        "packages",
+        "pkgs",
+        "default",
+        "srcDir",
+        "templates",
+        "composeSpec",
+        "nativeBuild",
+        "cmd",
+        "binary",
+        "baseImage",
+        "apt",
+        "title"
       ]
     },
     {

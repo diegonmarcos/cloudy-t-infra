@@ -514,6 +514,7 @@
         "c3bot-relay-go",
         "disk-janitor",
         "auth-broker",
+        "auth-broker-go",
         "cloudy-ai-tokens-api",
         "cloudy-ai-tokens-go-api",
         "crowdsec",
@@ -555,7 +556,7 @@
         "send",
         "vaultwarden"
       ],
-      "container_count": 102
+      "container_count": 106
     },
     "gcp-E2-f_0": {
       "ip": "35.226.147.64",
@@ -8319,6 +8320,163 @@
           "/oauth2/cloudflare/health",
           "/oauth2/email/health"
         ]
+      }
+    },
+    "auth-broker-go": {
+      "category": "sec",
+      "vm": "oci-A1-f_0",
+      "folder": "infra-sec_auth-broker-go",
+      "description": "Go port of auth-broker (fleet sign-in: GitHub device flow, Google and GitHub web flow with PKCE S256 and a single-use browser-bound state, Cloudflare One / Access JWT verification, email one-time code, the shared HMAC-signed session cookie), shadow stage: one container per provider on its own port, reading the Python service's build.json, outside every request path (ticket #1877). Parity harness drives the Python original with identical requests against stub providers.",
+      "enabled": true,
+      "flake": "infra-sec_auth-broker-go",
+      "containers": {
+        "google": {
+          "container_name": "cloudy-auth-google-go-api",
+          "image": "ghcr.io/diegonmarcos/auth-broker-go:latest",
+          "port": 4280,
+          "port_env": null,
+          "public": false,
+          "proxy": null,
+          "healthcheck": "/oauth2/google/health",
+          "monitoring": null,
+          "volumes": [],
+          "env_file": true,
+          "depends_on": [],
+          "resources": {
+            "mem_reservation": "16m",
+            "mem_limit": "64m"
+          },
+          "read_only": true,
+          "protocol": "http"
+        },
+        "github": {
+          "container_name": "cloudy-auth-github-go-api",
+          "image": "ghcr.io/diegonmarcos/auth-broker-go:latest",
+          "port": 4281,
+          "port_env": null,
+          "public": false,
+          "proxy": null,
+          "healthcheck": "/oauth2/github/health",
+          "monitoring": null,
+          "volumes": [],
+          "env_file": true,
+          "depends_on": [],
+          "resources": {
+            "mem_reservation": "16m",
+            "mem_limit": "64m"
+          },
+          "read_only": true,
+          "protocol": "http"
+        },
+        "cloudflare": {
+          "container_name": "cloudy-auth-cloudflare-go-api",
+          "image": "ghcr.io/diegonmarcos/auth-broker-go:latest",
+          "port": 4282,
+          "port_env": null,
+          "public": false,
+          "proxy": null,
+          "healthcheck": "/oauth2/cloudflare/health",
+          "monitoring": null,
+          "volumes": [],
+          "env_file": true,
+          "depends_on": [],
+          "resources": {
+            "mem_reservation": "16m",
+            "mem_limit": "64m"
+          },
+          "read_only": true,
+          "protocol": "http"
+        },
+        "email": {
+          "container_name": "cloudy-auth-email-go-api",
+          "image": "ghcr.io/diegonmarcos/auth-broker-go:latest",
+          "port": 4283,
+          "port_env": null,
+          "public": false,
+          "proxy": null,
+          "healthcheck": "/oauth2/email/health",
+          "monitoring": null,
+          "volumes": [],
+          "env_file": true,
+          "depends_on": [],
+          "resources": {
+            "mem_reservation": "16m",
+            "mem_limit": "64m"
+          },
+          "read_only": true,
+          "protocol": "http"
+        }
+      },
+      "container_names": [
+        "cloudy-auth-google-go-api",
+        "cloudy-auth-github-go-api",
+        "cloudy-auth-cloudflare-go-api",
+        "cloudy-auth-email-go-api"
+      ],
+      "all_ports": [
+        "4280",
+        "4281",
+        "4282",
+        "4283"
+      ],
+      "all_dns": [],
+      "compose": {
+        "containers": [],
+        "ports": [],
+        "networks": []
+      },
+      "proxy": {
+        "app_hub": false
+      },
+      "declared_ports": {
+        "google": 4280,
+        "github": 4281,
+        "cloudflare": 4282,
+        "email": 4283
+      },
+      "taxonomy": {
+        "group": "Infra Apps",
+        "category": "Net-Routing & Security"
+      },
+      "bind_host": "10.0.0.6",
+      "resources": {
+        "mem_limit": "64M",
+        "mem_reservation": "8M"
+      },
+      "tests": {
+        "unit": {
+          "cmd": "go test -count=1 ./...",
+          "cwd": "src/code"
+        },
+        "parity-compare": {
+          "cmd": "PYREF=$(ls -d /opt/hostedtoolcache/Python/3.11*/x64/bin/python3 2>/dev/null | tail -1); ${PYREF:-python3} -m venv /tmp/ab-parity-venv && PY_BIN=/tmp/ab-parity-venv/bin/python PY_APP_DIR=$PWD/../../../infra-sec_auth-broker/src/code PARITY_REQUIRE=1 go test -count=1 -timeout 15m -tags parity -v -run TestParity ./parity/",
+          "cwd": "src/code",
+          "_doc": "Reference = the Python service main.py (CPython 3.11, stdlib only) driven by parity/ref.py with a fake clock and a deterministic byte stream; the Go port gets the same. Every provider flow (device, web with PKCE and state, Cloudflare One, email one-time code) against stub providers; session cookies valid, expired, tampered, foreign-signed and hand-made; Cloudflare Access JWTs valid, expired, wrong kid, tampered, wrong audience/issuer/email, key rotation and the certs cache; the mail API and an SMTP-over-TLS server mocked; every request to the providers is compared too."
+        },
+        "parity-mutation": {
+          "cmd": "PYREF=$(ls -d /opt/hostedtoolcache/Python/3.11*/x64/bin/python3 2>/dev/null | tail -1); ${PYREF:-python3} -m venv /tmp/ab-parity-venv && o=$(mktemp); PY_BIN=/tmp/ab-parity-venv/bin/python PY_APP_DIR=$PWD/../../../infra-sec_auth-broker/src/code PARITY_MUTATE=1 PARITY_REQUIRE=1 go test -count=1 -timeout 15m -tags parity -run TestParityGoogle ./parity/ >\"$o\" 2>&1; grep -q 'requests differ' \"$o\"",
+          "cwd": "src/code",
+          "_doc": "Mutation proof: the Go side signs session cookies with another secret; the harness must report differing requests."
+        }
+      },
+      "_doc_addressing": "No mesh name on purpose during the shadow stage: nothing dials these containers, so they need no Hickory row and no Caddy fallback-map entry. Ports 4280-4283 sit beside the Python broker's 4180-4183 on the same host.",
+      "api": {
+        "has_api": true,
+        "has_web_ui": false,
+        "api_path": "/",
+        "api_url": null,
+        "healthcheck_paths": [
+          "/oauth2/google/health",
+          "/oauth2/github/health",
+          "/oauth2/cloudflare/health",
+          "/oauth2/email/health"
+        ],
+        "type": "custom-rest",
+        "base_path": "/",
+        "endpoint_count": 8,
+        "display_name": "Fleet Auth Broker (Go, shadow)",
+        "description": "Same contract as auth-broker: <prefix>/start, /device, /poll, /request, /verify, /callback, /auth, /cf-auth, /health per provider.",
+        "auth": "bearer"
       }
     },
     "authelia": {

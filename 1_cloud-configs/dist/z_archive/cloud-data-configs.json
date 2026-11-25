@@ -66,6 +66,21 @@
       ]
     },
     {
+      "name": "auth-broker-go",
+      "category": "sec",
+      "vm": "oci-A1-f_0",
+      "description": "Go port of auth-broker (fleet sign-in: GitHub device flow, Google and GitHub web flow with PKCE S256 and a single-use browser-bound state, Cloudflare One / Access JWT verification, email one-time code, the shared HMAC-signed session cookie), shadow stage: one container per provider on its own port, reading the Python service's build.json, outside every request path (ticket #1877). Parity harness drives the Python original with identical requests against stub providers.",
+      "domain": "—",
+      "ports": [],
+      "networks": [],
+      "containers": [
+        "cloudy-auth-google-go-api",
+        "cloudy-auth-github-go-api",
+        "cloudy-auth-cloudflare-go-api",
+        "cloudy-auth-email-go-api"
+      ]
+    },
+    {
       "name": "authelia",
       "category": "sec",
       "vm": "gcp-E2-f_0",
@@ -1447,6 +1462,21 @@
         "cloudy-auth-github-api",
         "cloudy-auth-cloudflare-api",
         "cloudy-auth-email-api"
+      ]
+    },
+    {
+      "name": "auth-broker-go",
+      "category": "sec",
+      "vm": "oci-A1-f_0",
+      "description": "Go port of auth-broker (fleet sign-in: GitHub device flow, Google and GitHub web flow with PKCE S256 and a single-use browser-bound state, Cloudflare One / Access JWT verification, email one-time code, the shared HMAC-signed session cookie), shadow stage: one container per provider on its own port, reading the Python service's build.json, outside every request path (ticket #1877). Parity harness drives the Python original with identical requests against stub providers.",
+      "domain": "—",
+      "ports": [],
+      "networks": [],
+      "containers": [
+        "cloudy-auth-google-go-api",
+        "cloudy-auth-github-go-api",
+        "cloudy-auth-cloudflare-go-api",
+        "cloudy-auth-email-go-api"
       ]
     },
     {

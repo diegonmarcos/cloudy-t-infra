@@ -620,6 +620,21 @@
         "mem_limit": "64m"
       }
     },
+    "auth-broker-go": {
+      "vm": "oci-apps",
+      "vm_ram_gb": 24,
+      "vm_cpu": 4,
+      "containers": [
+        "cloudy-auth-google-go-api",
+        "cloudy-auth-github-go-api",
+        "cloudy-auth-cloudflare-go-api",
+        "cloudy-auth-email-go-api"
+      ],
+      "resources": {
+        "mem_reservation": "16m",
+        "mem_limit": "64m"
+      }
+    },
     "authelia": {
       "vm": "gcp-proxy",
       "vm_ram_gb": 1,

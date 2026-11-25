@@ -2050,6 +2050,46 @@
         "db_engine": null
       },
       {
+        "name": "cloudy-auth-google-go-api",
+        "service": "auth-broker-go",
+        "vm": "oci-A1-f_0",
+        "private_dns": "cloudy-auth-google-go-api:4280",
+        "port": 4280,
+        "protocol": "http",
+        "category": "sec",
+        "db_engine": null
+      },
+      {
+        "name": "cloudy-auth-github-go-api",
+        "service": "auth-broker-go",
+        "vm": "oci-A1-f_0",
+        "private_dns": "cloudy-auth-github-go-api:4281",
+        "port": 4281,
+        "protocol": "http",
+        "category": "sec",
+        "db_engine": null
+      },
+      {
+        "name": "cloudy-auth-cloudflare-go-api",
+        "service": "auth-broker-go",
+        "vm": "oci-A1-f_0",
+        "private_dns": "cloudy-auth-cloudflare-go-api:4282",
+        "port": 4282,
+        "protocol": "http",
+        "category": "sec",
+        "db_engine": null
+      },
+      {
+        "name": "cloudy-auth-email-go-api",
+        "service": "auth-broker-go",
+        "vm": "oci-A1-f_0",
+        "private_dns": "cloudy-auth-email-go-api:4283",
+        "port": 4283,
+        "protocol": "http",
+        "category": "sec",
+        "db_engine": null
+      },
+      {
         "name": "authelia-redis",
         "service": "authelia",
         "vm": "gcp-E2-f_0",

@@ -1328,6 +1328,36 @@
         ]
       }
     },
+    "auth-broker-go": {
+      "ip": "10.0.0.6",
+      "ports": {
+        "google": 4280,
+        "github": 4281,
+        "cloudflare": 4282,
+        "email": 4283
+      },
+      "vm": "oci-apps",
+      "healthcheck": "/oauth2/google/health",
+      "description": "Go port of auth-broker (fleet sign-in: GitHub device flow, Google and GitHub web flow with PKCE S256 and a single-use browser-bound state, Cloudflare One / Access JWT verification, email one-time code, the shared HMAC-signed session cookie), shadow stage: one container per provider on its own port, reading the Python service's build.json, outside every request path (ticket #1877). Parity harness drives the Python original with identical requests against stub providers.",
+      "api": {
+        "has_api": true,
+        "has_web_ui": false,
+        "api_path": "/",
+        "api_url": null,
+        "healthcheck_paths": [
+          "/oauth2/google/health",
+          "/oauth2/github/health",
+          "/oauth2/cloudflare/health",
+          "/oauth2/email/health"
+        ],
+        "type": "custom-rest",
+        "base_path": "/",
+        "endpoint_count": 8,
+        "display_name": "Fleet Auth Broker (Go, shadow)",
+        "description": "Same contract as auth-broker: <prefix>/start, /device, /poll, /request, /verify, /callback, /auth, /cf-auth, /health per provider.",
+        "auth": "bearer"
+      }
+    },
     "authelia": {
       "ip": "10.0.0.1",
       "ports": {

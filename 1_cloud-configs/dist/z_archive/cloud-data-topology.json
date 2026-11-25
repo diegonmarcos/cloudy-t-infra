@@ -133,6 +133,10 @@
         "cloudy-auth-github-api",
         "cloudy-auth-cloudflare-api",
         "cloudy-auth-email-api",
+        "cloudy-auth-google-go-api",
+        "cloudy-auth-github-go-api",
+        "cloudy-auth-cloudflare-go-api",
+        "cloudy-auth-email-go-api",
         "cloudy-ai-tokens-api",
         "cloudy-ai-tokens-go-api",
         "crowdsec",
@@ -4871,6 +4875,118 @@
         "email": 4183
       },
       "flake": "infra-sec_auth-broker"
+    },
+    "auth-broker-go": {
+      "category": "sec",
+      "vm": "oci-A1-f_0",
+      "folder": "infra-sec_auth-broker-go",
+      "description": "Go port of auth-broker (fleet sign-in: GitHub device flow, Google and GitHub web flow with PKCE S256 and a single-use browser-bound state, Cloudflare One / Access JWT verification, email one-time code, the shared HMAC-signed session cookie), shadow stage: one container per provider on its own port, reading the Python service's build.json, outside every request path (ticket #1877). Parity harness drives the Python original with identical requests against stub providers.",
+      "containers": {
+        "google": {
+          "container_name": "cloudy-auth-google-go-api",
+          "image": "ghcr.io/diegonmarcos/auth-broker-go:latest",
+          "port": 4280,
+          "port_env": null,
+          "public": false,
+          "proxy": null,
+          "healthcheck": "/oauth2/google/health",
+          "monitoring": null,
+          "volumes": [],
+          "env_file": true,
+          "depends_on": [],
+          "resources": {
+            "mem_reservation": "16m",
+            "mem_limit": "64m"
+          },
+          "read_only": true,
+          "protocol": "http"
+        },
+        "github": {
+          "container_name": "cloudy-auth-github-go-api",
+          "image": "ghcr.io/diegonmarcos/auth-broker-go:latest",
+          "port": 4281,
+          "port_env": null,
+          "public": false,
+          "proxy": null,
+          "healthcheck": "/oauth2/github/health",
+          "monitoring": null,
+          "volumes": [],
+          "env_file": true,
+          "depends_on": [],
+          "resources": {
+            "mem_reservation": "16m",
+            "mem_limit": "64m"
+          },
+          "read_only": true,
+          "protocol": "http"
+        },
+        "cloudflare": {
+          "container_name": "cloudy-auth-cloudflare-go-api",
+          "image": "ghcr.io/diegonmarcos/auth-broker-go:latest",
+          "port": 4282,
+          "port_env": null,
+          "public": false,
+          "proxy": null,
+          "healthcheck": "/oauth2/cloudflare/health",
+          "monitoring": null,
+          "volumes": [],
+          "env_file": true,
+          "depends_on": [],
+          "resources": {
+            "mem_reservation": "16m",
+            "mem_limit": "64m"
+          },
+          "read_only": true,
+          "protocol": "http"
+        },
+        "email": {
+          "container_name": "cloudy-auth-email-go-api",
+          "image": "ghcr.io/diegonmarcos/auth-broker-go:latest",
+          "port": 4283,
+          "port_env": null,
+          "public": false,
+          "proxy": null,
+          "healthcheck": "/oauth2/email/health",
+          "monitoring": null,
+          "volumes": [],
+          "env_file": true,
+          "depends_on": [],
+          "resources": {
+            "mem_reservation": "16m",
+            "mem_limit": "64m"
+          },
+          "read_only": true,
+          "protocol": "http"
+        }
+      },
+      "container_names": [
+        "cloudy-auth-google-go-api",
+        "cloudy-auth-github-go-api",
+        "cloudy-auth-cloudflare-go-api",
+        "cloudy-auth-email-go-api"
+      ],
+      "all_ports": [
+        "4280",
+        "4281",
+        "4282",
+        "4283"
+      ],
+      "all_dns": [],
+      "compose": {
+        "containers": [],
+        "ports": [],
+        "networks": []
+      },
+      "proxy": {
+        "app_hub": false
+      },
+      "declared_ports": {
+        "google": 4280,
+        "github": 4281,
+        "cloudflare": 4282,
+        "email": 4283
+      },
+      "flake": "infra-sec_auth-broker-go"
     },
     "authelia": {
       "category": "sec",

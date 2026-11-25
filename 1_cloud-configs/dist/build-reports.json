@@ -1198,6 +1198,20 @@
       },
       "health": null
     },
+    "auth-broker-go": {
+      "name": "auth-broker-go",
+      "vm": "oci-A1-f_0",
+      "domain": null,
+      "enabled": true,
+      "category": "sec",
+      "ports": {
+        "google": 4280,
+        "github": 4281,
+        "cloudflare": 4282,
+        "email": 4283
+      },
+      "health": null
+    },
     "authelia": {
       "name": "authelia",
       "vm": "gcp-E2-f_0",
@@ -2805,6 +2819,7 @@
           "c3bot-relay-go",
           "disk-janitor",
           "auth-broker",
+          "auth-broker-go",
           "cloudy-ai-tokens-api",
           "cloudy-ai-tokens-go-api",
           "crowdsec",
@@ -3603,6 +3618,20 @@
           "github": 4181,
           "cloudflare": 4182,
           "email": 4183
+        },
+        "health": null
+      },
+      "auth-broker-go": {
+        "name": "auth-broker-go",
+        "vm": "oci-A1-f_0",
+        "domain": null,
+        "enabled": true,
+        "category": "sec",
+        "ports": {
+          "google": 4280,
+          "github": 4281,
+          "cloudflare": 4282,
+          "email": 4283
         },
         "health": null
       },

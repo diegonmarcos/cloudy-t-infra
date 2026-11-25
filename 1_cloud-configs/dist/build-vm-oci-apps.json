@@ -389,6 +389,18 @@
       "has_docker_build": true
     },
     {
+      "name": "auth-broker-go",
+      "dir": "infra-sec_auth-broker-go",
+      "compose_path": "/opt/containers/auth-broker-go",
+      "images": [
+        "ghcr.io/diegonmarcos/auth-broker-go:latest",
+        "ghcr.io/diegonmarcos/auth-broker-go:latest",
+        "ghcr.io/diegonmarcos/auth-broker-go:latest",
+        "ghcr.io/diegonmarcos/auth-broker-go:latest"
+      ],
+      "has_docker_build": true
+    },
+    {
       "name": "cloudy-ai-tokens-api",
       "dir": "infra-sec_cloudy-ai-tokens-api",
       "compose_path": "/opt/containers/cloudy-ai-tokens-api",

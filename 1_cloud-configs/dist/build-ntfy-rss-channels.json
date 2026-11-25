@@ -6,9 +6,9 @@
   "base": "https://rss.diegonmarcos.com/feed",
   "counts": {
     "declared": 22,
-    "logs": 131,
+    "logs": 135,
     "apps": 46,
-    "total": 199
+    "total": 203
   },
   "channels": [
     {
@@ -955,6 +955,50 @@
       "source": "logs",
       "vm": "oci-apps",
       "feed": "/feed/c/logs_cloudy-auth-email-api.atom",
+      "quiet": true
+    },
+    {
+      "id": "logs_cloudy-auth-google-go-api",
+      "topic": "logs_cloudy-auth-google-go-api",
+      "title": "cloudy-auth-google-go-api",
+      "path": "Cloud-Infra/Logs/oci-apps/cloudy-auth-google-go-api",
+      "category": "logs",
+      "source": "logs",
+      "vm": "oci-apps",
+      "feed": "/feed/c/logs_cloudy-auth-google-go-api.atom",
+      "quiet": true
+    },
+    {
+      "id": "logs_cloudy-auth-github-go-api",
+      "topic": "logs_cloudy-auth-github-go-api",
+      "title": "cloudy-auth-github-go-api",
+      "path": "Cloud-Infra/Logs/oci-apps/cloudy-auth-github-go-api",
+      "category": "logs",
+      "source": "logs",
+      "vm": "oci-apps",
+      "feed": "/feed/c/logs_cloudy-auth-github-go-api.atom",
+      "quiet": true
+    },
+    {
+      "id": "logs_cloudy-auth-cloudflare-go-api",
+      "topic": "logs_cloudy-auth-cloudflare-go-api",
+      "title": "cloudy-auth-cloudflare-go-api",
+      "path": "Cloud-Infra/Logs/oci-apps/cloudy-auth-cloudflare-go-api",
+      "category": "logs",
+      "source": "logs",
+      "vm": "oci-apps",
+      "feed": "/feed/c/logs_cloudy-auth-cloudflare-go-api.atom",
+      "quiet": true
+    },
+    {
+      "id": "logs_cloudy-auth-email-go-api",
+      "topic": "logs_cloudy-auth-email-go-api",
+      "title": "cloudy-auth-email-go-api",
+      "path": "Cloud-Infra/Logs/oci-apps/cloudy-auth-email-go-api",
+      "category": "logs",
+      "source": "logs",
+      "vm": "oci-apps",
+      "feed": "/feed/c/logs_cloudy-auth-email-go-api.atom",
       "quiet": true
     },
     {
