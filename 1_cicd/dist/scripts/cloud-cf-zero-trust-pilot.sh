@@ -287,12 +287,21 @@ do_drift() {
               "devices/posture|cloudflare_zero_trust_device_posture_rule" \
               "gateway/certificates|cloudflare_zero_trust_gateway_certificate"; do
     path="${spec%%|*}"; typ="${spec##*|}"
-    live="$(cf "/accounts/$ACCT/$path" | jq '.result | length')"
+    # The Cloudflare-managed WARP enrolment app (type "warp", created by Cloudflare itself the first time device
+    # enrolment is configured; not creatable as code on the free plan) is excluded from the app count and asserted
+    # separately below, so a server-only SELF_HOSTED app still trips the guard.
+    live="$(cf "/accounts/$ACCT/$path" | jq 'if (.result|type)=="array" then [.result[] | select((.type // "") != "warp")] | length else 0 end')"
     held="$(grep -c "^$typ\." state.txt || true)"
     echo "  live $typ=$live state=$held"
     if [ "$live" != "$held" ]; then echo "DRIFT: $typ has $live live object(s) but terraform holds $held (server-only objects are not in code)"; DRIFT=1; fi
   done
   rm -f state.txt
+  WARPAPPS="$(cf "/accounts/$ACCT/access/apps?per_page=100" | jq -r --arg d "$(jq -r '.zero_trust.adopted.org.auth_domain' "$CFG")/warp" '[.result[] | select(.type=="warp")] | "\(length) \(map(.domain)|unique|join(","))" ' )"
+  WARPWANT="$(jq -r '.zero_trust.adopted.org.auth_domain' "$CFG")/warp"
+  case "$WARPAPPS" in
+    "0 "*|"1 $WARPWANT") echo "  warp enrolment app(s): $WARPAPPS (Cloudflare-managed, asserted)" ;;
+    *) echo "DRIFT: unexpected WARP app set '$WARPAPPS' (want none or exactly $WARPWANT)"; DRIFT=1 ;;
+  esac
   # Settings the provider cannot manage (gateway settings crash it): compared with the pinned values.
   while IFS=$'\t' read -r path jqx want; do
     got="$(cf "/accounts/$ACCT/$path" | jq -r "$jqx")"
