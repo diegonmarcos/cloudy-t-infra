@@ -18211,6 +18211,7 @@
         "environment",
         "TZ",
         "restart",
+        "oom_score_adj",
         "deploy",
         "resources",
         "logging",
@@ -24477,6 +24478,7 @@
         "retries",
         "start_period",
         "cap_add",
+        "memswap_limit",
         "limits",
         "reservations",
         "command",
@@ -24923,6 +24925,8 @@
         "cap_add",
         "read_only",
         "volumes",
+        "memswap_limit",
+        "oom_score_adj",
         "limits",
         "reservations",
         "caddy_data",
@@ -25903,7 +25907,8 @@
         "interval",
         "timeout",
         "retries",
-        "start_period"
+        "start_period",
+        "memswap_limit"
       ]
     },
     {
@@ -26344,7 +26349,8 @@
         "interval",
         "timeout",
         "retries",
-        "start_period"
+        "start_period",
+        "memswap_limit"
       ]
     },
     {

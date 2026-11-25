@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 24948,
+    "files": 24953,
     "by_lang": {
-      "sh": 832,
+      "sh": 833,
       "js": 599,
       "py": 268,
-      "kotlin": 14020,
+      "kotlin": 14024,
       "ts": 8382,
       "java": 656,
       "nix": 37,
@@ -20,12 +20,12 @@
     "by_role": {
       "hook": 166,
       "file": 2270,
-      "shell": 665,
+      "shell": 666,
       "script": 352,
       "python": 98,
       "module": 6478,
       "java": 655,
-      "kotlin": 14017,
+      "kotlin": 14021,
       "flake": 33,
       "rust-module": 154,
       "nix-module": 4,
@@ -17611,6 +17611,7 @@
         "refreshStatus()",
         "scan()",
         "applyToTunnel()",
+        "testReach()",
         "testLookup()",
         "DnsPage(m: DnsModel)",
         "class DnsFragment",
@@ -17661,6 +17662,65 @@
         "class Server",
         "class Acc",
         "class Probe"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/network/DnsReach.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "DnsReach"
+      ],
+      "imports": [
+        "android.content.Context",
+        "android.net.ConnectivityManager",
+        "android.net.Network",
+        "android.net.NetworkCapabilities",
+        "org.json.JSONArray",
+        "org.json.JSONObject",
+        "java.net.InetAddress",
+        "java.net.InetSocketAddress",
+        "java.net.Socket",
+        "java.util.concurrent.Callable",
+        "java.util.concurrent.Executors",
+        "javax.net.ssl.HttpsURLConnection",
+        "javax.net.ssl.SNIHostName",
+        "javax.net.ssl.SSLPeerUnverifiedException",
+        "javax.net.ssl.SSLSocket",
+        "javax.net.ssl.SSLSocketFactory"
+      ],
+      "symbols": [
+        "isIpLiteral(s: String)",
+        "parse(o: JSONObject?)",
+        "carriedBy(local: String?, nets: List<Net>)",
+        "probe(target: Target, check: Check, path: String, timeoutMs: Int, nets: List<Net>, bind: ((Socket)",
+        "ms()",
+        "handshake(raw: Socket, name: String, port: Int, timeoutMs: Int)",
+        "reach(rows: List<Row>, path: String)",
+        "lookups(resolved: List<Boolean>)",
+        "verdict(ip: Reach, names: Lookups)",
+        "compare(vpn: Reach, direct: Reach)",
+        "kind(c: NetworkCapabilities)",
+        "run(ctx: Context, d: Decl, names: List<String>)",
+        "planText(d: Decl)",
+        "pathLabel(path: String, vpnUp: Boolean, directNet: String?)",
+        "tally(rows: List<Row>, path: String)",
+        "text(r: Outcome)",
+        "class that",
+        "class DnsReach",
+        "class Target",
+        "class Check",
+        "class Decl",
+        "class of",
+        "class Net",
+        "class Row",
+        "class owning",
+        "class Reach",
+        "class Lookups",
+        "class Verdict",
+        "class PathCause",
+        "class NameRow",
+        "class Outcome"
       ]
     },
     {
@@ -30571,6 +30631,55 @@
       ]
     },
     {
+      "path": "aa_cloud-superapp/app/src/test/java/com/diegonmarcos/superapp/network/DnsReachTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "DnsReachTest"
+      ],
+      "imports": [
+        "android.app.Application",
+        "com.diegonmarcos.superapp.network.DnsReach.Lookups",
+        "com.diegonmarcos.superapp.network.DnsReach.PathCause",
+        "com.diegonmarcos.superapp.network.DnsReach.Reach",
+        "com.diegonmarcos.superapp.network.DnsReach.Verdict",
+        "java.net.InetAddress",
+        "java.net.ServerSocket",
+        "org.json.JSONObject",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertThrows",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "org.junit.runner.RunWith",
+        "org.robolectric.RobolectricTestRunner",
+        "org.robolectric.annotation.Config"
+      ],
+      "symbols": [
+        "row(path: String, ok: Boolean, c: DnsReach.Check = tls, t: DnsReach.Target = site, error: String = if (ok)",
+        "theShippedDeclarationNamesTheThreeSitesByIpWithATlsNameEach()",
+        "theTargetsAreReadFromTheDeclarationInOrder()",
+        "anAbsentBlockDeclaresNothingAndSaysNotRun()",
+        "aTargetThatIsANameIsRefusedBecauseItWouldNeedDns()",
+        "decl(ip: String, name: String = \"a.example\")",
+        "onlyAddressLiteralsAreIpLiterals()",
+        "theVerdictCoversEveryCombinationOfIpReachabilityAndNameLookups()",
+        "theThreeVerdictsOfTheTicketReadAsStated()",
+        "thePathComparisonCoversEveryCombinationOfTheTwoPaths()",
+        "want(vpn: Reach, direct: Reach)",
+        "reachCountsOnePathAtATimeAndLookupsCountNames()",
+        "theVerdictOfARunIsTheNormalPathHeldAgainstTheNames()",
+        "run(vpnOk: Boolean, directOk: Boolean, nameOk: Boolean)",
+        "theCarryingInterfaceIsTheOneOwningTheSocketsLocalAddress()",
+        "aCheckConnectsByAddressAndATlsCheckIsNotMetByABareTcpAccept()",
+        "aNameIsNeverLookedUpByACheck()",
+        "theReadOutShowsVerdictPathsNamesAndEveryRowWithItsFourFields()",
+        "class DnsReachTest",
+        "class 203",
+        "class is"
+      ]
+    },
+    {
       "path": "aa_cloud-superapp/app/src/test/java/com/diegonmarcos/superapp/network/FleetDnsTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -34139,6 +34248,40 @@
       ]
     },
     {
+      "path": "aa_cloud-superapp/test/emulator-dns-reach.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "wake()",
+        "dump()",
+        "cap()",
+        "centre()",
+        "texts()",
+        "up()",
+        "down()",
+        "top()",
+        "tap()",
+        "page_text()",
+        "prompts()",
+        "readout()"
+      ],
+      "imports": [],
+      "symbols": [
+        "wake()",
+        "dump()",
+        "cap()",
+        "centre()",
+        "texts()",
+        "up()",
+        "down()",
+        "top()",
+        "tap()",
+        "page_text()",
+        "prompts()",
+        "readout()"
+      ]
+    },
+    {
       "path": "aa_cloud-superapp/test/emulator-network-nav.sh",
       "lang": "sh",
       "role": "shell",
@@ -35267,13 +35410,15 @@
       "exports": [
         "ok()",
         "bad()",
-        "d7()"
+        "d7()",
+        "d8()"
       ],
       "imports": [],
       "symbols": [
         "ok()",
         "bad()",
-        "d7()"
+        "d7()",
+        "d8()"
       ]
     },
     {
@@ -95193,6 +95338,28 @@
       ]
     },
     {
+      "path": "ab_cloud-libs-shared/libs/maps/src/main/java/com/diegonmarcos/cloudnav/maps/MapsGeoData.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "MapsGeoData"
+      ],
+      "imports": [
+        "android.content.Context",
+        "com.diegonmarcos.superapp.fleetdata.FleetData",
+        "kotlinx.coroutines.flow.Flow",
+        "org.json.JSONArray",
+        "org.json.JSONObject"
+      ],
+      "symbols": [
+        "parseCapitals(text: String)",
+        "parseMembers(text: String)",
+        "observeCapitals(ctx: Context)",
+        "members(ctx: Context)",
+        "class MapsGeoData"
+      ]
+    },
+    {
       "path": "ab_cloud-libs-shared/libs/maps/src/main/java/com/diegonmarcos/cloudnav/maps/MapsGeoLayers.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -96437,6 +96604,27 @@
         "travel(t0: Long, e0: Double, n0: Double, e1: Double, n1: Double, mps: Double, every: Int)",
         "build()",
         "class EngineTimelineTest"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/maps/src/test/java/com/diegonmarcos/cloudnav/maps/MapsGeoDataTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "MapsGeoDataTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.io.File"
+      ],
+      "symbols": [
+        "served(name: String)",
+        "theServedCapitalsParse()",
+        "theServedMembersParseAndPaintASubregion()",
+        "theDefaultsAreEmptyNotACrash()",
+        "class MapsGeoDataTest"
       ]
     },
     {
