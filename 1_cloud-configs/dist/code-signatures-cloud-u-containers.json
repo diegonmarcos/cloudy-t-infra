@@ -26559,6 +26559,7 @@
         "networks",
         "init",
         "env_file",
+        "volumes",
         "environment",
         "TZ",
         "PORT",
@@ -26573,7 +26574,6 @@
         "entrypoint",
         "command",
         "ports",
-        "volumes",
         "depends_on",
         "steelnet"
       ]
@@ -26668,6 +26668,7 @@
         "init",
         "user",
         "env_file",
+        "volumes",
         "environment",
         "TZ",
         "entrypoint",

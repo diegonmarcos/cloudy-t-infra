@@ -6,9 +6,9 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 25000,
+    "files": 25002,
     "by_lang": {
-      "sh": 838,
+      "sh": 840,
       "js": 599,
       "py": 270,
       "kotlin": 14064,
@@ -20,8 +20,8 @@
     "by_role": {
       "hook": 166,
       "file": 2270,
-      "shell": 671,
-      "script": 352,
+      "shell": 672,
+      "script": 353,
       "python": 100,
       "module": 6478,
       "java": 655,
@@ -8668,6 +8668,24 @@
       ]
     },
     {
+      "path": "1_cicd/src/scripts/test/vault-checkout-ref.test.sh",
+      "lang": "sh",
+      "role": "script",
+      "exports": [
+        "ok()",
+        "fail()",
+        "scan()",
+        "flush()"
+      ],
+      "imports": [],
+      "symbols": [
+        "ok()",
+        "fail()",
+        "scan()",
+        "flush()"
+      ]
+    },
+    {
       "path": "1_cicd/src/scripts/test/versioncode-guard.test.sh",
       "lang": "sh",
       "role": "script",
@@ -15262,7 +15280,7 @@
         "recentTiles(ctx: Context)",
         "newInstance(sectionId: String, search: Boolean = false)",
         "GroupedTilesPage(sectionId: String, click: (String)",
-        "GroupTitle(text: String)",
+        "GroupTitle(text: String, glyph: String = \"\")",
         "TileStrip(tiles: List<Sections.AggTile>, click: (String)",
         "TileCell(tile: Sections.AggTile, click: (String)",
         "class GroupedTilesFragment",
@@ -16679,11 +16697,17 @@
         "kotlin.math.sqrt"
       ],
       "symbols": [
+        "tri(n: Int)",
+        "sq(n: Int)",
+        "pent(n: Int)",
+        "pgram(n: Int)",
+        "hex(n: Int)",
+        "edgeRanks(id: String)",
         "mesh(id: String)",
         "build(id: String)",
         "fitScale(dim: Int, verts: Array<FloatArray>)",
         "norm(v: FloatArray)",
-        "deriveEdges(verts: Array<FloatArray>)",
+        "deriveEdges(verts: Array<FloatArray>, ranks: IntArray = intArrayOf(0)",
         "dist2(a: FloatArray, b: FloatArray)",
         "project( mesh: Mesh, elapsedMs: Double, width: Float, height: Float, rotXOverride: Float? = null, rotYOverride: Float? = null, a4Override: Double? = null, b4Override: Double? = null, )",
         "project4to3(v: FloatArray, aXW: Double, bYZ: Double)",
@@ -16692,6 +16716,13 @@
         "edgeAlpha(avgDepth: Float)",
         "cycleIndex(count: Int, minutes: Int, clockMs: Double)",
         "coordsFor(id: String)",
+        "dodecahedronCoords()",
+        "icosahedronCoords()",
+        "cell600Coords()",
+        "countFaces(mesh: Mesh, sides: Int, star: Boolean = false)",
+        "close()",
+        "rec(len: Int)",
+        "coplanar(pts: Array<FloatArray>)",
         "permute(a: IntArray, k: Int, out: MutableList<IntArray>)",
         "parity(perm: IntArray)",
         "allPermsWithSigns(t: DoubleArray)",
@@ -16703,9 +16734,9 @@
         "f4(a: Float, b: Float, c: Float, d: Float)",
         "v3(vararg vs: FloatArray)",
         "v4(vararg vs: FloatArray)",
+        "class is",
         "class PolytopeMath",
-        "class Mesh",
-        "class Result"
+        "class FaceSpec"
       ]
     },
     {
@@ -30058,6 +30089,12 @@
       "symbols": [
         "everyDeclaredShapeHasAMesh()",
         "vertexAndEdgeCountsAreTextbook()",
+        "faceCountsAreDerivedFromTheGeometryAndMatchTheDeclaredData()",
+        "eulerCharacteristicOfTheThreeDimensionalSolids()",
+        "fourDimensionalCellCountsSatisfyEuler()",
+        "starShapesShareAVertexSetAndDifferOnlyInTheEdgeClass()",
+        "aliasesResolveToTheSameMesh()",
+        "declaredCatalogueMatchesTheGeometry()",
         "cubeIsThePlatonicDefaultWithEightCornersTwelveEdges()",
         "unknownShapeFallsBackToCube()",
         "edgesReferenceRealVerticesAndNoSelfLoops()",
@@ -36097,6 +36134,26 @@
         "ok()",
         "bad()",
         "check()"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/test/test-launcher-ui-subpages-1915.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "ok()",
+        "bad()",
+        "chk()",
+        "expect_ok()",
+        "mut()"
+      ],
+      "imports": [],
+      "symbols": [
+        "ok()",
+        "bad()",
+        "chk()",
+        "expect_ok()",
+        "mut()"
       ]
     },
     {
@@ -105914,38 +105971,6 @@
       ]
     },
     {
-      "path": "ab_cloud-libs-shared/libs/scanner/src/main/java/com/diegonmarcos/cloudlib/scanner/CornerEditView.kt",
-      "lang": "kotlin",
-      "role": "kotlin",
-      "exports": [
-        "CornerEditView"
-      ],
-      "imports": [
-        "android.content.Context",
-        "android.graphics.Bitmap",
-        "android.graphics.Canvas",
-        "android.graphics.Color",
-        "android.graphics.Paint",
-        "android.graphics.Path",
-        "android.view.MotionEvent",
-        "android.view.View",
-        "kotlin.math.hypot",
-        "kotlin.math.min"
-      ],
-      "symbols": [
-        "show(b: Bitmap, q: Quad)",
-        "quad()",
-        "scale()",
-        "offX()",
-        "offY()",
-        "toView(p: P)",
-        "toImage(x: Float, y: Float)",
-        "onDraw(c: Canvas)",
-        "onTouchEvent(e: MotionEvent)",
-        "class CornerEditView"
-      ]
-    },
-    {
       "path": "ab_cloud-libs-shared/libs/scanner/src/main/java/com/diegonmarcos/cloudlib/scanner/Crop.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -106805,6 +106830,9 @@
         "androidx.compose.runtime.SideEffect",
         "androidx.compose.runtime.remember",
         "androidx.compose.ui.Alignment",
+        "androidx.compose.ui.ExperimentalComposeUiApi",
+        "androidx.compose.ui.semantics.semantics",
+        "androidx.compose.ui.semantics.testTagsAsResourceId",
         "androidx.compose.ui.Modifier",
         "androidx.compose.ui.draw.clip",
         "androidx.compose.ui.graphics.Color",
@@ -422528,6 +422556,46 @@
       ]
     },
     {
+      "path": "ac_cloud-me/app/src/main/java/com/diegonmarcos/cloudme/ProjHome.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ProjHomeTags",
+        "ProjHomeScreen"
+      ],
+      "imports": [
+        "androidx.compose.foundation.clickable",
+        "androidx.compose.foundation.layout.Arrangement",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.PaddingValues",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.foundation.layout.size",
+        "androidx.compose.foundation.lazy.grid.GridCells",
+        "androidx.compose.foundation.lazy.grid.GridItemSpan",
+        "androidx.compose.foundation.lazy.grid.LazyVerticalGrid",
+        "androidx.compose.foundation.lazy.grid.items",
+        "androidx.compose.material3.Icon",
+        "androidx.compose.material3.MaterialTheme",
+        "androidx.compose.material3.Text",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.ui.Alignment",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.platform.LocalContext",
+        "androidx.compose.ui.platform.testTag",
+        "androidx.compose.ui.res.painterResource",
+        "androidx.compose.ui.text.font.FontWeight",
+        "androidx.compose.ui.text.style.TextAlign",
+        "androidx.compose.ui.unit.dp"
+      ],
+      "symbols": [
+        "header(id: String)",
+        "tile(id: String)",
+        "ProjHomeScreen(modifier: Modifier = Modifier)",
+        "class ProjHomeTags"
+      ]
+    },
+    {
       "path": "ac_cloud-me/app/src/main/java/com/diegonmarcos/cloudme/RepoTree.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -424237,6 +424305,7 @@
         "sot_root()",
         "load(root, rel)",
         "point(doc, ptr)",
+        "repo_site(root, s)",
         "sot_value(root, e)",
         "page_file(e)",
         "main()"
@@ -424248,6 +424317,7 @@
         "sot_root()",
         "load(root, rel)",
         "point(doc, ptr)",
+        "repo_site(root, s)",
         "sot_value(root, e)",
         "page_file(e)",
         "main()"

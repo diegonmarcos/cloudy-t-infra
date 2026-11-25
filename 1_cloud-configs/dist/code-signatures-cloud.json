@@ -6,9 +6,9 @@
   },
   "repo": "cloud",
   "counts": {
-    "files": 1650,
+    "files": 1651,
     "by_lang": {
-      "sh": 1118,
+      "sh": 1119,
       "js": 176,
       "nix": 314,
       "py": 12,
@@ -17,7 +17,7 @@
     "by_role": {
       "hook": 402,
       "file": 91,
-      "shell": 568,
+      "shell": 569,
       "flake": 6,
       "script": 150,
       "module": 115,
@@ -19123,6 +19123,18 @@
         "log()",
         "get_config()",
         "check()"
+      ]
+    },
+    {
+      "path": "9_others/test/cf-zt-drift-warp-app.test.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "count()"
+      ],
+      "imports": [],
+      "symbols": [
+        "count()"
       ]
     },
     {
