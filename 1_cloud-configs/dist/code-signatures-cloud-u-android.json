@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 25025,
+    "files": 25047,
     "by_lang": {
-      "sh": 850,
-      "js": 599,
+      "sh": 856,
+      "js": 600,
       "py": 274,
-      "kotlin": 14073,
+      "kotlin": 14088,
       "ts": 8382,
       "java": 656,
       "nix": 37,
@@ -20,12 +20,12 @@
     "by_role": {
       "hook": 166,
       "file": 2270,
-      "shell": 680,
+      "shell": 686,
       "script": 357,
       "python": 102,
-      "module": 6478,
+      "module": 6479,
       "java": 655,
-      "kotlin": 14070,
+      "kotlin": 14085,
       "flake": 33,
       "rust-module": 154,
       "nix-module": 4,
@@ -13875,6 +13875,7 @@
         "repost()",
         "refresh()",
         "postIdle()",
+        "postChild(b: NotificationCompat.Builder)",
         "cancel()",
         "pi(target: String)",
         "ensureChannel()",
@@ -17686,6 +17687,22 @@
       ]
     },
     {
+      "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/network/DnsExport.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "DnsExport"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.network.mesh.MeshReport"
+      ],
+      "symbols": [
+        "text(title: String, status: String, lookup: String, reach: String, bridges: String, servers: String)",
+        "markdown(text: String)",
+        "class DnsExport"
+      ]
+    },
+    {
       "path": "aa_cloud-superapp/app/src/main/java/com/diegonmarcos/superapp/network/DnsFragment.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -17738,6 +17755,7 @@
         "palette()",
         "Content()",
         "newInstance()",
+        "c3copy(ctx: Context, text: String)",
         "toast(ctx: Context, msg: String)",
         "toast(msg: String)",
         "background(work: ()",
@@ -17753,6 +17771,9 @@
         "scan()",
         "applyToTunnel()",
         "testReach()",
+        "reportText()",
+        "copyAll()",
+        "exportMarkdown()",
         "testLookup()",
         "DnsPage(m: DnsModel)",
         "class DnsFragment",
@@ -17903,7 +17924,14 @@
         "parse(json: String)",
         "effective(d: Decl, presetId: String?)",
         "splitServers(csv: String)",
-        "vpnServers(d: Decl, presetId: String?, fallbacks: List<String>, fleetResolvers: List<String>)",
+        "vpnServers(d: Decl, presetId: String?, fallbacks: List<String>, fleetResolvers: List<String>, meshHealthy: Boolean = true)",
+        "queryPlan(d: Decl, name: String, meshUp: Boolean, meshHealthy: Boolean, presetId: String?, fallbacks: List<String>, chosen: Boolean, fleet: List<String>)",
+        "meshFailure(rcode: Int?)",
+        "report(ok: Boolean, why: String)",
+        "verdict()",
+        "text()",
+        "reapplyVpnDns(ctx: Context)",
+        "installHealth(ctx: Context)",
         "nonFleet(actual: List<String>, fleetResolvers: List<String>)",
         "presetServers(d: Decl, presetId: String?, fallbacks: List<String>, fleetResolvers: List<String>)",
         "meshDownServers(d: Decl, presetId: String?, fallbacks: List<String>, fleetResolvers: List<String>)",
@@ -17915,8 +17943,8 @@
         "vpnServers(ctx: Context, fleetDnsCsv: String)",
         "syncMeshDown(ctx: Context, raiseNow: Boolean)",
         "bridgeRoutes(ctx: Context, name: String)",
-        "promised(d: Decl, presetId: String?, fallbacks: List<String>, chosen: Boolean, fleet: List<String>, meshUp: Boolean)",
-        "verdict( d: Decl, presetId: String?, fallbacks: List<String>, chosen: Boolean, fleet: List<String>, meshUp: Boolean, idle: String, android: AndroidDns, engine: String, )",
+        "promised(d: Decl, presetId: String?, fallbacks: List<String>, chosen: Boolean, fleet: List<String>, meshUp: Boolean, meshHealthy: Boolean = true)",
+        "verdict( d: Decl, presetId: String?, fallbacks: List<String>, chosen: Boolean, fleet: List<String>, meshUp: Boolean, idle: String, android: AndroidDns, engine: String, meshHealthy: Boolean = true, )",
         "bad(why: String)",
         "meshUp(ctx: Context)",
         "fleetResolvers(ctx: Context)",
@@ -17930,14 +17958,7 @@
         "resolverSummary(ctx: Context)",
         "writeAndroid(ctx: Context, mode: String, host: String)",
         "query(server: String, name: String, timeoutMs: Int)",
-        "parseAnswer(b: ByteArray, len: Int, id: Int, questionEnd: Int)",
-        "u16(i: Int)",
-        "class FleetDns",
-        "class Preset",
-        "class Decl",
-        "class SelfResolver",
-        "class Prefs",
-        "class Verdict"
+        "parseAnswer(b: ByteArray, len: Int, id: Int, questionEnd: Int)"
       ]
     },
     {
@@ -18642,7 +18663,6 @@
       "symbols": [
         "redact(text: String)",
         "markdown(plain: String)",
-        "close()",
         "build( s: MeshSnapshot?, dnsPreset: String, provider: String, transport: TransportView?, probes: List<ProbeLine>, reach: List<MeshReach.Result>, journal: List<LogEvent>, nowMs: Long, tz: TimeZone = TimeZone.getDefault()",
         "line(t: String = \"\")",
         "kv(k: String, v: String)",
@@ -21082,9 +21102,10 @@
         "ordered(ctx: Context)",
         "move(ctx: Context, g: Group, delta: Int)",
         "rank(ctx: Context, g: Group)",
-        "attach(ctx: Context, b: NotificationCompat.Builder, badgeId: String)",
+        "attach(ctx: Context, b: NotificationCompat.Builder, badgeId: String, summary: Boolean = true)",
         "memberSortIndex(g: Group, badgeId: String)",
         "postSummary(ctx: Context, g: Group)",
+        "pruneEmpty(ctx: Context, badgeId: String)",
         "cancelSummary(ctx: Context, g: Group)",
         "release(ctx: Context, badgeId: String)",
         "apply(ctx: Context)",
@@ -25643,12 +25664,13 @@
       ],
       "imports": [
         "com.diegonmarcos.superapp.appstore.PhoneAppActions",
-        "org.json.JSONObject",
+        "com.diegonmarcos.superapp.bgpolicy.BgHost",
+        "com.diegonmarcos.superapp.bgpolicy.SuperSavingRuntime",
         "java.io.File"
       ],
       "symbols": [
         "file(name: String)",
-        "installSources()",
+        "install()",
         "class FleetPrivateFixtures"
       ]
     },
@@ -27751,6 +27773,7 @@
         "androidx.compose.foundation.layout.Column",
         "androidx.compose.ui.test.onRoot",
         "androidx.compose.ui.test.onAllNodesWithText",
+        "androidx.compose.ui.test.onAllNodesWithTag",
         "androidx.compose.ui.test.onNodeWithTag",
         "androidx.compose.ui.test.performClick",
         "com.diegonmarcos.superapp.launcher.BadgeCard",
@@ -30953,6 +30976,30 @@
       ]
     },
     {
+      "path": "aa_cloud-superapp/app/src/test/java/com/diegonmarcos/superapp/network/DnsExport1924Test.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "DnsExport1924Test"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.io.File"
+      ],
+      "symbols": [
+        "text(status: String = \"Preset: Public open\\nPreset servers in use: 1.1.1.1 → 1.0.0.1\\nMesh resolver: UNHEALTHY — SERVFAIL\")",
+        "coversEverySectionInThePagesOrder()",
+        "markdownHasAHeadingPerSectionAndTheServersAndVerdict()",
+        "secretsNeverReachTheExport()",
+        "aDroppedSectionIsDetected()",
+        "theButtonsAreOnThePage()",
+        "class DnsExport1924Test"
+      ]
+    },
+    {
       "path": "aa_cloud-superapp/app/src/test/java/com/diegonmarcos/superapp/network/DnsOverviewTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -31036,6 +31083,41 @@
       ]
     },
     {
+      "path": "aa_cloud-superapp/app/src/test/java/com/diegonmarcos/superapp/network/FleetDnsFallback1924Test.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "FleetDnsFallback1924Test"
+      ],
+      "imports": [
+        "android.app.Application",
+        "com.diegonmarcos.cloudlib.sysdns.DnsWire",
+        "com.diegonmarcos.cloudlib.sysdns.FleetDnsBridge",
+        "org.junit.After",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNotNull",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "org.junit.runner.RunWith",
+        "org.robolectric.RobolectricTestRunner",
+        "org.robolectric.annotation.Config"
+      ],
+      "symbols": [
+        "restore()",
+        "reply(q: ByteArray, rcode: Int, ip: String? = null)",
+        "routes(name: String, preset: String, fb: List<String>, healthy: Boolean)",
+        "walk(mesh: (ByteArray)",
+        "servfailFromTheMeshResolverFallsBackToPublicAndReportsUnhealthy()",
+        "refusedAndTimeoutAlsoFallBack()",
+        "anUnhealthyMeshIsAskedLastAndAHealthyAnswerIsReported()",
+        "publicOpenNeverAsksAMeshAddressForAPublicName()",
+        "privateOnlyWithADeadMeshHasNowhereToFall()",
+        "class FleetDnsFallback1924Test"
+      ]
+    },
+    {
       "path": "aa_cloud-superapp/app/src/test/java/com/diegonmarcos/superapp/network/FleetDnsTest.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -31062,6 +31144,12 @@
         "servers(id: String, fb: List<String> = emptyList()",
         "defaultPresetIsDeclaredAndUsable()",
         "eachPublicPresetIsItsServersThenItsFallback()",
+        "publicOpenIsExactlyCloudflareAndGoogleAndNeverAMeshAddress()",
+        "privateWithFallbacksSwitchesItsAdvertisedDnsWithMeshHealth()",
+        "queryPlanSplitsMeshNamesAndOrdersByHealth()",
+        "plan(id: String, name: String, healthy: Boolean)",
+        "servfailRefusedAndTimeoutAreMeshFailures()",
+        "healthFlipsAtOnceAndReappliesOnlyAfterTheDebounce()",
         "mirrorPutsOnlyTheFleetResolversOnTheVpn()",
         "privateOnlyIsTheFleetResolverAndNothingElse()",
         "privateWithFallbacksIsFleetFirstThenTheChosenFallbackInOrder()",
@@ -34685,6 +34773,38 @@
       ]
     },
     {
+      "path": "aa_cloud-superapp/test/emulator-dns-fallback.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "wake()",
+        "dump()",
+        "cap()",
+        "centre()",
+        "texts()",
+        "up()",
+        "down()",
+        "top()",
+        "tap()",
+        "page_text()",
+        "prompts()"
+      ],
+      "imports": [],
+      "symbols": [
+        "wake()",
+        "dump()",
+        "cap()",
+        "centre()",
+        "texts()",
+        "up()",
+        "down()",
+        "top()",
+        "tap()",
+        "page_text()",
+        "prompts()"
+      ]
+    },
+    {
       "path": "aa_cloud-superapp/test/emulator-dns-reach.sh",
       "lang": "sh",
       "role": "shell",
@@ -34982,6 +35102,20 @@
         "ok()",
         "bad()",
         "check()"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/test/test-ai-private-served.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "check()",
+        "mutant()"
+      ],
+      "imports": [],
+      "symbols": [
+        "check()",
+        "mutant()"
       ]
     },
     {
@@ -35683,6 +35817,20 @@
       ]
     },
     {
+      "path": "aa_cloud-superapp/test/test-decisions-private-served.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "check()",
+        "mutant()"
+      ],
+      "imports": [],
+      "symbols": [
+        "check()",
+        "mutant()"
+      ]
+    },
+    {
       "path": "aa_cloud-superapp/test/test-devcontrol-control-route.sh",
       "lang": "sh",
       "role": "shell",
@@ -35838,6 +35986,20 @@
         "_stage()",
         "_sub()",
         "_mut()"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/test/test-fleet-config-private-served.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "check()",
+        "mutant()"
+      ],
+      "imports": [],
+      "symbols": [
+        "check()",
+        "mutant()"
       ]
     },
     {
@@ -36756,6 +36918,20 @@
       ]
     },
     {
+      "path": "aa_cloud-superapp/test/test-perms-catalogue-private-served.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "check()",
+        "mutant()"
+      ],
+      "imports": [],
+      "symbols": [
+        "check()",
+        "mutant()"
+      ]
+    },
+    {
       "path": "aa_cloud-superapp/test/test-perms-play-protect.sh",
       "lang": "sh",
       "role": "shell",
@@ -37215,6 +37391,20 @@
         "eq()",
         "check()",
         "mut()"
+      ]
+    },
+    {
+      "path": "aa_cloud-superapp/test/test-shell-allowlist-private-served.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "check()",
+        "mutant()"
+      ],
+      "imports": [],
+      "symbols": [
+        "check()",
+        "mutant()"
       ]
     },
     {
@@ -43000,10 +43190,12 @@
       ],
       "imports": [
         "android.content.Context",
+        "com.diegonmarcos.superapp.fleetdata.FleetData",
         "org.json.JSONObject"
       ],
       "symbols": [
         "parse(text: String)",
+        "loadOrNull(ctx: Context)",
         "load(ctx: Context)",
         "class and",
         "class AiConfig"
@@ -64875,6 +65067,7 @@
         "com.diegonmarcos.superapp.decisions.core.Ledger",
         "com.diegonmarcos.superapp.decisions.core.Policy",
         "com.diegonmarcos.superapp.decisions.core.RelayEngine",
+        "com.diegonmarcos.superapp.fleetdata.FleetData",
         "org.json.JSONObject",
         "java.io.File"
       ],
@@ -68929,6 +69122,115 @@
       ]
     },
     {
+      "path": "ab_cloud-libs-shared/libs/fleet-endpoints/src/main/kotlin/com/diegonmarcos/superapp/fleetendpoints/errors/ErrorLog.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ErrorLog"
+      ],
+      "imports": [
+        "okhttp3.HttpUrl.Companion.toHttpUrlOrNull",
+        "okhttp3.Interceptor",
+        "okhttp3.Response",
+        "java.io.IOException",
+        "java.text.SimpleDateFormat",
+        "java.util.ArrayDeque",
+        "java.util.Date",
+        "java.util.Locale",
+        "java.util.TimeZone"
+      ],
+      "symbols": [
+        "log(tag: String, message: String)",
+        "ringLines()",
+        "latest()",
+        "all()",
+        "push(r: ErrorReport)",
+        "capture( operation: String, account: String, urlString: String, method: String, response: Response?, t: Throwable?, )",
+        "record(operation: String, account: String, t: Throwable, windowMs: Long = 60_000)",
+        "interceptor()",
+        "operationOf(path: String, method: String)",
+        "chainOf(t: Throwable?)",
+        "stamp(ms: Long)",
+        "toHttpUrlSafe()",
+        "reportText(r: ErrorReport)",
+        "line(s: String = \"\")",
+        "kv(k: String, v: String)",
+        "text(r: ErrorReport? = latest()",
+        "markdown(r: ErrorReport? = latest()",
+        "class ErrorLog"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/fleet-endpoints/src/main/kotlin/com/diegonmarcos/superapp/fleetendpoints/errors/ErrorRedactor.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ErrorRedactor"
+      ],
+      "imports": [],
+      "symbols": [
+        "isSecretHeader(name: String)",
+        "header(name: String, value: String)",
+        "text(s: String)",
+        "url(u: String)",
+        "class ErrorRedactor"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/fleet-endpoints/src/main/kotlin/com/diegonmarcos/superapp/fleetendpoints/errors/ErrorReport.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ErrorReport",
+        "RouteProfile"
+      ],
+      "imports": [],
+      "symbols": [
+        "class ErrorReport",
+        "class RouteProfile"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/fleet-endpoints/src/main/kotlin/com/diegonmarcos/superapp/fleetendpoints/errors/ReportMarkdown.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ReportMarkdown"
+      ],
+      "imports": [],
+      "symbols": [
+        "fromPlain(plain: String)",
+        "close()",
+        "class ReportMarkdown"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/fleet-endpoints/src/main/kotlin/com/diegonmarcos/superapp/fleetendpoints/errors/RouteProfiler.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "RouteProfiler"
+      ],
+      "imports": [
+        "java.net.InetAddress",
+        "java.net.InetSocketAddress",
+        "java.net.Socket",
+        "javax.net.ssl.SSLSocket",
+        "javax.net.ssl.SSLSocketFactory"
+      ],
+      "symbols": [
+        "resolve(host: String)",
+        "connect(address: String, port: Int, timeoutMs: Int)",
+        "handshake(address: String, host: String, port: Int, timeoutMs: Int)",
+        "now()",
+        "pathOf(host: String)",
+        "profile( host: String, port: Int, https: Boolean, vpn: String, io: Io = SystemIo, phaseTimeoutMs: Int = 2_000, )",
+        "class RouteProfiler",
+        "class Io",
+        "class SystemIo"
+      ]
+    },
+    {
       "path": "ab_cloud-libs-shared/libs/fleet-endpoints/src/main/kotlin/com/diegonmarcos/superapp/fleetendpoints/FleetEndpointsContract.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -69208,6 +69510,45 @@
         "register(policy: EndpointPolicy)",
         "get(path: String = \"/.well-known/jmap\", headers: Map<String, String> = emptyMap()",
         "class EndpointRoutingTest"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/fleet-endpoints/src/test/kotlin/com/diegonmarcos/superapp/fleetendpoints/errors/ErrorLog1925Test.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ErrorLog1925Test"
+      ],
+      "imports": [
+        "okhttp3.OkHttpClient",
+        "okhttp3.Request",
+        "okhttp3.mockwebserver.MockResponse",
+        "okhttp3.mockwebserver.MockWebServer",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertNotNull",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "resolve(host: String)",
+        "connect(address: String, port: Int, timeoutMs: Int)",
+        "handshake(address: String, host: String, port: Int, timeoutMs: Int)",
+        "now()",
+        "log(vpn: String = \"VPN up\")",
+        "failing(body: String, status: Int = 502)",
+        "everyFieldIsCarried()",
+        "transportFailureCarriesChainAndMeshPath()",
+        "recordPutsOperationAccountAndChainOnTheExchange()",
+        "leaks(redact: (String)",
+        "redactionStripsSecrets()",
+        "mutantRedactorIsCaught()",
+        "capturedReportNeverHoldsSecrets()",
+        "exportHoldsEverySectionAndTheRing()",
+        "ringIsBounded()",
+        "markdownHelperFencesSections()",
+        "class ErrorLog1925Test"
       ]
     },
     {
@@ -70053,6 +70394,7 @@
       ],
       "imports": [
         "android.content.Context",
+        "com.diegonmarcos.superapp.fleetdata.FleetData",
         "android.content.SharedPreferences",
         "android.util.Log",
         "org.json.JSONArray",
@@ -104039,7 +104381,8 @@
         "android.os.Bundle",
         "android.os.Environment",
         "android.os.PowerManager",
-        "android.provider.Settings"
+        "android.provider.Settings",
+        "com.diegonmarcos.superapp.fleetdata.FleetData"
       ],
       "symbols": [
         "appLabel(ctx: Context, pkg: String, fallback: String = pkg)",
@@ -108716,12 +109059,15 @@
         "com.diegonmarcos.superapp.adbdebug.ChannelAutoArm",
         "com.diegonmarcos.superapp.adbdebug.EmbeddedAdbChannel",
         "com.diegonmarcos.superapp.adbdebug.ShellChannels",
+        "com.diegonmarcos.superapp.fleetdata.FleetData",
         "com.diegonmarcos.superapp.shellclient.ShellResult",
         "com.diegonmarcos.superapp.shellclient.ShellStatus",
         "com.diegonmarcos.superapp.shellclient.ShellWire",
         "java.io.File"
       ],
       "symbols": [
+        "current(app: Context)",
+        "declaration(ctx: Context)",
         "core(ctx: Context)",
         "build(app: Context)",
         "name()",
@@ -135100,6 +135446,144 @@
       ]
     },
     {
+      "path": "ac_cloud-c3/app/src/main/java/com/diegonmarcos/cloudc3/pages/MailStack.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "MailStack"
+      ],
+      "imports": [
+        "androidx.compose.ui.geometry.Offset",
+        "androidx.compose.ui.graphics.Color",
+        "com.diegonmarcos.superapp.uikit.KitPalette",
+        "kotlinx.serialization.json.Json",
+        "kotlinx.serialization.json.JsonArray",
+        "kotlinx.serialization.json.JsonElement",
+        "kotlinx.serialization.json.JsonNull",
+        "kotlinx.serialization.json.JsonObject",
+        "kotlinx.serialization.json.JsonPrimitive",
+        "kotlinx.serialization.json.booleanOrNull",
+        "kotlinx.serialization.json.contentOrNull",
+        "kotlinx.serialization.json.doubleOrNull",
+        "kotlinx.serialization.json.intOrNull"
+      ],
+      "symbols": [
+        "topology(id: String)",
+        "table(id: String)",
+        "str(k: String)",
+        "num(k: String)",
+        "objs(k: String)",
+        "strs(k: String)",
+        "parseDecl(text: String)",
+        "validate(d: Decl)",
+        "healthOf(state: String)",
+        "parseAnswer(text: String)",
+        "rank(h: Health)",
+        "effective(p: Probe, a: Answer)",
+        "aggregate(ids: List<String>, a: Answer?)",
+        "nodeHealth(n: Node, a: Answer?)",
+        "edgeHealth(e: Edge, t: Topology, a: Answer?)",
+        "healthColor(h: Health, p: KitPalette)",
+        "healthLabel(h: Health)",
+        "detail(n: Node, a: Answer?)",
+        "cell(r: Row, key: String)",
+        "declaredRows(id: String, infraRaw: JsonObject, domains: List<FleetModel.Domain>)",
+        "rows(t: Table, a: Answer?, infraRaw: JsonObject, domains: List<FleetModel.Domain>)",
+        "filter(t: Table, rows: List<Row>, query: String, picked: Map<String, String>)",
+        "choices(rows: List<Row>, key: String)",
+        "emptyReason(t: Table, a: Answer?)",
+        "missingFields(t: Table, rows: List<Row>)",
+        "contains(p: Offset)",
+        "anchors(f: Rect, t: Rect)",
+        "plan(t: Topology, a: Answer?, d: Decl, p: KitPalette)",
+        "parity(t: Topology, plan: Plan)",
+        "toScreen(w: Offset)",
+        "toWorld(s: Offset)",
+        "transform(c: Offset, pan: Offset, factor: Float)",
+        "fit(b: Rect, w: Float, h: Float, pad: Float = 24f)",
+        "bezier(e: EdgePrim, t: Float)",
+        "pulses(e: EdgePrim, phase: Float)",
+        "hit(plan: Plan, v: View, screen: Offset)",
+        "drawnSummary(plan: Plan)",
+        "class MailStack",
+        "class Column",
+        "class Table"
+      ]
+    },
+    {
+      "path": "ac_cloud-c3/app/src/main/java/com/diegonmarcos/cloudc3/pages/MailStackScreens.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "MailTags",
+        "MailTablesScreen",
+        "MailTopologyCanvas",
+        "MailNodeDetail",
+        "MailTopologyScreen",
+        "MailStackFragment"
+      ],
+      "imports": [
+        "android.os.Bundle",
+        "androidx.compose.animation.core.LinearEasing",
+        "androidx.compose.animation.core.RepeatMode",
+        "androidx.compose.animation.core.animateFloat",
+        "androidx.compose.animation.core.infiniteRepeatable",
+        "androidx.compose.animation.core.rememberInfiniteTransition",
+        "androidx.compose.animation.core.tween",
+        "androidx.compose.foundation.Canvas",
+        "androidx.compose.foundation.background",
+        "androidx.compose.foundation.border",
+        "androidx.compose.foundation.clickable",
+        "androidx.compose.foundation.gestures.detectTapGestures",
+        "androidx.compose.foundation.gestures.detectTransformGestures",
+        "androidx.compose.foundation.horizontalScroll",
+        "androidx.compose.foundation.layout.Box",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.Row",
+        "androidx.compose.foundation.layout.fillMaxSize",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.foundation.layout.heightIn",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.foundation.layout.width",
+        "androidx.compose.foundation.rememberScrollState",
+        "androidx.compose.foundation.shape.RoundedCornerShape",
+        "androidx.compose.foundation.text.BasicTextField",
+        "androidx.compose.foundation.verticalScroll",
+        "androidx.compose.material3.Text",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.LaunchedEffect",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableStateMapOf",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.remember",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.ui.Alignment",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.geometry.Offset",
+        "androidx.compose.ui.geometry.Size",
+        "androidx.compose.ui.geometry.CornerRadius",
+        "androidx.compose.ui.graphics.Color"
+      ],
+      "symbols": [
+        "section(id: String)",
+        "row(id: String, i: Int)",
+        "filter(table: String, key: String, v: String)",
+        "canvas(id: String)",
+        "detail(node: String)",
+        "mono(size: Float, c: Color, w: FontWeight = FontWeight.Normal)",
+        "MailTablesScreen(decl: MailStack.Decl, answer: MailStack.Answer?, banner: String, infraRaw: kotlinx.serialization.json.JsonObject, domains: List<FleetModel.Domain>)",
+        "MailTopologyCanvas(topology: MailStack.Topology, decl: MailStack.Decl, answer: MailStack.Answer?, modifier: Modifier = Modifier, onOpen: (String)",
+        "DetailLine(k: String, v: String)",
+        "MailNodeDetail(d: MailStack.NodeDetail, onClose: ()",
+        "MailTopologyScreen(topology: MailStack.Topology, decl: MailStack.Decl, answer: MailStack.Answer?, banner: String, initialOpen: String? = null)",
+        "palette()",
+        "Content()",
+        "newInstance(view: String)",
+        "class MailTags",
+        "class MailStackFragment"
+      ]
+    },
+    {
       "path": "ac_cloud-c3/app/src/main/java/com/diegonmarcos/cloudc3/pages/OpsLive.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -136209,6 +136693,77 @@
         "show(section: String, live: FleetLiveState = FleetLiveState()",
         "row(section: String, id: String)",
         "class InfraScreensComposeTest"
+      ]
+    },
+    {
+      "path": "ac_cloud-c3/app/src/test/java/com/diegonmarcos/cloudc3/MailStackComposeTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "MailStackComposeTest"
+      ],
+      "imports": [
+        "android.content.ComponentName",
+        "androidx.activity.ComponentActivity",
+        "androidx.compose.ui.graphics.Color",
+        "androidx.compose.ui.test.assertCountEquals",
+        "androidx.compose.ui.test.junit4.createAndroidComposeRule",
+        "androidx.compose.ui.test.onAllNodesWithTag",
+        "androidx.compose.ui.test.onNodeWithTag",
+        "androidx.compose.ui.test.performClick",
+        "com.diegonmarcos.cloudc3.pages.MailNodeDetail",
+        "com.diegonmarcos.cloudc3.pages.MailStack",
+        "com.diegonmarcos.cloudc3.pages.MailTablesScreen",
+        "com.diegonmarcos.cloudc3.pages.MailTags",
+        "com.diegonmarcos.cloudc3.pages.MailTopologyScreen",
+        "com.diegonmarcos.superapp.uikit.CloudKitTheme",
+        "com.diegonmarcos.superapp.uikit.KitPalette",
+        "java.io.File",
+        "kotlinx.serialization.json.Json",
+        "kotlinx.serialization.json.JsonObject",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Rule",
+        "org.junit.Test",
+        "org.junit.rules.RuleChain",
+        "org.junit.rules.TestRule",
+        "org.junit.runner.RunWith",
+        "org.junit.runners.model.Statement",
+        "org.robolectric.RobolectricTestRunner",
+        "org.robolectric.RuntimeEnvironment",
+        "org.robolectric.Shadows.shadowOf",
+        "org.robolectric.annotation.Config",
+        "org.robolectric.annotation.GraphicsMode"
+      ],
+      "symbols": [
+        "evaluate()",
+        "class MailStackComposeTest"
+      ]
+    },
+    {
+      "path": "ac_cloud-c3/app/src/test/java/com/diegonmarcos/cloudc3/MailStackTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "MailStackTest"
+      ],
+      "imports": [
+        "androidx.compose.ui.geometry.Offset",
+        "androidx.compose.ui.graphics.Color",
+        "com.diegonmarcos.cloudc3.pages.MailStack",
+        "com.diegonmarcos.superapp.uikit.KitPalette",
+        "java.io.File",
+        "kotlinx.serialization.json.JsonObject",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertNotEquals",
+        "org.junit.Assert.assertNull",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "probe(id: String, state: String, source: String = \"live\", extra: String = \"\")",
+        "answer(vararg probes: String, stale: Boolean = false, tables: String = \"{}\")",
+        "d(o: Offset)",
+        "class MailStackTest"
       ]
     },
     {
@@ -279453,6 +280008,60 @@
       ]
     },
     {
+      "path": "ac_cloud-mail/app/src/main/kotlin/app/sterna/ui/errors/ErrorLogUi.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ErrorActions",
+        "ErrorActionsRow",
+        "ErrorLogDialog",
+        "ErrorActionsWithLog",
+        "showError"
+      ],
+      "imports": [
+        "android.content.ClipData",
+        "android.content.ClipboardManager",
+        "android.content.Context",
+        "android.content.Intent",
+        "androidx.compose.foundation.layout.Arrangement",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.Row",
+        "androidx.compose.foundation.layout.fillMaxSize",
+        "androidx.compose.foundation.layout.fillMaxWidth",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.foundation.rememberScrollState",
+        "androidx.compose.foundation.text.selection.SelectionContainer",
+        "androidx.compose.foundation.verticalScroll",
+        "androidx.compose.material3.MaterialTheme",
+        "androidx.compose.material3.Surface",
+        "androidx.compose.material3.Text",
+        "androidx.compose.material3.TextButton",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.remember",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.platform.LocalContext",
+        "androidx.compose.ui.text.font.FontFamily",
+        "androidx.compose.ui.window.Dialog",
+        "app.sterna.ui.theme.MailMetrics",
+        "androidx.compose.ui.window.DialogProperties",
+        "com.diegonmarcos.superapp.fleetendpoints.errors.ErrorLog"
+      ],
+      "symbols": [
+        "content(log: ErrorLog = ErrorLog.shared)",
+        "markdown(log: ErrorLog = ErrorLog.shared)",
+        "copyAll(context: Context, log: ErrorLog = ErrorLog.shared)",
+        "exportMarkdown(context: Context, log: ErrorLog = ErrorLog.shared)",
+        "ErrorActionsRow(onSeeLog: ()",
+        "ErrorLogDialog(onDismiss: ()",
+        "ErrorActionsWithLog(modifier: Modifier = Modifier)",
+        "showError(message: String, onSeeLog: ()",
+        "class ErrorActions"
+      ]
+    },
+    {
       "path": "ac_cloud-mail/app/src/main/kotlin/app/sterna/ui/FolderActions.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -280105,12 +280714,12 @@
         "restoreSearchResults(keys: Collection<EmailKey>)",
         "patchSearchResults(keys: Set<EmailKey>, transform: (Email)",
         "refreshThreadMembers()",
+        "currentAccountLabel()",
         "viewFor(key: String, overrides: Map<String, ListView>)",
         "updateView(change: (ListView)",
         "setGroupMode(mode: GroupMode)",
         "setRankMode(mode: RankMode)",
-        "toggleListFilter(filter: ListFilter)",
-        "resetListView()"
+        "toggleListFilter(filter: ListFilter)"
       ]
     },
     {
@@ -282352,13 +282961,13 @@
         "androidx.compose.material3.TopAppBar",
         "androidx.compose.runtime.Composable",
         "androidx.compose.runtime.LaunchedEffect",
+        "app.sterna.ui.errors.ErrorLogDialog",
+        "app.sterna.ui.errors.showError",
+        "app.sterna.ui.errors.ErrorActionsWithLog",
         "androidx.compose.runtime.getValue",
         "androidx.compose.runtime.mutableStateOf",
         "androidx.compose.runtime.remember",
-        "androidx.compose.runtime.setValue",
-        "androidx.compose.ui.Alignment",
-        "androidx.compose.ui.Modifier",
-        "androidx.compose.ui.res.pluralStringResource"
+        "androidx.compose.runtime.setValue"
       ],
       "symbols": [
         "MailBySenderScreen( onBack: ()",
@@ -289820,6 +290429,37 @@
         "bodies()",
         "rendered(raw: String)",
         "class DraftDeleteBodyTest"
+      ]
+    },
+    {
+      "path": "ac_cloud-mail/app/src/test/kotlin/app/sterna/ui/errors/ErrorBanners1925Test.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ErrorBanners1925Test"
+      ],
+      "imports": [
+        "com.diegonmarcos.superapp.fleetendpoints.errors.ErrorLog",
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test",
+        "java.io.File"
+      ],
+      "symbols": [
+        "src(rel: String)",
+        "fn(code: String, name: String)",
+        "bannersExposeActions(inbox: String)",
+        "actionLabelsArePinned()",
+        "bannersExposeTheActions()",
+        "mutantBannerWithoutActionsIsCaught()",
+        "SyncErrorBanner(\")",
+        "OutboxFailureBanner(\")",
+        "errorSnackbarsOfInboxAndSenderOfferSeeLog()",
+        "syncFailureIsRecordedWithOperationAndAccount()",
+        "seeLogExportAndCopyReadTheSameContent()",
+        "clientCapturesEveryExchange()",
+        "class ErrorBanners1925Test"
       ]
     },
     {
@@ -424756,6 +425396,20 @@
         "L()",
         "O()",
         "A(e,o=0)"
+      ]
+    },
+    {
+      "path": "ac_cloud-me/data/web/mysocials/img-fallback.js",
+      "lang": "js",
+      "role": "module",
+      "exports": [],
+      "imports": [],
+      "symbols": [
+        "rebase(url)",
+        "placeholder(alt)",
+        "fix(img)",
+        "swap(img)",
+        "scan(root)"
       ]
     },
     {

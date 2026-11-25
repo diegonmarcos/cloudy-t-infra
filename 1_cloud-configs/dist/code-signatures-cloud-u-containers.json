@@ -6,13 +6,13 @@
   },
   "repo": "cloud-u-containers",
   "counts": {
-    "files": 2804,
+    "files": 2808,
     "by_lang": {
       "sh": 210,
       "js": 129,
       "nix": 230,
       "py": 536,
-      "ts": 1324,
+      "ts": 1328,
       "rust": 375
     },
     "by_role": {
@@ -20,7 +20,7 @@
       "file": 363,
       "nix-module": 20,
       "python": 518,
-      "module": 826,
+      "module": 830,
       "script": 10,
       "flake": 106,
       "entrypoint": 73,
@@ -11547,6 +11547,7 @@
         "./routes/aiUsage.js",
         "./routes/fleetData.js",
         "./routes/tree.js",
+        "./routes/mail.js",
         "./hierarchy.js",
         "../shared/libs/poller.js"
       ],
@@ -11602,6 +11603,81 @@
       ],
       "symbols": [
         "main()"
+      ]
+    },
+    {
+      "path": "infra-api_cloudy-c3-api/src/code/api/mailLive.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "collectDns",
+        "collectTls",
+        "collectPorts",
+        "collectLive",
+        "MAIL_DOMAINS",
+        "TLS_TARGETS",
+        "PORT_TARGETS",
+        "Probes",
+        "realProbes"
+      ],
+      "imports": [
+        "node:dns/promises",
+        "node:net",
+        "node:tls",
+        "./mailStack.js"
+      ],
+      "symbols": [
+        "collectDns(p: Probes)",
+        "collectTls(p: Probes, now: number = Date.now()",
+        "collectPorts(p: Probes)",
+        "collectLive(p: Probes = realProbes, now: number = Date.now()"
+      ]
+    },
+    {
+      "path": "infra-api_cloudy-c3-api/src/code/api/mailStack.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "parseReport",
+        "stateOf",
+        "worst",
+        "reportProbes",
+        "certState",
+        "liveProbes",
+        "buildTables",
+        "ageText",
+        "notServed",
+        "mailStack",
+        "State",
+        "Check",
+        "Report",
+        "Probe",
+        "PHASES",
+        "REPORT_PROBES",
+        "DnsRow",
+        "TlsRow",
+        "PortRow",
+        "Live",
+        "CERT_WARN_DAYS",
+        "CERT_BAD_DAYS",
+        "Row",
+        "TABLE_KEYS",
+        "STALWART_QUEUE_CEILING",
+        "StackInputs"
+      ],
+      "imports": [],
+      "symbols": [
+        "parseReport(text: string | null | undefined)",
+        "stateOf(c: Pick<Check, \"passed\" | \"severity\">)",
+        "worst(states: State[])",
+        "probeFrom(id: string, cs: Check[], generated: string | null)",
+        "reportProbes(r: Report | null)",
+        "certState(t: Pick<TlsRow, \"ok\" | \"daysLeft\">)",
+        "liveProbes(l: Live | null)",
+        "buildTables(r: Report | null, l: Live | null, probes: Probe[], now: number = Date.now()",
+        "ageText(generated: string, now: number = Date.now()",
+        "notServed(r: Report | null, l: Live | null)",
+        "mailStack(i: StackInputs)"
       ]
     },
     {
@@ -11827,6 +11903,22 @@
         "guessLevel(line: string)",
         "resolveTargets(service?: string)",
         "pullAndIndex(vm: string, container: string)"
+      ]
+    },
+    {
+      "path": "infra-api_cloudy-c3-api/src/code/api/routes/mail.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [
+        "registerMailRoutes"
+      ],
+      "imports": [
+        "fastify",
+        "../mailLive.js",
+        "../mailStack.js"
+      ],
+      "symbols": [
+        "readReport()"
       ]
     },
     {
@@ -13726,6 +13818,19 @@
         "node:assert/strict",
         "node:fs",
         "./code/shared/libs/jev.ts"
+      ],
+      "symbols": []
+    },
+    {
+      "path": "infra-api_cloudy-c3-api/src/test-mail-stack.ts",
+      "lang": "ts",
+      "role": "module",
+      "exports": [],
+      "imports": [
+        "node:assert/strict",
+        "node:fs",
+        "./code/api/mailLive.ts",
+        "./code/api/mailStack.ts"
       ],
       "symbols": []
     },
