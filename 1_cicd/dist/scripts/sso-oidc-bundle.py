@@ -21,6 +21,10 @@
       client entry byte-for-byte) and append a new secret only for each client declared in
       oidc-clients.json that the bundle lacks. Exit 3 when nothing is missing (no write).
 
+  rotate <oidc-clients.json> <in.json> <out.json> <client_id>
+      Single-client rotation (#1917): copy the decrypted bundle unchanged and replace ONLY the secret and
+      digest of <client_id> (it must be declared and present). JWKS key and every other client stay as is.
+
 Prints nothing but `::add-mask::` lines for new secrets and client IDs / counts. Never a secret.
 """
 import base64, hashlib, json, os, secrets, subprocess, sys
@@ -79,11 +83,32 @@ def cmd_add(clients_path, in_path, out_path):
     return 0
 
 
+def cmd_rotate(clients_path, in_path, out_path, cid):
+    declared = {c["client_id"]: c["secret_var"] for c in json.load(open(clients_path))["clients"]}
+    b = json.load(open(in_path))
+    for k in ("jwks_key_pem", "clients"):
+        if k not in b:
+            print("::error::existing bundle has no %s; refusing" % k)
+            return 1
+    if cid not in declared or cid not in b["clients"]:
+        print("::error::client %s is not declared and present in the bundle; refusing" % cid)
+        return 1
+    for c in b["clients"].values():
+        print("::add-mask::" + c["secret"], flush=True)
+    b["clients"][cid] = new_client(declared[cid])
+    b.setdefault("rotated", []).append({"at": now(), "client": cid})
+    json.dump(b, open(out_path, "w"))
+    print("rotated client %s; kept %d other client secret(s) and the JWKS key" % (cid, len(b["clients"]) - 1))
+    return 0
+
+
 if __name__ == "__main__":
     a = sys.argv[1:]
     if len(a) == 4 and a[0] == "new":
         sys.exit(cmd_new(*a[1:]))
     if len(a) == 4 and a[0] == "add":
         sys.exit(cmd_add(*a[1:]))
-    print("usage: sso-oidc-bundle.py new <clients> <jwks.key> <out> | add <clients> <in> <out>", file=sys.stderr)
+    if len(a) == 5 and a[0] == "rotate":
+        sys.exit(cmd_rotate(*a[1:]))
+    print("usage: sso-oidc-bundle.py new <clients> <jwks.key> <out> | add <clients> <in> <out> | rotate <clients> <in> <out> <client_id>", file=sys.stderr)
     sys.exit(2)

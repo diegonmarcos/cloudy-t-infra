@@ -35,6 +35,11 @@ on:
         required: false
         default: "new"
         type: string
+      client:
+        description: "mode=rotate only: the single client_id whose secret and digest are replaced (#1917); the JWKS key and every other client are kept"
+        required: false
+        default: ""
+        type: string
       rotate:
         description: "true = replace an existing bundle (new JWKS key and every client secret)"
         required: false
@@ -57,6 +62,7 @@ jobs:
       VAULT_DEPLOY_KEY: ${{ secrets.VAULT_DEPLOY_KEY }}
       ROTATE: ${{ inputs.rotate }}
       MODE: ${{ inputs.mode }}
+      ROTATE_CLIENT: ${{ inputs.client }}
       SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
       AGE_RECIPIENT: age1u575hx8h4t5cgle2uznmyfy75e7cgd02h9t5dax506luz9e05vlqxtd7pq
     steps:
@@ -105,13 +111,20 @@ jobs:
               [ "$rc" -eq 3 ] && { echo "bundle unchanged (nothing to add)."; exit 0; }
               [ "$rc" -eq 0 ] || exit "$rc"
               COMMIT_MSG="sso-oidc: add-only, secrets for newly declared clients (existing secrets + JWKS key kept, sops-encrypted)" ;;
+            rotate)
+              [ -f "$B" ] || { echo "::error::mode=rotate needs an existing bundle"; exit 1; }
+              [ -n "$SOPS_AGE_KEY" ] || { echo "::error::SOPS_AGE_KEY is not available"; exit 1; }
+              case "$ROTATE_CLIENT" in ""|*[!A-Za-z0-9_-]*) echo "::error::mode=rotate needs a plain client id"; exit 1;; esac
+              sops -d --input-type json --output-type json "$B" > old.json
+              python3 -I "$BUNDLE_PY" rotate "$CLIENTS" old.json plain.json "$ROTATE_CLIENT"
+              COMMIT_MSG="sso-oidc: rotate one client secret (#1917; other secrets + JWKS key kept, sops-encrypted)" ;;
             new)
               if [ -f "$B" ] && [ "$ROTATE" != "true" ]; then
                 echo "::error::an SSO OIDC bundle already exists; pass rotate=true to replace the key and every client secret, or mode=add to append missing clients"; exit 1
               fi
               openssl genpkey -algorithm RSA -pkeyopt rsa_keygen_bits:4096 -out jwks.key 2>/dev/null
               python3 -I "$BUNDLE_PY" new "$CLIENTS" jwks.key plain.json ;;
-            *) echo "::error::mode must be new or add"; exit 1 ;;
+            *) echo "::error::mode must be new, add or rotate"; exit 1 ;;
           esac
           sops --encrypt --age "$AGE_RECIPIENT" --input-type json --output-type json plain.json > sso-oidc.sops.json
           grep -q '"sops"' sso-oidc.sops.json
