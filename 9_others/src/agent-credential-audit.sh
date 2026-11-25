@@ -19,7 +19,10 @@ API="${GITHUB_API_URL:-https://api.github.com}"
 command -v jq >/dev/null || { echo "::error::jq is required"; exit 2; }
 
 var="$(jq -r '.env_var' "$POLICY")"
-tok="${!var:-}"; src="\$$var"
+fvar="$(jq -r '.fine_grained_env_var // empty' "$POLICY")"
+tok=""; src=""
+[ -n "$fvar" ] && [ -n "${!fvar:-}" ] && { tok="${!fvar}"; src="\$$fvar"; }
+[ -n "$tok" ] || { tok="${!var:-}"; src="\$$var"; }
 if [ -z "$tok" ] && command -v gh >/dev/null; then
     tok="$(env -u "$var" gh auth token 2>/dev/null || true)"; src="gh auth token"
 fi
