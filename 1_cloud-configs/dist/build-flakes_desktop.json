@@ -10586,7 +10586,20 @@
         "_comment": "MATRIX CI packaging target (cgc-db-index.yml matrix jobs; CGC_PACKAGE_MODE=per-repo in cloud-cgc-db-update.sh), replacing db_publish for per-repo checkpoints during the migration. One GHCR image per indexed repo: <image_prefix><local_name>:<tag>, e.g. ghcr.io/diegonmarcos/cgc-db-cloud-data:latest -- built by cloud-cgc-db-package.sh (mode auto-detected from the image name) from that repo's own <project_id>/ dir only. Visibility mirrors the repo's OWN GitHub visibility (gh repo view --json isPrivate on repo_map[local_name]): private repo -> private package, public -> public, force-corrected at publish if drifted. base_image carries the SHARED octocode home root state (config.toml + fastembed/ + sentencetransformer/ model caches) restored before indexing so embedding models stay pinned identical across every per-repo image -- a mismatch silently drop_tables a repo. Read back by cloud-cgc-db-restore-all.sh (consumer side) with the same three keys. db_publish above stays the monolith path until the matrix is proven green; do not delete it.",
         "image_prefix": "ghcr.io/diegonmarcos/cgc-db-",
         "base_image": "ghcr.io/diegonmarcos/cgc-db-base:0.22.0",
-        "tag": "latest"
+        "tag": "latest",
+        "github_release": {
+          "_comment": "Second publication channel of every per-repo index (#1940), next to the GHCR image above (unchanged). After the index steps of a cgc-db-index.yml matrix job, cloud-cgc-db-release.sh (cloud-u-containers_cgc 1_cicd/src/ops) pulls <image_prefix><pkg>:<tag>, packs its /octocode-db (LanceDB: code_blocks, file_metadata, graphrag_nodes, graphrag_relationships) as tar + compression, splits it below GitHub's 2 GiB per-asset cap and uploads it to ONE rolling release per repo, <tag_prefix><pkg>, on the CALLING repository (pub: cloudy-u-containers_cgc, public; pvt: the private orchestrator). Assets: <asset_base>.<NNN> parts, SHA256SUMS, manifest.json (written last; carries the image digest, so an unchanged image is not re-uploaded). A private repo's index is only ever released on a private caller (fail-safe: unknown visibility = private). Restore: cloud-cgc-db-release-restore.sh.",
+          "enabled": true,
+          "surfaces": [
+            "pub",
+            "pvt"
+          ],
+          "tag_prefix": "cgc-db-",
+          "asset_base": "octocode-db.tar",
+          "compression": "zstd",
+          "zstd_level": 3,
+          "part_size_mib": 1900
+        }
       },
       "runtime": {
         "oom_score_adj": -900,
