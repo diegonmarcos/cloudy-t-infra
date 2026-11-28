@@ -5803,7 +5803,7 @@
         "category": "Ops-dBs-infra"
       },
       "redis": {
-        "maxmemory": "128mb",
+        "maxmemory": "32mb",
         "maxmemory_policy": "allkeys-lru"
       },
       "api": {
@@ -10005,7 +10005,7 @@
       },
       "bind_host": "10.0.0.1",
       "resources": {
-        "mem_limit": "128M",
+        "mem_limit": "96M",
         "mem_reservation": "16M"
       },
       "tests": {
@@ -10085,7 +10085,7 @@
       },
       "bind_host": "10.0.0.1",
       "resources": {
-        "mem_limit": "64M",
+        "mem_limit": "24M",
         "mem_reservation": "8M"
       },
       "tests": {
@@ -10184,7 +10184,7 @@
       "_ship_skip": "unparked (#1252, 2026-11-12): secrets provisioned in the vault through the sops-create workflow (Linux-Containers/infra-sec_mcp-oauth/src/secrets.yaml INTROSPECT_SECRET + secrets.form.yaml FORM_SECRET; introspect-proxy gets the same introspect value as fragment secrets.mcp-oauth.yaml MCP_OAUTH_INTROSPECT_SECRET). Ship builds and deploys it to gcp-proxy (mem_limit 128M fits the e2-micro, free tier).",
       "resources": {
         "mem_reservation": "16M",
-        "mem_limit": "128M"
+        "mem_limit": "96M"
       },
       "tests": {
         "unit": {
@@ -10269,7 +10269,7 @@
       },
       "bind_host": "10.0.0.1",
       "resources": {
-        "mem_limit": "64M",
+        "mem_limit": "24M",
         "mem_reservation": "8M"
       },
       "tests": {

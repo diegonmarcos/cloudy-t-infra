@@ -6,9 +6,9 @@
   },
   "repo": "cloud",
   "counts": {
-    "files": 1655,
+    "files": 1656,
     "by_lang": {
-      "sh": 1123,
+      "sh": 1124,
       "js": 176,
       "nix": 314,
       "py": 12,
@@ -17,7 +17,7 @@
     "by_role": {
       "hook": 402,
       "file": 91,
-      "shell": 573,
+      "shell": 574,
       "flake": 6,
       "script": 150,
       "module": 115,
@@ -21114,6 +21114,20 @@
       "symbols": [
         "pass()",
         "fail()"
+      ]
+    },
+    {
+      "path": "9_others/test/test_mail_full_rust_parity.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "run()",
+        "selftest()"
+      ],
+      "imports": [],
+      "symbols": [
+        "run()",
+        "selftest()"
       ]
     },
     {
