@@ -6,12 +6,12 @@
   },
   "repo": "cloud-u-android",
   "counts": {
-    "files": 25282,
+    "files": 25287,
     "by_lang": {
-      "sh": 898,
+      "sh": 899,
       "js": 602,
       "py": 287,
-      "kotlin": 14253,
+      "kotlin": 14257,
       "ts": 8382,
       "java": 656,
       "nix": 37,
@@ -20,12 +20,12 @@
     "by_role": {
       "hook": 166,
       "file": 2271,
-      "shell": 727,
+      "shell": 728,
       "script": 360,
       "python": 113,
       "module": 6480,
       "java": 655,
-      "kotlin": 14250,
+      "kotlin": 14254,
       "flake": 33,
       "rust-module": 167,
       "nix-module": 4,
@@ -62029,6 +62029,28 @@
       ]
     },
     {
+      "path": "ab_cloud-libs-shared/libs/clock-tools/core/src/main/kotlin/com/diegonmarcos/clocktools/ClockLook.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ClockLook",
+        "RingCard"
+      ],
+      "imports": [],
+      "symbols": [
+        "islandOrder(ids: List<String>)",
+        "dialText(ms: Long)",
+        "handDegrees(ms: Long)",
+        "majorTick(i: Int)",
+        "of(key: String, snoozable: Boolean, snoozeAt: String)",
+        "snoozeAt(nowMinuteOfDay: Int, minutes: Int)",
+        "class ClockLook",
+        "class RingCard",
+        "class Action",
+        "class Card"
+      ]
+    },
+    {
       "path": "ab_cloud-libs-shared/libs/clock-tools/core/src/main/kotlin/com/diegonmarcos/clocktools/ClockModel.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -62068,6 +62090,7 @@
       ],
       "imports": [],
       "symbols": [
+        "idOf(kindOrId: String?)",
         "class ClockSubpages"
       ]
     },
@@ -62217,6 +62240,25 @@
       "symbols": [
         "at(zone: ZoneId, y: Int, mo: Int, d: Int, h: Int, mi: Int, s: Int = 0)",
         "class ClockLogicTest"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/clock-tools/core/src/test/kotlin/com/diegonmarcos/clocktools/ClockLookTest.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ClockLookTest"
+      ],
+      "imports": [
+        "org.junit.Assert.assertEquals",
+        "org.junit.Assert.assertFalse",
+        "org.junit.Assert.assertTrue",
+        "org.junit.Test"
+      ],
+      "symbols": [
+        "rgb(c: Long)",
+        "luma(c: Long)",
+        "class ClockLookTest"
       ]
     },
     {
@@ -62417,6 +62459,24 @@
       ]
     },
     {
+      "path": "ab_cloud-libs-shared/libs/clock-tools/src/main/java/com/diegonmarcos/clocktools/ClockLink.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "ClockLink"
+      ],
+      "imports": [
+        "android.content.Context",
+        "android.content.Intent",
+        "kotlinx.coroutines.flow.MutableStateFlow"
+      ],
+      "symbols": [
+        "offer(intent: Intent?)",
+        "handOff(ctx: Context, id: String?)",
+        "class ClockLink"
+      ]
+    },
+    {
       "path": "ab_cloud-libs-shared/libs/clock-tools/src/main/java/com/diegonmarcos/clocktools/ClockReceiver.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -62464,7 +62524,8 @@
         "android.provider.Settings",
         "androidx.core.app.NotificationCompat",
         "androidx.core.app.ServiceCompat",
-        "androidx.core.content.ContextCompat"
+        "androidx.core.content.ContextCompat",
+        "java.time.Instant"
       ],
       "symbols": [
         "onBind(intent: Intent?)",
@@ -62514,8 +62575,11 @@
         "androidx.compose.foundation.layout.Row",
         "androidx.compose.foundation.layout.fillMaxSize",
         "androidx.compose.foundation.layout.padding",
-        "androidx.compose.material3.Button",
-        "androidx.compose.material3.FilledTonalButton",
+        "androidx.compose.material3.TextButton",
+        "androidx.compose.ui.graphics.Color",
+        "androidx.compose.ui.text.font.FontWeight",
+        "androidx.compose.ui.unit.sp",
+        "com.diegonmarcos.clocktools.ui.RoundButton",
         "androidx.compose.material3.MaterialTheme",
         "androidx.compose.material3.Text",
         "androidx.compose.runtime.Composable",
@@ -62540,6 +62604,85 @@
       ]
     },
     {
+      "path": "ab_cloud-libs-shared/libs/clock-tools/src/main/java/com/diegonmarcos/clocktools/ui/ClockLookUi.kt",
+      "lang": "kotlin",
+      "role": "kotlin",
+      "exports": [
+        "clockBackdrop",
+        "ClockFrame",
+        "ClockIsland",
+        "ClockGlyph",
+        "ClockSwitch",
+        "ClockOverflow",
+        "ClockPill",
+        "clockCard",
+        "DayCircle",
+        "ClockBar",
+        "ClockHairline"
+      ],
+      "imports": [
+        "androidx.compose.foundation.Canvas",
+        "androidx.compose.foundation.background",
+        "androidx.compose.foundation.border",
+        "androidx.compose.foundation.clickable",
+        "androidx.compose.foundation.selection.toggleable",
+        "androidx.compose.foundation.layout.Arrangement",
+        "androidx.compose.foundation.layout.Box",
+        "androidx.compose.foundation.layout.BoxScope",
+        "androidx.compose.foundation.layout.Column",
+        "androidx.compose.foundation.layout.Row",
+        "androidx.compose.foundation.layout.RowScope",
+        "androidx.compose.foundation.layout.height",
+        "androidx.compose.foundation.layout.padding",
+        "androidx.compose.foundation.layout.requiredSize",
+        "androidx.compose.foundation.layout.size",
+        "androidx.compose.foundation.layout.width",
+        "androidx.compose.foundation.shape.CircleShape",
+        "androidx.compose.foundation.shape.RoundedCornerShape",
+        "androidx.compose.material3.DropdownMenu",
+        "androidx.compose.material3.DropdownMenuItem",
+        "androidx.compose.material3.MaterialTheme",
+        "androidx.compose.material3.Text",
+        "androidx.compose.material3.darkColorScheme",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.CompositionLocalProvider",
+        "androidx.compose.runtime.collectAsState",
+        "androidx.compose.runtime.compositionLocalOf",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.remember",
+        "androidx.compose.runtime.setValue",
+        "androidx.compose.ui.Alignment",
+        "androidx.compose.ui.Modifier",
+        "androidx.compose.ui.draw.clip",
+        "androidx.compose.ui.draw.drawBehind",
+        "androidx.compose.ui.geometry.Offset",
+        "androidx.compose.ui.geometry.Size",
+        "androidx.compose.ui.graphics.Brush",
+        "androidx.compose.ui.graphics.Color",
+        "androidx.compose.ui.graphics.Path"
+      ],
+      "symbols": [
+        "look(c: Long)",
+        "rememberClockLink()",
+        "clockBackdrop()",
+        "drawGlow()",
+        "glow(c: Long, at: Triple<Float, Float, Float>)",
+        "ClockFrame(modifier: Modifier = Modifier, glow: Boolean = true, content: @Composable BoxScope.()",
+        "ClockIsland(ids: List<String>, labels: Map<String, String>, selected: String, onSelect: (String)",
+        "ClockGlyph(id: String, color: Color, filled: Boolean = false, modifier: Modifier = Modifier)",
+        "line(x1: Float, y1: Float, x2: Float, y2: Float)",
+        "ClockSwitch(checked: Boolean, onCheckedChange: (Boolean)",
+        "ClockOverflow(items: List<Pair<String, ()",
+        "ClockPill(text: String, modifier: Modifier = Modifier, selected: Boolean = false, onClick: ()",
+        "clockCard()",
+        "DayCircle(letter: String, on: Boolean, modifier: Modifier = Modifier, onClick: ()",
+        "drawStopwatchDial(elapsedMs: Long)",
+        "ClockBar(modifier: Modifier = Modifier, content: @Composable RowScope.()",
+        "ClockHairline(height: androidx.compose.ui.unit.Dp, color: Long = ClockLook.SWITCH_DIVIDER)"
+      ]
+    },
+    {
       "path": "ab_cloud-libs-shared/libs/clock-tools/src/main/java/com/diegonmarcos/clocktools/ui/ClockScreens.kt",
       "lang": "kotlin",
       "role": "kotlin",
@@ -62555,6 +62698,20 @@
       ],
       "imports": [
         "com.diegonmarcos.superapp.perms.PermsFixChip",
+        "androidx.compose.foundation.layout.BoxWithConstraints",
+        "androidx.compose.foundation.layout.fillMaxHeight",
+        "androidx.compose.foundation.layout.wrapContentWidth",
+        "androidx.compose.foundation.text.BasicTextField",
+        "androidx.compose.material3.ButtonDefaults",
+        "androidx.compose.runtime.rememberCoroutineScope",
+        "androidx.compose.ui.draw.drawBehind",
+        "androidx.compose.ui.geometry.Offset",
+        "androidx.compose.ui.graphics.SolidColor",
+        "androidx.compose.ui.semantics.contentDescription",
+        "androidx.compose.ui.semantics.semantics",
+        "androidx.compose.ui.unit.sp",
+        "com.diegonmarcos.clocktools.ClockLook",
+        "kotlinx.coroutines.launch",
         "android.Manifest",
         "android.content.ClipData",
         "android.content.ClipboardManager",
@@ -62579,21 +62736,7 @@
         "androidx.compose.material3.rememberDatePickerState",
         "androidx.compose.runtime.mutableIntStateOf",
         "androidx.compose.ui.draw.clip",
-        "androidx.compose.ui.graphics.Color",
-        "androidx.compose.ui.text.font.FontWeight",
-        "androidx.compose.ui.window.Dialog",
-        "androidx.compose.ui.window.DialogProperties",
-        "com.diegonmarcos.clocktools.ClockCalendarProvider",
-        "com.diegonmarcos.clocktools.ClockDesign",
-        "com.diegonmarcos.clocktools.ClockService",
-        "com.diegonmarcos.clocktools.Pomodoro",
-        "com.diegonmarcos.clocktools.PomodoroLogic",
-        "com.diegonmarcos.clocktools.PomodoroPhase",
-        "com.diegonmarcos.clocktools.TimerPresets",
-        "com.diegonmarcos.clocktools.Wheel",
-        "com.diegonmarcos.superapp.perms.PermsChip",
-        "com.diegonmarcos.superapp.perms.rememberPermsAsk",
-        "com.diegonmarcos.superapp.perms.rememberRawPermAsk"
+        "androidx.compose.ui.graphics.Color"
       ],
       "symbols": [
         "rememberClock()",
@@ -62769,6 +62912,26 @@
         "DayBar(bar: WorldTable.Bar, modifier: Modifier = Modifier)",
         "ZonePicker(cat: ClockPlaces.Catalogue?, title: String, onDismiss: ()",
         "FullClock(modifier: Modifier = Modifier, initialTab: Int = 0)"
+      ]
+    },
+    {
+      "path": "ab_cloud-libs-shared/libs/clock-tools/test/clock-1986-walk.sh",
+      "lang": "sh",
+      "role": "shell",
+      "exports": [
+        "shot()",
+        "dump()",
+        "find_xy()",
+        "tap()",
+        "keep_ui()"
+      ],
+      "imports": [],
+      "symbols": [
+        "shot()",
+        "dump()",
+        "find_xy()",
+        "tap()",
+        "keep_ui()"
       ]
     },
     {
@@ -145300,12 +145463,6 @@
       ],
       "imports": [
         "androidx.compose.foundation.Canvas",
-        "com.diegonmarcos.clocktools.ui.AlarmsScreen",
-        "com.diegonmarcos.clocktools.ui.BedtimeScreen",
-        "com.diegonmarcos.clocktools.ui.IntervalScreen",
-        "com.diegonmarcos.clocktools.ui.PomodoroScreen",
-        "com.diegonmarcos.clocktools.ui.StopwatchScreen",
-        "com.diegonmarcos.clocktools.ui.TimersScreen",
         "com.diegonmarcos.clocktools.ui.WorldClockScreen",
         "androidx.compose.foundation.clickable",
         "androidx.compose.foundation.layout.Arrangement",
@@ -145338,7 +145495,13 @@
         "androidx.compose.material3.OutlinedButton",
         "androidx.compose.material3.OutlinedTextField",
         "androidx.compose.material3.Text",
-        "androidx.compose.material3.TextButton"
+        "androidx.compose.material3.TextButton",
+        "androidx.compose.runtime.Composable",
+        "androidx.compose.runtime.LaunchedEffect",
+        "androidx.compose.runtime.getValue",
+        "androidx.compose.runtime.mutableStateMapOf",
+        "androidx.compose.runtime.mutableStateOf",
+        "androidx.compose.runtime.remember"
       ],
       "symbols": [
         "io(block: ()",
@@ -283312,6 +283475,8 @@
       "symbols": [
         "syncFleetEndpoints()",
         "onCreate()",
+        "onDiagnosticReceived(code: Int, data: Any?)",
+        "onResultReceived(code: Int, data: Any?)",
         "class PendingReplySuggestion",
         "class AppContainer",
         "class SternaApplication"
@@ -320849,6 +321014,7 @@
       "exports": [
         "fail()",
         "note()",
+        "dexopt_state()",
         "scroll_measure()",
         "shot()",
         "dump()",
@@ -320864,6 +321030,7 @@
       "symbols": [
         "fail()",
         "note()",
+        "dexopt_state()",
         "scroll_measure()",
         "shot()",
         "dump()",
@@ -572884,6 +573051,7 @@
         "androidx.compose.material3.Text",
         "androidx.compose.runtime.Composable",
         "androidx.compose.runtime.LaunchedEffect",
+        "androidx.compose.runtime.collectAsState",
         "androidx.compose.ui.platform.LocalContext",
         "androidx.compose.runtime.SideEffect",
         "androidx.compose.runtime.getValue",
@@ -572904,8 +573072,7 @@
         "com.diegonmarcos.cloudagenda.data.Backlog",
         "com.diegonmarcos.cloudagenda.data.BacklogSnapshot",
         "com.diegonmarcos.cloudagenda.data.BacklogSource",
-        "com.diegonmarcos.cloudagenda.data.Attachment",
-        "com.diegonmarcos.cloudagenda.data.MockTask"
+        "com.diegonmarcos.cloudagenda.data.Attachment"
       ],
       "symbols": [
         "saveThemeMode(mode: ThemeMode)",
